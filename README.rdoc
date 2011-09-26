@@ -1,6 +1,31 @@
 = github
+ 
+A Ruby wrapper for the GitHub REST API v3
 
-Description goes here.
+== Installation
+
+== Configuration
+
+# Certain methods require authentication. To get your GitHub OAuth v2 credentials,
+# register an app at http://dev.twitter.com/apps
+Github.configure do |config|
+  config.consumer_key = YOUR_CONSUMER_KEY
+  config.consumer_secret = YOUR_CONSUMER_SECRET
+  config.oauth_token = YOUR_OAUTH_TOKEN
+  config.oauth_token_secret = YOUR_OAUTH_TOKEN_SECRET
+end
+
+These parameters can be overwirtten as per method call. By passing hash
+{ 
+  :auth => {
+    :consumer_key => YOUR_CONSUMER_KEY,
+    :consumer_secret => YOUR_CONSUMER_SECRET,
+    :oauth_token => YOUR_OAUTH_TOKEN
+    :oauth_token_secret => YOUR_OAUTH_TOKEN_SECRET
+  }
+}
+
+== Examples
 
 == Contributing to github
  

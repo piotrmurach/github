@@ -1,10 +1,7 @@
 module Github
   class API
     
-    include Connection 
     include Request
-
-    include Repos
   
     def initialize
 
