@@ -6,6 +6,10 @@ module Github
       request(:get, path, params, options)
     end
 
+    def patch(path, params={}, options={})
+      request(:patch, path, params, options)
+    end
+
     def post(path, params={}, options={})
       request(:post, path, params, options)
     end
