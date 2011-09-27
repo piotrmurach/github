@@ -1,5 +1,5 @@
 module Github
-  module Repos
+  class Repos
     module Commits
       
       REQUIRED_COMMENT_PARAMS = ["body", "commit_id", "line", "path", "position"]

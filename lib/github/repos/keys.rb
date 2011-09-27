@@ -1,5 +1,5 @@
 module Github
-  module Repos
+  class Repos
     module Keys
       
       # List keys

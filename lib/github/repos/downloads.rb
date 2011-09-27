@@ -1,5 +1,5 @@
 module Github
-  module Repos
+  class Repos
     module Downloads
       
       REQUIRED_PARAMS = %w[ name size ]
@@ -67,7 +67,7 @@ module Github
           "file" => file 
         }
         
-        post(result.s3_url, mapped_params), 
+        post(result.s3_url, mapped_params)
       end
 
     end # Downloads

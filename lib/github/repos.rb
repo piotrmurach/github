@@ -2,12 +2,12 @@ module Github
   class Repos < API
     
     include Github::Repos::Collaborators
-    include Repos::Commits
-    include Repos::Downloads
-    include Repos::Forks
-    include Repos::Hooks
-    include Repos::Keys
-    include Repos::Watching
+    include Github::Repos::Commits
+    include Github::Repos::Downloads
+    include Github::Repos::Forks
+    include Github::Repos::Hooks
+    include Github::Repos::Keys
+    include Github::Repos::Watching
 
     DEFAULT_REPO_OPTIONS = {
       "homepage"   => "https://github.com",
@@ -24,8 +24,8 @@ module Github
     # GET /repos/:user/:repo/branches
     #
     def branches(user, repo, params={})
-      _validate_user_repo_params
-      response = get("/repos#{user}/#{repo}", options)
+      #_validate_user_repo_params
+      get("/repos#{user}/#{repo}", params)
     end
 
     def collaborators(user, repo)
@@ -105,7 +105,7 @@ module Github
     #  client = Client.new
     #  client.get_repo('my-username', 'my-repo-name')
     #
-    def get(user, repo)
+    def show(user, repo)
       get("/repos/#{user}/#{repo}")  # TODO change request methods CLASH!!!
     end
 
