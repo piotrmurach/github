@@ -1,7 +1,12 @@
+require 'github/configuration'
+require 'github/request'
+
 module Github
   class API
     
+    include Connection
     include Request
+    
   
     def initialize
 
@@ -15,7 +20,7 @@ module Github
       end
     end
 
-    def _validate_user_repo_params
+    def _validate_user_repo_params(params)
 
     end
 

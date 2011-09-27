@@ -1,7 +1,5 @@
-require 'hashie'
-
 module Github
-  class Response::Mashify
+  class Response::Mashify < Faraday::Response::Middleware
     dependency 'hashie/mash'
 
     class << self

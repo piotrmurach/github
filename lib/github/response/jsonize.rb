@@ -1,5 +1,5 @@
 module Github
-  class Response::Jasonize
+  class Response::Jasonize < Faraday::Response::Middleware
     dependency 'multi_json'
 
     def parse(body)

@@ -1,4 +1,4 @@
-module Octokitty
+module Github 
   module Version
     MAJOR = 0
     MINOR = 1
