@@ -31,7 +31,8 @@ module Github
     def collaborators(user, repo)
       
     end
-
+    
+    # Iterator over all commits for a repo ?
     def commits
 
     end

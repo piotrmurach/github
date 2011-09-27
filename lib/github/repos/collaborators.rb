@@ -7,17 +7,21 @@ module Github
       # PUT /repos/:user/:repo/collaborators/:user
       # 
       # Examples:
-      #  client = Client.new
-      #  client.add('user', 'repo', 'collaborator') 
+      #  github = Github.new
+      #  github.collaborators.add('user', 'repo', 'collaborator') 
       # 
       def add(user, repo, collaborator)
-        put("PUT /repos/#{user}/#{repo}/collaborators/#{collaborator}")
+        put("/repos/#{user}/#{repo}/collaborators/#{collaborator}")
       end
       
       
       # Checks if user is a collaborator for a given repository
       #
       # GET /repos/:user/:repo/collaborators/:user
+      #
+      # Examples:
+      #  github = Github.new
+      #  github.collaborators.collaborator?('user', 'repo', 'collaborator')
       #
       def collaborator?(user, repo, collaborator)
         get("/repos/#{user}/#{repo}/collaborators/#{collaborator}")
@@ -28,8 +32,9 @@ module Github
       # GET /repos/:user/:repo/collaborators
       #
       # Examples:
-      #   client = Client.new
-      #   client.collaborators.list
+      #   github = Github.new
+      #   github.collaborators.list('user', 'repo')
+      #
       def list(user, repo)
         get("/repos/#{user}/#{repo}/collaborators")
       end
@@ -37,6 +42,10 @@ module Github
       # Removes collaborator
       # 
       # DELETE /repos/:user/:repo/collaborators/:user
+      #
+      # Examples:
+      #  github = Github.new
+      #  github.collaborators.remove('user', 'repo', 'collaborator')
       #
       def remove(user, repo, collaborator) 
         delete("/repos/#{user}/#{repo}/collaborators/#{user}")

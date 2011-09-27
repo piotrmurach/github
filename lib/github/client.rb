@@ -1,10 +1,6 @@
 module Github
   class Client < API
 
-    def initialize
-      # initialize all the modules here ???
-    end
-    
     def gists
       puts "gists"
     end
