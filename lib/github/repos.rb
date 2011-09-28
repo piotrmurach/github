@@ -18,6 +18,11 @@ module Github
     }
 
     VALID_REPO_TYPES = %w[ all public private member ]
+    
+    # Creates new Repos API
+    def initialize(options = {})
+      super(options)
+    end
 
     # List branches
     #

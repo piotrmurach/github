@@ -4,26 +4,49 @@ A Ruby wrapper for the GitHub REST API v3
 
 == Installation
 
+== Usage
+
+Create a new client instance by passing it a configuration hash
+
+  @github = Github.new()
+
+In order to authenticate the user through OAuth2 you need
+
+You can interact with GitHub interface by following calls
+
+  @github.repos.list
+  @github.repos.branches
+  @github.repos.contributors
+
+The code base is modular and allows for you to work specifically with a given part of GitHub API e.g. repositories
+
+  @repos = Github::Repos.new
+  @repos.list
+
+For specification on all available methods go to
+
 == Configuration
 
-# Certain methods require authentication. To get your GitHub OAuth v2 credentials,
-# register an app at http://dev.twitter.com/apps
-Github.configure do |config|
-  config.consumer_key = YOUR_CONSUMER_KEY
-  config.consumer_secret = YOUR_CONSUMER_SECRET
-  config.oauth_token = YOUR_OAUTH_TOKEN
-  config.oauth_token_secret = YOUR_OAUTH_TOKEN_SECRET
-end
+Certain methods require authentication. To get your GitHub OAuth v2 credentials,
+register an app at http://dev.twitter.com/apps and then 
+
+  Github.configure do |config|
+    config.consumer_key = YOUR_CONSUMER_KEY
+    config.consumer_secret = YOUR_CONSUMER_SECRET
+    config.oauth_token = YOUR_OAUTH_TOKEN
+    config.oauth_token_secret = YOUR_OAUTH_TOKEN_SECRET
+  end
 
 These parameters can be overwirtten as per method call. By passing hash
-{ 
-  :auth => {
-    :consumer_key => YOUR_CONSUMER_KEY,
-    :consumer_secret => YOUR_CONSUMER_SECRET,
-    :oauth_token => YOUR_OAUTH_TOKEN
-    :oauth_token_secret => YOUR_OAUTH_TOKEN_SECRET
-  }
-}
+
+  Github.new({ 
+    :auth => {
+      :consumer_key => YOUR_CONSUMER_KEY,
+      :consumer_secret => YOUR_CONSUMER_SECRET,
+      :oauth_token => YOUR_OAUTH_TOKEN
+      :oauth_token_secret => YOUR_OAUTH_TOKEN_SECRET
+    }
+  })
 
 == Examples
 
@@ -36,6 +59,12 @@ These parameters can be overwirtten as per method call. By passing hash
 * Commit and push until you are happy with your contribution
 * Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.
 * Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
+
+== TODO
+
+* Add request caching.
+* Add helper methods to return iterators over most common collections.
+* Add response set helper methods e.i. pagination.
 
 == Copyright
 

@@ -9,6 +9,10 @@ module Github
     METHODS = [:get, :post, :put, :delete, :patch]
     METHODS_WITH_BODIES = Set.new [ :post, :put, :patch ]
 
+    TOKEN_REQUIRED_REGEXP = [
+      /repos\/.*\/.*\/comments/,
+    ]
+
     def get(path, params={}, options={})
       request(:get, path, params, options)
     end

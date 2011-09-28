@@ -21,8 +21,8 @@ module Github
 
     end
 
-    def repos
-      @repos ||= Github::Repos.new      
+    def repos(options = {})
+      @repos ||= Github::Repos.new(options)
     end
 
     def users
