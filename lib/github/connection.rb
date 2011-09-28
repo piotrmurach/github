@@ -43,7 +43,7 @@ module Github
       merged_options = faraday_options.merge(default_faraday_options)
 
       @connection ||= begin
-        conn = Faraday.new(merged_options) do |builder|
+        conn = ::Faraday.new(merged_options) do |builder|
 
           builder.use Faraday::Request::JSON
           builder.use Faraday::Request::Multipart
