@@ -6,7 +6,7 @@ module Github
       #
       # GET /repos/:user/:repo/keys
       #
-      def list(user, repo)
+      def list_keys(user, repo)
         get("/repos/#{user}/#{repo}/keys")
       end
 
@@ -14,14 +14,14 @@ module Github
       #
       # GET /repos/:user/:repo/keys/:id
       #
-      def get(user, repo, key_id)
+      def get_key(user, repo, key_id)
         get("/repos/#{user}/#{repo}/keys/#{key_id}")
       end
 
       # Create a key
       #
       # POST /repos/:user/:repo/keys
-      def create(user, repo, params={})
+      def create_key(user, repo, params={})
         _normalize_params_keys(params)
         _filter_params_keys(%w[ title key ], params)
 
@@ -32,7 +32,7 @@ module Github
       #
       # PATCH /repos/:user/:repo/keys/:id
       #
-      def edit(user, repo, key_id)
+      def edit_key(user, repo, key_id)
         _normalize_params_keys(params)
         _filter_params_keys(%w[ title key ], params)
 
@@ -42,7 +42,7 @@ module Github
       # Delete key
       #
       # DELETE /repos/:user/:repo/keys/:id
-      def delete(user, repo, key_id)
+      def delete_key(user, repo, key_id)
         delete("/repos/#{user}/#{repo}/keys/#{key_id}")
       end
 

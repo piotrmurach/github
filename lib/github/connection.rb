@@ -1,3 +1,5 @@
+#require 'faraday'
+
 module Github
   module Connection
     
@@ -24,19 +26,24 @@ module Github
       :json => 'json'
     }
 
-    def default_faraday_options(format, resource=nil)
+    def default_faraday_options()
       {
         :headers => {
           'Accept' => "application/#{resource}#{format}",
-          'User-Agent' => user_agent
+          'User-Agent' => user_agent 
         },
-        :ssl => { :verify => false }
+        :ssl => { :verify => false },
+        :url => endpoint
       }
     end
+
+    # TODO Write mime format conversion
     
     def connection(options = {})
+      merged_options = faraday_options.merge(default_faraday_options)
+
       @connection ||= begin
-        conn = Faraday.new do |builder|
+        conn = Faraday.new(merged_options) do |builder|
 
           builder.use Faraday::Request::JSON
           builder.use Faraday::Request::Multipart
@@ -48,8 +55,6 @@ module Github
 
           builder.adapter adapter
         end
-
-        conn
 
         conn
       end

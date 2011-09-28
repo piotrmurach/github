@@ -11,7 +11,7 @@ module Github
       #
       # GET /repos/:user/:repo/downloads
       #
-      def list(user, repo)
+      def list_downloads(user, repo)
         get("/repos/#{user}/#{repo}/downloads")
       end
 
@@ -19,7 +19,7 @@ module Github
       #
       # GET /repos/:user/:repo/downloads/:id
       #
-      def get(user, repo, download_id)
+      def get_download(user, repo, download_id)
         get("/repos/#{user}/#{repo}/downloads/#{download_id}")
       end
 
@@ -27,7 +27,7 @@ module Github
       #
       # DELETE /repos/:user/:repo/downloads/:id
       #
-      def delete(user, repo, download_id)
+      def delete_download(user, repo, download_id)
         delete("/repos/#{user}/#{repo}/downloads/#{download_id}")
       end
 
@@ -37,7 +37,7 @@ module Github
       #
       # POST /repos/:user/:repo/downloads
       #
-      def create(user, repo, params={})
+      def create_download(user, repo, params={})
         _normalize_params_keys(params)
         raise ArgumentError, "expected following inputs to the method: #{REQUIRED_INPUTS.join(', ')}" unless _valid_inputs(REQUIRED_PARAMS, params)
         _filter_params_keys(VALID_PARAMS, params)

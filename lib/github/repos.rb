@@ -30,7 +30,7 @@ module Github
     #
     def branches(user, repo, params={})
       #_validate_user_repo_params
-      get("/repos#{user}/#{repo}", params)
+      get("/repos/#{user}/#{repo}/branches", params)
     end
 
     def collaborators(user, repo)

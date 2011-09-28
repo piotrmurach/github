@@ -7,7 +7,7 @@ module Github
   module Request
     
     METHODS = [:get, :post, :put, :delete, :patch]
-    METHODS_WITH_BODIES = Set.new [ :post, :put, :patch ]
+    METHODS_WITH_BODIES = [ :post, :put, :patch ]
 
     TOKEN_REQUIRED_REGEXP = [
       /repos\/.*\/.*\/comments/,
@@ -37,21 +37,18 @@ module Github
       if !METHODS.include?(method)
         raise ArgumentError, "unkown http method: #{method}"
       end
+
+      puts "EXECUTED: #{method} - #{path} with #{params} and #{options}"
       
-      connection(options) do |request|
-        
+      response = connection(options) do |request|
+        case method.to_sym
+        when :get, :delete
+          
+        when *METHODS_WITH_BODY 
+          
+        end
       end
-
-      case method.to_sym
-      when :get, :delete
-        
-      when :post, :put, :patch
-
-      end
-    end
-
-    def connection(options = {})
-
+      response
     end
 
     def basic_auth(login, password)

@@ -9,6 +9,7 @@ module Github
       :oauth_token_secret,
       :endpoint,
       :format,
+      :resource,
       :user_agent,
       :faraday_options
     ].freeze
@@ -30,6 +31,10 @@ module Github
     DEFAULT_ENDPOINT = 'https://api.github.com/'.freeze
 
     DEFAULT_USER_AGENT = "Github Ruby Gem #{Github::Version::STRING}".freeze
+
+    DEFAULT_FORMAT = :json
+  
+    DEFAULT_RESOURCE = nil
 
     DEFAULT_FARADAY_OPTIONS = {}
 
@@ -59,6 +64,8 @@ module Github
       self.endpoint           = DEFAULT_ENDPOINT
       self.user_agent         = DEFAULT_USER_AGENT
       self.faraday_options    = DEFAULT_FARADAY_OPTIONS
+      self.format             = DEFAULT_FORMAT
+      self.resource           = DEFAULT_RESOURCE
       self
     end
 

@@ -8,7 +8,7 @@ module Github
       #
       # Examples
       #
-      def list(user, repo)
+      def list_forks(user, repo)
         get("/repos/#{user}/#{repo}/forks")
       end
       
@@ -16,7 +16,7 @@ module Github
       # 
       # POST /repos/:user/:repo/forks
       #
-      def create(user, repo, params={})
+      def create_fork(user, repo, params={})
         _normalize_params_keys(params)
         _filter_params_keys(%w[ org ], params)
 

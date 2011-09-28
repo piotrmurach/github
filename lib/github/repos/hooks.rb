@@ -8,7 +8,7 @@ module Github
       # 
       # GET /repos/:user/:repo/hooks
       #
-      def list(user, repo)
+      def list_hooks(user, repo)
         get("/repos/#{user}/#{repo}/hooks")
       end
 
@@ -16,7 +16,7 @@ module Github
       #
       # GET /repos/:user/:repo/hooks/:id
       #
-      def get(user, repo, hook_id)
+      def get_hook(user, repo, hook_id)
         get("/repos/#{user}/#{repo}/hooks/#{hook_id}")
       end
 
@@ -24,7 +24,7 @@ module Github
       #
       # POST /repos/:user/:repo/hooks
       #
-      def create(user, repo, params)
+      def create_hook(user, repo, params)
         _normalize_params_keys(params)
         _filter_params_keys(%w[ name config active ], params)
         raise ArgumentError, "Required parameters are: #{REQUIRED_PARAMS.join(', ')}" unless _validate_inputs(REQUIRED_PARAMS, params)
@@ -36,7 +36,7 @@ module Github
       #
       # PATCH /repos/:user/:repo/hooks/:id
       # 
-      def edit(user, repo, hook_id, params)
+      def edit_hook(user, repo, hook_id, params)
         _normalize_params_keys(params)
         _filter_params_keys(%w[ name config active ], params)
         raise ArgumentError, "Required parameters are: #{REQUIRED_PARAMS.join(', ')}" unless _validate_inputs(REQUIRED_PARAMS, params)
@@ -48,7 +48,7 @@ module Github
       #
       # POST /repos/:user/:repo/hooks/:id/test
       #
-      def test(user, repo, hook_id)
+      def test_hook(user, repo, hook_id)
         post("/repos/#{user}/#{repo}/hooks/#{hook_id}/test")
       end
 
@@ -56,7 +56,7 @@ module Github
       #
       # DELETE /repos/:user/:repo/hooks/:id
       #
-      def delete(user, repo, hook_id)
+      def delete_hook(user, repo, hook_id)
         delete("/repos/#{user}/#{repo}/hooks/#{hook_id}")
       end
 

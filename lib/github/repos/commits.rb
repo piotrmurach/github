@@ -2,7 +2,7 @@ module Github
   class Repos
     module Commits
       
-      REQUIRED_COMMENT_PARAMS = ["body", "commit_id", "line", "path", "position"]
+      REQUIRED_COMMENT_PARAMS = %w[ body commit_id line path position ]
 
       # Creates a commit comment
       #
@@ -63,7 +63,7 @@ module Github
       # 
       # Examples: 
       #
-      def get(user, repo, sha)
+      def show(user, repo, sha)
         get("/repos/#{user}/#{repo}/commits/#{sha}")
       end
 

@@ -8,9 +8,12 @@ module Github
       # 
       # Examples:
       #  github = Github.new
-      #  github.collaborators.add('user', 'repo', 'collaborator') 
-      # 
-      def add(user, repo, collaborator)
+      #  github.collaborators.add_collaborator('user', 'repo', 'collaborator') 
+      #
+      #  repos = Github::Repos.new
+      #  repos.add_collaborator('user', 'repo', 'collaborator')
+      #
+      def add_collaborator(user, repo, collaborator)
         put("/repos/#{user}/#{repo}/collaborators/#{collaborator}")
       end
       
@@ -35,7 +38,7 @@ module Github
       #   github = Github.new
       #   github.collaborators.list('user', 'repo')
       #
-      def list(user, repo)
+      def list_collaborators(user, repo)
         get("/repos/#{user}/#{repo}/collaborators")
       end
       
@@ -47,7 +50,7 @@ module Github
       #  github = Github.new
       #  github.collaborators.remove('user', 'repo', 'collaborator')
       #
-      def remove(user, repo, collaborator) 
+      def remove_collabolator(user, repo, collaborator) 
         delete("/repos/#{user}/#{repo}/collaborators/#{user}")
       end
 
