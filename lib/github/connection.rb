@@ -1,4 +1,6 @@
-#require 'faraday'
+# encoding: utf-8
+
+require 'faraday'
 
 module Github
   module Connection

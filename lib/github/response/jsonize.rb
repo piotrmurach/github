@@ -1,5 +1,9 @@
+# encoding: utf-8
+
+require 'faraday'
+
 module Github
-  class Response::Jasonize < Faraday::Response::Middleware
+  class Response::Jsonize < Faraday::Response::Middleware
     dependency 'multi_json'
 
     def parse(body)

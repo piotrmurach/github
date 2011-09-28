@@ -1,3 +1,7 @@
+# encoding: utf-8
+
+require 'faraday'
+
 module Github
   class Response::Mashify < Faraday::Response::Middleware
     dependency 'hashie/mash'
@@ -13,10 +17,10 @@ module Github
       when Hash
         self.class.mash_class.new(body)
       when Array
-         
+        body.map { |item| item.is_a?(Hash) ? self.class.mash_class.new(item) : item }
       else
         body
       end
     end
   end
-end
+end # Github

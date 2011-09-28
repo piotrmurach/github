@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require 'base64'
 require 'addressable/uri'
 require 'set'
@@ -43,7 +45,7 @@ module Github
       response = connection(options) do |request|
         case method.to_sym
         when :get, :delete
-          
+          request.url(path)          
         when *METHODS_WITH_BODY 
           
         end

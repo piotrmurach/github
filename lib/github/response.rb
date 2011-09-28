@@ -1,7 +1,7 @@
 module Github
   # Contains methods and attributes that act on the response returned from the 
   # request
-  module Response
+  class Response
     
   end # Response
 end
