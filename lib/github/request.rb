@@ -42,21 +42,25 @@ module Github
 
       puts "EXECUTED: #{method} - #{path} with #{params} and #{options}"
       
-      response = connection(options) do |request|
+      response = connection(options).send(method) do |request|
         case method.to_sym
-        when :get, :delete
-          request.url(path)          
-        when *METHODS_WITH_BODY 
-          
+        when *(METHODS - METHODS_WITH_BODIES)
+          request.url(formatted_path(path), params)          
+        when *METHODS_WITH_BODIES
+          request.path = formatted_path(path, options)
+          request.body = params unless params.empty?
         end
       end
-      response
+      response.body
+    end
+
+    def formatted_path(path)
+      [ path, options.fetch(:format, format) ].compact.join('.')
     end
 
     def basic_auth(login, password)
       auth = Base64.encode("#{login}:#{password}")
       auth.gsub!("\n", "")
-
     end
 
     def token_auth

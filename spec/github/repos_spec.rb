@@ -1,8 +1,10 @@
 require 'spec_helper'
 
-describe "Repos" do
+describe Github::Repos do
   
   context "list" do
-    it "should list all repos by default" 
+    it "should list all repos by default" do
+      fail 'implement this'
+    end
   end
 end
