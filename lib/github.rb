@@ -36,10 +36,11 @@ module Github
   extend AutoloadHelper
 
   autoload_all 'github',
-    :API => 'api',
-    :Client => 'client',
-    :Repos => 'repos',
-    :Request => 'request',
-    :Response => 'response'
+    :API      => 'api',
+    :Client   => 'client',
+    :Repos    => 'repos',
+    :Request  => 'request',
+    :Response => 'response',
+    :Error    => 'error'
 
 end # Github
