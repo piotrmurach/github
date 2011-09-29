@@ -1,6 +1,17 @@
 module Github
   class Repos < API
+    extend AutoloadHelper
     
+    # Load all the modules after initializing Repos to avoid superclass mismatch
+    autoload_all 'github/repos',
+      :Collaborators => 'collaborators',
+      :Commits       => 'commits',
+      :Downloads     => 'downloads',
+      :Forks         => 'forks',
+      :Hooks         => 'hooks',
+      :Keys          => 'keys',
+      :Watching      => 'watching'
+
     include Github::Repos::Collaborators
     include Github::Repos::Commits
     include Github::Repos::Downloads

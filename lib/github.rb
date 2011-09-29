@@ -1,3 +1,6 @@
+require 'github/configuration'
+require 'github/connection'
+
 module Github
   extend Configuration
 
@@ -20,4 +23,23 @@ module Github
       new.respond_to?(method, include_private) || super(method, include_private) 
     end
   end
-end
+
+  module AutoloadHelper
+    
+    def autoload_all(prefix, options)
+      options.each do |const_name, path|
+        autoload const_name, File.join(prefix, path)
+      end
+    end
+  end
+
+  extend AutoloadHelper
+
+  autoload_all 'github',
+    :API => 'api',
+    :Client => 'client',
+    :Repos => 'repos',
+    :Request => 'request',
+    :Response => 'response'
+
+end # Github
