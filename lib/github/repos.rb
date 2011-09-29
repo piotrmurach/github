@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 module Github
   class Repos < API
     extend AutoloadHelper
@@ -28,6 +30,8 @@ module Github
       "has_downloads" => true
     }
 
+    VALID_REPO_OPTIONS = %w[ name description homepage public has_issues has_wiki has_downloads ]
+
     VALID_REPO_TYPES = %w[ all public private member ]
     
     # Creates new Repos API
@@ -37,29 +41,28 @@ module Github
 
     # List branches
     #
-    # GET /repos/:user/:repo/branches
+    # = Examples
+    # 
+    #   @github = Github.new
+    #   @github.repos.branches('user-name', 'repo-name')
     #
-    def branches(user, repo, params={})
-      #_validate_user_repo_params
-      get("/repos/#{user}/#{repo}/branches", params)
+    #   @repos = Github::Repos.new
+    #   @repos.branches('user-name', 'repo-name')
+    #
+    def branches(user_name=nil, repo_name=nil)
+      _validate_user_repo_params(user_name, repo_name) unless user? && repo?
+      _update_user_repo_params(user_name, repo_name)      
+
+      response = get("/repos/#{user}/#{repo}/branches")
+      return response unless block_given?
+      response.each { |el| yield el }
     end
 
-    def collaborators(user, repo)
-      
-    end
-    
-    # Iterator over all commits for a repo ?
-    def commits
-
-    end
-
-    # Create a new repository for the autheticated user
+    # Create a new repository for the autheticated user.
     #
-    # POST /user/repos
-    #
-    # Examples:
-    #   client = Client.new
-    #   client.create(:name => 'my_repo_name')
+    # = Examples
+    #  @github = Github.new
+    #  @github.repos.create_repo.create(:name => 'my_repo_name')
     #
     #
     # Create a new repository in this organisation. The authenticated user 
@@ -71,7 +74,7 @@ module Github
     #   client = Client.new
     #   client.create('my-repo-name', :org => 'my-organisation')
     # 
-    def create(name, params = {})
+    def create_repo(name, params = {})
       DEFAULT_REPO_OPTIONS.merge(params)
       if (org = params.delete("org")) 
         post("/orgs/#{org}/repos", params)
@@ -82,60 +85,77 @@ module Github
     
     # List contributors 
     #
-    # GET /repos/:user/:repo/contributors
-    # 
-    # Examples:
-    #    client = Client.new
-    #    client.contributors(:user => 'john', :role => 'twitter')
-    def contributors(user, repo, flag=nil)
-      get("/repos/#{user}/#{repo}/contributors", flag)
-    end
-    
-    # Provides access to Github::Repos::Downloads
-    def downloades
-      
+    # = Parameters
+    #  :anon - Optional flag. Set to 1 or true to include anonymous contributors. 
+    #
+    # = Examples
+    #  @github = Github.new
+    #  @github.repos.contributors('user-name','repo-name')
+    #  @github.repos.contributors('user-name','repo-name') { |cont| ... }
+    #
+    def contributors(user, repo, params={})
+      _validate_user_repo_params(user_name, repo_name) unless user? && repo?
+      _update_user_repo_params(user_name, repo_name)      
+      _normalize_params_keys(params)
+      _filter_params_keys(['anon'], params)
+
+      response = get("/repos/#{user}/#{repo}/contributors", params)
+      return response unless block_given?
+      response.each { |el| yield el }
     end
 
     # Edit a repository
-    # 
-    # POST /repos/:user/:repo
     #
-    # Examples:
-    #   client = Client.new
-    #   client.edit
+    # = Parameters
+    #  :name        Required string
+    #  :description Optional string
+    #  :homepage    Optional string
+    #  :public      Optional boolean - true to create public repo, false to create a private one
+    #  :has_issues  Optional boolean - <tt>true</tt> to enable issues for this repository, <tt>false</tt> to disable them
+    #  :has_wiki    Optional boolean - <tt>true</tt> to enable the wiki for this repository, <tt>false</tt> to disable it. Default is <tt>true</tt>
+    #  :has_downloads Optional boolean - <tt>true</tt> to enable downloads for this repository 
+    #
+    # = Examples
+    #  @github = Github.new
+    #  @github.repos.edit_repo('user-name', 'repo-name', { :name => 'hello-world', :description => 'This is your first repo', :homepage => "https://github.com", :public => true, :has_issues => true })
     # 
-    def edit(user, repo, name, params = {})
-      post("/repos/#{user}/#{repo}", params)  
-    end
-    
-    # Provides access to Github::Repos::Forks
-    def forks
+    def edit_repo(user=nil, repo=nil, params={})
+      _validate_user_repo_params(user, repo) unless user? && repo?
+      _normalize_params_keys(params)
+      _filter_params_keys(VALID_REPO_OPTIONS, params)
 
+      DEFAULT_REPO_OPTIONS.merge(params)
+
+      patch("/repos/#{user}/#{repo}", params)  
     end
     
     # Get a repository
     # 
-    # GET /repos/:user/:repo
-    # 
-    # Examples:
-    # 
-    #  client = Client.new
-    #  client.get_repo('my-username', 'my-repo-name')
+    # = Examples
+    #  @github = Github.new
+    #  @github.repos.get_repo('user-name', 'repo-name')
     #
-    def show(user, repo)
-      get("/repos/#{user}/#{repo}")  # TODO change request methods CLASH!!!
-    end
+    def get_repo(user_name, repo_name)
+      _validate_user_repo_params(user_name, repo_name) unless user? && repo?
+      _update_user_repo_params(user_name, repo_name)      
 
-    # Provides access to Github::Repos::Keys
-    def keys
-       
+      get("/repos/#{user}/#{repo}")
     end
 
     # List languages
     #
-    #  GET /repos/:user/:repo/languages
-    def languages(user, repo)
-      get("/repos/#{user}/#{repo}/languages")
+    # = Examples
+    #  @github = Github.new
+    #  @github.repos.languages('user-name', 'repo-name')
+    #  @github.repos.languages('user-name', 'repo-name') { |lang| ... }
+    #
+    def languages(user_name, repo_name)
+      _validate_user_repo_params(user_name, repo_name) unless user? && repo?
+      _update_user_repo_params(user_name, repo_name)      
+
+      response = get("/repos/#{user}/#{repo}/languages")
+      return response unless block_given?
+      response.each { |el| yield el }
     end
 
     # List repositories for the authenticated user
@@ -157,7 +177,7 @@ module Github
     #
     # Examples:
     #
-    def list(params = {})
+    def list_repos(params = {})
       type = params["type"]
       raise ArgumentError, "unkown repository type, only valid are: #{VALID_REPO_TYPES.join(' ')}" if VALID_REPO_TYPES.include? 
       if (user = params.delete("user"))
@@ -171,17 +191,34 @@ module Github
     
     # List tags
     #
-    # GET /repos/:user/:repo/tags
-    # 
-    def tags(params={})
-      get("/repos/#{user}/#{repo}/tags")
+    # = Examples
+    #   @github = Github.new
+    #   @github.repos.tags('user-name', 'repo-name')
+    #   @github.repos.tags('user-name', 'repo-name') { |tag| ... }
+    #
+    def tags(user_name=nil, repo_name=nil)
+      _validate_user_repo_params(user_name, repo_name) unless user? && repo?
+      _update_user_repo_params(user_name, repo_name)      
+
+      response = get("/repos/#{user}/#{repo}/tags")
+      return response unless block_given?
+      response.each { |el| yield el }
     end
     
     # List teams
     #
-    # GET /repos/:user/:repo/teams
-    def teams(user, repo)
-      get("/repos/#{user}/#{repo}/teams")
+    # == Examples
+    #   @github = Github.new
+    #   @github.repos.teams('user-name', 'repo-name')
+    #   @github.repos.teams('user-name', 'repo-name') { |team| ... }
+    #
+    def teams(user_name=nil, repo_name=nil)
+      _validate_user_repo_params(user_name, repo_name) unless user? && repo?
+      _update_user_repo_params(user_name, repo_name)      
+
+      response = get("/repos/#{user}/#{repo}/teams")
+      return response unless block_given?
+      response.each { |el| yield el }
     end
   
   end # Repos

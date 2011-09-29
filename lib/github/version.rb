@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 module Github 
   module Version
     MAJOR = 0

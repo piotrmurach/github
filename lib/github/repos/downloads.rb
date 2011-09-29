@@ -11,7 +11,7 @@ module Github
       #
       # GET /repos/:user/:repo/downloads
       #
-      def list_downloads(user, repo)
+      def downloads(user, repo)
         get("/repos/#{user}/#{repo}/downloads")
       end
 

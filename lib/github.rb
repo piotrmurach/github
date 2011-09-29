@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require 'github/configuration'
 require 'github/connection'
 
@@ -9,7 +11,7 @@ module Github
     #
     # @return [Github::Client]
     def new(options = {})
-      Github::Client.new
+      Github::Client.new(options)
     end
     
     # Delegate to Github::Client

@@ -45,16 +45,17 @@ module Github
       response = connection(options).send(method) do |request|
         case method.to_sym
         when *(METHODS - METHODS_WITH_BODIES)
-          request.url(formatted_path(path), params)          
+          request.url(path, params)          
         when *METHODS_WITH_BODIES
-          request.path = formatted_path(path, options)
+          request.path = path
           request.body = params unless params.empty?
         end
       end
       response.body
     end
-
-    def formatted_path(path)
+    
+    # no need for this smizzle
+    def formatted_path(path, options={})
       [ path, options.fetch(:format, format) ].compact.join('.')
     end
 

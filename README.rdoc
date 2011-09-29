@@ -1,16 +1,25 @@
 = github
  
-A Ruby wrapper for the GitHub REST API v3
+A Ruby wrapper for the GitHub REST API v3.
+
+It's build in a modular way, that is, you can either instantiate the whole api wrapper Github.new or use parts of it e.i. Github::Repos.new if working solely with repositories is your main concern.
 
 == Installation
+
+Grab the gem by issuing
+
+gem install github
 
 == Usage
 
 Create a new client instance by passing it a configuration hash
 
-  @github = Github.new()
+  @github = Github.new :user => 'peter-murach', :repo => 'github'
+  TODO
 
-In order to authenticate the user through OAuth2 you need
+In order to authenticate the user through OAuth2 you need 
+
+  TODO
 
 You can interact with GitHub interface by following calls
 
@@ -20,8 +29,15 @@ You can interact with GitHub interface by following calls
 
 The code base is modular and allows for you to work specifically with a given part of GitHub API e.g. repositories
 
-  @repos = Github::Repos.new
-  @repos.list
+  @repos = Github::Repos.new 
+  @repos.branches 'peter-murach', 'github'
+
+or
+
+  @repos = Github::Repos.new :user => 'peter-murach', :repo => 'github'
+  @repos.branches 
+
+The response is of type [Hashie::Mash] and allows to traverse all the json response attributes like method calls e.i.
 
 For specification on all available methods go to
 
@@ -63,8 +79,10 @@ These parameters can be overwirtten as per method call. By passing hash
 == TODO
 
 * Add request caching.
+* Add response processing methods
 * Add helper methods to return iterators over most common collections.
 * Add response set helper methods e.i. pagination.
+* Add DSL falvoured api access
 
 == Copyright
 

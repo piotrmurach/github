@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 module Github
   module Configuration
       
@@ -11,7 +13,9 @@ module Github
       :format,
       :resource,
       :user_agent,
-      :faraday_options
+      :faraday_options,
+      :repo,
+      :user
     ].freeze
 
     # Other adapters are :typhoeus, :patron, :em_synchrony, :excon, :test
@@ -37,6 +41,12 @@ module Github
     DEFAULT_RESOURCE = nil
 
     DEFAULT_FARADAY_OPTIONS = {}
+    
+    # By default, don't set user name
+    DEFAULT_USER = nil
+
+    # By default, don't set repository name
+    DEFAULT_REPO = nil
 
     attr_accessor *VALID_OPTIONS_KEYS
     
@@ -66,6 +76,8 @@ module Github
       self.faraday_options    = DEFAULT_FARADAY_OPTIONS
       self.format             = DEFAULT_FORMAT
       self.resource           = DEFAULT_RESOURCE
+      self.user               = DEFAULT_USER
+      self.repo               = DEFAULT_REPO
       self
     end
 

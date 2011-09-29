@@ -8,7 +8,7 @@ module Github
       # 
       # GET /repos/:user/:repo/hooks
       #
-      def list_hooks(user, repo)
+      def hooks(user, repo)
         get("/repos/#{user}/#{repo}/hooks")
       end
 

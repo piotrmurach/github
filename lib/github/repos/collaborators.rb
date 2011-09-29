@@ -36,9 +36,9 @@ module Github
       #
       # Examples:
       #   github = Github.new
-      #   github.collaborators.list('user', 'repo')
+      #   github.repos.collaborators('user', 'repo')
       #
-      def list_collaborators(user, repo)
+      def collaborators(user, repo)
         get("/repos/#{user}/#{repo}/collaborators")
       end
       

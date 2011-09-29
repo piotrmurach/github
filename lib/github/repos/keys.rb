@@ -6,7 +6,7 @@ module Github
       #
       # GET /repos/:user/:repo/keys
       #
-      def list_keys(user, repo)
+      def keys(user, repo)
         get("/repos/#{user}/#{repo}/keys")
       end
 

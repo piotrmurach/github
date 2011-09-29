@@ -8,7 +8,7 @@ module Github
       #
       # Examples
       #
-      def list_forks(user, repo)
+      def forks(user, repo)
         get("/repos/#{user}/#{repo}/forks")
       end
       

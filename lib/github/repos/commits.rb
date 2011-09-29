@@ -34,11 +34,11 @@ module Github
       #   client = Client.new
       #   client.list('user', 'repo-name')
       #
-      def list(user, repo, params={})
+      def commits(user, repo, params={})
         _normalize_params_keys(params)
         _filter_params_keys(["sha", "path"], params)
 
-        get("/repos/#{user}/#{repo}/commits", valid_options)
+        get("/repos/#{user}/#{repo}/commits", params)
       end
 
       # List commit comments for a repository
