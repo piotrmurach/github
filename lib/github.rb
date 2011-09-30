@@ -43,6 +43,8 @@ module Github
     :Repos    => 'repos',
     :Request  => 'request',
     :Response => 'response',
-    :Error    => 'error'
+    :Error    => 'error',
+    :Issues   => 'issues',
+    :Gists    => 'gists'
 
 end # Github
