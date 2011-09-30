@@ -63,12 +63,20 @@ module Github
       self.repo = repo_name || self.repo
     end
 
+    def _merge_user_into_params!(params)
+      params.merge!({ 'user' => self.user }) if user?
+    end
+
+    def _merge_user_repo_into_params!(params)
+      { 'user' => self.user, 'repo' => self.repo }.merge!(params)
+    end
+
     def _normalize_params_keys(params)
       case params
       when Hash
         params.keys.each do |k|
-          params[k.to_s] = params[delete(k)]
-          _normalize_params_keys(params[k.to_s])
+          params[k.to_s] = params.delete(k)
+          #_normalize_params_keys(params[k.to_s])
         end
       when Array
         params.map! { |el| el.to_s }

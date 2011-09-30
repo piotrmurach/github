@@ -5,6 +5,7 @@ require 'github/response'
 require 'github/response/mashify'
 require 'github/response/jsonize'
 require 'github/response/raise_error'
+require 'github/request/oauth2'
 
 module Github
   module Connection
@@ -55,6 +56,8 @@ module Github
           builder.use Faraday::Request::Multipart
           builder.use Faraday::Request::UrlEncoded
           builder.use Faraday::Response::Logger
+
+          builder.use Github::Request::OAuth2, oauth_token if oauth_token?
 
           builder.use Github::Response::Mashify
           builder.use Github::Response::Jsonize

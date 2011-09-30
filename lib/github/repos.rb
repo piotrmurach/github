@@ -86,15 +86,13 @@ module Github
       _normalize_params_keys(params)
       _filter_params_keys(VALID_REPO_OPTIONS + %w[ org ], params)
        
-      DEFAULT_REPO_OPTIONS.merge!(params)
-
       raise ArgumentError, "Required params are: :name" unless _validate_inputs(%w[ name ], params)
       
       # Requires authenticated user
       if (org = params.delete("org")) 
-        post("/orgs/#{org}/repos", params)
+        post("/orgs/#{org}/repos", DEFAULT_REPO_OPTIONS.merge(params))
       else
-        post("/user/repos", params)
+        post("/user/repos", DEFAULT_REPO_OPTIONS.merge(params))
       end
     end
     
@@ -142,7 +140,7 @@ module Github
 
       raise ArgumentError, "Required params are: #{%w[ :name ] }" unless _validate_inputs(%w[ name ], params)
 
-      patch("/repos/#{user}/#{repo}", DEFAULT_REPO_OPTIONS.merge!(params))  
+      patch("/repos/#{user}/#{repo}", DEFAULT_REPO_OPTIONS.merge(params))  
     end
     
     # Get a repository
@@ -195,6 +193,7 @@ module Github
     def list_repos(*args)
       params = args.last.is_a?(Hash) ? args.pop : {}
       _normalize_params_keys(params)
+      _merge_user_into_params!(params) unless params.has_key?('user')
       _filter_params_keys(%w[ org user type ], params)
 
       if (user_name = params.delete("user"))

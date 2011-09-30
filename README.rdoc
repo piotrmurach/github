@@ -21,9 +21,13 @@ Create a new client instance by passing it a configuration hash
   @github = Github.new :user => 'peter-murach', :repo => 'github'
   TODO
 
-In order to authenticate the user through OAuth2 you need 
+In order to authenticate the user through OAuth2 on GitHub you need to
 
-  TODO
+* visit https://github.com/account/applications/ and register your app
+* authorize your credentials https://github.com/login/oauth/authorize
+* get your token https://github.com/login/oauth/access_token
+
+Once you have your consumer and token keys, configure your github instance following instructions under Configuration.
 
 You can interact with GitHub interface by following calls
 
@@ -56,23 +60,20 @@ Certain methods require authentication. To get your GitHub OAuth v2 credentials,
 register an app at http://dev.twitter.com/apps and then 
 
   Github.configure do |config|
-    config.consumer_key = YOUR_CONSUMER_KEY
-    config.consumer_secret = YOUR_CONSUMER_SECRET
-    config.oauth_token = YOUR_OAUTH_TOKEN
-    config.oauth_token_secret = YOUR_OAUTH_TOKEN_SECRET
+    config.client_id     = YOUR_CLIENT_ID
+    config.client_secret = YOUR_CLIENT_SECRET
+    config.oauth_token   = YOUR_OAUTH_ACCESS_TOKEN
   end
 
 or
 
   Github.new({
-    :consumer_key => YOUR_CONSUMER_KEY,
-    :consumer_secret => YOUR_CONSUMER_SECRET,
+    :client_id => YOUR_CLIENT_ID,
+    :client_secret => YOUR_CLIENT_SECRET,
     :oauth_token => YOUR_OAUTH_TOKEN
-    :oauth_token_secret => YOUR_OAUTH_TOKEN_SECRET
   })
 
-All parameters can be overwirtten as per method call. By passing hash
-  TODO
+All parameters can be overwirtten as per method call. By passing parameters hash...
 
 == Examples
 
