@@ -50,8 +50,8 @@ module Github
     #   @repos.branches('user-name', 'repo-name')
     #
     def branches(user_name=nil, repo_name=nil)
-      _validate_user_repo_params(user_name, repo_name) unless user? && repo?
       _update_user_repo_params(user_name, repo_name)      
+      _validate_user_repo_params(user, repo) unless (user? && repo?)
 
       response = get("/repos/#{user}/#{repo}/branches")
       return response unless block_given?
@@ -60,6 +60,15 @@ module Github
 
     # Create a new repository for the autheticated user.
     #
+    # = Parameters
+    #  :name        Required string
+    #  :description Optional string
+    #  :homepage    Optional string
+    #  :public      Optional boolean - true to create public repo, false to create a private one
+    #  :has_issues  Optional boolean - <tt>true</tt> to enable issues for this repository, <tt>false</tt> to disable them
+    #  :has_wiki    Optional boolean - <tt>true</tt> to enable the wiki for this repository, <tt>false</tt> to disable it. Default is <tt>true</tt>
+    #  :has_downloads Optional boolean - <tt>true</tt> to enable downloads for this repository 
+    #
     # = Examples
     #  @github = Github.new
     #  @github.repos.create_repo.create(:name => 'my_repo_name')
@@ -67,15 +76,21 @@ module Github
     #
     # Create a new repository in this organisation. The authenticated user 
     # must be a member of this organisation
-    # 
-    # POST /orgs/:org/repos
     #
     # Examples:
-    #   client = Client.new
-    #   client.create('my-repo-name', :org => 'my-organisation')
+    #   @github = Github.new({ :consumer_key => ...})
+    #   @github.repos.create_repo(:name => 'my-repo-name', :org => 'my-organisation')
     # 
-    def create_repo(name, params = {})
-      DEFAULT_REPO_OPTIONS.merge(params)
+    def create_repo(*args)
+      params = args.last.is_a?(Hash) ? args.pop : {}
+      _normalize_params_keys(params)
+      _filter_params_keys(VALID_REPO_OPTIONS + %w[ org ], params)
+       
+      DEFAULT_REPO_OPTIONS.merge!(params)
+
+      raise ArgumentError, "Required params are: :name" unless _validate_inputs(%w[ name ], params)
+      
+      # Requires authenticated user
       if (org = params.delete("org")) 
         post("/orgs/#{org}/repos", params)
       else
@@ -93,9 +108,9 @@ module Github
     #  @github.repos.contributors('user-name','repo-name')
     #  @github.repos.contributors('user-name','repo-name') { |cont| ... }
     #
-    def contributors(user, repo, params={})
-      _validate_user_repo_params(user_name, repo_name) unless user? && repo?
+    def contributors(user_name=nil, repo_name=nil, params={})
       _update_user_repo_params(user_name, repo_name)      
+      _validate_user_repo_params(user, repo) unless user? && repo?
       _normalize_params_keys(params)
       _filter_params_keys(['anon'], params)
 
@@ -120,13 +135,14 @@ module Github
     #  @github.repos.edit_repo('user-name', 'repo-name', { :name => 'hello-world', :description => 'This is your first repo', :homepage => "https://github.com", :public => true, :has_issues => true })
     # 
     def edit_repo(user=nil, repo=nil, params={})
+      _update_user_repo_params(user_name, repo_name)      
       _validate_user_repo_params(user, repo) unless user? && repo?
       _normalize_params_keys(params)
       _filter_params_keys(VALID_REPO_OPTIONS, params)
 
-      DEFAULT_REPO_OPTIONS.merge(params)
+      raise ArgumentError, "Required params are: #{%w[ :name ] }" unless _validate_inputs(%w[ name ], params)
 
-      patch("/repos/#{user}/#{repo}", params)  
+      patch("/repos/#{user}/#{repo}", DEFAULT_REPO_OPTIONS.merge!(params))  
     end
     
     # Get a repository
@@ -135,9 +151,9 @@ module Github
     #  @github = Github.new
     #  @github.repos.get_repo('user-name', 'repo-name')
     #
-    def get_repo(user_name, repo_name)
-      _validate_user_repo_params(user_name, repo_name) unless user? && repo?
+    def get_repo(user_name=nil, repo_name=nil)
       _update_user_repo_params(user_name, repo_name)      
+      _validate_user_repo_params(user, repo) unless user? && repo?
 
       get("/repos/#{user}/#{repo}")
     end
@@ -149,9 +165,9 @@ module Github
     #  @github.repos.languages('user-name', 'repo-name')
     #  @github.repos.languages('user-name', 'repo-name') { |lang| ... }
     #
-    def languages(user_name, repo_name)
-      _validate_user_repo_params(user_name, repo_name) unless user? && repo?
+    def languages(user_name=nil, repo_name=nil)
       _update_user_repo_params(user_name, repo_name)      
+      _validate_user_repo_params(user, repo) unless user? && repo?
 
       response = get("/repos/#{user}/#{repo}/languages")
       return response unless block_given?
@@ -160,31 +176,33 @@ module Github
 
     # List repositories for the authenticated user
     #
-    # GET /user/repos
-    # 
+    # = Examples
+    #   @github = Github.new { :consumer_key => ... }
+    #   @github.repos.list_repos
     #
     # List public repositories for the specified user.
     # 
-    # GET /users/:user/repos
-    #
-    # Examples:
+    # = Examples
     #   github = Github.new
-    #   github.repos.list(:user => 'username')
+    #   github.repos.list_repos(:user => 'user-name')
     #
     # List repositories for the specified organisation.
     #
-    # GET /orgs/:org/repos
+    # = Examples
+    #  @github = Github.new
+    #  @github.repos.list_repos(:org => 'org-name')
     #
-    # Examples:
-    #
-    def list_repos(params = {})
-      type = params["type"]
-      raise ArgumentError, "unkown repository type, only valid are: #{VALID_REPO_TYPES.join(' ')}" if VALID_REPO_TYPES.include? 
-      if (user = params.delete("user"))
-        get("/users/#{user}/repos")
-      elsif (org = params.delete("org"))
-        get("/users/#{user}/repos", params)
+    def list_repos(*args)
+      params = args.last.is_a?(Hash) ? args.pop : {}
+      _normalize_params_keys(params)
+      _filter_params_keys(%w[ org user type ], params)
+
+      if (user_name = params.delete("user"))
+        get("/users/#{user_name}/repos")
+      elsif (org_name = params.delete("org"))
+        get("/users/#{org_name}/repos", params)
       else
+        # For authenticated user
         get("/user/repos", params)
       end
     end
@@ -197,8 +215,8 @@ module Github
     #   @github.repos.tags('user-name', 'repo-name') { |tag| ... }
     #
     def tags(user_name=nil, repo_name=nil)
-      _validate_user_repo_params(user_name, repo_name) unless user? && repo?
       _update_user_repo_params(user_name, repo_name)      
+      _validate_user_repo_params(user, repo) unless user? && repo?
 
       response = get("/repos/#{user}/#{repo}/tags")
       return response unless block_given?
@@ -213,8 +231,8 @@ module Github
     #   @github.repos.teams('user-name', 'repo-name') { |team| ... }
     #
     def teams(user_name=nil, repo_name=nil)
-      _validate_user_repo_params(user_name, repo_name) unless user? && repo?
       _update_user_repo_params(user_name, repo_name)      
+      _validate_user_repo_params(user, repo) unless user? && repo?
 
       response = get("/repos/#{user}/#{repo}/teams")
       return response unless block_given?

@@ -1,6 +1,10 @@
 # encoding: utf-8
 
 require 'faraday'
+require 'github/response'
+require 'github/response/mashify'
+require 'github/response/jsonize'
+require 'github/response/raise_error'
 
 module Github
   module Connection
