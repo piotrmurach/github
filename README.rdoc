@@ -29,9 +29,9 @@ In order to authenticate the user through OAuth2 on GitHub you need to
 
 Once you have your consumer and token keys, configure your github instance following instructions under Configuration.
 
-You can interact with GitHub interface by following calls
+You can interact with GitHub interface by issueing following calls
 
-  @github.repos.list
+  @github.repos.commits
   @github.repos.branches
   @github.repos.contributors
 
@@ -60,18 +60,12 @@ Certain methods require authentication. To get your GitHub OAuth v2 credentials,
 register an app at http://dev.twitter.com/apps and then 
 
   Github.configure do |config|
-    config.client_id     = YOUR_CLIENT_ID
-    config.client_secret = YOUR_CLIENT_SECRET
     config.oauth_token   = YOUR_OAUTH_ACCESS_TOKEN
   end
 
 or
 
-  Github.new({
-    :client_id => YOUR_CLIENT_ID,
-    :client_secret => YOUR_CLIENT_SECRET,
-    :oauth_token => YOUR_OAUTH_TOKEN
-  })
+  Github.new(:oauth_token => YOUR_OAUTH_TOKEN)
 
 All parameters can be overwirtten as per method call. By passing parameters hash...
 
