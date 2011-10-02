@@ -31,7 +31,7 @@ module Github
         _filter_params_keys(VALID_MILSTONE_OPTIONS.keys, params)
         _validate_params_values(VALID_MILSTONE_OPTIONS, params)
         
-        response = get("/repos/#{user}/#{repo}/milestones")
+        response = get("/repos/#{user}/#{repo}/milestones", params)
         return response unless block_given?
         response.each { |el| yield el }
       end
@@ -42,8 +42,11 @@ module Github
       #  @github = Github.new 
       #  @github.issues.get_milestone 'user-name', 'repo-name', 'milestone-id'
       #
-      def get_milestone(user, repo, milestone_id)
-        get("/repos/:user/:repo/milestones/:id")
+      def get_milestone(user_name, repo_name, milestone_id)
+        _update_user_repo_params(user_name, repo_name)
+        _validate_user_repo_params(user, repo) unless user? && repo?
+
+        get("/repos/#{user}/#{repo}/milestones/#{milestone_id}")
       end
 
       # Create a milestone
@@ -67,7 +70,7 @@ module Github
         
         raise ArgumentError, "Required params are: :title" unless _validate_inputs(%w[ title ], params)
 
-        post("/repos/#{user}/#{repo}/milestones")
+        post("/repos/#{user}/#{repo}/milestones", params)
       end
       
 
@@ -93,7 +96,7 @@ module Github
         
         raise ArgumentError, "Required params are: :title" unless _validate_inputs(%w[ title ], params)
 
-        patch("/repos/#{user}/#{repo}/milestones/#{milestone_id}")
+        patch("/repos/#{user}/#{repo}/milestones/#{milestone_id}", params)
       end
 
       # Delete a milestone
@@ -108,7 +111,7 @@ module Github
         _validate_presence_of milestone_id
         _normalize_params_keys(params)
 
-        delete("/repos/#{user}/#{repo}/milestones/#{milestone_id}")
+        delete("/repos/#{user}/#{repo}/milestones/#{milestone_id}", params)
       end
 
     end # Milestones
