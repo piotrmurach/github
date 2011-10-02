@@ -11,7 +11,7 @@ module Github
 
     end
 
-    def issues
+    def issues(options = {})
       @issues ||= Github::Issues.new(options)
     end
 

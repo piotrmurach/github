@@ -9,6 +9,11 @@ module Github
       :Events     => 'events',
       :Labels     => 'labels',
       :Milestones => 'milestones'
+
+    include Github::Issues::Comments
+    include Github::Issues::Events
+    include Github::Issues::Labels
+    include Github::Issues::Milestones
     
     # Creates new Issues API
     def initialize(options = {})

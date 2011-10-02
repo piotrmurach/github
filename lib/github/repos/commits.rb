@@ -87,7 +87,7 @@ module Github
       # 
       # = Examples
       #  @github = Github.new
-      #  @github.repos.get_comment
+      #  @github.repos.get_comment 'user-name', 'repo-name', 'comment-id'
       #
       def get_comment(user, repo, comment_id)
         get("/repos/#{user}/#{repo}/comments/#{comment_id}")

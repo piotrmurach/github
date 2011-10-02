@@ -53,6 +53,12 @@ module Github
       end
     end
 
+    def _validate_presence_of(*params)
+      params.each do |param|
+        raise ArgumentError, "parameter cannot be nil" if param.nil?
+      end
+    end
+
     def _validate_user_repo_params(user_name, repo_name)
       raise ArgumentError, "[user] parameter cannot be nil" if user_name.nil?
       raise ArgumentError, "[repo] parameter cannot be nil" if repo_name.nil?
@@ -88,6 +94,24 @@ module Github
 
     def _filter_params_keys(keys, params)
       params.reject! { |k,v| !keys.include? k }
+    end
+
+    def _validate_params_values(options, params)
+      params.each do |k,v| 
+        raise ArgumentError, "Wrong value for #{k}, allowed: #{options[k].join(', ')}" unless options[k].include? params[k]
+      end
+    end
+
+    def _merge_parameters(params)
+      
+    end
+
+    def _extract_parameters!(array)
+      if array.last.is_a?(Hash) && array.last.instance_of?(Hash)
+        pop
+      else
+        {}
+      end
     end
     
     # Passes configuration options to instantiated class

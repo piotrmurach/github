@@ -102,6 +102,7 @@ module Github
     #  :anon - Optional flag. Set to 1 or true to include anonymous contributors. 
     #
     # = Examples
+    #
     #  @github = Github.new
     #  @github.repos.contributors('user-name','repo-name')
     #  @github.repos.contributors('user-name','repo-name') { |cont| ... }
@@ -120,15 +121,16 @@ module Github
     # Edit a repository
     #
     # = Parameters
-    #  :name        Required string
-    #  :description Optional string
-    #  :homepage    Optional string
-    #  :public      Optional boolean - true to create public repo, false to create a private one
-    #  :has_issues  Optional boolean - <tt>true</tt> to enable issues for this repository, <tt>false</tt> to disable them
-    #  :has_wiki    Optional boolean - <tt>true</tt> to enable the wiki for this repository, <tt>false</tt> to disable it. Default is <tt>true</tt>
-    #  :has_downloads Optional boolean - <tt>true</tt> to enable downloads for this repository 
+    # * <tt>:name</tt> Required string
+    # * <tt>:description</tt>   Optional string
+    # * <tt>:homepage</tt>      Optional string
+    # * <tt>:public</tt>        Optional boolean - true to create public repo, false to create a private one
+    # * <tt>:has_issues</tt>    Optional boolean - <tt>true</tt> to enable issues for this repository, <tt>false</tt> to disable them
+    # * <tt>:has_wiki</tt>      Optional boolean - <tt>true</tt> to enable the wiki for this repository, <tt>false</tt> to disable it. Default is <tt>true</tt>
+    # * <tt>:has_downloads</tt> Optional boolean - <tt>true</tt> to enable downloads for this repository 
     #
     # = Examples
+    #
     #  @github = Github.new
     #  @github.repos.edit_repo('user-name', 'repo-name', { :name => 'hello-world', :description => 'This is your first repo', :homepage => "https://github.com", :public => true, :has_issues => true })
     # 

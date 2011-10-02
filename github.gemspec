@@ -1,7 +1,7 @@
 require File.expand_path('../lib/github/version', __FILE__)
 
 Gem::Specification.new do |gem|
-  gem.name          = 'github'
+  gem.name          = 'github-api'
   gem.authors       = [ "Piotr Murach" ]
   gem.email         = ""
   gem.homepage      = 'https://github.com/peter-murach/github'
