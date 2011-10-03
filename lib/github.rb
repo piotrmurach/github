@@ -45,6 +45,8 @@ module Github
     :Response => 'response',
     :Error    => 'error',
     :Issues   => 'issues',
-    :Gists    => 'gists'
+    :Gists    => 'gists',
+    :GitData  => 'git_data',
+    :Orgs     => 'orgs'
 
 end # Github

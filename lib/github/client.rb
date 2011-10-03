@@ -7,16 +7,16 @@ module Github
       @gists ||= Github::Gists.new(options)
     end
 
-    def git_data
-
+    def git_data(options)
+      @git_data ||= Github::GitData.new(options)
     end
 
     def issues(options = {})
       @issues ||= Github::Issues.new(options)
     end
 
-    def orgs
-
+    def orgs(options = {})
+      @orgs ||= Github::Orgs.new(options)
     end
 
     def pull_requests
