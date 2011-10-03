@@ -64,7 +64,7 @@ module Github
       raise ArgumentError, "[repo] parameter cannot be nil" if repo_name.nil?
     end
 
-    def _update_user_repo_params(user_name, repo_name)
+    def _update_user_repo_params(user_name, repo_name=nil)
       self.user = user_name || self.user
       self.repo = repo_name || self.repo
     end
@@ -82,7 +82,7 @@ module Github
       when Hash
         params.keys.each do |k|
           params[k.to_s] = params.delete(k)
-          #_normalize_params_keys(params[k.to_s])
+          _normalize_params_keys(params[k.to_s])
         end
       when Array
         params.map! { |el| el.to_s }
