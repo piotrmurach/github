@@ -34,6 +34,7 @@ module Github
       Configuration::VALID_OPTIONS_KEYS.each do |key|
         send("#{key}=", options[key])
       end
+      @cached = Hash.new
     end
 
     private

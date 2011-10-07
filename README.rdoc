@@ -87,10 +87,16 @@ If a method returns a collection, you can iterator over it by supplying a block 
     puts event.actor.login
   end
 
+Query requests instead of http responses return boolean values
+
+  @github = Github.new
+  @github.orgs.public_member? 'github', 'technoweenie' # => true
+
 == Caching
 
 == TODO
 
+* Add support for mime types
 * Add request caching - local filestore?, http caching?.
 * Add oauth2 helper methods.
 * Add response processing methods

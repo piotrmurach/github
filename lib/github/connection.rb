@@ -9,7 +9,7 @@ require 'github/request/oauth2'
 
 module Github
   module Connection
-    
+
     # Available resources 
     RESOURCES = {
       :issue         => 'vnd.github-issue.',
@@ -37,7 +37,7 @@ module Github
       {
         :headers => {
           'Accept' => "application/#{resource}#{format}",
-          'User-Agent' => user_agent 
+          'User-Agent' => user_agent
         },
         :ssl => { :verify => false },
         :url => endpoint
@@ -45,12 +45,27 @@ module Github
     end
 
     # TODO Write mime format conversion
-    
+
+    # Create cache hash and store connection there and then pass it to @connection
+    # add method to invalidate it if previous options are different from current
+
+    def clear_cache
+      @connection = nil
+    end
+
+    def caching?
+      !@connection.nil?
+    end
+
     def connection(options = {})
       merged_options = faraday_options.merge(default_faraday_options)
 
+      clear_cache unless options.empty?
+
       @connection ||= begin
-        conn = Faraday.new(merged_options) do |builder|
+        Faraday.new(merged_options) do |builder|
+
+          puts options.inspect
 
           builder.use Faraday::Request::JSON
           builder.use Faraday::Request::Multipart
@@ -59,14 +74,16 @@ module Github
 
           builder.use Github::Request::OAuth2, oauth_token if oauth_token?
 
-          builder.use Github::Response::Mashify
-          builder.use Github::Response::Jsonize
+          unless options[:raw]
+            builder.use Github::Response::Mashify
+            builder.use Github::Response::Jsonize
+          end
 
+          builder.use Github::Response::RaiseError
           builder.adapter adapter
         end
-
-        conn
       end
+
     end
 
   end # Connection
