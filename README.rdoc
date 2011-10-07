@@ -20,7 +20,7 @@ Create a new client instance
 
   @github = Github.new
 
-At this state you can also supply various configuration parameters, such as :user, :repo, :org etc..,
+At this stage you can also supply various configuration parameters, such as :user, :repo, :org etc..,
 which are used thoughtout the API
 
   @github = Github.new :user => 'peter-murach', :repo => 'github-api'
@@ -61,7 +61,7 @@ For specification on all available methods go to http://developer.github.com/v3/
 == Configuration
 
 Certain methods require authentication. To get your GitHub OAuth v2 credentials,
-register an app at http://dev.twitter.com/apps and then 
+register an app at https://github.com/account/applications/
 
   Github.configure do |config|
     config.oauth_token   = YOUR_OAUTH_ACCESS_TOKEN
@@ -99,7 +99,7 @@ If a method returns a collection, you can iterator over it by supplying a block 
 * Add DSL falvoured api access
 
 == Contributing to github
- 
+
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
 * Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
 * Fork the project
