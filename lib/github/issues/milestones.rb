@@ -73,37 +73,36 @@ module Github
 
         post("/repos/#{user}/#{repo}/milestones", params)
       end
-      
 
       # Update a milestone
       #
       # = Inputs
       #  <tt>:title</tt> - Required string
       #  <tt>:state</tt> - Optional string - <tt>open</tt> or <tt>closed</tt>
-      #  <tt>:description</tt> - Optional string 
+      #  <tt>:description</tt> - Optional string
       #  <tt>:due_on</tt> - Optional string - ISO 8601 time
-      # 
+      #
       # = Examples
-      #  @github = Github.new 
+      #  @github = Github.new
       #  @github.issues.update_milestone 'user-name', 'repo-name', 'milestone-id', :title => 'hello-world'
       #
       def update_milestone(user_name, repo_name, milestone_id, params={})
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
         _validate_presence_of milestone_id
-        
+
         _normalize_params_keys(params)
         _filter_params_keys(VALID_MILESTONE_INPUTS, params)
-        
+
         raise ArgumentError, "Required params are: :title" unless _validate_inputs(%w[ title ], params)
 
         patch("/repos/#{user}/#{repo}/milestones/#{milestone_id}", params)
       end
 
       # Delete a milestone
-      # 
+      #
       # = Examples
-      #  @github = Github.new 
+      #  @github = Github.new
       #  @github.issues.delete_milestone 'user-name', 'repo-name', 'milestone-id'
       #
       def delete_milestone(user_name, repo_name, milestone_id, params={})
