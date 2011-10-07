@@ -40,9 +40,9 @@ module Github
       #
       # = Examples
       #  @github = Github.new
-      #  @github.issues.get_milestone 'user-name', 'repo-name', 'milestone-id'
+      #  @github.issues.milestone 'user-name', 'repo-name', 'milestone-id'
       #
-      def get_milestone(user_name, repo_name, milestone_id, params={})
+      def milestone(user_name, repo_name, milestone_id, params={})
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
         _normalize_params_keys(params)

@@ -27,9 +27,13 @@ module Github
       #
       # = Examples
       #  @github = Github.new
-      #  @github.issues.get_label 'user-name', 'repo-name', 'label-id'
+      #  @github.issues.label 'user-name', 'repo-name', 'label-id'
       #
-      def get_label(user, repo, label_id, params={})
+      def label(user_name, repo_name, label_id, params={})
+        _update_user_repo_params(user_name, repo_name)
+        _validate_user_repo_params(user, repo) unless user? && repo?
+        _normalize_params_keys(params)
+
         get("/repos/#{user}/#{repo}/labels/#{label_id}", params)
       end
 
@@ -140,6 +144,7 @@ module Github
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
         _validate_presence_of(issue_id)
+        _normalize_params_keys(params)
 
         if label_id
           delete("/repos/#{user}/#{repo}/issues/#{issue_id}/labels/#{label_id}", params)
