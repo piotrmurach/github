@@ -17,7 +17,7 @@ module Github
 
     attr_reader *Configuration::VALID_OPTIONS_KEYS
     attr_accessor *VALID_API_KEYS
-    
+
     # Callback to update global configuration options
     class_eval do
       Configuration::VALID_OPTIONS_KEYS.each do |key|
@@ -27,10 +27,10 @@ module Github
         end
       end
     end
-   
-    # Creates new API 
+
+    # Creates new API
     def initialize(options = {})
-      options = Github.options.merge(options)   
+      options = Github.options.merge(options)
       Configuration::VALID_OPTIONS_KEYS.each do |key|
         send("#{key}=", options[key])
       end
@@ -40,8 +40,8 @@ module Github
 
     # Responds to attribute query
     def method_missing(method, *args, &block)
-      if method.to_s =~ /^(.*)\?$/ 
-        return !self.send($1.to_s).nil? 
+      if method.to_s =~ /^(.*)\?$/
+        return !self.send($1.to_s).nil?
       else
         super
       end
@@ -87,7 +87,7 @@ module Github
       when Array
         params.map! { |el| el.to_s }
       else
-        params    
+        params
       end
       return params
     end
@@ -97,8 +97,13 @@ module Github
     end
 
     def _validate_params_values(options, params)
-      params.each do |k,v| 
-        raise ArgumentError, "Wrong value for #{k}, allowed: #{options[k].join(', ')}" unless options[k].include? params[k]
+      params.each do |k, v|
+        next unless options.keys.include?(k)
+        if options[k].is_a?(Array) && !options[k].include?(params[k])
+          raise ArgumentError, "Wrong value for #{k}, allowed: #{options[k].join(', ')}"
+        elsif options[k].is_a?(Regexp) && !(options[k] =~ params[k])
+          raise ArgumentError, "String does not match the parameter value."
+        end
       end
     end
 
@@ -106,7 +111,7 @@ module Github
       
     end
 
-    def _extract_parameters!(array)
+    def _extract_parameters(array)
       if array.last.is_a?(Hash) && array.last.instance_of?(Hash)
         pop
       else

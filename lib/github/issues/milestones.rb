@@ -30,7 +30,7 @@ module Github
         _normalize_params_keys(params)
         _filter_params_keys(VALID_MILSTONE_OPTIONS.keys, params)
         _validate_params_values(VALID_MILSTONE_OPTIONS, params)
-        
+
         response = get("/repos/#{user}/#{repo}/milestones", params)
         return response unless block_given?
         response.each { |el| yield el }
@@ -39,14 +39,15 @@ module Github
       # Get a single milestone
       #
       # = Examples
-      #  @github = Github.new 
+      #  @github = Github.new
       #  @github.issues.get_milestone 'user-name', 'repo-name', 'milestone-id'
       #
-      def get_milestone(user_name, repo_name, milestone_id)
+      def get_milestone(user_name, repo_name, milestone_id, params={})
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
+        _normalize_params_keys(params)
 
-        get("/repos/#{user}/#{repo}/milestones/#{milestone_id}")
+        get("/repos/#{user}/#{repo}/milestones/#{milestone_id}", params)
       end
 
       # Create a milestone
@@ -54,9 +55,9 @@ module Github
       # = Inputs
       #  <tt>:title</tt> - Required string
       #  <tt>:state</tt> - Optional string - <tt>open</tt> or <tt>closed</tt>
-      #  <tt>:description</tt> - Optional string 
+      #  <tt>:description</tt> - Optional string
       #  <tt>:due_on</tt> - Optional string - ISO 8601 time
-      # 
+      #
       # = Examples
       #  @github = Github.new :user => 'user-name', :repo => 'repo-name'
       #  @github.issues.create_milestone :title => 'hello-world'
@@ -64,10 +65,10 @@ module Github
       def create_milestone(user_name=nil, repo_name=nil, params={})
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
-        
+
         _normalize_params_keys(params)
         _filter_params_keys(VALID_MILESTONE_INPUTS, params)
-        
+
         raise ArgumentError, "Required params are: :title" unless _validate_inputs(%w[ title ], params)
 
         post("/repos/#{user}/#{repo}/milestones", params)
