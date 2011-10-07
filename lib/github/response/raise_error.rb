@@ -5,7 +5,7 @@ require 'github/error'
 
 module Github
   class Response::RaiseError < Faraday::Response::Middleware
-    
+
     def on_complete(env)
       case env[:status].to_i
       when 400

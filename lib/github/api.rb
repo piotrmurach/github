@@ -109,7 +109,6 @@ module Github
     end
 
     def _merge_parameters(params)
-      
     end
 
     def _extract_parameters(array)
@@ -119,19 +118,16 @@ module Github
         {}
       end
     end
-    
+
     # Passes configuration options to instantiated class
     # TODO implement 
     # @private
     def _create_instance(klass)
-      klass.new(options) 
+      klass.new(options)
     end
-  
+
     def _token_required
-
     end
 
-
-  end
-
-end
+  end # API
+end # Github
