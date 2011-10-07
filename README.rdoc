@@ -10,8 +10,8 @@ Grab the gem by issuing
 
   gem install github-api
 
-or in your Gemfile 
-  
+or in your Gemfile
+
   gem 'github-api'
 
 == Usage
@@ -47,10 +47,10 @@ The code base is modular and allows for you to work specifically with a given pa
 or
 
   @repos = Github::Repos.new :user => 'peter-murach', :repo => 'github'
-  @repos.branches 
+  @repos.branches
 
 The response is of type [Hashie::Mash] and allows to traverse all the json response attributes like method calls e.i.
-  
+
   @repos = Github::Repos.new :user => 'peter-murach', :repo => 'github'
   @repos.branches do |branch|
     puts branch.name
@@ -80,7 +80,23 @@ Some api methods require input parameters, these are added simply as a hash prop
   @issues = Github::Issues.new :user => 'peter-murach', :repo => 'github-api'
   @issues.milestones :state => 'open', :sort => 'due_date', :direction => 'asc'
 
+If a method returns a collection, you can iterator over it by supplying a block parameter,
+
+  @issues = Github::Issues.new :user => 'peter-murach', :repo => 'github-api'
+  @issues.events do |event|
+    puts event.actor.login
+  end
+
 == Caching
+
+== TODO
+
+* Add request caching - local filestore?, http caching?.
+* Add oauth2 helper methods.
+* Add response processing methods
+* Add helper methods to return iterators over most common collections.
+* Add response set helper methods e.i. pagination.
+* Add DSL falvoured api access
 
 == Contributing to github
  
@@ -92,17 +108,7 @@ Some api methods require input parameters, these are added simply as a hash prop
 * Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.
 * Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
 
-== TODO
-
-* Add request caching - local filestore?.
-* Add oauth2 helper methods.
-* Add response processing methods
-* Add helper methods to return iterators over most common collections.
-* Add response set helper methods e.i. pagination.
-* Add DSL falvoured api access
-
 == Copyright
 
 Copyright (c) 2011 Piotr Murach. See LICENSE.txt for
 further details.
-
