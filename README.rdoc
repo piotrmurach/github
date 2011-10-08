@@ -69,6 +69,11 @@ Main API methods are grouped into the following classes that can be instantiated
   Github::Repos
   Github::Users
 
+Some parts of GitHub API v3 require you to be autheticated, for instance the following are examples of API only for the authenticated user
+
+  Github::Users::Emails
+  Github::Users::Keys
+
 All method calls form ruby like sentences and allow for intuitive api navigation, for instance
 
   @github = Github.new :oauth_token => '...'
