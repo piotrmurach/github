@@ -17,6 +17,7 @@ module Github
       #
       def members(org_name, params={})
         _validate_presence_of org_name
+        _normalize_params_keys(params)
         response = get("/orgs/#{org_name}/members", params)
         return response unless block_given?
         response.each { |el| yield el }
@@ -30,6 +31,7 @@ module Github
       #
       def member?(org_name, member_name, params={})
         _validate_presence_of org_name, member_name
+        _normalize_params_keys(params)
         get("/orgs/#{org_name}/members/#{member_name}", params)
         true
       rescue Github::ResourceNotFound
@@ -44,8 +46,9 @@ module Github
       #  @github = Github.new
       #  @github.orgs.delete_member 'org-name', 'member-name'
       #
-      def delete_member(org_name, member_name)
+      def delete_member(org_name, member_name, params={})
         _validate_presence_of org_name, member_name
+        _normalize_params_keys(params)
         delete("/orgs/#{org_name}/members/#{member_name}", params)
       end
 
@@ -57,6 +60,7 @@ module Github
       #
       def public_members(org_name, params={})
         _validate_presence_of org_name
+        _normalize_params_keys(params)
         response = get("/orgs/#{org_name}/public_members")
         return response unless block_given?
         response.each { |el| yield el }
@@ -69,6 +73,7 @@ module Github
       #
       def public_member?(org_name, member_name, params={})
         _validate_presence_of org_name, member_name
+        _normalize_params_keys(params)
         get("/orgs/#{org_name}/public_members/#{member_name}", params)
         true
       rescue Github::ResourceNotFound
@@ -83,6 +88,7 @@ module Github
       #
       def publicize(org_name, member_name, params={})
         _validate_presence_of org_name, member_name
+        _normalize_params_keys(params)
         put("/orgs/#{org_name}/public_members/#{member_name}", params)
       end
 
@@ -94,6 +100,7 @@ module Github
       #
       def conceal(org_name, member_name, params={})
         _validate_presence_of org_name, member_name
+        _normalize_params_keys(params)
         delete("/orgs/#{org_name}/public_members/#{member_name}", params)
       end
 
