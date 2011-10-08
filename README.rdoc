@@ -1,5 +1,5 @@
 = github
- 
+
 A Ruby wrapper for the GitHub REST API v3.
 
 Supports all the API methods(nearly 200). It's build in a modular way, that is, you can either instantiate the whole api wrapper Github.new or use parts of it e.i. Github::Repos.new if working solely with repositories is your main concern.
@@ -68,6 +68,12 @@ Main API methods are grouped into the following classes that can be instantiated
   Github::PullRequests
   Github::Repos
   Github::Users
+
+All method calls form ruby like sentences and allow for intuitive api navigation, for instance
+
+  @github = Github.new :oauth_token => '...'
+  @github.users.following 'wycats'  # => returns users that 'wycats' is following
+  @github.users.following? 'wycats' # => returns true if following, otherwise false
 
 For specification on all available methods go to http://developer.github.com/v3/ or
 read the rdoc, all methods are documented there with examples of usage.
