@@ -27,8 +27,8 @@ module Github
       @repos ||= Github::Repos.new(options)
     end
 
-    def users
-
+    def users(options = {})
+      @users ||= Github::Users.new(options)
     end
 
   end # Client
