@@ -38,15 +38,16 @@ module Github
   extend AutoloadHelper
 
   autoload_all 'github',
-    :API      => 'api',
-    :Client   => 'client',
-    :Repos    => 'repos',
-    :Request  => 'request',
-    :Response => 'response',
-    :Error    => 'error',
-    :Issues   => 'issues',
-    :Gists    => 'gists',
-    :GitData  => 'git_data',
-    :Orgs     => 'orgs'
+    :API          => 'api',
+    :Client       => 'client',
+    :Repos        => 'repos',
+    :Request      => 'request',
+    :Response     => 'response',
+    :Error        => 'error',
+    :Issues       => 'issues',
+    :Gists        => 'gists',
+    :GitData      => 'git_data',
+    :Orgs         => 'orgs',
+    :PullRequests => 'pull_requests'
 
 end # Github

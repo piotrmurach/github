@@ -189,6 +189,8 @@ module Github
     def edit_issue(user_name, repo_name, issue_id, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
+      _validate_presence_of issue_id
+
       _normalize_params_keys(params)
       _filter_params_keys(VALID_MILESTONE_INPUTS, params)
 

@@ -19,8 +19,8 @@ module Github
       @orgs ||= Github::Orgs.new(options)
     end
 
-    def pull_requests
-
+    def pull_requests(options = {})
+      @pull_requests ||= Github::PullRequests.new(options)
     end
 
     def repos(options = {})
@@ -31,5 +31,5 @@ module Github
 
     end
 
-  end
-end
+  end # Client
+end # Github

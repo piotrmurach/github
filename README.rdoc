@@ -41,7 +41,7 @@ You can interact with GitHub interface, for example repositories, by issueing fo
 
 The code base is modular and allows for you to work specifically with a given part of GitHub API e.g. repositories
 
-  @repos = Github::Repos.new 
+  @repos = Github::Repos.new
   @repos.branches 'peter-murach', 'github'
 
 or
@@ -56,7 +56,21 @@ The response is of type [Hashie::Mash] and allows to traverse all the json respo
     puts branch.name
   end
 
-For specification on all available methods go to http://developer.github.com/v3/
+== API
+
+Main API methods are grouped into the following classes that can be instantiated on their own
+
+  Github         - full API access
+  Github::Gists
+  Github::GitData
+  Github::Issues
+  Github::Orgs
+  Github::PullRequests
+  Github::Repos
+  Github::Users
+
+For specification on all available methods go to http://developer.github.com/v3/ or
+read the rdoc, all methods are documented there with examples of usage.
 
 == Configuration
 
