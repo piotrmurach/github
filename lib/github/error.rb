@@ -3,7 +3,7 @@
 module Github
   class Error < StandardError
     attr_reader :response_message, :response_headers
-      
+
     def initialize(message, headers)
       @response_message = message 
       super message
@@ -13,7 +13,7 @@ module Github
       %(#<#{self.class}>)
     end
   end # Error
-  
+
   # Raised when Github returns the HTTP status code 400
   class BadRequest < Error; end
 
@@ -25,7 +25,7 @@ module Github
 
   # Raised when Github returns the HTTP status code 404
   class ResourceNotFound < Error; end
-  
+
   # Raised when Github returns the HTTP status code 500
   class InternalServerError < Error; end
 

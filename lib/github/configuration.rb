@@ -2,7 +2,7 @@
 
 module Github
   module Configuration
-      
+
     VALID_OPTIONS_KEYS = [
       :adapter,
       :client_id,
@@ -28,20 +28,20 @@ module Github
 
     # By default, don't set a user oauth access token
     DEFAULT_OAUTH_TOKEN = nil
-    
+
     # The endpoint used to connect to GitHub if none is set
     DEFAULT_ENDPOINT = 'https://api.github.com/'.freeze
-    
+
     # The value sent in the http header for 'User-Agent' if none is set
     DEFAULT_USER_AGENT = "Github Ruby Gem #{Github::Version::STRING}".freeze
 
     DEFAULT_FORMAT = :json
-    
+
     # By default,  
     DEFAULT_RESOURCE = nil
 
     DEFAULT_FARADAY_OPTIONS = {}
-    
+
     # By default, don't set user name
     DEFAULT_USER = nil
 
@@ -49,7 +49,7 @@ module Github
     DEFAULT_REPO = nil
 
     attr_accessor *VALID_OPTIONS_KEYS
-    
+
     # Convenience method to allow for global setting of configuration options
     def configure
       yield self
@@ -80,5 +80,5 @@ module Github
       self
     end
 
-  end
-end
+  end # Configuration
+end # Github
