@@ -78,6 +78,15 @@ All method calls form ruby like sentences and allow for intuitive api navigation
 For specification on all available methods go to http://developer.github.com/v3/ or
 read the rdoc, all methods are documented there with examples of usage.
 
+== MIME Types
+
+Provides support for the following mime types
+
+In order to pass a mime type with your request do
+
+  @github = Github.new :oauth_token
+  @github...
+
 == Configuration
 
 Certain methods require authentication. To get your GitHub OAuth v2 credentials,
@@ -99,6 +108,11 @@ Some api methods require input parameters, these are added simply as a hash prop
 
   @issues = Github::Issues.new :user => 'peter-murach', :repo => 'github-api'
   @issues.milestones :state => 'open', :sort => 'due_date', :direction => 'asc'
+
+Other methods may require inputs as an array of strings
+
+  @users = Github::Users.new :oauth_token => '...'
+  @users.add_email 'email1', 'email2', ..., 'emailn' # => Adds emails to the authenticated user
 
 If a method returns a collection, you can iterator over it by supplying a block parameter,
 

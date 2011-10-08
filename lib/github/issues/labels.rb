@@ -120,13 +120,13 @@ module Github
       #
       def add_labels(user_name, repo_name, issue_id, *args)
         params = args.last.is_a?(Hash) ? args.pop : {}
-        labels = args.nil? ? [] : args
+        params['data'] = [args].flatten unless args.nil?
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
         _validate_presence_of(issue_id)
         _normalize_params_keys(params)
 
-        post("/repos/#{user}/#{repo}/issues/#{issue_id}/labels", labels, params)
+        post("/repos/#{user}/#{repo}/issues/#{issue_id}/labels", params)
       end
 
       # Remove a label from an issue
@@ -163,13 +163,13 @@ module Github
       #
       def replace_labels(user_name, repo_name, issue_id, *args)
         params = args.last.is_a?(Hash) ? args.pop : {}
-        labels = args.nil? ? [] : args
+        params['data'] = [args].flatten unless args.nil?
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
         _validate_presence_of(issue_id)
         _normalize_params_keys(params)
 
-        put("/repos/#{user}/#{repo}/issues/#{issue_id}/labels", labels, params)
+        put("/repos/#{user}/#{repo}/issues/#{issue_id}/labels", params)
       end
 
       # Get labels for every issue in a milestone
@@ -185,7 +185,6 @@ module Github
 
         get("/repos/#{user}/#{repo}/milestones/#{milestone_id}/labels", params)
       end
-
 
     end # Labels
   end # Issues

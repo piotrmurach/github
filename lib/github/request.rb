@@ -41,19 +41,23 @@ module Github
       end
 
       puts "EXECUTED: #{method} - #{path} with #{params} and #{options}"
-      
+
       response = connection(options).send(method) do |request|
         case method.to_sym
         when *(METHODS - METHODS_WITH_BODIES)
-          request.url(path, params)          
+          request.url(path, params)
         when *METHODS_WITH_BODIES
           request.path = path
-          request.body = params unless params.empty?
+          request.body = _process_params(params) unless params.empty?
         end
       end
       response.body
     end
-    
+
+    def _process_params(params)
+      return params['data'] if params.has_key?('data')
+      return params
+    end
     # no need for this smizzle
     def formatted_path(path, options={})
       [ path, options.fetch(:format, format) ].compact.join('.')
