@@ -1,8 +1,8 @@
 # encoding: utf-8
 
-require 'github/configuration'
-require 'github/connection'
-require 'github/request'
+require 'github_api/configuration'
+require 'github_api/connection'
+require 'github_api/request'
 
 module Github
   # @private

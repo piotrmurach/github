@@ -1,7 +1,7 @@
 # encoding: utf-8
 
-module Github 
-  module Version
+module Github
+  module VERSION
     MAJOR = 0
     MINOR = 1
     PATCH = 0

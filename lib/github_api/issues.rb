@@ -4,7 +4,7 @@ module Github
   class Issues < API
     extend AutoloadHelper
 
-    autoload_all 'github/issues', 
+    autoload_all 'github_api/issues',
       :Comments   => 'comments',
       :Events     => 'events',
       :Labels     => 'labels',

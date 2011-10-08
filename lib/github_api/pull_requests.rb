@@ -4,7 +4,7 @@ module Github
   class PullRequests < API
     extend AutoloadHelper
 
-    autoload_all 'github/pull_requests',
+    autoload_all 'github_api/pull_requests',
       :Comments => 'comments'
 
     include Github::PullRequests::Comments

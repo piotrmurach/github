@@ -5,7 +5,7 @@ module Github
     extend AutoloadHelper
 
     # Load all the modules after initializing Repos to avoid superclass mismatch
-    autoload_all 'github/repos',
+    autoload_all 'github_api/repos',
       :Collaborators => 'collaborators',
       :Commits       => 'commits',
       :Downloads     => 'downloads',

@@ -4,7 +4,7 @@ module Github
   class Orgs < API
     extend AutoloadHelper
 
-    autoload_all 'github/orgs',
+    autoload_all 'github_api/orgs',
       :Members => 'members',
       :Teams   => 'teams'
 

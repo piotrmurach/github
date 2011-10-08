@@ -4,7 +4,7 @@ module Github
   class GitData < API
     extend AutoloadHelper
 
-    autoload_all 'github/git_data',
+    autoload_all 'github_api/git_data',
       :Blobs      => 'blobs',
       :Commits    => 'commits',
       :References => 'references',

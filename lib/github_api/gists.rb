@@ -4,7 +4,7 @@ module Github
   class Gists < API
     extend AutoloadHelper
 
-    autoload_all 'github/gists',
+    autoload_all 'github_api/gists',
       :Comments => 'comments'
 
     include Github::Gists::Comments

@@ -1,7 +1,8 @@
 # encoding: utf-8
 
-require 'github/configuration'
-require 'github/connection'
+require 'github_api/version'
+require 'github_api/configuration'
+require 'github_api/connection'
 
 module Github
   extend Configuration
@@ -37,7 +38,7 @@ module Github
 
   extend AutoloadHelper
 
-  autoload_all 'github',
+  autoload_all 'github_api',
     :API          => 'api',
     :Client       => 'client',
     :Repos        => 'repos',

@@ -1,16 +1,17 @@
-require File.expand_path('../lib/github/version', __FILE__)
+require File.expand_path('../lib/github_api/version', __FILE__)
 
 Gem::Specification.new do |gem|
-  gem.name          = 'github-api'
+  gem.name          = 'github_api'
   gem.authors       = [ "Piotr Murach" ]
   gem.email         = ""
   gem.homepage      = 'https://github.com/peter-murach/github'
   gem.require_paths = ['lib']
   gem.summary       = %q{ Ruby wrapper for the GitHub API v3}
-  gem.description   = %q{ Ruby wrapper for the GitHub API v3}
-  gem.version       = Github::Version::STRING.dup
+  gem.description   = %q{ Ruby wrapper that supports all of the GitHub API methods(nearly 200). It's build in a modular way, that is, you can either instantiate the whole api wrapper Github.new or use parts of it e.i. Github::Repos.new if working solely with repositories is your main concern. }
+  gem.version       = Github::VERSION::STRING.dup
 
-  gem.files = `git ls-files`.split("\n")
+  #gem.files = `git ls-files`.split("\n")
+  gem.files = Dir['Rakefile', '{features,lib,spec}/**/*', 'README*', 'LICENSE*']
   gem.require_paths = %w[ lib ]
 
   gem.add_dependency 'hashie', '~> 1.1.0'
