@@ -78,6 +78,7 @@ module Github
       { 'user' => self.user, 'repo' => self.repo }.merge!(params)
     end
 
+    # Turns any keys from nested hashes including nested arrays into strings
     def _normalize_params_keys(params)
       case params
       when Hash
@@ -86,15 +87,34 @@ module Github
           _normalize_params_keys(params[k.to_s])
         end
       when Array
-        params.map! { |el| el.to_s }
+        params.map! do |el|
+          _normalize_params_keys(el)
+        end
       else
-        params
+        params.to_s
       end
       return params
     end
 
     def _filter_params_keys(keys, params)
       params.reject! { |k,v| !keys.include? k }
+    end
+
+    def _hash_traverse(hash, &block)
+      hash.each do |key, val|
+        block.call(key)
+        case val
+        when Hash
+          val.keys.each do |k|
+            _hash_traverse(val, &block)
+          end
+        when Array
+          val.each do |item|
+            _hash_traverse(item, &block)
+          end
+        end
+      end
+      return hash
     end
 
     def _validate_params_values(options, params)

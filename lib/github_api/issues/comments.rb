@@ -15,6 +15,7 @@ module Github
       def issue_comments(user_name, repo_name, issue_id, params={})
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
+        _validate_presence_of issue_id
         _normalize_params_keys(params)
 
         get("/repos/#{user}/#{repo}/issues/#{issue_id}/comments", params)
