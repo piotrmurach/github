@@ -40,8 +40,8 @@ module Github
         else
           get("/repos/#{user}/#{repo}/git/trees/#{sha.to_s}", params)
         end
-          return response unless block_given?
-          response.tree.each { |el| yield el }
+        return response unless block_given?
+        response.tree.each { |el| yield el }
       end
 
       # Create a tree
