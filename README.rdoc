@@ -69,7 +69,7 @@ Main API methods are grouped into the following classes that can be instantiated
   Github::Repos
   Github::Users
 
-Some parts of GitHub API v3 require you to be autheticated, for instance the following are examples of API only for the authenticated user
+Some parts of GitHub API v3 require you to be autheticated, for instance the following are examples of APIs only for the authenticated user
 
   Github::Users::Emails
   Github::Users::Keys
@@ -82,6 +82,22 @@ All method calls form ruby like sentences and allow for intuitive api navigation
 
 For specification on all available methods go to http://developer.github.com/v3/ or
 read the rdoc, all methods are documented there with examples of usage.
+
+== Inputs
+
+Some API methods apart from required parameters such as username, repository name
+or organisation name, allow you to switch the way the data is returned to you, for instance
+
+  @github = Github.new
+  @github.git_data.tree 'peter-murach', 'github', 'c18647b75d72f19c1e0cc8af031e5d833b7f12ea' # => gets a tree
+
+  @github.git_data.tree 'peter-murach', 'github', 'c18647b75d72f19c1e0cc8af031e5d833b7f12ea', :recursive => true # => gets a whole tree recursively
+
+  by passing a block you can iterate over the file tree
+
+  @github.git_data.tree 'peter-murach', 'github', 'c18647b75d72f19c1e0cc8af031e5d833b7f12ea', :recursive => true do |file|
+    puts file.path
+  end
 
 == MIME Types
 
@@ -132,6 +148,8 @@ Query requests instead of http responses return boolean values
   @github.orgs.public_member? 'github', 'technoweenie' # => true
 
 == Caching
+
+Each call by default is not going to be cached. In order to set the inmemory cache do...
 
 == TODO
 
