@@ -62,3 +62,5 @@ end
 def fixture(file)
   File.new(File.join(fixture_path, '/', file))
 end
+
+OAUTH_TOKEN = 'bafec72922f31fe86aacc8aca4261117f3bd62cf'
