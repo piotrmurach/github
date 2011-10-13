@@ -14,9 +14,10 @@ module Github
         content
       ].freeze
 
-      VALID_TREE_PARAM_VALUES = %w[
-      
-      ]
+      VALID_TREE_PARAM_VALUES = {
+        'mode' => %w[ 100644 100755 040000 160000 120000 ],
+        'type' => %w[ blob tree commit ]
+      }
 
       # Get a tree
       #
@@ -64,10 +65,10 @@ module Github
       #  @github.git_data.create_tree 'user-name', 'repo-name',
       #    "tree" => [
       #      {
-      #        "path": "file.rb",
-      #        "mode": "100644",
-      #        "type": "blob",
-      #        "sha": "44b4fc6d56897b048c772eb4087f854f46256132"
+      #        "path" => "file.rb",
+      #        "mode" => "100644",
+      #        "type" => "blob",
+      #        "sha" => "44b4fc6d56897b048c772eb4087f854f46256132"
       #      },
       #      ...
       #    ]
@@ -76,7 +77,9 @@ module Github
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
         _normalize_params_keys(params)
-        _filter_params_keys(VALID_TREE_PARAM_NAMES, params)
+
+        _filter_params_keys(VALID_TREE_PARAM_NAMES, params['tree'])
+        _validate_params_values(VALID_TREE_PARAM_VALUES, params['tree'])
 
         post("/repos/#{user}/#{repo}/git/trees", params)
       end
