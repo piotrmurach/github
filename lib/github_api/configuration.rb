@@ -30,7 +30,7 @@ module Github
     DEFAULT_OAUTH_TOKEN = nil
 
     # The endpoint used to connect to GitHub if none is set
-    DEFAULT_ENDPOINT = 'https://api.github.com/'.freeze
+    DEFAULT_ENDPOINT = 'https://api.github.com'.freeze
 
     # The value sent in the http header for 'User-Agent' if none is set
     DEFAULT_USER_AGENT = "Github Ruby Gem #{Github::VERSION::STRING}".freeze
