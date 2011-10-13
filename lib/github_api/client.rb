@@ -7,7 +7,10 @@ module Github
       @gists ||= Github::Gists.new(options)
     end
 
-    def git_data(options)
+    # The Git Database API gives you access to read and write raw Git objects
+    # to your Git database on GitHub and to list and update your references
+    # (branch heads and tags).
+    def git_data(options = {})
       @git_data ||= Github::GitData.new(options)
     end
 
@@ -27,6 +30,8 @@ module Github
       @repos ||= Github::Repos.new(options)
     end
 
+    # Many of the resources on the users API provide a shortcut for getting 
+    # information about the currently authenticated user.
     def users(options = {})
       @users ||= Github::Users.new(options)
     end
