@@ -64,6 +64,8 @@ module Github
 
       # Watch a repository
       #
+      # You need to be authenticated to watch a repository
+      #
       # = Examples
       #  @github = Github.new
       #  @github.repos.start_watching 'user-name', 'repo-name'
@@ -76,6 +78,7 @@ module Github
 
       # Stop watching a repository
       #
+      # You need to be authenticated to stop watching a repository.
       # = Examples
       #  @github = Github.new
       #  @github.repos.start_watching 'user-name', 'repo-name'

@@ -58,28 +58,31 @@ describe Github::Repos::Watching do
 
     context "if user unauthenticated" do
       before do
-        stub_get("/users/#{user}/watched").
-          to_return(:body => fixture("repos/watched.json"), :status => 401, :headers => {})
-
+        WebMock.reset!
       end
 
       it "should fail to get resource without username " do
+        stub_get("/user/watched").
+          to_return(:body => fixture("repos/watched.json"), :status => 401, :headers => {})
         expect {
+          github.user = nil
           github.repos.watched
         }.to raise_error(Github::Unauthorised)
       end
 
       it "should get the resource with username" do
-        github.user = user
+        stub_get("/users/#{user}/watched").
+          to_return(:body => fixture("repos/watched.json"), :status => 200, :headers => {})
         github.repos.watched(user)
-        a_get("/user/#{user}/watched").should have_been_made
+        a_get("/users/#{user}/watched").should have_been_made
       end
     end
 
     context "if user authenticated" do
       before do
+        github.user = nil
         github.oauth_token = OAUTH_TOKEN
-        stub_get("/user/watched").
+        stub_get("/user/watched?access_token=#{OAUTH_TOKEN}").
           to_return(:body => fixture("repos/watched.json"), :status => 200, :headers => {})
       end
 
@@ -108,6 +111,8 @@ describe Github::Repos::Watching do
 
       context "this repo is being watched by the user"
         before do
+          github.oauth_token = nil
+          github.user = nil
           stub_get("/user/watched/#{user}/#{repo}").
             to_return(:body => "", :status => 404, :headers => {:user_agent => github.user_agent})
         end
@@ -117,17 +122,90 @@ describe Github::Repos::Watching do
         watching.should be_false
       end
 
+      it "should return true if resoure found" do
+          stub_get("/user/watched/#{user}/#{repo}").
+            to_return(:body => "", :status => 200, :headers => {:user_agent => github.user_agent})
+        watching = github.repos.watching? user, repo
+        watching.should be_true
+      end
+
     end
 
     context "without username and reponame passed" do
-
+      it "should fail validation " do
+        expect { github.repos.watching?(nil, nil) }.to raise_error(ArgumentError)
+      end
     end
   end
 
   describe "start_watching" do
+
+    context "user authenticated" do
+
+      context "with correct information" do
+        before do
+          github.user, github.repo = nil, nil
+          github.oauth_token = OAUTH_TOKEN
+          stub_put("/user/watched/#{user}/#{repo}?access_token=#{OAUTH_TOKEN}").
+            to_return(:body => "", :status => 204, :headers => {})
+        end
+
+        it "should successfully watch a repo" do
+          github.repos.start_watching(user, repo)
+          a_put("/user/watched/#{user}/#{repo}?access_token=#{OAUTH_TOKEN}").should have_been_made
+        end
+      end
+
+      context "without correct information" do
+
+      end
+    end
+
+    context "user unauthenticated" do
+      it "should fail" do
+        github.oauth_token = nil
+        stub_put("/user/watched/#{user}/#{repo}").
+          to_return(:body => "", :status => 401, :headers => {})
+        expect {
+          github.repos.start_watching(user, repo)
+        }.to raise_error(Github::Unauthorised)
+      end
+    end
   end
 
   describe "stop_watching" do
+
+    context "user authenticated" do
+
+      context "with correct information" do
+        before do
+          github.user, github.repo = nil, nil
+          github.oauth_token = OAUTH_TOKEN
+          stub_delete("/user/watched/#{user}/#{repo}?access_token=#{OAUTH_TOKEN}").
+            to_return(:body => "", :status => 204, :headers => {})
+        end
+
+        it "should successfully watch a repo" do
+          github.repos.stop_watching(user, repo)
+          a_delete("/user/watched/#{user}/#{repo}?access_token=#{OAUTH_TOKEN}").should have_been_made
+        end
+      end
+
+      context "without correct information" do
+
+      end
+    end
+
+    context "user unauthenticated" do
+      it "should fail" do
+        github.oauth_token = nil
+        stub_delete("/user/watched/#{user}/#{repo}").
+          to_return(:body => "", :status => 401, :headers => {})
+        expect {
+          github.repos.stop_watching(user, repo)
+        }.to raise_error(Github::Unauthorised)
+      end
+    end
   end
 
 end # Github::Respos::Watching
