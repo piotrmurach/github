@@ -3,48 +3,98 @@
 module Github
   class Repos
     module Keys
-      
-      # List keys
+
+      VALID_KEY_PARAM_NAMES = %w[ title key ].freeze
+
+      # List deploy keys
       #
-      # GET /repos/:user/:repo/keys
+      # = Examples
+      #  @github = Github.new
+      #  @github.repos.keys 'user-name', 'repo-name'
+      #  @github.repos.keys 'user-name', 'repo-name' { |key| ... }
       #
-      def keys(user, repo)
-        get("/repos/#{user}/#{repo}/keys")
+      def keys(user_name=nil, repo_name=nil, params={})
+        _update_user_repo_params(user_name, repo_name)
+        _validate_user_repo_params(user, repo) unless user? && repo?
+        _normalize_params_keys(params)
+
+        response = get("/repos/#{user}/#{repo}/keys")
+        return response unless block_given?
+        response.each { |el| yield el }
       end
 
       # Get a key
       #
-      # GET /repos/:user/:repo/keys/:id
+      # = Examples
+      #  @github = Github.new
+      #  @github.repos.get_key 'user-name', 'repo-name', 'key-id'
       #
-      def get_key(user, repo, key_id)
+      def get_key(user_name, repo_name, key_id, params={})
+        _update_user_repo_params(user_name, repo_name)
+        _validate_user_repo_params(user, repo) unless user? && repo?
+        _validate_presence_of key_id
+        _normalize_params_keys(params)
+
         get("/repos/#{user}/#{repo}/keys/#{key_id}")
       end
 
       # Create a key
       #
-      # POST /repos/:user/:repo/keys
-      def create_key(user, repo, params={})
+      # = Inputs
+      # * <tt>:title</tt> - Required string.
+      # * <tt>:key</tt> - Required string.
+      #
+      # = Examples
+      #  @github = Github.new
+      #  @github.repos.create_key 'user-name', 'repo-name',
+      #    "title" => "octocat@octomac",
+      #    "key" =>  "ssh-rsa AAA..."
+      #
+      def create_key(user_name=nil, repo_name=nil, params={})
+        _update_user_repo_params(user_name, repo_name)
+        _validate_user_repo_params(user, repo) unless user? && repo?
         _normalize_params_keys(params)
-        _filter_params_keys(%w[ title key ], params)
+        _filter_params_keys(VALID_KEY_PARAM_NAMES, params)
+
+        raise ArgumentError, "Required params are: #{VALID_KEY_PARAM_NAMES.join(', ')}" unless _validate_inputs(VALID_KEY_PARAM_NAMES, params)
 
         post("/repos/#{user}/#{repo}/keys", params)
       end
 
-      # Edit key
+      # Edit a key
       #
-      # PATCH /repos/:user/:repo/keys/:id
+      # = Inputs
+      # * <tt>:title</tt> - Required string.
+      # * <tt>:key</tt> - Required string.
       #
-      def edit_key(user, repo, key_id)
+      # = Examples
+      #  @github = Github.new
+      #  @github.repos.create_key 'user-name', 'repo-name',
+      #    "title" => "octocat@octomac",
+      #    "key" =>  "ssh-rsa AAA..."
+      #
+      def edit_key(user_name, repo_name, key_id, params={})
+        _update_user_repo_params(user_name, repo_name)
+        _validate_user_repo_params(user, repo) unless user? && repo?
+
         _normalize_params_keys(params)
-        _filter_params_keys(%w[ title key ], params)
+        _filter_params_keys(VALID_KEY_PARAM_NAMES, params)
 
         patch("/repos/#{user}/#{repo}/keys/#{key_id}")
       end
-      
+
       # Delete key
       #
-      # DELETE /repos/:user/:repo/keys/:id
-      def delete_key(user, repo, key_id)
+      # = Examples
+      #  @github = Github.new
+      #  @github.repos.delete_key 'user-name', 'repo-name', 'key-id'
+      #
+      def delete_key(user_name, repo_name, key_id, params={})
+        _update_user_repo_params(user_name, repo_name)
+        _validate_user_repo_params(user, repo) unless user? && repo?
+        _validate_presence_of key_id
+        _normalize_params_keys(params)
+
         delete("/repos/#{user}/#{repo}/keys/#{key_id}")
       end
 
