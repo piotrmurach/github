@@ -8,9 +8,9 @@ module Github
       dependency 'oauth2'
 
       def call(env)
-        puts "ENV: #{env.inspect}"
-        puts "TOKEN : #{@token}"
-        puts "APP: #{@app}"
+#         puts "ENV: #{env.inspect}"
+#         puts "TOKEN : #{@token}"
+#         puts "APP: #{@app}"
 
         # Extract parameters from the query
         params = env[:url].query_values || {}

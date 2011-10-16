@@ -5,6 +5,7 @@ module Github
     module Members
 
       # List members
+      #
       # List all users who are members of an organization. A member is a user 
       # that belongs to at least 1 team in the organization. 
       # If the authenticated user is also a member of this organization then 

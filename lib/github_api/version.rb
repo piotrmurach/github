@@ -5,7 +5,7 @@ module Github
     MAJOR = 0
     MINOR = 1
     PATCH = 0
-    BUILD = 'pre'
+    BUILD = nil
 
     STRING = [MAJOR, MINOR, PATCH, BUILD].compact.join('.');
   end
