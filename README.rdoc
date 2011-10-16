@@ -8,11 +8,11 @@ Supports all the API methods(nearly 200). It's build in a modular way, that is, 
 
 Grab the gem by issuing
 
-  gem install github_api --pre
+  gem install github_api
 
 or in your Gemfile
 
-  gem "github_api", "~> 0.1.0.pre"
+  gem "github_api", "~> 0.1.1"
 
 == Usage
 
