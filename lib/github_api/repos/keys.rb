@@ -35,7 +35,7 @@ module Github
         _validate_presence_of key_id
         _normalize_params_keys(params)
 
-        get("/repos/#{user}/#{repo}/keys/#{key_id}")
+        get("/repos/#{user}/#{repo}/keys/#{key_id}", params)
       end
 
       # Create a key
@@ -81,7 +81,7 @@ module Github
         _normalize_params_keys(params)
         _filter_params_keys(VALID_KEY_PARAM_NAMES, params)
 
-        patch("/repos/#{user}/#{repo}/keys/#{key_id}")
+        patch("/repos/#{user}/#{repo}/keys/#{key_id}", params)
       end
 
       # Delete key
@@ -96,7 +96,7 @@ module Github
         _validate_presence_of key_id
         _normalize_params_keys(params)
 
-        delete("/repos/#{user}/#{repo}/keys/#{key_id}")
+        delete("/repos/#{user}/#{repo}/keys/#{key_id}", params)
       end
 
     end # Keys

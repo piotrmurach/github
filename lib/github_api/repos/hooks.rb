@@ -2,64 +2,135 @@
 
 module Github
   class Repos
+    # The Repository Hooks API manages the post-receive web and service hooks for a repository.
     module Hooks
 
+      VALID_KEY_PARAM_NAMES = %w[ name config active ].freeze
       REQUIRED_PARAMS = %w[ name config ]
 
       # List repository hooks
-      # 
-      # GET /repos/:user/:repo/hooks
       #
-      def hooks(user, repo)
-        get("/repos/#{user}/#{repo}/hooks")
+      # = Examples
+      #  @github = Github.new
+      #  @github.repos.hooks 'user-name', 'repo-name'
+      #  @github.repos.hooks 'user-name', 'repo-name' { |hook| ... }
+      #
+      def hooks(user_name=nil, repo_name=nil, params={})
+        _update_user_repo_params(user_name, repo_name)
+        _validate_user_repo_params(user, repo) unless user? && repo?
+        _normalize_params_keys(params)
+
+        response = get("/repos/#{user}/#{repo}/hooks", params)
+        return response unless block_given?
+        response.each { |el| yield el }
       end
 
-      # Get a single hook 
+      # Get a single hook
       #
-      # GET /repos/:user/:repo/hooks/:id
+      # = Examples
+      #  @github = Github.new
+      #  @github.repos.hook 'user-name', 'repo-name'
       #
-      def get_hook(user, repo, hook_id)
-        get("/repos/#{user}/#{repo}/hooks/#{hook_id}")
+      def hook(user_name, repo_name, hook_id, params={})
+        _update_user_repo_params(user_name, repo_name)
+        _validate_user_repo_params(user, repo) unless user? && repo?
+        _validate_presence_of hook_id
+        _normalize_params_keys(params)
+
+        get("/repos/#{user}/#{repo}/hooks/#{hook_id}", params)
       end
 
       # Create a hook
       #
-      # POST /repos/:user/:repo/hooks
+      # = Inputs
+      # * <tt>:name</tt> - Required string - the name of the service that is being called.
+      # * <tt>:config</tt> - Required hash - A Hash containing key/value pairs to provide settings for this hook.
+      # * <tt>:active</tt> - Optional boolean - Determines whether the hook is actually triggered on pushes.
       #
-      def create_hook(user, repo, params)
+      # = Examples
+      #  @github = Github.new
+      #  @github.repos.create_hook 'user-name', 'repo-name',
+      #    "name" => "campfire",
+      #    "active" =>  true,
+      #    "config" =>  {
+      #      "subdomain" => "github",
+      #      "room" =>  "Commits",
+      #      "token" => "abc123"
+      #    }
+      #
+      def create_hook(user_name=nil, repo_name=nil, params={})
+        _update_user_repo_params(user_name, repo_name)
+        _validate_user_repo_params(user, repo) unless user? && repo?
+
         _normalize_params_keys(params)
-        _filter_params_keys(%w[ name config active ], params)
-        raise ArgumentError, "Required parameters are: #{REQUIRED_PARAMS.join(', ')}" unless _validate_inputs(REQUIRED_PARAMS, params)
+        _filter_params_keys(VALID_KEY_PARAM_NAMES, params)
+
+        raise ArgumentError, "Required parameters are: name, config" unless _validate_inputs(%w[ name config], params)
 
         post("/repos/#{user}/#{repo}/hooks", params)
       end
 
       # Edit a hook
       #
-      # PATCH /repos/:user/:repo/hooks/:id
-      # 
-      def edit_hook(user, repo, hook_id, params)
-        _normalize_params_keys(params)
-        _filter_params_keys(%w[ name config active ], params)
-        raise ArgumentError, "Required parameters are: #{REQUIRED_PARAMS.join(', ')}" unless _validate_inputs(REQUIRED_PARAMS, params)
+      # = Inputs
+      # * <tt>:name</tt> - Required string - the name of the service that is being called.
+      # * <tt>:config</tt> - Required hash - A Hash containing key/value pairs to provide settings for this hook.
+      # * <tt>:active</tt> - Optional boolean - Determines whether the hook is actually triggered on pushes.
+      #
+      # = Examples
+      #  @github = Github.new
+      #  @github.repos.edit_hook 'user-name', 'repo-name',
+      #    "name" => "campfire",
+      #    "active" =>  true,
+      #    "config" =>  {
+      #      "subdomain" => "github",
+      #      "room" =>  "Commits",
+      #      "token" => "abc123"
+      #    }
+      #
+      def edit_hook(user_name, repo_name, hook_id, params={})
+        _update_user_repo_params(user_name, repo_name)
+        _validate_user_repo_params(user, repo) unless user? && repo?
+        _validate_presence_of hook_id
 
-        patch("/repos/#{user}/#{repo}/hooks/#{hook_id}")
+        _normalize_params_keys(params)
+        _filter_params_keys(VALID_KEY_PARAM_NAMES, params)
+
+        raise ArgumentError, "Required parameters are: name, config" unless _validate_inputs(%w[ name config], params)
+
+        patch("/repos/#{user}/#{repo}/hooks/#{hook_id}", params)
       end
 
       # Test a hook
       #
-      # POST /repos/:user/:repo/hooks/:id/test
+      # This will trigger the hook with the latest push to the current repository.
       #
-      def test_hook(user, repo, hook_id)
-        post("/repos/#{user}/#{repo}/hooks/#{hook_id}/test")
+      # = Examples
+      #  @github = Github.new
+      #  @github.repos.test_hook 'user-name', 'repo-name', 'hook-id'
+      #
+      def test_hook(user_name, repo_name, hook_id, params={})
+        _update_user_repo_params(user_name, repo_name)
+        _validate_user_repo_params(user, repo) unless user? && repo?
+        _validate_presence_of hook_id
+        _normalize_params_keys(params)
+
+        post("/repos/#{user}/#{repo}/hooks/#{hook_id}/test", params)
       end
 
       # Delete a hook
       #
-      # DELETE /repos/:user/:repo/hooks/:id
+      # = Examples
+      #  @github = Github.new
+      #  @github.repos.delete_hook 'user-name', 'repo-name', 'hook-id'
       #
-      def delete_hook(user, repo, hook_id)
-        delete("/repos/#{user}/#{repo}/hooks/#{hook_id}")
+      def delete_hook(user_name, repo_name, hook_id, params={})
+        _update_user_repo_params(user_name, repo_name)
+        _validate_user_repo_params(user, repo) unless user? && repo?
+        _validate_presence_of hook_id
+        _normalize_params_keys(params)
+
+        delete("/repos/#{user}/#{repo}/hooks/#{hook_id}", params)
       end
 
     end # Hooks
