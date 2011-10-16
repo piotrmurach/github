@@ -15,6 +15,7 @@ describe Github::Repos::Watching do
     end
 
     it "should fail to get resource without username" do
+      github.user, github.repo = nil, nil
       expect { github.repos.watchers }.to raise_error(ArgumentError)
     end
 
