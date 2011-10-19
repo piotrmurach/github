@@ -37,10 +37,10 @@ module Github
       @cached = Hash.new
     end
 
-    private
+  private
 
     # Responds to attribute query
-    def method_missing(method, *args, &block)
+    def method_missing(method, *args, &block) # :nodoc:
       if method.to_s =~ /^(.*)\?$/
         return !self.send($1.to_s).nil?
       else
@@ -48,38 +48,38 @@ module Github
       end
     end
 
-    def _validate_inputs(required, provided)
+    def _validate_inputs(required, provided) # :nodoc:
       required.all? do |key|
         provided.has_key? key
       end
     end
 
-    def _validate_presence_of(*params)
+    def _validate_presence_of(*params) # :nodoc:
       params.each do |param|
         raise ArgumentError, "parameter cannot be nil" if param.nil?
       end
     end
 
-    def _validate_user_repo_params(user_name, repo_name)
+    def _validate_user_repo_params(user_name, repo_name) # :nodoc:
       raise ArgumentError, "[user] parameter cannot be nil" if user_name.nil?
       raise ArgumentError, "[repo] parameter cannot be nil" if repo_name.nil?
     end
 
-    def _update_user_repo_params(user_name, repo_name=nil)
+    def _update_user_repo_params(user_name, repo_name=nil) # :nodoc:
       self.user = user_name || self.user
       self.repo = repo_name || self.repo
     end
 
-    def _merge_user_into_params!(params)
+    def _merge_user_into_params!(params)  #  :nodoc:
       params.merge!({ 'user' => self.user }) if user?
     end
 
-    def _merge_user_repo_into_params!(params)
+    def _merge_user_repo_into_params!(params)   #  :nodoc:
       { 'user' => self.user, 'repo' => self.repo }.merge!(params)
     end
 
     # Turns any keys from nested hashes including nested arrays into strings
-    def _normalize_params_keys(params)
+    def _normalize_params_keys(params)  #  :nodoc:
       case params
       when Hash
         params.keys.each do |k|
@@ -96,7 +96,7 @@ module Github
       return params
     end
 
-    def _filter_params_keys(keys, params)
+    def _filter_params_keys(keys, params)  # :nodoc:
       params.reject! { |k,v| !keys.include? k }
     end
 
@@ -117,7 +117,7 @@ module Github
       return hash
     end
 
-    def _validate_params_values(options, params)
+    def _validate_params_values(options, params)  # :nodoc:
       params.each do |k, v|
         next unless options.keys.include?(k)
         if options[k].is_a?(Array) && !options[k].include?(params[k])
@@ -131,6 +131,7 @@ module Github
     def _merge_parameters(params)
     end
 
+    # TODO add to core extensions
     def _extract_parameters(array)
       if array.last.is_a?(Hash) && array.last.instance_of?(Hash)
         pop
