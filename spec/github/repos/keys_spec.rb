@@ -96,7 +96,7 @@ describe Github::Repos::Keys do
 
     context "resource created" do
       before do
-        stub_post("/repos/#{user}/#{repo}/keys").
+        stub_post("/repos/#{user}/#{repo}/keys").with(inputs).
           to_return(:body => fixture("repos/key.json"), :status => 201)
       end
 
@@ -114,7 +114,7 @@ describe Github::Repos::Keys do
 
       it "should create the resource" do
         github.repos.create_key(user, repo, inputs)
-        a_post("/repos/#{user}/#{repo}/keys").should have_been_made
+        a_post("/repos/#{user}/#{repo}/keys").with(inputs).should have_been_made
       end
 
       it "should get the key information back" do

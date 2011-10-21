@@ -5,7 +5,7 @@ module Github
     # The Repository Hooks API manages the post-receive web and service hooks for a repository.
     module Hooks
 
-      VALID_KEY_PARAM_NAMES = %w[ name config active ].freeze
+      VALID_KEY_PARAM_NAMES = %w[ name config active events ].freeze
       REQUIRED_PARAMS = %w[ name config ]
 
       # List repository hooks
@@ -45,17 +45,17 @@ module Github
       # = Inputs
       # * <tt>:name</tt> - Required string - the name of the service that is being called.
       # * <tt>:config</tt> - Required hash - A Hash containing key/value pairs to provide settings for this hook.
+      # * <tt>:events</tt> - Optional array - Determines what events the hook is triggered for. Default: ["push"]
       # * <tt>:active</tt> - Optional boolean - Determines whether the hook is actually triggered on pushes.
       #
       # = Examples
       #  @github = Github.new
       #  @github.repos.create_hook 'user-name', 'repo-name',
-      #    "name" => "campfire",
-      #    "active" =>  true,
-      #    "config" =>  {
-      #      "subdomain" => "github",
-      #      "room" =>  "Commits",
-      #      "token" => "abc123"
+      #    "name" =>  "web",
+      #    "active" => true,
+      #    "config" => {
+      #      "url" => "http://something.com/webhook"
+      #      }
       #    }
       #
       def create_hook(user_name=nil, repo_name=nil, params={})

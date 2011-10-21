@@ -64,3 +64,11 @@ def fixture(file)
 end
 
 OAUTH_TOKEN = 'bafec72922f31fe86aacc8aca4261117f3bd62cf'
+
+class Hash
+  def except(*keys)
+    cpy = self.dup
+    keys.each { |key| cpy.delete(key) }
+    cpy
+  end
+end
