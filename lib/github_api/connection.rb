@@ -6,6 +6,7 @@ require 'github_api/response/mashify'
 require 'github_api/response/jsonize'
 require 'github_api/response/raise_error'
 require 'github_api/request/oauth2'
+require 'github_api/request/basic_auth'
 
 module Github
   module Connection
@@ -73,6 +74,7 @@ module Github
           builder.use Faraday::Response::Logger
 
           builder.use Github::Request::OAuth2, oauth_token if oauth_token?
+          builder.use Github::Request::BasicAuth, login, password if login? && password?
 
           unless options[:raw]
             builder.use Github::Response::Mashify
@@ -83,7 +85,6 @@ module Github
           builder.adapter adapter
         end
       end
-
     end
 
   end # Connection

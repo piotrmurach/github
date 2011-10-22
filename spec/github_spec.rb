@@ -82,6 +82,13 @@ describe Github do
       Github.faraday_options.should be_empty
     end
 
+    it "shoulve have not set user's login" do
+      Github.login.should be_nil
+    end
+
+    it "should have not set user's password" do
+      Github.password.should be_nil
+    end
   end
 
   describe ".configure" do

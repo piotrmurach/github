@@ -14,7 +14,10 @@ module Github
       :user_agent,
       :faraday_options,
       :repo,
-      :user
+      :user,
+      :login,
+      :password,
+      :basic_auth
     ].freeze
 
     # Other adapters are :typhoeus, :patron, :em_synchrony, :excon, :test
@@ -28,6 +31,15 @@ module Github
 
     # By default, don't set a user oauth access token
     DEFAULT_OAUTH_TOKEN = nil
+
+    # By default, don't set a user login name
+    DEFAULT_LOGIN = nil
+
+    # By default, don't set a user password
+    DEFAULT_PASSWORD = nil
+
+    # By default, don't set a user basic authentication
+    DEFAULT_BASIC_AUTH = nil
 
     # The endpoint used to connect to GitHub if none is set
     DEFAULT_ENDPOINT = 'https://api.github.com'.freeze
@@ -77,6 +89,9 @@ module Github
       self.resource           = DEFAULT_RESOURCE
       self.user               = DEFAULT_USER
       self.repo               = DEFAULT_REPO
+      self.login              = DEFAULT_LOGIN
+      self.password           = DEFAULT_PASSWORD
+      self.basic_auth         = DEFAULT_BASIC_AUTH
       self
     end
 

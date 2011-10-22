@@ -28,6 +28,6 @@ module Github
         @app = app
         @token = args.shift
       end
-    end
-  end
+    end # OAuth2
+  end # Request
 end # Github
