@@ -36,10 +36,23 @@ module Github
       Configuration::VALID_OPTIONS_KEYS.each do |key|
         send("#{key}=", options[key])
       end
+      _process_basic_auth(options[:basic_auth])
       @cached = Hash.new
     end
 
   private
+
+    # Extract login and password from basic_auth parameter
+    def _process_basic_auth(auth)
+      case auth
+      when String
+        login    = auth.split(':').first
+        password = auth.split(':').last
+      when Hash
+        login    = auth[:login]
+        password = auth[:password]
+      end
+    end
 
     # Responds to attribute query
     def method_missing(method, *args, &block) # :nodoc:
@@ -143,9 +156,8 @@ module Github
     end
 
     # Passes configuration options to instantiated class
-    # TODO implement 
-    # @private
-    def _create_instance(klass)
+    def _create_instance(klass, options)
+      options.symbolize_keys!
       klass.new(options)
     end
 
