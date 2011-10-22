@@ -20,7 +20,7 @@ Create a new client instance
 
   @github = Github.new
 
-At this stage you can also supply various configuration parameters, such as :user, :repo, :org etc..,
+At this stage you can also supply various configuration parameters, such as :user, :repo, :org, :oauth_token, :login, :password or :basic_auth
 which are used thoughtout the API
 
   @github = Github.new :user => 'peter-murach', :repo => 'github-api'
@@ -32,6 +32,13 @@ In order to authenticate the user through OAuth2 on GitHub you need to
 * get your token https://github.com/login/oauth/access_token
 
 Once you have your consumer and token keys, configure your github instance following instructions under Configuration.
+
+You can also use basic authentication by passing your login and password credentials
+  @github = Github.new :login => 'peter-murach', :password => '...'
+
+  or use convenience method:
+
+  @github = Github.new :basic_auth => 'login:password'
 
 You can interact with GitHub interface, for example repositories, by issueing following calls
 
@@ -115,11 +122,13 @@ register an app at https://github.com/account/applications/
 
   Github.configure do |config|
     config.oauth_token   = YOUR_OAUTH_ACCESS_TOKEN
+    config.basic_auth    = 'login:password'
   end
 
 or
 
   Github.new(:oauth_token => YOUR_OAUTH_TOKEN)
+  Github.new(:basic_auth => 'login:password)
 
 All parameters can be overwirtten as per method call. By passing parameters hash...
 
