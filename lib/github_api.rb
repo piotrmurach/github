@@ -50,6 +50,7 @@ module Github
     :GitData      => 'git_data',
     :Orgs         => 'orgs',
     :PullRequests => 'pull_requests',
-    :Users        => 'users'
+    :Users        => 'users',
+    :CoreExt      => 'core_ext'
 
 end # Github
