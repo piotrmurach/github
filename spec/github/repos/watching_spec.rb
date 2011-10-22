@@ -20,9 +20,8 @@ describe Github::Repos::Watching do
     end
 
     it "should yield iterator if block given" do
-      pending
-      block = lambda { ['a', 'b', 'c'] }
-      github.repos.watchers(user, repo, &block)
+      github.repos.should_receive(:watchers).with(user, repo).and_yield('github')
+      github.repos.watchers(user, repo) { |param| 'github' }
     end
 
     it "should get the resources" do
@@ -34,6 +33,11 @@ describe Github::Repos::Watching do
       watchers = github.repos.watchers(user, repo)
       watchers.should be_an Array
       watchers.should have(1).items
+    end
+
+    it "should return result of mash type" do
+      watchers = github.repos.watchers user, repo
+      watchers.first.should be_a Hashie::Mash
     end
 
     it "should get watcher information" do

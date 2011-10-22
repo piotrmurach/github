@@ -180,7 +180,18 @@ describe Github::Repos::Keys do
     context "resource found successfully" do
       before do
         stub_delete("/repos/#{user}/#{repo}/keys/#{key_id}").
-          to_return(:body => "", :status => 204)
+          to_return(:body => "", :status => 204, :headers => { :content_type => "application/json; charset=utf-8"} )
+      end
+
+      it "should fail to delete without 'user/repo' parameters" do
+        github.user, github.repo = nil, nil
+        expect { github.repos.delete_key }.to raise_error(ArgumentError)
+      end
+
+      it "should fail to delete resource without key id" do
+        expect {
+          github.repos.delete_key user, repo, nil
+        }.to raise_error(ArgumentError)
       end
 
       it "should delete the resource" do

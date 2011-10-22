@@ -57,7 +57,7 @@ describe Github::Repos::Hooks do
         }.to raise_error(Github::ResourceNotFound)
       end
     end
-  end
+  end # hooks
 
   describe "hook" do
     let(:hook_id) { 1 }
@@ -102,7 +102,7 @@ describe Github::Repos::Hooks do
         }.to raise_error(Github::ResourceNotFound)
       end
     end
-  end
+  end # hook
 
   describe "create_hook" do
     let(:inputs) { {:name => 'web', :config => {:url => "http://something.com/webhook"}, :active => true}}
@@ -131,6 +131,11 @@ describe Github::Repos::Hooks do
         a_post("/repos/#{user}/#{repo}/hooks").with(inputs).should have_been_made
       end
 
+      it "should return the resource" do
+        hook = github.repos.create_hook user, repo, inputs
+        hook.should be_a Hashie::Mash
+      end
+
       it "should get the hook information" do
         hook = github.repos.create_hook(user, repo, inputs)
         hook.name.should == 'web'
@@ -150,18 +155,153 @@ describe Github::Repos::Hooks do
         }.to raise_error(Github::ResourceNotFound)
       end
     end
-  end
+  end # create_hook
 
-  describe "edit_key" do
+  describe "edit_hook" do
+    let(:hook_id) { 1 }
+    let(:inputs) { {:name => 'web', :config => {:url => "http://something.com/webhook"}, :active => true}}
 
-  end
+    context "resource edited successfully" do
+      before do
+        stub_patch("/repos/#{user}/#{repo}/hooks/#{hook_id}").with(inputs).
+          to_return(:body => fixture("repos/hook.json"), :status => 200, :headers => { :content_type => "application/json; charset=utf-8"})
+      end
+
+      it "should fail to edit without 'user/repo' parameters" do
+        github.user, github.repo = nil, nil
+        expect { github.repos.edit_hook }.to raise_error(ArgumentError)
+      end
+
+      it "should fail to edit resource without 'name' parameter" do
+        expect{
+          github.repos.edit_hook user, repo, inputs.except(:name)
+        }.to raise_error(ArgumentError)
+      end
+
+      it "should fail to edit resource without 'hook_id'" do
+        expect {
+          github.repos.edit_hook user, repo
+        }.to raise_error(ArgumentError)
+      end
+
+      it "should fail to edit resource without 'config' parameter" do
+        expect {
+          github.repos.edit_hook user, repo, hook_id, inputs.except(:config)
+        }.to raise_error(ArgumentError)
+      end
+
+      it "should edit the resource" do
+        github.repos.edit_hook user, repo, hook_id, inputs
+        a_patch("/repos/#{user}/#{repo}/hooks/#{hook_id}").with(inputs).should have_been_made
+      end
+
+      it "should return resource" do
+        hook = github.repos.edit_hook user, repo, hook_id, inputs
+        hook.should be_a Hashie::Mash
+      end
+
+      it "should be able to retrieve information" do
+        hook = github.repos.edit_hook user, repo, hook_id, inputs
+        hook.name.should == 'web'
+      end
+
+    end
+
+    context "failed to edit resource" do
+      before do
+        stub_patch("/repos/#{user}/#{repo}/hooks/#{hook_id}").with(inputs).
+          to_return(:body => fixture("repos/hook.json"), :status => 404, :headers => { :content_type => "application/json; charset=utf-8"})
+
+      end
+
+      it "should fail to find resource" do
+        expect {
+          github.repos.edit_hook user, repo, hook_id, inputs
+        }.to raise_error(Github::ResourceNotFound)
+      end
+    end
+  end # edit_hook
 
   describe "delete_key" do
+    let(:hook_id) { 1 }
 
-  end
+    context "resource edited successfully" do
+      before do
+        stub_delete("/repos/#{user}/#{repo}/hooks/#{hook_id}").
+          to_return(:body => '', :status => 204, :headers => { :content_type => "application/json; charset=utf-8"})
+      end
+
+      it "should fail to delete without 'user/repo' parameters" do
+        github.user, github.repo = nil, nil
+        expect { github.repos.delete_hook }.to raise_error(ArgumentError)
+      end
+
+      it "should fail to delete resource without 'hook_id'" do
+        expect {
+          github.repos.edit_hook user, repo
+        }.to raise_error(ArgumentError)
+      end
+
+      it "should delete the resource" do
+        github.repos.delete_hook user, repo, hook_id
+        a_delete("/repos/#{user}/#{repo}/hooks/#{hook_id}").should have_been_made
+      end
+    end
+
+    context "failed to edit resource" do
+      before do
+        stub_delete("/repos/#{user}/#{repo}/hooks/#{hook_id}").
+          to_return(:body => fixture("repos/hook.json"), :status => 404, :headers => { :content_type => "application/json; charset=utf-8"})
+
+      end
+
+      it "should fail to find resource" do
+        expect {
+          github.repos.delete_hook user, repo, hook_id
+        }.to raise_error(Github::ResourceNotFound)
+      end
+    end
+  end # delete_hook
 
   describe "test_hook" do
+    let(:hook_id) { 1 }
 
-  end
+    context "resource edited successfully" do
+      before do
+        stub_post("/repos/#{user}/#{repo}/hooks/#{hook_id}/test").
+          to_return(:body => '', :status => 204, :headers => { :content_type => "application/json; charset=utf-8"})
+      end
 
-end
+      it "should fail to test without 'user/repo' parameters" do
+        github.user, github.repo = nil, nil
+        expect { github.repos.test_hook }.to raise_error(ArgumentError)
+      end
+
+      it "should fail to test resource without 'hook_id'" do
+        expect {
+          github.repos.test_hook user, repo
+        }.to raise_error(ArgumentError)
+      end
+
+      it "should trigger test for the resource" do
+        github.repos.test_hook user, repo, hook_id
+        a_post("/repos/#{user}/#{repo}/hooks/#{hook_id}/test").should have_been_made
+      end
+    end
+
+    context "failed to test resource" do
+      before do
+        stub_post("/repos/#{user}/#{repo}/hooks/#{hook_id}/test").
+          to_return(:body => '', :status => 404, :headers => { :content_type => "application/json; charset=utf-8"})
+
+      end
+
+      it "should fail to find resource" do
+        expect {
+          github.repos.test_hook user, repo, hook_id
+        }.to raise_error(Github::ResourceNotFound)
+      end
+    end
+  end # test_hook
+
+end # Github::Repos::Hooks
