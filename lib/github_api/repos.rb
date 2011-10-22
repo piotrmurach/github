@@ -60,11 +60,13 @@ module Github
     def branches(user_name=nil, repo_name=nil, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless (user? && repo?)
+      _normalize_params_keys(params)
 
       response = get("/repos/#{user}/#{repo}/branches", params)
       return response unless block_given?
       response.each { |el| yield el }
     end
+    alias :list_branches :branches
 
     # Create a new repository for the autheticated user.
     #
@@ -102,6 +104,7 @@ module Github
         post("/user/repos", DEFAULT_REPO_OPTIONS.merge(params))
       end
     end
+    alias :create_repository :create_repo
 
     # List contributors
     #
@@ -124,6 +127,8 @@ module Github
       return response unless block_given?
       response.each { |el| yield el }
     end
+    alias :list_contributors :contributors
+    alias :contribs :contributors
 
     # Edit a repository
     #
@@ -152,6 +157,7 @@ module Github
 
       patch("/repos/#{user}/#{repo}", DEFAULT_REPO_OPTIONS.merge(params))
     end
+    alias :edit_repository :edit_repo
 
     # Get a repository
     #
@@ -166,6 +172,8 @@ module Github
 
       get("/repos/#{user}/#{repo}", params)
     end
+    alias :get_repository :get_repo
+
 
     # List languages
     #
@@ -183,6 +191,7 @@ module Github
       return response unless block_given?
       response.each { |el| yield el }
     end
+    alias :list_languages :languages
 
     # List repositories for the authenticated user
     #
@@ -202,7 +211,7 @@ module Github
     #  @github = Github.new
     #  @github.repos.list_repos(:org => 'org-name')
     #
-    def list_repos(*args)
+    def repos(*args)
       params = args.last.is_a?(Hash) ? args.pop : {}
       _normalize_params_keys(params)
       _merge_user_into_params!(params) unless params.has_key?('user')
@@ -217,6 +226,8 @@ module Github
         get("/user/repos", params)
       end
     end
+    alias :list_repos :repos
+    alias :list_repositories :repos
 
     # List tags
     #
@@ -234,6 +245,8 @@ module Github
       return response unless block_given?
       response.each { |el| yield el }
     end
+    alias :repo_tags :tags
+    alias :repository_tags :tags
 
     # List teams
     #
@@ -251,6 +264,8 @@ module Github
       return response unless block_given?
       response.each { |el| yield el }
     end
+    alias :repo_teams :teams
+    alias :repository_teams :teams
 
   end # Repos
 end # Github
