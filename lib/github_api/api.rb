@@ -3,6 +3,8 @@
 require 'github_api/configuration'
 require 'github_api/connection'
 require 'github_api/request'
+require 'github_api/core_ext/hash'
+require 'github_api/core_ext/array'
 
 module Github
   # @private

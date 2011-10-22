@@ -5,8 +5,35 @@ module Github
     # The Repository Hooks API manages the post-receive web and service hooks for a repository.
     module Hooks
 
-      VALID_KEY_PARAM_NAMES = %w[ name config active events ].freeze
-      REQUIRED_PARAMS = %w[ name config ]
+      VALID_HOOK_PARAM_NAMES = %w[
+        name
+        config
+        active
+        events
+        add_events
+        remove_events
+      ].freeze
+
+      # Active hooks can be configured to trigger for one or more events. The default event is push. 
+      # The available events are:
+      VALID_HOOK_PARAM_VALUES = {
+        'events' => %w[
+          push
+          issues
+          issue_comment
+          commit_comment
+          pull_request
+          gollum
+          watch
+          download
+          fork
+          fork_apply
+          member
+          public
+        ]
+      }.freeze
+
+      REQUIRED_PARAMS = %w[ name config ].freeze
 
       # List repository hooks
       #
@@ -63,9 +90,9 @@ module Github
         _validate_user_repo_params(user, repo) unless user? && repo?
 
         _normalize_params_keys(params)
-        _filter_params_keys(VALID_KEY_PARAM_NAMES, params)
+        _filter_params_keys(VALID_HOOK_PARAM_NAMES, params)
 
-        raise ArgumentError, "Required parameters are: name, config" unless _validate_inputs(%w[ name config], params)
+        raise ArgumentError, "Required parameters are: name, config" unless _validate_inputs(REQUIRED_PARAMS, params)
 
         post("/repos/#{user}/#{repo}/hooks", params)
       end
@@ -75,6 +102,9 @@ module Github
       # = Inputs
       # * <tt>:name</tt> - Required string - the name of the service that is being called.
       # * <tt>:config</tt> - Required hash - A Hash containing key/value pairs to provide settings for this hook.
+      # * <tt>:events</tt> - Optional array - Determines what events the hook is triggered for. This replaces the entire array of events. Default: ["push"].
+      # * <tt>:add_events</tt> - Optional array - Determines a list of events to be added to the list of events that the Hook triggers for.
+      # * <tt>:remove_events</tt> - Optional array - Determines a list of events to be removed from the list of events that the Hook triggers for.
       # * <tt>:active</tt> - Optional boolean - Determines whether the hook is actually triggered on pushes.
       #
       # = Examples
@@ -94,9 +124,9 @@ module Github
         _validate_presence_of hook_id
 
         _normalize_params_keys(params)
-        _filter_params_keys(VALID_KEY_PARAM_NAMES, params)
+        _filter_params_keys(VALID_HOOK_PARAM_NAMES, params)
 
-        raise ArgumentError, "Required parameters are: name, config" unless _validate_inputs(%w[ name config], params)
+        raise ArgumentError, "Required parameters are: name, config" unless _validate_inputs(REQUIRED_PARAMS, params)
 
         patch("/repos/#{user}/#{repo}/hooks/#{hook_id}", params)
       end
