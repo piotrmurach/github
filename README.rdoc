@@ -1,5 +1,4 @@
 = github
-{<img src="https://secure.travis-ci.org/peter-murach/github.png?branch=master" />}{http://travis-ci.org/peter-murach/github}
 
 A Ruby wrapper for the GitHub REST API v3.
 
@@ -14,6 +13,9 @@ Grab the gem by issuing
 or in your Gemfile
 
   gem "github_api", "~> 0.1.1"
+
+== Continous Integration
+  [![Build Status]("https://secure.travis-ci.org/peter-murach/github.png?branch=master)](http://travis-ci.org/peter-murach/github)
 
 == Usage
 
