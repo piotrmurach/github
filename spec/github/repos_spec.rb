@@ -122,7 +122,132 @@ describe Github::Repos do
     end
   end # contributors
 
+  describe "create_repo" do
+    let(:inputs) { {:name => 'web', :description => "This is your first repo", :homepage => "https://github.com", :public => true, :has_issues => true, :has_wiki => true}}
+
+    context "resource created successfully for the authenticated user" do
+      before do
+        github.user = nil
+        github.oauth_token = OAUTH_TOKEN
+        stub_post("/user/repos?access_token=#{OAUTH_TOKEN}").with(inputs).
+          to_return(:body => fixture('repos/repo.json'), :status => 201,:headers => {:content_type => "application/json; charset=utf-8"} )
+      end
+
+      after do
+        github.user, github.oauth_token = nil, nil
+      end
+
+      it "should faile to create resource if 'name' inputs is missing" do
+        expect {
+          github.repos.create_repo inputs.except(:name)
+        }.to raise_error(ArgumentError)
+      end
+
+      it "should create resource" do
+        github.repos.create_repo inputs
+        a_post("/user/repos?access_token=#{OAUTH_TOKEN}").with(inputs).should have_been_made
+      end
+
+      it "should return the resource" do
+        repository = github.repos.create_repo inputs
+        repository.name.should == 'Hello-World'
+      end
+
+      it "should return mash type" do
+        repository = github.repos.create_repo inputs
+        repository.should be_a Hashie::Mash
+      end
+    end
+
+    context "resource created for the authenticated user belonging to organization" do
+      let(:org) { '37signals' }
+      before do
+        github.user = nil
+        github.oauth_token = OAUTH_TOKEN
+        stub_post("/orgs/#{org}/repos?access_token=#{OAUTH_TOKEN}").with(inputs).
+          to_return(:body => fixture('repos/repo.json'), :status => 201,:headers => {:content_type => "application/json; charset=utf-8"} )
+      end
+
+      after do
+        github.user, github.oauth_token = nil, nil
+      end
+
+      it "should get the resource" do
+        github.repos.create_repo inputs.merge(:org => org)
+        a_post("/orgs/#{org}/repos?access_token=#{OAUTH_TOKEN}").with(inputs).should have_been_made
+      end
+    end
+
+    context "failed to create" do
+      before do
+        github.user = nil
+        github.oauth_token = OAUTH_TOKEN
+        stub_post("/user/repos?access_token=#{OAUTH_TOKEN}").with(inputs).
+          to_return(:body => '', :status => 404,:headers => {:content_type => "application/json; charset=utf-8"} )
+      end
+
+      after do
+        github.user, github.oauth_token = nil, nil
+      end
+
+      it "should faile to retrieve resource" do
+        expect {
+          github.repos.create_repo inputs
+        }.to raise_error(Github::ResourceNotFound)
+      end
+    end
+  end
+
   describe "edit_repo" do
+    let(:inputs) { {:name => 'web', :description => "This is your first repo", :homepage => "https://github.com", :public => true, :has_issues => true, :has_wiki => true}}
+
+    context "resource edited successfully" do
+      before do
+        stub_patch("/repos/#{user}/#{repo}").with(inputs).
+          to_return(:body => fixture("repos/repo.json"), :status => 200, :headers => { :content_type => "application/json; charset=utf-8"})
+      end
+
+      it "should fail to edit without 'user/repo' parameters" do
+        github.user, github.repo = nil, nil
+        expect { github.repos.edit_repo }.to raise_error(ArgumentError)
+      end
+
+      it "should fail to edit resource without 'name' parameter" do
+        expect{
+          github.repos.edit_hook user, repo, inputs.except(:name)
+        }.to raise_error(ArgumentError)
+      end
+
+      it "should edit the resource" do
+        github.repos.edit_repo user, repo, inputs
+        a_patch("/repos/#{user}/#{repo}").with(inputs).should have_been_made
+      end
+
+      it "should return resource" do
+        repository = github.repos.edit_repo user, repo, inputs
+        repository.should be_a Hashie::Mash
+      end
+
+      it "should be able to retrieve information" do
+        repository = github.repos.edit_repo user, repo, inputs
+        repository.name.should == 'Hello-World'
+      end
+
+    end
+
+    context "failed to edit resource" do
+      before do
+        stub_patch("/repos/#{user}/#{repo}").with(inputs).
+          to_return(:body => fixture("repos/repo.json"), :status => 404, :headers => { :content_type => "application/json; charset=utf-8"})
+
+      end
+
+      it "should fail to find resource" do
+        expect {
+          github.repos.edit_repo user, repo, inputs
+        }.to raise_error(Github::ResourceNotFound)
+      end
+    end
 
   end # edit_repo
 
@@ -235,6 +360,97 @@ describe Github::Repos do
       end
     end
   end # languages
+
+  describe "repos" do
+    context "resource found for authenticated user" do
+      before do
+        github.user = nil
+        github.oauth_token = OAUTH_TOKEN
+        stub_get("/user/repos?access_token=#{OAUTH_TOKEN}").
+          to_return(:body => fixture('repos/repos.json'), :status => 200,:headers => {:content_type => "application/json; charset=utf-8"} )
+      end
+
+      after do
+        github.oauth_token = nil
+        github.user, github.repo = nil, nil
+      end
+
+      it "should faile if user unauthenticated" do
+        github.oauth_token = nil
+        stub_get("/user/repos").
+          to_return(:body => '', :status => 401,:headers => {:content_type => "application/json; charset=utf-8"} )
+        expect { github.repos.repos}.to raise_error(Github::Unauthorised)
+      end
+
+      it "should get the resources" do
+        github.repos.repos
+        a_get("/user/repos?access_token=#{OAUTH_TOKEN}").should have_been_made
+      end
+
+      it "should return array of resources" do
+        repositories = github.repos.repos
+        repositories.should be_an Array
+        repositories.should have(1).items
+      end
+
+      it "should get resource information" do
+        repositories = github.repos.repos
+        repositories.first.name.should == 'Hello-World'
+      end
+
+      it "should yield repositories to a block" do
+        github.repos.should_receive(:repos).and_yield('octocat')
+        github.repos.repos { |repo| 'octocat' }
+      end
+    end
+
+    context "resource found for organization" do
+      let(:org) { '37signals' }
+
+      before do
+        github.user = nil
+        github.oauth_token = nil
+        stub_get("/orgs/#{org}/repos").
+          to_return(:body => fixture('repos/repos.json'), :status => 200,:headers => {:content_type => "application/json; charset=utf-8"} )
+      end
+
+      it "should get the resources" do
+        github.repos.repos :org => org
+        a_get("/orgs/#{org}/repos").should have_been_made
+      end
+
+    end
+
+    context "resource found for organization" do
+      before do
+        stub_get("/users/#{user}/repos").
+          to_return(:body => fixture('repos/repos.json'), :status => 200,:headers => {:content_type => "application/json; charset=utf-8"} )
+      end
+
+      it "should get the resources" do
+        github.repos.repos :user => user
+        a_get("/users/#{user}/repos").should have_been_made
+      end
+    end
+
+    context "rosource not found for authenticated user" do
+      before do
+        github.user = nil
+        github.oauth_token = OAUTH_TOKEN
+        stub_get("/user/repos?access_token=#{OAUTH_TOKEN}").
+          to_return(:body => '', :status => 404,:headers => {:content_type => "application/json; charset=utf-8"} )
+      end
+
+      after do
+        github.oauth_token = nil
+        github.user, github.repo = nil, nil
+      end
+
+      it "fail to find resources" do
+        expect { github.repos.repos }.to raise_error(Github::ResourceNotFound)
+      end
+    end
+  end # repos
 
   describe "tags" do
     context "resource found" do

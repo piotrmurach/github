@@ -81,14 +81,20 @@ module Github
     #
     # = Examples
     #  @github = Github.new
-    #  @github.repos.create_repo :name => 'my_repo_name'
+    #  @github.repos.create_repo "name" => 'repo-name'
+    #    "description": "This is your first repo",
+    #    "homepage": "https://github.com",
+    #    "public": true,
+    #    "has_issues": true,
+    #    "has_wiki": true,
+    #    "has_downloads": true
     #
-    # Create a new repository in this organisation. The authenticated user 
+    # Create a new repository in this organisation. The authenticated user
     # must be a member of this organisation
     #
     # Examples:
     #   @github = Github.new :oauth_token => '...'
-    #   @github.repos.create_repo(:name => 'my-repo-name', :org => 'my-organisation')
+    #   @github.repos.create_repo :name => 'repo-name', :org => 'organisation-name'
     #
     def create_repo(*args)
       params = args.last.is_a?(Hash) ? args.pop : {}
@@ -114,8 +120,8 @@ module Github
     # = Examples
     #
     #  @github = Github.new
-    #  @github.repos.contributors('user-name','repo-name')
-    #  @github.repos.contributors('user-name','repo-name') { |cont| ... }
+    #  @github.repos.contributors 'user-name','repo-name'
+    #  @github.repos.contributors 'user-name','repo-name' { |cont| ... }
     #
     def contributors(user_name=nil, repo_name=nil, params={})
       _update_user_repo_params(user_name, repo_name)
@@ -196,35 +202,40 @@ module Github
     # List repositories for the authenticated user
     #
     # = Examples
-    #   @github = Github.new { :consumer_key => ... }
+    #   @github = Github.new :oauth_token => '...'
     #   @github.repos.list_repos
+    #   @github.repos.list_repos { |repo| ... }
     #
     # List public repositories for the specified user.
     #
     # = Examples
     #   github = Github.new
-    #   github.repos.list_repos(:user => 'user-name')
+    #   github.repos.list_repos :user => 'user-name'
+    #   github.repos.list_repos :user => 'user-name', { |repo| ... }
     #
     # List repositories for the specified organisation.
     #
     # = Examples
     #  @github = Github.new
-    #  @github.repos.list_repos(:org => 'org-name')
+    #  @github.repos.list_repos :org => 'org-name'
+    #  @github.repos.list_repos :org => 'org-name', { |repo| ... }
     #
     def repos(*args)
       params = args.last.is_a?(Hash) ? args.pop : {}
       _normalize_params_keys(params)
-      _merge_user_into_params!(params) unless params.has_key?('user')
+      # _merge_user_into_params!(params) unless params.has_key?('user')
       _filter_params_keys(%w[ org user type ], params)
 
-      if (user_name = params.delete("user"))
+      response = if (user_name = params.delete("user"))
         get("/users/#{user_name}/repos")
       elsif (org_name = params.delete("org"))
-        get("/users/#{org_name}/repos", params)
+        get("/orgs/#{org_name}/repos", params)
       else
         # For authenticated user
         get("/user/repos", params)
       end
+      return response unless block_given?
+      response.each { |el| yield el }
     end
     alias :list_repos :repos
     alias :list_repositories :repos

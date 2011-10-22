@@ -1,5 +1,4 @@
-= github
-  (https://secure.travis-ci.org/peter-murach/github.png?branch=master)
+= github {<img src="http://travis-ci.org/peter-murach/github.png?branch=master" />}[http://travis-ci.org/peter-murach/github]
 
 A Ruby wrapper for the GitHub REST API v3.
 
