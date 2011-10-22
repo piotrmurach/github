@@ -15,35 +15,35 @@ RSpec.configure do |config|
   config.include WebMock::API
 end
 
-def stub_get(path, endpoint = Github.endpoint)
+def stub_get(path, endpoint = Github.endpoint.to_s)
   stub_request(:get, endpoint + path)
 end
 
-def stub_post(path, endpoint = Github.endpoint)
+def stub_post(path, endpoint = Github.endpoint.to_s)
   stub_request(:post, endpoint + path)
 end
 
-def stub_patch(path, endpoint = Github.endpoint)
+def stub_patch(path, endpoint = Github.endpoint.to_s)
   stub_request(:patch, endpoint + path)
 end
 
-def stub_put(path, endpoint = Github.endpoint)
+def stub_put(path, endpoint = Github.endpoint.to_s)
   stub_request(:put, endpoint + path)
 end
 
-def stub_delete(path, endpoint = Github.endpoint)
+def stub_delete(path, endpoint = Github.endpoint.to_s)
   stub_request(:delete, endpoint + path)
 end
 
-def a_get(path, endpoint = Github.endpoint)
+def a_get(path, endpoint = Github.endpoint.to_s)
   a_request(:get, endpoint + path)
 end
 
-def a_post(path, endpoint = Github.endpoint)
+def a_post(path, endpoint = Github.endpoint.to_s)
   a_request(:post, endpoint + path)
 end
 
-def a_patch(path, endpoint = Github.endpoint)
+def a_patch(path, endpoint = Github.endpoint.to_s)
   a_request(:patch, endpoint + path)
 end
 
