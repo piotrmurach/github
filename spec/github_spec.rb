@@ -2,6 +2,11 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe Github do
 
+  before do
+    Github.user = nil
+    Github.repo = nil
+  end
+
   it "should respond to 'new' message" do
     Github.should respond_to :new
   end
