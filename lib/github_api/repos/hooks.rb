@@ -14,7 +14,7 @@ module Github
         remove_events
       ].freeze
 
-      # Active hooks can be configured to trigger for one or more events. The default event is push. 
+      # Active hooks can be configured to trigger for one or more events. The default event is push.
       # The available events are:
       VALID_HOOK_PARAM_VALUES = {
         'events' => %w[

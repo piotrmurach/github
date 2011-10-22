@@ -42,7 +42,7 @@ module Github
 
     VALID_REPO_TYPES = %w[ all public private member ]
 
-    # Creates new Repos API
+    # Creates new Repositories API
     def initialize(options = {})
       super(options)
     end
@@ -146,7 +146,7 @@ module Github
     #  @github = Github.new
     #  @github.repos.edit_repo('user-name', 'repo-name', { :name => 'hello-world', :description => 'This is your first repo', :homepage => "https://github.com", :public => true, :has_issues => true })
     #
-    def edit_repo(user=nil, repo=nil, params={})
+    def edit_repo(user_name=nil, repo_name=nil, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
 
@@ -245,6 +245,7 @@ module Github
       return response unless block_given?
       response.each { |el| yield el }
     end
+    alias :list_tags :tags
     alias :repo_tags :tags
     alias :repository_tags :tags
 
@@ -264,6 +265,7 @@ module Github
       return response unless block_given?
       response.each { |el| yield el }
     end
+    alias :list_teams :teams
     alias :repo_teams :teams
     alias :repository_teams :teams
 
