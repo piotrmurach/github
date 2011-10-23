@@ -12,7 +12,8 @@ module Github
       :Forks         => 'forks',
       :Hooks         => 'hooks',
       :Keys          => 'keys',
-      :Watching      => 'watching'
+      :Watching      => 'watching',
+      :PubSubHubbub  => 'pub_sub_hubbub'
 
     include Github::Repos::Collaborators
     include Github::Repos::Commits
@@ -21,6 +22,7 @@ module Github
     include Github::Repos::Hooks
     include Github::Repos::Keys
     include Github::Repos::Watching
+    include Github::Repos::PubSubHubbub
 
     DEFAULT_REPO_OPTIONS = {
       "homepage"   => "https://github.com",
@@ -28,7 +30,7 @@ module Github
       "has_issues" => true,
       "has_wiki"   => true,
       "has_downloads" => true
-    }
+    }.freeze
 
     VALID_REPO_OPTIONS = %w[
       name
@@ -40,7 +42,7 @@ module Github
       has_downloads
     ].freeze
 
-    VALID_REPO_TYPES = %w[ all public private member ]
+    VALID_REPO_TYPES = %w[ all public private member ].freeze
 
     # Creates new Repositories API
     def initialize(options = {})
