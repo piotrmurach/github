@@ -12,7 +12,7 @@ Grab the gem by issuing
 
 or in your Gemfile
 
-  gem "github_api", "~> 0.1.1"
+  gem "github_api", "~> 0.2.0"
 
 == Usage
 
