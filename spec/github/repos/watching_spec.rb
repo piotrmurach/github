@@ -10,6 +10,7 @@ describe Github::Repos::Watching do
 
   describe "watchers" do
     before do
+      github.oauth_token = nil
       stub_get("/repos/#{user}/#{repo}/watchers").
         to_return(:body => fixture("repos/watchers.json"), :status => 200, :headers => {})
     end
@@ -63,6 +64,7 @@ describe Github::Repos::Watching do
 
     context "if user unauthenticated" do
       before do
+        github.oauth_token = nil
         WebMock.reset!
       end
 
@@ -153,6 +155,10 @@ describe Github::Repos::Watching do
           github.oauth_token = OAUTH_TOKEN
           stub_put("/user/watched/#{user}/#{repo}?access_token=#{OAUTH_TOKEN}").
             to_return(:body => "", :status => 204, :headers => {})
+        end
+
+        after do
+          github.oauth_token = nil # ensure authentication is reset
         end
 
         it "should successfully watch a repo" do
