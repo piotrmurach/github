@@ -16,7 +16,7 @@ module Github
     def header_options() # :nodoc:
       {
         :headers => {
-          'Accept'       => accepts,
+          'Accept'       => '*/*', #accepts,
           'User-Agent'   => user_agent,
           'Content-Type' => 'application/x-www-form-urlencoded'
         },
@@ -35,7 +35,7 @@ module Github
 
     def connection(options = {}) # :nodoc:
 
-      parse(options[:resource], options[:mime_type] || mime_type) if options[:mime_type]
+      # parse(options['resource'], options['mime_type'] || mime_type) if options['mime_type']
 
       merged_options = connection_options.merge(header_options)
 

@@ -26,18 +26,17 @@ module Github
     }
 
     def parse(resource = nil, mime_type = :json)
-      puts "resource=#{resource}, mime=#{mime_type}"
       resource  = lookup_resource(resource) if resource
       mime_type = lookup_mime(mime_type)
-      self.accepts = "application/#{resource}#{mime_type}"
+      self.accepts = "application/#{resource || ''}#{mime_type}"
     end
 
     def lookup_resource(name)
-      RESOURCE_LOOKUP.fetch(name.to_sym)
+      RESOURCE_LOOKUP.fetch(name)
     end
 
     def lookup_mime(name)
-      MIME_LOOKUP.fetch(name.to_sym)
+      MIME_LOOKUP.fetch(name)
     end
 
     def _normalize_name(name)

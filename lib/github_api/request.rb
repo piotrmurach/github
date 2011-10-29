@@ -63,10 +63,8 @@ module Github
     end
 
     def _extract_mime_type(params, options) # :nodoc:
-      options.merge!({
-        :resource  => params.delete('resource'),
-        :mime_type => params.delete('mime_type')
-      })
+      options['resource']  = params.delete('resource') || ''
+      options['mime_type'] = params.delete('mime_type')
     end
 
     # no need for this smizzle
