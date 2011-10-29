@@ -39,9 +39,6 @@ module Github
       if !METHODS.include?(method)
         raise ArgumentError, "unkown http method: #{method}"
       end
-
-      debugger
-
       _extract_mime_type(params, options)
 
       puts "EXECUTED: #{method} - #{path} with #{params} and #{options}"

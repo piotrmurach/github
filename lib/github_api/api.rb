@@ -41,7 +41,7 @@ module Github
         send("#{key}=", options[key])
       end
       _process_basic_auth(options[:basic_auth])
-      @cached = Hash.new
+      client if client_id? && client_secret?
     end
 
   private
