@@ -58,8 +58,8 @@ describe Github::Authorization do
 
     it "should make the authorization request" do
       expect {
-      github.get_token code
-      a_request(:post, "https://github.com/login/oauth/access_token").should have_been_made
+        github.get_token code
+        a_request(:post, "https://github.com/login/oauth/access_token").should have_been_made
       }.to raise_error(OAuth2::Error)
     end
 
