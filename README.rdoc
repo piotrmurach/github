@@ -108,12 +108,14 @@ or organisation name, allow you to switch the way the data is returned to you, f
 
 == MIME Types
 
-Provides support for the following mime types
+Issues, PullRequests and few other API leverage custom mime types which are <tt>:json</tt>, <tt>:blob</tt>, <tt>:raw</tt>, <tt>:text</tt>, <tt>:html</tt>, <tt>:full</tt>. By default <tt>:raw</tt> is used.
 
 In order to pass a mime type with your request do
 
-  @github = Github.new :oauth_token
-  @github...
+  @github = Github.new
+  @github.pull_requests.pull_requests 'peter-murach', 'github', :mime_type => :full
+
+  Your header will contain 'Accept: "application/vnd.github-pull.full+json"' which in turn returns raw, text and html representations in response body.
 
 == Configuration
 
@@ -131,6 +133,12 @@ or
   Github.new(:basic_auth => 'login:password)
 
 All parameters can be overwirtten as per method call. By passing parameters hash...
+
+== Caching
+
+Each <tt>get</tt> request by default is not going to be cached. In order to set the cache do... If no cache type is provided a default memoization is done.
+
+  Github.cache do...
 
 == Examples
 
@@ -156,9 +164,13 @@ Query requests instead of http responses return boolean values
   @github = Github.new
   @github.orgs.public_member? 'github', 'technoweenie' # => true
 
-== Caching
+== Rails Example
 
-Each call by default is not going to be cached. In order to set the inmemory cache do...
+A Rails controller that allows a user to authorize their GitHub account and then perform request.
+
+  class GithubController < ApplicationController
+
+  end
 
 == TODO
 
