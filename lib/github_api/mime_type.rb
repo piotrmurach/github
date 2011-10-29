@@ -9,12 +9,12 @@ module Github
       :json           => 'json',
       :issue          => 'vnd.github-issue.',
       :issue_comment  => 'vnd.github-issuecomment.',
-      :commit_comment => 'vnd.github-commitcomment',
+      :commit_comment => 'vnd.github-commitcomment.',
       :pull_request   => 'vnd.github-pull.',
       :pull_comment   => 'vnd.github-pullcomment.',
       :gist_comment   => 'vnd.github-gistcomment.',
       :blob           => 'vnd.github-blob.'
-    }.freeze
+    }
 
     MIME_LOOKUP = {
       :json => 'json',
@@ -23,7 +23,7 @@ module Github
       :text => 'text+json',
       :html => 'html+json',
       :full => 'full+json'
-    }.freeze
+    }
 
     def parse(resource = nil, mime_type = :json)
       puts "resource=#{resource}, mime=#{mime_type}"
@@ -32,12 +32,12 @@ module Github
       self.accepts = "application/#{resource}#{mime_type}"
     end
 
-    def lookup_mime(name)
-      RESOURCE_LOOKUP[name.to_sym]
+    def lookup_resource(name)
+      RESOURCE_LOOKUP.fetch(name.to_sym)
     end
 
-    def lookup_resource(name)
-      MIME_LOOKUP[name.to_sym]
+    def lookup_mime(name)
+      MIME_LOOKUP.fetch(name.to_sym)
     end
 
     def _normalize_name(name)

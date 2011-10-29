@@ -51,6 +51,7 @@ module Github
     :Orgs         => 'orgs',
     :PullRequests => 'pull_requests',
     :Users        => 'users',
-    :CoreExt      => 'core_ext'
+    :CoreExt      => 'core_ext',
+    :MimeType     => 'mime_type'
 
 end # Github
