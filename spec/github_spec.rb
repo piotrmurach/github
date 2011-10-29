@@ -74,12 +74,12 @@ describe Github do
       Github.repo.should == 'github'
     end
 
-    it "should have faraday options as hash" do
-      Github.faraday_options.should be_a Hash
+    it "should have connection options as hash" do
+      Github.connection_options.should be_a Hash
     end
 
-    it "should initialize faraday options to empty hash" do
-      Github.faraday_options.should be_empty
+    it "should initialize connection options to empty hash" do
+      Github.connection_options.should be_empty
     end
 
     it "shoulve have not set user's login" do
@@ -88,6 +88,10 @@ describe Github do
 
     it "should have not set user's password" do
       Github.password.should be_nil
+    end
+
+    it "should have set mime type to json" do
+      Github.mime_type.should == :json
     end
   end
 
