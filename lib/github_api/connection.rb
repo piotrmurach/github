@@ -11,33 +11,13 @@ require 'github_api/request/basic_auth'
 module Github
   module Connection
 
-    # Available resources 
-    RESOURCES = {
-      :issue         => 'vnd.github-issue.',
-      :issuecomment  => 'vnd.github-issuecomment.',
-      :commitcomment => 'vnd.github-commitcomment',
-      :pull          => 'vnd.github-pull.',
-      :pullcomment   => 'vnd.github-pullcomment.',
-      :gistcomment   => 'vnd.github-gistcomment.'
-    }
+  private
 
-    # Mime types used by resources
-    RESOURCE_MIME_TYPES = {
-      :raw  => 'raw+json',
-      :text => 'text+json',
-      :html => 'html+json',
-      :full => 'html+full'
-    }
-
-    BLOB_MIME_TYPES = {
-      :raw => 'vnd.github-blob.raw',
-      :json => 'json'
-    }
-
-    def default_faraday_options()
+    def header_options() # :nodoc:
       {
         :headers => {
-          'Accept' => "application/#{resource}#{format}",
+          # 'Accept' => "application/#{resource}#{format}",
+          'Accept' => accepts,
           'User-Agent' => user_agent
         },
         :ssl => { :verify => false },
@@ -45,21 +25,19 @@ module Github
       }
     end
 
-    # TODO Write mime format conversion
-
-    # Create cache hash and store connection there and then pass it to @connection
-    # add method to invalidate it if previous options are different from current
-
-    def clear_cache
+    def clear_cache # :nodoc:
       @connection = nil
     end
 
-    def caching?
+    def caching? # :nodoc:
       !@connection.nil?
     end
 
-    def connection(options = {})
-      merged_options = faraday_options.merge(default_faraday_options)
+    def connection(options = {}) # :nodoc:
+
+      parse(options[:resource], options[:mime_type] || mime_type)
+
+      merged_options = connection_options.merge(header_options)
 
       clear_cache unless options.empty?
 
