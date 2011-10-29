@@ -9,10 +9,9 @@ module Github
       :client_secret,
       :oauth_token,
       :endpoint,
-      :format,
-      :resource,
+      :mime_type,
       :user_agent,
-      :faraday_options,
+      :connection_options,
       :repo,
       :user,
       :login,
@@ -47,12 +46,11 @@ module Github
     # The value sent in the http header for 'User-Agent' if none is set
     DEFAULT_USER_AGENT = "Github Ruby Gem #{Github::VERSION::STRING}".freeze
 
-    DEFAULT_FORMAT = :json
+    # By default the <tt>Accept</tt> header will make a request for <tt>JSON</tt>
+    DEFAULT_MIME_TYPE = :json
 
-    # By default,  
-    DEFAULT_RESOURCE = nil
-
-    DEFAULT_FARADAY_OPTIONS = {}
+    # By default uses the Faraday connection options if none is set
+    DEFAULT_CONNECTION_OPTIONS = {}
 
     # By default, don't set user name
     DEFAULT_USER = nil
@@ -84,9 +82,8 @@ module Github
       self.oauth_token        = DEFAULT_OAUTH_TOKEN
       self.endpoint           = DEFAULT_ENDPOINT
       self.user_agent         = DEFAULT_USER_AGENT
-      self.faraday_options    = DEFAULT_FARADAY_OPTIONS
-      self.format             = DEFAULT_FORMAT
-      self.resource           = DEFAULT_RESOURCE
+      self.connection_options = DEFAULT_CONNECTION_OPTIONS
+      self.mime_type          = DEFAULT_MIME_TYPE
       self.user               = DEFAULT_USER
       self.repo               = DEFAULT_REPO
       self.login              = DEFAULT_LOGIN
