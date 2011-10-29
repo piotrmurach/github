@@ -9,9 +9,8 @@ module Github
 
     # Setup OAuth2 instance
     def client
-      debugger
       @client ||= ::OAuth2::Client.new(client_id, client_secret,
-        :site => 'https://github.com/login/oauth/authorize',
+        :site          => 'https://github.com',
         :authorize_url => 'login/oauth/authorize',
         :token_url     => 'login/oauth/access_token'
       )
@@ -19,7 +18,8 @@ module Github
 
     # Strategy token
     def auth_code
-      @client.oauth_code
+      _verify_client
+      @client.auth_code
     end
 
     # Sends authorization request to GitHub.
@@ -34,12 +34,20 @@ module Github
     #   * <tt>gist</tt> - write access to gists.
     #
     def authorize_url(params = {})
+      _verify_client
       @client.auth_code.authorize_url(params)
     end
 
     # Makes request to token endpoint and retrieves access token value
     def get_token(authorization_code, params = {})
+      _verify_client
       @client.auth_code.get_token(authorization_code, params)
+    end
+
+    private
+
+    def _verify_client # :nodoc:
+      raise ArgumentError, 'Need to provide client_id and client_secret' unless client_id? && client_secret?
     end
 
   end # Authorization
