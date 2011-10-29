@@ -1,0 +1,56 @@
+# encoding: utf-8
+
+module Github
+  module MimeType
+
+    attr_accessor :accepts
+
+    RESOURCE_LOOKUP = {
+      :json           => 'json',
+      :issue          => 'vnd.github-issue.',
+      :issue_comment  => 'vnd.github-issuecomment.',
+      :commit_comment => 'vnd.github-commitcomment',
+      :pull_request   => 'vnd.github-pull.',
+      :pull_comment   => 'vnd.github-pullcomment.',
+      :gist_comment   => 'vnd.github-gistcomment.',
+      :blob           => 'vnd.github-blob.'
+    }.freeze
+
+    MIME_LOOKUP = {
+      :json => 'json',
+      :blob => 'raw',
+      :raw  => 'raw+json',
+      :text => 'text+json',
+      :html => 'html+json',
+      :full => 'full+json'
+    }.freeze
+
+    def parse(resource = nil, mime_type = :json)
+      puts "resource=#{resource}, mime=#{mime_type}"
+      resource  = lookup_resource(resource) if resource
+      mime_type = lookup_mime(mime_type)
+      self.accepts = "application/#{resource}#{mime_type}"
+    end
+
+    def lookup_mime(name)
+      RESOURCE_LOOKUP[name.to_sym]
+    end
+
+    def lookup_resource(name)
+      MIME_LOOKUP[name.to_sym]
+    end
+
+    def _normalize_name(name)
+      puts "NAME: #{name}"
+      case name
+      when String
+        name.strip.downcase.to_sym
+      when Symbol
+        name
+      else
+        raise ArgumentError, 'Provided MIME Type is not a valid or recognized entry'
+      end
+    end
+
+  end # MimeType
+end # Github
