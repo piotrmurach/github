@@ -20,20 +20,12 @@ Create a new client instance
 
   @github = Github.new
 
-At this stage you can also supply various configuration parameters, such as :user, :repo, :org, :oauth_token, :login, :password or :basic_auth
-which are used thoughtout the API
+At this stage you can also supply various configuration parameters, such as :user, :repo, :org, :oauth_token, :login, :password or :basic_auth which are used thoughtout the API
 
   @github = Github.new :user => 'peter-murach', :repo => 'github-api'
 
-In order to authenticate the user through OAuth2 on GitHub you need to
+You can authenticate either using OAuth authentication convenience methods(see section OAuth) or through basic authentication by passing your login and password credentials
 
-* visit https://github.com/account/applications/ and register your app
-* authorize your credentials https://github.com/login/oauth/authorize
-* get your token https://github.com/login/oauth/access_token
-
-Once you have your consumer and token keys, configure your github instance following instructions under Configuration.
-
-You can also use basic authentication by passing your login and password credentials
   @github = Github.new :login => 'peter-murach', :password => '...'
 
   or use convenience method:
@@ -85,7 +77,7 @@ All method calls form ruby like sentences and allow for intuitive api navigation
 
   @github = Github.new :oauth_token => '...'
   @github.users.following 'wycats'  # => returns users that 'wycats' is following
-  @github.users.following? 'wycats' # => returns true if following, otherwise false
+  @github.users.following 'wycats' # => returns true if following, otherwise false
 
 For specification on all available methods go to http://developer.github.com/v3/ or
 read the rdoc, all methods are documented there with examples of usage.
@@ -105,6 +97,25 @@ or organisation name, allow you to switch the way the data is returned to you, f
   @github.git_data.tree 'peter-murach', 'github', 'c18647b75d72f19c1e0cc8af031e5d833b7f12ea', :recursive => true do |file|
     puts file.path
   end
+
+== OAuth
+
+In order to authenticate the user through OAuth2 on GitHub you need to
+
+* visit https://github.com/account/applications/ and register your app
+
+* authorize your credentials https://github.com/login/oauth/authorize
+  You can use convenience methods to help you achieve this that come with this gem:
+
+    @github = Github.new :client_id => '...', :client_secret => '...'
+    @github.authorize_url :redirect_uri => 'http://localhost', :scope => 'repo'
+    # => "https://github.com/login/oauth/authorize?scope=repo&response_type=code&client_id='...'&redirect_uri=http%3A%2F%2Flocalhost"
+
+    After you get your authorization code, call to receive your access_token
+
+    token = github.get_token( authorization_code )
+
+Once you have your access token, configure your github instance following instructions under Configuration.
 
 == MIME Types
 
@@ -170,15 +181,23 @@ A Rails controller that allows a user to authorize their GitHub account and then
 
   class GithubController < ApplicationController
 
+    def authorize
+      github = Github.new :client_id => '...', :client_secret => '...'
+      address = github.authorize_url :redirect_uri => 'http://...', :scope => 'repo'
+      redirect_to address
+    end
+
+    def callback
+      authorization_code = params[:code]
+      token = github.get_token authorization_code
+      access_token = token.token
+    end
   end
 
 == TODO
 
-* Add support for mime types
 * Add request caching - local filestore?, http caching?.
-* Add oauth2 helper methods.
 * Add response processing methods
-* Add helper methods to return iterators over most common collections.
 * Add response set helper methods e.i. pagination.
 * Add DSL falvoured api access
 
