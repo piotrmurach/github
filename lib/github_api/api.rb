@@ -11,6 +11,7 @@ module Github
 
   # @private
   class API
+    include Authorization
     include MimeType
     include Connection
     include Request
@@ -146,7 +147,9 @@ module Github
       end
     end
 
-    def _merge_parameters(params)
+    def _merge_mime_type(resource, params) # :nodoc:
+      params['resource'] = resource
+      params['mime_type'] = params['mime_type'] || :raw
     end
 
     # TODO add to core extensions

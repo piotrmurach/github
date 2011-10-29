@@ -27,6 +27,8 @@ module Github
       mentioned
       title
       body
+      resource
+      mime_type
     ]
 
     VALID_ISSUE_PARAM_VALUES = {
@@ -58,7 +60,7 @@ module Github
     #
     # = Examples
     #  @github = Github.new :oauth_token => '...'
-    #  @github.issues.issues :since => '2011-04-12312:12:121', 
+    #  @github.issues.issues :since => '2011-04-12312:12:121',
     #    :filter => 'created',
     #    :state  => 'open',
     #    :labels => "bug,ui,bla",
@@ -68,6 +70,7 @@ module Github
     def issues(params={})
       _normalize_params_keys(params)
       _filter_params_keys(VALID_ISSUE_PARAM_NAMES, params)
+      _merge_mime_type(:issue, params)
       _validate_params_values(VALID_ISSUE_PARAM_VALUES, params)
 
       response = get("/issues", params)
@@ -111,6 +114,7 @@ module Github
 
       _normalize_params_keys(params)
       _filter_params_keys(VALID_ISSUE_PARAM_NAMES, params)
+      _merge_mime_type(:issue, params)
       _validate_params_values(VALID_ISSUE_PARAM_VALUES, params)
 
       response = get("/repos/#{user}/#{repo}/issues", params)
@@ -127,7 +131,9 @@ module Github
     def get_issue(user_name, repo_name, issue_id, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
+
       _normalize_params_keys(params)
+      _merge_mime_type(:issue, params)
 
       get("/repos/#{user}/#{repo}/issues/#{issue_id}")
     end
@@ -157,6 +163,7 @@ module Github
       _validate_user_repo_params(user, repo) unless user? && repo?
 
       _normalize_params_keys(params)
+      _merge_mime_type(:issue, params)
       _filter_params_keys(VALID_MILESTONE_INPUTS, params)
 
       raise ArgumentError, "Required params are: :title" unless _validate_inputs(%w[ title ], params)
@@ -192,6 +199,7 @@ module Github
       _validate_presence_of issue_id
 
       _normalize_params_keys(params)
+      _merge_mime_type(:issue, params)
       _filter_params_keys(VALID_MILESTONE_INPUTS, params)
 
       patch("/repos/#{user}/#{repo}/issues/#{issue_id}", params)

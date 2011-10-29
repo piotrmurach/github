@@ -10,6 +10,8 @@ module Github
         path
         position
         in_reply_to
+        mime_type
+        resource
       ].freeze
 
       # List comments on a pull request
@@ -22,7 +24,9 @@ module Github
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
         _validate_presence_of request_id
+
         _normalize_params_keys(params)
+        _merge_mime_type(:pull_comment, params)
 
         response = get("/repos/#{user}/#{repo}/pulls/#{request_id}/comments", params)
         return response unless block_given?
@@ -38,7 +42,9 @@ module Github
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
         _validate_presence_of comment_id
+
         _normalize_params_keys(params)
+        _merge_mime_type(:pull_comment, params)
 
         get("/repos/#{user}/#{repo}/pulls/comments/#{comment_id}", params)
       end
@@ -75,6 +81,7 @@ module Github
         _validate_presence_of request_id
 
         _normalize_params_keys(params)
+        _merge_mime_type(:pull_comment, params)
         _filter_params_keys(VALID_REQUEST_COM_PARAM_NAMES, params)
         _validate_reply_to(params)
 
@@ -96,6 +103,7 @@ module Github
         _validate_presence_of comment_id
 
         _normalize_params_keys(params)
+        _merge_mime_type(:pull_comment, params)
         _filter_params_keys(VALID_REQUEST_COM_PARAM_NAMES, params)
 
         patch("/repos/#{user}/#{repo}/pulls/comments/#{comment_id}", params)
@@ -112,7 +120,9 @@ module Github
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
         _validate_presence_of comment_id
+
         _normalize_params_keys(params)
+        _merge_mime_type(:pull_comment, params)
 
         delete("/repos/#{user}/#{repo}/pulls/comments/#{comment_id}", params)
       end

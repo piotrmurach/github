@@ -16,9 +16,9 @@ module Github
     def header_options() # :nodoc:
       {
         :headers => {
-          # 'Accept' => "application/#{resource}#{format}",
-          'Accept' => accepts,
-          'User-Agent' => user_agent
+          'Accept'       => accepts,
+          'User-Agent'   => user_agent,
+          'Content-Type' => 'application/x-www-form-urlencoded'
         },
         :ssl => { :verify => false },
         :url => endpoint
@@ -67,4 +67,3 @@ module Github
 
   end # Connection
 end # Github
-

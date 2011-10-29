@@ -7,7 +7,7 @@ require 'set'
 module Github
   # Defines HTTP verbs
   module Request
-    
+
     METHODS = [:get, :post, :put, :delete, :patch]
     METHODS_WITH_BODIES = [ :post, :put, :patch ]
 
@@ -40,6 +40,10 @@ module Github
         raise ArgumentError, "unkown http method: #{method}"
       end
 
+      debugger
+
+      _extract_mime_type(params, options)
+
       puts "EXECUTED: #{method} - #{path} with #{params} and #{options}"
 
       response = connection(options).send(method) do |request|
@@ -54,16 +58,26 @@ module Github
       response.body
     end
 
-    def _process_params(params)
+    private
+
+    def _process_params(params) # :nodoc:
       return params['data'] if params.has_key?('data')
       return params
     end
+
+    def _extract_mime_type(params, options) # :nodoc:
+      options.merge!({
+        :resource  => params.delete('resource'),
+        :mime_type => params.delete('mime_type')
+      })
+    end
+
     # no need for this smizzle
     def formatted_path(path, options={})
       [ path, options.fetch(:format, format) ].compact.join('.')
     end
 
-    def basic_auth(login, password)
+    def basic_auth(login, password) # :nodoc:
       auth = Base64.encode("#{login}:#{password}")
       auth.gsub!("\n", "")
     end
