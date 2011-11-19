@@ -3,73 +3,151 @@
 module Github
   class Repos
     module Downloads
-      
-      REQUIRED_PARAMS = %w[ name size ]
-      VALID_PARAMS = %w[ name size description content_type ]
 
-      REQUIRED_S3_PARAMS = %w[ key acl success_action_status Filename AWSAccessKeyId Policy Signature Content-Type file ]
+      REQUIRED_PARAMS = %w[ name size ]
+
+      VALID_DOWNLOAD_PARAM_NAMES = %w[
+        name
+        size
+        description
+        content_type
+      ].freeze
+
+      REQUIRED_S3_PARAMS = %w[
+        path
+        acl
+        name
+        accesskeyid
+        policy
+        signature
+        mime_type
+      ].freeze
+
+      # Status code for successful upload to Amazon S3 service
+      SUCCESS_STATUS = 201
 
       # List downloads for a repository
       #
-      # GET /repos/:user/:repo/downloads
+      # = Examples
+      #  @github = Github.new
+      #  @github.repos.downloads 'user-name', 'repo-name'
+      #  @github.repos.downloads 'user-name', 'repo-name' { |downl| ... }
       #
-      def downloads(user, repo)
-        get("/repos/#{user}/#{repo}/downloads")
+      def downloads(user_name=nil, repo_name=nil, params={})
+        _update_user_repo_params(user_name, repo_name)
+        _validate_user_repo_params(user, repo) unless user? && repo?
+        _normalize_params_keys(params)
+
+        response = get("/repos/#{user}/#{repo}/downloads")
+        return response unless block_given?
+        response.each { |el| yield el }
       end
+      alias :list_downloads :downloads
+      alias :get_downloads :downloads
 
       # Get a single download
       #
-      # GET /repos/:user/:repo/downloads/:id
+      # = Examples
+      #  @github = Github.new
+      #  @github.repos.download 'user-name', 'repo-name'
       #
-      def get_download(user, repo, download_id)
+      def download(user_name, repo_name, download_id, params={})
+        _update_user_repo_params(user_name, repo_name)
+        _validate_user_repo_params(user, repo) unless user? && repo?
+        _validate_presence_of download_id
+        _normalize_params_keys(params)
+
         get("/repos/#{user}/#{repo}/downloads/#{download_id}")
       end
+      alias :get_download :download
 
       # Delete download from a repository
       #
-      # DELETE /repos/:user/:repo/downloads/:id
+      # = Examples
+      #  @github = Github.new
+      #  @github.repos.delete_download 'user-name', 'repo-name', 'download-id'
       #
-      def delete_download(user, repo, download_id)
+      def delete_download(user_name, repo_name, download_id, params={})
+        _update_user_repo_params(user_name, repo_name)
+        _validate_user_repo_params(user, repo) unless user? && repo?
+        _validate_presence_of download_id
+        _normalize_params_keys(params)
+
         delete("/repos/#{user}/#{repo}/downloads/#{download_id}")
       end
 
-      # Creating a new download is a two step process. 
+      # Creating a new download is a two step process.
       # You must first create a new download resource using this method.
       # Response from this method is to be used in #upload method.
       #
-      # POST /repos/:user/:repo/downloads
+      # = Inputs
+      # * <tt>:name</tt> - Required string - name of the file that is being created.
+      # * <tt>:size</tt> - Required number - size of file in bytes.
+      # * <tt>:description</tt> - Optional string
+      # * <tt>:content_type</tt> - Optional string
       #
-      def create_download(user, repo, params={})
+      # = Examples
+      #  @github = Github.new
+      #  @github.repos.create_download 'user-name', 'repo-name',
+      #    "name" =>  "new_file.jpg",
+      #    "size" => 114034,
+      #    "description" => "Latest release",
+      #    "content_type" => "text/plain"
+      #
+      def create_download(user_name=nil, repo_name=nil, params={})
+        _update_user_repo_params(user_name, repo_name)
+        _validate_user_repo_params(user, repo) unless user? && repo?
+
         _normalize_params_keys(params)
-        raise ArgumentError, "expected following inputs to the method: #{REQUIRED_INPUTS.join(', ')}" unless _valid_inputs(REQUIRED_PARAMS, params)
-        _filter_params_keys(VALID_PARAMS, params)
+        _filter_params_keys(VALID_DOWNLOAD_PARAM_NAMES, params)
+
+        raise ArgumentError, "Required parameters are: #{REQUIRED_PARAMS.join(', ')}" unless _validate_inputs(REQUIRED_PARAMS, params)
 
         post("/repos/#{user}/#{repo}/downloads", params)
       end
-        
-      # Upload a file to Amazon, using the reponse instance from 
-      # Github::Repos::Downloads#create. This can be done by passing 
+
+      # Upload a file to Amazon, using the reponse instance from
+      # Github::Repos::Downloads#create_download. This can be done by passing
       # the response object as an argument to upload method.
       #
-      def upload(result, file)
+      # = Parameters
+      # * <tt>resource</tt> - Required Hashie::Mash -resource of the create_download call
+      # * <tt>:size</tt> - Required number - size of file in bytes.
+      #
+      def upload(resource, filename)
+        _validate_presence_of resource, filename
+        raise ArgumentError, 'Need to provied resource of Github::Repose::Downloads#create_download call' unless resource.is_a? Hashie::Mash
+
         REQUIRED_S3_PARAMS.each do |key|
-          raise ArgumentError, "expected following keys: #{REQUIRED_S3_PARAMS.join(', ')}" unless result.respond_to?(key) 
+          raise ArgumentError, "Expected following key: #{key}" unless resource.respond_to?(key)
         end
-        
+
         # TODO use ordered hash if Ruby < 1.9
+        hash = ruby_18 {
+          require 'active_support'
+          ActiveSupport::OrderedHash.new } || ruby_19 { Hash.new }
+
         mapped_params = {
-          "key"                   => result.path,
-          "acl"                   => result.acl,
-          "success_action_status" => 201,
-          "Filename"              => result.name,
-          "AWSAccessKeyId" => result.accesskeyid,
-          "Policy" => result.policy,
-          "Signature" => result.signature,
-          "Content-Type" => result.mime_type,
-          "file" => file 
+          'key'                   => resource.path,
+          'acl'                   => resource.acl,
+          'success_action_status' => SUCCESS_STATUS,
+          'Filename'              => resource.name,
+          'AWSAccessKeyId'        => resource.accesskeyid,
+          'Policy'                => resource.policy,
+          'Signature'             => resource.signature,
+          'Content-Type'          => resource.mime_type,
+          'file'                  => prepend_at_for(filename.to_s)
         }
-        
-        post(result.s3_url, mapped_params)
+
+        post('', mapped_params, { :url => resource.s3_url })
+      end
+      alias :upload_to_s3 :upload
+      alias :upload_to_amazon :upload
+
+    private
+
+      def prepend_at_for(file)
+        /^@.*/ =~ file ? '@' + file : file
       end
 
     end # Downloads
