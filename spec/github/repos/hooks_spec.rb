@@ -19,7 +19,7 @@ describe Github::Repos::Hooks do
       end
 
       it "should get the resources" do
-        github.repos.hooks(user, repo)
+        github.repos.hooks user, repo
         a_get("/repos/#{user}/#{repo}/hooks").should have_been_made
       end
 
@@ -222,7 +222,7 @@ describe Github::Repos::Hooks do
     end
   end # edit_hook
 
-  describe "delete_key" do
+  describe "delete_hook" do
     let(:hook_id) { 1 }
 
     context "resource edited successfully" do
@@ -238,7 +238,7 @@ describe Github::Repos::Hooks do
 
       it "should fail to delete resource without 'hook_id'" do
         expect {
-          github.repos.edit_hook user, repo
+          github.repos.delete_hook user, repo
         }.to raise_error(ArgumentError)
       end
 
