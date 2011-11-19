@@ -17,7 +17,7 @@ module Github
       email
       location
       name
-    ]
+    ].freeze
 
     # Creates new Orgs API
     def initialize(options = {})
@@ -47,6 +47,8 @@ module Github
       return response unless block_given?
       response.each { |el| yield el }
     end
+    alias :list_orgs :orgs
+    alias :list_organizations :orgs
 
     # Get properties for a single organization
     #
@@ -58,6 +60,8 @@ module Github
       _validate_presence_of org_name
       get("/orgs/#{org_name}")
     end
+    alias :get_org :org
+    alias :organisation :org
 
     # Edit organization
     #
@@ -85,6 +89,7 @@ module Github
 
       patch("/orgs/#{org_name}", params)
     end
+    alias :edit_organization :edit_org
 
   end # Orgs
 end # Github
