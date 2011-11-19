@@ -51,6 +51,8 @@ module Github
         return response unless block_given?
         response.each { |el| yield el }
       end
+      alias :repo_hooks :hooks
+      alias :respository_hooks :hooks
 
       # Get a single hook
       #
@@ -66,6 +68,9 @@ module Github
 
         get("/repos/#{user}/#{repo}/hooks/#{hook_id}", params)
       end
+      alias :get_hook :hook
+      alias :repo_hook :hook
+      alias :get_repo_hook :hook
 
       # Create a hook
       #
