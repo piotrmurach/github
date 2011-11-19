@@ -37,12 +37,12 @@ module Github
 
       # parse(options['resource'], options['mime_type'] || mime_type) if options['mime_type']
       debugger
-
-      merged_options = if connection_options.empty?
-        header_options
-      else
-        connection_options.merge(header_options)
-      end
+#       merged_options = if connection_options.empty?
+#         header_options.merge(options)
+#       else
+#         connection_options.merge(header_options)
+#       end
+      merged_options = header_options.merge(options)
 
       clear_cache unless options.empty?
 
