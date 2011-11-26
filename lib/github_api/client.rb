@@ -39,5 +39,11 @@ module Github
       @users ||= _create_instance Github::Users, options
     end
 
+    # An API for users to manage their own tokens. You can only access your own
+    # tokens, and only through Basic Authentication.
+    def oauth(options = {})
+      @oauth ||= _create_instance Github::Authorizations, options
+    end
+
   end # Client
 end # Github
