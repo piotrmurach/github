@@ -53,6 +53,7 @@ module Github
     :Users        => 'users',
     :CoreExt      => 'core_ext',
     :MimeType     => 'mime_type',
-    :Authorization => 'authorization'
+    :Authorization => 'authorization',
+    :Authorizations => 'authorizations'
 
 end # Github
