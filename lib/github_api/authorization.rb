@@ -42,6 +42,11 @@ module Github
       @client.auth_code.get_token(authorization_code, params)
     end
 
+    # Check whether authentication credentials are present
+    def authenticated?
+      basic_auth? || oauth_token? || (login? && password?)
+    end
+
     private
 
     def _verify_client # :nodoc:
