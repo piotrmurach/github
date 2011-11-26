@@ -12,7 +12,7 @@ Grab the gem by issuing
 
 or in your Gemfile
 
-  gem "github_api", "~> 0.2.1"
+  gem "github_api", "~> 0.3.0"
 
 == Usage
 
@@ -28,7 +28,7 @@ You can authenticate either using OAuth authentication convenience methods(see s
 
   @github = Github.new :login => 'peter-murach', :password => '...'
 
-  or use convenience method:
+or use convenience method:
 
   @github = Github.new :basic_auth => 'login:password'
 
@@ -67,6 +67,7 @@ Main API methods are grouped into the following classes that can be instantiated
   Github::PullRequests
   Github::Repos
   Github::Users
+  Github::Authorizations
 
 Some parts of GitHub API v3 require you to be autheticated, for instance the following are examples of APIs only for the authenticated user
 
@@ -116,6 +117,13 @@ In order to authenticate the user through OAuth2 on GitHub you need to
     token = github.get_token( authorization_code )
 
 Once you have your access token, configure your github instance following instructions under Configuration.
+
+Alternatively you can use OAuth Authorizations API. For instance, to create access token through GitHub API do following
+
+  @github = Github.new :basic_auth => 'login:password'
+  @github.oauth.create_authorization 'scopes' => ['repo']
+
+You can add more than one scope from the <tt>user</tt>, <tt>public_repo</tt>, <tt>repo</tt>, <tt>gist</tt> or leave the scopes parameter out, in which case, the default read-only access will be assumed(includes public user profile info, public repo info, and gists).
 
 == MIME Types
 
