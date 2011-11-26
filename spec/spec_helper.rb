@@ -66,6 +66,12 @@ end
 
 OAUTH_TOKEN = 'bafec72922f31fe86aacc8aca4261117f3bd62cf'
 
+def reset_authentication_for(object)
+  ['basic_auth', 'oauth_token', 'login', 'password' ].each do |item|
+    object.send("#{item}=", nil)
+  end
+end
+
 class Hash
   def except(*keys)
     cpy = self.dup
