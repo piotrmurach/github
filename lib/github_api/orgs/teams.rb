@@ -7,9 +7,9 @@ module Github
     # Api calls that require explicit permissions are noted.
     module Teams
 
-      VALID_TEAM_PARAM_NAMES = %w[ name repo_names permission ]
+      VALID_TEAM_PARAM_NAMES = %w[ name repo_names permission ].freeze
       VALID_TEAM_PARAM_VALUES = {
-        'permission' => %w[ pull push admin ]
+        'permission' => %w[ pull push admin ].freeze
       }
 
       # List teams
@@ -22,10 +22,11 @@ module Github
         _validate_presence_of org_name
         _normalize_params_keys(params)
 
-        get("/orgs/#{org_name}/teams", params)
+        response = get("/orgs/#{org_name}/teams", params)
         return response unless block_given?
         response.each { |el| yield el }
       end
+      alias :list_teams :teams
 
       # Get a team
       #
@@ -39,6 +40,7 @@ module Github
 
         get("/teams/#{team_name}", params)
       end
+      alias :get_team :team
 
       # Create a team
       #
@@ -71,7 +73,7 @@ module Github
         post("/orgs/#{org_name}/teams", params)
       end
 
-      # Create a team
+      # Edit a team
       # In order to edit a team, the authenticated user must be an owner of the org that the team is associated with.
       #
       # = Inputs
@@ -123,10 +125,11 @@ module Github
         _validate_presence_of team_name
         _normalize_params_keys(params)
 
-        response = get("/teams/:id/members", params)
+        response = get("/teams/#{team_name}/members", params)
         return response unless block_given?
         response.each { |el| yield el }
       end
+      alias :list_team_members :team_members
 
       # Check if a user is a member of a team
       #
@@ -155,6 +158,7 @@ module Github
         _normalize_params_keys(params)
         put("/teams/#{team_name}/members/#{member_name}", params)
       end
+      alias :add_member :add_team_member
 
       # Remove a team member
       # In order to remove a user from a team, the authenticated user must
@@ -171,6 +175,7 @@ module Github
         _normalize_params_keys(params)
         delete("/teams/#{team_name}/members/#{member_name}", params)
       end
+      alias :remove_member :remove_team_member
 
       # List team repositories
       #
@@ -179,19 +184,20 @@ module Github
       #  @github.orgs.team_repos 'team-name'
       #
       def team_repos(team_name, params={})
-        _validate_presence_of team_name, member_name
+        _validate_presence_of team_name
         _normalize_params_keys(params)
 
         response = get("/teams/#{team_name}/repos", params)
         return response unless block_given?
         response.each { |el| yield el }
       end
+      alias :team_repositories :team_repos
 
       # Check if a repository belongs to a team
       #
       # = Examples
       #  @github = Github.new :oauth_token => '...'
-      #  @github.orgs.team_repo? 'team-name'
+      #  @github.orgs.team_repo? 'team-name', 'user-name', 'repo-name'
       #
       def team_repo?(team_name, user_name, repo_name, params={})
         _validate_presence_of team_name, user_name, repo_name
@@ -201,6 +207,7 @@ module Github
       rescue Github::ResourceNotFound
         false
       end
+      alias :team_repository? :team_repo?
 
       # Add a team repository
       # In order to add a repo to a team, the authenticated user must be
@@ -215,6 +222,7 @@ module Github
         _normalize_params_keys(params)
         put("/teams/#{team_name}/repos/#{user_name}/#{repo_name}", params)
       end
+      alias :add_team_repository :add_team_repo
 
       # Remove a team repository
       # In order to add a repo to a team, the authenticated user must be
@@ -230,6 +238,7 @@ module Github
         _normalize_params_keys(params)
         delete("/teams/#{team_name}/repos/#{user_name}/#{repo_name}", params)
       end
+      alias :remove_team_repository :remove_team_repo
 
     end # Teams
   end # Orgs
