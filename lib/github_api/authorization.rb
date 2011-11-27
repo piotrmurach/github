@@ -44,7 +44,22 @@ module Github
 
     # Check whether authentication credentials are present
     def authenticated?
-      basic_auth? || oauth_token? || (login? && password?)
+      basic_authed? || oauth_token?
+    end
+
+    # Check whether basic authentication credentials are present
+    def basic_authed?
+      basic_auth? || (login? && password?)
+    end
+
+    def authentication
+      if login? && password?
+        { :login => login, :password => password }
+      elsif basic_auth?
+        { :basic_auth => basic_auth }
+      else
+        { }
+      end
     end
 
     private
