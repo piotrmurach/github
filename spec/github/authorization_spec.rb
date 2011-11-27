@@ -68,4 +68,32 @@ describe Github::Authorization do
     end
   end
 
+  context "authentication" do
+    it "should respond to 'authentication'" do
+      github.should respond_to :authentication
+    end
+
+    context 'basic_auth' do
+      before do
+        github = Github.new :basic_auth => 'github:pass'
+      end
+
+      it "should return hash with basic auth params" do
+        github.authentication.should be_a Hash
+        github.authentication.should have_key :basic_auth
+      end
+    end
+
+    context 'login & password' do
+      before do
+        github = Github.new :login => 'github', :password => 'pass'
+      end
+
+      it "should return hash with login & password params" do
+        github.authentication.should be_a Hash
+        github.authentication.should have_key :login
+      end
+    end
+  end # authentication
+
 end # Github::Authorization
