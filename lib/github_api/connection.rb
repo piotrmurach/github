@@ -57,7 +57,7 @@ module Github
           builder.use Faraday::Response::Logger
 
           builder.use Github::Request::OAuth2, oauth_token if oauth_token?
-          builder.use Github::Request::BasicAuth, login, password if login? && password?
+          builder.use Github::Request::BasicAuth, authentication if basic_authed?
 
           unless options[:raw]
             builder.use Github::Response::Mashify
