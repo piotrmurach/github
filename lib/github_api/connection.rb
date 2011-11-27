@@ -36,7 +36,6 @@ module Github
     def connection(options = {}) # :nodoc:
 
       # parse(options['resource'], options['mime_type'] || mime_type) if options['mime_type']
-      debugger
 #       merged_options = if connection_options.empty?
 #         header_options.merge(options)
 #       else

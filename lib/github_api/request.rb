@@ -2,7 +2,7 @@
 
 require 'base64'
 require 'addressable/uri'
-require 'set'
+require 'multi_json'
 
 module Github
   # Defines HTTP verbs
@@ -49,7 +49,7 @@ module Github
           request.url(path, params)
         when *METHODS_WITH_BODIES
           request.path = path
-          request.body = _process_params(params) unless params.empty?
+          request.body = MultiJson.encode(_process_params(params)) unless params.empty?
         end
       end
       response.body
