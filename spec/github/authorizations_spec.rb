@@ -3,9 +3,10 @@ require 'spec_helper'
 describe Github::Authorizations do
 
   let(:github) { Github.new }
+  let(:basic_auth) { 'login:password' }
 
   before do
-    github.basic_auth = 'login:password'
+    github.basic_auth = basic_auth
   end
 
   after do
@@ -15,7 +16,7 @@ describe Github::Authorizations do
   describe "authorizations" do
     context "resource found" do
       before do
-        stub_get("/authorizations").
+        stub_get("/authorizations", "https://#{basic_auth}@api.github.com").
           to_return(:body => fixture('auths/authorizations.json'), :status => 200, :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
@@ -27,7 +28,7 @@ describe Github::Authorizations do
 
       it "should get the resources" do
         github.oauth.authorizations
-        a_get("/authorizations").should have_been_made
+        a_get("/authorizations", "https://#{basic_auth}@api.github.com").should have_been_made
       end
 
       it "should return array of resources" do
@@ -54,7 +55,7 @@ describe Github::Authorizations do
 
     context "resource not found" do
       before do
-        stub_get("/authorizations").
+        stub_get("/authorizations", "https://#{basic_auth}@api.github.com").
           to_return(:body => "", :status => [404, "Not Found"])
       end
 
@@ -69,7 +70,7 @@ describe Github::Authorizations do
 
     context "resource found" do
       before do
-        stub_get("/authorizations/#{authorization_id}").
+        stub_get("/authorizations/#{authorization_id}", "https://#{basic_auth}@api.github.com").
           to_return(:body => fixture('auths/authorization.json'), :status => 200, :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
@@ -79,7 +80,7 @@ describe Github::Authorizations do
 
       it "should get the resource" do
         github.oauth.authorization authorization_id
-        a_get("/authorizations/#{authorization_id}").should have_been_made
+        a_get("/authorizations/#{authorization_id}", "https://#{basic_auth}@api.github.com").should have_been_made
       end
 
       it "should get authorization information" do
@@ -96,7 +97,7 @@ describe Github::Authorizations do
 
     context "resource not found" do
       before do
-        stub_get("/authorizations/#{authorization_id}").
+        stub_get("/authorizations/#{authorization_id}", "https://#{basic_auth}@api.github.com").
           to_return(:body => fixture('auths/authorization.json'), :status => 404, :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
@@ -119,13 +120,13 @@ describe Github::Authorizations do
       end
 
       before do
-        stub_post("/authorizations").with(inputs).
+        stub_post("/authorizations", "https://#{basic_auth}@api.github.com").with(inputs).
           to_return(:body => fixture('auths/authorization.json'), :status => 201, :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
       it "should create resource successfully" do
         github.oauth.create_authorization inputs
-        a_post("/authorizations").with(inputs).should have_been_made
+        a_post("/authorizations", "https://#{basic_auth}@api.github.com").with(inputs).should have_been_made
       end
 
       it "should return the resource" do
@@ -141,7 +142,7 @@ describe Github::Authorizations do
 
     context "failed to create resource" do
       before do
-        stub_post("/authorizations").with(inputs).
+        stub_post("/authorizations", "https://#{basic_auth}@api.github.com").with(inputs).
           to_return(:body => '', :status => 404, :headers => {:content_type => "application/json; charset=utf-8"})
 
       end
@@ -166,13 +167,13 @@ describe Github::Authorizations do
       end
 
       before do
-        stub_patch("/authorizations/#{authorization_id}").with(inputs).
+        stub_patch("/authorizations/#{authorization_id}", "https://#{basic_auth}@api.github.com").with(inputs).
           to_return(:body => fixture('auths/authorization.json'), :status => 201, :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
       it "should update resource successfully" do
         github.oauth.update_authorization authorization_id, inputs
-        a_patch("/authorizations/#{authorization_id}").with(inputs).should have_been_made
+        a_patch("/authorizations/#{authorization_id}", "https://#{basic_auth}@api.github.com").with(inputs).should have_been_made
       end
 
       it "should return the resource" do
@@ -188,7 +189,7 @@ describe Github::Authorizations do
 
     context "failed to update resource" do
       before do
-        stub_patch("/authorizations/#{authorization_id}").with(inputs).
+        stub_patch("/authorizations/#{authorization_id}", "https://#{basic_auth}@api.github.com").with(inputs).
           to_return(:body => '', :status => 404, :headers => {:content_type => "application/json; charset=utf-8"})
 
       end
@@ -213,19 +214,19 @@ describe Github::Authorizations do
       end
 
       before do
-        stub_delete("/authorizations/#{authorization_id}").
+        stub_delete("/authorizations/#{authorization_id}", "https://#{basic_auth}@api.github.com").
           to_return(:body => '', :status => 204, :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
       it "should delete resource successfully" do
         github.oauth.delete_authorization authorization_id
-        a_delete("/authorizations/#{authorization_id}").should have_been_made
+        a_delete("/authorizations/#{authorization_id}", "https://#{basic_auth}@api.github.com").should have_been_made
       end
     end
 
     context "failed to create resource" do
       before do
-        stub_delete("/authorizations/#{authorization_id}").
+        stub_delete("/authorizations/#{authorization_id}", "https://#{basic_auth}@api.github.com").
           to_return(:body => '', :status => 404, :headers => {:content_type => "application/json; charset=utf-8"})
 
       end

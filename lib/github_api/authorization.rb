@@ -52,6 +52,7 @@ module Github
       basic_auth? || (login? && password?)
     end
 
+    # Select authentication parameters
     def authentication
       if login? && password?
         { :login => login, :password => password }
