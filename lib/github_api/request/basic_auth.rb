@@ -9,7 +9,6 @@ module Github
       dependency 'base64'
 
       def call(env)
-        # puts "BASIC: #{@auth}"
         env[:request_headers].merge!('Authorization' => "Basic #{@auth}\"")
 
         @app.call env
@@ -17,8 +16,14 @@ module Github
 
       def initialize(app, *args)
         @app = app
-        login, password = args.shift, args.shift
-        @auth = Base64.encode64("#{login}:#{password}")
+        credentials = ""
+        options = args.last.is_a?(Hash) ? args.pop : {}
+        if options.has_key? :login
+          credentials = "#{options[:login]}:#{options[:password]}"
+        elsif options.has_key? :basic_auth
+          credentials = "#{options[:basic_auth]}"
+        end
+        @auth = Base64.encode64(credentials)
         @auth.gsub!("\n", "")
       end
     end # BasicAuth
