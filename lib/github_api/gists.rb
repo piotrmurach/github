@@ -43,6 +43,7 @@ module Github
       return response unless block_given?
       response.each { |el| yield el }
     end
+    alias :list_gists :gists
 
     # List the authenticated user's starred gists
     #
