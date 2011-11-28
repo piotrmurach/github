@@ -23,7 +23,7 @@ module Github
     end
 
     def respond_to?(method, include_private = false)
-      new.respond_to?(method, include_private) || super(method, include_private) 
+      new.respond_to?(method, include_private) || super(method, include_private)
     end
   end
 
@@ -51,6 +51,7 @@ module Github
     :Orgs         => 'orgs',
     :PullRequests => 'pull_requests',
     :Users        => 'users',
+    :Events       => 'events',
     :CoreExt      => 'core_ext',
     :MimeType     => 'mime_type',
     :Authorization => 'authorization',

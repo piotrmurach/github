@@ -39,6 +39,12 @@ module Github
       @users ||= _create_instance Github::Users, options
     end
 
+    # This is a read-only API to the GitHub events.
+    # These events power the various activity streams on the site.
+    def events(options = {})
+      @events ||= _create_instance Github::Events, options
+    end
+
     # An API for users to manage their own tokens. You can only access your own
     # tokens, and only through Basic Authentication.
     def oauth(options = {})
