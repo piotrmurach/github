@@ -435,4 +435,57 @@ describe Github::Events do
     end
   end # performed
 
+  describe "user_org" do
+    let(:org) { 'github' }
+    context "resource found" do
+      before do
+        stub_get("/users/#{user}/events/orgs/#{org}").
+          to_return(:body => fixture('events/events.json'), :status => 200, :headers => {:content_type => "application/json; charset=utf-8"})
+      end
+
+      it "should fail to get resource without orgname" do
+        expect { github.events.user_org user, nil }.to raise_error(ArgumentError)
+      end
+
+      it "should get the resources" do
+        github.events.user_org user, org
+        a_get("/users/#{user}/events/orgs/#{org}").should have_been_made
+      end
+
+      it "should return array of resources" do
+        events = github.events.user_org user, org
+        events.should be_an Array
+        events.should have(1).items
+      end
+
+      it "should be a mash type" do
+        events = github.events.user_org user, org
+        events.first.should be_a Hashie::Mash
+      end
+
+      it "should get event information" do
+        events = github.events.user_org user, org
+        events.first.type.should == 'Event'
+      end
+
+      it "should yield to a block" do
+        github.events.should_receive(:user_org).with(user, org).and_yield('web')
+        github.events.user_org(user, org) { |param| 'web' }
+      end
+    end
+
+    context "resource not found" do
+      before do
+        stub_get("/users/#{user}/events/orgs/#{org}").
+          to_return(:body => "", :status => [404, "Not Found"])
+      end
+
+      it "should return 404 with a message 'Not Found'" do
+        expect {
+          github.events.user_org user, org
+        }.to raise_error(Github::ResourceNotFound)
+      end
+    end
+  end # user_org
+
 end # Github::Events
