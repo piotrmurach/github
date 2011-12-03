@@ -350,4 +350,89 @@ describe Github::Events do
     end
   end # received
 
+  describe "performed" do
+    context "resource found" do
+      before do
+        stub_get("/users/#{user}/events").
+          to_return(:body => fixture('events/events.json'), :status => 200, :headers => {:content_type => "application/json; charset=utf-8"})
+      end
+
+      it "should fail to get resource without username" do
+        expect { github.events.performed nil }.to raise_error(ArgumentError)
+      end
+
+      it "should get the resources" do
+        github.events.performed user
+        a_get("/users/#{user}/events").should have_been_made
+      end
+
+      it "should return array of resources" do
+        events = github.events.performed user
+        events.should be_an Array
+        events.should have(1).items
+      end
+
+      it "should be a mash type" do
+        events = github.events.performed user
+        events.first.should be_a Hashie::Mash
+      end
+
+      it "should get event information" do
+        events = github.events.performed user
+        events.first.type.should == 'Event'
+      end
+
+      it "should yield to a block" do
+        github.events.should_receive(:performed).with(user).and_yield('web')
+        github.events.performed(user) { |param| 'web' }
+      end
+    end
+
+    context "all public resources found" do
+      before do
+        stub_get("/users/#{user}/events/public").
+          to_return(:body => fixture('events/events.json'), :status => 200, :headers => {:content_type => "application/json; charset=utf-8"})
+      end
+
+      it "should get the resources" do
+        github.events.performed user, :public => true
+        a_get("/users/#{user}/events/public").should have_been_made
+      end
+
+      it "should return array of resources" do
+        events = github.events.performed user, :public => true
+        events.should be_an Array
+        events.should have(1).items
+      end
+
+      it "should be a mash type" do
+        events = github.events.performed user, :public => true
+        events.first.should be_a Hashie::Mash
+      end
+
+      it "should get event information" do
+        events = github.events.performed user, :public => true
+        events.first.type.should == 'Event'
+      end
+
+      it "should yield to a block" do
+        github.events.should_receive(:performed).with(user).and_yield('web')
+        github.events.performed(user) { |param| 'web' }
+      end
+    end
+
+    context "resource not found" do
+      before do
+        stub_get("/users/#{user}/events").
+          to_return(:body => "", :status => [404, "Not Found"])
+      end
+
+      it "should return 404 with a message 'Not Found'" do
+        expect {
+          github.events.performed user
+        }.to raise_error(Github::ResourceNotFound)
+      end
+    end
+  end # performed
+
 end # Github::Events
