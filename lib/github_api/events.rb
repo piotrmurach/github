@@ -175,5 +175,28 @@ module Github
     alias :user_performed :performed
     alias :list_user_performed :performed
 
+    # List all events for an organization
+    #
+    # This is the user’s organization dashboard. You must be authenticated
+    # as the user to view this.
+    #
+    # = Examples
+    #  @github = Github.new
+    #  @github.events.user_org 'user-name', 'org-name'
+    #  @github.events.user_org 'user-name', 'org-name' { |event| ... }
+    #
+    def user_org(user_name, org_name, params={})
+      _validate_presence_of user_name, org_name
+      _normalize_params_keys(params)
+
+      response = get("/users/#{user_name}/events/orgs/#{org_name}", params)
+      return response unless block_given?
+      response.each { |el| yield el }
+    end
+    alias :user_organization :user_org
+    alias :list_user_org :user_org
+    alias :list_user_org_events :user_org
+    alias :list_user_organization_events :user_org
+
   end # Events
 end # Github
