@@ -110,6 +110,10 @@ module Github
 
     # List all events that a user has received
     #
+    # These are events that you’ve received by watching repos and following users.
+    # If you are authenticated as the given user, you will see private events. 
+    # Otherwise, you’ll only see public events.
+    #
     # = Examples
     #  @github = Github.new
     #  @github.events.received 'user-name'
