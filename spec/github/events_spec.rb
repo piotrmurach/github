@@ -220,7 +220,7 @@ describe Github::Events do
           to_return(:body => fixture('events/events.json'), :status => 200, :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
-      it "should fail to get resource without username" do
+      it "should fail to get resource without orgname" do
         expect { github.events.org nil }.to raise_error(ArgumentError)
       end
 
@@ -264,5 +264,90 @@ describe Github::Events do
       end
     end
   end # org
+
+  describe "received" do
+    context "resource found" do
+      before do
+        stub_get("/users/#{user}/received_events").
+          to_return(:body => fixture('events/events.json'), :status => 200, :headers => {:content_type => "application/json; charset=utf-8"})
+      end
+
+      it "should fail to get resource without username" do
+        expect { github.events.received nil }.to raise_error(ArgumentError)
+      end
+
+      it "should get the resources" do
+        github.events.received user
+        a_get("/users/#{user}/received_events").should have_been_made
+      end
+
+      it "should return array of resources" do
+        events = github.events.received user
+        events.should be_an Array
+        events.should have(1).items
+      end
+
+      it "should be a mash type" do
+        events = github.events.received user
+        events.first.should be_a Hashie::Mash
+      end
+
+      it "should get event information" do
+        events = github.events.received user
+        events.first.type.should == 'Event'
+      end
+
+      it "should yield to a block" do
+        github.events.should_receive(:received).with(user).and_yield('web')
+        github.events.received(user) { |param| 'web' }
+      end
+    end
+
+    context "all public resources found" do
+      before do
+        stub_get("/users/#{user}/received_events/public").
+          to_return(:body => fixture('events/events.json'), :status => 200, :headers => {:content_type => "application/json; charset=utf-8"})
+      end
+
+      it "should get the resources" do
+        github.events.received user, :public => true
+        a_get("/users/#{user}/received_events/public").should have_been_made
+      end
+
+      it "should return array of resources" do
+        events = github.events.received user, :public => true
+        events.should be_an Array
+        events.should have(1).items
+      end
+
+      it "should be a mash type" do
+        events = github.events.received user, :public => true
+        events.first.should be_a Hashie::Mash
+      end
+
+      it "should get event information" do
+        events = github.events.received user, :public => true
+        events.first.type.should == 'Event'
+      end
+
+      it "should yield to a block" do
+        github.events.should_receive(:received).with(user).and_yield('web')
+        github.events.received(user) { |param| 'web' }
+      end
+    end
+
+    context "resource not found" do
+      before do
+        stub_get("/users/#{user}/received_events").
+          to_return(:body => "", :status => [404, "Not Found"])
+      end
+
+      it "should return 404 with a message 'Not Found'" do
+        expect {
+          github.events.received user
+        }.to raise_error(Github::ResourceNotFound)
+      end
+    end
+  end # received
 
 end # Github::Events
