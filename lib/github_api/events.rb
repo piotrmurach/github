@@ -142,5 +142,38 @@ module Github
     alias :user_received :received
     alias :list_user_received :received
 
+    # List all events that a user has performed
+    #
+    # If you are authenticated as the given user, you will see your private
+    # events. Otherwise, you’ll only see public events.
+    #
+    # = Examples
+    #  @github = Github.new
+    #  @github.events.performed 'user-name'
+    #  @github.events.performed 'user-name' { |event| ... }
+    #
+    # List all public events that a user has performed
+    #
+    # = Examples
+    #  @github = Github.new
+    #  @github.events.performed 'user-name', :public => true
+    #  @github.events.performed 'user-name', :public => true { |event| ... }
+    #
+    def performed(user_name, params={})
+      _validate_presence_of user_name
+      _normalize_params_keys(params)
+
+      public_events = if params['public']
+        params.delete('public')
+        '/public'
+      end
+
+      response = get("/users/#{user_name}/events#{public_events}", params)
+      return response unless block_given?
+      response.each { |el| yield el }
+    end
+    alias :user_performed :performed
+    alias :list_user_performed :performed
+
   end # Events
 end # Github
