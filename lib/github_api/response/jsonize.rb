@@ -3,8 +3,12 @@
 require 'faraday'
 
 module Github
-  class Response::Jsonize < Faraday::Response::Middleware
+  class Response::Jsonize < Response
     dependency 'multi_json'
+
+    define_parser do |body|
+      ::MultiJson.decode body
+    end
 
     def parse(body)
       case body
@@ -15,8 +19,8 @@ module Github
       when 'false'
         false
       else
-        ::MultiJson.decode(body)
+        self.class.parser.call body
       end
     end
-  end
+  end # Response::Jsonize
 end # Github
