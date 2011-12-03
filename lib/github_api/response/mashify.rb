@@ -3,24 +3,22 @@
 require 'faraday'
 
 module Github
-  class Response::Mashify < Faraday::Response::Middleware
+  class Response::Mashify < Response
     dependency 'hashie/mash'
 
-    class << self
-      attr_accessor :mash_class
+    define_parser do |body|
+      ::Hashie::Mash.new body
     end
-
-    self.mash_class = ::Hashie::Mash
 
     def parse(body)
       case body
       when Hash
-        self.class.mash_class.new(body)
+        self.class.parser.call body
       when Array
-        body.map { |item| item.is_a?(Hash) ? self.class.mash_class.new(item) : item }
+        body.map { |item| item.is_a?(Hash) ? self.class.parser.call(item) : item }
       else
         body
       end
     end
-  end
+  end # Response::Mashify
 end # Github
