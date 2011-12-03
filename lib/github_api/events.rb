@@ -93,7 +93,7 @@ module Github
     # = Examples
     #  @github = Github.new
     #  @github.events.org 'org-name'
-    #  @github.events.org 'user-name' { |event| ... }
+    #  @github.events.org 'org-name' { |event| ... }
     #
     def org(org_name, params={})
       _validate_presence_of org_name
@@ -107,6 +107,36 @@ module Github
     alias :list_orgs :org
     alias :list_org_events :org
     alias :list_organization_events :org
+
+    # List all events that a user has received
+    #
+    # = Examples
+    #  @github = Github.new
+    #  @github.events.received 'user-name'
+    #  @github.events.received 'user-name' { |event| ... }
+    #
+    # List all public events that a user has received
+    #
+    # = Examples
+    #  @github = Github.new
+    #  @github.events.received 'user-name', :public => true
+    #  @github.events.received 'user-name', :public => true { |event| ... }
+    #
+    def received(user_name, params={})
+      _validate_presence_of user_name
+      _normalize_params_keys(params)
+
+      public_events = if params['public']
+        params.delete('public')
+        '/public'
+      end
+
+      response = get("/users/#{user_name}/received_events#{public_events}", params)
+      return response unless block_given?
+      response.each { |el| yield el }
+    end
+    alias :user_received :received
+    alias :list_user_received :received
 
   end # Events
 end # Github
