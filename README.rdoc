@@ -12,7 +12,7 @@ Grab the gem by issuing
 
 or in your Gemfile
 
-  gem "github_api", "~> 0.3.0"
+  gem "github_api", "~> 0.3.2"
 
 == Usage
 
@@ -67,6 +67,7 @@ Main API methods are grouped into the following classes that can be instantiated
   Github::PullRequests
   Github::Repos
   Github::Users
+  Github::Events
   Github::Authorizations
 
 Some parts of GitHub API v3 require you to be autheticated, for instance the following are examples of APIs only for the authenticated user
