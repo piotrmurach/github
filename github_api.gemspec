@@ -27,4 +27,5 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'webmock', '~> 1.7.6'
   gem.add_development_dependency 'simplecov', '~> 0.4'
   gem.add_development_dependency 'guard-rspec'
+  gem.add_development_dependency 'guard-cucumber'
 end
