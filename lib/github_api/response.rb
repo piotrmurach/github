@@ -6,6 +6,7 @@ module Github
   # Contains methods and attributes that act on the response returned from the 
   # request
   class Response < Faraday::Response::Middleware
+    CONTENT_TYPE = 'Content-Type'.freeze
 
     class << self
       attr_accessor :parser
@@ -17,6 +18,10 @@ module Github
 
     def response_type(env)
       env[:response_headers][CONTENT_TYPE].to_s
+    end
+
+    def parse_response?(env)
+      env[:body].respond_to? :to_str
     end
 
   end # Response
