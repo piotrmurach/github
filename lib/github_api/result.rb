@@ -11,17 +11,15 @@ module Github
 
     # Requests are limited to API v3 to 5000 per hour.
     def ratelimit
-      @env[:response_headers][RATELIMIT]
+      loaded? ? @env[:response_headers][RATELIMIT] : nil
     end
 
     def content_type
-      @env[:response_headers][CONTENT_TYPE]
+      loaded? ? @env[:response_headers][CONTENT_TYPE] : nil
     end
 
     def content_length
-      puts "ENV #{@env.inspect}"
-      @env[:response_headers][CONTENT_LENGTH]
-      @env[:link]
+      loaded? ? @env[:response_headers][CONTENT_LENGTH] : nil
     end
 
     def status
