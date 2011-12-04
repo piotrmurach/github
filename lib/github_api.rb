@@ -25,6 +25,7 @@ module Github
     def respond_to?(method, include_private = false)
       new.respond_to?(method, include_private) || super(method, include_private)
     end
+
   end
 
   module AutoloadHelper
@@ -34,6 +35,17 @@ module Github
         autoload const_name, File.join(prefix, path)
       end
     end
+
+    def register_constant(options)
+      options.each do |const_name, value|
+        const_set const_name.upcase.to_s, value
+      end
+    end
+
+    def lookup_constant(const_name)
+      const_get const_name.upcase.to_s
+    end
+
   end
 
   extend AutoloadHelper
@@ -44,6 +56,7 @@ module Github
     :Repos        => 'repos',
     :Request      => 'request',
     :Response     => 'response',
+    :Result       => 'result',
     :Error        => 'error',
     :Issues       => 'issues',
     :Gists        => 'gists',
