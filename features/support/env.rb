@@ -8,6 +8,6 @@ rescue Bundler::BundlerError => e
 end
 
 $LOAD_PATH.unshift(File.dirname(__FILE__) + '/../../lib')
-require 'github'
+require 'github_api'
 
 require 'rspec/expectations'
