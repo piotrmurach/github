@@ -44,11 +44,12 @@ module Github
     def get_user(user_name=nil, params={})
       _normalize_params_keys(params)
       if user_name
-        get("/users/#{user}", params)
+        get("/users/#{user_name}", params)
       else
         get("/user", params)
       end
     end
+    alias :get_auth_user :get_user
 
     # Update the authenticated user
     #
@@ -77,6 +78,7 @@ module Github
       _filter_params_keys(VALID_USER_PARAMS_NAMES, params)
       patch("/user", params)
     end
+    alias :update_authenticated_user :update_user
 
   end # Users
 end # Github
