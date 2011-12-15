@@ -12,6 +12,14 @@ require 'github_api/request/basic_auth'
 module Github
   module Connection
 
+  ALLOWED_OPTIONS = [
+    :headers,
+    :url,
+    :params,
+    :request,
+    :ssl
+  ].freeze
+
   private
 
     def header_options() # :nodoc:
@@ -42,13 +50,11 @@ module Github
 #       else
 #         connection_options.merge(header_options)
 #       end
-      merged_options = header_options.merge(options)
-
+      merged_options = _filter_params_keys(ALLOWED_OPTIONS, header_options.merge(options))
       clear_cache unless options.empty?
 
       @connection ||= begin
         Faraday.new(merged_options) do |builder|
-
           puts options.inspect
 
           builder.use Faraday::Request::JSON
