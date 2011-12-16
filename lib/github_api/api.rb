@@ -170,6 +170,11 @@ module Github
 
     def _token_required
     end
+    
+    # Removes keys with empty values
+    def _remove_empty_values(params)
+      params.delete_if { |k, v| v.empty? } if params.is_a?(Hash)
+    end
 
   end # API
 end # Github
