@@ -23,6 +23,43 @@ describe Github::Authorization do
     github.client.token_url.should == 'https://github.com/login/oauth/access_token'
   end
 
+  context '.client' do
+    it { github.should respond_to :client }
+
+    it "should return OAuth2::Client instance" do
+      github.client.should be_a OAuth2::Client
+    end
+  end
+
+  context '.auth_code' do
+    let(:oauth) { OAuth2::Client.new(client_id, client_secret) }
+
+    before do
+      github = Github.new :client_id => client_id, :client_secret => client_secret
+    end
+
+    after do
+      github.client_id, github.client_secret = nil, nil
+    end
+
+    it "should throw an error if no client_id" do
+      github.client_id = nil
+      expect { github.auth_code }.should raise_error(ArgumentError)
+    end
+
+    it "should throw an error if no client_secret" do
+      github.client_secret = nil
+      expect { github.auth_code }.should raise_error(ArgumentError)
+    end
+
+    it "should return authentication token code" do
+      github.client_id = client_id
+      github.client_secret = client_secret
+      github.client.stub(:auth_code).and_return code
+      github.auth_code.should == code
+    end
+  end
+
   context "authorize_url" do
     before do
       github = Github.new :client_id => client_id, :client_secret => client_secret
@@ -68,9 +105,49 @@ describe Github::Authorization do
     end
   end
 
+  context ".authenticated?" do
+    it { github.should respond_to :authenticated? }
+
+    it "should return false if falied on basic authentication" do
+      github.stub(:basic_authed?).and_return false
+      github.authenticated?.should be_false
+    end
+
+    it "should return true if basic authentication performed" do
+      github.stub(:basic_authed?).and_return true
+      github.authenticated?.should be_true
+    end
+
+    it "should return true if basic authentication performed" do
+      github.stub(:oauth_token?).and_return true
+      github.authenticated?.should be_true
+    end
+  end
+
+  context ".basic_authed?" do
+    it { github.should respond_to :basic_authed? }
+
+    it "should return false if login is missing" do
+      github.stub(:login?).and_return false
+      github.basic_authed?.should be_false
+    end
+
+    it "should return true if login && password provided" do
+      github.stub(:login?).and_return true
+      github.stub(:password?).and_return true
+      github.basic_authed?.should be_true
+    end
+  end
+
   context "authentication" do
     it "should respond to 'authentication'" do
       github.should respond_to :authentication
+    end
+
+    it "should return empty hash if no basic authentication params available" do
+      github.stub(:login?).and_return false
+      github.stub(:basic_auth?).and_return false
+      github.authentication.should be_empty
     end
 
     context 'basic_auth' do
