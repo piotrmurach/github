@@ -8,7 +8,7 @@ require 'json'
 require 'webmock/rspec'
 require 'github_api'
 
-if RUBY_VERSION > '1.9'
+if RUBY_VERSION > '1.9' and ENV['COVERAGE']
   require 'simplecov'
   SimpleCov.start do
     add_filter "/spec/"
