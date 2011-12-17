@@ -29,7 +29,7 @@ module Github
       body
       resource
       mime_type
-    ]
+    ].freeze
 
     VALID_ISSUE_PARAM_VALUES = {
       'filter'    => %w[ assigned created mentioned subscribed ],
@@ -77,6 +77,7 @@ module Github
       return response unless block_given?
       response.each { |el| yield el }
     end
+    alias :list_issues :issues
 
     # List issues for a repository
     #
@@ -121,6 +122,9 @@ module Github
       return response unless block_given?
       response.each { |el| yield el }
     end
+    alias :repository_issues :repo_issues
+    alias :list_repo_issues :repo_issues
+    alias :list_repository_issues :repo_issues
 
     # Get a single issue
     #
@@ -128,15 +132,17 @@ module Github
     #  @github = Github.new
     #  @github.issues.get_issue 'user-name', 'repo-name', 'issue-id'
     #
-    def get_issue(user_name, repo_name, issue_id, params={})
+    def issue(user_name, repo_name, issue_id, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
+      _validate_presence_of issue_id
 
       _normalize_params_keys(params)
       _merge_mime_type(:issue, params)
 
       get("/repos/#{user}/#{repo}/issues/#{issue_id}")
     end
+    alias :get_issue :issue
 
     # Create an issue
     #
@@ -164,7 +170,7 @@ module Github
 
       _normalize_params_keys(params)
       _merge_mime_type(:issue, params)
-      _filter_params_keys(VALID_MILESTONE_INPUTS, params)
+      _filter_params_keys(VALID_ISSUE_PARAM_NAMES, params)
 
       raise ArgumentError, "Required params are: :title" unless _validate_inputs(%w[ title ], params)
 
