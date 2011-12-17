@@ -1,0 +1,8 @@
+0.3.4 (December 17, 2011)
+
+* adding specs to authorization module to increase coverage to 100%
+* adding specs to issues api to fix create issues bug and increase code coverage
+
+0.3.3 (December 4, 2011)
+
+* fixing json parsing issue preventing repository creation
