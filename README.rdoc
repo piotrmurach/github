@@ -1,6 +1,6 @@
 = GithubAPI {<img src="http://travis-ci.org/peter-murach/github.png?branch=master" />}[http://travis-ci.org/peter-murach/github] {<img src="https://gemnasium.com/peter-murach/github.png?travis" />}[https://gemnasium.com/peter-murach/github]
 
-Wiki[https://github.com/peter-murach/wiki] | RDocs[http://rubydoc.info/github/peter-murach/github/master/frames]
+Wiki[https://github.com/peter-murach/github/wiki] | RDocs[http://rubydoc.info/github/peter-murach/github/master/frames]
 
 A Ruby wrapper for the GitHub REST API v3.
 
