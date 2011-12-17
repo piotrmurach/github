@@ -14,7 +14,7 @@ Grab the gem by issuing
 
 or in your Gemfile
 
-  gem "github_api", "~> 0.3.3"
+  gem "github_api"
 
 == Usage
 
