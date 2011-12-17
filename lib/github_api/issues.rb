@@ -38,6 +38,8 @@ module Github
       'direction' => %w[ desc asc ],
       'since'     => %r{\d{4}-\d{2}-\d{5}:\d{2}:\d{3}}
     }
+    
+    VALID_ISSUE_INPUTS = %w[ title body assignee milestone labels ]
 
     # Creates new Issues API
     def initialize(options = {})
@@ -164,7 +166,8 @@ module Github
 
       _normalize_params_keys(params)
       _merge_mime_type(:issue, params)
-      _filter_params_keys(VALID_MILESTONE_INPUTS, params)
+      _filter_params_keys(VALID_ISSUE_INPUTS, params)
+      _remove_empty_values(params)
 
       raise ArgumentError, "Required params are: :title" unless _validate_inputs(%w[ title ], params)
 
