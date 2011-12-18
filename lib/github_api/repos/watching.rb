@@ -16,7 +16,7 @@ module Github
         _validate_user_repo_params(user, repo) unless user? && repo?
         _normalize_params_keys(params)
 
-        response = get("/repos/#{user}/#{repo}/watchers")
+        response = get("/repos/#{user}/#{repo}/watchers", params)
         return response unless block_given?
         response.each { |el| yield el }
       end
@@ -38,9 +38,9 @@ module Github
         _normalize_params_keys(params)
 
         response = if user
-          get("/users/#{user}/watched")
+          get("/users/#{user}/watched", params)
         else
-          get("/user/watched")
+          get("/user/watched", params)
         end
         return response unless block_given?
         response.each { |el| yield el }
@@ -56,7 +56,7 @@ module Github
       def watching?(user_name, repo_name, params={})
         _validate_presence_of user_name, repo_name
         _normalize_params_keys(params)
-        get("/user/watched/#{user_name}/#{repo_name}")
+        get("/user/watched/#{user_name}/#{repo_name}", params)
         true
       rescue Github::ResourceNotFound
         false
@@ -73,7 +73,7 @@ module Github
       def start_watching(user_name, repo_name, params={})
         _validate_presence_of user_name, repo_name
         _normalize_params_keys(params)
-        put("/user/watched/#{user_name}/#{repo_name}")
+        put("/user/watched/#{user_name}/#{repo_name}", params)
       end
 
       # Stop watching a repository
@@ -86,7 +86,7 @@ module Github
       def stop_watching(user_name, repo_name, params={})
         _validate_presence_of user_name, repo_name
         _normalize_params_keys(params)
-        delete("/user/watched/#{user_name}/#{repo_name}")
+        delete("/user/watched/#{user_name}/#{repo_name}", params)
       end
 
     end # Watching
