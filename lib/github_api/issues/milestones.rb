@@ -4,13 +4,18 @@ module Github
   class Issues
     module Milestones
 
-      VALID_MILSTONE_OPTIONS = {
+      VALID_MILESTONE_OPTIONS = {
        'state' => %w[ open closed ],
        'sort'  => %w[ due_date completeness ],
        'direction' => %w[ desc asc ]
-      }
+      }.freeze # :nodoc:
 
-      VALID_MILESTONE_INPUTS = %w[ title state description due_on ]
+      VALID_MILESTONE_INPUTS = %w[
+        title
+        state
+        description
+        due_on
+      ].freeze # :nodoc:
 
       # List milestones for a repository
       #
@@ -23,18 +28,25 @@ module Github
       #  @github = Github.new :user => 'user-name', :repo => 'repo-name'
       #  @github.issues.milestones
       #
+      #  or
+      #
+      #  @github.issues.milestones :state => 'open',
+      #     :sort => 'due_date',
+      #     :direction => 'asc'
+      #
       def milestones(user_name=nil, repo_name=nil, params={})
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
 
         _normalize_params_keys(params)
-        _filter_params_keys(VALID_MILSTONE_OPTIONS.keys, params)
-        _validate_params_values(VALID_MILSTONE_OPTIONS, params)
+        _filter_params_keys(VALID_MILESTONE_OPTIONS.keys, params)
+        _validate_params_values(VALID_MILESTONE_OPTIONS, params)
 
         response = get("/repos/#{user}/#{repo}/milestones", params)
         return response unless block_given?
         response.each { |el| yield el }
       end
+      alias :list_milestones :milestones
 
       # Get a single milestone
       #
@@ -45,10 +57,12 @@ module Github
       def milestone(user_name, repo_name, milestone_id, params={})
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
+        _validate_presence_of milestone_id
         _normalize_params_keys(params)
 
         get("/repos/#{user}/#{repo}/milestones/#{milestone_id}", params)
       end
+      alias :get_milestone :milestone
 
       # Create a milestone
       #
@@ -60,7 +74,10 @@ module Github
       #
       # = Examples
       #  @github = Github.new :user => 'user-name', :repo => 'repo-name'
-      #  @github.issues.create_milestone :title => 'hello-world'
+      #  @github.issues.create_milestone :title => 'hello-world',
+      #    :state => "open or closed",
+      #    :description => "String",
+      #    :due_on => "Time"
       #
       def create_milestone(user_name=nil, repo_name=nil, params={})
         _update_user_repo_params(user_name, repo_name)
