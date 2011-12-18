@@ -38,7 +38,7 @@ module Github
         _validate_user_repo_params(user, repo) unless user? && repo?
         _normalize_params_keys(params)
 
-        response = get("/repos/#{user}/#{repo}/downloads")
+        response = get("/repos/#{user}/#{repo}/downloads", params)
         return response unless block_given?
         response.each { |el| yield el }
       end
@@ -57,7 +57,7 @@ module Github
         _validate_presence_of download_id
         _normalize_params_keys(params)
 
-        get("/repos/#{user}/#{repo}/downloads/#{download_id}")
+        get("/repos/#{user}/#{repo}/downloads/#{download_id}", params)
       end
       alias :get_download :download
 
@@ -73,7 +73,7 @@ module Github
         _validate_presence_of download_id
         _normalize_params_keys(params)
 
-        delete("/repos/#{user}/#{repo}/downloads/#{download_id}")
+        delete("/repos/#{user}/#{repo}/downloads/#{download_id}", params)
       end
 
       # Creating a new download is a two step process.
