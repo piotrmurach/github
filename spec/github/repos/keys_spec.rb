@@ -6,8 +6,9 @@ describe Github::Repos::Keys do
   let(:user)   { 'peter-murach'}
   let(:repo)   { 'github' }
 
-  describe "keys" do
+  it { described_class::VALID_KEY_PARAM_NAMES.should_not be_nil }
 
+  describe "keys" do
     context "resource found" do
       before do
         stub_get("/repos/#{user}/#{repo}/keys").
