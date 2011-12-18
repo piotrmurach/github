@@ -101,7 +101,11 @@ module Github
       #
       # = Examples
       #  @github = Github.new
-      #  @github.issues.update_milestone 'user-name', 'repo-name', 'milestone-id', :title => 'hello-world'
+      #  @github.issues.update_milestone 'user-name', 'repo-name', 'milestone-id',
+      #    :title => 'hello-world',
+      #    :state => "open or closed",
+      #    :description => "String",
+      #    :due_on => "Time"
       #
       def update_milestone(user_name, repo_name, milestone_id, params={})
         _update_user_repo_params(user_name, repo_name)
