@@ -12,7 +12,7 @@ module Github
         events
         add_events
         remove_events
-      ].freeze
+      ].freeze # :nodoc:
 
       # Active hooks can be configured to trigger for one or more events. The default event is push.
       # The available events are:
@@ -31,9 +31,9 @@ module Github
           member
           public
         ]
-      }.freeze
+      }.freeze # :nodoc:
 
-      REQUIRED_PARAMS = %w[ name config ].freeze
+      REQUIRED_PARAMS = %w[ name config ].freeze # :nodoc:
 
       # List repository hooks
       #
@@ -52,7 +52,7 @@ module Github
         response.each { |el| yield el }
       end
       alias :repo_hooks :hooks
-      alias :respository_hooks :hooks
+      alias :repository_hooks :hooks
 
       # Get a single hook
       #
@@ -70,6 +70,7 @@ module Github
       end
       alias :get_hook :hook
       alias :repo_hook :hook
+      alias :repository_hook :hook
       alias :get_repo_hook :hook
 
       # Create a hook
