@@ -2,11 +2,22 @@ require 'spec_helper'
 
 describe Github::Repos::Hooks do
 
+  let(:hooks_api) { Github::Repos::Hooks }
   let(:github) { Github.new }
   let(:user)   { 'peter-murach' }
   let(:repo)   { 'github' }
 
+  it { hooks_api::VALID_HOOK_PARAM_NAMES.should_not be_nil }
+  it { hooks_api::VALID_HOOK_PARAM_VALUES.should_not be_nil }
+  it { hooks_api::REQUIRED_PARAMS.should_not be_nil }
+
   describe "hooks" do
+    context 'check aliases' do
+      it { github.repos.should respond_to :hooks }
+      it { github.repos.should respond_to :repo_hooks }
+      it { github.repos.should respond_to :repository_hooks }
+    end
+
     context "resource found" do
       before do
         stub_get("/repos/#{user}/#{repo}/hooks").
@@ -35,7 +46,7 @@ describe Github::Repos::Hooks do
       end
 
       it "should get hook information" do
-        hooks = github.repos.hooks(user, repo)
+        hooks = github.repos.hooks user, repo
         hooks.first.name.should == 'web'
       end
 
@@ -62,6 +73,14 @@ describe Github::Repos::Hooks do
   describe "hook" do
     let(:hook_id) { 1 }
 
+    context 'check aliases' do
+      it { github.repos.should respond_to :hook }
+      it { github.repos.should respond_to :get_hook }
+      it { github.repos.should respond_to :repo_hook }
+      it { github.repos.should respond_to :get_repo_hook }
+      it { github.repos.should respond_to :repository_hook }
+    end
+
     context "resource found" do
       before do
         stub_get("/repos/#{user}/#{repo}/hooks/#{hook_id}").
@@ -87,7 +106,6 @@ describe Github::Repos::Hooks do
         hook = github.repos.hook user, repo, hook_id
         hook.should be_a Hashie::Mash
       end
-
     end
 
     context "resource not found" do
@@ -98,36 +116,41 @@ describe Github::Repos::Hooks do
 
       it "should fail to retrive resource" do
         expect {
-          github.repos.hook(user, repo, hook_id)
+          github.repos.hook user, repo, hook_id
         }.to raise_error(Github::ResourceNotFound)
       end
     end
   end # hook
 
   describe "create_hook" do
-    let(:inputs) { {:name => 'web', :config => {:url => "http://something.com/webhook"}, :active => true}}
+    let(:inputs) {
+      {
+        :name => 'web',
+        :config => { :url => "http://something.com/webhook" },
+        :active => true
+      }
+    }
 
     context "resouce created" do
       before do
         stub_post("/repos/#{user}/#{repo}/hooks").with(inputs).
           to_return(:body => fixture('repos/hook.json'), :status => 201, :headers => {:content_type => "application/json; charset=utf-8"})
-
       end
 
       it "should fail to create resource if 'name' input is missing" do
         expect {
-          github.repos.create_hook(user, repo, inputs.except(:name) )
+          github.repos.create_hook user, repo, inputs.except(:name)
         }.to raise_error(ArgumentError)
       end
 
       it "should failt to create resource if 'config' input is missing" do
         expect {
-          github.repos.create_hook(user, repo, inputs.except(:config) )
+          github.repos.create_hook user, repo, inputs.except(:config)
         }.to raise_error(ArgumentError)
       end
 
       it "should create resource successfully" do
-        github.repos.create_hook(user, repo, inputs)
+        github.repos.create_hook user, repo, inputs
         a_post("/repos/#{user}/#{repo}/hooks").with(inputs).should have_been_made
       end
 
@@ -142,16 +165,15 @@ describe Github::Repos::Hooks do
       end
     end
 
-    context "failed to create resource" do
+    context "fail to create resource" do
       before do
         stub_post("/repos/#{user}/#{repo}/hooks").with(inputs).
           to_return(:body => fixture('repos/hook.json'), :status => 404, :headers => {:content_type => "application/json; charset=utf-8"})
-
       end
 
-      it "should faile to retrieve resource" do
+      it "should fail to retrieve resource" do
         expect {
-          github.repos.create_hook(user, repo, inputs)
+          github.repos.create_hook user, repo, inputs
         }.to raise_error(Github::ResourceNotFound)
       end
     end
@@ -159,7 +181,13 @@ describe Github::Repos::Hooks do
 
   describe "edit_hook" do
     let(:hook_id) { 1 }
-    let(:inputs) { {:name => 'web', :config => {:url => "http://something.com/webhook"}, :active => true}}
+    let(:inputs) {
+      {
+        :name => 'web',
+        :config => { :url => "http://something.com/webhook" },
+        :active => true
+      }
+    }
 
     context "resource edited successfully" do
       before do
@@ -211,7 +239,6 @@ describe Github::Repos::Hooks do
       before do
         stub_patch("/repos/#{user}/#{repo}/hooks/#{hook_id}").with(inputs).
           to_return(:body => fixture("repos/hook.json"), :status => 404, :headers => { :content_type => "application/json; charset=utf-8"})
-
       end
 
       it "should fail to find resource" do
@@ -225,7 +252,7 @@ describe Github::Repos::Hooks do
   describe "delete_hook" do
     let(:hook_id) { 1 }
 
-    context "resource edited successfully" do
+    context "resource removed successfully" do
       before do
         stub_delete("/repos/#{user}/#{repo}/hooks/#{hook_id}").
           to_return(:body => '', :status => 204, :headers => { :content_type => "application/json; charset=utf-8"})
@@ -252,7 +279,6 @@ describe Github::Repos::Hooks do
       before do
         stub_delete("/repos/#{user}/#{repo}/hooks/#{hook_id}").
           to_return(:body => fixture("repos/hook.json"), :status => 404, :headers => { :content_type => "application/json; charset=utf-8"})
-
       end
 
       it "should fail to find resource" do
@@ -266,7 +292,7 @@ describe Github::Repos::Hooks do
   describe "test_hook" do
     let(:hook_id) { 1 }
 
-    context "resource edited successfully" do
+    context "resource tested successfully" do
       before do
         stub_post("/repos/#{user}/#{repo}/hooks/#{hook_id}/test").
           to_return(:body => '', :status => 204, :headers => { :content_type => "application/json; charset=utf-8"})
