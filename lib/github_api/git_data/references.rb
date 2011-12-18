@@ -49,9 +49,9 @@ module Github
         _normalize_params_keys(params)
 
         response = if ref
-          get("/repos/#{user}/#{repo}/git/refs/#{ref}")
+          get("/repos/#{user}/#{repo}/git/refs/#{ref}", params)
         else
-          get("/repos/#{user}/#{repo}/git/refs")
+          get("/repos/#{user}/#{repo}/git/refs", params)
         end
         return response unless block_given?
         response.each { |el| yield el }

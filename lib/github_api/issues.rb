@@ -140,7 +140,7 @@ module Github
       _normalize_params_keys(params)
       _merge_mime_type(:issue, params)
 
-      get("/repos/#{user}/#{repo}/issues/#{issue_id}")
+      get("/repos/#{user}/#{repo}/issues/#{issue_id}", params)
     end
     alias :get_issue :issue
 

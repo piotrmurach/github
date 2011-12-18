@@ -67,7 +67,7 @@ module Github
       def public_members(org_name, params={})
         _validate_presence_of org_name
         _normalize_params_keys(params)
-        response = get("/orgs/#{org_name}/public_members")
+        response = get("/orgs/#{org_name}/public_members", params)
         return response unless block_given?
         response.each { |el| yield el }
       end

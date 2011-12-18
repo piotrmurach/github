@@ -58,7 +58,7 @@ module Github
     #
     def org(org_name, params={})
       _validate_presence_of org_name
-      get("/orgs/#{org_name}")
+      get("/orgs/#{org_name}", params)
     end
     alias :get_org :org
     alias :organisation :org
