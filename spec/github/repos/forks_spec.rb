@@ -7,6 +7,11 @@ describe Github::Repos::Forks do
   let(:repo)   { 'github' }
 
   describe "forks" do
+
+    it { github.repos.should respond_to :forks }
+    it { github.repos.should respond_to :repo_forks }
+    it { github.repos.should respond_to :repository_forks }
+
     context "resource found" do
       before do
         stub_get("/repos/#{user}/#{repo}/forks").
