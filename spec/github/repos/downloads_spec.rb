@@ -6,7 +6,15 @@ describe Github::Repos::Downloads do
   let(:user)   { 'peter-murach' }
   let(:repo)   { 'github' }
 
+  it { described_class::VALID_DOWNLOAD_PARAM_NAMES.should_not be_nil }
+  it { described_class::REQUIRED_PARAMS.should_not be_nil }
+  it { described_class::REQUIRED_S3_PARAMS.should_not be_nil }
+
   describe "downloads" do
+    it { github.repos.should respond_to :downloads }
+    it { github.repos.should respond_to :list_downloads }
+    it { github.repos.should respond_to :get_downloads }
+
     context "resource found" do
       before do
         stub_get("/repos/#{user}/#{repo}/downloads").
@@ -61,6 +69,9 @@ describe Github::Repos::Downloads do
 
   describe "download" do
     let(:download_id) { 1 }
+
+    it { github.repos.should respond_to :download }
+    it { github.repos.should respond_to :get_download }
 
     context "resource found" do
       before do
