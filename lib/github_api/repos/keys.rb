@@ -18,7 +18,7 @@ module Github
         _validate_user_repo_params(user, repo) unless user? && repo?
         _normalize_params_keys(params)
 
-        response = get("/repos/#{user}/#{repo}/keys")
+        response = get("/repos/#{user}/#{repo}/keys", params)
         return response unless block_given?
         response.each { |el| yield el }
       end
