@@ -33,7 +33,7 @@ module Github
     # List public and private organizations for the authenticated user.
     #
     #  @github = Github.new :oauth_token => '..'
-    #  @github.orgs.org 'github'
+    #  @github.orgs.orgs 'github'
     #
     def orgs(user_name=nil, params={})
       _update_user_repo_params(user_name)
