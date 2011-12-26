@@ -1,11 +1,9 @@
 require 'spec_helper'
 
 describe Github::Issues::Milestones do
+  include SpecHelpers::Base
 
   let(:milestones_api) { Github::Issues::Milestones }
-  let(:github) { Github.new }
-  let(:user)   { 'peter-murach' }
-  let(:repo)   { 'github' }
 
   it { milestones_api::VALID_MILESTONE_OPTIONS.should_not be_nil }
   it { milestones_api::VALID_MILESTONE_INPUTS.should_not be_nil }
