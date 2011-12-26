@@ -29,6 +29,9 @@ module Github
       return response unless block_given?
       response.each { |el| yield el }
     end
+    alias :list_events :events
+    alias :issue_events :events
+    alias :repo_events :events
 
     # Get a single event
     #
@@ -44,6 +47,7 @@ module Github
 
       get("/repos/#{user}/#{repo}/issues/events/#{event_id}")
     end
+    alias :get_event :event
 
     end # Events
   end # Issues
