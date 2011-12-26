@@ -22,7 +22,7 @@ module Github
     #  @github = Github.new :user => 'user-name'
     #  @github.gists.gists
     #
-    # List the authenticated user’s gists or if called anonymously, 
+    # List the authenticated user’s gists or if called anonymously,
     # this will returns all public gists
     #
     # = Examples
