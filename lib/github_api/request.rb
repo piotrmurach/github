@@ -41,7 +41,7 @@ module Github
       end
       _extract_mime_type(params, options)
 
-      puts "EXECUTED: #{method} - #{path} with #{params} and #{options}"
+      puts "EXECUTED: #{method} - #{path} with #{params} and #{options}" if ENV['DEBUG']
 
       response = connection(options).send(method) do |request|
         case method.to_sym
