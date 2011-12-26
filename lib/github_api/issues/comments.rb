@@ -14,9 +14,10 @@ module Github
       #
       # = Examples
       #  @github = Github.new
-      #  @github.issues.issue_comments 'user-name', 'repo-name', 'issue-id'
+      #  @github.issues.comments 'user-name', 'repo-name', 'issue-id'
+      #  @github.issues.comments 'user-name', 'repo-name', 'issue-id' { |com| ... }
       #
-      def issue_comments(user_name, repo_name, issue_id, params={})
+      def comments(user_name, repo_name, issue_id, params={})
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
         _validate_presence_of issue_id
@@ -24,16 +25,21 @@ module Github
         _normalize_params_keys(params)
         _merge_mime_type(:issue_comment, params)
 
-        get("/repos/#{user}/#{repo}/issues/#{issue_id}/comments", params)
+        response = get("/repos/#{user}/#{repo}/issues/#{issue_id}/comments", params)
+        return response unless block_given?
+        response.each { |el| yield el }
       end
+      alias :issue_comments :comments
+      alias :list_comments :comments
+      alias :list_issue_comments :comments
 
       # Get a single comment
       #
       # = Examples
       #  @github = Github.new
-      #  @github.issues.issue_comment 'user-name', 'repo-name', 'comment-id'
+      #  @github.issues.comment 'user-name', 'repo-name', 'comment-id'
       #
-      def issue_comment(user_name, repo_name, comment_id, params={})
+      def comment(user_name, repo_name, comment_id, params={})
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
         _validate_presence_of comment_id
@@ -43,6 +49,8 @@ module Github
 
         get("/repos/#{user}/#{repo}/issues/comments/#{comment_id}", params)
       end
+      alias :issue_comment :comment
+      alias :get_comment :comment
 
       # Create a comment
       #
@@ -51,10 +59,10 @@ module Github
       #
       # = Examples
       #  @github = Github.new
-      #  @github.issues.create_issue_comment 'user-name', 'repo-name', 'issue-id',
+      #  @github.issues.create_comment 'user-name', 'repo-name', 'issue-id',
       #     "body" => 'a new comment'
       #
-      def create_issue_comment(user_name, repo_name, issue_id, params={})
+      def create_comment(user_name, repo_name, issue_id, params={})
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
         _validate_presence_of issue_id
@@ -62,9 +70,11 @@ module Github
         _normalize_params_keys(params)
         _merge_mime_type(:issue_comment, params)
         _filter_params_keys(VALID_ISSUE_COMMENT_PARAM_NAME, params)
+        raise ArgumentError, "Required params are: :body" unless _validate_inputs(%w[ body ], params)
 
         post("/repos/#{user}/#{repo}/issues/#{issue_id}/comments", params)
       end
+      alias :create_issue_comment :create_comment
 
       # Edit a comment
       #
@@ -73,10 +83,10 @@ module Github
       #
       # = Examples
       #  @github = Github.new
-      #  @github.issues.edit_issue_comment 'user-name', 'repo-name', 'comment-id',
+      #  @github.issues.edit_comment 'user-name', 'repo-name', 'comment-id',
       #     "body" => 'a new comment'
       #
-      def edit_issue_comment(user_name, repo_name, comment_id, params={})
+      def edit_comment(user_name, repo_name, comment_id, params={})
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
         _validate_presence_of comment_id
@@ -84,17 +94,19 @@ module Github
         _normalize_params_keys(params)
         _merge_mime_type(:issue_comment, params)
         _filter_params_keys(VALID_ISSUE_COMMENT_PARAM_NAME, params)
+        raise ArgumentError, "Required params are: :body" unless _validate_inputs(%w[ body ], params)
 
         patch("/repos/#{user}/#{repo}/issues/comments/#{comment_id}")
       end
+      alias :edit_issue_comment :edit_comment
 
       # Delete a comment
       #
       # = Examples
       #  @github = Github.new
-      #  @github.issues.delete_issue_comment 'user-name', 'repo-name', 'comment-id'
+      #  @github.issues.delete_comment 'user-name', 'repo-name', 'comment-id'
       #
-      def delete_issue_comment(user_name, repo_name, comment_id, params={})
+      def delete_comment(user_name, repo_name, comment_id, params={})
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
         _validate_presence_of comment_id
@@ -104,6 +116,7 @@ module Github
 
         delete("/repos/#{user}/#{repo}/issues/comments/#{comment_id}", params)
       end
+      alias :delete_issue_comment :delete_comment
 
     end # Comments
   end # Issues
