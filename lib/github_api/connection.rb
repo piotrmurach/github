@@ -22,13 +22,13 @@ module Github
 
   private
 
-    def header_options() # :nodoc:
+    def default_options(options={}) # :nodoc:
       {
-        :headers => {
-          'Accept'       => '*/*', #accepts,
-          'User-Agent'   => user_agent,
-          'Content-Type' => 'application/x-www-form-urlencoded'
-        },
+#         :headers => {
+#           'Accept'       => '*/*', #accepts,
+#           'User-Agent'   => user_agent,
+#           'Content-Type' => 'application/x-www-form-urlencoded'
+#         },
         :ssl => { :verify => false },
         :url => endpoint
       }
@@ -44,17 +44,11 @@ module Github
 
     def connection(options = {}) # :nodoc:
 
-      # parse(options['resource'], options['mime_type'] || mime_type) if options['mime_type']
-#       merged_options = if connection_options.empty?
-#         header_options.merge(options)
-#       else
-#         connection_options.merge(header_options)
-#       end
-      merged_options = _filter_params_keys(ALLOWED_OPTIONS, header_options.merge(options))
+      # merged_options = _filter_params_keys(ALLOWED_OPTIONS, header_options.merge(options))
       clear_cache unless options.empty?
 
       @connection ||= begin
-        Faraday.new(merged_options) do |builder|
+        Faraday.new(default_options.merge(options)) do |builder|
           puts options.inspect
 
           builder.use Faraday::Request::JSON
