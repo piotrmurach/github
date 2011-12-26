@@ -1,3 +1,9 @@
+0.3.6 (December 26, 2011)
+
+* refactor specs setup to common base class
+* add specs for issues events and comments apis
+* fix bug with gem loading lib folder
+
 0.3.5 (December 18, 2011)
 
 * adding specs for issues milestones api
