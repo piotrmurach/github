@@ -78,7 +78,6 @@ module Github
         _validate_user_repo_params(user, repo) unless user? && repo?
         _normalize_params_keys(params)
 
-        _filter_params_keys(VALID_TREE_PARAM_NAMES, params['tree'])
         _validate_params_values(VALID_TREE_PARAM_VALUES, params['tree'])
 
         post("/repos/#{user}/#{repo}/git/trees", params)
