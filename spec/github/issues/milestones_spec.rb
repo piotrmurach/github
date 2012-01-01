@@ -3,10 +3,8 @@ require 'spec_helper'
 describe Github::Issues::Milestones do
   include SpecHelpers::Base
 
-  let(:milestones_api) { Github::Issues::Milestones }
-
-  it { milestones_api::VALID_MILESTONE_OPTIONS.should_not be_nil }
-  it { milestones_api::VALID_MILESTONE_INPUTS.should_not be_nil }
+  it { described_class::VALID_MILESTONE_OPTIONS.should_not be_nil }
+  it { described_class::VALID_MILESTONE_INPUTS.should_not be_nil }
 
   describe 'milestones' do
     it { github.issues.should respond_to :milestones }
