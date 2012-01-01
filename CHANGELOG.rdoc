@@ -1,3 +1,8 @@
+0.3.8 (January 1, 2012)
+
+* add specs for git data blobs and trees apis
+* refactored parameter filtering fuction to fix tree_create bug
+
 0.3.7 (January 1, 2012)
 
 * add block parameter passing for main github instance
