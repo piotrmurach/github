@@ -119,7 +119,24 @@ module Github
     end
 
     def _filter_params_keys(keys, params)  # :nodoc:
-      params.reject! { |k,v| !keys.include? k }
+      # params.reject! { |k,v| !keys.include? k }
+      case params
+      when Hash
+        params.keys.each do |k, v|
+          unless keys.include? k
+            params.delete(k)
+          else
+            _filter_params_keys(keys, params[k])
+          end
+        end
+      when Array
+        params.map! do |el|
+          _filter_params_keys(keys, el)
+        end
+      else
+        params
+      end
+      return params
     end
 
     def _hash_traverse(hash, &block)
