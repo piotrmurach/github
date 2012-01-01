@@ -11,8 +11,8 @@ module Github
     # Alias for Github::Client.new
     #
     # @return [Github::Client]
-    def new(options = {})
-      Github::Client.new(options)
+    def new(options = {}, &block)
+      Github::Client.new(options, &block)
     end
 
     # Delegate to Github::Client

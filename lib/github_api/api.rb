@@ -36,13 +36,15 @@ module Github
     end
 
     # Creates new API
-    def initialize(options = {})
+    def initialize(options = {}, &block)
       options = Github.options.merge(options)
       Configuration::VALID_OPTIONS_KEYS.each do |key|
         send("#{key}=", options[key])
       end
       _process_basic_auth(options[:basic_auth])
       client if client_id? && client_secret?
+
+      self.instance_eval(&block) if block_given?
     end
 
   private
