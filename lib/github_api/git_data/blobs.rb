@@ -36,7 +36,7 @@ module Github
       #    "content" => "Content of the blob",
       #    "encoding" => "utf-8"
       #
-      def create_blob(user_name=nil, repo_name=nil, params={})
+      def create_blob(user_name, repo_name, params={})
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
 

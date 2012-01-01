@@ -12,6 +12,7 @@ module Github
         type
         sha
         content
+        url
       ].freeze
 
       VALID_TREE_PARAM_VALUES = {
@@ -28,6 +29,12 @@ module Github
       #    file.path
       #  end
       #
+      # Get a tree recursively
+      #
+      # = Examples
+      #  @github = Github.new
+      #  @github.git_data.tree 'user-name', 'repo-name', 'sha', 'recursive' => true
+      #
       def tree(user_name, repo_name, sha, params={})
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
@@ -43,6 +50,7 @@ module Github
         return response unless block_given?
         response.tree.each { |el| yield el }
       end
+      alias :get_tree :tree
 
       # Create a tree
       #
@@ -73,10 +81,12 @@ module Github
       #      ...
       #    ]
       #
-      def create_tree(user_name=nil, repo_name=nil, params={})
+      def create_tree(user_name, repo_name, params={})
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
         _normalize_params_keys(params)
+
+        raise ArgumentError, "Required param: 'tree'" unless _validate_inputs(%w[ tree ], params)
 
         _filter_params_keys(VALID_TREE_PARAM_NAMES, params['tree'])
         _validate_params_values(VALID_TREE_PARAM_VALUES, params['tree'])
