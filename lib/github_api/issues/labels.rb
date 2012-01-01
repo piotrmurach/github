@@ -4,7 +4,7 @@ module Github
   class Issues
     module Labels
 
-      VALID_LABEL_INPUTS = %w[ name color ]
+      VALID_LABEL_INPUTS = %w[ name color ].freeze
 
       # List all labels for a repository
       #
@@ -22,6 +22,7 @@ module Github
         return response unless block_given?
         response.each { |el| yield el }
       end
+      alias :list_labels :labels
 
       # Get a single label
       #
@@ -32,10 +33,12 @@ module Github
       def label(user_name, repo_name, label_id, params={})
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
+        _validate_presence_of label_id
         _normalize_params_keys(params)
 
         get("/repos/#{user}/#{repo}/labels/#{label_id}", params)
       end
+      alias :get_label :label
 
       # Create a label
       #
@@ -91,8 +94,9 @@ module Github
       def delete_label(user_name, repo_name, label_id, params={})
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
-        _validate_presence_of milestone_id
-        _normalize_params_keys(params)
+
+        _validate_presence_of label_id
+        _normalize_params_keys params
 
         delete("/repos/#{user}/#{repo}/labels/#{label_id}", params)
       end
@@ -111,6 +115,7 @@ module Github
 
         get("/repos/#{user}/#{repo}/issues/#{issue_id}/labels", params)
       end
+      alias :issue_labels :labels_for
 
       # Add labels to an issue
       #
@@ -120,7 +125,8 @@ module Github
       #
       def add_labels(user_name, repo_name, issue_id, *args)
         params = args.last.is_a?(Hash) ? args.pop : {}
-        params['data'] = [args].flatten unless args.nil?
+        params['data'] = args unless args.empty?
+
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
         _validate_presence_of(issue_id)
@@ -128,6 +134,7 @@ module Github
 
         post("/repos/#{user}/#{repo}/issues/#{issue_id}/labels", params)
       end
+      alias :add_issue_labels :add_labels
 
       # Remove a label from an issue
       #
@@ -143,8 +150,8 @@ module Github
       def remove_label(user_name, repo_name, issue_id, label_id=nil, params={})
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
-        _validate_presence_of(issue_id)
-        _normalize_params_keys(params)
+        _validate_presence_of issue_id
+        _normalize_params_keys params
 
         if label_id
           delete("/repos/#{user}/#{repo}/issues/#{issue_id}/labels/#{label_id}", params)
@@ -152,13 +159,14 @@ module Github
           delete("/repos/#{user}/#{repo}/issues/#{issue_id}/labels", params)
         end
       end
+      alias :remove_label_from_issue :remove_label
 
       # Replace all labels for an issue 
       #
       # Sending an empty array ([]) will remove all Labels from the Issue.
       #
       # = Examples
-      #  @github = Github.new 
+      #  @github = Github.new
       #  @github.issues.replace_labels 'user-name', 'repo-name', 'issue-id', 'label1', 'label2', ...
       #
       def replace_labels(user_name, repo_name, issue_id, *args)
@@ -178,13 +186,17 @@ module Github
       #  @github = Github.new
       #  @github.issues.get_label 'user-name', 'repo-name', 'milestone-id'
       #
-      def get_label(user_name, repo_name, milestone_id, params={})
+      def milestone_labels(user_name, repo_name, milestone_id, params={})
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
-        _validate_presence_of(issue_id)
+        _validate_presence_of milestone_id
 
-        get("/repos/#{user}/#{repo}/milestones/#{milestone_id}/labels", params)
+        response = get("/repos/#{user}/#{repo}/milestones/#{milestone_id}/labels", params)
+        return response unless block_given?
+        response.each { |el| yield el }
       end
+      alias :milestone_issues_labels :milestone_labels
+      alias :list_milestone_labels :milestone_labels
 
     end # Labels
   end # Issues

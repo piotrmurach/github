@@ -58,7 +58,7 @@ module Github
     private
 
     def _process_params(params) # :nodoc:
-      return params['data'] if params.has_key?('data')
+      return params['data'] if params.has_key?('data') && !params['data'].nil?
       return params
     end
 
