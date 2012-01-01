@@ -171,10 +171,11 @@ module Github
       #
       def replace_labels(user_name, repo_name, issue_id, *args)
         params = args.last.is_a?(Hash) ? args.pop : {}
-        params['data'] = [args].flatten unless args.nil?
+        params['data'] = args unless args.empty?
+
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
-        _validate_presence_of(issue_id)
+        _validate_presence_of issue_id
         _normalize_params_keys(params)
 
         put("/repos/#{user}/#{repo}/issues/#{issue_id}/labels", params)
