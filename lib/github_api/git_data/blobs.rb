@@ -19,10 +19,11 @@ module Github
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
         _validate_presence_of sha
-        _normalize_params_keys(params)
+        _normalize_params_keys params
 
         get("/repos/#{user}/#{repo}/git/blobs/#{sha}", params)
       end
+      alias :get_blob :blob
 
       # Create a blob
       #
@@ -35,9 +36,10 @@ module Github
       #    "content" => "Content of the blob",
       #    "encoding" => "utf-8"
       #
-      def create_blob(user_name, repo_name=nil, params={})
+      def create_blob(user_name=nil, repo_name=nil, params={})
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
+
         _normalize_params_keys(params)
         _filter_params_keys(VALID_BLOB_PARAM_NAMES, params)
 
