@@ -26,6 +26,13 @@ At this stage you can also supply various configuration parameters, such as :use
 
   @github = Github.new :user => 'peter-murach', :repo => 'github-api'
 
+  or
+
+  @github = Github.new do |opts|
+    opts.user = 'peter-murach'
+    opts.repo = 'github-api'
+  end
+
 You can authenticate either using OAuth authentication convenience methods(see section OAuth) or through basic authentication by passing your login and password credentials
 
   @github = Github.new :login => 'peter-murach', :password => '...'
@@ -45,7 +52,7 @@ The code base is modular and allows for you to work specifically with a given pa
   @repos = Github::Repos.new
   @repos.branches 'peter-murach', 'github'
 
-or
+  or
 
   @repos = Github::Repos.new :user => 'peter-murach', :repo => 'github'
   @repos.branches
