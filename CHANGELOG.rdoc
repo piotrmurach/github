@@ -1,3 +1,9 @@
+0.3.7 (January 1, 2012)
+
+* add block parameter passing for main github instance
+* refactor methods inside issues labels api
+* add specs to cover issues labels api
+
 0.3.6 (December 26, 2011)
 
 * refactor specs setup to common base class
