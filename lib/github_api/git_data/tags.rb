@@ -13,7 +13,10 @@ module Github
         name
         email
         date
-      ]
+        sha
+        url
+        tagger
+      ].freeze
 
       VALID_TAG_PARAM_VALUES = {
         'type' => %w[ blob tree commit ]
@@ -33,6 +36,7 @@ module Github
 
         get("/repos/#{user}/#{repo}/git/tags/#{sha}", params)
       end
+      alias :get_tag :tag
 
       # Create a tag object
       # Note that creating a tag object does not create the reference that
