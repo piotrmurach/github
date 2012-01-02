@@ -1,7 +1,6 @@
 require 'spec_helper'
 
-describe Github::GitData::Blobs do
-  include SpecHelpers::Base
+describe Github::GitData::Blobs, :type => :base do
 
   let(:sha) { "3a0f86fb8db8eea7ccbb9a95f325ddbedfb25e15" }
 

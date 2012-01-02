@@ -11,3 +11,7 @@ module SpecHelpers
 
   end
 end # SpecHelpers
+
+RSpec.configure do |conf|
+  conf.include SpecHelpers::Base, :type => :base
+end

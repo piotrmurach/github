@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-describe Github::GitData::References do
-  pending
-end
+describe Github::GitData::References, :type => :base do
+  
+end # Github::GitData::References

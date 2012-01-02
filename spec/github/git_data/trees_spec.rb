@@ -1,7 +1,6 @@
 require 'spec_helper'
 
-describe Github::GitData::Trees do
-  include SpecHelpers::Base
+describe Github::GitData::Trees, :type => :base do
 
   let(:sha) { "9fb037999f264ba9a7fc6274d15fa3ae2ab98312" }
 
