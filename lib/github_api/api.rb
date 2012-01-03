@@ -118,8 +118,8 @@ module Github
       return params
     end
 
+    # Removes any keys from nested hashes that don't match predefiend keys
     def _filter_params_keys(keys, params)  # :nodoc:
-      # params.reject! { |k,v| !keys.include? k }
       case params
       when Hash
         params.keys.each do |k, v|
@@ -156,6 +156,7 @@ module Github
       return hash
     end
 
+    # Ensures that hash values contain predefined values
     def _validate_params_values(options, params)  # :nodoc:
       params.each do |k, v|
         next unless options.keys.include?(k)
