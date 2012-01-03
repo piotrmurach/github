@@ -2,11 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Repos::Watching do
-
-  let(:github) { Github.new }
-  let(:user)   { 'peter-murach' }
-  let(:repo)   { 'github' }
+describe Github::Repos::Watching, :type => :base do
 
   describe "watchers" do
     before do

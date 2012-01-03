@@ -1,7 +1,6 @@
 require 'spec_helper'
 
-describe Github::Issues::Labels do
-  include SpecHelpers::Base
+describe Github::Issues::Labels, :type => :base do
 
   it { described_class::VALID_LABEL_INPUTS.should_not be_nil }
 

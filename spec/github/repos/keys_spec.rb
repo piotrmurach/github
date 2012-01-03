@@ -1,10 +1,6 @@
 require 'spec_helper'
 
-describe Github::Repos::Keys do
-
-  let(:github) { Github.new }
-  let(:user)   { 'peter-murach'}
-  let(:repo)   { 'github' }
+describe Github::Repos::Keys, :type => :base do
 
   it { described_class::VALID_KEY_PARAM_NAMES.should_not be_nil }
 

@@ -1,10 +1,6 @@
 require 'spec_helper'
 
-describe Github::Repos::Forks do
-
-  let(:github) { Github.new }
-  let(:user)   { 'peter-murach' }
-  let(:repo)   { 'github' }
+describe Github::Repos::Forks, :type => :base do
 
   describe "forks" do
 

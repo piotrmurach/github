@@ -1,10 +1,6 @@
 require 'spec_helper'
 
-describe Github::Repos::Downloads do
-
-  let(:github) { Github.new }
-  let(:user)   { 'peter-murach' }
-  let(:repo)   { 'github' }
+describe Github::Repos::Downloads, :type => :base do
 
   it { described_class::VALID_DOWNLOAD_PARAM_NAMES.should_not be_nil }
   it { described_class::REQUIRED_PARAMS.should_not be_nil }

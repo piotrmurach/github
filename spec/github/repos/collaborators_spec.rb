@@ -1,11 +1,6 @@
 require 'spec_helper'
 
-describe Github::Repos::Collaborators do
-
-  let(:github) { Github.new }
-  let(:user)   { 'peter-murach' }
-  let(:repo)   { 'github' }
-  let(:collaborator) { 'octocat' }
+describe Github::Repos::Collaborators, :type => :base do
 
   describe "collaborators" do
     context "resource found" do

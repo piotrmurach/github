@@ -1,10 +1,6 @@
 require 'spec_helper'
 
-describe Github::Repos::Commits do
-
-  let(:github) { Github.new }
-  let(:user)   { 'peter-murach' }
-  let(:repo)   { 'github' }
+describe Github::Repos::Commits, :type => :base do
 
   describe "commits" do
     context "resource found" do

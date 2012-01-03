@@ -1,7 +1,6 @@
 require 'spec_helper'
 
-describe Github::Issues::Milestones do
-  include SpecHelpers::Base
+describe Github::Issues::Milestones, :type => :base do
 
   it { described_class::VALID_MILESTONE_OPTIONS.should_not be_nil }
   it { described_class::VALID_MILESTONE_INPUTS.should_not be_nil }

@@ -1,13 +1,9 @@
 require 'spec_helper'
 
-describe Github::Orgs::Teams do
+describe Github::Orgs::Teams, :type => :base do
 
-  let(:github) { Github.new }
   let(:team)   { 'github' }
   let(:member) { 'github' }
-  let(:org)    { 'github' }
-  let(:user)   { 'peter-murach' }
-  let(:repo)   { 'github' }
 
   describe "teams" do
     context "resource found" do

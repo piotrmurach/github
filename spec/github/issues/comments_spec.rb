@@ -1,11 +1,8 @@
 require 'spec_helper'
 
-describe Github::Issues::Comments do
-  include SpecHelpers::Base
+describe Github::Issues::Comments, :type => :base do
 
-  let(:comments_api) { Github::Issues::Comments }
-
-  it { comments_api::VALID_ISSUE_COMMENT_PARAM_NAME.should_not be_nil }
+  it { described_class::VALID_ISSUE_COMMENT_PARAM_NAME.should_not be_nil }
 
   describe 'comments' do
     let(:issue_id) { 1 }

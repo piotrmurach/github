@@ -1,15 +1,10 @@
 require 'spec_helper'
 
-describe Github::Repos::Hooks do
+describe Github::Repos::Hooks, :type => :base do
 
-  let(:hooks_api) { Github::Repos::Hooks }
-  let(:github) { Github.new }
-  let(:user)   { 'peter-murach' }
-  let(:repo)   { 'github' }
-
-  it { hooks_api::VALID_HOOK_PARAM_NAMES.should_not be_nil }
-  it { hooks_api::VALID_HOOK_PARAM_VALUES.should_not be_nil }
-  it { hooks_api::REQUIRED_PARAMS.should_not be_nil }
+  it { described_class::VALID_HOOK_PARAM_NAMES.should_not be_nil }
+  it { described_class::VALID_HOOK_PARAM_VALUES.should_not be_nil }
+  it { described_class::REQUIRED_PARAMS.should_not be_nil }
 
   describe "hooks" do
     context 'check aliases' do

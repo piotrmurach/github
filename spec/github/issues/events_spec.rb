@@ -1,7 +1,6 @@
 require 'spec_helper'
 
-describe Github::Issues::Events do
-  include SpecHelpers::Base
+describe Github::Issues::Events, :type => :base do
 
   describe 'events' do
     it { github.issues.should respond_to :events }

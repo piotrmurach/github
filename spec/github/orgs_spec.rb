@@ -1,10 +1,6 @@
 require 'spec_helper'
 
-describe Github::Orgs do
-
-  let(:github) { Github.new }
-  let(:user)   { 'peter-murach' }
-  let(:org)   { 'github' }
+describe Github::Orgs, :type => :base do
 
   describe "orgs" do
     context "resource found for a user" do

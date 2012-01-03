@@ -1,10 +1,6 @@
 require 'spec_helper'
 
-describe Github::Repos do
-
-  let(:github) { Github.new }
-  let(:user)   { 'peter-murach' }
-  let(:repo)   { 'github' }
+describe Github::Repos, :type => :base do
 
   describe "branches" do
     context "resource found" do

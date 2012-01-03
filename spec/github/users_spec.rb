@@ -1,9 +1,6 @@
 require 'spec_helper'
 
-describe Github::Users do
-
-  let(:github) { Github.new }
-  let(:user)   { 'peter-murach' }
+describe Github::Users, :type => :base do
 
   before do
     reset_authentication_for github

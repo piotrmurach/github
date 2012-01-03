@@ -6,6 +6,8 @@ module SpecHelpers
         let(:github) { Github.new }
         let(:user)   { 'peter-murach' }
         let(:repo)   { 'github' }
+        let(:org)   { 'github' }
+        let(:collaborator) { 'octocat' }
       end
     end
 
