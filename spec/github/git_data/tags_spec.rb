@@ -64,14 +64,15 @@ describe Github::GitData::Tags, :type => :base do
           "name" => "Scott Chacon",
           "email" => "schacon@gmail.com",
           "date" => "2011-06-17T14:53:35-07:00"
-        }
+        },
+        'unrelated' => 'giberrish'
       }
     }
 
     context "resouce created" do
       before do
         stub_post("/repos/#{user}/#{repo}/git/tags").
-          with(:body => JSON.generate(inputs)).
+          with(:body => JSON.generate(inputs.except('unrelated'))).
           to_return(:body => fixture('git_data/tag.json'), :status => 201, :headers => {:content_type => "application/json; charset=utf-8"})
       end
 

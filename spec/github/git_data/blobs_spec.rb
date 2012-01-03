@@ -54,14 +54,15 @@ describe Github::GitData::Blobs, :type => :base do
     let(:inputs) {
       {
         "content" => "Content of the blob",
-        "encoding" =>  "utf-8"
+        "encoding" =>  "utf-8",
+        "unrelated" => 'giberrish'
       }
     }
 
     context "resouce created" do
       before do
         stub_post("/repos/#{user}/#{repo}/git/blobs").
-          with(:body => JSON.generate(inputs)).
+          with(:body => JSON.generate(inputs.except('unrelated'))).
           to_return(:body => fixture('git_data/blob_sha.json'), :status => 201, :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
