@@ -15,6 +15,12 @@ module Github
         date
       ].freeze
 
+      REQUIRED_COMMIT_PARAMS = %w[
+        message
+        tree
+        parents
+      ].freeze
+
       # Get a commit
       #
       # = Examples
@@ -29,6 +35,7 @@ module Github
 
         get("/repos/#{user}/#{repo}/git/commits/#{sha}", params)
       end
+      alias :get_commit :commit
 
       # Create a commit
       #
@@ -62,13 +69,13 @@ module Github
       #    ],
       #    "tree": "827efc6d56897b048c772eb4087f854f46256132"]
       #
-      def create_commit(user_name=nil, repo_name=nil, params={})
+      def create_commit(user_name, repo_name, params={})
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
         _normalize_params_keys(params)
         _filter_params_keys(VALID_COMMIT_PARAM_NAMES, params)
 
-        raise ArgumentError, "Required params are: message, tree, parents" unless _validate_inputs(%w[ message tree parents ], params)
+        raise ArgumentError, "Required params are: message, tree, parents" unless _validate_inputs(REQUIRED_COMMIT_PARAMS, params)
 
         post("/repos/#{user}/#{repo}/git/commits", params)
       end
