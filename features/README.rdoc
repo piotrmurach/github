@@ -1,0 +1,26 @@
+= GithubAPI
+
+== Running the specs and features
+
+To run the specs first run the +bundle+ command to install the necessary gems and then +rake+ command to run the specs.
+
+  bundle
+  rake
+
+The specs currently require Ruby 1.9.x.
+
+In order to run only features
+
+  rake features
+
+== Coverage
+
+GithubAPI will run coverage only on demand and to run it do
+
+  COVERAGE=true rake
+
+== Automation
+
+You can also run specs and features when you do file modifications by typing
+
+  COVERAGE=true guard
