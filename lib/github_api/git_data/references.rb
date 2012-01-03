@@ -10,26 +10,6 @@ module Github
         'ref' => %r{^refs\/\w+\/\w+(\/\w+)*} # test fully qualified reference
       }
 
-      # Get a reference
-      #
-      # The ref in the URL must be formatted as <tt>heads/branch</tt>,
-      # not just branch. For example, the call to get the data for a
-      # branch named <tt>sc/featureA</tt> would be formatted as
-      # <tt>heads/sc/featureA</tt>
-      #
-      # = Examples
-      #  @github = Github.new
-      #  @github.git_data.reference 'user-name', 'repo-name', 'reference'
-      #
-      def reference(user_name, repo_name, ref, params={})
-        _update_user_repo_params(user_name, repo_name)
-        _validate_user_repo_params(user, repo) unless user? && repo?
-        _validate_presence_of ref
-        _normalize_params_keys(params)
-
-        get("/repos/#{user}/#{repo}/git/refs/#{ref}", params)
-      end
-
       # Get all references
       #
       # This will return an array of all the references on the system,
@@ -49,6 +29,7 @@ module Github
         _normalize_params_keys(params)
 
         response = if ref
+          _validate_reference ref
           get("/repos/#{user}/#{repo}/git/refs/#{ref}", params)
         else
           get("/repos/#{user}/#{repo}/git/refs", params)
@@ -56,6 +37,32 @@ module Github
         return response unless block_given?
         response.each { |el| yield el }
       end
+      alias :list_references :references
+      alias :get_all_references :references
+
+      # Get a reference
+      #
+      # The ref in the URL must be formatted as <tt>heads/branch</tt>,
+      # not just branch. For example, the call to get the data for a
+      # branch named <tt>sc/featureA</tt> would be formatted as
+      # <tt>heads/sc/featureA</tt>
+      #
+      # = Examples
+      #  @github = Github.new
+      #  @github.git_data.reference 'user-name', 'repo-name', 'reference'
+      #
+      def reference(user_name, repo_name, ref, params={})
+        _update_user_repo_params(user_name, repo_name)
+        _validate_user_repo_params(user, repo) unless user? && repo?
+
+        _validate_presence_of ref
+        _validate_reference ref
+        _normalize_params_keys params
+
+        get("/repos/#{user}/#{repo}/git/refs/#{ref}", params)
+      end
+      alias :get_reference :reference
+
 
       # Create a reference
       #
@@ -72,12 +79,12 @@ module Github
       def create_reference(user_name, repo_name, params={})
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
-        _normalize_params_keys(params)
+
+        _normalize_params_keys params
+        _filter_params_keys VALID_REF_PARAM_NAMES, params
+        _validate_reference params['ref']
 
         raise ArgumentError, "Required params are: ref, sha" unless _validate_inputs(%w[ ref sha ], params)
-
-        _filter_params_keys(VALID_REF_PARAM_NAMES, params)
-        _validate_params_values(VALID_REF_PARAM_VALUES, params)
 
         post("/repos/#{user}/#{repo}/git/refs", params)
       end
@@ -97,15 +104,23 @@ module Github
       def update_reference(user_name, repo_name, ref, params={})
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
+
         _validate_presence_of ref
+        _validate_reference ref
         _normalize_params_keys(params)
+        _filter_params_keys(VALID_REF_PARAM_NAMES, params)
 
         raise ArgumentError, "Required params are: sha" unless _validate_inputs(%w[ sha ], params)
 
-        _filter_params_keys(VALID_REF_PARAM_NAMES, params)
-        _validate_params_values(VALID_REF_PARAM_VALUES, params)
-
         patch("/repos/#{user}/#{repo}/git/refs/#{ref}", params)
+      end
+
+    private
+
+      def _validate_reference ref
+        unless VALID_REF_PARAM_VALUES['ref'] =~ "refs/#{ref}"
+          raise ArgumentError, "Provided 'reference' is invalid"
+        end
       end
 
     end # References
