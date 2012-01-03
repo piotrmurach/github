@@ -3,15 +3,20 @@
 module Github
   module Result
 
-    RATELIMIT = 'X-RateLimit-Remaining'.freeze
+    RATELIMIT_REMAINING = 'X-RateLimit-Remaining'.freeze
+    RATELIMIT_LIMIT = 'X-RateLimit-Limit'.freeze
     CONTENT_TYPE = 'Content-Type'.freeze
     CONTENT_LENGTH = 'content-length'.freeze
 
     attr_reader :env
 
     # Requests are limited to API v3 to 5000 per hour.
-    def ratelimit
-      loaded? ? @env[:response_headers][RATELIMIT] : nil
+    def ratelimit_limit
+      loaded? ? @env[:response_headers][RATELIMIT_LIMIT] : nil
+    end
+
+    def ratelimit_remaining
+      loaded? ? @env[:response_headers][RATELIMIT_REMAINING] : nil
     end
 
     def content_type
