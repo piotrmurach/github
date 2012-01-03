@@ -1,3 +1,10 @@
+0.3.9 (January 3, 2012)
+
+* add specs for git data tags, references and commits apis
+* fix bugs with parameter passing inside git data api
+* comment out and remove dead code from main api
+* removed duplication from specs setup
+
 0.3.8 (January 1, 2012)
 
 * add specs for git data blobs and trees apis
