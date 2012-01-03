@@ -8,11 +8,11 @@ Supports all the API methods(nearly 200). It's build in a modular way, that is, 
 
 == Installation
 
-Grab the gem by issuing
+Install the gem by issuing
 
   gem install github_api
 
-or in your Gemfile
+or put it in your Gemfile and run <tt>bundle install</tt>
 
   gem "github_api"
 
@@ -156,7 +156,7 @@ register an app at https://github.com/account/applications/
     config.basic_auth    = 'login:password'
   end
 
-or
+  or
 
   Github.new(:oauth_token => YOUR_OAUTH_TOKEN)
   Github.new(:basic_auth => 'login:password)
@@ -168,6 +168,15 @@ All parameters can be overwirtten as per method call. By passing parameters hash
 Each <tt>get</tt> request by default is not going to be cached. In order to set the cache do... If no cache type is provided a default memoization is done.
 
   Github.cache do...
+
+== Response Message
+
+Each response comes packaged with methods allowing for inspection of HTTP start line and headers. For example to check for rate limits and status code issue
+
+  res = Github::Repos.new.branches 'peter-murach', 'github'
+  res.ratelimit_limit     # "5000"
+  res.ratelimit_remainig  # "4999"
+  res.status              # "200"
 
 == Examples
 
@@ -219,17 +228,10 @@ A Rails controller that allows a user to authorize their GitHub account and then
 * Add response set helper methods e.i. pagination.
 * Add DSL falvoured api access
 
-== Contributing to github
+== Development
 
-* Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
-* Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
-* Fork the project
-* Start a feature/bugfix branch
-* Commit and push until you are happy with your contribution
-* Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.
-* Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
+Questions or problems? Please post them on the [issue tracker](https://github.com/peter-murach/github/issues). You can contribute changes by forking the project and submitting a pull request. You can ensure the tests are passing by running `bundle` and `rake`.
 
 == Copyright
 
-Copyright (c) 2011 Piotr Murach. See LICENSE.txt for
-further details.
+Copyright (c) 2011-2012 Piotr Murach. See LICENSE.txt for further details.
