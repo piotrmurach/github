@@ -9,6 +9,10 @@ To run the specs first run the +bundle+ command to install the necessary gems an
 
 The specs currently require Ruby 1.9.x.
 
+In order to run only features
+
+  rake features
+
 == Coverage
 
 GithubAPI will run coverage only on demand and to run it do
