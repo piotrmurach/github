@@ -5,7 +5,7 @@ module Github
     attr_reader :response_message, :response_headers
 
     def initialize(message, headers)
-      @response_message = message 
+      @response_message = message
       super message
     end
 
@@ -21,10 +21,13 @@ module Github
   class Unauthorised < Error; end
 
   # Raised when Github returns the HTTP status code 403
-  class Forbidden < Error; end 
+  class Forbidden < Error; end
 
   # Raised when Github returns the HTTP status code 404
   class ResourceNotFound < Error; end
+
+  # Raised when Github returns the HTTP status code 422
+  class UnprocessableEntity < Error; end
 
   # Raised when Github returns the HTTP status code 500
   class InternalServerError < Error; end
