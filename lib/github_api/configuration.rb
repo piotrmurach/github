@@ -1,10 +1,7 @@
 # encoding: utf-8
 
-require 'github_api/constants'
-
 module Github
   module Configuration
-    extend Github::Constants
 
     VALID_OPTIONS_KEYS = [
       :adapter,

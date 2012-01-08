@@ -1,5 +1,6 @@
 module Github
   module Constants
+    extend self
 
     # Response headers
     RATELIMIT_REMAINING = 'X-RateLimit-Remaining'.freeze
