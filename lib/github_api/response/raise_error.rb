@@ -16,6 +16,9 @@ module Github
         raise Github::Forbidden.new(response_message(env), env[:response_headers])
       when 404
         raise Github::ResourceNotFound.new(response_message(env), env[:response_headers])
+
+      when 422
+        raise Github::UnprocessableEntitty.new(response_message(env), env[:response_headers])
       when 500
         raise Github::InternalServerError.new(response_message(env), env[:response_headers])
       when 503
