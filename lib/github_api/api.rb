@@ -19,7 +19,7 @@ module Github
 
     VALID_API_KEYS = [
       :per_page,
-      :pagination
+      :jsonp_callback
     ]
 
     attr_reader *Configuration::VALID_OPTIONS_KEYS
@@ -61,10 +61,13 @@ module Github
       end
     end
 
-    # Responds to attribute query
+    # Responds to attribute query or attribute clear
     def method_missing(method, *args, &block) # :nodoc:
-      if method.to_s =~ /^(.*)\?$/
+      case method.to_s
+      when /^(.*)\?$/
         return !self.send($1.to_s).nil?
+      when /^clear_(.*)$/
+        self.send("#{$1.to_s}=", nil)
       else
         super
       end
