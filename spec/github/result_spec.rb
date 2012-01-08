@@ -12,6 +12,7 @@ describe Github::Result do
         :headers => {
           :content_type => "application/json; charset=utf-8",
           'X-RateLimit-Remaining' => '4999',
+          'X-RateLimit-Limit' => '5000',
           'content-length' => '344'
         })
   end
@@ -24,8 +25,12 @@ describe Github::Result do
     res.content_length.should match '344'
   end
 
-  it "should read response ratelimit" do
-    res.ratelimit.should == '4999'
+  it "should read response ratelimit limit" do
+    res.ratelimit_limit.should == '5000'
+  end
+
+  it "should read response ratelimit remaining" do
+    res.ratelimit_remaining.should == '4999'
   end
 
   it "should read response statsu" do
