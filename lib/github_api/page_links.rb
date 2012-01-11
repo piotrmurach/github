@@ -16,7 +16,7 @@ module Github
     def initialize(response_headers)
       link_header = response_headers[HEADER_LINK]
       if link_header
-        # return unless link_header =~ /(next|first|last|prev)/
+        return unless link_header =~ /(next|first|last|prev)/
 
         link_header.split(DELIM_LINKS).each do |link|
           if link.strip =~ /<([^>]+)>; rel=\"([^\"]+)\"/
