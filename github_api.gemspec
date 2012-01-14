@@ -19,7 +19,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'multi_json', '~> 1.0.3'
   gem.add_dependency 'oauth2', '~> 0.5.0'
 
-  gem.add_development_dependency 'rspec', '~> 2.7.0'
+  gem.add_development_dependency 'rspec', '~> 2.8.0'
   gem.add_development_dependency 'cucumber', '>= 0'
   gem.add_development_dependency 'yajl-ruby', '~> 1.1.0'
   gem.add_development_dependency 'bundler', '~> 1.0.0'
