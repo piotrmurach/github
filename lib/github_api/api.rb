@@ -18,9 +18,9 @@ module Github
     include Request
 
     VALID_API_KEYS = [
-      :page,
-      :per_page,
-      :jsonp_callback
+      'page',
+      'per_page',
+      'jsonp_callback'
     ]
 
     attr_reader *Configuration::VALID_OPTIONS_KEYS
@@ -127,7 +127,7 @@ module Github
       case params
       when Hash
         params.keys.each do |k, v|
-          unless keys.include? k
+          unless (keys.include?(k) or VALID_API_KEYS.include?(k))
             params.delete(k)
           else
             _filter_params_keys(keys, params[k])
