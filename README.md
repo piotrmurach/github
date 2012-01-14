@@ -229,7 +229,7 @@ In order to iterate through the entire result set page by page, you can use conv
 
 ```ruby
 res.each_page do |page_set|
-  page_set.each do |rep|
+  page_set.each do |repo|
     puts repo.name
   end
 end
