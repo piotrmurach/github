@@ -25,9 +25,9 @@ module Github
     def default_options(options={}) # :nodoc:
       {
         :headers => {
-          'Accept'       => '*/*', #accepts,
-          'User-Agent'   => user_agent,
-          'Content-Type' => 'application/x-www-form-urlencoded'
+          :accept       => '*/*', #accepts,
+          :user_agent   => user_agent,
+          :content_type => 'application/x-www-form-urlencoded'
         },
         :ssl => { :verify => false },
         :url => endpoint
@@ -49,7 +49,7 @@ module Github
 
       @connection ||= begin
         Faraday.new(merged_options.merge(connection_options)) do |builder|
-          puts options.inspect
+          puts options.inspect if ENV['DEBUG']
 
           builder.use Faraday::Request::JSON
           builder.use Faraday::Request::Multipart
