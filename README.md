@@ -27,15 +27,19 @@ gem "github_api"
 ## Usage
 
 Create a new client instance
+
 ```ruby
 @github = Github.new
 ```
+
 At this stage you can also supply various configuration parameters, such as `:user`,`:repo`, `:org`, `:oauth_token`, `:login`, `:password` or `:basic_auth` which are used throughout the API
 
 ```ruby
 @github = Github.new :user => 'peter-murach', :repo => 'github-api'
 ```
+
 or
+
 ```ruby
 @github = Github.new do |opts|
   opts.user = 'peter-murach'
@@ -44,11 +48,13 @@ end
 ```
 
 You can authenticate either using OAuth authentication convenience methods(see section OAuth) or through basic authentication by passing your login and password credentials
+
 ```ruby
 @github = Github.new :login => 'peter-murach', :password => '...'
 ```
 
 or use convenience method:
+
 ```ruby
 @github = Github.new :basic_auth => 'login:password'
 ```
@@ -83,6 +89,7 @@ end
 ## API
 
 Main API methods are grouped into the following classes that can be instantiated on their own
+
 ```ruby
 Github         - full API access
 Github::Gists
@@ -156,19 +163,23 @@ Once you have your access token, configure your github instance following instru
 
 Alternatively you can use OAuth Authorizations API. For instance, to create access token through GitHub API do following
 
-  @github = Github.new :basic_auth => 'login:password'
-  @github.oauth.create_authorization 'scopes' => ['repo']
+```ruby
+@github = Github.new :basic_auth => 'login:password'
+@github.oauth.create_authorization 'scopes' => ['repo']
+```
 
 You can add more than one scope from the <tt>user</tt>, <tt>public_repo</tt>, <tt>repo</tt>, <tt>gist</tt> or leave the scopes parameter out, in which case, the default read-only access will be assumed(includes public user profile info, public repo info, and gists).
 
-== MIME Types
+## MIME Types
 
 Issues, PullRequests and few other API leverage custom mime types which are <tt>:json</tt>, <tt>:blob</tt>, <tt>:raw</tt>, <tt>:text</tt>, <tt>:html</tt>, <tt>:full</tt>. By default <tt>:raw</tt> is used.
 
 In order to pass a mime type with your request do
 
-  @github = Github.new
-  @github.pull_requests.pull_requests 'peter-murach', 'github', :mime_type => :full
+```ruby
+@github = Github.new
+@github.pull_requests.pull_requests 'peter-murach', 'github', :mime_type => :full
+```
 
   Your header will contain 'Accept: "application/vnd.github-pull.full+json"' which in turn returns raw, text and html representations in response body.
 
@@ -176,17 +187,19 @@ In order to pass a mime type with your request do
 
 Certain methods require authentication. To get your GitHub OAuth v2 credentials,
 register an app at https://github.com/account/applications/
+
 ```ruby
 Github.configure do |config|
   config.oauth_token   = YOUR_OAUTH_ACCESS_TOKEN
   config.basic_auth    = 'login:password'
 end
-```
-  or
-```ruby
+
+or
+
 Github.new(:oauth_token => YOUR_OAUTH_TOKEN)
 Github.new(:basic_auth => 'login:password)
 ```
+
 All parameters can be overwirtten as per method call. By passing parameters hash...
 
 ## Caching
@@ -204,6 +217,7 @@ res = Github::Repos.new.repos :user => 'wycats', :per_page => 10
 ```
 
 Then you can query pagination information included in the link header by:
+
 ```ruby
 res.links.first  # Shows the URL of the first page of results.
 res.links.next   # Shows the URL of the immediate next page of results.
@@ -212,6 +226,7 @@ res.links.last   # Shows the URL of the last page of results.
 ```
 
 In order to iterate through the entire result set page by page, you can use convenience methods:
+
 ```ruby
 res.each_page do |page_set|
   page_set.each do |rep|
@@ -220,7 +235,8 @@ res.each_page do |page_set|
 end
 ```
 
-or use `has_next_page?` and `next_page`
+or use `has_next_page?` and `next_page` like in the following:
+
 ```ruby
 while res.has_next_page?
   ... process response ...
@@ -229,6 +245,7 @@ end
 ```
 
 One can also navigate straight to specific page by:
+
 ```ruby
 res.get_page 5
 res.first_page
@@ -264,13 +281,16 @@ Other methods may require inputs as an array of strings
 ```
 
 If a method returns a collection, you can iterator over it by supplying a block parameter,
+
 ```ruby
 @issues = Github::Issues.new :user => 'peter-murach', :repo => 'github-api'
 @issues.events do |event|
   puts event.actor.login
 end
 ```
+
 Query requests instead of http responses return boolean values
+
 ```ruby
 @github = Github.new
 @github.orgs.public_member? 'github', 'technoweenie' # => true
