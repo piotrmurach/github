@@ -156,4 +156,34 @@ describe Github::PageIterator do
     end
   end # last
 
+  context 'get_page' do
+    before do
+      Github.new
+      instance.stub(:has_next?).and_return true
+      stub_get("/users/#{user}/repos").
+        with(:query => { 'page' => '6', 'per_page' => '20'}).
+        to_return(:body => '', :status => 200,
+          :headers => {
+            :content_type => "application/json; charset=utf-8",
+            'Link' => link
+            }
+        )
+    end
+
+    it 'returns nil if there are no pages' do
+      instance.stub(:first_page_uri).and_return nil
+      instance.stub(:last_page_uri).and_return nil
+      instance.get_page(5).should be_nil
+    end
+
+    it 'finds a single page' do
+      instance.should_receive(:update_page_links)
+      instance.should_receive(:page_request).
+        with("https://api.github.com/users/#{user}/repos",
+          'page' => 2, 'per_page' => 20).and_return link
+      link.stub(:links).and_return link
+      instance.get_page(2)
+    end
+  end # get_page
+
 end # Github::PageIterator
