@@ -247,7 +247,7 @@ end
 One can also navigate straight to specific page by:
 
 ```ruby
-res.get_page 5
+res.page 5     # Requests given page if it exists, nil otherwise
 res.first_page
 res.prev_page
 res.last_page
