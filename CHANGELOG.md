@@ -1,3 +1,14 @@
+0.4.0 (January 14, 2012)
+
+* add helper methods for clearing api keys
+* add constants module to preserver memory and improve GC
+* add http header links parsing class utility
+* add pagination iterator class for internal link traversal
+* add new result set methods for retrieving pages including each_page method
+* add specific request module for handling page related parameters
+* extend filter_params to accept json_callback and page parameters
+* change readme to new format and add pagination information among other things
+
 0.3.9 (January 3, 2012)
 
 * add specs for git data tags, references and commits apis
