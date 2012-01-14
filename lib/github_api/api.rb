@@ -18,6 +18,7 @@ module Github
     include Request
 
     VALID_API_KEYS = [
+      :page,
       :per_page,
       :jsonp_callback
     ]
