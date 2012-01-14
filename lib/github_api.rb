@@ -2,6 +2,8 @@
 
 require 'github_api/version'
 require 'github_api/configuration'
+require 'github_api/constants'
+require 'github_api/utils/url'
 require 'github_api/connection'
 
 module Github
@@ -12,7 +14,12 @@ module Github
     #
     # @return [Github::Client]
     def new(options = {}, &block)
-      Github::Client.new(options, &block)
+      @@api_client = Github::Client.new(options, &block)
+    end
+
+    # Returns handle for the client instance
+    def api_client
+      @@api_client
     end
 
     # Delegate to Github::Client
@@ -68,6 +75,9 @@ module Github
     :CoreExt      => 'core_ext',
     :MimeType     => 'mime_type',
     :Authorization => 'authorization',
-    :Authorizations => 'authorizations'
+    :Authorizations => 'authorizations',
+    :PageLinks    => 'page_links',
+    :PageIterator => 'page_iterator',
+    :PagedRequest => 'paged_request'
 
 end # Github
