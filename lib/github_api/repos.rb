@@ -225,11 +225,11 @@ module Github
     def repos(*args)
       params = args.last.is_a?(Hash) ? args.pop : {}
       _normalize_params_keys(params)
-      # _merge_user_into_params!(params) unless params.has_key?('user')
+      _merge_user_into_params!(params) unless params.has_key?('user')
       _filter_params_keys(%w[ org user type ], params)
 
       response = if (user_name = params.delete("user"))
-        get("/users/#{user_name}/repos")
+        get("/users/#{user_name}/repos", params)
       elsif (org_name = params.delete("org"))
         get("/orgs/#{org_name}/repos", params)
       else
