@@ -3,7 +3,12 @@ require 'spec_helper'
 describe Github::Result do
 
   let(:github) { Github.new }
+  let(:user)   { 'wycats' }
   let(:res)    { github.events.public }
+  let(:pages)  { ['1', '5', '6'] }
+  let(:link) {
+    "<https://api.github.com/users/wycats/repos?page=6&per_page=20>; rel=\"last\", <https://api.github.com/users/wycats/repos?page=1&per_page=20>; rel=\"first\""
+  }
 
   before do
     stub_get("/events").
@@ -13,8 +18,23 @@ describe Github::Result do
           :content_type => "application/json; charset=utf-8",
           'X-RateLimit-Remaining' => '4999',
           'X-RateLimit-Limit' => '5000',
-          'content-length' => '344'
+          'content-length' => '344',
+          'Link' => link
         })
+
+    ['1', '5', '6'].each do |page|
+    stub_get("/users/#{user}/repos").
+      with(:query => {'per_page' => '20', 'page' => page}).
+      to_return(:body => fixture('events/events.json'),
+        :status => 200,
+        :headers => {
+          :content_type => "application/json; charset=utf-8",
+          'X-RateLimit-Remaining' => '4999',
+          'X-RateLimit-Limit' => '5000',
+          'content-length' => '344',
+          'Link' => link
+        })
+    end
   end
 
   it "should read response content_type " do
@@ -47,7 +67,7 @@ describe Github::Result do
 
   context "pagination methods" do
     let(:env) { {:response_headers => {}}}
-    let(:iterator) { mock(Github::PageIterator.new(env)).as_null_object }
+    let(:iterator) { Github::PageIterator.new(env) }
     let(:items) { [] }
 
     before do
@@ -59,10 +79,21 @@ describe Github::Result do
       res.links.should be_a Github::PageLinks
     end
 
-    %w[ first next prev last].each do |link|
+    %w[ next prev ].each do |link|
       it "should return #{link} page if exists" do
         res.send(:"#{link}_page").should eq @items
       end
+    end
+
+    %w[ first last].each do |link|
+      it "should return #{link} page if exists" do
+        res.send(:"#{link}_page").should_not be_empty
+      end
+    end
+
+    it 'finds single page successfully' do
+      iterator.stub(:get_page).and_return res
+      res.page(5).should eq res
     end
 
     it 'checks if there are more pages' do
