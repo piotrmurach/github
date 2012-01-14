@@ -4,6 +4,8 @@ module Github
   module Result
     include Github::Constants
 
+    # TODO Add result counts method to check total items looking at result links
+
     # Requests are limited to API v3 to 5000 per hour.
     def ratelimit_limit
       loaded? ? @env[:response_headers][RATELIMIT_LIMIT] : nil
@@ -56,7 +58,7 @@ module Github
     # or there are no pages at all in the result.
     def first_page
       first_request = page_iterator.first
-      self.instance_eval { @env = first_request.env }
+      self.instance_eval { @env = first_request.env } if first_request
       first_request
     end
 
@@ -64,7 +66,7 @@ module Github
     # no next page or no pages at all.
     def next_page
       next_request = page_iterator.next
-      self.instance_eval { @env = next_request.env }
+      self.instance_eval { @env = next_request.env } if next_request
       next_request
     end
 
@@ -72,16 +74,17 @@ module Github
     # no previous page or no pages at all.
     def prev_page
       prev_request = page_iterator.prev
-      self.instance_eval { @env = prev_request.env }
+      self.instance_eval { @env = prev_request.env } if prev_request
       prev_request
     end
+    alias :previous_page :prev_page
 
     # Retrives the result of the last page. Returns <tt>nil</tt> if there is
     # no last page - either because you are already on the last page,
     # there is only one page or there are no pages at all in the result.
     def last_page
       last_request = page_iterator.last
-      self.instance_eval { @env = last_request.env }
+      self.instance_eval { @env = last_request.env } if last_request
       last_request
     end
 
@@ -89,8 +92,10 @@ module Github
     # The <tt>page_number</tt> parameter is not validate, hitting a page
     # that does not exist will return Github API error. Consequently, if
     # there is only one page, this method returns nil
-    def get_page(page_number)
-      nil
+    def page(page_number)
+      request = page_iterator.get_page(page_number)
+      self.instance_eval { @env = request.env } if request
+      request
     end
 
     # Returns <tt>true</tt> if there is another page in the result set,
