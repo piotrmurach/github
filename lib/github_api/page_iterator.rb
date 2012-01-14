@@ -63,9 +63,20 @@ module Github
       response
     end
 
-    # Get the result for a specific page.
+    # Returns the result for a specific page.
     def get_page(page_number)
+      # Find URI that we can work with, if we cannot get the first or the
+      # last page URI then there is only one page.
+      page_uri = first_page_uri || last_page_uri
+      return nil unless page_uri
+
+      response = page_request page_uri.split(QUERY_STR_SEP)[0],
+                              'page' => page_number,
+                              'per_page' => parse_per_page_number(page_uri)
+      update_page_links response.links
+      response
     end
+
 
   private
 
