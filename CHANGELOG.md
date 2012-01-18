@@ -1,3 +1,9 @@
+0.4.1 (January 18, 2012)
+
+* fix bug with default settings for paginated items in result set
+* added api rest methods listing
+* updated specs for main api
+
 0.4.0 (January 14, 2012)
 
 * add helper methods for clearing api keys
