@@ -7,6 +7,7 @@ require 'github_api/mime_type'
 require 'github_api/core_ext/hash'
 require 'github_api/core_ext/array'
 require 'github_api/compatibility'
+require 'github_api/api/actions'
 
 module Github
 
