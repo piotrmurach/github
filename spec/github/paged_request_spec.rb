@@ -15,15 +15,15 @@ describe Github::PagedRequest do
     it 'sets default per_page when only custom page passed' do
       Github.stub_chain(:api_client, :per_page).and_return nil
       Github.stub_chain(:api_client, :get).and_return nil
-      Github::PagedRequest.page_request path, {'page' => 3}
+      Github::PagedRequest.page_request path, {'page' => 3, 'per_page' => -1}
       Github::PagedRequest.page.should eq 3
-      Github::PagedRequest.per_page.should eq 25
+      Github::PagedRequest.per_page.should eq 30
     end
 
     it 'sets default page when only custom per_page passed' do
       Github.stub_chain(:api_client, :page).and_return nil
       Github.stub_chain(:api_client, :get).and_return nil
-      Github::PagedRequest.page_request path, {'per_page' => 33}
+      Github::PagedRequest.page_request path, {'per_page' => 33, 'page' => -1}
       Github::PagedRequest.page.should eq 1
       Github::PagedRequest.per_page.should eq 33
     end
