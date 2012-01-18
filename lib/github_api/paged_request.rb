@@ -4,9 +4,11 @@ module Github
 
     extend self
 
-    FIRST_PAGE = 1
+    FIRST_PAGE = 1 # Default request page if none provided
 
-    PER_PAGE = 25
+    PER_PAGE   = 30 # Default number of items as specified by API
+
+    NOT_FOUND  = -1 # Either page or per_page parameter not present
 
     class << self
       attr_accessor :page, :per_page
@@ -21,8 +23,12 @@ module Github
     end
 
     def page_request(path, params={})
-      params[PARAM_PER_PAGE] = default_page_size unless params[PARAM_PER_PAGE]
-      params[PARAM_PAGE] = default_page unless params[PARAM_PAGE]
+      if params[PARAM_PER_PAGE] == NOT_FOUND
+        params[PARAM_PER_PAGE] = default_page_size
+      end
+      if !params[PARAM_PAGE] || params[PARAM_PAGE] == NOT_FOUND
+        params[PARAM_PAGE] = default_page
+      end
 
       Github::PagedRequest.page = params[PARAM_PAGE]
       Github::PagedRequest.per_page = params[PARAM_PER_PAGE]
