@@ -26,7 +26,7 @@ module Github
       if params[PARAM_PER_PAGE] == NOT_FOUND
         params[PARAM_PER_PAGE] = default_page_size
       end
-      if !params[PARAM_PAGE] || params[PARAM_PAGE] == NOT_FOUND
+      if params[PARAM_PAGE] && params[PARAM_PAGE] == NOT_FOUND
         params[PARAM_PAGE] = default_page
       end
 
