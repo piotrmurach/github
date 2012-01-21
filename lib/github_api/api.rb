@@ -174,8 +174,8 @@ module Github
     end
 
     def _merge_mime_type(resource, params) # :nodoc:
-      params['resource'] = resource
-      params['mime_type'] = params['mime_type'] || :raw
+#       params['resource'] = resource
+#       params['mime_type'] = params['mime_type'] || :raw
     end
 
     # TODO add to core extensions
