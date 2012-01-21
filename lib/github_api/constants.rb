@@ -11,6 +11,12 @@ module Github
 
     CONTENT_LENGTH = 'content-length'.freeze
 
+    ETAG = 'ETag'.freeze
+
+    SERVER = 'Server'.freeze
+
+    DATE = 'Date'.freeze
+
     # Link headers
     HEADER_LINK = "Link".freeze
 
@@ -33,6 +39,10 @@ module Github
     PARAM_PER_PAGE = "per_page".freeze
 
     PARAM_START_PAGE = "start_page".freeze
+
+    # URI parsing
+    QUERY_STR_SEP = '?'.freeze
+
 
   end # Constants
 end # Github
