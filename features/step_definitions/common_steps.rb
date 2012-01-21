@@ -9,3 +9,11 @@ end
 Then /^the response should be "([^"]*)"$/ do |expected_response|
   @response.status.should eql expected_response.to_i
 end
+
+Then /^the response type should be "([^"]*)"$/ do |type|
+  @response.content_type.should =~ /application\/#{type.downcase}/
+end
+
+Then /^the response should have (\d+) items$/ do |size|
+  @response.size.should eql size.to_i
+end
