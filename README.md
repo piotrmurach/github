@@ -60,11 +60,13 @@ or use convenience method:
 ```
 
 You can interact with GitHub interface, for example repositories, by issueing following calls
+
 ```ruby
 @github.repos.commits
 @github.repos.branches
 @github.repos.contributors
 ```
+
 The code base is modular and allows for you to work specifically with a given part of GitHub API e.g. repositories
 
 ```ruby
@@ -119,7 +121,18 @@ All method calls form ruby like sentences and allow for intuitive api navigation
 ```
 
 For specification on all available methods go to http://developer.github.com/v3/ or
-read the rdoc, all methods are documented there with examples of usage.
+read the rdoc, all methods are documented there with examples of usage. Alternatively,
+you can find out supported methods by issuing the following in your `irb`:
+
+```ruby
+>> Github::Repos.actions
+---
+|--> branches
+|--> contribs
+|--> contributors
+|--> create_repo
+...
+```
 
 ## Inputs
 
@@ -262,6 +275,7 @@ res = Github::Repos.new.branches 'peter-murach', 'github'
 res.ratelimit_limit     # "5000"
 res.ratelimit_remainig  # "4999"
 res.status              # "200"
+res.content_type        # "application/json; charset=utf-8"
 ```
 
 ## Examples
