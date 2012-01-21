@@ -4,7 +4,7 @@ describe Github::Result do
 
   let(:github) { Github.new }
   let(:user)   { 'wycats' }
-  let(:res)    { github.events.public }
+  let(:res)    { github.events.public :per_page => 20 }
   let(:pages)  { ['1', '5', '6'] }
   let(:link) {
     "<https://api.github.com/users/wycats/repos?page=6&per_page=20>; rel=\"last\", <https://api.github.com/users/wycats/repos?page=1&per_page=20>; rel=\"first\""
@@ -12,6 +12,7 @@ describe Github::Result do
 
   before do
     stub_get("/events").
+      with(:query => { 'per_page' => '20' }).
       to_return(:body => fixture('events/events.json'),
         :status => 200,
         :headers => {
@@ -22,9 +23,10 @@ describe Github::Result do
           'Link' => link
         })
 
-    ['1', '5', '6'].each do |page|
+    ['', '1', '5', '6'].each do |page|
+    params = page.empty? ? {'per_page'=>'20'} : {'per_page'=>'20', 'page'=>page}
     stub_get("/users/#{user}/repos").
-      with(:query => {'per_page' => '20', 'page' => page}).
+      with(:query => params).
       to_return(:body => fixture('events/events.json'),
         :status => 200,
         :headers => {
@@ -80,14 +82,26 @@ describe Github::Result do
     end
 
     %w[ next prev ].each do |link|
-      it "should return #{link} page if exists" do
-        res.send(:"#{link}_page").should eq @items
+      context "#{link}_page" do
+        it "should return collection of resources" do
+          res.send(:"#{link}_page").should be_an Array
+        end
+
+        it 'should have no link information' do
+          res.links.send(:"#{link}").should be_nil
+        end
       end
     end
 
     %w[ first last].each do |link|
-      it "should return #{link} page if exists" do
-        res.send(:"#{link}_page").should_not be_empty
+      context "#{link}_page" do
+        it "should return resource if exists" do
+          res.send(:"#{link}_page").should_not be_empty
+        end
+
+        it "should have link information" do
+          res.send(:"#{link}_page").should_not be_nil
+        end
       end
     end
 

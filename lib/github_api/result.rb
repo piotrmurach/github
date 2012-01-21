@@ -59,7 +59,7 @@ module Github
     def first_page
       first_request = page_iterator.first
       self.instance_eval { @env = first_request.env } if first_request
-      first_request
+      self.body
     end
 
     # Retrives the result of the next page. Returns <tt>nil</tt> if there is
@@ -67,7 +67,7 @@ module Github
     def next_page
       next_request = page_iterator.next
       self.instance_eval { @env = next_request.env } if next_request
-      next_request
+      self.body
     end
 
     # Retrives the result of the previous page. Returns <tt>nil</tt> if there is
@@ -75,7 +75,7 @@ module Github
     def prev_page
       prev_request = page_iterator.prev
       self.instance_eval { @env = prev_request.env } if prev_request
-      prev_request
+      self.body
     end
     alias :previous_page :prev_page
 
@@ -85,7 +85,7 @@ module Github
     def last_page
       last_request = page_iterator.last
       self.instance_eval { @env = last_request.env } if last_request
-      last_request
+      self.body
     end
 
     # Retrives a specific result for a page given page number.
@@ -95,7 +95,7 @@ module Github
     def page(page_number)
       request = page_iterator.get_page(page_number)
       self.instance_eval { @env = request.env } if request
-      request
+      self.body
     end
 
     # Returns <tt>true</tt> if there is another page in the result set,
