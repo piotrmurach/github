@@ -11,7 +11,7 @@ module Github
       #  @github.repos.watchers
       #  @github.repos.watchers { |watcher| ... }
       #
-      def watchers(user_name=nil, repo_name=nil, params={})
+      def watchers(user_name, repo_name, params={})
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
         _normalize_params_keys(params)
@@ -24,8 +24,8 @@ module Github
       # List repos being watched by a user
       #
       # = Examples
-      #  @github = Github.new :user => 'user-name'
-      #  @github.repos.watched
+      #  @github = Github.new
+      #  @github.repos.watched :user => 'user-name'
       #
       # List repos being watched by the authenticated user
       #
@@ -33,12 +33,13 @@ module Github
       #  @github = Github.new :oauth_token => '...'
       #  @github.repos.watched
       #
-      def watched(user_name=nil, params={})
-        _update_user_repo_params(user_name)
+      def watched(*args)
+        params = args.last.is_a?(Hash) ? args.pop : {}
         _normalize_params_keys(params)
+        _merge_user_into_params!(params) unless params.has_key?('user')
 
-        response = if user
-          get("/users/#{user}/watched", params)
+        response = if (user_name = params.delete('user'))
+          get("/users/#{user_name}/watched", params)
         else
           get("/user/watched", params)
         end
