@@ -56,7 +56,7 @@ describe Github::Repos::Watching, :type => :base do
 
   end
 
-  describe "watched" do
+  describe ":watched:" do
 
     context "if user unauthenticated" do
       before do
@@ -76,7 +76,7 @@ describe Github::Repos::Watching, :type => :base do
       it "should get the resource with username" do
         stub_get("/users/#{user}/watched").
           to_return(:body => fixture("repos/watched.json"), :status => 200, :headers => {})
-        github.repos.watched(user)
+        github.repos.watched(:user => user)
         a_get("/users/#{user}/watched").should have_been_made
       end
     end
