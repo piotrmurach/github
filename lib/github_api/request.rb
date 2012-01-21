@@ -63,8 +63,8 @@ module Github
     end
 
     def _extract_mime_type(params, options) # :nodoc:
-      options['resource']  = params.delete('resource') || ''
-      options['mime_type'] = params.delete('mime_type')
+      options['resource']  = params['resource'] ? params.delete('resource') : ''
+      options['mime_type'] = params['resource'] ? params.delete('mime_type') : ''
     end
 
     # no need for this smizzle
