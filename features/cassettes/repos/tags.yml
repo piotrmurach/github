@@ -165,3 +165,38 @@
       xsti6tGM4iC6Z7zyFx5dGhXAugUOSdO1V1D1YpWpg1f45z9C6mMuZTkAAA==
 
     http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: https://api.github.com:443/user/repos
+    body: 
+    headers: 
+      accept-encoding: 
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 401
+      message: Unauthorized
+    headers: 
+      server: 
+      - nginx/1.0.4
+      date: 
+      - Sat, 21 Jan 2012 17:44:53 GMT
+      content-type: 
+      - application/json; charset=utf-8
+      connection: 
+      - keep-alive
+      status: 
+      - 401 Unauthorized
+      x-ratelimit-limit: 
+      - "5000"
+      www-authenticate: 
+      - Basic realm="GitHub"
+      etag: 
+      - "\"99852aefab6a0988db8f62bf2fb96f49\""
+      x-ratelimit-remaining: 
+      - "4999"
+      content-length: 
+      - "37"
+    body: "{\"message\":\"Requires authentication\"}"
+    http_version: "1.1"
