@@ -20,6 +20,8 @@ describe Github::Result do
           'X-RateLimit-Remaining' => '4999',
           'X-RateLimit-Limit' => '5000',
           'content-length' => '344',
+          'etag' => "\"d9a88f20567726e29d35c6fae87cef2f\"",
+          'server' => "nginx/1.0.4",
           'Link' => link
         })
 
@@ -57,6 +59,14 @@ describe Github::Result do
 
   it "should read response status" do
     res.status.should be 200
+  end
+
+  it 'should read response etag' do
+    res.etag.should eql "\"d9a88f20567726e29d35c6fae87cef2f\""
+  end
+
+  it 'should read response server' do
+    res.server.should eql "nginx/1.0.4"
   end
 
   it "should assess successful" do

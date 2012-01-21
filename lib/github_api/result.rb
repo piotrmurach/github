@@ -23,6 +23,14 @@ module Github
       loaded? ? @env[:response_headers][CONTENT_LENGTH] : nil
     end
 
+    def etag
+      loaded? ? @env[:response_headers][ETAG] : nil
+    end
+
+    def server
+      loaded? ? @env[:response_headers][SERVER] : nil
+    end
+
     def status
       loaded? ? @env[:status] : nil
     end
