@@ -1,15 +1,10 @@
-# encoding: utf-8
-
-require 'github_api/utils/url'
+# encoding: utf-8 require 'github_api/utils/url'
 
 module Github
   class PageIterator
     include Github::Constants
     include Github::Utils::Url
     include Github::PagedRequest
-
-    # Query string separator
-    QUERY_STR_SEP = '?'.freeze
 
     # Setup attribute accesor for all the link types
     ATTRIBUTES = [ META_FIRST, META_NEXT, META_PREV, META_LAST ]
@@ -29,8 +24,21 @@ module Github
 
     def first
       return nil unless first_page_uri
-      response = page_request first_page_uri.split(QUERY_STR_SEP)[0],
-                              'per_page' => parse_per_page_number(first_page_uri)
+
+      response = if next_page < 1
+        parsed_query = parse_query(first_page_uri.split(QUERY_STR_SEP).last)
+        params = {}
+        if parsed_query.keys.include?('sha')
+          params['sha'] = 'master'
+        end
+        params['per_page'] = parse_per_page_number(first_page_uri)
+
+        page_request first_page_uri.split(QUERY_STR_SEP).first, params
+      else
+        page_request first_page_uri.split(QUERY_STR_SEP)[0],
+                           'per_page' => parse_per_page_number(first_page_uri)
+      end
+
       update_page_links response.links
       response
     end
@@ -38,9 +46,20 @@ module Github
     def next
       return nil unless has_next?
 
-      response = page_request next_page_uri.split(QUERY_STR_SEP)[0],
+      response = if next_page < 1
+        parsed_query = parse_query(next_page_uri.split(QUERY_STR_SEP).last)
+        params = {}
+        if parsed_query.keys.include?('last_sha')
+          params['sha'] = parsed_query['last_sha']
+        end
+        params['per_page'] = parse_per_page_number(next_page_uri)
+
+        page_request next_page_uri.split(QUERY_STR_SEP)[0], params
+      else
+        page_request next_page_uri.split(QUERY_STR_SEP)[0],
                                 'page' => next_page,
                                 'per_page'=> parse_per_page_number(next_page_uri)
+      end
       update_page_links response.links
       response
     end
