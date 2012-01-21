@@ -1,3 +1,11 @@
+0.4.2 (January 22, 2012)
+
+* fix pagination iterator to work with 'commits' method for Github::Repos api
+* fix bug with pagination returned collection set
+* add cukes to test pagination
+* extend response set with new helper methods such as etag, server
+* fix bug with pagination params for 'watched' method for Github::Repos api
+
 0.4.1 (January 18, 2012)
 
 * fix bug with default settings for paginated items in result set
