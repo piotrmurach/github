@@ -54,7 +54,7 @@ module Github
           builder.use Faraday::Request::JSON
           builder.use Faraday::Request::Multipart
           builder.use Faraday::Request::UrlEncoded
-          builder.use Faraday::Response::Logger
+          builder.use Faraday::Response::Logger if ENV['DEBUG']
 
           builder.use Github::Request::OAuth2, oauth_token if oauth_token?
           builder.use Github::Request::BasicAuth, authentication if basic_authed?
