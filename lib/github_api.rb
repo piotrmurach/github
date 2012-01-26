@@ -5,6 +5,7 @@ require 'github_api/configuration'
 require 'github_api/constants'
 require 'github_api/utils/url'
 require 'github_api/connection'
+require 'github_api/deprecation'
 
 module Github
   extend Configuration
