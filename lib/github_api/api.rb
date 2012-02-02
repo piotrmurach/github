@@ -44,6 +44,7 @@ module Github
         send("#{key}=", options[key])
       end
       _process_basic_auth(options[:basic_auth])
+      _set_api_client
       client if client_id? && client_secret?
 
       self.instance_eval(&block) if block_given?
@@ -61,6 +62,19 @@ module Github
         login    = auth[:login]
         password = auth[:password]
       end
+    end
+
+    # Assigns current api class
+    def _set_api_client
+      Github.api_client = self
+    end
+
+    # Passes configuration options to instantiated class
+    def _create_instance(klass, options)
+      options.symbolize_keys!
+      instance = klass.send :new, options
+      Github.api_client = instance
+      instance
     end
 
     # Responds to attribute query or attribute clear
@@ -185,12 +199,6 @@ module Github
       else
         {}
       end
-    end
-
-    # Passes configuration options to instantiated class
-    def _create_instance(klass, options)
-      options.symbolize_keys!
-      klass.new(options)
     end
 
     def _token_required
