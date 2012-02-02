@@ -56,11 +56,11 @@ module Github
     def _process_basic_auth(auth)
       case auth
       when String
-        login    = auth.split(':').first
-        password = auth.split(':').last
+        self.login    = auth.split(':').first
+        self.password = auth.split(':').last
       when Hash
-        login    = auth[:login]
-        password = auth[:password]
+        self.login    = auth[:login]
+        self.password = auth[:password]
       end
     end
 
