@@ -29,6 +29,21 @@ describe Github::API do
     end
   end
 
+  context '_process_basic_auth' do
+    it 'should parse authentication params' do
+      github = Github.new :basic_auth => 'login:password'
+      github.login.should eq 'login'
+      github.password.should eq 'password'
+    end
+  end
+
+  context '_set_api_client' do
+    it 'should set instantiated api class as main api client' do
+      repos_instance = repos.new
+      Github.api_client.should eq repos_instance
+    end
+  end
+
   context '_normalize_params_keys' do
     before do
       @params = { 'a' => { :b => { 'c' => 1 }, 'd' => [ 'a', { :e => 2 }] } }
