@@ -54,10 +54,10 @@ module Github
 
     # Select authentication parameters
     def authentication
-      if login? && password?
-        { :login => login, :password => password }
-      elsif basic_auth?
+      if basic_auth?
         { :basic_auth => basic_auth }
+      elsif login? && password?
+        { :login => login, :password => password }
       else
         { }
       end

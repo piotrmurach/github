@@ -125,6 +125,10 @@ describe Github::Authorization do
   end
 
   context ".basic_authed?" do
+    before do
+      github.stub(:basic_auth?).and_return false
+    end
+
     it { github.should respond_to :basic_authed? }
 
     it "should return false if login is missing" do
@@ -164,6 +168,7 @@ describe Github::Authorization do
     context 'login & password' do
       before do
         github = Github.new :login => 'github', :password => 'pass'
+        github.basic_auth = nil
       end
 
       it "should return hash with login & password params" do
