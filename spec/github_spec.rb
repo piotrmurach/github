@@ -3,95 +3,100 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 describe Github do
 
   before do
-    Github.user = nil
-    Github.repo = nil
+    subject.user = nil
+    subject.repo = nil
   end
 
   it "should respond to 'new' message" do
-    Github.should respond_to :new
+    subject.should respond_to :new
   end
 
-  it "should receive 'new' and initialize Github::Client instance" do
-    Github.new.should be_a Github::Client
+  it "should receive 'new' and initialize subject::Client instance" do
+    subject.new.should be_a Github::Client
   end
 
   it "should respond to 'configure' message" do
-    Github.should respond_to :configure
+    subject.should respond_to :configure
   end
 
   describe "setting configuration options" do
 
     it "should return default adapter" do
-      Github.adapter.should == Github::Configuration::DEFAULT_ADAPTER
+      subject.adapter.should == Github::Configuration::DEFAULT_ADAPTER
     end
 
     it "should allow to set adapter" do
-      Github.adapter = :typhoeus
-      Github.adapter.should == :typhoeus
+      subject.adapter = :typhoeus
+      subject.adapter.should == :typhoeus
     end
 
     it "should return the default end point" do
-      Github.endpoint.should == Github::Configuration::DEFAULT_ENDPOINT
+      subject.endpoint.should == Github::Configuration::DEFAULT_ENDPOINT
     end
 
     it "should allow to set endpoint" do
-      Github.endpoint = 'http://linkedin.com'
-      Github.endpoint.should == 'http://linkedin.com'
+      subject.endpoint = 'http://linkedin.com'
+      subject.endpoint.should == 'http://linkedin.com'
     end
 
     it "should return the default user agent" do
-      Github.user_agent.should == Github::Configuration::DEFAULT_USER_AGENT
+      subject.user_agent.should == Github::Configuration::DEFAULT_USER_AGENT
     end
 
     it "should allow to set new user agent" do
-      Github.user_agent = 'New User Agent'
-      Github.user_agent.should == 'New User Agent'
+      subject.user_agent = 'New User Agent'
+      subject.user_agent.should == 'New User Agent'
     end
 
     it "should have not set oauth token" do
-      Github.oauth_token.should be_nil
+      subject.oauth_token.should be_nil
     end
 
     it "should allow to set oauth token" do
-      Github.oauth_token = ''
+      subject.oauth_token = ''
     end
 
     it "should have not set default user" do
-      Github.user.should be_nil
+      subject.user.should be_nil
     end
 
     it "should allow to set new user" do
-      Github.user = 'github'
-      Github.user.should == 'github'
+      subject.user = 'github'
+      subject.user.should == 'github'
     end
 
     it "should have not set default repository" do
-      Github.repo.should be_nil
+      subject.repo.should be_nil
     end
 
     it "should allow to set new repository" do
-      Github.repo = 'github'
-      Github.repo.should == 'github'
+      subject.repo = 'github'
+      subject.repo.should == 'github'
     end
 
     it "should have connection options as hash" do
-      Github.connection_options.should be_a Hash
+      subject.connection_options.should be_a Hash
     end
 
     it "should initialize connection options to empty hash" do
-      Github.connection_options.should be_empty
+      subject.connection_options.should be_empty
     end
 
     it "shoulve have not set user's login" do
-      Github.login.should be_nil
+      subject.login.should be_nil
     end
 
     it "should have not set user's password" do
-      Github.password.should be_nil
+      subject.password.should be_nil
     end
 
     it "should have set mime type to json" do
-      Github.mime_type.should == :json
+      subject.mime_type.should == :json
+    end
+
+    it "should allow to set current api client" do
+      subject.should respond_to :api_client=
+      subject.should respond_to :api_client
     end
   end
 
@@ -106,4 +111,4 @@ describe Github do
     end
   end
 
-end
+end # Github
