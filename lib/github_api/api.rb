@@ -91,7 +91,7 @@ module Github
 
     def _validate_inputs(required, provided) # :nodoc:
       required.all? do |key|
-        provided.has_key? key
+        provided.has_deep_key? key
       end
     end
 
