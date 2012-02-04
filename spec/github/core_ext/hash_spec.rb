@@ -10,35 +10,62 @@ describe Hash do
     @symbols = { :a => { :b => { :c => 1 } } }
   end
 
-  it "should respond to except" do
-    @nested_hash.should respond_to :except
+  context '#except!' do
+    it "should respond to except!" do
+      @nested_hash.should respond_to :except!
+    end
   end
 
-  it "should respond to except!" do
-    @nested_hash.should respond_to :except!
+  context '#except' do
+    it "should respond to except" do
+      @nested_hash.should respond_to :except
+    end
+
+    it "should remove key from the hash" do
+      @nested_hash.except('a').should be_empty
+    end
   end
 
-  it "should respond to symbolize_keys!" do
-    @nested_hash.should respond_to :symbolize_keys!
+  context '#symbolize_keys' do
+    it "should respond to symbolize_keys" do
+      @nested_hash.should respond_to :symbolize_keys
+    end
   end
 
-  it "should respond to symbolize_keys" do
-    @nested_hash.should respond_to :symbolize_keys
+  context '#symbolize_keys!' do
+    it "should respond to symbolize_keys!" do
+      @nested_hash.should respond_to :symbolize_keys!
+    end
+
+    it "should convert nested keys to symbols" do
+      @nested_hash.symbolize_keys!.should == @symbols
+    end
   end
 
-  it "should respond to serialize" do
-    @nested_hash.should respond_to :serialize
+  context '#serialize' do
+    it "should respond to serialize" do
+      @nested_hash.should respond_to :serialize
+    end
+
+    it "should serialize hash" do
+      @hash.serialize.should == @serialized
+    end
   end
 
-  it "should remove key from the hash" do
-    @nested_hash.except('a').should be_empty
+  context '#all_keys' do
+    it "should respond to all_keys" do
+      @nested_hash.should respond_to :all_keys
+    end
+
+    it "should return all keys for nested hash" do
+      @nested_hash.all_keys.should eq ['a', 'b', 'c']
+    end
   end
 
-  it "should convert nested keys to symbols" do
-    @nested_hash.symbolize_keys!.should == @symbols
+  context '#has_deep_key?' do
+    it 'should find key inside nested hash' do
+      @nested_hash.has_deep_key?('c').should be_true
+    end
   end
 
-  it "should serialize hash" do
-    @hash.serialize.should == @serialized
-  end
-end
+end # Hash

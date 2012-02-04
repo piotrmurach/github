@@ -1,7 +1,6 @@
 class Array # :nodoc:
 
   def except(*keys) # :nodoc:
-    puts "module except works!!!"
     self.dup.except!(*keys)
   end unless method_defined?(:except)
 
@@ -11,4 +10,4 @@ class Array # :nodoc:
     copy
   end unless method_defined?(:except!)
 
-end # Hash
+end # Array
