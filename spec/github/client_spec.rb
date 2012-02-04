@@ -32,6 +32,10 @@ describe Github::Client do
     github.users.should be_a Github::Users
   end
 
+  it "should return Github::Authorizations instance" do
+    github.oauth.should be_a Github::Authorizations
+  end
+
   it "should respond to repos" do
     github.should respond_to :repos
   end
