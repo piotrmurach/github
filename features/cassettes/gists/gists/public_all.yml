@@ -1,0 +1,71 @@
+--- 
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: https://api.github.com:443/users/%7B%7D/gists
+    body: 
+    headers: 
+      accept-encoding: 
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 404
+      message: Not Found
+    headers: 
+      server: 
+      - nginx/1.0.4
+      date: 
+      - Sat, 04 Feb 2012 14:18:39 GMT
+      content-type: 
+      - application/json; charset=utf-8
+      transfer-encoding: 
+      - chunked
+      connection: 
+      - keep-alive
+      status: 
+      - 404 Not Found
+      x-ratelimit-limit: 
+      - "5000"
+      etag: 
+      - "\"e66a7a6c91e2c26803f3f49feb7a883f\""
+      x-ratelimit-remaining: 
+      - "4998"
+      content-encoding: 
+      - gzip
+    body: !binary |
+      H4sIAAAAAAAAA6tWyk0tLk5MT1WyUvLLL1Fwyy/NS1GqBQB8+Ys1FwAAAA==
+
+    http_version: "1.1"
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: https://api.github.com:443/users/nil/gists
+    body: 
+    headers: 
+      accept-encoding: 
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      server: 
+      - nginx/1.0.4
+      date: 
+      - Sat, 04 Feb 2012 14:21:08 GMT
+      content-type: 
+      - application/json; charset=utf-8
+      connection: 
+      - keep-alive
+      status: 
+      - 200 OK
+      x-ratelimit-limit: 
+      - "5000"
+      etag: 
+      - "\"d751713988987e9331980363e24189ce\""
+      x-ratelimit-remaining: 
+      - "4997"
+      content-length: 
+      - "2"
+    body: "[]"
+    http_version: "1.1"
