@@ -1,3 +1,14 @@
+0.4.3 (February 4, 2012)
+
+* add api extension allowing to list a given api actions(methods)
+* add api methods deprecation module
+* add specs for gists and modify unstar method signature
+* change gists starred? method to return boolean
+* add gists, error codes feature tests
+* change api client setting to work on per api class initialization to scope variables such as per_page per api instance, added specs
+* fix issue with pagination helper for iterating over response set
+* change test coverage reporting to split results for rspec and cucumber
+
 0.4.2 (January 22, 2012)
 
 * fix pagination iterator to work with 'commits' method for Github::Repos api
