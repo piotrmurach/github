@@ -45,6 +45,17 @@ When /^I request "([^"]*)" page$/ do |link|
   @next_response = @response.send :"#{link}_page"
 end
 
+When /^I iterate through collection pages$/ do
+  @pages = []
+  @response.each_page do |page|
+    @pages << page.flatten
+  end
+end
+
 Then /^the response collection of resources is different for "([^"]*)" attribute$/ do |attr|
   @next_response.first.send(:"#{attr}").should_not eql @response.first.send(:"#{attr}")
+end
+
+Then /^this collection should include first page$/ do
+  @pages.flatten.map(&:name).should include @response.first.name
 end

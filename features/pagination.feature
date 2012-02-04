@@ -65,3 +65,13 @@ Feature: Githu API pagination
     And the response should have 30 items
     And the response collection of resources is different for "sha" attribute
 
+  Scenario: Requesting resources with per_page helper
+    Given I have "Github::Repos" instance
+    When I am looking for "repos"
+    And I pass the following request options:
+      | user   |
+      | wycats |
+    And I make request within a cassette named "pagination/repos/per_page/first"
+    Then the response should be "200"
+    When I iterate through collection pages within a cassette named "pagination/repos/per_page/each_page"
+    Then this collection should include first page

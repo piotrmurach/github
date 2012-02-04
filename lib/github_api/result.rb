@@ -56,8 +56,9 @@ module Github
     # Iterator like each for response pages. If there are no pages to
     # iterate over this method will return nothing.
     def each_page
+      yield self.body
       while page_iterator.has_next?
-        yield next_page #page_iterator.next
+        yield next_page
       end
     end
 
