@@ -9,7 +9,12 @@ module Github
 
     include Github::Gists::Comments
 
-    REQUIRED_GIST_INPUTS = %w[ description public files content ]
+    REQUIRED_GIST_INPUTS = %w[
+      description
+      public
+      files
+      content
+    ].freeze
 
     # Creates new Gists API
     def initialize(options = {})
@@ -84,8 +89,8 @@ module Github
     #        <tt>:content</tt> - Required string - File contents.
     #
     # = Examples
-    #  @github = Github.new :oauth_token => '...'
-    #  @github.gists.create_gist 
+    #  @github = Github.new
+    #  @github.gists.create_gist
     #    'description' => 'the description for this gist',
     #    'public' => true,
     #    'files' => {
@@ -96,7 +101,11 @@ module Github
     #
     def create_gist(params={})
       _normalize_params_keys(params)
-      _filter_params_keys(REQUIRED_GIST_INPUTS, params)
+
+      unless _validate_inputs(REQUIRED_GIST_INPUTS, params)
+        raise ArgumentError,
+          "Required parameters are: #{REQUIRED_GIST_INPUTS.join(', ')}"
+      end
 
       post("/gists", params)
     end
@@ -132,7 +141,6 @@ module Github
     def edit_gist(gist_id, params={})
       _validate_presence_of(gist_id)
       _normalize_params_keys(params)
-      _filter_params_keys(REQUIRED_GIST_INPUTS, params)
 
       patch("/gists/#{gist_id}", params)
     end
@@ -156,14 +164,14 @@ module Github
     #  @github = Github.new
     #  @github.gists.unstar 'gist-id'
     #
-    def unstar_gist(gist_id, params={})
+    def unstar(gist_id, params={})
       _validate_presence_of(gist_id)
       _normalize_params_keys(params)
 
       delete("/gists/#{gist_id}/star", params)
     end
 
-    # Check if a gist is starred 
+    # Check if a gist is starred
     #
     # = Examples
     #  @github = Github.new
@@ -174,6 +182,9 @@ module Github
       _normalize_params_keys(params)
 
       get("/gists/#{gist_id}/star", params)
+      true
+    rescue Github::ResourceNotFound
+      false
     end
 
     # Fork a gist
