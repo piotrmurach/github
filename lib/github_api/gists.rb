@@ -53,19 +53,25 @@ module Github
     #
     def starred(params={})
       _normalize_params_keys(params)
-      get("/gists/starred", params)
+
+      response = get("/gists/starred", params)
+      return response unless block_given?
+      response.each { |el| yield el }
     end
 
     # Get a single gist
     #
     # = Examples
-    #  @github = Github.new :oauth_token => '...'
+    #  @github = Github.new
     #  @github.gists.get_gist 'gist-id'
     #
-    def get_gist(gist_id, params={})
+    def gist(gist_id, params={})
       _normalize_params_keys(params)
+      _validate_presence_of(gist_id)
+
       get("/gists/#{gist_id}", params)
     end
+    alias :get_gist :gist
 
     # Create a gist
     #
