@@ -3,11 +3,7 @@ Given /^I have github instance$/ do
 end
 
 Given /^I have "([^"]*)" instance$/ do |api_classes|
-  constant = Object
-  api_classes.split('::').each do |api_class|
-    constant = constant.const_get api_class
-  end
-  @instance = constant.new
+  @instance = convert_to_constant(api_classes).new
 end
 
 When /^I fetch "([^"]*)"$/ do |method|
@@ -58,4 +54,12 @@ end
 
 Then /^this collection should include first page$/ do
   @pages.flatten.map(&:name).should include @response.first.name
+end
+
+Then /^request should fail with "([^"]*)"$/ do |exception|
+  @options ||= {}
+  @attributes ||= {}
+  expect {
+    @response = @instance.send @method, *@attributes.values, @options
+  }.to raise_error(convert_to_constant(exception))
 end
