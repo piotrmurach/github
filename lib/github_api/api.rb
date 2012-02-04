@@ -9,6 +9,7 @@ require 'github_api/core_ext/hash'
 require 'github_api/core_ext/array'
 require 'github_api/compatibility'
 require 'github_api/api/actions'
+require 'github_api/api_factory'
 
 module Github
 
@@ -63,14 +64,6 @@ module Github
     # Assigns current api class
     def _set_api_client
       Github.api_client = self
-    end
-
-    # Passes configuration options to instantiated class
-    def _create_instance(klass, options)
-      options.symbolize_keys!
-      instance = klass.send :new, options
-      Github.api_client = instance
-      instance
     end
 
     # Responds to attribute query or attribute clear
