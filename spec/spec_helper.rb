@@ -11,6 +11,7 @@ require 'github_api'
 if RUBY_VERSION > '1.9' and ENV['COVERAGE']
   require 'coverage_adapter'
   SimpleCov.start 'github_api'
+  SimpleCov.coverage_dir 'coverage/rspec'
 end
 
 # Requires supporting files with custom matchers and macros, etc,
