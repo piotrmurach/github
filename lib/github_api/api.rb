@@ -2,6 +2,7 @@
 
 require 'github_api/configuration'
 require 'github_api/connection'
+require 'github_api/validation'
 require 'github_api/request'
 require 'github_api/mime_type'
 require 'github_api/core_ext/hash'
@@ -17,12 +18,7 @@ module Github
     include MimeType
     include Connection
     include Request
-
-    VALID_API_KEYS = [
-      'page',
-      'per_page',
-      'jsonp_callback'
-    ]
+    include Validation
 
     attr_reader *Configuration::VALID_OPTIONS_KEYS
     attr_accessor *VALID_API_KEYS
@@ -87,23 +83,6 @@ module Github
       else
         super
       end
-    end
-
-    def _validate_inputs(required, provided) # :nodoc:
-      required.all? do |key|
-        provided.has_deep_key? key
-      end
-    end
-
-    def _validate_presence_of(*params) # :nodoc:
-      params.each do |param|
-        raise ArgumentError, "parameter cannot be nil" if param.nil?
-      end
-    end
-
-    def _validate_user_repo_params(user_name, repo_name) # :nodoc:
-      raise ArgumentError, "[user] parameter cannot be nil" if user_name.nil?
-      raise ArgumentError, "[repo] parameter cannot be nil" if repo_name.nil?
     end
 
     def _update_user_repo_params(user_name, repo_name=nil) # :nodoc:
@@ -173,18 +152,6 @@ module Github
         end
       end
       return hash
-    end
-
-    # Ensures that hash values contain predefined values
-    def _validate_params_values(options, params)  # :nodoc:
-      params.each do |k, v|
-        next unless options.keys.include?(k)
-        if options[k].is_a?(Array) && !options[k].include?(params[k])
-          raise ArgumentError, "Wrong value for #{k}, allowed: #{options[k].join(', ')}"
-        elsif options[k].is_a?(Regexp) && !(options[k] =~ params[k])
-          raise ArgumentError, "String does not match the parameter value."
-        end
-      end
     end
 
     def _merge_mime_type(resource, params) # :nodoc:

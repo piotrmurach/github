@@ -78,6 +78,7 @@ module Github
     :Authorizations => 'authorizations',
     :PageLinks    => 'page_links',
     :PageIterator => 'page_iterator',
-    :PagedRequest => 'paged_request'
+    :PagedRequest => 'paged_request',
+    :Validation   => 'validation'
 
 end # Github
