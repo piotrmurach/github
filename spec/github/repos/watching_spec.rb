@@ -85,13 +85,18 @@ describe Github::Repos::Watching, :type => :base do
       before do
         github.user = nil
         github.oauth_token = OAUTH_TOKEN
-        stub_get("/user/watched?access_token=#{OAUTH_TOKEN}").
+        stub_get("/user/watched").
+          with(:query => {:access_token => OAUTH_TOKEN}).
           to_return(:body => fixture("repos/watched.json"), :status => 200, :headers => {})
+      end
+      after do
+        github.oauth_token = nil
       end
 
       it "should get the resources" do
         github.repos.watched
-        a_get("/user/watched?access_token=#{OAUTH_TOKEN}").should have_been_made
+        a_get("/user/watched").with(:query => {:access_token => OAUTH_TOKEN}).
+          should have_been_made
       end
 
       it "should return array of resources" do
@@ -149,7 +154,8 @@ describe Github::Repos::Watching, :type => :base do
         before do
           github.user, github.repo = nil, nil
           github.oauth_token = OAUTH_TOKEN
-          stub_put("/user/watched/#{user}/#{repo}?access_token=#{OAUTH_TOKEN}").
+          stub_put("/user/watched/#{user}/#{repo}").
+            with(:query => {:access_token => OAUTH_TOKEN}).
             to_return(:body => "", :status => 204, :headers => {})
         end
 
@@ -159,7 +165,9 @@ describe Github::Repos::Watching, :type => :base do
 
         it "should successfully watch a repo" do
           github.repos.start_watching(user, repo)
-          a_put("/user/watched/#{user}/#{repo}?access_token=#{OAUTH_TOKEN}").should have_been_made
+          a_put("/user/watched/#{user}/#{repo}").
+            with(:query => {:access_token => OAUTH_TOKEN}).
+            should have_been_made
         end
       end
 
