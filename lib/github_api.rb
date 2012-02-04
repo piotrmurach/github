@@ -59,6 +59,7 @@ module Github
 
   autoload_all 'github_api',
     :API          => 'api',
+    :ApiFactory   => 'api_factory',
     :Client       => 'client',
     :Repos        => 'repos',
     :Request      => 'request',
