@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe Github::Gists, :type => :base do
 
+  let(:gist_id) { '1' }
+
   describe "#gists" do
     context 'check aliases' do
       it { github.gists.should respond_to :gists }
@@ -186,5 +188,276 @@ describe Github::Gists, :type => :base do
       end
     end
   end # gist
+
+  describe "#create_gist" do
+    let(:inputs) {
+      {
+        "description" => "the description for this gist",
+        "public" => true,
+        "files" => {
+          "file1.txt" => {
+            "content" => "String file contents"
+          }
+        },
+      }
+    }
+
+    context "resouce created" do
+      before do
+        stub_post("/gists").
+          with(:body => JSON.generate(inputs)).
+          to_return(:body => fixture('gists/gist.json'),
+                :status => 201,
+                :headers => {:content_type => "application/json; charset=utf-8"})
+      end
+
+      it "should fail to create resource if 'content' input is missing" do
+        expect {
+          github.gists.create_gist inputs.except('files')
+        }.to raise_error(ArgumentError)
+      end
+
+      it "should fail to create resource if 'encoding' input is missing" do
+        expect {
+          github.gists.create_gist inputs.except('public')
+        }.to raise_error(ArgumentError)
+      end
+
+      it "should create resource successfully" do
+        github.gists.create_gist inputs
+        a_post("/gists").with(inputs).should have_been_made
+      end
+
+      it "should return the resource" do
+        gist = github.gists.create_gist inputs
+        gist.should be_a Hashie::Mash
+      end
+
+      it "should get the gist information" do
+        gist = github.gists.create_gist inputs
+        gist.user.login.should == 'octocat'
+      end
+    end
+
+    context "failed to create resource" do
+      before do
+        stub_post("/gists").with(inputs).
+          to_return(:body => fixture('gists/gist.json'),
+            :status => 404,
+            :headers => {:content_type => "application/json; charset=utf-8"})
+      end
+
+      it "should faile to retrieve resource" do
+        expect {
+          github.gists.create_gist inputs
+        }.to raise_error(Github::ResourceNotFound)
+      end
+    end
+  end # create_gist
+
+  describe "#edit_gist" do
+    let(:inputs) {
+      {
+        "description" => "the description for this gist",
+        "files" => {
+          "file1.txt" => {
+            "content" => "updated file contents"
+          },
+          "old_name.txt" => {
+            "filename" => "new_name.txt",
+            "content" => "modified contents"
+          },
+          "new_file.txt" => {
+            "content" => "a new file"
+          },
+          "delete_this_file.txt" => nil
+        }
+      }
+    }
+
+    context "resouce edited" do
+      before do
+        stub_patch("/gists/#{gist_id}").
+          with(:body => JSON.generate(inputs)).
+          to_return(:body => fixture('gists/gist.json'),
+                :status => 200,
+                :headers => {:content_type => "application/json; charset=utf-8"})
+      end
+
+      it "should edit resource successfully" do
+        github.gists.edit_gist gist_id, inputs
+        a_patch("/gists/#{gist_id}").with(inputs).should have_been_made
+      end
+
+      it "should return the resource" do
+        gist = github.gists.edit_gist gist_id, inputs
+        gist.should be_a Hashie::Mash
+      end
+
+      it "should get the gist information" do
+        gist = github.gists.edit_gist gist_id, inputs
+        gist.user.login.should == 'octocat'
+      end
+    end
+
+    context "failed to edit resource" do
+      before do
+        stub_patch("/gists/#{gist_id}").with(inputs).
+          to_return(:body => fixture('gists/gist.json'),
+            :status => 404,
+            :headers => {:content_type => "application/json; charset=utf-8"})
+      end
+
+      it "should fail to retrieve resource" do
+        expect {
+          github.gists.edit_gist gist_id, inputs
+        }.to raise_error(Github::ResourceNotFound)
+      end
+    end
+  end # edit_gist
+
+  context '#star' do
+    before do
+      stub_put("/gists/#{gist_id}/star").
+        to_return(:body => '',
+              :status => 204,
+              :headers => {:content_type => "application/json; charset=utf-8"})
+    end
+
+    it "should raise error if gist id not present" do
+      expect {
+        github.gists.star nil
+      }.to raise_error(ArgumentError)
+    end
+
+    it 'successfully stars a gist' do
+      github.gists.star(gist_id)
+      a_put("/gists/#{gist_id}/star").should have_been_made
+    end
+
+    it "should return 204 with a message 'Not Found'" do
+      github.gists.star(gist_id).status.should be 204
+    end
+  end # star
+
+  context '#unstar' do
+    before do
+      stub_delete("/gists/#{gist_id}/star").
+        to_return(:body => '',
+              :status => 204,
+              :headers => {:content_type => "application/json; charset=utf-8"})
+    end
+
+    it "should raise error if gist id not present" do
+      expect {
+        github.gists.unstar nil
+      }.to raise_error(ArgumentError)
+    end
+
+    it 'successfully stars a gist' do
+      github.gists.unstar(gist_id)
+      a_delete("/gists/#{gist_id}/star").should have_been_made
+    end
+
+    it "should return 204 with a message 'Not Found'" do
+      github.gists.unstar(gist_id).status.should be 204
+    end
+  end # unstar
+
+  context '#starred?' do
+    before do
+      stub_get("/gists/#{gist_id}/star").
+        to_return(:body => '',
+              :status => 204,
+              :headers => {:content_type => "application/json; charset=utf-8"})
+    end
+
+    it 'should raise error if gist id not present' do
+      expect {
+        github.gists.starred? nil
+      }.to raise_error(ArgumentError)
+    end
+
+    it 'should return true if gist is already starred' do
+      github.gists.starred?(gist_id).should be_true
+    end
+
+    it 'should return false if gist is not starred' do
+      stub_get("/gists/#{gist_id}/star").
+        to_return(:body => '',
+              :status => 404,
+              :headers => {:content_type => "application/json; charset=utf-8"})
+      github.gists.starred?(gist_id).should be_false
+    end
+  end # starred?
+
+  context '#fork' do
+    before do
+      stub_post("/gists/#{gist_id}/fork").
+        to_return(:body => fixture('gists/gist.json'),
+              :status => 201,
+              :headers => {:content_type => "application/json; charset=utf-8"})
+    end
+
+
+    it "should fail to fork gist without gist id" do
+      expect { github.gists.fork(nil) }.to raise_error(ArgumentError)
+    end
+
+    it "should fork resource successfully" do
+      github.gists.fork gist_id
+      a_post("/gists/#{gist_id}/fork").should have_been_made
+    end
+
+    it "should return the resource" do
+      gist = github.gists.fork gist_id
+      gist.should be_a Hashie::Mash
+    end
+
+    it "should get the gist information" do
+      gist = github.gists.fork gist_id
+      gist.user.login.should == 'octocat'
+    end
+
+    it 'fails to retrieve resource' do
+      stub_post("/gists/#{gist_id}/fork").
+        to_return(:body => '',
+          :status => 404,
+          :headers => {:content_type => "application/json; charset=utf-8"})
+      expect {
+        github.gists.fork gist_id
+      }.to raise_error(Github::ResourceNotFound)
+    end
+  end # fork
+
+  context "#delete_gist" do
+    before do
+      stub_delete("/gists/#{gist_id}").
+        to_return(:body => fixture('gists/gist.json'),
+              :status => 204,
+              :headers => {:content_type => "application/json; charset=utf-8"})
+    end
+
+    it 'should raise error if gist id not present' do
+      expect {
+        github.gists.delete_gist nil
+      }.to raise_error(ArgumentError)
+    end
+
+    it "should remove resource successfully" do
+      github.gists.delete_gist gist_id
+      a_delete("/gists/#{gist_id}").should have_been_made
+    end
+
+    it "fails to delete resource" do
+      stub_delete("/gists/#{gist_id}").
+        to_return(:body => '',
+          :status => 404,
+          :headers => {:content_type => "application/json; charset=utf-8"})
+      expect {
+        github.gists.delete_gist gist_id
+      }.to raise_error(Github::ResourceNotFound)
+    end
+  end # delete_gist
 
 end # Github::Gists
