@@ -22,6 +22,7 @@ describe Github::Result do
           'content-length' => '344',
           'etag' => "\"d9a88f20567726e29d35c6fae87cef2f\"",
           'server' => "nginx/1.0.4",
+          'Date' => "Sun, 05 Feb 2012 15:02:34 GMT",
           'Link' => link
         })
 
@@ -36,6 +37,7 @@ describe Github::Result do
           'X-RateLimit-Remaining' => '4999',
           'X-RateLimit-Limit' => '5000',
           'content-length' => '344',
+          'Date' => "Sun, 05 Feb 2012 15:02:34 GMT",
           'Link' => link
         })
     end
@@ -63,6 +65,10 @@ describe Github::Result do
 
   it 'should read response etag' do
     res.etag.should eql "\"d9a88f20567726e29d35c6fae87cef2f\""
+  end
+
+  it 'should read response date' do
+    res.date.should eql "Sun, 05 Feb 2012 15:02:34 GMT"
   end
 
   it 'should read response server' do

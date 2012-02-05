@@ -27,6 +27,10 @@ module Github
       loaded? ? @env[:response_headers][ETAG] : nil
     end
 
+    def date
+      loaded? ? @env[:response_headers][DATE] : nil
+    end
+
     def server
       loaded? ? @env[:response_headers][SERVER] : nil
     end
