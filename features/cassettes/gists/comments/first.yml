@@ -1,0 +1,46 @@
+--- 
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :get
+    uri: https://api.github.com:443/gists/comments/33469
+    body: 
+    headers: 
+      accept-encoding: 
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      server: 
+      - nginx/1.0.4
+      date: 
+      - Sun, 05 Feb 2012 12:59:01 GMT
+      content-type: 
+      - application/json; charset=utf-8
+      transfer-encoding: 
+      - chunked
+      connection: 
+      - keep-alive
+      status: 
+      - 200 OK
+      x-ratelimit-limit: 
+      - "5000"
+      etag: 
+      - "\"612aa3594782fab47ab767da9f377a8c\""
+      x-ratelimit-remaining: 
+      - "4996"
+      content-encoding: 
+      - gzip
+    body: !binary |
+      H4sIAAAAAAAAA4VSy27cMAz8FcJAb+vX2smuDRQ5FAjSe5BDLwElUbZgWRIk
+      ua0T5N8jO91ie2luA4kznCH5mi1eZ302xuhCX5boVDGoOC6s4HYuBxViKBOa
+      ySTQNO1tlx0yZsWaSE/kV+DW6gNoa6cAWk0EcSTwNNBvCoBGgMM47v+LSw+e
+      YFJaKzOAIy+tn9FwKuDbSHwCu0S4WLmy4Tg6X4rV2JxpFV/IQ2ICI8PHGf20
+      qSEIJSX5ZBQwOOIRrLzusZsJHDUylURWyGG0vyD1X2GTDiAsfAdDJMAaeCA/
+      2eUOUtzFCYwknjGm0MeqrvPqJm/qx/q2P970TfNjqwnks/71/+PcikK5p0mU
+      weNPjOiflUi6TNatrLqT5GdG7flUdazFTiIxLpF3MhG0HZRJpReBP/R/NxiI
+      L56Ki/i+xo/C8rMWd+Lr3zs4tueCCpxwRlUYiiWGQDFcHceX472acaCQwKXb
+      Nc7rtiqcGZLxLeCpObf12wfe7+iQcU+fzPXtHbPbLeKgAgAA
+
+    http_version: "1.1"
