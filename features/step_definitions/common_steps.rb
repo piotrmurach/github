@@ -17,3 +17,7 @@ end
 Then /^the response should have (\d+) items$/ do |size|
   @response.size.should eql size.to_i
 end
+
+Then /^the response should not be empty$/ do
+  @response.should_not be_empty
+end
