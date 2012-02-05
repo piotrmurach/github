@@ -20,6 +20,7 @@ module Github
     include Connection
     include Request
     include Validation
+    include Filter
 
     attr_reader *Configuration::VALID_OPTIONS_KEYS
     attr_accessor *VALID_API_KEYS
@@ -89,45 +90,6 @@ module Github
 
     def _merge_user_repo_into_params!(params)   #  :nodoc:
       { 'user' => self.user, 'repo' => self.repo }.merge!(params)
-    end
-
-    # Turns any keys from nested hashes including nested arrays into strings
-    def _normalize_params_keys(params)  #  :nodoc:
-      case params
-      when Hash
-        params.keys.each do |k|
-          params[k.to_s] = params.delete(k)
-          _normalize_params_keys(params[k.to_s])
-        end
-      when Array
-        params.map! do |el|
-          _normalize_params_keys(el)
-        end
-      else
-        params.to_s
-      end
-      return params
-    end
-
-    # Removes any keys from nested hashes that don't match predefiend keys
-    def _filter_params_keys(keys, params)  # :nodoc:
-      case params
-      when Hash
-        params.keys.each do |k, v|
-          unless (keys.include?(k) or VALID_API_KEYS.include?(k))
-            params.delete(k)
-          else
-            _filter_params_keys(keys, params[k])
-          end
-        end
-      when Array
-        params.map! do |el|
-          _filter_params_keys(keys, el)
-        end
-      else
-        params
-      end
-      return params
     end
 
     def _hash_traverse(hash, &block)
