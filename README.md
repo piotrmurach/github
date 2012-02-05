@@ -141,13 +141,19 @@ or organisation name, allow you to switch the way the data is returned to you, f
 
 ```ruby
 @github = Github.new
-@github.git_data.tree 'peter-murach', 'github', 'c18647b75d72f19c1e0cc8af031e5d833b7f12ea' # => gets a tree
+@github.git_data.tree 'peter-murach', 'github', 'c18647b75d72f19c1e0cc8af031e5d833b7f12ea'
+# => gets a tree
 
-@github.git_data.tree 'peter-murach', 'github', 'c18647b75d72f19c1e0cc8af031e5d833b7f12ea', :recursive => true # => gets a whole tree recursively
+@github.git_data.tree 'peter-murach', 'github', 'c18647b75d72f19c1e0cc8af031e5d833b7f12ea', :recursive => true
+# => gets a whole tree recursively
+```
 
 by passing a block you can iterate over the file tree
 
-@github.git_data.tree 'peter-murach', 'github', 'c18647b75d72f19c1e0cc8af031e5d833b7f12ea', :recursive => true do |file|
+```ruby
+@github.git_data.tree 'peter-murach', 'github', 'c18647b75d72f19c1e0cc8af031e5d833b7f12ea',
+  :recursive => true do |file|
+
   puts file.path
 end
 ```
@@ -210,7 +216,7 @@ end
 or
 
 Github.new(:oauth_token => YOUR_OAUTH_TOKEN)
-Github.new(:basic_auth => 'login:password)
+Github.new(:basic_auth => 'login:password')
 ```
 
 All parameters can be overwirtten as per method call. By passing parameters hash...
