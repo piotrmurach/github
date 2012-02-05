@@ -60,7 +60,6 @@ module Github
         _filter_params_keys(ALLOWED_GIST_COMMENT_INPUTS, params)
 
         unless _validate_inputs(REQUIRED_GIST_COMMENT_INPUTS, params)
-          puts params
           raise ArgumentError, "Required inputs are: :body"
         end
 
