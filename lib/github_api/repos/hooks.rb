@@ -96,9 +96,11 @@ module Github
         _validate_user_repo_params(user, repo) unless user? && repo?
 
         _normalize_params_keys(params)
-        _filter_params_keys(VALID_HOOK_PARAM_NAMES, params)
+        _filter_params_keys(VALID_HOOK_PARAM_NAMES, params, :recursive => false)
 
-        raise ArgumentError, "Required parameters are: name, config" unless _validate_inputs(REQUIRED_PARAMS, params)
+        unless _validate_inputs(REQUIRED_PARAMS, params)
+          raise ArgumentError, "Required parameters are: name, config"
+        end
 
         post("/repos/#{user}/#{repo}/hooks", params)
       end
@@ -130,9 +132,11 @@ module Github
         _validate_presence_of hook_id
 
         _normalize_params_keys(params)
-        _filter_params_keys(VALID_HOOK_PARAM_NAMES, params)
+        _filter_params_keys(VALID_HOOK_PARAM_NAMES, params, :recursive => false)
 
-        raise ArgumentError, "Required parameters are: name, config" unless _validate_inputs(REQUIRED_PARAMS, params)
+        unless _validate_inputs(REQUIRED_PARAMS, params)
+          raise ArgumentError, "Required parameters are: name, config"
+        end
 
         patch("/repos/#{user}/#{repo}/hooks/#{hook_id}", params)
       end

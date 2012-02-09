@@ -121,14 +121,22 @@ describe Github::Repos::Hooks, :type => :base do
     let(:inputs) {
       {
         :name => 'web',
-        :config => { :url => "http://something.com/webhook" },
-        :active => true
+        :config => {
+          :url => "http://something.com/webhook",
+          :address => "test@example.com",
+          :subdomain => "github",
+          :room => "Commits",
+          :token => "abc123"
+        },
+        :active => true,
+        :unrelated => true
       }
     }
 
     context "resouce created" do
       before do
-        stub_post("/repos/#{user}/#{repo}/hooks").with(inputs).
+        stub_post("/repos/#{user}/#{repo}/hooks").
+          with(:body => JSON.generate(inputs.except(:unrelated))).
           to_return(:body => fixture('repos/hook.json'), :status => 201, :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
@@ -179,14 +187,22 @@ describe Github::Repos::Hooks, :type => :base do
     let(:inputs) {
       {
         :name => 'web',
-        :config => { :url => "http://something.com/webhook" },
-        :active => true
+        :config => {
+          :url => "http://something.com/webhook",
+          :address => "test@example.com",
+          :subdomain => "github",
+          :room => "Commits",
+          :token => "abc123"
+        },
+        :active => true,
+        :unrelated => true
       }
     }
 
     context "resource edited successfully" do
       before do
-        stub_patch("/repos/#{user}/#{repo}/hooks/#{hook_id}").with(inputs).
+        stub_patch("/repos/#{user}/#{repo}/hooks/#{hook_id}").
+          with(:body => JSON.generate(inputs.except(:unrelated))).
           to_return(:body => fixture("repos/hook.json"), :status => 200, :headers => { :content_type => "application/json; charset=utf-8"})
       end
 
