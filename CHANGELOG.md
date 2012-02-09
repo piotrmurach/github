@@ -1,3 +1,11 @@
+0.4.4 (February 9, 2012)
+
+* factor out request validation into its own module
+* factor out request filtering inside its own module
+* add factory for creating main api submodules
+* add specs for gists comments api
+* expand filtering to allow for toggling recursive behaviour
+
 0.4.3 (February 4, 2012)
 
 * add api extension allowing to list a given api actions(methods)
