@@ -32,19 +32,19 @@ module Github
     end
 
     # Removes any keys from nested hashes that don't match predefiend keys
-    def _filter_params_keys(keys, params)  # :nodoc:
+    def _filter_params_keys(keys, params, options={:recursive => true})  # :nodoc:
       case params
       when Hash
         params.keys.each do |k, v|
           unless (keys.include?(k) or Github::Validation::VALID_API_KEYS.include?(k))
             params.delete(k)
           else
-            _filter_params_keys(keys, params[k])
+            _filter_params_keys(keys, params[k]) if options[:recursive]
           end
         end
       when Array
         params.map! do |el|
-          _filter_params_keys(keys, el)
+          _filter_params_keys(keys, el) if options[:recursive]
         end
       else
         params

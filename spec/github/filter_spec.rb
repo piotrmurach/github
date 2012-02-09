@@ -67,6 +67,16 @@ describe Github::Filter, :type => :base do
       hash.all_keys.should_not include :b
       hash.all_keys.should_not include :c
     end
+
+    it 'recursively filters inputs tree' do
+      github.repos._filter_params_keys([:a, :b], hash)
+      hash.all_keys.should_not include :c
+    end
+
+    it 'filters inputs tree only on top level' do
+      github.repos._filter_params_keys([:a, :b], hash, :recursive => false)
+      hash.all_keys.should include :c
+    end
   end
 
 end # Github::Filter
