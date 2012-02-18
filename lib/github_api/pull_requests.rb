@@ -75,6 +75,7 @@ module Github
 
       get("/repos/#{user}/#{repo}/pulls/#{request_id}", params)
     end
+    alias :get_pull_request :pull_request
 
     # Create a pull request
     #
@@ -105,7 +106,7 @@ module Github
     #    "head" => "octocat:new-feature",
     #    "base" => "master"
     #
-    def create_request(user_name=nil, repo_name=nil, params={})
+    def create_request(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
 
@@ -115,6 +116,7 @@ module Github
 
       post("/repos/#{user}/#{repo}/pulls", params)
     end
+    alias :create_pull_request :create_request
 
     # Update a pull request
     #
@@ -142,6 +144,7 @@ module Github
 
       patch("/repos/#{user}/#{repo}/pulls/#{request_id}", params)
     end
+    alias :update_pull_request :update_request
 
     # List commits on a pull request
     #
