@@ -152,7 +152,7 @@ module Github
     #  @github = Github.new
     #  @github.pull_requests.request_commits 'user-name', 'repo-name', 'request-id'
     #
-    def request_commits(user_name, repo_name, request_id, params={})
+    def commits(user_name, repo_name, request_id, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of request_id
@@ -164,6 +164,7 @@ module Github
       return response unless block_given?
       response.each { |el| yield el }
     end
+    alias :request_commits :commits
 
     # List pull requests files
     #
@@ -171,7 +172,7 @@ module Github
     #  @github = Github.new
     #  @github.pull_requests.request_files 'user-name', 'repo-name', 'request-id'
     #
-    def request_files(user_name, repo_name, request_id, params={})
+    def files(user_name, repo_name, request_id, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of request_id
@@ -183,6 +184,7 @@ module Github
       return response unless block_given?
       response.each { |el| yield el }
     end
+    alias :request_files :files
 
     # Check if pull request has been merged
     #
@@ -211,7 +213,7 @@ module Github
     #
     # = Examples
     #  @github = Github.new
-    #  @github.pull_requests.request_files 'user-name', 'repo-name', 'request-id'
+    #  @github.pull_requests.merge 'user-name', 'repo-name', 'request-id'
     #
     def merge(user_name, repo_name, request_id, params={})
       _update_user_repo_params(user_name, repo_name)
