@@ -40,7 +40,7 @@ module Github
     #  @pull_reqs = Github::PullRequests.new
     #  @pull_reqs.pull_requests 'user-name', 'repo-name'
     #
-    def pull_requests(user_name=nil, repo_name=nil, params={})
+    def pull_requests(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless (user? && repo?)
 
@@ -53,6 +53,8 @@ module Github
       return response unless block_given?
       response.each { |el| yield el }
     end
+    alias :pulls :pull_requests
+    alias :requests :pull_requests
 
     # Get a single pull request
     #
