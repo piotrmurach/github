@@ -1,3 +1,13 @@
+0.4.5 (February 25, 2012)
+
+* add specs for the main pull requests api
+* add specs for the pull reqeust review comments api
+* change method signatures inside pull request api to be more concise
+* add new generic error class
+* add GitHub service specific error types
+* change response raising error to use new error types and increased encapsulation of http header information
+* fix breakage across api classes and test suite
+
 0.4.4 (February 9, 2012)
 
 * factor out request validation into its own module
