@@ -142,7 +142,7 @@ module Github
         _normalize_params_keys(params)
         get("/teams/#{team_name}/members/#{member_name}", params)
         true
-      rescue Github::ResourceNotFound
+      rescue Github::Error::NotFound
         false
       end
 
@@ -204,7 +204,7 @@ module Github
         _normalize_params_keys(params)
         get("/teams/#{team_name}/repos/#{user_name}/#{repo_name}", params)
         true
-      rescue Github::ResourceNotFound
+      rescue Github::Error::NotFound
         false
       end
       alias :team_repository? :team_repo?

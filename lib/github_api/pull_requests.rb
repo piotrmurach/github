@@ -202,7 +202,7 @@ module Github
 
       get("/repos/#{user}/#{repo}/pulls/#{request_id}/merge", params)
       true
-    rescue Github::ResourceNotFound
+    rescue Github::Error::NotFound
       false
     end
 

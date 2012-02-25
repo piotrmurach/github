@@ -37,7 +37,7 @@ module Github
         _normalize_params_keys(params)
         get("/orgs/#{org_name}/members/#{member_name}", params)
         true
-      rescue Github::ResourceNotFound
+      rescue Github::Error::NotFound
         false
       end
       alias :is_member? :member?
@@ -84,7 +84,7 @@ module Github
         _normalize_params_keys(params)
         get("/orgs/#{org_name}/public_members/#{member_name}", params)
         true
-      rescue Github::ResourceNotFound
+      rescue Github::Error::NotFound
         false
       end
 

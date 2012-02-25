@@ -36,7 +36,9 @@ module Github
     #
     def gists(user_name=nil, params={})
       _update_user_repo_params(user_name)
-      _normalize_params_keys(params)
+      process_params do
+        normalize params
+      end
 
       response = if user
         get("/users/#{user}/gists", params)
@@ -57,7 +59,9 @@ module Github
     #  @github.gists.starred
     #
     def starred(params={})
-      _normalize_params_keys(params)
+      process_params do
+        normalize params
+      end
 
       response = get("/gists/starred", params)
       return response unless block_given?
@@ -183,7 +187,7 @@ module Github
 
       get("/gists/#{gist_id}/star", params)
       true
-    rescue Github::ResourceNotFound
+    rescue Github::Error::NotFound
       false
     end
 

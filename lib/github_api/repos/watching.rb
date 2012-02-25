@@ -59,7 +59,7 @@ module Github
         _normalize_params_keys(params)
         get("/user/watched/#{user_name}/#{repo_name}", params)
         true
-      rescue Github::ResourceNotFound
+      rescue Github::Error::NotFound
         false
       end
 

@@ -65,7 +65,7 @@ module Github
         _normalize_params_keys(params)
         get("/user/following/#{user_name}", params)
         true
-      rescue Github::ResourceNotFound
+      rescue Github::Error::NotFound
         false
       end
 

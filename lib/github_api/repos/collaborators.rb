@@ -37,7 +37,7 @@ module Github
 
         get("/repos/#{user}/#{repo}/collaborators/#{collaborator}", params)
         true
-      rescue Github::ResourceNotFound
+      rescue Github::Error::NotFound
         false
       end
 
