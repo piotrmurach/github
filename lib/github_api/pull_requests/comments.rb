@@ -18,9 +18,9 @@ module Github
       #
       # = Examples
       #  @github = Github.new
-      #  @github.pull_requests.request_comments 'user-name', 'repo-name', 'request-id'
+      #  @github.pull_requests.comments 'user-name', 'repo-name', 'request-id'
       #
-      def request_comments(user_name, repo_name, request_id, params={})
+      def comments(user_name, repo_name, request_id, params={})
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
         _validate_presence_of request_id
@@ -32,13 +32,14 @@ module Github
         return response unless block_given?
         response.each { |el| yield el }
       end
+      alias :request_comments :comments
 
       # Get a single comment for pull requests
       # = Examples
       #  @github = Github.new
-      #  @github.pull_requests.request_comment 'user-name', 'repo-name', 'comment-id'
+      #  @github.pull_requests.comment 'user-name', 'repo-name', 'comment-id'
       #
-      def request_comment(user_name, repo_name, comment_id, params={})
+      def comment(user_name, repo_name, comment_id, params={})
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
         _validate_presence_of comment_id
@@ -48,6 +49,8 @@ module Github
 
         get("/repos/#{user}/#{repo}/pulls/comments/#{comment_id}", params)
       end
+      alias :request_comment :comment
+      alias :get_comment :comment
 
       # Create a pull request comment
       #
@@ -59,7 +62,8 @@ module Github
       #
       # = Examples
       #  @github = Github.new
-      #  @github.pull_requests.create_request_comment 'user-name', 'repo-name', 'request-id', "body" => "Nice change",
+      #  @github.pull_requests.create_comment 'user-name','repo-name','request-id',
+      #   "body" => "Nice change",
       #   "commit_id" => "6dcb09b5b57875f334f61aebed695e2e4193db5e",
       #   "path" => "file1.txt",
       #   "position" => 4
@@ -72,10 +76,11 @@ module Github
       #
       # = Examples
       #  @github = Github.new
-      #  @github.pull_requests.create_request_comment 'user-name', 'repo-name', 'request-id', "body" => "Nice change",
-      #   "in_reply_to" => 4
+      #  @github.pull_requests.create_comment 'user-name','repo-name','request-id',
+      #    "body" => "Nice change",
+      #    "in_reply_to" => 4
       #
-      def create_request_comment(user_name, repo_name, request_id, params={})
+      def create_comment(user_name, repo_name, request_id, params={})
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
         _validate_presence_of request_id
@@ -83,7 +88,7 @@ module Github
         _normalize_params_keys(params)
         _merge_mime_type(:pull_comment, params)
         _filter_params_keys(VALID_REQUEST_COM_PARAM_NAMES, params)
-        _validate_reply_to(params)
+        # _validate_reply_to(params)
 
         post("/repos/#{user}/#{repo}/pulls/#{request_id}/comments", params)
       end
@@ -95,9 +100,10 @@ module Github
       #
       # = Examples
       #  @github = Github.new
-      #  @github.pull_requests.edit_request_comment 'user-name', 'repo-name', 'comment-id', "body" => "Nice change",
+      #  @github.pull_requests.edit_comment 'user-name', 'repo-name','comment-id',
+      #    "body" => "Nice change"
       #
-      def edit_request_comment(user_name, repo_name, comment_id, params={})
+      def edit_comment(user_name, repo_name, comment_id, params={})
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
         _validate_presence_of comment_id
@@ -113,10 +119,9 @@ module Github
       #
       # = Examples
       #  @github = Github.new
-      #  @github.pull_requests.delete_request_comment 'user-name', 'repo-name',
-      #     'comment-id'
+      #  @github.pull_requests.delete_comment 'user-name', 'repo-name','comment-id'
       #
-      def delete_request_comment(user_name, repo_name, comment_id, params={})
+      def delete_comment(user_name, repo_name, comment_id, params={})
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
         _validate_presence_of comment_id
