@@ -21,7 +21,7 @@ describe Github::PullRequests, :type => :base do
             :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
-      it "throws error if gist id not provided" do
+      it "throws error if pull_request id not provided" do
         expect { github.pull_requests.pull_requests nil}.to raise_error(ArgumentError)
       end
 
@@ -223,6 +223,69 @@ describe Github::PullRequests, :type => :base do
       end
     end
   end # update_request
+
+  describe "#commits" do
+    context 'check aliases' do
+      it { github.pull_requests.should respond_to :commits }
+      it { github.pull_requests.should respond_to :request_commits }
+    end
+
+    context 'resource found' do
+      before do
+        stub_get("/repos/#{user}/#{repo}/pulls/#{pull_request_id}/commits").
+          to_return(:body => fixture('pull_requests/commits.json'),
+            :status => 200,
+            :headers => {:content_type => "application/json; charset=utf-8"})
+      end
+
+      it "throws error if pull_request_id not provided" do
+        expect {
+          github.pull_requests.commits user, repo, nil
+        }.to raise_error(ArgumentError)
+      end
+
+      it "should get the resources" do
+        github.pull_requests.commits user, repo, pull_request_id
+        a_get("/repos/#{user}/#{repo}/pulls/#{pull_request_id}/commits").
+          should have_been_made
+      end
+
+      it "should return array of resources" do
+        pull_requests = github.pull_requests.commits user, repo, pull_request_id
+        pull_requests.should be_an Array
+        pull_requests.should have(1).items
+      end
+
+      it "should be a mash type" do
+        pull_requests = github.pull_requests.commits user, repo, pull_request_id
+        pull_requests.first.should be_a Hashie::Mash
+      end
+
+      it "should get pull request information" do
+        pull_requests = github.pull_requests.commits user, repo, pull_request_id
+        pull_requests.first.committer.name.should == 'Scott Chacon'
+      end
+
+      it "should yield to a block" do
+        github.pull_requests.should_receive(:commits).
+          with(user, repo, pull_request_id).and_yield('web')
+        github.pull_requests.commits(user, repo, pull_request_id) {|param| 'web' }
+      end
+    end
+
+    context 'resource not found' do
+      before do
+        stub_get("/repos/#{user}/#{repo}/pulls/#{pull_request_id}/commits").
+          to_return(:body => "", :status => [404, "Not Found"])
+      end
+
+      it "should return 404 with a message 'Not Found'" do
+        expect {
+          github.pull_requests.commits user, repo, pull_request_id
+        }.to raise_error(Github::ResourceNotFound)
+      end
+    end
+  end # commits
 
   describe "#files" do
     context 'check aliases' do
