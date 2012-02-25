@@ -55,7 +55,7 @@ describe Github::Repos, :type => :base do
       it "should fail to get resource" do
         expect {
           github.repos.branches user, repo
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # branches
@@ -113,7 +113,7 @@ describe Github::Repos, :type => :base do
       it "should fail to get resource" do
         expect {
           github.repos.contributors user, repo
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # contributors
@@ -189,7 +189,7 @@ describe Github::Repos, :type => :base do
       it "should faile to retrieve resource" do
         expect {
           github.repos.create_repo inputs
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end
@@ -241,7 +241,7 @@ describe Github::Repos, :type => :base do
       it "should fail to find resource" do
         expect {
           github.repos.edit_repo user, repo, inputs
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
 
@@ -293,7 +293,7 @@ describe Github::Repos, :type => :base do
       it "should fail to get resource" do
         expect {
           github.repos.get_repo user, repo
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
 
     end
@@ -352,7 +352,7 @@ describe Github::Repos, :type => :base do
       it "should fail to get resource" do
         expect {
           github.repos.languages user, repo
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # languages
@@ -371,11 +371,11 @@ describe Github::Repos, :type => :base do
         github.user, github.repo = nil, nil
       end
 
-      it "should faile if user unauthenticated" do
+      it "fails if user is unauthenticated" do
         github.oauth_token = nil
         stub_get("/user/repos").
           to_return(:body => '', :status => 401,:headers => {:content_type => "application/json; charset=utf-8"} )
-        expect { github.repos.repos}.to raise_error(Github::Unauthorised)
+        expect { github.repos.repos}.to raise_error(Github::Error::Unauthorized)
       end
 
       it "should get the resources" do
@@ -443,7 +443,7 @@ describe Github::Repos, :type => :base do
       end
 
       it "fail to find resources" do
-        expect { github.repos.repos }.to raise_error(Github::ResourceNotFound)
+        expect { github.repos.repos }.to raise_error(Github::Error::NotFound)
       end
     end
   end # repos
@@ -501,7 +501,7 @@ describe Github::Repos, :type => :base do
       it "should fail to get resource" do
         expect {
           github.repos.tags user, repo
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end #tags
@@ -559,7 +559,7 @@ describe Github::Repos, :type => :base do
       it "should fail to get resource" do
         expect {
           github.repos.teams user, repo
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # teams

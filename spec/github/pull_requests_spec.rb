@@ -62,7 +62,7 @@ describe Github::PullRequests, :type => :base do
       it "should return 404 with a message 'Not Found'" do
         expect {
           github.pull_requests.pull_requests user, repo
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # pull_requests
@@ -114,7 +114,7 @@ describe Github::PullRequests, :type => :base do
       it "should fail to retrive resource" do
         expect {
           github.pull_requests.pull_request user, repo, pull_request_id
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # pull_request
@@ -164,7 +164,7 @@ describe Github::PullRequests, :type => :base do
       it "should faile to retrieve resource" do
         expect {
           github.pull_requests.create_request user, repo, inputs
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # create_request
@@ -219,7 +219,7 @@ describe Github::PullRequests, :type => :base do
       it "should faile to retrieve resource" do
         expect {
           github.pull_requests.update_request user, repo, pull_request_id, inputs
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # update_request
@@ -282,7 +282,7 @@ describe Github::PullRequests, :type => :base do
       it "should return 404 with a message 'Not Found'" do
         expect {
           github.pull_requests.commits user, repo, pull_request_id
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # commits
@@ -339,7 +339,7 @@ describe Github::PullRequests, :type => :base do
       it "should return 404 with a message 'Not Found'" do
         expect {
           github.pull_requests.files user, repo, pull_request_id
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # files

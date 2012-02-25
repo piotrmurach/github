@@ -60,7 +60,7 @@ describe Github::Authorizations do
       end
 
       it "should return 404 with a message 'Not Found'" do
-        expect { github.oauth.authorizations }.to raise_error(Github::ResourceNotFound)
+        expect { github.oauth.authorizations }.to raise_error(Github::Error::NotFound)
       end
     end
   end # authorizations
@@ -104,7 +104,7 @@ describe Github::Authorizations do
       it "should fail to retrive resource" do
         expect {
           github.oauth.authorization authorization_id
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # authorization
@@ -150,7 +150,7 @@ describe Github::Authorizations do
       it "should fail to retrieve resource" do
         expect {
           github.oauth.create_authorization inputs
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # create_authorization
@@ -197,7 +197,7 @@ describe Github::Authorizations do
       it "should fail to retrieve resource" do
         expect {
           github.oauth.update_authorization authorization_id, inputs
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # update_authorization
@@ -234,7 +234,7 @@ describe Github::Authorizations do
       it "should fail to retrieve resource" do
         expect {
           github.oauth.delete_authorization authorization_id
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # delete_authorization

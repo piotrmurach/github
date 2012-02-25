@@ -55,7 +55,7 @@ describe Github::Repos::Forks, :type => :base do
       it "should return 404 with a message 'Not Found'" do
         expect {
           github.repos.forks user, repo
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # forks
@@ -96,7 +96,7 @@ describe Github::Repos::Forks, :type => :base do
       it "should faile to retrieve resource" do
         expect {
           github.repos.create_fork user, repo, inputs
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # create_fork

@@ -48,7 +48,7 @@ describe Github::Events do
       it "should return 404 with a message 'Not Found'" do
         expect {
           github.events.public
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # public_events
@@ -101,7 +101,7 @@ describe Github::Events do
       it "should return 404 with a message 'Not Found'" do
         expect {
           github.events.repository user, repo
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # repository
@@ -154,7 +154,7 @@ describe Github::Events do
       it "should return 404 with a message 'Not Found'" do
         expect {
           github.events.issue user, repo
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # repository
@@ -207,7 +207,7 @@ describe Github::Events do
       it "should return 404 with a message 'Not Found'" do
         expect {
           github.events.network user, repo
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # network
@@ -260,7 +260,7 @@ describe Github::Events do
       it "should return 404 with a message 'Not Found'" do
         expect {
           github.events.org org
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # org
@@ -345,7 +345,7 @@ describe Github::Events do
       it "should return 404 with a message 'Not Found'" do
         expect {
           github.events.received user
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # received
@@ -430,7 +430,7 @@ describe Github::Events do
       it "should return 404 with a message 'Not Found'" do
         expect {
           github.events.performed user
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # performed
@@ -483,7 +483,7 @@ describe Github::Events do
       it "should return 404 with a message 'Not Found'" do
         expect {
           github.events.user_org user, org
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # user_org

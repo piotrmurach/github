@@ -63,7 +63,7 @@ describe Github::Orgs, :type => :base do
       it "should return 404 with a message 'Not Found'" do
         expect {
           github.orgs.orgs user
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # orgs
@@ -105,7 +105,7 @@ describe Github::Orgs, :type => :base do
       it "should fail to retrive resource" do
         expect {
           github.orgs.org org
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # org
@@ -148,7 +148,7 @@ describe Github::Orgs, :type => :base do
       it "should fail to find resource" do
         expect {
           github.orgs.edit_org org
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # edit_org

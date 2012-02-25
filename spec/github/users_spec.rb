@@ -70,7 +70,7 @@ describe Github::Users, :type => :base do
       it "should return 404 with a message 'Not Found'" do
         expect {
           github.users.get_user user
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # get_user
@@ -129,7 +129,7 @@ describe Github::Users, :type => :base do
       it "should fail to retrieve resource" do
         expect {
           github.users.update_user
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # update_comment

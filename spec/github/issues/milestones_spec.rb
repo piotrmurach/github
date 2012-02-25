@@ -56,7 +56,7 @@ describe Github::Issues::Milestones, :type => :base do
       it "should return 404 with a message 'Not Found'" do
         expect {
           github.issues.milestones user, repo
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # milestones
@@ -103,7 +103,7 @@ describe Github::Issues::Milestones, :type => :base do
       it "should fail to retrive resource" do
         expect {
           github.issues.milestone user, repo, milestone_id
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # milestone
@@ -156,7 +156,7 @@ describe Github::Issues::Milestones, :type => :base do
       it "should faile to retrieve resource" do
         expect {
           github.issues.create_milestone user, repo, inputs
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # create_milestone
@@ -210,7 +210,7 @@ describe Github::Issues::Milestones, :type => :base do
       it "should faile to retrieve resource" do
         expect {
           github.issues.update_milestone user, repo, milestone_id, inputs
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # update_milestone
@@ -249,7 +249,7 @@ describe Github::Issues::Milestones, :type => :base do
       it "should faile to retrieve resource" do
         expect {
           github.issues.delete_milestone user, repo, milestone_id
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # delete_milestone

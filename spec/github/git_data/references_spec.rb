@@ -81,7 +81,7 @@ describe Github::GitData::References, :type => :base do
       it "should return 404 with a message 'Not Found'" do
         expect {
           github.git_data.references user, repo, ref
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # references
@@ -131,7 +131,7 @@ describe Github::GitData::References, :type => :base do
       it "should fail to retrive resource" do
         expect {
           github.git_data.reference user, repo, ref
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # reference
@@ -196,7 +196,7 @@ describe Github::GitData::References, :type => :base do
       it "should faile to retrieve resource" do
         expect {
           github.git_data.create_reference user, repo, inputs
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # create_reference
@@ -255,7 +255,7 @@ describe Github::GitData::References, :type => :base do
       it "should faile to retrieve resource" do
         expect {
           github.git_data.update_reference user, repo, ref, inputs
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # update_reference

@@ -53,7 +53,7 @@ describe Github::Orgs::Members do
       it "should return 404 with a message 'Not Found'" do
         expect {
           github.orgs.members org
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # members
@@ -138,7 +138,7 @@ describe Github::Orgs::Members do
       it "should return 404 with a message 'Not Found'" do
         expect {
           github.orgs.public_members org
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # public_members
@@ -202,7 +202,7 @@ describe Github::Orgs::Members do
       it "should return 404 with a message 'Not Found'" do
         expect {
           github.orgs.publicize org, member
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # publicize
@@ -233,7 +233,7 @@ describe Github::Orgs::Members do
       it "should return 404 with a message 'Not Found'" do
         expect {
           github.orgs.conceal org, member
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # conceal
@@ -267,7 +267,7 @@ describe Github::Orgs::Members do
       it "should fail to find resource" do
         expect {
           github.orgs.delete_member org, member
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # delete_member

@@ -50,7 +50,7 @@ describe Github::Repos::Commits, :type => :base do
       it "should return 404 with a message 'Not Found'" do
         expect {
           github.repos.commits user, repo
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # commits
@@ -96,7 +96,7 @@ describe Github::Repos::Commits, :type => :base do
       it "should fail to retrive resource" do
         expect {
           github.repos.commit user, repo, sha
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # commit
@@ -149,7 +149,7 @@ describe Github::Repos::Commits, :type => :base do
       it "should return 404 with a message 'Not Found'" do
         expect {
           github.repos.repo_comments user, repo
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # repo comments
@@ -205,7 +205,7 @@ describe Github::Repos::Commits, :type => :base do
       it "should fail to retrive resource" do
         expect {
           github.repos.commit_comments user, repo, sha
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # commit_comments
@@ -251,7 +251,7 @@ describe Github::Repos::Commits, :type => :base do
       it "should fail to retrive resource" do
         expect {
           github.repos.commit_comment user, repo, comment_id
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # commit_comment
@@ -323,7 +323,7 @@ describe Github::Repos::Commits, :type => :base do
       it "should fail to retrieve resource" do
         expect {
           github.repos.create_comment user, repo, sha, inputs
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # create_comment
@@ -364,7 +364,7 @@ describe Github::Repos::Commits, :type => :base do
       it "should fail to find resource" do
         expect {
           github.repos.delete_comment user, repo, comment_id
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # delete_comment
@@ -412,7 +412,7 @@ describe Github::Repos::Commits, :type => :base do
       it "should fail to retrieve resource" do
         expect {
           github.repos.update_comment user, repo, comment_id, inputs
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # update_comment

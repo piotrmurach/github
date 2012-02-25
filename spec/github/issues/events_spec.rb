@@ -58,7 +58,7 @@ describe Github::Issues::Events, :type => :base do
         it "should return 404 with a message 'Not Found'" do
           expect {
             github.issues.events user, repo, issue_id
-          }.to raise_error(Github::ResourceNotFound)
+          }.to raise_error(Github::Error::NotFound)
         end
       end
 
@@ -144,7 +144,7 @@ describe Github::Issues::Events, :type => :base do
       it "should fail to retrive resource" do
         expect {
           github.issues.event user, repo, event_id
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # event

@@ -60,7 +60,7 @@ describe Github::Issues do
       end
 
       it "should return 404 with a message 'Not Found'" do
-        expect { github.issues.issues }.to raise_error(Github::ResourceNotFound)
+        expect { github.issues.issues }.to raise_error(Github::Error::NotFound)
       end
     end
   end # issues
@@ -119,7 +119,7 @@ describe Github::Issues do
       it "should return 404 with a message 'Not Found'" do
         expect {
           github.issues.repo_issues user, repo
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # repo_issues
@@ -166,7 +166,7 @@ describe Github::Issues do
       it "should fail to retrive resource" do
         expect {
           github.issues.issue user, repo, issue_id
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # get_issue
@@ -221,7 +221,7 @@ describe Github::Issues do
       it "should faile to retrieve resource" do
         expect {
           github.issues.create_issue user, repo, inputs
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # create_issue
@@ -279,7 +279,7 @@ describe Github::Issues do
       it "should fail to find resource" do
         expect {
           github.issues.edit_issue user, repo, issue_id, inputs
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # edit_issue

@@ -42,7 +42,7 @@ describe Github::Repos::Keys, :type => :base do
       it "should fail to retrieve resource" do
         expect {
           github.repos.keys user, repo
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
 
@@ -83,7 +83,7 @@ describe Github::Repos::Keys, :type => :base do
       it "should fail to retrieve resource" do
         expect {
           github.repos.get_key(user, repo, key_id)
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end
@@ -129,7 +129,7 @@ describe Github::Repos::Keys, :type => :base do
       it "should fail to retrieve resource" do
         expect {
           github.repos.create_key(user, repo, inputs)
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end
@@ -165,7 +165,7 @@ describe Github::Repos::Keys, :type => :base do
       it "should fail to retrieve resource" do
         expect {
           github.repos.edit_key(user, repo, key_id, inputs)
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
 
@@ -205,7 +205,7 @@ describe Github::Repos::Keys, :type => :base do
       it "should fail to find resource" do
         expect {
           github.repos.delete_key(user, repo, key_id)
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end

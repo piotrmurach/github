@@ -45,7 +45,7 @@ describe Github::GitData::Blobs, :type => :base do
       it "should fail to retrive resource" do
         expect {
           github.git_data.blob user, repo, sha
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # blob
@@ -104,7 +104,7 @@ describe Github::GitData::Blobs, :type => :base do
       it "should faile to retrieve resource" do
         expect {
           github.git_data.create_blob user, repo, inputs
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # create_blob

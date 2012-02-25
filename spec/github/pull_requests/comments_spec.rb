@@ -64,7 +64,7 @@ describe Github::PullRequests::Comments, :type => :base do
       it "should return 404 with a message 'Not Found'" do
         expect {
           github.pull_requests.comments user, repo, pull_request_id
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # comments
@@ -118,7 +118,7 @@ describe Github::PullRequests::Comments, :type => :base do
       it "should fail to retrive resource" do
         expect {
           github.pull_requests.comment user, repo, comment_id
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # comment
@@ -176,7 +176,7 @@ describe Github::PullRequests::Comments, :type => :base do
       it "should faile to retrieve resource" do
         expect {
           github.pull_requests.create_comment user, repo, pull_request_id, inputs
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # create_comment
@@ -226,7 +226,7 @@ describe Github::PullRequests::Comments, :type => :base do
       it "should fail to retrieve resource" do
         expect {
           github.pull_requests.edit_comment user, repo, comment_id, inputs
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # edit_comment
@@ -258,7 +258,7 @@ describe Github::PullRequests::Comments, :type => :base do
           :headers => {:content_type => "application/json; charset=utf-8"})
       expect {
         github.pull_requests.delete_comment user, repo, comment_id
-      }.to raise_error(Github::ResourceNotFound)
+      }.to raise_error(Github::Error::NotFound)
     end
   end # delete_gist
 

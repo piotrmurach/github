@@ -59,7 +59,7 @@ describe Github::Gists::Comments, :type => :base do
       it "should return 404 with a message 'Not Found'" do
         expect {
           github.gists.comments gist_id
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # comments
@@ -110,7 +110,7 @@ describe Github::Gists::Comments, :type => :base do
       it "should fail to retrive resource" do
         expect {
           github.gists.comment comment_id
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # comment
@@ -162,7 +162,7 @@ describe Github::Gists::Comments, :type => :base do
       it "should faile to retrieve resource" do
         expect {
           github.gists.create_comment gist_id, inputs
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # create_comment
@@ -214,7 +214,7 @@ describe Github::Gists::Comments, :type => :base do
       it "should faile to retrieve resource" do
         expect {
           github.gists.edit_comment comment_id, inputs
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # edit_comment
@@ -249,7 +249,7 @@ describe Github::Gists::Comments, :type => :base do
       it "should faile to retrieve resource" do
         expect {
           github.gists.delete_comment comment_id
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # delete_comment

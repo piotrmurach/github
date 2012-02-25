@@ -49,11 +49,11 @@ describe Github::Repos::Watching, :type => :base do
       end
 
       it "should return 404 not found message" do
-        lambda { github.repos.watchers(user, repo) }.should raise_error(Github::ResourceNotFound)
+        expect {
+          github.repos.watchers(user, repo)
+        }.to raise_error(Github::Error::NotFound)
       end
-
     end
-
   end
 
   describe ":watched:" do
@@ -70,7 +70,7 @@ describe Github::Repos::Watching, :type => :base do
         expect {
           github.user = nil
           github.repos.watched
-        }.to raise_error(Github::Unauthorised)
+        }.to raise_error(Github::Error::Unauthorized)
       end
 
       it "should get the resource with username" do
@@ -183,7 +183,7 @@ describe Github::Repos::Watching, :type => :base do
           to_return(:body => "", :status => 401, :headers => {})
         expect {
           github.repos.start_watching(user, repo)
-        }.to raise_error(Github::Unauthorised)
+        }.to raise_error(Github::Error::Unauthorized)
       end
     end
   end
@@ -218,7 +218,7 @@ describe Github::Repos::Watching, :type => :base do
           to_return(:body => "", :status => 401, :headers => {})
         expect {
           github.repos.stop_watching(user, repo)
-        }.to raise_error(Github::Unauthorised)
+        }.to raise_error(Github::Error::Unauthorized)
       end
     end
   end

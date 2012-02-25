@@ -45,7 +45,7 @@ describe Github::GitData::Commits, :type => :base do
       it "should fail to retrive resource" do
         expect {
           github.git_data.commit user, repo, sha
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # commit
@@ -118,7 +118,7 @@ describe Github::GitData::Commits, :type => :base do
       it "should faile to retrieve resource" do
         expect {
           github.git_data.create_commit user, repo, inputs
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # create_commit

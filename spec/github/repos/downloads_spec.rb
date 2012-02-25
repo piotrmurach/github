@@ -58,7 +58,7 @@ describe Github::Repos::Downloads, :type => :base do
       it "should return 404 with a message 'Not Found'" do
         expect {
           github.repos.downloads user, repo
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # downloads
@@ -105,7 +105,7 @@ describe Github::Repos::Downloads, :type => :base do
       it "should fail to retrive resource" do
         expect {
           github.repos.download user, repo, download_id
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # download
@@ -146,7 +146,7 @@ describe Github::Repos::Downloads, :type => :base do
       it "should fail to find resource" do
         expect {
           github.repos.delete_download user, repo, download_id
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # delete_download
@@ -199,7 +199,7 @@ describe Github::Repos::Downloads, :type => :base do
       it "should faile to retrieve resource" do
         expect {
           github.repos.create_download(user, repo, inputs)
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # create_download
@@ -234,7 +234,7 @@ describe Github::Repos::Downloads, :type => :base do
       it "should faile to retrieve resource" do
         expect {
           github.repos.upload resource, file
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
 
     end

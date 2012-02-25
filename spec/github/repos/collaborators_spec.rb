@@ -50,7 +50,7 @@ describe Github::Repos::Collaborators, :type => :base do
       it "should return 404 with a message 'Not Found'" do
         expect {
           github.repos.collaborators user, repo
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # collaborators
@@ -122,7 +122,7 @@ describe Github::Repos::Collaborators, :type => :base do
       it "should fail to add resource" do
         expect {
           github.repos.add_collaborator user, repo, collaborator
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # add_collaborator
@@ -156,7 +156,7 @@ describe Github::Repos::Collaborators, :type => :base do
       it "should fail to remove resource" do
         expect {
           github.repos.remove_collaborator user, repo, collaborator
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # remove_collaborator

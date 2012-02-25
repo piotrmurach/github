@@ -53,7 +53,7 @@ describe Github::Gists, :type => :base do
         it "should return 404 with a message 'Not Found'" do
           expect {
             github.gists.gists user
-          }.to raise_error(Github::ResourceNotFound)
+          }.to raise_error(Github::Error::NotFound)
         end
       end
     end # unauthenticated user
@@ -134,7 +134,7 @@ describe Github::Gists, :type => :base do
       it "should return 404 with a message 'Not Found'" do
         expect {
           github.gists.starred
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
 
@@ -184,7 +184,7 @@ describe Github::Gists, :type => :base do
       it "should fail to retrive resource" do
         expect {
           github.gists.gist gist_id
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # gist
@@ -250,7 +250,7 @@ describe Github::Gists, :type => :base do
       it "should faile to retrieve resource" do
         expect {
           github.gists.create_gist inputs
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # create_gist
@@ -311,7 +311,7 @@ describe Github::Gists, :type => :base do
       it "should fail to retrieve resource" do
         expect {
           github.gists.edit_gist gist_id, inputs
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # edit_gist
@@ -426,7 +426,7 @@ describe Github::Gists, :type => :base do
           :headers => {:content_type => "application/json; charset=utf-8"})
       expect {
         github.gists.fork gist_id
-      }.to raise_error(Github::ResourceNotFound)
+      }.to raise_error(Github::Error::NotFound)
     end
   end # fork
 
@@ -456,7 +456,7 @@ describe Github::Gists, :type => :base do
           :headers => {:content_type => "application/json; charset=utf-8"})
       expect {
         github.gists.delete_gist gist_id
-      }.to raise_error(Github::ResourceNotFound)
+      }.to raise_error(Github::Error::NotFound)
     end
   end # delete_gist
 

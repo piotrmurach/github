@@ -55,7 +55,7 @@ describe Github::Issues::Labels, :type => :base do
       it "should return 404 with a message 'Not Found'" do
         expect {
           github.issues.labels user, repo
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # labels
@@ -101,7 +101,7 @@ describe Github::Issues::Labels, :type => :base do
       it "should fail to retrive resource" do
         expect {
           github.issues.label user, repo, label_id
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # label
@@ -158,7 +158,7 @@ describe Github::Issues::Labels, :type => :base do
       it "should faile to retrieve resource" do
         expect {
           github.issues.create_label user, repo, inputs
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # create_label
@@ -216,7 +216,7 @@ describe Github::Issues::Labels, :type => :base do
       it "should faile to retrieve resource" do
         expect {
           github.issues.update_label user, repo, label_id, inputs
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # update_label
@@ -255,7 +255,7 @@ describe Github::Issues::Labels, :type => :base do
       it "should faile to retrieve resource" do
         expect {
           github.issues.delete_label user, repo, label_id
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # delete_label
@@ -314,7 +314,7 @@ describe Github::Issues::Labels, :type => :base do
       it "should return 404 with a message 'Not Found'" do
         expect {
           github.issues.labels_for user, repo, issue_id
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # labels_for
@@ -361,7 +361,7 @@ describe Github::Issues::Labels, :type => :base do
       it "should fail to retrieve resource" do
         expect {
           github.issues.add_labels user, repo, issue_id, labels
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # add_labels
@@ -419,7 +419,7 @@ describe Github::Issues::Labels, :type => :base do
       it "should faile to retrieve resource" do
         expect {
           github.issues.remove_label user, repo, issue_id, label_id
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # remove_label
@@ -466,7 +466,7 @@ describe Github::Issues::Labels, :type => :base do
       it "should fail to retrieve resource" do
         expect {
           github.issues.replace_labels user, repo, issue_id, labels
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # add_labels
@@ -526,7 +526,7 @@ describe Github::Issues::Labels, :type => :base do
       it "should return 404 with a message 'Not Found'" do
         expect {
           github.issues.milestone_labels user, repo, milestone_id
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # milestone_labels

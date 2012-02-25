@@ -60,7 +60,7 @@ describe Github::Repos::Hooks, :type => :base do
       it "should return 404 with a message 'Not Found'" do
         expect {
           github.repos.hooks user, repo
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # hooks
@@ -112,7 +112,7 @@ describe Github::Repos::Hooks, :type => :base do
       it "should fail to retrive resource" do
         expect {
           github.repos.hook user, repo, hook_id
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # hook
@@ -177,7 +177,7 @@ describe Github::Repos::Hooks, :type => :base do
       it "should fail to retrieve resource" do
         expect {
           github.repos.create_hook user, repo, inputs
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # create_hook
@@ -255,7 +255,7 @@ describe Github::Repos::Hooks, :type => :base do
       it "should fail to find resource" do
         expect {
           github.repos.edit_hook user, repo, hook_id, inputs
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # edit_hook
@@ -295,7 +295,7 @@ describe Github::Repos::Hooks, :type => :base do
       it "should fail to find resource" do
         expect {
           github.repos.delete_hook user, repo, hook_id
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # delete_hook
@@ -336,7 +336,7 @@ describe Github::Repos::Hooks, :type => :base do
       it "should fail to find resource" do
         expect {
           github.repos.test_hook user, repo, hook_id
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # test_hook

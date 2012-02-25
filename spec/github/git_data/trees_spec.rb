@@ -67,7 +67,7 @@ describe Github::GitData::Trees, :type => :base do
       it "should fail to retrive resource" do
         expect {
           github.git_data.tree user, repo, sha
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # tree
@@ -125,7 +125,7 @@ describe Github::GitData::Trees, :type => :base do
       it "should faile to retrieve resource" do
         expect {
           github.git_data.create_tree user, repo, inputs
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # create_tree

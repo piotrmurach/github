@@ -52,7 +52,7 @@ describe Github::Orgs::Teams, :type => :base do
       it "should return 404 with a message 'Not Found'" do
         expect {
           github.orgs.teams org
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # teams
@@ -94,7 +94,7 @@ describe Github::Orgs::Teams, :type => :base do
       it "should fail to retrive resource" do
         expect {
           github.orgs.team team
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # team
@@ -145,7 +145,7 @@ describe Github::Orgs::Teams, :type => :base do
       it "should faile to retrieve resource" do
         expect {
           github.orgs.create_team org, inputs
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # create_team
@@ -196,7 +196,7 @@ describe Github::Orgs::Teams, :type => :base do
       it "should faile to retrieve resource" do
         expect {
           github.orgs.edit_team team, inputs
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # edit_team
@@ -228,7 +228,7 @@ describe Github::Orgs::Teams, :type => :base do
       end
 
       it "should fail to find resource" do
-        expect { github.orgs.delete_team team }.to raise_error(Github::ResourceNotFound)
+        expect { github.orgs.delete_team team }.to raise_error(Github::Error::NotFound)
       end
     end
   end # delete_team
@@ -280,7 +280,7 @@ describe Github::Orgs::Teams, :type => :base do
       it "should return 404 with a message 'Not Found'" do
         expect {
           github.orgs.team_members team
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # team_members
@@ -351,7 +351,7 @@ describe Github::Orgs::Teams, :type => :base do
       it "should fail to add resource" do
         expect {
           github.orgs.add_team_member team, member
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # add_team_member
@@ -390,7 +390,7 @@ describe Github::Orgs::Teams, :type => :base do
       it "should fail to remove resource" do
         expect {
           github.orgs.remove_team_member team, member
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # remove_team_member
@@ -442,7 +442,7 @@ describe Github::Orgs::Teams, :type => :base do
       it "should return 404 with a message 'Not Found'" do
         expect {
           github.orgs.team_repos team
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # team_repos
@@ -512,7 +512,7 @@ describe Github::Orgs::Teams, :type => :base do
       it "should fail to add resource" do
         expect {
           github.orgs.add_team_repo team, user, repo
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # add_team_repo
@@ -551,7 +551,7 @@ describe Github::Orgs::Teams, :type => :base do
       it "should fail to remove resource" do
         expect {
           github.orgs.remove_team_repo team, user, repo
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end # remove_team_repo

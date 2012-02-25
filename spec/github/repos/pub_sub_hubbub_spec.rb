@@ -43,7 +43,7 @@ describe Github::Repos::PubSubHubbub do
       it "should fail to subscribe to hub" do
         expect {
           github.repos.subscribe topic, callback
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end
@@ -76,7 +76,7 @@ describe Github::Repos::PubSubHubbub do
       it "should fail to subscribe to hub" do
         expect {
           github.repos.unsubscribe topic, callback
-        }.to raise_error(Github::ResourceNotFound)
+        }.to raise_error(Github::Error::NotFound)
       end
     end
   end
