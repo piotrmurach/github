@@ -150,7 +150,7 @@ module Github
     #
     # = Examples
     #  @github = Github.new
-    #  @github.pull_requests.request_commits 'user-name', 'repo-name', 'request-id'
+    #  @github.pull_requests.commits 'user-name', 'repo-name', 'request-id'
     #
     def commits(user_name, repo_name, request_id, params={})
       _update_user_repo_params(user_name, repo_name)
