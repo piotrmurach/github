@@ -10,4 +10,4 @@ Feature: Handles HTTP error codes
       And I pass the following request options:
         | name       |
         | basic_auth |
-    Then request should fail with "Github::Unauthorised" within a cassette named "errors/repos/create"
+    Then request should fail with "Github::Error::Unauthorized" within a cassette named "errors/repos/create"
