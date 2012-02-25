@@ -1,38 +1,31 @@
 # encoding: utf-8
 
 module Github
-  class Error < StandardError
-    attr_reader :response_message, :response_headers
+  module Error
+    class GithubError < StandardError
+      attr_reader :response_message, :response_headers
 
-    def initialize(message, headers)
-      @response_message = message
-      super message
-    end
+      def initialize(message)
+        super message
+        @response_message = message
+      end
 
-    def inspect
-      %(#<#{self.class}>)
+#       def inspect
+#         %(#<#{self.class}>)
+#       end
     end
   end # Error
-
-  # Raised when Github returns the HTTP status code 400
-  class BadRequest < Error; end
-
-  # Raised when Github returns the HTTP status code 401
-  class Unauthorised < Error; end
-
-  # Raised when Github returns the HTTP status code 403
-  class Forbidden < Error; end
-
-  # Raised when Github returns the HTTP status code 404
-  class ResourceNotFound < Error; end
-
-  # Raised when Github returns the HTTP status code 422
-  class UnprocessableEntity < Error; end
-
-  # Raised when Github returns the HTTP status code 500
-  class InternalServerError < Error; end
-
-  # Raised when Github returns the HTTP status code 503
-  class ServiceUnavailable < Error; end
-
 end # Github
+
+%w[
+  service_error
+  not_found
+  forbidden
+  bad_request
+  unauthorized
+  service_unavailable
+  internal_server_error
+  unprocessable_entity
+].each do |error|
+  require "github_api/error/#{error}"
+end
