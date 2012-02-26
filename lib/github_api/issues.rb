@@ -70,7 +70,7 @@ module Github
     def issues(params={})
       _normalize_params_keys(params)
       _filter_params_keys(VALID_ISSUE_PARAM_NAMES, params)
-      _merge_mime_type(:issue, params)
+      # _merge_mime_type(:issue, params)
       _validate_params_values(VALID_ISSUE_PARAM_VALUES, params)
 
       response = get("/issues", params)
@@ -115,7 +115,7 @@ module Github
 
       _normalize_params_keys(params)
       _filter_params_keys(VALID_ISSUE_PARAM_NAMES, params)
-      _merge_mime_type(:issue, params)
+      # _merge_mime_type(:issue, params)
       _validate_params_values(VALID_ISSUE_PARAM_VALUES, params)
 
       response = get("/repos/#{user}/#{repo}/issues", params)
@@ -138,7 +138,7 @@ module Github
       _validate_presence_of issue_id
 
       _normalize_params_keys(params)
-      _merge_mime_type(:issue, params)
+      # _merge_mime_type(:issue, params)
 
       get("/repos/#{user}/#{repo}/issues/#{issue_id}", params)
     end
@@ -169,7 +169,7 @@ module Github
       _validate_user_repo_params(user, repo) unless user? && repo?
 
       _normalize_params_keys(params)
-      _merge_mime_type(:issue, params)
+      # _merge_mime_type(:issue, params)
       _filter_params_keys(VALID_ISSUE_PARAM_NAMES, params)
 
       raise ArgumentError, "Required params are: :title" unless _validate_inputs(%w[ title ], params)
@@ -205,7 +205,7 @@ module Github
       _validate_presence_of issue_id
 
       _normalize_params_keys(params)
-      _merge_mime_type(:issue, params)
+      # _merge_mime_type(:issue, params)
       _filter_params_keys(VALID_MILESTONE_INPUTS, params)
 
       patch("/repos/#{user}/#{repo}/issues/#{issue_id}", params)

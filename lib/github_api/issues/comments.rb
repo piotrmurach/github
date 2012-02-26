@@ -23,7 +23,7 @@ module Github
         _validate_presence_of issue_id
 
         _normalize_params_keys(params)
-        _merge_mime_type(:issue_comment, params)
+        # _merge_mime_type(:issue_comment, params)
 
         response = get("/repos/#{user}/#{repo}/issues/#{issue_id}/comments", params)
         return response unless block_given?
@@ -45,7 +45,7 @@ module Github
         _validate_presence_of comment_id
 
         _normalize_params_keys(params)
-        _merge_mime_type(:issue_comment, params)
+        # _merge_mime_type(:issue_comment, params)
 
         get("/repos/#{user}/#{repo}/issues/comments/#{comment_id}", params)
       end
@@ -68,7 +68,7 @@ module Github
         _validate_presence_of issue_id
 
         _normalize_params_keys(params)
-        _merge_mime_type(:issue_comment, params)
+        # _merge_mime_type(:issue_comment, params)
         _filter_params_keys(VALID_ISSUE_COMMENT_PARAM_NAME, params)
         raise ArgumentError, "Required params are: :body" unless _validate_inputs(%w[ body ], params)
 
@@ -92,7 +92,7 @@ module Github
         _validate_presence_of comment_id
 
         _normalize_params_keys(params)
-        _merge_mime_type(:issue_comment, params)
+        # _merge_mime_type(:issue_comment, params)
         _filter_params_keys(VALID_ISSUE_COMMENT_PARAM_NAME, params)
         raise ArgumentError, "Required params are: :body" unless _validate_inputs(%w[ body ], params)
 
@@ -112,7 +112,7 @@ module Github
         _validate_presence_of comment_id
 
         _normalize_params_keys(params)
-        _merge_mime_type(:issue_comment, params)
+        # _merge_mime_type(:issue_comment, params)
 
         delete("/repos/#{user}/#{repo}/issues/comments/#{comment_id}", params)
       end

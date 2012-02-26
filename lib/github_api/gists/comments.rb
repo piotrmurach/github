@@ -23,7 +23,7 @@ module Github
       def comments(gist_id, params={})
         _normalize_params_keys(params)
         _validate_presence_of(gist_id)
-        _merge_mime_type(:gist_comment, params)
+        # _merge_mime_type(:gist_comment, params)
 
         response = get("/gists/#{gist_id}/comments", params)
         return response unless block_given?
@@ -41,7 +41,7 @@ module Github
       def comment(comment_id, params={})
         _normalize_params_keys(params)
         _validate_presence_of(comment_id)
-        _merge_mime_type(:gist_comment, params)
+        # _merge_mime_type(:gist_comment, params)
 
         get("/gists/comments/#{comment_id}", params)
       end
@@ -56,7 +56,7 @@ module Github
       #
       def create_comment(gist_id, params={})
         _normalize_params_keys(params)
-        _merge_mime_type(:gist_comment, params)
+        # _merge_mime_type(:gist_comment, params)
         _filter_params_keys(ALLOWED_GIST_COMMENT_INPUTS, params)
 
         unless _validate_inputs(REQUIRED_GIST_COMMENT_INPUTS, params)
@@ -76,7 +76,7 @@ module Github
       def edit_comment(comment_id, params={})
         _normalize_params_keys(params)
         _validate_presence_of(comment_id)
-        _merge_mime_type(:gist_comment, params)
+        # _merge_mime_type(:gist_comment, params)
         _filter_params_keys(ALLOWED_GIST_COMMENT_INPUTS, params)
 
         unless _validate_inputs(REQUIRED_GIST_COMMENT_INPUTS, params)
@@ -96,7 +96,7 @@ module Github
       def delete_comment(comment_id, params={})
         _normalize_params_keys(params)
         _validate_presence_of(comment_id)
-        _merge_mime_type(:gist_comment, params)
+        # _merge_mime_type(:gist_comment, params)
 
         delete("/gists/comments/#{comment_id}", params)
       end
