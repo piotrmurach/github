@@ -2,19 +2,14 @@ require 'spec_helper'
 
 describe Github::Users, :type => :base do
 
-  before do
-    reset_authentication_for github
-  end
-
-  after do
-    reset_authentication_for github
-  end
+  it_should_behave_like 'unauthenticated'
 
   describe "get_user" do
     context "resource found for a user" do
       before do
         stub_get("/users/#{user}").
-          to_return(:body => fixture('users/user.json'), :status => 200, :headers => {:content_type => "application/json; charset=utf-8"})
+          to_return(:body => fixture('users/user.json'),
+            :status => 200, :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
       it "should get the resources" do
@@ -45,14 +40,9 @@ describe Github::Users, :type => :base do
 
     context "resource found for an authenticated user" do
       before do
-        reset_authentication_for github
         github.oauth_token = OAUTH_TOKEN
         stub_get("/user?access_token=#{OAUTH_TOKEN}").
           to_return(:body => fixture('users/user.json'), :status => 200, :headers => {:content_type => "application/json; charset=utf-8"})
-      end
-
-      after do
-        reset_authentication_for github
       end
 
       it "should get the resources" do
@@ -64,6 +54,7 @@ describe Github::Users, :type => :base do
     context "resource not found for a user" do
       before do
         stub_get("/users/#{user}").
+          with(:query => { :access_token => "#{OAUTH_TOKEN}"}).
           to_return(:body => "", :status => [404, "Not Found"])
       end
 
@@ -90,15 +81,10 @@ describe Github::Users, :type => :base do
 
     context "resouce updated" do
       before do
-        reset_authentication_for github
         github.oauth_token = OAUTH_TOKEN
         stub_patch("/user?access_token=#{OAUTH_TOKEN}").with(user_params).
           to_return(:body => fixture('users/user.json'), :status => 200, :headers => {:content_type => "application/json; charset=utf-8"})
 
-      end
-
-      after do
-        reset_authentication_for github
       end
 
       it "should create resource successfully" do
@@ -119,7 +105,6 @@ describe Github::Users, :type => :base do
 
     context "failed to update resource" do
       before do
-        reset_authentication_for github
         github.oauth_token = OAUTH_TOKEN
         stub_patch("/user?access_token=#{OAUTH_TOKEN}").with(user_params).
           to_return(:body => fixture('users/user.json'), :status => 404, :headers => {:content_type => "application/json; charset=utf-8"})
