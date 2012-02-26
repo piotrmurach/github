@@ -378,6 +378,11 @@ describe Github::Gists, :type => :base do
       }.to raise_error(ArgumentError)
     end
 
+    it 'should perform request' do
+      github.gists.starred? gist_id
+      a_get("/gists/#{gist_id}/star").should have_been_made
+    end
+
     it 'should return true if gist is already starred' do
       github.gists.starred?(gist_id).should be_true
     end
