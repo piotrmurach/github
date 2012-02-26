@@ -8,6 +8,11 @@ module SpecHelpers
         let(:repo)   { 'github' }
         let(:org)   { 'github' }
         let(:collaborator) { 'octocat' }
+
+        before(:each) do
+          github.login = nil
+          github.password = nil
+        end
       end
     end
 
