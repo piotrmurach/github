@@ -18,8 +18,26 @@ end
 # in ./support/ and its subdirectories.
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 
+module Github
+  def reset!
+    instance_variables.each do |ivar|
+      instance_variable_set(ivar, nil)
+    end
+  end
+end
+
 RSpec.configure do |config|
   config.include WebMock::API
+  # config.order = :rand
+  config.color_enabled = true
+  config.treat_symbols_as_metadata_keys_with_true_values = true
+
+  config.before(:each) do
+    WebMock.reset!
+  end
+  config.after(:each) do
+    WebMock.reset!
+  end
 end
 
 def stub_get(path, endpoint = Github.endpoint.to_s)
