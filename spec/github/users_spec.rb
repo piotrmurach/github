@@ -2,7 +2,13 @@ require 'spec_helper'
 
 describe Github::Users, :type => :base do
 
-  it_should_behave_like 'unauthenticated'
+  before do
+    reset_authentication_for github
+  end
+
+  after do
+    reset_authentication_for github
+  end
 
   describe "get_user" do
     context "resource found for a user" do
@@ -41,20 +47,21 @@ describe Github::Users, :type => :base do
     context "resource found for an authenticated user" do
       before do
         github.oauth_token = OAUTH_TOKEN
-        stub_get("/user?access_token=#{OAUTH_TOKEN}").
+        stub_get("/user").
+          with(:query => { :access_token => "#{OAUTH_TOKEN}"}).
           to_return(:body => fixture('users/user.json'), :status => 200, :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
       it "should get the resources" do
         github.users.get_user
-        a_get("/user?access_token=#{OAUTH_TOKEN}").should have_been_made
+        a_get("/user").with(:query => {:access_token => "#{OAUTH_TOKEN}"}).
+          should have_been_made
       end
     end
 
     context "resource not found for a user" do
       before do
         stub_get("/users/#{user}").
-          with(:query => { :access_token => "#{OAUTH_TOKEN}"}).
           to_return(:body => "", :status => [404, "Not Found"])
       end
 
