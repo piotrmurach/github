@@ -15,18 +15,19 @@ Gem::Specification.new do |gem|
   gem.require_paths = %w[ lib ]
 
   gem.add_dependency 'hashie', '~> 1.2.0'
-  gem.add_dependency 'faraday', '~> 0.7.4'
-  gem.add_dependency 'multi_json', '~> 1.0.3'
-  gem.add_dependency 'oauth2', '~> 0.5.0'
+  gem.add_dependency 'faraday', '~> 0.7.6'
+  gem.add_dependency 'multi_json', '~> 1.1.0'
+  gem.add_dependency 'oauth2', '~> 0.5.2'
 
   gem.add_development_dependency 'rspec', '~> 2.8.0'
   gem.add_development_dependency 'cucumber', '>= 0'
   gem.add_development_dependency 'yajl-ruby', '~> 1.1.0'
   gem.add_development_dependency 'bundler', '~> 1.0.0'
   gem.add_development_dependency 'jeweler'
-  gem.add_development_dependency 'webmock', '~> 1.7.6'
+  gem.add_development_dependency 'webmock', '~> 1.8.0'
   gem.add_development_dependency 'vcr', '~> 1.11.3'
-  gem.add_development_dependency 'simplecov', '~> 0.4'
-  gem.add_development_dependency 'guard-rspec'
-  gem.add_development_dependency 'guard-cucumber'
+  gem.add_development_dependency 'simplecov', '~> 0.6.1'
+  gem.add_development_dependency 'guard', '~> 0.8.8'
+  gem.add_development_dependency 'guard-rspec', '0.5.7'
+  gem.add_development_dependency 'guard-cucumber', '0.7.4'
 end
