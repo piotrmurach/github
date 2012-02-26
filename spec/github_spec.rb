@@ -5,6 +5,8 @@ describe Github do
   before do
     subject.user = nil
     subject.repo = nil
+    subject.oauth_token = nil
+    subject.basic_auth = nil
   end
 
   it "should respond to 'new' message" do
