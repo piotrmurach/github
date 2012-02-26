@@ -15,8 +15,8 @@ module Github
       #
       # = Examples
       #  @github = Github.new :oauth_token => '...'
-      #  @github.users.following
-      #  @github.users.following { |user| ... }
+      #  @github.users.followers
+      #  @github.users.followers { |user| ... }
       #
       def followers(user_name=nil, params={})
         _normalize_params_keys(params)
