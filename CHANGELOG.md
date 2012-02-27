@@ -1,3 +1,11 @@
+0.4.6 (February 27, 2012)
+
+* Update gem dependencies, specifically core libraries: multi_json, oauth2, faraday and testing: webmock. (Cannot udpate guard as it conflicts with Growl notifications.)
+* Fix test dependency for github_spec and users_spec test suites.
+* Add specs for user followers api.
+* Add better support for isolation of test dependency by resetting request mocks and github instance variables.
+* Remove jeweler dependency from gemspec and rakefile. Clean up rakefile.
+
 0.4.5 (February 25, 2012)
 
 * add specs for the main pull requests api
