@@ -23,7 +23,6 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'cucumber', '>= 0'
   gem.add_development_dependency 'yajl-ruby', '~> 1.1.0'
   gem.add_development_dependency 'bundler', '~> 1.0.0'
-  gem.add_development_dependency 'jeweler'
   gem.add_development_dependency 'webmock', '~> 1.8.0'
   gem.add_development_dependency 'vcr', '~> 1.11.3'
   gem.add_development_dependency 'simplecov', '~> 0.6.1'
