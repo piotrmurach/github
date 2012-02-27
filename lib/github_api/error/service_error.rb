@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 module Github #:nodoc
-  # Raised when Github returns the HTTP status code 404
+  # Raised when Github returns any of the HTTP status codes
   module Error
     class ServiceError < GithubError
       attr_accessor :http_headers
