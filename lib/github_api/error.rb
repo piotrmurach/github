@@ -26,6 +26,8 @@ end # Github
   service_unavailable
   internal_server_error
   unprocessable_entity
+  client_error
+  invalid_options
 ].each do |error|
   require "github_api/error/#{error}"
 end
