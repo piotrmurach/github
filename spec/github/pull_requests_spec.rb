@@ -11,11 +11,11 @@ describe Github::PullRequests, :type => :base do
     end
 
     context 'resource found' do
-      let(:params) { { :state => 'closed', :unrelated => true } }
+      let(:inputs) { { 'state'=> 'closed', 'unrelated' => true } }
 
       before do
         stub_get("/repos/#{user}/#{repo}/pulls").
-          with(:query => params.except(:unrelated)).
+          with(:query => inputs.except('unrelated')).
           to_return(:body => fixture('pull_requests/pull_requests.json'),
             :status => 200,
             :headers => {:content_type => "application/json; charset=utf-8"})
@@ -26,23 +26,23 @@ describe Github::PullRequests, :type => :base do
       end
 
       it "should get the resources" do
-        github.pull_requests.pull_requests user, repo, params
-        a_get("/repos/#{user}/#{repo}/pulls").with(:query => params).should have_been_made
+        github.pull_requests.pull_requests user, repo, inputs
+        a_get("/repos/#{user}/#{repo}/pulls").with(:query => inputs).should have_been_made
       end
 
       it "should return array of resources" do
-        pull_requests = github.pull_requests.pull_requests user, repo, params
+        pull_requests = github.pull_requests.pull_requests user, repo, inputs
         pull_requests.should be_an Array
         pull_requests.should have(1).items
       end
 
       it "should be a mash type" do
-        pull_requests = github.pull_requests.pull_requests user, repo, params
+        pull_requests = github.pull_requests.pull_requests user, repo, inputs
         pull_requests.first.should be_a Hashie::Mash
       end
 
       it "should get pull request information" do
-        pull_requests = github.pull_requests.pull_requests user, repo, params
+        pull_requests = github.pull_requests.pull_requests user, repo, inputs
         pull_requests.first.title.should == 'new-feature'
       end
 
