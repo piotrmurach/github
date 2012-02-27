@@ -16,7 +16,7 @@ module Github
     #  @github = Github.new
     #  @github.issues.events 'user-name', 'repo-name'
     #
-    def events(user_name=nil, repo_name=nil, issue_id=nil, params={})
+    def events(user_name, repo_name, issue_id=nil, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
       _normalize_params_keys(params)

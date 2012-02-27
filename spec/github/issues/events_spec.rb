@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Github::Issues::Events, :type => :base do
+  let(:issue_id) { 1 }
 
   describe 'events' do
     it { github.issues.should respond_to :events }
@@ -9,8 +10,6 @@ describe Github::Issues::Events, :type => :base do
     it { github.issues.should respond_to :repo_events }
 
     context 'without issue_id' do
-      let(:issue_id) { nil }
-
       context "resource found" do
         before do
           stub_get("/repos/#{user}/#{repo}/issues/events").
@@ -23,29 +22,29 @@ describe Github::Issues::Events, :type => :base do
         end
 
         it "should get the resources" do
-          github.issues.events user, repo, issue_id
+          github.issues.events user, repo
           a_get("/repos/#{user}/#{repo}/issues/events").should have_been_made
         end
 
         it "should return array of resources" do
-          events = github.issues.events user, repo, issue_id
+          events = github.issues.events user, repo
           events.should be_an Array
           events.should have(1).items
         end
 
         it "should be a mash type" do
-          events = github.issues.events user, repo, issue_id
+          events = github.issues.events user, repo
           events.first.should be_a Hashie::Mash
         end
 
         it "should get issue information" do
-          events = github.issues.events user, repo, issue_id
+          events = github.issues.events user, repo
           events.first.actor.login.should == 'octocat'
         end
 
         it "should yield to a block" do
-          github.issues.should_receive(:events).with(user, repo, issue_id).and_yield('web')
-          github.issues.events(user, repo, issue_id) { |param| 'web' }.should == 'web'
+          github.issues.should_receive(:events).with(user, repo).and_yield('web')
+          github.issues.events(user, repo) { |param| 'web' }.should == 'web'
         end
       end
 
@@ -57,7 +56,7 @@ describe Github::Issues::Events, :type => :base do
 
         it "should return 404 with a message 'Not Found'" do
           expect {
-            github.issues.events user, repo, issue_id
+            github.issues.events user, repo
           }.to raise_error(Github::Error::NotFound)
         end
       end
@@ -65,8 +64,6 @@ describe Github::Issues::Events, :type => :base do
     end # without issue_id
 
     context 'with issue_id' do
-      let(:issue_id) { 123 }
-
       context "resource found" do
         before do
           stub_get("/repos/#{user}/#{repo}/issues/#{issue_id}/events").

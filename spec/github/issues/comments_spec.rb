@@ -1,11 +1,12 @@
 require 'spec_helper'
 
 describe Github::Issues::Comments, :type => :base do
+  let!(:comment_id) { 1 }
+  let!(:issue_id) { 1 }
 
   it { described_class::VALID_ISSUE_COMMENT_PARAM_NAME.should_not be_nil }
 
   describe 'comments' do
-    let(:issue_id) { 1 }
 
     it { github.issues.should respond_to :comments }
     it { github.issues.should respond_to :issue_comments }
@@ -65,7 +66,6 @@ describe Github::Issues::Comments, :type => :base do
   end # comments
 
   describe "comment" do
-    let(:comment_id) { 1 }
 
     it { github.issues.should respond_to :comment }
     it { github.issues.should respond_to :issue_comment }
@@ -121,7 +121,7 @@ describe Github::Issues::Comments, :type => :base do
 
     context "resouce created" do
       before do
-        stub_post("/repos/#{user}/#{repo}/issues/#{issue_id}/comments").with(inputs).
+        stub_post("/repos/#{user}/#{repo}/issues/#{issue_id}/comments").with(:body => inputs).
           to_return(:body => fixture('issues/comment.json'), :status => 201, :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
