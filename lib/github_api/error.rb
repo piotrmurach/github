@@ -28,6 +28,7 @@ end # Github
   unprocessable_entity
   client_error
   invalid_options
+  required_params
 ].each do |error|
   require "github_api/error/#{error}"
 end
