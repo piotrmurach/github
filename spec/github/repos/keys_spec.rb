@@ -1,6 +1,11 @@
 require 'spec_helper'
 
-describe Github::Repos::Keys, :type => :base do
+describe Github::Repos::Keys do
+  let(:github) { Github.new }
+  let(:user) { 'peter-murach' }
+  let(:repo) { 'github' }
+
+  after { github.user, github.repo = nil, nil}
 
   it { described_class::VALID_KEY_PARAM_NAMES.should_not be_nil }
 
@@ -12,7 +17,6 @@ describe Github::Repos::Keys, :type => :base do
       end
 
       it "should fail to get resource without username" do
-        github.user, github.repo = nil, nil
         expect { github.repos.keys }.to raise_error(ArgumentError)
       end
 
@@ -45,7 +49,6 @@ describe Github::Repos::Keys, :type => :base do
         }.to raise_error(Github::Error::NotFound)
       end
     end
-
   end
 
   describe "get_key" do
@@ -100,13 +103,13 @@ describe Github::Repos::Keys, :type => :base do
       it "should fail to create resource if 'title' input is missing" do
         expect {
           github.repos.create_key(user, repo, :key => 'ssh-rsa AAA...')
-        }.to raise_error(ArgumentError)
+        }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should fail to create resource if 'key' input is missing" do
         expect {
           github.repos.create_key(user, repo, :title => 'octocat@octomac')
-        }.to raise_error(ArgumentError)
+        }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should create the resource" do
@@ -168,7 +171,6 @@ describe Github::Repos::Keys, :type => :base do
         }.to raise_error(Github::Error::NotFound)
       end
     end
-
   end
 
   describe "delete_key" do

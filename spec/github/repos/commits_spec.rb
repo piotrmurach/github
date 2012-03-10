@@ -1,6 +1,10 @@
 require 'spec_helper'
 
-describe Github::Repos::Commits, :type => :base do
+describe Github::Repos::Commits do
+  let(:github) { Github.new }
+  let(:user) { 'peter-murach' }
+  let(:repo) { 'github' }
+  after { github.user, github.repo = nil, nil }
 
   describe "commits" do
     context "resource found" do
@@ -10,7 +14,6 @@ describe Github::Repos::Commits, :type => :base do
       end
 
       it "should fail to get resource without username" do
-        github.user, github.repo = nil, nil
         expect { github.repos.commits }.to raise_error(ArgumentError)
       end
 
@@ -84,7 +87,6 @@ describe Github::Repos::Commits, :type => :base do
         commit = github.repos.commit user, repo, sha
         commit.should be_a Hashie::Mash
       end
-
     end
 
     context "resource not found" do
@@ -109,7 +111,6 @@ describe Github::Repos::Commits, :type => :base do
       end
 
       it "should fail to get resource without username" do
-        github.user, github.repo = nil, nil
         expect { github.repos.repo_comments }.to raise_error(ArgumentError)
       end
 
@@ -171,7 +172,8 @@ describe Github::Repos::Commits, :type => :base do
 
       it "should get the resource" do
         github.repos.commit_comments user, repo, sha
-        a_get("/repos/#{user}/#{repo}/commits/#{sha}/comments").should have_been_made
+        a_get("/repos/#{user}/#{repo}/commits/#{sha}/comments").
+          should have_been_made
       end
 
       it "should return array of resources" do
@@ -239,7 +241,6 @@ describe Github::Repos::Commits, :type => :base do
         commit_comment = github.repos.commit_comment user, repo, comment_id
         commit_comment.should be_a Hashie::Mash
       end
-
     end
 
     context "resource not found" do
@@ -258,43 +259,48 @@ describe Github::Repos::Commits, :type => :base do
 
   describe "create_comment" do
     let(:sha) { '23432dfosfsufd' }
-    let(:inputs) { {'body'=> 'web', :commit_id => 1, :line => 1, :path => 'file1.txt', :position => 4 } }
+    let(:inputs) do
+      { 'body' => 'web',
+        :commit_id => 1,
+        :line => 1,
+        :path => 'file1.txt',
+        :position => 4 }
+    end
 
     context "resouce created" do
       before do
         stub_post("/repos/#{user}/#{repo}/commits/#{sha}/comments").with(inputs).
           to_return(:body => fixture('repos/commit_comment.json'), :status => 201, :headers => {:content_type => "application/json; charset=utf-8"})
-
       end
 
       it "should fail to create resource if 'body' input is missing" do
         expect {
           github.repos.create_comment user, repo, sha, inputs.except('body')
-        }.to raise_error(ArgumentError)
+        }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should fail to create resource if 'commit_id' input is missing" do
         expect {
           github.repos.create_comment user, repo, sha, inputs.except(:commit_id)
-        }.to raise_error(ArgumentError)
+        }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should fail to create resource if 'line' input is missing" do
         expect {
           github.repos.create_comment user, repo, sha, inputs.except(:line)
-        }.to raise_error(ArgumentError)
+        }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should fail to create resource if 'path' input is missing" do
         expect {
           github.repos.create_comment user, repo, sha, inputs.except(:path)
-        }.to raise_error(ArgumentError)
+        }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should fail to create resource if 'position' input is missing" do
         expect {
           github.repos.create_comment user, repo, sha, inputs.except(:position)
-        }.to raise_error(ArgumentError)
+        }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should create resource successfully" do
@@ -383,7 +389,7 @@ describe Github::Repos::Commits, :type => :base do
       it "should fail to create resource if 'body' input is missing" do
         expect {
           github.repos.update_comment user, repo, comment_id, inputs.except('body')
-        }.to raise_error(ArgumentError)
+        }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should create resource successfully" do

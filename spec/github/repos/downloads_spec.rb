@@ -1,6 +1,13 @@
+# encoding: utf-8
+
 require 'spec_helper'
 
-describe Github::Repos::Downloads, :type => :base do
+describe Github::Repos::Downloads do
+  let(:github) { Github.new }
+  let(:user) { 'peter-murach' }
+  let(:repo) { 'github' }
+
+  after { github.user, github.repo = nil, nil }
 
   it { described_class::VALID_DOWNLOAD_PARAM_NAMES.should_not be_nil }
   it { described_class::REQUIRED_PARAMS.should_not be_nil }
@@ -18,7 +25,6 @@ describe Github::Repos::Downloads, :type => :base do
       end
 
       it "should fail to get resource without username" do
-        github.user, github.repo = nil, nil
         expect { github.repos.downloads }.to raise_error(ArgumentError)
       end
 
@@ -76,7 +82,9 @@ describe Github::Repos::Downloads, :type => :base do
       end
 
       it "should fail to get resource without download id" do
-        expect { github.repos.download(user, repo, nil)}.to raise_error(ArgumentError)
+        expect {
+          github.repos.download(user, repo, nil)
+        }.to raise_error(ArgumentError)
       end
 
       it "should get the resource" do
@@ -164,13 +172,13 @@ describe Github::Repos::Downloads, :type => :base do
       it "should fail to create resource if 'name' input is missing" do
         expect {
           github.repos.create_download user, repo, inputs.except(:name)
-        }.to raise_error(ArgumentError)
+        }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should failt to create resource if 'size' input is missing" do
         expect {
           github.repos.create_download user, repo, inputs.except(:size)
-        }.to raise_error(ArgumentError)
+        }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should create resource successfully" do
@@ -193,7 +201,6 @@ describe Github::Repos::Downloads, :type => :base do
       before do
         stub_post("/repos/#{user}/#{repo}/downloads").with(inputs).
           to_return(:body => fixture('repos/download_s3.json'), :status => 404, :headers => {:content_type => "application/json; charset=utf-8"})
-
       end
 
       it "should faile to retrieve resource" do
@@ -205,7 +212,12 @@ describe Github::Repos::Downloads, :type => :base do
   end # create_download
 
   describe 'upload' do
-    let(:inputs) { {:name => 'new_file.jpg', :size => 114034, :description => "Latest release", :content_type => 'text/plain'} }
+    let(:inputs) do
+      { :name => 'new_file.jpg',
+        :size => 114034,
+        :description => "Latest release",
+        :content_type => 'text/plain' }
+    end
     let(:resource) { Hashie::Mash.new ::JSON.parse(fixture('repos/download_s3.json').read) }
     let(:file)     { 'filename' }
 
@@ -236,7 +248,6 @@ describe Github::Repos::Downloads, :type => :base do
           github.repos.upload resource, file
         }.to raise_error(Github::Error::NotFound)
       end
-
     end
   end # upload
 

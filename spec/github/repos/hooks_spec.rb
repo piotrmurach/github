@@ -1,6 +1,11 @@
+# encoding: utf-8
+
 require 'spec_helper'
 
-describe Github::Repos::Hooks, :type => :base do
+describe Github::Repos::Hooks do
+  let(:github) { Github.new }
+  let(:user) { 'peter-murach' }
+  let(:repo) { 'github' }
 
   it { described_class::VALID_HOOK_PARAM_NAMES.should_not be_nil }
   it { described_class::VALID_HOOK_PARAM_VALUES.should_not be_nil }
@@ -143,13 +148,13 @@ describe Github::Repos::Hooks, :type => :base do
       it "should fail to create resource if 'name' input is missing" do
         expect {
           github.repos.create_hook user, repo, inputs.except(:name)
-        }.to raise_error(ArgumentError)
+        }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should failt to create resource if 'config' input is missing" do
         expect {
           github.repos.create_hook user, repo, inputs.except(:config)
-        }.to raise_error(ArgumentError)
+        }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should create resource successfully" do
@@ -214,7 +219,7 @@ describe Github::Repos::Hooks, :type => :base do
       it "should fail to edit resource without 'name' parameter" do
         expect{
           github.repos.edit_hook user, repo, inputs.except(:name)
-        }.to raise_error(ArgumentError)
+        }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should fail to edit resource without 'hook_id'" do
@@ -226,12 +231,13 @@ describe Github::Repos::Hooks, :type => :base do
       it "should fail to edit resource without 'config' parameter" do
         expect {
           github.repos.edit_hook user, repo, hook_id, inputs.except(:config)
-        }.to raise_error(ArgumentError)
+        }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should edit the resource" do
         github.repos.edit_hook user, repo, hook_id, inputs
-        a_patch("/repos/#{user}/#{repo}/hooks/#{hook_id}").with(inputs).should have_been_made
+        a_patch("/repos/#{user}/#{repo}/hooks/#{hook_id}").
+          with(inputs).should have_been_made
       end
 
       it "should return resource" do
@@ -243,7 +249,6 @@ describe Github::Repos::Hooks, :type => :base do
         hook = github.repos.edit_hook user, repo, hook_id, inputs
         hook.name.should == 'web'
       end
-
     end
 
     context "failed to edit resource" do
@@ -330,7 +335,6 @@ describe Github::Repos::Hooks, :type => :base do
       before do
         stub_post("/repos/#{user}/#{repo}/hooks/#{hook_id}/test").
           to_return(:body => '', :status => 404, :headers => { :content_type => "application/json; charset=utf-8"})
-
       end
 
       it "should fail to find resource" do

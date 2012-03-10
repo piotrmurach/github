@@ -38,7 +38,7 @@ module Github
         _normalize_params_keys(params)
         _filter_params_keys(REQUIRED_COMMENT_PARAMS, params)
 
-        raise ArgumentError, "Expected following inputs to the method: #{REQUIRED_COMMENT_PARAMS.join(', ')}" unless _validate_inputs(REQUIRED_COMMENT_PARAMS, params)
+        _validate_inputs(REQUIRED_COMMENT_PARAMS, params)
 
         post("/repos/#{user}/#{repo}/commits/#{sha}/comments", params)
       end
@@ -170,7 +170,7 @@ module Github
         _validate_presence_of comment_id
 
         _normalize_params_keys(params)
-        raise ArgumentError, "expected following inputs to the method: 'body'" unless _validate_inputs(["body"], params)
+        _validate_inputs(%w[ body ], params)
 
         patch("/repos/#{user}/#{repo}/comments/#{comment_id}", params)
       end

@@ -50,13 +50,12 @@ module Github
       #    "title" => "octocat@octomac",
       #    "key" =>  "ssh-rsa AAA..."
       #
-      def create_key(user_name=nil, repo_name=nil, params={})
+      def create_key(user_name, repo_name, params={})
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
         _normalize_params_keys(params)
         _filter_params_keys(VALID_KEY_PARAM_NAMES, params)
-
-        raise ArgumentError, "Required params are: #{VALID_KEY_PARAM_NAMES.join(', ')}" unless _validate_inputs(VALID_KEY_PARAM_NAMES, params)
+        _validate_inputs(VALID_KEY_PARAM_NAMES, params)
 
         post("/repos/#{user}/#{repo}/keys", params)
       end

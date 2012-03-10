@@ -1,6 +1,12 @@
 require 'spec_helper'
 
-describe Github::Repos::Collaborators, :type => :base do
+describe Github::Repos::Collaborators do
+  let(:github) { Github.new }
+  let(:user) { 'peter-murach' }
+  let(:repo) { 'github' }
+  let(:collaborator) { 'octocat' }
+
+  after { github.user, github.repo = nil, nil }
 
   describe "collaborators" do
     context "resource found" do
@@ -10,7 +16,6 @@ describe Github::Repos::Collaborators, :type => :base do
       end
 
       it "should fail to get resource without username" do
-        github.user, github.repo = nil, nil
         expect { github.repos.collaborators }.to raise_error(ArgumentError)
       end
 
@@ -65,7 +70,7 @@ describe Github::Repos::Collaborators, :type => :base do
 
       it "should fail to get resource without collaborator name" do
         expect {
-          github.repos.collaborator?(user, repo, nil)
+          github.repos.collaborator? user, repo, nil
         }.to raise_error(ArgumentError)
       end
 
@@ -75,7 +80,8 @@ describe Github::Repos::Collaborators, :type => :base do
       end
 
       it "should find collaborator" do
-        github.repos.should_receive(:collaborator?).with(user, repo, collaborator).and_return true
+        github.repos.should_receive(:collaborator?).
+          with(user, repo, collaborator) { true }
         github.repos.collaborator? user, repo, collaborator
       end
     end
@@ -87,14 +93,14 @@ describe Github::Repos::Collaborators, :type => :base do
       end
 
       it "should fail to retrieve resource" do
-        github.repos.should_receive(:collaborator?).with(user, repo, collaborator).and_return false
+        github.repos.should_receive(:collaborator?).
+          with(user, repo, collaborator) { false }
         github.repos.collaborator? user, repo, collaborator
       end
     end
   end # collaborator?
 
   describe "add_collaborator" do
-
     context "resouce added" do
       before do
         stub_put("/repos/#{user}/#{repo}/collaborators/#{collaborator}").
@@ -128,7 +134,6 @@ describe Github::Repos::Collaborators, :type => :base do
   end # add_collaborator
 
   describe "remove_collaborator" do
-
     context "resouce added" do
       before do
         stub_delete("/repos/#{user}/#{repo}/collaborators/#{collaborator}").

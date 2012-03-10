@@ -97,10 +97,7 @@ module Github
 
         _normalize_params_keys(params)
         _filter_params_keys(VALID_HOOK_PARAM_NAMES, params, :recursive => false)
-
-        unless _validate_inputs(REQUIRED_PARAMS, params)
-          raise ArgumentError, "Required parameters are: name, config"
-        end
+        _validate_inputs(REQUIRED_PARAMS, params)
 
         post("/repos/#{user}/#{repo}/hooks", params)
       end
@@ -133,10 +130,7 @@ module Github
 
         _normalize_params_keys(params)
         _filter_params_keys(VALID_HOOK_PARAM_NAMES, params, :recursive => false)
-
-        unless _validate_inputs(REQUIRED_PARAMS, params)
-          raise ArgumentError, "Required parameters are: name, config"
-        end
+        _validate_inputs(REQUIRED_PARAMS, params)
 
         patch("/repos/#{user}/#{repo}/hooks/#{hook_id}", params)
       end

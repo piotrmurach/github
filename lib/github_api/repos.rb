@@ -59,7 +59,7 @@ module Github
     #   @repos = Github::Repos.new
     #   @repos.branches 'user-name', 'repo-name'
     #
-    def branches(user_name=nil, repo_name=nil, params={})
+    def branches(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless (user? && repo?)
       _normalize_params_keys(params)
@@ -103,7 +103,11 @@ module Github
       _normalize_params_keys(params)
       _filter_params_keys(VALID_REPO_OPTIONS + %w[ org ], params)
 
-      raise ArgumentError, "Required params are: :name" unless _validate_inputs(%w[ name ], params)
+#       if !_validate_inputs(%w[ name ], params)
+#         raise ArgumentError, "Required params are: :name"
+#       end
+
+      _validate_inputs(%w[ name ], params)
 
       # Requires authenticated user
       if (org = params.delete("org"))
@@ -161,7 +165,9 @@ module Github
       _normalize_params_keys(params)
       _filter_params_keys(VALID_REPO_OPTIONS, params)
 
-      raise ArgumentError, "Required params are: #{%w[ :name ] }" unless _validate_inputs(%w[ name ], params)
+      unless _validate_inputs(%w[ name ], params)
+        raise ArgumentError, "Required params are: #{%w[ :name ] }"
+      end
 
       patch("/repos/#{user}/#{repo}", DEFAULT_REPO_OPTIONS.merge(params))
     end

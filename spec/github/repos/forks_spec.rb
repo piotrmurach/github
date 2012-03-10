@@ -1,9 +1,13 @@
 require 'spec_helper'
 
-describe Github::Repos::Forks, :type => :base do
+describe Github::Repos::Forks do
+  let(:github) { Github.new }
+  let(:user) { 'peter-murach' }
+  let(:repo) { 'github' }
+
+  after { github.user, github.repo = nil, nil }
 
   describe "forks" do
-
     it { github.repos.should respond_to :forks }
     it { github.repos.should respond_to :repo_forks }
     it { github.repos.should respond_to :repository_forks }
@@ -15,7 +19,6 @@ describe Github::Repos::Forks, :type => :base do
       end
 
       it "should fail to get resource without username" do
-        github.user, github.repo = nil, nil
         expect { github.repos.forks }.to raise_error(ArgumentError)
       end
 

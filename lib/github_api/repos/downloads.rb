@@ -100,8 +100,7 @@ module Github
 
         _normalize_params_keys(params)
         _filter_params_keys(VALID_DOWNLOAD_PARAM_NAMES, params)
-
-        raise ArgumentError, "Required parameters are: #{REQUIRED_PARAMS.join(', ')}" unless _validate_inputs(REQUIRED_PARAMS, params)
+        _validate_inputs(REQUIRED_PARAMS, params)
 
         post("/repos/#{user}/#{repo}/downloads", params)
       end

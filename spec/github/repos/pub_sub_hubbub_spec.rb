@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Github::Repos::PubSubHubbub do
-
   let(:github) { Github.new }
   let(:topic)  { "https://github.com/peter-murach/github/events/push"}
   let(:callback) { "github://campfire?subdomain=github&room=Commits&token=abc123" }
@@ -15,16 +14,14 @@ describe Github::Repos::PubSubHubbub do
     }
   }
 
+  after { github.user, github.oauth_token = nil, nil }
+
   describe "subscribe" do
     context "success" do
       before do
         github.oauth_token = OAUTH_TOKEN
         stub_post("/hub?access_token=#{OAUTH_TOKEN}").with(hub_inputs).
           to_return(:body => '', :status => 200, :headers => {:content_type => "application/json; charset=utf-8"})
-      end
-
-      after do
-        github.oauth_token = nil
       end
 
       it "should subscribe to hub" do
@@ -46,7 +43,7 @@ describe Github::Repos::PubSubHubbub do
         }.to raise_error(Github::Error::NotFound)
       end
     end
-  end
+  end # subscribe
 
   describe "unsubscribe" do
     context "success" do
@@ -54,10 +51,6 @@ describe Github::Repos::PubSubHubbub do
         github.oauth_token = OAUTH_TOKEN
         stub_post("/hub?access_token=#{OAUTH_TOKEN}").with(hub_inputs.merge("hub.mode" => 'unsubscribe')).
           to_return(:body => '', :status => 200, :headers => {:content_type => "application/json; charset=utf-8"})
-      end
-
-      after do
-        github.oauth_token = nil
       end
 
       it "should subscribe to hub" do
@@ -79,5 +72,5 @@ describe Github::Repos::PubSubHubbub do
         }.to raise_error(Github::Error::NotFound)
       end
     end
-  end
+  end # unsubscribe
 end # Github::Repos::PubSubHubbub
