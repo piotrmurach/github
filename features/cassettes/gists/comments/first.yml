@@ -1,46 +1,56 @@
 --- 
-- !ruby/struct:VCR::HTTPInteraction 
-  request: !ruby/struct:VCR::Request 
-    method: :get
-    uri: https://api.github.com:443/gists/comments/33469
+http_interactions: 
+- request: 
+    method: get
+    uri: https://api.github.com/gists/comments/33469
     body: 
+      encoding: US-ASCII
+      string: ""
     headers: 
-      accept-encoding: 
+      Accept-Encoding: 
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response: !ruby/struct:VCR::Response 
-    status: !ruby/struct:VCR::ResponseStatus 
+      Accept: 
+      - "*/*"
+      User-Agent: 
+      - Ruby
+  response: 
+    status: 
       code: 200
       message: OK
     headers: 
-      server: 
-      - nginx/1.0.4
-      date: 
-      - Sun, 05 Feb 2012 12:59:01 GMT
-      content-type: 
+      Server: 
+      - nginx/1.0.12
+      Date: 
+      - Sat, 10 Mar 2012 23:11:48 GMT
+      Content-Type: 
       - application/json; charset=utf-8
-      transfer-encoding: 
+      Transfer-Encoding: 
       - chunked
-      connection: 
+      Connection: 
       - keep-alive
-      status: 
+      Status: 
       - 200 OK
-      x-ratelimit-limit: 
+      X-Ratelimit-Limit: 
       - "5000"
-      etag: 
-      - "\"612aa3594782fab47ab767da9f377a8c\""
-      x-ratelimit-remaining: 
+      Etag: 
+      - "\"2e13207db4166565ad36d0650ff6b67a\""
+      X-Ratelimit-Remaining: 
       - "4996"
-      content-encoding: 
+      Content-Encoding: 
       - gzip
-    body: !binary |
-      H4sIAAAAAAAAA4VSy27cMAz8FcJAb+vX2smuDRQ5FAjSe5BDLwElUbZgWRIk
-      ua0T5N8jO91ie2luA4kznCH5mi1eZ302xuhCX5boVDGoOC6s4HYuBxViKBOa
-      ySTQNO1tlx0yZsWaSE/kV+DW6gNoa6cAWk0EcSTwNNBvCoBGgMM47v+LSw+e
-      YFJaKzOAIy+tn9FwKuDbSHwCu0S4WLmy4Tg6X4rV2JxpFV/IQ2ICI8PHGf20
-      qSEIJSX5ZBQwOOIRrLzusZsJHDUylURWyGG0vyD1X2GTDiAsfAdDJMAaeCA/
-      2eUOUtzFCYwknjGm0MeqrvPqJm/qx/q2P970TfNjqwnks/71/+PcikK5p0mU
-      weNPjOiflUi6TNatrLqT5GdG7flUdazFTiIxLpF3MhG0HZRJpReBP/R/NxiI
-      L56Ki/i+xo/C8rMWd+Lr3zs4tueCCpxwRlUYiiWGQDFcHceX472acaCQwKXb
-      Nc7rtiqcGZLxLeCpObf12wfe7+iQcU+fzPXtHbPbLeKgAgAA
+    body: 
+      encoding: ASCII-8BIT
+      string: !binary |
+        H4sIAAAAAAAAA4VSy27cMAz8FcJAb/Fr7WTXBoocAgTtveihl4CSKFuwLQmS
+        3NQN8u+lt91gc2luA2k4Qw75kq1hzvpsTMnHvizRm2IwaVxFId1SDiamWDJa
+        yDJomvauy24yGQgTqSdMXHqo6jqvbvOm/lbf9Yfbvml+MEc4tfHvdwobSOfm
+        G5idmyLMZiJII0GggX5RBLQKPKbx/L96fggEk5lnYwfwFLQLC1pJBTyMJCdw
+        a4JLu1eteok+lGqzLhezSb8pAFeCICvHBcO0qyEoozUFHgYwepIJnL72ODcT
+        Jc4oDItskMPonoH9N9ilIygHX8ESKXAWvlCY3HoPPO7q1YeRGJVxOBwh0yOF
+        rH/5f/o7KZaTe45mYosh4E9MGJ52nUzoutVVd9TyJKg9HatOtNhpJCE1yk5z
+        wewGY5n6pvCv/v3KI8k1UHFRP+/9L7H8yONefX47nEN7KqjACRc0haVUYoyU
+        4tU1fTo8mgUHigwubtc4r9uq8HbgzvcJj82prV9f/wAsufCeogIAAA==
 
-    http_version: "1.1"
+    http_version: 
+  recorded_at: Sat, 10 Mar 2012 23:11:48 GMT
+recorded_with: VCR 2.0.0

@@ -1,36 +1,46 @@
 --- 
-- !ruby/struct:VCR::HTTPInteraction 
-  request: !ruby/struct:VCR::Request 
-    method: :post
-    uri: https://api.github.com:443/user/repos
-    body: "{\"homepage\":\"https://github.com\",\"public\":true,\"has_issues\":true,\"has_wiki\":true,\"has_downloads\":true,\"name\":\"basic_auth\"}"
+http_interactions: 
+- request: 
+    method: post
+    uri: https://api.github.com/user/repos
+    body: 
+      encoding: UTF-8
+      string: "{\"homepage\":\"https://github.com\",\"public\":true,\"has_issues\":true,\"has_wiki\":true,\"has_downloads\":true,\"name\":\"basic_auth\"}"
     headers: 
-      content-type: 
+      Content-Type: 
       - application/json
-  response: !ruby/struct:VCR::Response 
-    status: !ruby/struct:VCR::ResponseStatus 
+      Accept: 
+      - "*/*"
+      User-Agent: 
+      - Ruby
+  response: 
+    status: 
       code: 401
       message: Unauthorized
     headers: 
-      server: 
-      - nginx/1.0.4
-      date: 
-      - Sat, 04 Feb 2012 13:32:31 GMT
-      content-type: 
+      Server: 
+      - nginx/1.0.12
+      Date: 
+      - Sat, 10 Mar 2012 23:11:46 GMT
+      Content-Type: 
       - application/json; charset=utf-8
-      connection: 
+      Connection: 
       - keep-alive
-      status: 
+      Status: 
       - 401 Unauthorized
-      www-authenticate: 
+      Www-Authenticate: 
       - Basic realm="GitHub"
-      x-ratelimit-limit: 
+      X-Ratelimit-Limit: 
       - "5000"
-      etag: 
+      Etag: 
       - "\"99852aefab6a0988db8f62bf2fb96f49\""
-      x-ratelimit-remaining: 
-      - "4997"
-      content-length: 
+      X-Ratelimit-Remaining: 
+      - "4999"
+      Content-Length: 
       - "37"
-    body: "{\"message\":\"Requires authentication\"}"
-    http_version: "1.1"
+    body: 
+      encoding: US-ASCII
+      string: "{\"message\":\"Requires authentication\"}"
+    http_version: 
+  recorded_at: Sat, 10 Mar 2012 23:11:46 GMT
+recorded_with: VCR 2.0.0

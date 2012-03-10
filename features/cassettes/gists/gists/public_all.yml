@@ -1,71 +1,44 @@
 --- 
-- !ruby/struct:VCR::HTTPInteraction 
-  request: !ruby/struct:VCR::Request 
-    method: :get
-    uri: https://api.github.com:443/users/%7B%7D/gists
+http_interactions: 
+- request: 
+    method: get
+    uri: https://api.github.com/users/nil/gists
     body: 
+      encoding: US-ASCII
+      string: ""
     headers: 
-      accept-encoding: 
+      Accept-Encoding: 
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response: !ruby/struct:VCR::Response 
-    status: !ruby/struct:VCR::ResponseStatus 
-      code: 404
-      message: Not Found
-    headers: 
-      server: 
-      - nginx/1.0.4
-      date: 
-      - Sat, 04 Feb 2012 14:18:39 GMT
-      content-type: 
-      - application/json; charset=utf-8
-      transfer-encoding: 
-      - chunked
-      connection: 
-      - keep-alive
-      status: 
-      - 404 Not Found
-      x-ratelimit-limit: 
-      - "5000"
-      etag: 
-      - "\"e66a7a6c91e2c26803f3f49feb7a883f\""
-      x-ratelimit-remaining: 
-      - "4998"
-      content-encoding: 
-      - gzip
-    body: !binary |
-      H4sIAAAAAAAAA6tWyk0tLk5MT1WyUvLLL1Fwyy/NS1GqBQB8+Ys1FwAAAA==
-
-    http_version: "1.1"
-- !ruby/struct:VCR::HTTPInteraction 
-  request: !ruby/struct:VCR::Request 
-    method: :get
-    uri: https://api.github.com:443/users/nil/gists
-    body: 
-    headers: 
-      accept-encoding: 
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response: !ruby/struct:VCR::Response 
-    status: !ruby/struct:VCR::ResponseStatus 
+      Accept: 
+      - "*/*"
+      User-Agent: 
+      - Ruby
+  response: 
+    status: 
       code: 200
       message: OK
     headers: 
-      server: 
-      - nginx/1.0.4
-      date: 
-      - Sat, 04 Feb 2012 14:21:08 GMT
-      content-type: 
+      Server: 
+      - nginx/1.0.12
+      Date: 
+      - Sat, 10 Mar 2012 23:16:26 GMT
+      Content-Type: 
       - application/json; charset=utf-8
-      connection: 
+      Connection: 
       - keep-alive
-      status: 
+      Status: 
       - 200 OK
-      x-ratelimit-limit: 
+      X-Ratelimit-Limit: 
       - "5000"
-      etag: 
+      Etag: 
       - "\"d751713988987e9331980363e24189ce\""
-      x-ratelimit-remaining: 
-      - "4997"
-      content-length: 
+      X-Ratelimit-Remaining: 
+      - "4979"
+      Content-Length: 
       - "2"
-    body: "[]"
-    http_version: "1.1"
+    body: 
+      encoding: US-ASCII
+      string: "[]"
+    http_version: 
+  recorded_at: Sat, 10 Mar 2012 23:16:26 GMT
+recorded_with: VCR 2.0.0

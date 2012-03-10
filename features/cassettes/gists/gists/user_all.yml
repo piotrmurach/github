@@ -1,48 +1,58 @@
 --- 
-- !ruby/struct:VCR::HTTPInteraction 
-  request: !ruby/struct:VCR::Request 
-    method: :get
-    uri: https://api.github.com:443/users/peter-murach/gists
+http_interactions: 
+- request: 
+    method: get
+    uri: https://api.github.com/users/peter-murach/gists
     body: 
+      encoding: US-ASCII
+      string: ""
     headers: 
-      accept-encoding: 
+      Accept-Encoding: 
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response: !ruby/struct:VCR::Response 
-    status: !ruby/struct:VCR::ResponseStatus 
+      Accept: 
+      - "*/*"
+      User-Agent: 
+      - Ruby
+  response: 
+    status: 
       code: 200
       message: OK
     headers: 
-      server: 
-      - nginx/1.0.4
-      date: 
-      - Sat, 04 Feb 2012 14:18:07 GMT
-      content-type: 
+      Server: 
+      - nginx/1.0.12
+      Date: 
+      - Sat, 10 Mar 2012 23:16:26 GMT
+      Content-Type: 
       - application/json; charset=utf-8
-      transfer-encoding: 
+      Transfer-Encoding: 
       - chunked
-      connection: 
+      Connection: 
       - keep-alive
-      status: 
+      Status: 
       - 200 OK
-      x-ratelimit-limit: 
+      X-Ratelimit-Remaining: 
+      - "4980"
+      X-Ratelimit-Limit: 
       - "5000"
-      etag: 
-      - "\"0ea1f9dcbdf7ecbe9127a6a7c38519f9\""
-      x-ratelimit-remaining: 
-      - "4999"
-      content-encoding: 
+      Etag: 
+      - "\"3b1871b005e54550b919c427e1950e05\""
+      Content-Encoding: 
       - gzip
-    body: !binary |
-      H4sIAAAAAAAAA4VS246bMBD9lchS3whgMASQVtu+9Av61KqKBnsgVg1Yvmwv
-      q/x7h022m02lROLBNnPmzDlnvj2z6Azr2CEE67ssA6vTUYdD7FO5TNmoffAZ
-      L8uGtzVLmEIvnbZBLzOBPoUA8qDncfMETkNv0G/CshnN0oPZzDChtyCRcDb2
-      RkvWBRcxYYOmStY9M7kMA55b/g+jgvDbIhEF/BUya0DP1MvrP/RW7vJTo5WG
-      Sm63SpiBeYwwUukcjUmYg5/799JXrZfaqeJVeTbkA29qjm2zK3e8HRqhZD+s
-      F6lEjmXNe17WQ53dHuN4TMjpydxhfvObMphwDmQWqY1WQUC1h0B6i5zzLX15
-      +aUouqrtxO4rmUPZ7S0JPDPQlUK9Vnbuv4olSPTo1jBuLsJa5DOLAd12io5i
-      JyQ8QQB3JcajjA7T0Z3+vqzR6ZgNfSFaVVW1gHxoZAV5X7eYqx1XVdOK9lE9
-      /NvDQjQppvADJtDpjCED7zH4i4A+FJ/1RIl6OryyXZ63XOSpncfVlfMwe63I
-      untjEMAsI+1ax64Er3AhRMkLCvJktT+8Wf3xyujuvdEv5BfZOrwT5/H7Xwxs
-      RfCgAwAA
+    body: 
+      encoding: ASCII-8BIT
+      string: !binary |
+        H4sIAAAAAAAAA4VS246bMBD9lchS3wjGYAggVW1f+gV9alVFAx7AqgHLNtvL
+        Kv/eYUO02Wy7kXgYD2fOzJkz3x6ZQt86bYOeJ1azTyFAO+ip3z2A09AY9Lsw
+        73ozN2B2E4zoLbTIIrZYBQHVEQKVpYkQe/qS7Eua1nlVy8NXwrTzOOIUPKuT
+        iHWayFj9SNmuw63ra2YChN8WiTTgr8CtAT0R1Vq9tqf82/URc/DzuDhDyCEE
+        62vOe+1D3OswLE1MM3FCcJFlpagK3iWdKAuBVXnIDqLqSqnaplsfrZIJZoVo
+        RFZ0Bb/X1sDUL9DThNNiTMS8/kNxdkhOp4hR86Ol9DYYPf8x1jbSOikpHsJ4
+        gf9Px1ZA4DO/H575P96Irl+ytw7v2meXxuiW1cEtSIZ7dKt98AAB3M2GPbaL
+        w7h3579PWz6HvGtSWak8LyQkXdnmkDRFhYk6CJWXlaw+qPcXfZDKMsYYfsAI
+        Op4wcPAeg7/y7l36WY+0ZU/Bpdt1vBcyie3U007M3NPp1MxiQLcfF0eXvR7u
+        i9MAq68vYxXp+U2FVqyWUmYipUVvCo9rkt3Txsj6J+CzU2+2Xz3zl9Nkp+9/
+        ATnFaK+gAwAA
 
-    http_version: "1.1"
+    http_version: 
+  recorded_at: Sat, 10 Mar 2012 23:16:26 GMT
+recorded_with: VCR 2.0.0

@@ -1,202 +1,154 @@
 --- 
-- !ruby/struct:VCR::HTTPInteraction 
-  request: !ruby/struct:VCR::Request 
-    method: :get
-    uri: https://api.github.com:443/repos/peter-murach/github/teams
+http_interactions: 
+- request: 
+    method: get
+    uri: https://api.github.com/repos/peter-murach/github/tags
     body: 
+      encoding: US-ASCII
+      string: ""
     headers: 
-      accept-encoding: 
+      Accept-Encoding: 
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response: !ruby/struct:VCR::Response 
-    status: !ruby/struct:VCR::ResponseStatus 
-      code: 404
-      message: Not Found
-    headers: 
-      server: 
-      - nginx/1.0.4
-      date: 
-      - Tue, 03 Jan 2012 16:21:26 GMT
-      content-type: 
-      - application/json; charset=utf-8
-      transfer-encoding: 
-      - chunked
-      connection: 
-      - keep-alive
-      status: 
-      - 404 Not Found
-      x-ratelimit-limit: 
-      - "5000"
-      etag: 
-      - "\"e66a7a6c91e2c26803f3f49feb7a883f\""
-      x-ratelimit-remaining: 
-      - "4987"
-      content-encoding: 
-      - gzip
-    body: !binary |
-      H4sIAAAAAAAAA6tWyk0tLk5MT1WyUvLLL1Fwyy/NS1GqBQB8+Ys1FwAAAA==
-
-    http_version: "1.1"
-- !ruby/struct:VCR::HTTPInteraction 
-  request: !ruby/struct:VCR::Request 
-    method: :get
-    uri: https://api.github.com:443/repos/peter-murach/github/tags
-    body: 
-    headers: 
-      accept-encoding: 
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response: !ruby/struct:VCR::Response 
-    status: !ruby/struct:VCR::ResponseStatus 
+      Accept: 
+      - "*/*"
+      User-Agent: 
+      - Ruby
+  response: 
+    status: 
       code: 200
       message: OK
     headers: 
-      server: 
-      - nginx/1.0.4
-      date: 
-      - Tue, 03 Jan 2012 16:21:40 GMT
-      content-type: 
+      Server: 
+      - nginx/1.0.12
+      Date: 
+      - Sat, 10 Mar 2012 23:12:34 GMT
+      Content-Type: 
       - application/json; charset=utf-8
-      transfer-encoding: 
+      Transfer-Encoding: 
       - chunked
-      connection: 
+      Connection: 
       - keep-alive
-      status: 
+      Status: 
       - 200 OK
-      x-ratelimit-limit: 
+      X-Ratelimit-Limit: 
       - "5000"
-      etag: 
-      - "\"6fce6d04509cf0003c528b9c75d705b1\""
-      x-ratelimit-remaining: 
-      - "4986"
-      content-encoding: 
+      Etag: 
+      - "\"66879d03534495890d14f08c5d333611\""
+      X-Ratelimit-Remaining: 
+      - "4992"
+      Content-Encoding: 
       - gzip
-    body: !binary |
-      H4sIAAAAAAAAA63WwW7bMAwG4HfxuUskUSKlvMowDCQlLgGaNUjSHVb03Sej
-      QdYaO3iorkF+mv5Aif76Mv0+nIQfH78/nx+n3bS/Xk+X3Xb743DdP8tGn47b
-      U7u285fj85l1f/t9ewttf7kNbPL0MF35/P9VbqG/VfrjjofrtHuZPnbDp8Pm
-      XUfndnq6/LOvtwKXrSVwDiqJcYGUiV0qrpbAxkyKQq1pSqi988ue+3uvDrw+
-      TD/52Hrk9u6vDyMMyxDDucoww5QlO+8qgoYWqXKsqlIzWw7RIIQGouLsbrg6
-      sDAs0xhDP8RwrjLMsIBgLJ4YPVSJiT2rz0ktYHbMztVcKtb5BL3N4erAwtAP
-      MgxDDOcqwwybEVJuIVg2ACFALuQZSsotK/XTDQSF6G64OrAwDIMMYYjhXGWY
-      oWoH1MYRinhonIyEog+OY67SEgnX/ge+G64OLAxhkGEcYjhXGWaIGtFLKhHZ
-      ecU+kDma8+bFCfqgmLWhuvn+eDvLqwMLwzjIMA0xnKsMM6QWUFoMEtkpasoF
-      nMcY2CepoWFS6Rsn4t1wdWBhmAYZzp18/ttmrjLMENVaAmvYF3BOSZKlWlIR
-      MDKoSLFS9Y3ruzlcGVgY4hDDEVt56E5OVLN4M2CfizNo0i9Bctx3iy8WPVgs
-      tbDc/VYHPviN2sjzXvv8BM5Vhk1gIsgVTRS9ldqU+hYWtn4Hai5U+/dhCbVP
-      5jvBlYHFBNL0+u0Pc7n/vKMMAAA=
-
-    http_version: "1.1"
-- !ruby/struct:VCR::HTTPInteraction 
-  request: !ruby/struct:VCR::Request 
-    method: :get
-    uri: https://api.github.com:443/users/peter-murach/repos
     body: 
+      encoding: ASCII-8BIT
+      string: !binary |
+        H4sIAAAAAAAAA62Y3W4bOQyF38XX7ZgU9ZtXKYqFSEmbAElrOE4vWuTdl8IE
+        41lgL2YR3kVBzrHy4VAk/e3P6ffThevz819v1+fTw+nxdru8PpzPfz/dHt94
+        kZ8v50u/9evXl7drlceP358/ROdfsNCST19Ot3r9/y4forvLj/rS9RKbq378
+        y9Pt9PDn9O/b1cvTsrvhtV9+vv7nPVeD1/MIBEAt8aiFQk4VQoFWXB21Jomc
+        epcQouh/8vpY9QqHBe/vXywYFhOG02XPcJ7NGIbMGRBaJHHdp1Z9E+GW68jO
+        D3KuEwvD2BgeFpgw9AsYMFxd7gzXsxnDEgQpOMgJ0TukFLOU3JwIUVOcEXoP
+        xLQxPCwwYUgLGjBcXfY5nK52DImjL5hqRGrsQ8UqmIMMFzPUCtByabHNV2mt
+        5XJUYMLQmzBcXfY5NGU4OMXmHffGHAZTIc1l9dC1kj3UoD8XJjcr6uM9PCow
+        YUiLM8nhdNnncJ7NcthHiil350YeRJwo1pKwUgm5Z0naZShRSWljeFhgwtCb
+        MFxd9jk0ZQicJJeO+iyCNpMBjkN0joSRnWiDSd4Tt74xPCwwYUjLfIk/P9tM
+        l30O59kshyIaQunVU2GkXsNInDw6qD437iFxbfoHdWN4WGDC0JswXF32OTRl
+        iNLyCAnGkIQjZq/IlKqH5qDog4igM44LvDE8LDBhSIs3yeF02edwns1yGMVH
+        5FB8rIAS9WHMfgAOZOCITnTU6VFg9rG1pxwWmDD0JgxXl30OTRl2yuhqK631
+        7rKuJl2Hl9mMidAz6JAddU6Mu55yVGDCkJZgksPpss/hPJvlMHUXuetw4ytI
+        lJALAUbvKgZursegzQWaj1sODwtMGHoThqvLPoemDAeIbnSiYXN9gE8jti6g
+        M41O3KmHVmNIGODO8LDAhCEt85M/35enyz6H82yWwyhDd7nRoy7GOQSds0Mr
+        QcfqkQZpDfuWGvbadu/hQYEJQ4tNb3rc+ZluKCG1zDgGVcwFBnXWcSZB1Ukb
+        y/BIw5dW6r0jHxaY0PMmCVxd9lVsmkAdpyNLB8yok6F2FSrYsMaRRYpWtW7K
+        JBLuCTwsMGFIy+xjn6/i6bKv4nk2q+KQKLc4WCKOoo9g0s2O69B5RheX1PS7
+        r+KaVvdWxYcF7+/f/wFBybeMfxUAAA==
+
+    http_version: 
+  recorded_at: Sat, 10 Mar 2012 23:12:34 GMT
+- request: 
+    method: get
+    uri: https://api.github.com/users/peter-murach/repos
+    body: 
+      encoding: US-ASCII
+      string: ""
     headers: 
-      accept-encoding: 
+      Accept-Encoding: 
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response: !ruby/struct:VCR::Response 
-    status: !ruby/struct:VCR::ResponseStatus 
+      Accept: 
+      - "*/*"
+      User-Agent: 
+      - Ruby
+  response: 
+    status: 
       code: 200
       message: OK
     headers: 
-      server: 
-      - nginx/1.0.4
-      date: 
-      - Tue, 03 Jan 2012 16:25:33 GMT
-      content-type: 
+      Server: 
+      - nginx/1.0.12
+      Date: 
+      - Sat, 10 Mar 2012 23:12:35 GMT
+      Content-Type: 
       - application/json; charset=utf-8
-      transfer-encoding: 
+      Transfer-Encoding: 
       - chunked
-      connection: 
+      Connection: 
       - keep-alive
-      status: 
+      Status: 
       - 200 OK
-      x-ratelimit-limit: 
+      X-Ratelimit-Limit: 
       - "5000"
-      etag: 
-      - "\"7be13ab6007576b15b8f5d0d907a3fb2\""
-      x-ratelimit-remaining: 
-      - "4985"
-      content-encoding: 
+      Etag: 
+      - "\"e031bfd575ce2da4b96e89ccb6296347\""
+      X-Ratelimit-Remaining: 
+      - "4991"
+      Content-Encoding: 
       - gzip
-    body: !binary |
-      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
-
-    http_version: "1.1"
-- !ruby/struct:VCR::HTTPInteraction 
-  request: !ruby/struct:VCR::Request 
-    method: :get
-    uri: https://api.github.com:443/user/repos
     body: 
-    headers: 
-      accept-encoding: 
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response: !ruby/struct:VCR::Response 
-    status: !ruby/struct:VCR::ResponseStatus 
-      code: 401
-      message: Unauthorized
-    headers: 
-      server: 
-      - nginx/1.0.4
-      date: 
-      - Sat, 21 Jan 2012 17:44:53 GMT
-      content-type: 
-      - application/json; charset=utf-8
-      connection: 
-      - keep-alive
-      status: 
-      - 401 Unauthorized
-      x-ratelimit-limit: 
-      - "5000"
-      www-authenticate: 
-      - Basic realm="GitHub"
-      etag: 
-      - "\"99852aefab6a0988db8f62bf2fb96f49\""
-      x-ratelimit-remaining: 
-      - "4999"
-      content-length: 
-      - "37"
-    body: "{\"message\":\"Requires authentication\"}"
-    http_version: "1.1"
+      encoding: ASCII-8BIT
+      string: !binary |
+        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
+        NILkDLEtR6jTAM788x9m7VDe7TUAAA==
+
+    http_version: 
+  recorded_at: Sat, 10 Mar 2012 23:12:35 GMT
+recorded_with: VCR 2.0.0
