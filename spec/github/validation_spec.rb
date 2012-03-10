@@ -1,19 +1,20 @@
 require 'spec_helper'
 
-describe Github::Validation, :type => :base do
+describe Github::Validation do
+  let(:github) { Github.new }
 
   context '#_validate_inputs' do
-    before do
-      @required = ['param_a', 'param_c']
-      @provided = { 'param_a' => true, 'param_c' => true }
-    end
+    let(:required) { ['param_a', 'param_c'] }
+    let(:provided) { { 'param_a' => true, 'param_c' => true } }
 
     it 'detect missing parameter' do
-      github._validate_inputs(@required, @provided.except('param_c')).should be_false
+      expect {
+      github._validate_inputs(required, provided.except('param_c')).should be_false
+      }.to raise_error(Github::Error::RequiredParams)
     end
 
     it 'asserts correct required parameters' do
-      github._validate_inputs(@required, @provided).should be_true
+      github._validate_inputs(required, provided).should be_true
     end
   end
 

@@ -12,9 +12,13 @@ module Github
     # Ensures that esential input parameters are present before request is made
     #
     def _validate_inputs(required, provided)
-      required.all? do |key|
+      result = required.all? do |key|
         provided.has_deep_key? key
       end
+      if !result
+        raise Github::Error::RequiredParams.new(provided, required)
+      end
+      result
     end
 
     # Ensures that esential arguments are present before request is made
