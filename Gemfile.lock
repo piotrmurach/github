@@ -71,7 +71,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (~> 1.1.0)
+  bundler
   cucumber
   github_api!
   growl

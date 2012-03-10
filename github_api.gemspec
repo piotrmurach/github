@@ -22,7 +22,6 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'rspec', '~> 2.8.0'
   gem.add_development_dependency 'cucumber', '>= 0'
   gem.add_development_dependency 'yajl-ruby', '~> 1.1.0'
-  gem.add_development_dependency 'bundler', '~> 1.1.0'
   gem.add_development_dependency 'webmock', '~> 1.8.0'
   gem.add_development_dependency 'vcr', '~> 2.0.0'
   gem.add_development_dependency 'simplecov', '~> 0.6.1'
@@ -30,4 +29,5 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'guard-rspec', '0.5.7'
   gem.add_development_dependency 'guard-cucumber', '0.7.4'
   gem.add_development_dependency 'rake'
+  gem.add_development_dependency 'bundler'
 end
