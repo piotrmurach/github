@@ -29,4 +29,5 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'guard', '~> 0.8.8'
   gem.add_development_dependency 'guard-rspec', '0.5.7'
   gem.add_development_dependency 'guard-cucumber', '0.7.4'
+  gem.add_development_dependency 'rake', '0.9.2'
 end
