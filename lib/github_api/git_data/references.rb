@@ -83,8 +83,7 @@ module Github
         _normalize_params_keys params
         _filter_params_keys VALID_REF_PARAM_NAMES, params
         _validate_reference params['ref']
-
-        raise ArgumentError, "Required params are: ref, sha" unless _validate_inputs(%w[ ref sha ], params)
+        _validate_inputs(%w[ ref sha ], params)
 
         post("/repos/#{user}/#{repo}/git/refs", params)
       end
@@ -109,8 +108,7 @@ module Github
         _validate_reference ref
         _normalize_params_keys(params)
         _filter_params_keys(VALID_REF_PARAM_NAMES, params)
-
-        raise ArgumentError, "Required params are: sha" unless _validate_inputs(%w[ sha ], params)
+        _validate_inputs(%w[ sha ], params)
 
         patch("/repos/#{user}/#{repo}/git/refs/#{ref}", params)
       end

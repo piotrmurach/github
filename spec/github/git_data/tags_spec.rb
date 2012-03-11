@@ -1,7 +1,11 @@
+# encoding: utf-8
+
 require 'spec_helper'
 
-describe Github::GitData::Tags, :type => :base do
-
+describe Github::GitData::Tags do
+  let(:github) { Github.new }
+  let(:user) { 'peter-murach' }
+  let(:repo) { 'github' }
   let(:sha) { "940bd336248efae0f9ee5bc7b2d5c985887b16ac" }
 
   it { described_class::VALID_TAG_PARAM_NAMES.should_not be_nil }
@@ -97,7 +101,6 @@ describe Github::GitData::Tags, :type => :base do
         stub_post("/repos/#{user}/#{repo}/git/tags").
           with(inputs).
           to_return(:body => fixture('git_data/tag.json'), :status => 404, :headers => {:content_type => "application/json; charset=utf-8"})
-
       end
 
       it "should faile to retrieve resource" do

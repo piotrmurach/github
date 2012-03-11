@@ -1,7 +1,11 @@
+# encoding: utf-8
+
 require 'spec_helper'
 
-describe Github::GitData::Trees, :type => :base do
-
+describe Github::GitData::Trees do
+  let(:github) { Github.new }
+  let(:user) { 'peter-murach' }
+  let(:repo) { 'github' }
   let(:sha) { "9fb037999f264ba9a7fc6274d15fa3ae2ab98312" }
 
   it { described_class::VALID_TREE_PARAM_NAMES.should_not be_nil }
@@ -96,7 +100,7 @@ describe Github::GitData::Trees, :type => :base do
       it "should fail to create resource if 'content' input is missing" do
         expect {
           github.git_data.create_tree user, repo, inputs.except('tree')
-        }.to raise_error(ArgumentError)
+        }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should create resource successfully" do

@@ -1,7 +1,11 @@
+# encoding: utf-8
+
 require 'spec_helper'
 
-describe Github::GitData::Blobs, :type => :base do
-
+describe Github::GitData::Blobs do
+  let(:github) { Github.new }
+  let(:user) { 'peter-murach' }
+  let(:repo) { 'github' }
   let(:sha) { "3a0f86fb8db8eea7ccbb9a95f325ddbedfb25e15" }
 
   it { described_class::VALID_BLOB_PARAM_NAMES.should_not be_nil }
@@ -69,13 +73,13 @@ describe Github::GitData::Blobs, :type => :base do
       it "should fail to create resource if 'content' input is missing" do
         expect {
           github.git_data.create_blob user, repo, inputs.except('content')
-        }.to raise_error(ArgumentError)
+        }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should fail to create resource if 'encoding' input is missing" do
         expect {
           github.git_data.create_blob user, repo, inputs.except('encoding')
-        }.to raise_error(ArgumentError)
+        }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should create resource successfully" do

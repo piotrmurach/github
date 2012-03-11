@@ -42,8 +42,7 @@ module Github
 
         _normalize_params_keys(params)
         _filter_params_keys(VALID_BLOB_PARAM_NAMES, params)
-
-        raise ArgumentError, "Required params are: #{VALID_BLOB_PARAM_NAMES.join(', ')}" unless _validate_inputs(VALID_BLOB_PARAM_NAMES, params)
+        _validate_inputs(VALID_BLOB_PARAM_NAMES, params)
 
         post("/repos/#{user}/#{repo}/git/blobs", params)
       end

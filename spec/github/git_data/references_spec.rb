@@ -1,9 +1,15 @@
+# encoding: utf-8
+
 require 'spec_helper'
 
-describe Github::GitData::References, :type => :base do
-
+describe Github::GitData::References do
+  let(:github) { Github.new }
+  let(:user) { 'peter-murach' }
+  let(:repo) { 'github' }
   let(:ref) { "heads/master" }
   let(:sha) { "3a0f86fb8db8eea7ccbb9a95f325ddbedfb25e15" }
+
+  after { github.user, github.repo = nil, nil }
 
   it { described_class::VALID_REF_PARAM_NAMES.should_not be_nil }
   it { described_class::VALID_REF_PARAM_VALUES.should_not be_nil }
@@ -23,7 +29,6 @@ describe Github::GitData::References, :type => :base do
       end
 
       it "should fail to get resource without username" do
-        github.user, github.repo = nil, nil
         expect { github.git_data.references }.to raise_error(ArgumentError)
       end
 
@@ -161,7 +166,7 @@ describe Github::GitData::References, :type => :base do
       it "should fail to create resource if 'sha' input is missing" do
         expect {
           github.git_data.create_reference user, repo, inputs.except('sha')
-        }.to raise_error(ArgumentError)
+        }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should fail to create resource if 'ref' is wrong" do
@@ -217,13 +222,13 @@ describe Github::GitData::References, :type => :base do
           to_return(:body => fixture('git_data/reference.json'), :status => 201, :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
-      it "should fail to create resource if 'sha' input is missing" do
+      it "should fail to update resource if 'sha' input is missing" do
         expect {
           github.git_data.update_reference user, repo, ref, inputs.except('sha')
-        }.to raise_error(ArgumentError)
+        }.to raise_error(Github::Error::RequiredParams)
       end
 
-      it "should fail to create resource if 'ref' is wrong" do
+      it "should fail to update resource if 'ref' is wrong" do
         expect {
           github.git_data.update_reference user, repo, 'branch', inputs
         }.to raise_error(ArgumentError)
@@ -245,7 +250,7 @@ describe Github::GitData::References, :type => :base do
       end
     end
 
-    context "failed to create resource" do
+    context "failed to update resource" do
       before do
         stub_patch("/repos/#{user}/#{repo}/git/refs/#{ref}").with(inputs).
           to_return(:body => fixture('git_data/reference.json'), :status => 404, :headers => {:content_type => "application/json; charset=utf-8"})

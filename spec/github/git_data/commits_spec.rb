@@ -1,7 +1,11 @@
+# encoding: utf-8
+
 require 'spec_helper'
 
 describe Github::GitData::Commits, :type => :base do
-
+  let(:github) { Github.new }
+  let(:user) { 'peter-murach' }
+  let(:repo) { 'github' }
   let(:sha) { "3a0f86fb8db8eea7ccbb9a95f325ddbedfb25e15" }
 
   it { described_class::VALID_COMMIT_PARAM_NAMES.should_not be_nil }
@@ -17,7 +21,9 @@ describe Github::GitData::Commits, :type => :base do
       end
 
       it "should fail to get resource without sha" do
-        expect { github.git_data.commit(user, repo, nil)}.to raise_error(ArgumentError)
+        expect {
+          github.git_data.commit(user, repo, nil)
+        }.to raise_error(ArgumentError)
       end
 
       it "should get the resource" do
@@ -77,19 +83,19 @@ describe Github::GitData::Commits, :type => :base do
       it "should fail to create resource if 'message' input is missing" do
         expect {
           github.git_data.create_commit user, repo, inputs.except('message')
-        }.to raise_error(ArgumentError)
+        }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should fail to create resource if 'tree' input is missing" do
         expect {
           github.git_data.create_commit user, repo, inputs.except('tree')
-        }.to raise_error(ArgumentError)
+        }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should fail to create resource if 'parents' input is missing" do
         expect {
           github.git_data.create_commit user, repo, inputs.except('parents')
-        }.to raise_error(ArgumentError)
+        }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should create resource successfully" do
@@ -112,7 +118,6 @@ describe Github::GitData::Commits, :type => :base do
       before do
         stub_post("/repos/#{user}/#{repo}/git/commits").with(inputs).
           to_return(:body => fixture('git_data/commit.json'), :status => 404, :headers => {:content_type => "application/json; charset=utf-8"})
-
       end
 
       it "should faile to retrieve resource" do

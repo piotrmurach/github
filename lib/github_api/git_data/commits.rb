@@ -74,8 +74,7 @@ module Github
         _validate_user_repo_params(user, repo) unless user? && repo?
         _normalize_params_keys(params)
         _filter_params_keys(VALID_COMMIT_PARAM_NAMES, params)
-
-        raise ArgumentError, "Required params are: message, tree, parents" unless _validate_inputs(REQUIRED_COMMIT_PARAMS, params)
+        _validate_inputs(REQUIRED_COMMIT_PARAMS, params)
 
         post("/repos/#{user}/#{repo}/git/commits", params)
       end

@@ -86,7 +86,7 @@ module Github
         _validate_user_repo_params(user, repo) unless user? && repo?
         _normalize_params_keys(params)
 
-        raise ArgumentError, "Required param: 'tree'" unless _validate_inputs(%w[ tree ], params)
+        _validate_inputs(%w[ tree ], params)
 
         _filter_params_keys(VALID_TREE_PARAM_NAMES, params['tree'])
         _validate_params_values(VALID_TREE_PARAM_VALUES, params['tree'])
