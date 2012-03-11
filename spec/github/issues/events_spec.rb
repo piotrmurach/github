@@ -1,7 +1,14 @@
+# encoding: utf-8
+
 require 'spec_helper'
 
-describe Github::Issues::Events, :type => :base do
+describe Github::Issues::Events do
+  let(:github) { Github.new }
+  let(:user)   { 'peter-murach' }
+  let(:repo)   { 'github' }
   let(:issue_id) { 1 }
+
+  after { github.user, github.repo, github.oauth_token = nil, nil, nil }
 
   describe 'events' do
     it { github.issues.should respond_to :events }
@@ -17,7 +24,6 @@ describe Github::Issues::Events, :type => :base do
         end
 
         it "should fail to get resource without username" do
-          github.user, github.repo = nil, nil
           expect { github.issues.events }.to raise_error(ArgumentError)
         end
 
@@ -60,7 +66,6 @@ describe Github::Issues::Events, :type => :base do
           }.to raise_error(Github::Error::NotFound)
         end
       end
-
     end # without issue_id
 
     context 'with issue_id' do

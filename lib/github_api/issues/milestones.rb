@@ -85,8 +85,7 @@ module Github
 
         _normalize_params_keys(params)
         _filter_params_keys(VALID_MILESTONE_INPUTS, params)
-
-        raise ArgumentError, "Required params are: :title" unless _validate_inputs(%w[ title ], params)
+        _validate_inputs(%w[ title ], params)
 
         post("/repos/#{user}/#{repo}/milestones", params)
       end
@@ -114,8 +113,7 @@ module Github
 
         _normalize_params_keys(params)
         _filter_params_keys(VALID_MILESTONE_INPUTS, params)
-
-        raise ArgumentError, "Required params are: :title" unless _validate_inputs(%w[ title ], params)
+        _validate_inputs(%w[ title ], params)
 
         patch("/repos/#{user}/#{repo}/milestones/#{milestone_id}", params)
       end

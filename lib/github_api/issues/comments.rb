@@ -70,7 +70,7 @@ module Github
         _normalize_params_keys(params)
         # _merge_mime_type(:issue_comment, params)
         _filter_params_keys(VALID_ISSUE_COMMENT_PARAM_NAME, params)
-        raise ArgumentError, "Required params are: :body" unless _validate_inputs(%w[ body ], params)
+        _validate_inputs(%w[ body ], params)
 
         post("/repos/#{user}/#{repo}/issues/#{issue_id}/comments", params)
       end
@@ -94,7 +94,7 @@ module Github
         _normalize_params_keys(params)
         # _merge_mime_type(:issue_comment, params)
         _filter_params_keys(VALID_ISSUE_COMMENT_PARAM_NAME, params)
-        raise ArgumentError, "Required params are: :body" unless _validate_inputs(%w[ body ], params)
+        _validate_inputs(%w[ body ], params)
 
         patch("/repos/#{user}/#{repo}/issues/comments/#{comment_id}")
       end

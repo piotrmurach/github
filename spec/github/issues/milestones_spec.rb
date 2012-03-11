@@ -1,6 +1,13 @@
+# encoding: utf-8
+
 require 'spec_helper'
 
-describe Github::Issues::Milestones, :type => :base do
+describe Github::Issues::Milestones do
+  let(:github) { Github.new }
+  let(:user)   { 'peter-murach' }
+  let(:repo)   { 'github' }
+
+  after { github.user, github.repo, github.oauth_token = nil, nil, nil }
 
   it { described_class::VALID_MILESTONE_OPTIONS.should_not be_nil }
   it { described_class::VALID_MILESTONE_INPUTS.should_not be_nil }
@@ -127,7 +134,7 @@ describe Github::Issues::Milestones, :type => :base do
       it "should fail to create resource if 'title' input is missing" do
         expect {
           github.issues.create_milestone user, repo, inputs.except('title')
-        }.to raise_error(ArgumentError)
+        }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should create resource successfully" do
@@ -181,7 +188,7 @@ describe Github::Issues::Milestones, :type => :base do
       it "should fail to create resource if 'title' input is missing" do
         expect {
           github.issues.update_milestone user, repo, milestone_id, inputs.except('title')
-        }.to raise_error(ArgumentError)
+        }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should update resource successfully" do

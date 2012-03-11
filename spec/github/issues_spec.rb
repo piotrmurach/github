@@ -3,11 +3,12 @@
 require 'spec_helper'
 
 describe Github::Issues do
-
   let(:issues_api) { Github::Issues }
   let(:github) { Github.new }
   let(:user)   { 'peter-murach' }
   let(:repo)   { 'github' }
+
+  after { github.user, github.repo, github.oauth_token = nil, nil, nil }
 
   describe 'modules inclusion' do
     it { issues_api.included_modules.should include Github::Issues::Comments }
@@ -193,7 +194,7 @@ describe Github::Issues do
       it "should fail to create resource if 'title' input is missing" do
         expect {
           github.issues.create_issue user, repo, inputs.except('title')
-        }.to raise_error(ArgumentError)
+        }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should create resource successfully" do
@@ -248,7 +249,6 @@ describe Github::Issues do
       end
 
       it "should fail to edit without 'user/repo' parameters" do
-        github.user, github.repo = nil, nil
         expect {
           github.issues.edit_issue nil, repo, issue_id
         }.to raise_error(ArgumentError)

@@ -171,8 +171,7 @@ module Github
       _normalize_params_keys(params)
       # _merge_mime_type(:issue, params)
       _filter_params_keys(VALID_ISSUE_PARAM_NAMES, params)
-
-      raise ArgumentError, "Required params are: :title" unless _validate_inputs(%w[ title ], params)
+      _validate_inputs(%w[ title ], params)
 
       post("/repos/#{user}/#{repo}/issues", params)
     end

@@ -56,8 +56,7 @@ module Github
 
         _normalize_params_keys(params)
         _filter_params_keys(VALID_LABEL_INPUTS, params)
-
-        raise ArgumentError, "Required params are: :name, :color" unless _validate_inputs(VALID_LABEL_INPUTS, params)
+        _validate_inputs(VALID_LABEL_INPUTS, params)
 
         post("/repos/#{user}/#{repo}/labels", params)
       end
@@ -79,8 +78,7 @@ module Github
 
         _normalize_params_keys(params)
         _filter_params_keys(VALID_LABEL_INPUTS, params)
-
-        raise ArgumentError, "Required params are: :name, :color" unless _validate_inputs(VALID_LABEL_INPUTS, params)
+        _validate_inputs(VALID_LABEL_INPUTS, params)
 
         patch("/repos/#{user}/#{repo}/labels/#{label_id}", params)
       end

@@ -1,8 +1,15 @@
+# encoding: utf-8
+
 require 'spec_helper'
 
-describe Github::Issues::Comments, :type => :base do
+describe Github::Issues::Comments do
+  let(:github) { Github.new }
+  let(:user)   { 'peter-murach' }
+  let(:repo)   { 'github' }
   let!(:comment_id) { 1 }
   let!(:issue_id) { 1 }
+
+  after { github.user, github.repo, github.oauth_token = nil, nil, nil }
 
   it { described_class::VALID_ISSUE_COMMENT_PARAM_NAME.should_not be_nil }
 
@@ -128,7 +135,7 @@ describe Github::Issues::Comments, :type => :base do
       it "should fail to create resource if 'body' input is missing" do
         expect {
           github.issues.create_comment user, repo, issue_id, inputs.except('body')
-        }.to raise_error(ArgumentError)
+        }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should create resource successfully" do
@@ -177,7 +184,7 @@ describe Github::Issues::Comments, :type => :base do
       it "should fail to create resource if 'body' input is missing" do
         expect {
           github.issues.edit_comment user, repo, comment_id, inputs.except('body')
-        }.to raise_error(ArgumentError)
+        }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should create resource successfully" do

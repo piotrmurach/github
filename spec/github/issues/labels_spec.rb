@@ -1,6 +1,11 @@
 require 'spec_helper'
 
-describe Github::Issues::Labels, :type => :base do
+describe Github::Issues::Labels do
+  let(:github) { Github.new }
+  let(:user)   { 'peter-murach' }
+  let(:repo)   { 'github' }
+
+  after { github.user, github.repo, github.oauth_token = nil, nil, nil }
 
   it { described_class::VALID_LABEL_INPUTS.should_not be_nil }
 
@@ -123,13 +128,13 @@ describe Github::Issues::Labels, :type => :base do
       it "should fail to create resource if 'name' input is missing" do
         expect {
           github.issues.create_label user, repo, inputs.except('name')
-        }.to raise_error(ArgumentError)
+        }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should fail to create resource if 'color' input is missing" do
         expect {
           github.issues.create_label user, repo, inputs.except('color')
-        }.to raise_error(ArgumentError)
+        }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should create resource successfully" do
@@ -181,13 +186,13 @@ describe Github::Issues::Labels, :type => :base do
       it "should fail to create resource if 'name' input is missing" do
         expect {
           github.issues.update_label user, repo, label_id, inputs.except('name')
-        }.to raise_error(ArgumentError)
+        }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should fail to create resource if 'color' input is missing" do
         expect {
           github.issues.update_label user, repo, label_id, inputs.except('color')
-        }.to raise_error(ArgumentError)
+        }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should update resource successfully" do
@@ -274,13 +279,14 @@ describe Github::Issues::Labels, :type => :base do
 
       it "should fail to get resource without issue_id" do
         expect {
-          github.issues.labels_for user, repo, nil 
+          github.issues.labels_for user, repo, nil
         }.to raise_error(ArgumentError)
       end
 
       it "should get the resources" do
         github.issues.labels_for user, repo, issue_id
-        a_get("/repos/#{user}/#{repo}/issues/#{issue_id}/labels").should have_been_made
+        a_get("/repos/#{user}/#{repo}/issues/#{issue_id}/labels").
+          should have_been_made
       end
 
       it "should return array of resources" do
