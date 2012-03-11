@@ -3,11 +3,11 @@ module SpecHelpers
 
     def self.included(base)
       base.class_eval do
-        let(:github) { Github.new }
-        let(:user)   { 'peter-murach' }
-        let(:repo)   { 'github' }
-        let(:org)   { 'github' }
-        let(:collaborator) { 'octocat' }
+        let!(:github) { Github.new }
+        let!(:user)   { 'peter-murach' }
+        let!(:repo)   { 'github' }
+        let!(:org)   { 'github' }
+        let!(:collaborator) { 'octocat' }
 
         before(:each) do
           github.login = nil
