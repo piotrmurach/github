@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require 'spec_helper'
 
 describe Github::Repos do
@@ -5,7 +7,7 @@ describe Github::Repos do
   let(:user) { 'peter-murach' }
   let(:repo) { 'github' }
 
-  after { github.user, github.repo = nil, nil }
+  after { reset_authentication_for github }
 
   describe "branches" do
     context "resource found" do

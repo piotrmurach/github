@@ -1,7 +1,8 @@
+# encoding: utf-8
+
 require 'spec_helper'
 
 describe Github::PagedRequest do
-
   it { described_class.constants.should include :FIRST_PAGE }
   it { described_class.constants.should include :PER_PAGE }
 

@@ -1,7 +1,8 @@
+# encoding: utf-8
+
 require 'spec_helper'
 
 describe Github::PageIterator do
-
   let(:link) {
     "<https://api.github.com/users/wycats/repos?page=4&per_page=20>; rel=\"next\", <https://api.github.com/users/wycats/repos?page=6&per_page=20>; rel=\"last\", <https://api.github.com/users/wycats/repos?page=1&per_page=20>; rel=\"first\", <https://api.github.com/users/wycats/repos?page=2&per_page=20>; rel=\"prev\""
   }
