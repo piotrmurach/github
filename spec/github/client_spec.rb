@@ -1,8 +1,11 @@
+# encoding: utf-8
+
 require 'spec_helper'
 
 describe Github::Client do
-
   let(:github) { Github.new }
+
+  after { reset_authentication_for github }
 
   it "should return Github::Gists instance" do
     github.gists.should be_a Github::Gists

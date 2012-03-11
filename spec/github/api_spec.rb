@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Github::API do
-
   let(:api) { Github::API.new }
   let(:repos) { Github::Repos }
 
@@ -30,8 +29,11 @@ describe Github::API do
   end
 
   context '_process_basic_auth' do
+    let(:github) { Github.new :basic_auth => 'login:password' }
+
+    after { reset_authentication_for github }
+
     it 'should parse authentication params' do
-      github = Github.new :basic_auth => 'login:password'
       github.login.should eq 'login'
       github.password.should eq 'password'
     end

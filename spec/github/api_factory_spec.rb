@@ -1,7 +1,8 @@
+# encoding: utf-8
+
 require 'spec_helper'
 
 describe Github::ApiFactory, :type => :base do
-
   context '#new' do
     it 'throws error if klass type is ommitted' do
       expect { described_class.new nil }.to raise_error(ArgumentError)

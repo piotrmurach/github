@@ -1,8 +1,8 @@
 require 'spec_helper'
 require 'github_api/core_ext/hash'
 
-describe Github::Filter, :type => :base do
-
+describe Github::Filter do
+  let(:github) { Github.new }
   let(:repos_instance) { Github::Repos.new }
   let(:block) {
     Proc.new do |repo|

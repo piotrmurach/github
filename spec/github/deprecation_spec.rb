@@ -1,7 +1,8 @@
+# encoding: utf-8
+
 require 'spec_helper'
 
 describe Github do
-
   let(:method) { 'create_repos'}
   let(:alt_method) { 'repos.create'}
 
