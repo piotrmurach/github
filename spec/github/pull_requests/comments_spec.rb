@@ -266,6 +266,6 @@ describe Github::PullRequests::Comments do
         github.pull_requests.delete_comment user, repo, comment_id
       }.to raise_error(Github::Error::NotFound)
     end
-  end # delete_gist
+  end # delete_comment
 
 end # Github::PullRequests::Comments

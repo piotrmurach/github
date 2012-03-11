@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Github::Response::Helpers do
-
   let(:env) { { :body => [1,2,3] } }
   let(:instance) { described_class.new }
 
@@ -14,5 +13,4 @@ describe Github::Response::Helpers do
     res = instance.on_complete(env)
     res[:body].should respond_to :env
   end
-
 end # Github::Response::Helpers

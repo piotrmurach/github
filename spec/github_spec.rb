@@ -1,12 +1,12 @@
-require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
+# encoding: utf-8
+
+require 'spec_helper'
 
 describe Github do
 
-  before do
-    subject.user = nil
-    subject.repo = nil
-    subject.oauth_token = nil
-    subject.basic_auth = nil
+  after do
+    subject.set_defaults
+    reset_authentication_for subject
   end
 
   it "should respond to 'new' message" do
@@ -22,7 +22,6 @@ describe Github do
   end
 
   describe "setting configuration options" do
-
     it "should return default adapter" do
       subject.adapter.should == Github::Configuration::DEFAULT_ADAPTER
     end

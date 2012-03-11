@@ -1,7 +1,8 @@
+# encoding: utf-8
+
 require 'spec_helper'
 
 describe Github::Authorizations do
-
   let(:github) { Github.new }
   let(:basic_auth) { 'login:password' }
 
