@@ -8,6 +8,8 @@ describe Github::GitData::Blobs do
   let(:repo) { 'github' }
   let(:sha) { "3a0f86fb8db8eea7ccbb9a95f325ddbedfb25e15" }
 
+  after { github.user, github.repo, github.oauth_token = nil, nil, nil }
+
   it { described_class::VALID_BLOB_PARAM_NAMES.should_not be_nil }
 
   describe "blob" do

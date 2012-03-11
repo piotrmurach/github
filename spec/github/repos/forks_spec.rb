@@ -5,7 +5,7 @@ describe Github::Repos::Forks do
   let(:user) { 'peter-murach' }
   let(:repo) { 'github' }
 
-  after { github.user, github.repo = nil, nil }
+  after { github.user, github.repo, github.oauth_token = nil, nil, nil }
 
   describe "forks" do
     it { github.repos.should respond_to :forks }

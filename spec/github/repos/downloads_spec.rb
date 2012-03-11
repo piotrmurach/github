@@ -7,7 +7,7 @@ describe Github::Repos::Downloads do
   let(:user) { 'peter-murach' }
   let(:repo) { 'github' }
 
-  after { github.user, github.repo = nil, nil }
+  after { github.user, github.repo, github.oauth_token = nil, nil, nil }
 
   it { described_class::VALID_DOWNLOAD_PARAM_NAMES.should_not be_nil }
   it { described_class::REQUIRED_PARAMS.should_not be_nil }

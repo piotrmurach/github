@@ -14,7 +14,7 @@ describe Github::Repos::PubSubHubbub do
     }
   }
 
-  after { github.user, github.oauth_token = nil, nil }
+  after { github.user, github.repo, github.oauth_token = nil, nil, nil }
 
   describe "subscribe" do
     context "success" do

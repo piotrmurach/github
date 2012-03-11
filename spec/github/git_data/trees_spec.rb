@@ -8,6 +8,8 @@ describe Github::GitData::Trees do
   let(:repo) { 'github' }
   let(:sha) { "9fb037999f264ba9a7fc6274d15fa3ae2ab98312" }
 
+  after { github.user, github.repo, github.oauth_token = nil, nil, nil }
+
   it { described_class::VALID_TREE_PARAM_NAMES.should_not be_nil }
 
   describe "tree" do

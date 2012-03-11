@@ -5,7 +5,7 @@ describe Github::Orgs::Members do
   let(:member) { 'peter-murach' }
   let(:org)    { 'github' }
 
-  after { github.user, github.repo = nil, nil }
+  after { github.user, github.repo, github.oauth_token = nil, nil, nil }
 
   describe "members" do
     context "resource found" do

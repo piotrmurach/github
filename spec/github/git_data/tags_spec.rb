@@ -8,6 +8,8 @@ describe Github::GitData::Tags do
   let(:repo) { 'github' }
   let(:sha) { "940bd336248efae0f9ee5bc7b2d5c985887b16ac" }
 
+  after { github.user, github.repo, github.oauth_token = nil, nil, nil }
+
   it { described_class::VALID_TAG_PARAM_NAMES.should_not be_nil }
 
   describe "tag" do

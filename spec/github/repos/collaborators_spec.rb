@@ -6,7 +6,7 @@ describe Github::Repos::Collaborators do
   let(:repo) { 'github' }
   let(:collaborator) { 'octocat' }
 
-  after { github.user, github.repo = nil, nil }
+  after { github.user, github.repo, github.oauth_token = nil, nil, nil }
 
   describe "collaborators" do
     context "resource found" do

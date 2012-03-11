@@ -8,7 +8,7 @@ describe Github::Orgs::Teams do
   let(:team)   { 'github' }
   let(:member) { 'github' }
 
-  after { github.repo, github.user = nil, nil }
+  after { github.user, github.repo, github.oauth_token = nil, nil, nil }
 
   describe "teams" do
     context "resource found" do
