@@ -8,7 +8,7 @@ describe Github::Orgs do
   let(:repo) { 'github' }
   let(:org) { 'github' }
 
-  after { github.user, github.repo = nil, nil }
+  after { github.user, github.repo, github.oauth_token = nil, nil, nil }
 
   describe "orgs" do
     context "resource found for a user" do

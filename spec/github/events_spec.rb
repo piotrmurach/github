@@ -1,10 +1,13 @@
+# encoding: utf-8
+
 require 'spec_helper'
 
 describe Github::Events do
-
   let(:github) { Github.new }
   let(:user)   { 'peter-murach' }
   let(:repo)   { 'github' }
+
+  after { github.user, github.repo, github.oauth_token = nil, nil, nil }
 
   describe "public" do
     context "resource found" do
@@ -61,7 +64,6 @@ describe Github::Events do
       end
 
       it "should fail to get resource without username" do
-        github.user, github.repo = nil, nil
         expect { github.events.repository nil, repo }.to raise_error(ArgumentError)
       end
 
@@ -114,7 +116,6 @@ describe Github::Events do
       end
 
       it "should fail to get resource without username" do
-        github.user, github.repo = nil, nil
         expect { github.events.issue nil, repo }.to raise_error(ArgumentError)
       end
 
@@ -167,7 +168,6 @@ describe Github::Events do
       end
 
       it "should fail to get resource without username" do
-        github.user, github.repo = nil, nil
         expect { github.events.network nil, repo }.to raise_error(ArgumentError)
       end
 

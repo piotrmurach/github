@@ -1,14 +1,12 @@
+# encoding: utf-8
+
 require 'spec_helper'
 
-describe Github::Users::Followers, :type => :base do
+describe Github::Users::Followers do
+  let(:github) { Github.new }
+  let(:user)   { 'peter-murach' }
 
-  before do
-    reset_authentication_for github
-  end
-
-  after do
-    reset_authentication_for github
-  end
+  after { reset_authentication_for github }
 
   describe "#followers" do
     context "resource found for a user" do
