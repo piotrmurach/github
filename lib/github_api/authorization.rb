@@ -17,7 +17,7 @@ module Github
     # Strategy token
     def auth_code
       _verify_client
-      @client.auth_code
+      client.auth_code
     end
 
     # Sends authorization request to GitHub.
@@ -33,13 +33,13 @@ module Github
     #
     def authorize_url(params = {})
       _verify_client
-      @client.auth_code.authorize_url(params)
+      client.auth_code.authorize_url(params)
     end
 
     # Makes request to token endpoint and retrieves access token value
     def get_token(authorization_code, params = {})
       _verify_client
-      @client.auth_code.get_token(authorization_code, params)
+      client.auth_code.get_token(authorization_code, params)
     end
 
     # Check whether authentication credentials are present

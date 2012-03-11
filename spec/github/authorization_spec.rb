@@ -1,26 +1,18 @@
+# encoding: utf-8
+
 require 'spec_helper'
 
 describe Github::Authorization do
-
   let(:client_id) { '234jl23j4l23j4l' }
   let(:client_secret) { 'asasd79sdf9a7asfd7sfd97s' }
   let(:code) { 'c9798sdf97df98ds'}
-  let(:github) { Github.new }
+  let(:github) {
+    Github.new :client_id => client_id, :client_secret => client_secret
+  }
 
-  it "should instantiate oauth2 instance" do
-    github.client.should be_a OAuth2::Client
-  end
-
-  it "should assign site from the options hash" do
-    github.client.site.should == 'https://github.com'
-  end
-
-  it "should assign 'authorize_url" do
-    github.client.authorize_url.should == 'https://github.com/login/oauth/authorize'
-  end
-
-  it "should assign 'token_url" do
-    github.client.token_url.should == 'https://github.com/login/oauth/access_token'
+  after do
+    github.client_id, github.client_secret = nil, nil
+    reset_authentication_for github
   end
 
   context '.client' do
@@ -29,18 +21,22 @@ describe Github::Authorization do
     it "should return OAuth2::Client instance" do
       github.client.should be_a OAuth2::Client
     end
+
+    it "should assign site from the options hash" do
+      github.client.site.should == 'https://github.com'
+    end
+
+    it "should assign 'authorize_url" do
+      github.client.authorize_url.should == 'https://github.com/login/oauth/authorize'
+    end
+
+    it "should assign 'token_url" do
+      github.client.token_url.should == 'https://github.com/login/oauth/access_token'
+    end
   end
 
   context '.auth_code' do
     let(:oauth) { OAuth2::Client.new(client_id, client_secret) }
-
-    before do
-      github = Github.new :client_id => client_id, :client_secret => client_secret
-    end
-
-    after do
-      github.client_id, github.client_secret = nil, nil
-    end
 
     it "should throw an error if no client_id" do
       github.client_id = nil
@@ -61,10 +57,6 @@ describe Github::Authorization do
   end
 
   context "authorize_url" do
-    before do
-      github = Github.new :client_id => client_id, :client_secret => client_secret
-    end
-
     it "should respond to 'authorize_url' " do
       github.should respond_to :authorize_url
     end
@@ -84,7 +76,6 @@ describe Github::Authorization do
 
   context "get_token" do
     before do
-      github = Github.new :client_id => client_id, :client_secret => client_secret
       stub_request(:post, 'https://github.com/login/oauth/access_token').
         to_return(:body => '', :status => 200, :headers => {})
     end
