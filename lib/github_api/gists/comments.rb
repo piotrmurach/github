@@ -58,10 +58,7 @@ module Github
         _normalize_params_keys(params)
         # _merge_mime_type(:gist_comment, params)
         _filter_params_keys(ALLOWED_GIST_COMMENT_INPUTS, params)
-
-        unless _validate_inputs(REQUIRED_GIST_COMMENT_INPUTS, params)
-          raise ArgumentError, "Required inputs are: :body"
-        end
+        _validate_inputs(REQUIRED_GIST_COMMENT_INPUTS, params)
 
         post("/gists/#{gist_id}/comments", params)
       end
@@ -78,10 +75,7 @@ module Github
         _validate_presence_of(comment_id)
         # _merge_mime_type(:gist_comment, params)
         _filter_params_keys(ALLOWED_GIST_COMMENT_INPUTS, params)
-
-        unless _validate_inputs(REQUIRED_GIST_COMMENT_INPUTS, params)
-          raise ArgumentError, "Required inputs are: :body"
-        end
+        _validate_inputs(REQUIRED_GIST_COMMENT_INPUTS, params)
 
         patch("/gists/comments/#{comment_id}", params)
       end

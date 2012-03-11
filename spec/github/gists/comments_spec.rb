@@ -1,9 +1,13 @@
+# encoding: utf-8
+
 require 'spec_helper'
 
-describe Github::Gists::Comments, :type => :base do
-
+describe Github::Gists::Comments do
+  let(:github) { Github.new }
   let(:gist_id)    { '1' }
   let(:comment_id) { 1 }
+
+  after { github.user, github.repo, github.oauth_token = nil, nil, nil }
 
   describe "#comments" do
     context 'check aliases' do
@@ -132,7 +136,7 @@ describe Github::Gists::Comments, :type => :base do
       it "should fail to create resource if 'content' input is missing" do
         expect {
           github.gists.create_comment gist_id, inputs.except('body')
-        }.to raise_error(ArgumentError)
+        }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should create resource successfully" do
@@ -184,7 +188,7 @@ describe Github::Gists::Comments, :type => :base do
       it "should fail to create resource if 'content' input is missing" do
         expect {
           github.gists.edit_comment comment_id, inputs.except('body')
-        }.to raise_error(ArgumentError)
+        }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should create resource successfully" do

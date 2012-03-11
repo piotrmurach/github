@@ -1,8 +1,13 @@
+# encoding: utf-8
+
 require 'spec_helper'
 
-describe Github::Gists, :type => :base do
-
+describe Github::Gists do
+  let(:github) { Github.new }
+  let(:user) { 'peter-murach' }
   let(:gist_id) { '1' }
+
+  after { github.user, github.repo, github.oauth_token = nil, nil, nil }
 
   describe "#gists" do
     context 'check aliases' do
@@ -60,7 +65,6 @@ describe Github::Gists, :type => :base do
 
     context '- public' do
       before do
-        github.user = nil
         stub_get("/gists/public").
           to_return(:body => fixture('gists/gists.json'), :status => 200, :headers => {:content_type => "application/json; charset=utf-8"})
       end
@@ -73,15 +77,12 @@ describe Github::Gists, :type => :base do
 
     context '- authenticated user' do
       before do
-        github.user = nil
         github.oauth_token = OAUTH_TOKEN
         stub_get("/gists").
           with(:query => {:access_token => OAUTH_TOKEN}).
           to_return(:body => fixture('gists/gists.json'), :status => 200, :headers => {:content_type => "application/json; charset=utf-8"})
       end
-      after do
-        github.oauth_token = nil
-      end
+      after { github.oauth_token = nil }
 
       it "should get the resources" do
         github.gists.gists
@@ -137,12 +138,9 @@ describe Github::Gists, :type => :base do
         }.to raise_error(Github::Error::NotFound)
       end
     end
-
   end # starred
 
   describe "#gist" do
-    let(:gist_id) { '1' }
-
     context 'check aliases' do
       it { github.gists.should respond_to :gist }
       it { github.gists.should respond_to :get_gist }
@@ -211,16 +209,23 @@ describe Github::Gists, :type => :base do
                 :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
-      it "should fail to create resource if 'content' input is missing" do
+      it "should fail to create resource if 'files' input is missing" do
         expect {
           github.gists.create_gist inputs.except('files')
-        }.to raise_error(ArgumentError)
+        }.to raise_error(Github::Error::RequiredParams)
       end
 
-      it "should fail to create resource if 'encoding' input is missing" do
+      it "should fail to create resource if 'content' input is missing" do
+        pending 'add validation for nested attributes'
+        expect {
+          github.gists.create_gist inputs.except('content')
+        }.to raise_error(Github::Error::RequiredParams)
+      end
+
+      it "should fail to create resource if 'public' input is missing" do
         expect {
           github.gists.create_gist inputs.except('public')
-        }.to raise_error(ArgumentError)
+        }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should create resource successfully" do

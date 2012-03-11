@@ -105,11 +105,7 @@ module Github
     #
     def create_gist(params={})
       _normalize_params_keys(params)
-
-      unless _validate_inputs(REQUIRED_GIST_INPUTS, params)
-        raise ArgumentError,
-          "Required parameters are: #{REQUIRED_GIST_INPUTS.join(', ')}"
-      end
+      _validate_inputs(REQUIRED_GIST_INPUTS, params)
 
       post("/gists", params)
     end
