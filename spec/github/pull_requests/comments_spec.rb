@@ -1,9 +1,15 @@
+# encoding: utf-8
+
 require 'spec_helper'
 
-describe Github::PullRequests::Comments, :type => :base do
-
+describe Github::PullRequests::Comments do
+  let(:github) { Github.new }
+  let(:user)   { 'peter-murach' }
+  let(:repo) { 'github' }
   let(:pull_request_id) { 1 }
   let(:comment_id) { 1 }
+
+  after { reset_authentication_for github }
 
   describe "#comments" do
     context 'check aliases' do

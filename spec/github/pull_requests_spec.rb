@@ -1,8 +1,12 @@
 require 'spec_helper'
 
-describe Github::PullRequests, :type => :base do
-
+describe Github::PullRequests do
+  let(:github) { Github.new }
+  let(:user)   { 'peter-murach' }
+  let(:repo) { 'github' }
   let(:pull_request_id) { 1 }
+
+  after { reset_authentication_for github }
 
   describe "#pull_requests" do
     context 'check aliases' do
