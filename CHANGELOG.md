@@ -1,3 +1,13 @@
+0.4.7 (March 11, 2012)
+
+* Add custom client error class.
+* Add custom errors invalid options and required params.
+* Clean all github api specs from test dependencies.
+* Change all github api to use new required params error class to provide clearer
+  and more helpful request exceptions.
+* Update cassettes and config to vcr 2.0
+* Chage gem dependecies to use rake, bundler 1.1.0 and vcr 2.0
+
 0.4.6 (February 27, 2012)
 
 * Update gem dependencies, specifically core libraries: multi_json, oauth2, faraday and testing: webmock. (Cannot udpate guard as it conflicts with Growl notifications.)
