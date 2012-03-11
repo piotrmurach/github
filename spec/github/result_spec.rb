@@ -1,10 +1,11 @@
+# encoding: utf-8
+
 require 'spec_helper'
 
 describe Github::Result do
-
   let(:github) { Github.new }
   let(:user)   { 'wycats' }
-  let(:res)    { github.events.public :per_page => 20 }
+  let(:res)    { github.events.public({ 'per_page' => 20 }) }
   let(:pages)  { ['1', '5', '6'] }
   let(:link) {
     "<https://api.github.com/users/wycats/repos?page=6&per_page=20>; rel=\"last\", <https://api.github.com/users/wycats/repos?page=1&per_page=20>; rel=\"first\""
@@ -86,11 +87,9 @@ describe Github::Result do
   context "pagination methods" do
     let(:env) { {:response_headers => {}}}
     let(:iterator) { Github::PageIterator.new(env) }
-    let(:items) { [] }
 
     before do
       described_class.stub(:page_iterator).and_return iterator
-      @items.stub(:env).and_return env
     end
 
     it "should respond to links" do
