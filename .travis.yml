@@ -3,3 +3,10 @@ before_install:
 rvm:
   - 1.9.2
   - 1.9.3
+  - jruby
+  - rbx
+  - ree
+branches:
+  only: master
+notifications:
+  email: false
