@@ -67,8 +67,7 @@ module Github
         _normalize_params_keys(params)
         _filter_params_keys(VALID_TEAM_PARAM_NAMES, params)
         _validate_params_values(VALID_TEAM_PARAM_VALUES, params)
-
-        raise ArgumentError, "Required params are: :name" unless _validate_inputs(%w[ name ], params)
+        _validate_inputs(%w[ name ], params)
 
         post("/orgs/#{org_name}/teams", params)
       end
@@ -92,10 +91,10 @@ module Github
       def edit_team(team_name, params={})
         _validate_presence_of team_name
         _normalize_params_keys(params)
+
         _filter_params_keys(VALID_TEAM_PARAM_NAMES, params)
         _validate_params_values(VALID_TEAM_PARAM_VALUES, params)
-
-        raise ArgumentError, "Required params are: :name" unless _validate_inputs(%w[ name ], params)
+        _validate_inputs(%w[ name ], params)
 
         patch("/teams/#{team_name}", params)
       end

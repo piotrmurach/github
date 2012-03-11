@@ -1,6 +1,14 @@
+# encoding: utf-8
+
 require 'spec_helper'
 
-describe Github::Orgs, :type => :base do
+describe Github::Orgs do
+  let(:github) { Github.new }
+  let(:user) { 'peter-murach' }
+  let(:repo) { 'github' }
+  let(:org) { 'github' }
+
+  after { github.user, github.repo = nil, nil }
 
   describe "orgs" do
     context "resource found for a user" do
@@ -38,19 +46,18 @@ describe Github::Orgs, :type => :base do
 
     context "resource found for an au user" do
       before do
-        github.user = nil
         github.oauth_token = OAUTH_TOKEN
-        stub_get("/user/orgs?access_token=#{OAUTH_TOKEN}").
+        stub_get("/user/orgs").
+          with(:query => { :access_token => OAUTH_TOKEN }).
           to_return(:body => fixture('orgs/orgs.json'), :status => 200, :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
-      after do
-        github.user, github.oauth_token = nil, nil
-      end
+      after { github.oauth_token = nil }
 
       it "should get the resources" do
         github.orgs.orgs
-        a_get("/user/orgs?access_token=#{OAUTH_TOKEN}").should have_been_made
+        a_get("/user/orgs").with(:query => { :access_token => OAUTH_TOKEN }).
+          should have_been_made
       end
     end
 
@@ -111,7 +118,14 @@ describe Github::Orgs, :type => :base do
   end # org
 
   describe "edit_org" do
-    let(:inputs) { { :billing_email => 'support@github.com', :blog => "https://github.com/blog", :company => "GitHub", :email => "support@github.com", :location => "San Francisco", :name => "github" } }
+    let(:inputs) do
+      { :billing_email => 'support@github.com',
+        :blog => "https://github.com/blog",
+        :company => "GitHub",
+        :email => "support@github.com",
+        :location => "San Francisco",
+        :name => "github" }
+    end
 
     context "resource edited successfully" do
       before do

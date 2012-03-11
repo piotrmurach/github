@@ -1,10 +1,11 @@
 require 'spec_helper'
 
 describe Github::Orgs::Members do
-
   let(:github) { Github.new }
   let(:member) { 'peter-murach' }
   let(:org)    { 'github' }
+
+  after { github.user, github.repo = nil, nil }
 
   describe "members" do
     context "resource found" do
@@ -59,13 +60,9 @@ describe Github::Orgs::Members do
   end # members
 
   describe "member?" do
-
     context "with username ane reponame passed" do
-
       context "this repo is being watched by the user"
         before do
-          github.oauth_token = nil
-          github.user = nil
           stub_get("/orgs/#{org}/members/#{member}").
             to_return(:body => "", :status => 404, :headers => {:user_agent => github.user_agent})
         end
@@ -81,7 +78,6 @@ describe Github::Orgs::Members do
         membership = github.orgs.member? org, member
         membership.should be_true
       end
-
     end
 
     context "without org name and member name passed" do
@@ -144,13 +140,9 @@ describe Github::Orgs::Members do
   end # public_members
 
   describe "public_member?" do
-
     context "with username ane reponame passed" do
-
       context "this repo is being watched by the user"
         before do
-          github.oauth_token = nil
-          github.user = nil
           stub_get("/orgs/#{org}/public_members/#{member}").
             to_return(:body => "", :status => 404, :headers => {:user_agent => github.user_agent})
         end
@@ -166,7 +158,6 @@ describe Github::Orgs::Members do
         public_member = github.orgs.public_member? org, member
         public_member.should be_true
       end
-
     end
 
     context "without org name and member name passed" do

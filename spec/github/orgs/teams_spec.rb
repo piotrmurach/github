@@ -1,9 +1,14 @@
 require 'spec_helper'
 
-describe Github::Orgs::Teams, :type => :base do
-
+describe Github::Orgs::Teams do
+  let(:github) { Github.new }
+  let(:user) { 'peter-murach' }
+  let(:org) { 'github' }
+  let(:repo) { 'github' }
   let(:team)   { 'github' }
   let(:member) { 'github' }
+
+  after { github.repo, github.user = nil, nil }
 
   describe "teams" do
     context "resource found" do
@@ -106,7 +111,6 @@ describe Github::Orgs::Teams, :type => :base do
       before do
         stub_post("/orgs/#{org}/teams").with(inputs).
           to_return(:body => fixture('orgs/team.json'), :status => 201, :headers => {:content_type => "application/json; charset=utf-8"})
-
       end
 
       it "should fail to create resource if 'org_name' param is missing" do
@@ -116,7 +120,7 @@ describe Github::Orgs::Teams, :type => :base do
       it "should failt to create resource if 'name' input is missing" do
         expect {
           github.orgs.create_team org, inputs.except(:name)
-        }.to raise_error(ArgumentError)
+        }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should create resource successfully" do
@@ -139,7 +143,6 @@ describe Github::Orgs::Teams, :type => :base do
       before do
         stub_post("/orgs/#{org}/teams").with(inputs).
           to_return(:body => fixture('orgs/team.json'), :status => 404, :headers => {:content_type => "application/json; charset=utf-8"})
-
       end
 
       it "should faile to retrieve resource" do
@@ -167,7 +170,7 @@ describe Github::Orgs::Teams, :type => :base do
       it "should failt to create resource if 'name' input is missing" do
         expect {
           github.orgs.edit_team team, inputs.except(:name)
-        }.to raise_error(ArgumentError)
+        }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should create resource successfully" do
@@ -190,7 +193,6 @@ describe Github::Orgs::Teams, :type => :base do
       before do
         stub_patch("/teams/#{team}").with(inputs).
           to_return(:body => fixture('orgs/team.json'), :status => 404, :headers => {:content_type => "application/json; charset=utf-8"})
-
       end
 
       it "should faile to retrieve resource" do
@@ -290,8 +292,6 @@ describe Github::Orgs::Teams, :type => :base do
 
       context "this repo is being watched by the user"
         before do
-          github.oauth_token = nil
-          github.user = nil
           stub_get("/teams/#{team}/members/#{member}").
             to_return(:body => "", :status => 404, :headers => {:user_agent => github.user_agent})
         end
