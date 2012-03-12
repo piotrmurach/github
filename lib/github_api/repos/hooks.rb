@@ -42,7 +42,7 @@ module Github
       #  @github.repos.hooks 'user-name', 'repo-name'
       #  @github.repos.hooks 'user-name', 'repo-name' { |hook| ... }
       #
-      def hooks(user_name=nil, repo_name=nil, params={})
+      def hooks(user_name, repo_name, params={})
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
         _normalize_params_keys(params)
