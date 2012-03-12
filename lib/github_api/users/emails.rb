@@ -9,9 +9,13 @@ module Github
       # = Examples
       #  @github = Github.new :oauth_token => '...'
       #  @github.users.emails
+      #  @github.users.emails { |email| ... }
       #
       def emails(params={})
-        get("/user/emails", params)
+        _normalize_params_keys(params)
+        response = get("/user/emails", params)
+        return response unless block_given?
+        response.each { |el| yield el }
       end
 
       # Add email address(es) for the authenticated user
@@ -25,7 +29,8 @@ module Github
       #
       def add_email(*args)
         params = _extract_parameters(args)
-        params['data'] = [args].flatten
+        _normalize_params_keys(params)
+        params['data'] = [args].flatten if args
         post("/user/emails", params)
       end
 
@@ -38,8 +43,9 @@ module Github
       #  @github = Github.new :oauth_token => '...'
       #  @github.users.delete_email "octocat@github.com", "support@github.com"
       #
-      def add_email(*args)
+      def delete_email(*args)
         params = _extract_parameters(args)
+        _normalize_params_keys(params)
         params['data'] = [args].flatten
         delete("/user/emails", params)
       end

@@ -117,7 +117,7 @@ module Github
     # TODO add to core extensions
     def _extract_parameters(array)
       if array.last.is_a?(Hash) && array.last.instance_of?(Hash)
-        pop
+        array.pop
       else
         {}
       end
