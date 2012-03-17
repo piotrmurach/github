@@ -18,8 +18,8 @@ module Github
 
     def api_methods_in(klass)
       puts "---"
-      (klass.send(:instance_methods, false) - ['actions']).sort.each do |rest_met|
-        puts "|--> #{rest_met}"
+      (klass.send(:instance_methods, false) - ['actions']).sort.each do |method|
+        puts "|--> #{method}"
       end
       klass.included_modules.each do |mod|
         if mod.to_s =~ /#{klass}/
@@ -32,6 +32,18 @@ module Github
       end
       puts "---"
       nil
+    end
+
+    def append_arguments(method)
+      _method = self.method(method)
+      if _method.arity == 0
+        args = "()"
+      elsif _method.arity > 0
+        args = "(few)"
+      else
+        args = "(else)"
+      end
+      args
     end
 
   end # API
