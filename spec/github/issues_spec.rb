@@ -7,20 +7,18 @@ describe Github::Issues do
   let(:github) { Github.new }
   let(:user)   { 'peter-murach' }
   let(:repo)   { 'github' }
+  let(:issue_id) { 1347 }
 
   after { github.user, github.repo, github.oauth_token = nil, nil, nil }
 
-  describe 'modules inclusion' do
-    it { issues_api.included_modules.should include Github::Issues::Comments }
-    it { issues_api.included_modules.should include Github::Issues::Events }
-    it { issues_api.included_modules.should include Github::Issues::Labels }
-    it { issues_api.included_modules.should include Github::Issues::Milestones }
+  context 'access to apis' do
+    it { subject.comments.should be_a Github::Issues::Comments }
+    it { subject.events.should be_a Github::Issues::Events }
+    it { subject.labels.should be_a Github::Issues::Labels }
+    it { subject.milestones.should be_a Github::Issues::Milestones }
   end
 
-  describe 'issues' do
-    it { github.issues.should respond_to :issues }
-    it { github.issues.should respond_to :list_issues }
-
+  context '#list' do
     context "resource found" do
       before do
         stub_get("/issues").
@@ -28,29 +26,29 @@ describe Github::Issues do
       end
 
       it "should get the resources" do
-        github.issues.issues
+        github.issues.list
         a_get("/issues").should have_been_made
       end
 
       it "should return array of resources" do
-        issues = github.issues.issues
+        issues = github.issues.list
         issues.should be_an Array
         issues.should have(1).items
       end
 
       it "should be a mash type" do
-        issues = github.issues.issues
+        issues = github.issues.list
         issues.first.should be_a Hashie::Mash
       end
 
       it "should get issue information" do
-        issues = github.issues.issues
+        issues = github.issues.list
         issues.first.title.should == 'Found a bug'
       end
 
       it "should yield to a block" do
-        github.issues.should_receive(:issues).and_yield('web')
-        github.issues.issues { |param| 'web' }.should == 'web'
+        github.issues.should_receive(:list).and_yield('web')
+        github.issues.list { |param| 'web' }.should == 'web'
       end
     end
 
@@ -61,53 +59,50 @@ describe Github::Issues do
       end
 
       it "should return 404 with a message 'Not Found'" do
-        expect { github.issues.issues }.to raise_error(Github::Error::NotFound)
+        expect { github.issues.list }.to raise_error(Github::Error::NotFound)
       end
     end
-  end # issues
+  end # list
 
-  describe 'repo_issues' do
-    it { github.issues.should respond_to :repo_issues }
-    it { github.issues.should respond_to :list_repo_issues }
-    it { github.issues.should respond_to :list_repository_issues }
+  describe '#list_repo' do
+    it { github.issues.should respond_to :list_repository }
 
     context "resource found" do
       before do
-        github.user, github.repo = nil, nil
         stub_get("/repos/#{user}/#{repo}/issues").
           to_return(:body => fixture('issues/issues.json'), :status => 200, :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
       it "should raise error if user-name empty" do
         expect {
-          github.issues.repo_issues nil, repo
+          github.issues.list_repo nil, repo
         }.should raise_error(ArgumentError)
       end
 
       it "should get the resources" do
-        github.issues.repo_issues user, repo
+        github.issues.list_repo user, repo
         a_get("/repos/#{user}/#{repo}/issues").should have_been_made
       end
 
       it "should return array of resources" do
-        repo_issues = github.issues.repo_issues user, repo
+        repo_issues = github.issues.list_repo user, repo
         repo_issues.should be_an Array
         repo_issues.should have(1).items
       end
 
       it "should be a mash type" do
-        repo_issues = github.issues.repo_issues user, repo
+        repo_issues = github.issues.list_repo user, repo
         repo_issues.first.should be_a Hashie::Mash
       end
 
       it "should get repository issue information" do
-        repo_issues = github.issues.repo_issues user, repo
+        repo_issues = github.issues.list_repo user, repo
         repo_issues.first.title.should == 'Found a bug'
       end
 
       it "should yield to a block" do
-        github.issues.should_receive(:issues).with(user, repo).and_yield('web')
-        github.issues.issues(user, repo) { |param| 'web' }.should == 'web'
+        github.issues.should_receive(:list_repo).with(user, repo).and_yield('web')
+        github.issues.list_repo(user, repo) { |param| 'web' }.should == 'web'
       end
     end
 
@@ -119,41 +114,39 @@ describe Github::Issues do
 
       it "should return 404 with a message 'Not Found'" do
         expect {
-          github.issues.repo_issues user, repo
+          github.issues.list_repo user, repo
         }.to raise_error(Github::Error::NotFound)
       end
     end
-  end # repo_issues
+  end # list_repo
 
-  describe "get_issue" do
-    let(:issue_id) { 1347 }
-
-    it { github.issues.should respond_to :issue }
-    it { github.issues.should respond_to :get_issue }
+  describe "#find" do
 
     context "resource found" do
       before do
         stub_get("/repos/#{user}/#{repo}/issues/#{issue_id}").
-          to_return(:body => fixture('issues/issue.json'), :status => 200, :headers => {:content_type => "application/json; charset=utf-8"})
+          to_return(:body => fixture('issues/issue.json'),
+          :status => 200,
+          :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
       it "should fail to get resource without issue id" do
-        expect { github.issues.issue(user, repo, nil)}.to raise_error(ArgumentError)
+        expect { github.issues.find(user, repo, nil)}.to raise_error(ArgumentError)
       end
 
       it "should get the resource" do
-        github.issues.issue user, repo, issue_id
+        github.issues.find user, repo, issue_id
         a_get("/repos/#{user}/#{repo}/issues/#{issue_id}").should have_been_made
       end
 
       it "should get issue information" do
-        issue = github.issues.issue user, repo, issue_id
+        issue = github.issues.find user, repo, issue_id
         issue.number.should == issue_id
         issue.title.should == 'Found a bug'
       end
 
       it "should return mash" do
-        issue = github.issues.issue user, repo, issue_id
+        issue = github.issues.find user, repo, issue_id
         issue.should be_a Hashie::Mash
       end
     end
@@ -161,18 +154,20 @@ describe Github::Issues do
     context "resource not found" do
       before do
         stub_get("/repos/#{user}/#{repo}/issues/#{issue_id}").
-          to_return(:body => fixture('issues/issue.json'), :status => 404, :headers => {:content_type => "application/json; charset=utf-8"})
+          to_return(:body => fixture('issues/issue.json'),
+          :status => 404,
+          :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
       it "should fail to retrive resource" do
         expect {
-          github.issues.issue user, repo, issue_id
+          github.issues.find user, repo, issue_id
         }.to raise_error(Github::Error::NotFound)
       end
     end
   end # get_issue
 
-  describe "create_issue" do
+  describe "#create" do
     let(:inputs) {
       {
          "title" =>  "Found a bug",
@@ -193,22 +188,22 @@ describe Github::Issues do
 
       it "should fail to create resource if 'title' input is missing" do
         expect {
-          github.issues.create_issue user, repo, inputs.except('title')
+          github.issues.create user, repo, inputs.except('title')
         }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should create resource successfully" do
-        github.issues.create_issue user, repo, inputs
+        github.issues.create user, repo, inputs
         a_post("/repos/#{user}/#{repo}/issues").with(inputs).should have_been_made
       end
 
       it "should return the resource" do
-        issue = github.issues.create_issue user, repo, inputs
+        issue = github.issues.create user, repo, inputs
         issue.should be_a Hashie::Mash
       end
 
       it "should get the issue information" do
-        issue = github.issues.create_issue(user, repo, inputs)
+        issue = github.issues.create(user, repo, inputs)
         issue.title.should == 'Found a bug'
       end
     end
@@ -221,14 +216,13 @@ describe Github::Issues do
 
       it "should faile to retrieve resource" do
         expect {
-          github.issues.create_issue user, repo, inputs
+          github.issues.create user, repo, inputs
         }.to raise_error(Github::Error::NotFound)
       end
     end
-  end # create_issue
+  end # create
 
-  describe "edit_issue" do
-    let(:issue_id) { 1349 }
+  describe "#edit" do
     let(:inputs) {
       {
          "title" =>  "Found a bug",
@@ -250,22 +244,22 @@ describe Github::Issues do
 
       it "should fail to edit without 'user/repo' parameters" do
         expect {
-          github.issues.edit_issue nil, repo, issue_id
+          github.issues.edit nil, repo, issue_id
         }.to raise_error(ArgumentError)
       end
 
       it "should edit the resource" do
-        github.issues.edit_issue user, repo, issue_id, inputs
+        github.issues.edit user, repo, issue_id, inputs
         a_patch("/repos/#{user}/#{repo}/issues/#{issue_id}").with(inputs).should have_been_made
       end
 
       it "should return resource" do
-        issue = github.issues.edit_issue user, repo, issue_id, inputs
+        issue = github.issues.edit user, repo, issue_id, inputs
         issue.should be_a Hashie::Mash
       end
 
       it "should be able to retrieve information" do
-        issue = github.issues.edit_issue user, repo, issue_id, inputs
+        issue = github.issues.edit user, repo, issue_id, inputs
         issue.title.should == 'Found a bug'
       end
     end
@@ -278,7 +272,7 @@ describe Github::Issues do
 
       it "should fail to find resource" do
         expect {
-          github.issues.edit_issue user, repo, issue_id, inputs
+          github.issues.edit user, repo, issue_id, inputs
         }.to raise_error(Github::Error::NotFound)
       end
     end

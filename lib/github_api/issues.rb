@@ -10,11 +10,6 @@ module Github
       :Labels     => 'labels',
       :Milestones => 'milestones'
 
-    include Github::Issues::Comments
-    include Github::Issues::Events
-    include Github::Issues::Labels
-    include Github::Issues::Milestones
-
     VALID_ISSUE_PARAM_NAMES = %w[
       filter
       state
@@ -44,6 +39,26 @@ module Github
       super(options)
     end
 
+    # Access to Issues::Comments API
+    def comments
+      @comments ||= ApiFactory.new 'Issues::Comments'
+    end
+
+    # Access to Issues::Events API
+    def events
+      @events ||= ApiFactory.new 'Issues::Events'
+    end
+
+    # Access to Issues::Comments API
+    def labels
+      @labels ||= ApiFactory.new 'Issues::Labels'
+    end
+
+    # Access to Issues::Comments API
+    def milestones
+      @milestones ||= ApiFactory.new 'Issues::Milestones'
+    end
+
     # List your issues
     #
     # = Parameters
@@ -59,15 +74,15 @@ module Github
     # <tt>:since</tt> - Optional string of a timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
     #
     # = Examples
-    #  @github = Github.new :oauth_token => '...'
-    #  @github.issues.issues :since => '2011-04-12312:12:121',
+    #  github = Github.new :oauth_token => '...'
+    #  github.issues.list :since => '2011-04-12312:12:121',
     #    :filter => 'created',
     #    :state  => 'open',
     #    :labels => "bug,ui,bla",
     #    :sort   => 'comments',
     #    :direction => 'asc'
     #
-    def issues(params={})
+    def list(params={})
       _normalize_params_keys(params)
       _filter_params_keys(VALID_ISSUE_PARAM_NAMES, params)
       # _merge_mime_type(:issue, params)
@@ -77,7 +92,7 @@ module Github
       return response unless block_given?
       response.each { |el| yield el }
     end
-    alias :list_issues :issues
+    alias :all :list
 
     # List issues for a repository
     #
@@ -100,8 +115,8 @@ module Github
     # <tt>:direction</tt> - <tt>asc</tt>, <tt>desc</tt>, default: <tt>desc</tt>
     #
     # = Examples
-    #  @github = Github.new :user => 'user-name', :repo => 'repo-name'
-    #  @github.issues.repo_issues :milestone => 1,
+    #  github = Github.new :user => 'user-name', :repo => 'repo-name'
+    #  github.issues.list_repo :milestone => 1,
     #    :state  => 'open',
     #    :assignee => '*',
     #    :mentioned => 'octocat',
@@ -109,7 +124,7 @@ module Github
     #    :sort   => 'comments',
     #    :direction => 'asc'
     #
-    def repo_issues(user_name=nil, repo_name=nil, params={})
+    def list_repo(user_name=nil, repo_name=nil, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
 
@@ -122,17 +137,15 @@ module Github
       return response unless block_given?
       response.each { |el| yield el }
     end
-    alias :repository_issues :repo_issues
-    alias :list_repo_issues :repo_issues
-    alias :list_repository_issues :repo_issues
+    alias :list_repository :list_repo
 
     # Get a single issue
     #
     # = Examples
-    #  @github = Github.new
-    #  @github.issues.get_issue 'user-name', 'repo-name', 'issue-id'
+    #  github = Github.new
+    #  github.issues.find 'user-name', 'repo-name', 'issue-id'
     #
-    def issue(user_name, repo_name, issue_id, params={})
+    def find(user_name, repo_name, issue_id, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of issue_id
@@ -142,7 +155,6 @@ module Github
 
       get("/repos/#{user}/#{repo}/issues/#{issue_id}", params)
     end
-    alias :get_issue :issue
 
     # Create an issue
     #
@@ -153,8 +165,8 @@ module Github
     #  <tt>:milestone</tt> - Optional number - Milestone to associate this issue with
     #  <tt>:labels</tt> - Optional array of strings - Labels to associate with this issue
     # = Examples
-    #  @github = Github.new :user => 'user-name', :repo => 'repo-name'
-    #  @github.issues.create_issue
+    #  github = Github.new :user => 'user-name', :repo => 'repo-name'
+    #  github.issues.create
     #    "title" => "Found a bug",
     #    "body" => "I'm having a problem with this.",
     #    "assignee" => "octocat",
@@ -164,7 +176,7 @@ module Github
     #      "Label2"
     #    ]
     #
-    def create_issue(user_name=nil, repo_name=nil, params={})
+    def create(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
 
@@ -187,8 +199,8 @@ module Github
     #  <tt>:labels</tt> - Optional array of strings - Labels to associate with this issue. Pass one or more Labels to replace the set of Labels on this Issue. Send an empty array ([]) to clear all Labels from the Issue.
     #
     # = Examples
-    #  @github = Github.new
-    #  @github.issues.create_issue 'user-name', 'repo-name', 'issue-id'
+    #  github = Github.new
+    #  github.issues.edit 'user-name', 'repo-name', 'issue-id'
     #    "title" => "Found a bug",
     #    "body" => "I'm having a problem with this.",
     #    "assignee" => "octocat",
@@ -198,14 +210,14 @@ module Github
     #      "Label2"
     #    ]
     #
-    def edit_issue(user_name, repo_name, issue_id, params={})
+    def edit(user_name, repo_name, issue_id, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of issue_id
 
       _normalize_params_keys(params)
       # _merge_mime_type(:issue, params)
-      _filter_params_keys(VALID_MILESTONE_INPUTS, params)
+      _filter_params_keys(VALID_ISSUE_PARAM_NAMES, params)
 
       patch("/repos/#{user}/#{repo}/issues/#{issue_id}", params)
     end
