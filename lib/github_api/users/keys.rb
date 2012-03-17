@@ -13,12 +13,13 @@ module Github
       #  @github.users.public_keys
       #  @github.users.public_keys { |key| ... }
       #
-      def public_keys(params={})
+      def keys(params={})
         _normalize_params_keys(params)
         response = get("/user/keys", params)
         return response unless block_given?
         response.each { |el| yield el }
       end
+      alias :public_keys :keys
 
       # Get a single pulic key for the authenticated user
       #
@@ -26,11 +27,12 @@ module Github
       #  @github = Github.new :oauth_token => '...'
       #  @github.users.public_key 'key-id'
       #
-      def public_key(key_id, params={})
+      def key(key_id, params={})
         _validate_presence_of key_id
         _normalize_params_keys(params)
         get("/user/keys/#{key_id}", params)
       end
+      alias :public_key :key
 
       # Create a public key for the authenticated user
       #
