@@ -1,22 +1,26 @@
 # encoding: utf-8
 
 module Github
-  class Issues
-    module Events
+  class Issues::Events < API
+
+    # Creates new Issues::Events API
+    def initialize(options = {})
+      super(options)
+    end
 
     # List events for an issue
     #
     # = Examples
-    #  @github = Github.new
-    #  @github.issues.events 'user-name', 'repo-name', 'issue-id'
+    #  github = Github.new
+    #  github.issues.events.list 'user-name', 'repo-name', 'issue-id'
     #
     # List events for a repository
     #
     # = Examples
-    #  @github = Github.new
-    #  @github.issues.events 'user-name', 'repo-name'
+    #  github = Github.new
+    #  github.issues.events.list 'user-name', 'repo-name'
     #
-    def events(user_name, repo_name, issue_id=nil, params={})
+    def list(user_name, repo_name, issue_id=nil, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
       _normalize_params_keys(params)
@@ -29,17 +33,15 @@ module Github
       return response unless block_given?
       response.each { |el| yield el }
     end
-    alias :list_events :events
-    alias :issue_events :events
-    alias :repo_events :events
+    alias :all :list
 
     # Get a single event
     #
     # = Examples
-    #  @github = Github.new
-    #  @github.issues.event 'user-name', 'repo-name', 'event-id'
+    #  github = Github.new
+    #  github.issues.events.find 'user-name', 'repo-name', 'event-id'
     #
-    def event(user_name, repo_name, event_id, params={})
+    def find(user_name, repo_name, event_id, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of event_id
@@ -47,8 +49,6 @@ module Github
 
       get("/repos/#{user}/#{repo}/issues/events/#{event_id}")
     end
-    alias :get_event :event
 
-    end # Events
-  end # Issues
+  end # Issues::Events
 end # Github

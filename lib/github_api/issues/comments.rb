@@ -1,123 +1,119 @@
 # encoding: utf-8
 
 module Github
-  class Issues
-    module Comments
+  class Issues::Comments < API
 
-      VALID_ISSUE_COMMENT_PARAM_NAME = %w[
-        body
-        resource
-        mime_type
-      ].freeze
+    VALID_ISSUE_COMMENT_PARAM_NAME = %w[
+      body
+      resource
+      mime_type
+    ].freeze
 
-      # List comments on an issue
-      #
-      # = Examples
-      #  @github = Github.new
-      #  @github.issues.comments 'user-name', 'repo-name', 'issue-id'
-      #  @github.issues.comments 'user-name', 'repo-name', 'issue-id' { |com| ... }
-      #
-      def comments(user_name, repo_name, issue_id, params={})
-        _update_user_repo_params(user_name, repo_name)
-        _validate_user_repo_params(user, repo) unless user? && repo?
-        _validate_presence_of issue_id
+    # Creates new Issues::Comments API
+    def initialize(options = {})
+      super(options)
+    end
 
-        _normalize_params_keys(params)
-        # _merge_mime_type(:issue_comment, params)
+    # List comments on an issue
+    #
+    # = Examples
+    #  github = Github.new
+    #  github.issues.comments.all 'user-name', 'repo-name', 'issue-id'
+    #  github.issues.comments.all 'user-name', 'repo-name', 'issue-id' {|com| .. }
+    #
+    def list(user_name, repo_name, issue_id, params={})
+      _update_user_repo_params(user_name, repo_name)
+      _validate_user_repo_params(user, repo) unless user? && repo?
+      _validate_presence_of issue_id
 
-        response = get("/repos/#{user}/#{repo}/issues/#{issue_id}/comments", params)
-        return response unless block_given?
-        response.each { |el| yield el }
-      end
-      alias :issue_comments :comments
-      alias :list_comments :comments
-      alias :list_issue_comments :comments
+      _normalize_params_keys(params)
+      # _merge_mime_type(:issue_comment, params)
 
-      # Get a single comment
-      #
-      # = Examples
-      #  @github = Github.new
-      #  @github.issues.comment 'user-name', 'repo-name', 'comment-id'
-      #
-      def comment(user_name, repo_name, comment_id, params={})
-        _update_user_repo_params(user_name, repo_name)
-        _validate_user_repo_params(user, repo) unless user? && repo?
-        _validate_presence_of comment_id
+      response = get("/repos/#{user}/#{repo}/issues/#{issue_id}/comments", params)
+      return response unless block_given?
+      response.each { |el| yield el }
+    end
+    alias :all :list
 
-        _normalize_params_keys(params)
-        # _merge_mime_type(:issue_comment, params)
+    # Get a single comment
+    #
+    # = Examples
+    #  github = Github.new
+    #  github.issues.comments.find 'user-name', 'repo-name', 'comment-id'
+    #
+    def find(user_name, repo_name, comment_id, params={})
+      _update_user_repo_params(user_name, repo_name)
+      _validate_user_repo_params(user, repo) unless user? && repo?
+      _validate_presence_of comment_id
 
-        get("/repos/#{user}/#{repo}/issues/comments/#{comment_id}", params)
-      end
-      alias :issue_comment :comment
-      alias :get_comment :comment
+      _normalize_params_keys(params)
+      # _merge_mime_type(:issue_comment, params)
 
-      # Create a comment
-      #
-      # = Inputs
-      #  <tt>:body</tt> Required string
-      #
-      # = Examples
-      #  @github = Github.new
-      #  @github.issues.create_comment 'user-name', 'repo-name', 'issue-id',
-      #     "body" => 'a new comment'
-      #
-      def create_comment(user_name, repo_name, issue_id, params={})
-        _update_user_repo_params(user_name, repo_name)
-        _validate_user_repo_params(user, repo) unless user? && repo?
-        _validate_presence_of issue_id
+      get("/repos/#{user}/#{repo}/issues/comments/#{comment_id}", params)
+    end
 
-        _normalize_params_keys(params)
-        # _merge_mime_type(:issue_comment, params)
-        _filter_params_keys(VALID_ISSUE_COMMENT_PARAM_NAME, params)
-        _validate_inputs(%w[ body ], params)
+    # Create a comment
+    #
+    # = Inputs
+    #  <tt>:body</tt> Required string
+    #
+    # = Examples
+    #  github = Github.new
+    #  github.issues.comments.create 'user-name', 'repo-name', 'issue-id',
+    #     "body" => 'a new comment'
+    #
+    def create(user_name, repo_name, issue_id, params={})
+      _update_user_repo_params(user_name, repo_name)
+      _validate_user_repo_params(user, repo) unless user? && repo?
+      _validate_presence_of issue_id
 
-        post("/repos/#{user}/#{repo}/issues/#{issue_id}/comments", params)
-      end
-      alias :create_issue_comment :create_comment
+      _normalize_params_keys(params)
+      # _merge_mime_type(:issue_comment, params)
+      _filter_params_keys(VALID_ISSUE_COMMENT_PARAM_NAME, params)
+      _validate_inputs(%w[ body ], params)
 
-      # Edit a comment
-      #
-      # = Inputs
-      #  <tt>:body</tt> Required string
-      #
-      # = Examples
-      #  @github = Github.new
-      #  @github.issues.edit_comment 'user-name', 'repo-name', 'comment-id',
-      #     "body" => 'a new comment'
-      #
-      def edit_comment(user_name, repo_name, comment_id, params={})
-        _update_user_repo_params(user_name, repo_name)
-        _validate_user_repo_params(user, repo) unless user? && repo?
-        _validate_presence_of comment_id
+      post("/repos/#{user}/#{repo}/issues/#{issue_id}/comments", params)
+    end
 
-        _normalize_params_keys(params)
-        # _merge_mime_type(:issue_comment, params)
-        _filter_params_keys(VALID_ISSUE_COMMENT_PARAM_NAME, params)
-        _validate_inputs(%w[ body ], params)
+    # Edit a comment
+    #
+    # = Inputs
+    #  <tt>:body</tt> Required string
+    #
+    # = Examples
+    #  github = Github.new
+    #  github.issues.comments.edit 'user-name', 'repo-name', 'comment-id',
+    #     "body" => 'a new comment'
+    #
+    def edit(user_name, repo_name, comment_id, params={})
+      _update_user_repo_params(user_name, repo_name)
+      _validate_user_repo_params(user, repo) unless user? && repo?
+      _validate_presence_of comment_id
 
-        patch("/repos/#{user}/#{repo}/issues/comments/#{comment_id}")
-      end
-      alias :edit_issue_comment :edit_comment
+      _normalize_params_keys(params)
+      # _merge_mime_type(:issue_comment, params)
+      _filter_params_keys(VALID_ISSUE_COMMENT_PARAM_NAME, params)
+      _validate_inputs(%w[ body ], params)
 
-      # Delete a comment
-      #
-      # = Examples
-      #  @github = Github.new
-      #  @github.issues.delete_comment 'user-name', 'repo-name', 'comment-id'
-      #
-      def delete_comment(user_name, repo_name, comment_id, params={})
-        _update_user_repo_params(user_name, repo_name)
-        _validate_user_repo_params(user, repo) unless user? && repo?
-        _validate_presence_of comment_id
+      patch("/repos/#{user}/#{repo}/issues/comments/#{comment_id}")
+    end
 
-        _normalize_params_keys(params)
-        # _merge_mime_type(:issue_comment, params)
+    # Delete a comment
+    #
+    # = Examples
+    #  github = Github.new
+    #  github.issues.comments.delete 'user-name', 'repo-name', 'comment-id'
+    #
+    def delete(user_name, repo_name, comment_id, params={})
+      _update_user_repo_params(user_name, repo_name)
+      _validate_user_repo_params(user, repo) unless user? && repo?
+      _validate_presence_of comment_id
 
-        delete("/repos/#{user}/#{repo}/issues/comments/#{comment_id}", params)
-      end
-      alias :delete_issue_comment :delete_comment
+      _normalize_params_keys(params)
+      # _merge_mime_type(:issue_comment, params)
 
-    end # Comments
-  end # Issues
+      delete("/repos/#{user}/#{repo}/issues/comments/#{comment_id}", params)
+    end
+
+  end # Issues::Comments
 end # Github
