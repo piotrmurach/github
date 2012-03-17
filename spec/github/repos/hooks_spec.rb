@@ -27,7 +27,6 @@ describe Github::Repos::Hooks do
       end
 
       it "should fail to get resource without username" do
-        github.user, github.repo = nil, nil
         expect { github.repos.hooks }.to raise_error(ArgumentError)
       end
 

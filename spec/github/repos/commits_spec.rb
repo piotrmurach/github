@@ -4,7 +4,8 @@ describe Github::Repos::Commits do
   let(:github) { Github.new }
   let(:user) { 'peter-murach' }
   let(:repo) { 'github' }
-  after { github.user, github.repo = nil, nil }
+
+  after { github.user, github.repo, github.oauth_token = nil, nil, nil }
 
   describe "commits" do
     context "resource found" do
