@@ -7,18 +7,24 @@ module Github
 
     # Instantiates a new github api object
     def self.new(klass, options={})
-      return _create_instance(klass, options) if klass
+      return create_instance(klass, options) if klass
       raise ArgumentError, 'must provied klass to be instantiated'
     end
 
-  private
-
     # Passes configuration options to instantiated class
-    def self._create_instance(klass, options)
+    def self.create_instance(klass, options)
       options.symbolize_keys!
-      instance = Github.const_get(klass.to_sym).new options
+      instance = convert_to_constant(klass.to_s).new options
       Github.api_client = instance
       instance
+    end
+
+    def self.convert_to_constant(classes)
+      constant = Github
+      classes.split('::').each do |klass|
+        constant = constant.const_get klass
+      end
+      return constant
     end
   end
 end # Github
