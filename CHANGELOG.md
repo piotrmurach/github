@@ -1,3 +1,8 @@
+0.4.8 (March 17, 2012)
+
+* Change user emails api, fix bug with deleting emails, add specs.
+* Change user keys api and add specs.
+
 0.4.7 (March 11, 2012)
 
 * Add custom client error class.
