@@ -26,9 +26,9 @@ module Github
       _normalize_params_keys(params)
 
       response = if issue_id
-        get("/repos/#{user}/#{repo}/issues/#{issue_id}/events", params)
+        get_request("/repos/#{user}/#{repo}/issues/#{issue_id}/events", params)
       else
-        get("/repos/#{user}/#{repo}/issues/events", params)
+        get_request("/repos/#{user}/#{repo}/issues/events", params)
       end
       return response unless block_given?
       response.each { |el| yield el }
@@ -39,16 +39,17 @@ module Github
     #
     # = Examples
     #  github = Github.new
-    #  github.issues.events.find 'user-name', 'repo-name', 'event-id'
+    #  github.issues.events.get 'user-name', 'repo-name', 'event-id'
     #
-    def find(user_name, repo_name, event_id, params={})
+    def get(user_name, repo_name, event_id, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of event_id
       _normalize_params_keys(params)
 
-      get("/repos/#{user}/#{repo}/issues/events/#{event_id}")
+      get_request("/repos/#{user}/#{repo}/issues/events/#{event_id}")
     end
+    alias :find :get
 
   end # Issues::Events
 end # Github
