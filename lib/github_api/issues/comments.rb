@@ -29,7 +29,7 @@ module Github
       _normalize_params_keys(params)
       # _merge_mime_type(:issue_comment, params)
 
-      response = get("/repos/#{user}/#{repo}/issues/#{issue_id}/comments", params)
+      response = get_request("/repos/#{user}/#{repo}/issues/#{issue_id}/comments", params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -41,7 +41,7 @@ module Github
     #  github = Github.new
     #  github.issues.comments.find 'user-name', 'repo-name', 'comment-id'
     #
-    def find(user_name, repo_name, comment_id, params={})
+    def get(user_name, repo_name, comment_id, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of comment_id
@@ -49,8 +49,9 @@ module Github
       _normalize_params_keys(params)
       # _merge_mime_type(:issue_comment, params)
 
-      get("/repos/#{user}/#{repo}/issues/comments/#{comment_id}", params)
+      get_request("/repos/#{user}/#{repo}/issues/comments/#{comment_id}", params)
     end
+    alias :find :get
 
     # Create a comment
     #
@@ -72,7 +73,7 @@ module Github
       _filter_params_keys(VALID_ISSUE_COMMENT_PARAM_NAME, params)
       _validate_inputs(%w[ body ], params)
 
-      post("/repos/#{user}/#{repo}/issues/#{issue_id}/comments", params)
+      post_request("/repos/#{user}/#{repo}/issues/#{issue_id}/comments", params)
     end
 
     # Edit a comment
@@ -95,7 +96,7 @@ module Github
       _filter_params_keys(VALID_ISSUE_COMMENT_PARAM_NAME, params)
       _validate_inputs(%w[ body ], params)
 
-      patch("/repos/#{user}/#{repo}/issues/comments/#{comment_id}")
+      patch_request("/repos/#{user}/#{repo}/issues/comments/#{comment_id}")
     end
 
     # Delete a comment
@@ -112,7 +113,7 @@ module Github
       _normalize_params_keys(params)
       # _merge_mime_type(:issue_comment, params)
 
-      delete("/repos/#{user}/#{repo}/issues/comments/#{comment_id}", params)
+      delete_request("/repos/#{user}/#{repo}/issues/comments/#{comment_id}", params)
     end
 
   end # Issues::Comments
