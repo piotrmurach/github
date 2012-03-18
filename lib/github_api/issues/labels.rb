@@ -24,7 +24,7 @@ module Github
       _validate_user_repo_params(user, repo) unless user? && repo?
       _normalize_params_keys(params)
 
-      response = get("/repos/#{user}/#{repo}/labels", params)
+      response = get_request("/repos/#{user}/#{repo}/labels", params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -36,14 +36,15 @@ module Github
     #  github = Github.new
     #  github.issues.labels.find 'user-name', 'repo-name', 'label-id'
     #
-    def find(user_name, repo_name, label_id, params={})
+    def get(user_name, repo_name, label_id, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of label_id
       _normalize_params_keys(params)
 
-      get("/repos/#{user}/#{repo}/labels/#{label_id}", params)
+      get_request("/repos/#{user}/#{repo}/labels/#{label_id}", params)
     end
+    alias :find :get
 
     # Create a label
     #
@@ -63,7 +64,7 @@ module Github
       _filter_params_keys(VALID_LABEL_INPUTS, params)
       _validate_inputs(VALID_LABEL_INPUTS, params)
 
-      post("/repos/#{user}/#{repo}/labels", params)
+      post_request("/repos/#{user}/#{repo}/labels", params)
     end
 
     # Update a label
@@ -86,7 +87,7 @@ module Github
       _filter_params_keys(VALID_LABEL_INPUTS, params)
       _validate_inputs(VALID_LABEL_INPUTS, params)
 
-      patch("/repos/#{user}/#{repo}/labels/#{label_id}", params)
+      patch_request("/repos/#{user}/#{repo}/labels/#{label_id}", params)
     end
     alias :edit :update
 
@@ -103,24 +104,23 @@ module Github
       _validate_presence_of label_id
       _normalize_params_keys params
 
-      delete("/repos/#{user}/#{repo}/labels/#{label_id}", params)
+      delete_request("/repos/#{user}/#{repo}/labels/#{label_id}", params)
     end
 
     # List labels on an issue
     #
     # = Examples
     #  @github = Github.new
-    #  @github.issues.labels_for 'user-name', 'repo-name', 'issue-id'
+    #  @github.issues.labels.issue 'user-name', 'repo-name', 'issue-id'
     #
-    def labels_for(user_name, repo_name, issue_id, params={})
+    def issue(user_name, repo_name, issue_id, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of(issue_id)
       _normalize_params_keys(params)
 
-      get("/repos/#{user}/#{repo}/issues/#{issue_id}/labels", params)
+      get_request("/repos/#{user}/#{repo}/issues/#{issue_id}/labels", params)
     end
-    alias :issue_labels :labels_for
 
     # Add labels to an issue
     #
@@ -137,7 +137,7 @@ module Github
       _validate_presence_of(issue_id)
       _normalize_params_keys(params)
 
-      post("/repos/#{user}/#{repo}/issues/#{issue_id}/labels", params)
+      post_request("/repos/#{user}/#{repo}/issues/#{issue_id}/labels", params)
     end
     alias :<< :add
 
@@ -159,9 +159,9 @@ module Github
       _normalize_params_keys params
 
       if label_id
-        delete("/repos/#{user}/#{repo}/issues/#{issue_id}/labels/#{label_id}", params)
+        delete_request("/repos/#{user}/#{repo}/issues/#{issue_id}/labels/#{label_id}", params)
       else
-        delete("/repos/#{user}/#{repo}/issues/#{issue_id}/labels", params)
+        delete_request("/repos/#{user}/#{repo}/issues/#{issue_id}/labels", params)
       end
     end
 
@@ -182,7 +182,7 @@ module Github
       _validate_presence_of issue_id
       _normalize_params_keys(params)
 
-      put("/repos/#{user}/#{repo}/issues/#{issue_id}/labels", params)
+      put_request("/repos/#{user}/#{repo}/issues/#{issue_id}/labels", params)
     end
 
     # Get labels for every issue in a milestone
@@ -196,7 +196,7 @@ module Github
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of milestone_id
 
-      response = get("/repos/#{user}/#{repo}/milestones/#{milestone_id}/labels", params)
+      response = get_request("/repos/#{user}/#{repo}/milestones/#{milestone_id}/labels", params)
       return response unless block_given?
       response.each { |el| yield el }
     end
