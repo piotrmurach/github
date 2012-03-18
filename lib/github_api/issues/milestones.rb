@@ -46,7 +46,7 @@ module Github
       _filter_params_keys(VALID_MILESTONE_OPTIONS.keys, params)
       _validate_params_values(VALID_MILESTONE_OPTIONS, params)
 
-      response = get("/repos/#{user}/#{repo}/milestones", params)
+      response = get_request("/repos/#{user}/#{repo}/milestones", params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -56,16 +56,17 @@ module Github
     #
     # = Examples
     #  github = Github.new
-    #  github.issues.milestones.find 'user-name', 'repo-name', 'milestone-id'
+    #  github.issues.milestones.get 'user-name', 'repo-name', 'milestone-id'
     #
-    def find(user_name, repo_name, milestone_id, params={})
+    def get(user_name, repo_name, milestone_id, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of milestone_id
       _normalize_params_keys(params)
 
-      get("/repos/#{user}/#{repo}/milestones/#{milestone_id}", params)
+      get_request("/repos/#{user}/#{repo}/milestones/#{milestone_id}", params)
     end
+    alias :find :get
 
     # Create a milestone
     #
@@ -77,7 +78,7 @@ module Github
     #
     # = Examples
     #  github = Github.new :user => 'user-name', :repo => 'repo-name'
-    #  github.issues.create_milestone :title => 'hello-world',
+    #  github.issues.milestones.create :title => 'hello-world',
     #    :state => "open or closed",
     #    :description => "String",
     #    :due_on => "Time"
@@ -90,7 +91,7 @@ module Github
       _filter_params_keys(VALID_MILESTONE_INPUTS, params)
       _validate_inputs(%w[ title ], params)
 
-      post("/repos/#{user}/#{repo}/milestones", params)
+      post_request("/repos/#{user}/#{repo}/milestones", params)
     end
 
     # Update a milestone
@@ -103,7 +104,7 @@ module Github
     #
     # = Examples
     #  github = Github.new
-    #  github.issues.update_milestone 'user-name', 'repo-name', 'milestone-id',
+    #  github.issues.milestones.update 'user-name', 'repo-name', 'milestone-id',
     #    :title => 'hello-world',
     #    :state => "open or closed",
     #    :description => "String",
@@ -118,7 +119,7 @@ module Github
       _filter_params_keys(VALID_MILESTONE_INPUTS, params)
       _validate_inputs(%w[ title ], params)
 
-      patch("/repos/#{user}/#{repo}/milestones/#{milestone_id}", params)
+      patch_request("/repos/#{user}/#{repo}/milestones/#{milestone_id}", params)
     end
 
     # Delete a milestone
@@ -133,7 +134,7 @@ module Github
       _validate_presence_of milestone_id
       _normalize_params_keys(params)
 
-      delete("/repos/#{user}/#{repo}/milestones/#{milestone_id}", params)
+      delete_request("/repos/#{user}/#{repo}/milestones/#{milestone_id}", params)
     end
 
   end # Issues::Milestones
