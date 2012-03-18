@@ -11,15 +11,34 @@ module Github
       :Tags       => 'tags',
       :Trees      => 'trees'
 
-    include Github::GitData::Blobs
-    include Github::GitData::Commits
-    include Github::GitData::References
-    include Github::GitData::Tags
-    include Github::GitData::Trees
-
     # Creates new GitData API
     def initialize(options = {})
       super(options)
+    end
+
+    # Access to GitData::Blobs API
+    def blobs
+      @blobs ||= ApiFactory.new 'GitData::Blobs'
+    end
+
+    # Access to GitData::Commits API
+    def commits
+      @commits ||= ApiFactory.new 'GitData::Commits'
+    end
+
+    # Access to GitData::References API
+    def references
+      @references ||= ApiFactory.new 'GitData::References'
+    end
+
+    # Access to GitData::Tags API
+    def tags
+      @tags ||= ApiFactory.new 'GitData::Tags'
+    end
+
+    # Access to GitData::Tags API
+    def trees
+      @trees ||= ApiFactory.new 'GitData::Trees'
     end
 
   end # GitData
