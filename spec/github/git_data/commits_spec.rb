@@ -12,9 +12,8 @@ describe Github::GitData::Commits, :type => :base do
 
   it { described_class::VALID_COMMIT_PARAM_NAMES.should_not be_nil }
 
-  describe "commit" do
-    it { github.git_data.should respond_to :commit }
-    it { github.git_data.should respond_to :get_commit }
+  describe "#get" do
+    it { github.git_data.commits.should respond_to :find }
 
     context "resource found" do
       before do
@@ -24,22 +23,22 @@ describe Github::GitData::Commits, :type => :base do
 
       it "should fail to get resource without sha" do
         expect {
-          github.git_data.commit(user, repo, nil)
+          github.git_data.commits.get user, repo, nil
         }.to raise_error(ArgumentError)
       end
 
       it "should get the resource" do
-        github.git_data.commit user, repo, sha
+        github.git_data.commits.get user, repo, sha
         a_get("/repos/#{user}/#{repo}/git/commits/#{sha}").should have_been_made
       end
 
       it "should get commit information" do
-        commit = github.git_data.commit user, repo, sha
+        commit = github.git_data.commits.get user, repo, sha
         commit.author.name.should eql "Scott Chacon"
       end
 
       it "should return mash" do
-        commit = github.git_data.commit user, repo, sha
+        commit = github.git_data.commits.get user, repo, sha
         commit.should be_a Hashie::Mash
       end
     end
@@ -47,18 +46,20 @@ describe Github::GitData::Commits, :type => :base do
     context "resource not found" do
       before do
         stub_get("/repos/#{user}/#{repo}/git/commits/#{sha}").
-          to_return(:body => fixture('git_data/commit.json'), :status => 404, :headers => {:content_type => "application/json; charset=utf-8"})
+          to_return(:body => fixture('git_data/commit.json'),
+            :status => 404,
+            :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
       it "should fail to retrive resource" do
         expect {
-          github.git_data.commit user, repo, sha
+          github.git_data.commits.get user, repo, sha
         }.to raise_error(Github::Error::NotFound)
       end
     end
-  end # commit
+  end # get
 
-  describe "create_commit" do
+  describe "#create" do
     let(:inputs) {
       {
         "message" =>  "my commit message",
@@ -84,34 +85,34 @@ describe Github::GitData::Commits, :type => :base do
 
       it "should fail to create resource if 'message' input is missing" do
         expect {
-          github.git_data.create_commit user, repo, inputs.except('message')
+          github.git_data.commits.create user, repo, inputs.except('message')
         }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should fail to create resource if 'tree' input is missing" do
         expect {
-          github.git_data.create_commit user, repo, inputs.except('tree')
+          github.git_data.commits.create user, repo, inputs.except('tree')
         }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should fail to create resource if 'parents' input is missing" do
         expect {
-          github.git_data.create_commit user, repo, inputs.except('parents')
+          github.git_data.commits.create user, repo, inputs.except('parents')
         }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should create resource successfully" do
-        github.git_data.create_commit user, repo, inputs
+        github.git_data.commits.create user, repo, inputs
         a_post("/repos/#{user}/#{repo}/git/commits").with(inputs).should have_been_made
       end
 
       it "should return the resource" do
-        commit = github.git_data.create_commit user, repo, inputs
+        commit = github.git_data.commits.create user, repo, inputs
         commit.should be_a Hashie::Mash
       end
 
       it "should get the commit information" do
-        commit = github.git_data.create_commit user, repo, inputs
+        commit = github.git_data.commits.create user, repo, inputs
         commit.author.name.should eql "Scott Chacon"
       end
     end
@@ -124,10 +125,10 @@ describe Github::GitData::Commits, :type => :base do
 
       it "should faile to retrieve resource" do
         expect {
-          github.git_data.create_commit user, repo, inputs
+          github.git_data.commits.create user, repo, inputs
         }.to raise_error(Github::Error::NotFound)
       end
     end
-  end # create_commit
+  end # create
 
 end # Github::GitData::Commits

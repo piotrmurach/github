@@ -48,7 +48,7 @@ module Github
       _filter_params_keys(VALID_BLOB_PARAM_NAMES, params)
       _validate_inputs(VALID_BLOB_PARAM_NAMES, params)
 
-      post("/repos/#{user}/#{repo}/git/blobs", params)
+      post_request("/repos/#{user}/#{repo}/git/blobs", params)
     end
 
   end # GitData::Blobs
