@@ -99,7 +99,7 @@ module Github
     #
     # = Examples
     #  github = Github.new
-    #  github.git_data.references.create 'user-name', 'repo-name',
+    #  github.git_data.references.update 'user-name', 'repo-name',
     #    "sha" =>  "827efc6d56897b048c772eb4087f854f46256132",
     #    "force" => true
     #
@@ -113,7 +113,7 @@ module Github
       _filter_params_keys(VALID_REF_PARAM_NAMES, params)
       _validate_inputs(%w[ sha ], params)
 
-      patch("/repos/#{user}/#{repo}/git/refs/#{ref}", params)
+      patch_request("/repos/#{user}/#{repo}/git/refs/#{ref}", params)
     end
 
   private

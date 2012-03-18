@@ -12,9 +12,8 @@ describe Github::GitData::Tags do
 
   it { described_class::VALID_TAG_PARAM_NAMES.should_not be_nil }
 
-  describe "tag" do
-    it { github.git_data.should respond_to :tag }
-    it { github.git_data.should respond_to :get_tag }
+  describe "#get" do
+    it { github.git_data.tags.should respond_to :find }
 
     context "resource found" do
       before do
@@ -23,21 +22,23 @@ describe Github::GitData::Tags do
       end
 
       it "should fail to get resource without sha" do
-        expect { github.git_data.tag(user, repo, nil)}.to raise_error(ArgumentError)
+        expect {
+          github.git_data.tags.get user, repo, nil
+        }.to raise_error(ArgumentError)
       end
 
       it "should get the resource" do
-        github.git_data.tag user, repo, sha
+        github.git_data.tags.get user, repo, sha
         a_get("/repos/#{user}/#{repo}/git/tags/#{sha}").should have_been_made
       end
 
       it "should get tag information" do
-        tag = github.git_data.tag user, repo, sha
+        tag = github.git_data.tags.get user, repo, sha
         tag.tag.should eql "v0.0.1"
       end
 
       it "should return mash" do
-        tag = github.git_data.tag user, repo, sha
+        tag = github.git_data.tags.get user, repo, sha
         tag.should be_a Hashie::Mash
       end
     end
@@ -50,13 +51,13 @@ describe Github::GitData::Tags do
 
       it "should fail to retrive resource" do
         expect {
-          github.git_data.tag user, repo, sha
+          github.git_data.tags.get user, repo, sha
         }.to raise_error(Github::Error::NotFound)
       end
     end
-  end # tag
+  end # get
 
-  describe "create_tag" do
+  describe "#create" do
     let(:inputs) {
       {
         "tag" => "v0.0.1",
@@ -83,17 +84,17 @@ describe Github::GitData::Tags do
       end
 
       it "should create resource successfully" do
-        github.git_data.create_tag user, repo, inputs
+        github.git_data.tags.create user, repo, inputs
         a_post("/repos/#{user}/#{repo}/git/tags").with(inputs).should have_been_made
       end
 
       it "should return the resource" do
-        tag = github.git_data.create_tag user, repo, inputs
+        tag = github.git_data.tags.create user, repo, inputs
         tag.should be_a Hashie::Mash
       end
 
       it "should get the tag information" do
-        tag = github.git_data.create_tag user, repo, inputs
+        tag = github.git_data.tags.create user, repo, inputs
         tag.sha.should == sha
       end
     end
@@ -107,10 +108,10 @@ describe Github::GitData::Tags do
 
       it "should faile to retrieve resource" do
         expect {
-          github.git_data.create_tag user, repo, inputs
+          github.git_data.tags.create user, repo, inputs
         }.to raise_error(Github::Error::NotFound)
       end
     end
-  end # create_tag
+  end # create
 
 end # Github::GitData::Tags
