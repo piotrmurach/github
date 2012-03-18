@@ -80,7 +80,7 @@ module Github
     :PageLinks    => 'page_links',
     :PageIterator => 'page_iterator',
     :PagedRequest => 'paged_request',
-    :Validation   => 'validation',
+    :Validations  => 'validations',
     :Filter       => 'filter'
 
 end # Github

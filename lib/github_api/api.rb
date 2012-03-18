@@ -2,7 +2,7 @@
 
 require 'github_api/configuration'
 require 'github_api/connection'
-require 'github_api/validation'
+require 'github_api/validations'
 require 'github_api/request'
 require 'github_api/mime_type'
 require 'github_api/core_ext/hash'
@@ -19,8 +19,10 @@ module Github
     include MimeType
     include Connection
     include Request
-    include Validation
+    # TODO Validation & Filter will be optional
+    include Validations
     include Filter
+
 
     attr_reader *Configuration::VALID_OPTIONS_KEYS
     attr_accessor *VALID_API_KEYS
