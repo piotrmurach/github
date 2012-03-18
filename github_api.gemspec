@@ -30,4 +30,22 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'guard-cucumber', '0.7.4'
   gem.add_development_dependency 'rake'
   gem.add_development_dependency 'bundler'
+
+  gem.post_install_message = %{
+--------------------------------------------------------------------------------
+Thank you for installing github_api-#{Github::VERSION::STRING.dup}.
+
+*NOTE*: Version 0.5.0 introduces breaking changes to the way github api is queried.
+The interface has been rewritten to be more consistent with REST verbs that
+interact with GitHub hypermedia resources. Thus, to list resources 'list' or 'all'
+verb is used, to retrieve individual resource 'get' or 'find' verbs are used.
+Further CRUDE operations on all resources use preditable verbs as well.
+
+Again sorry for inconvenience but I trust that this will help in easier access to
+the GitHub API.
+
+For more information: http://rubydoc.info/github/peter-murach/github/master/frames
+
+--------------------------------------------------------------------------------
+  }
 end
