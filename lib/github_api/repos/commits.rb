@@ -11,6 +11,23 @@ module Github
         position
       ].freeze
 
+      # Compares two commits
+      #
+      # = Examples
+      #  github = Github.new
+      #  github.repos.commits.compare
+      #    'user-name',
+      #    'repo-name',
+      #    'v0.4.8',
+      #    'master'
+      #
+      def compare(user_name, repo_name, base, head, params={})
+        _validate_presence_of base, head
+        _normalize_params_keys(params)
+
+        get_request("/repos/#{user_name}/#{repo_name}/compare/#{base}...#{head}", params)
+      end
+
       # Creates a commit comment
       #
       # = Inputs

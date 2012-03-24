@@ -7,6 +7,36 @@ describe Github::Repos::Commits do
 
   after { github.user, github.repo, github.oauth_token = nil, nil, nil }
 
+  describe "#compare" do
+    let(:base) { 'master' }
+    let(:head) { 'topic' }
+
+    context 'resource found' do
+      before do
+        stub_get("/repos/#{user}/#{repo}/compare/#{base}...#{head}").
+          to_return(:body => fixture('repos/commit_comparison.json'),
+            :status => 200,
+            :headers => {:content_type => "application/json; charset=utf-8"})
+      end
+
+      it "should fail to get resource without base" do
+        expect {
+          github.repos.commits.compare user, repo, nil, head
+        }.to raise_error(ArgumentError)
+      end
+
+      it "should compare successfully" do
+        github.repos.commits.compare user, repo, base, head
+        a_get("/repos/#{user}/#{repo}/compare/#{base}...#{head}").should have_been_made
+      end
+
+      it "should get comparison information" do
+        commit = github.repos.commits.compare user, repo, base, head
+        commit.base_commit.commit.author.name.should == 'Monalisa Octocat'
+      end
+    end
+  end # compare
+
   describe "#list" do
     it { github.repos.commits.should respond_to :all }
 
