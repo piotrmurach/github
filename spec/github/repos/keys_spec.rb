@@ -9,30 +9,33 @@ describe Github::Repos::Keys do
 
   it { described_class::VALID_KEY_PARAM_NAMES.should_not be_nil }
 
-  describe "keys" do
+  describe "#list" do
+    it { github.repos.keys.should respond_to :all }
+
     context "resource found" do
       before do
         stub_get("/repos/#{user}/#{repo}/keys").
-          to_return(:body => fixture("repos/keys.json"), :status => 200, :headers => {})
+          to_return(:body => fixture("repos/keys.json"),
+            :status => 200, :headers => {})
       end
 
       it "should fail to get resource without username" do
-        expect { github.repos.keys }.to raise_error(ArgumentError)
+        expect { github.repos.keys.list }.to raise_error(ArgumentError)
       end
 
       it "should get the resources" do
-        github.repos.keys(user, repo)
+        github.repos.keys.list user, repo
         a_get("/repos/#{user}/#{repo}/keys").should have_been_made
       end
 
       it "should return array of resources" do
-        keys = github.repos.keys(user, repo)
+        keys = github.repos.keys.list user, repo
         keys.should be_an Array
         keys.should have(1).items
       end
 
       it "should get key information" do
-        keys = github.repos.keys(user, repo)
+        keys = github.repos.keys.list user, repo
         keys.first.title.should == 'octocat@octomac'
       end
     end
@@ -45,14 +48,16 @@ describe Github::Repos::Keys do
 
       it "should fail to retrieve resource" do
         expect {
-          github.repos.keys user, repo
+          github.repos.keys.list user, repo
         }.to raise_error(Github::Error::NotFound)
       end
     end
-  end
+  end # list
 
-  describe "get_key" do
+  describe "#get" do
     let(:key_id) { 1 }
+
+    it { github.repos.keys.should respond_to :find }
 
     context "resource found" do
       before do
@@ -62,17 +67,17 @@ describe Github::Repos::Keys do
 
       it "should fail to get resource without key" do
         expect {
-          github.repos.get_key(user, repo, nil)
+          github.repos.keys.get user, repo, nil
         }.to raise_error(ArgumentError)
       end
 
       it "should get the resource" do
-        github.repos.get_key(user, repo, key_id)
+        github.repos.keys.get user, repo, key_id
         a_get("/repos/#{user}/#{repo}/keys/#{key_id}").should have_been_made
       end
 
       it "should get key information" do
-        key = github.repos.get_key(user, repo, key_id)
+        key = github.repos.keys.get user, repo, key_id
         key.id.should == key_id
       end
     end
@@ -85,13 +90,13 @@ describe Github::Repos::Keys do
 
       it "should fail to retrieve resource" do
         expect {
-          github.repos.get_key(user, repo, key_id)
+          github.repos.keys.get user, repo, key_id
         }.to raise_error(Github::Error::NotFound)
       end
     end
-  end
+  end # get
 
-  describe "create_key" do
+  describe "#create" do
     let(:inputs) { {:title => "octocat@octomac", :key => "ssh-rsa AAA..." } }
 
     context "resource created" do
@@ -102,23 +107,23 @@ describe Github::Repos::Keys do
 
       it "should fail to create resource if 'title' input is missing" do
         expect {
-          github.repos.create_key(user, repo, :key => 'ssh-rsa AAA...')
+          github.repos.keys.create user, repo, :key => 'ssh-rsa AAA...'
         }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should fail to create resource if 'key' input is missing" do
         expect {
-          github.repos.create_key(user, repo, :title => 'octocat@octomac')
+          github.repos.keys.create user, repo, :title => 'octocat@octomac'
         }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should create the resource" do
-        github.repos.create_key(user, repo, inputs)
+        github.repos.keys.create user, repo, inputs
         a_post("/repos/#{user}/#{repo}/keys").with(inputs).should have_been_made
       end
 
       it "should get the key information back" do
-        key = github.repos.create_key(user, repo, inputs)
+        key = github.repos.keys.create user, repo, inputs
         key.title.should == 'octocat@octomac'
       end
     end
@@ -131,13 +136,13 @@ describe Github::Repos::Keys do
 
       it "should fail to retrieve resource" do
         expect {
-          github.repos.create_key(user, repo, inputs)
+          github.repos.keys.create user, repo, inputs
         }.to raise_error(Github::Error::NotFound)
       end
     end
-  end
+  end # create
 
-  describe "edit_key" do
+  describe "#edit" do
     let(:key_id) { 1 }
     let(:inputs) { {:title => "octocat@octomac", :key => "ssh-rsa AAA..." } }
 
@@ -148,12 +153,12 @@ describe Github::Repos::Keys do
       end
 
       it "should edit the resource" do
-        github.repos.edit_key(user, repo, key_id, inputs)
+        github.repos.keys.edit user, repo, key_id, inputs
         a_patch("/repos/#{user}/#{repo}/keys/#{key_id}").should have_been_made
       end
 
       it "should get the key information back" do
-        key = github.repos.edit_key(user, repo, key_id, inputs)
+        key = github.repos.keys.edit user, repo, key_id, inputs
         key.id.should == key_id
         key.title.should == 'octocat@octomac'
       end
@@ -167,34 +172,34 @@ describe Github::Repos::Keys do
 
       it "should fail to retrieve resource" do
         expect {
-          github.repos.edit_key(user, repo, key_id, inputs)
+          github.repos.keys.edit user, repo, key_id, inputs
         }.to raise_error(Github::Error::NotFound)
       end
     end
-  end
+  end # edit
 
-  describe "delete_key" do
+  describe "#delete" do
     let(:key_id) { 1 }
 
     context "resource found successfully" do
       before do
         stub_delete("/repos/#{user}/#{repo}/keys/#{key_id}").
-          to_return(:body => "", :status => 204, :headers => { :content_type => "application/json; charset=utf-8"} )
+          to_return(:body => "", :status => 204,
+            :headers => { :content_type => "application/json; charset=utf-8"} )
       end
 
       it "should fail to delete without 'user/repo' parameters" do
-        github.user, github.repo = nil, nil
-        expect { github.repos.delete_key }.to raise_error(ArgumentError)
+        expect { github.repos.keys.delete }.to raise_error(ArgumentError)
       end
 
       it "should fail to delete resource without key id" do
         expect {
-          github.repos.delete_key user, repo, nil
+          github.repos.keys.delete user, repo, nil
         }.to raise_error(ArgumentError)
       end
 
       it "should delete the resource" do
-        github.repos.delete_key(user, repo, key_id)
+        github.repos.keys.delete user, repo, key_id
         a_delete("/repos/#{user}/#{repo}/keys/#{key_id}").should have_been_made
       end
     end
@@ -206,10 +211,10 @@ describe Github::Repos::Keys do
       end
       it "should fail to find resource" do
         expect {
-          github.repos.delete_key(user, repo, key_id)
+          github.repos.keys.delete user, repo, key_id
         }.to raise_error(Github::Error::NotFound)
       end
     end
-  end
+  end # delete
 
 end # Github::Repos::Keys
