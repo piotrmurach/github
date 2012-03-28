@@ -125,7 +125,7 @@ describe Github::Repos do
   end # contributors
 
   describe "create_repo" do
-    let(:inputs) { {:name => 'web', :description => "This is your first repo", :homepage => "https://github.com", :public => true, :has_issues => true, :has_wiki => true}}
+    let(:inputs) { {:name => 'web', :description => "This is your first repo", :homepage => "https://github.com", :private => false, :has_issues => true, :has_wiki => true}}
 
     context "resource created successfully for the authenticated user" do
       before do
@@ -202,7 +202,7 @@ describe Github::Repos do
       { :name => 'web',
         :description => "This is your first repo",
         :homepage => "https://github.com",
-        :public => true,
+        :private => false,
         :has_issues => true,
         :has_wiki => true }
     end
