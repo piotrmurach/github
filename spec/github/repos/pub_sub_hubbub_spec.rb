@@ -25,7 +25,7 @@ describe Github::Repos::PubSubHubbub do
       end
 
       it "should subscribe to hub" do
-        github.repos.subscribe topic, callback
+        github.repos.pubsubhubbub.subscribe topic, callback
         a_post("/hub?access_token=#{OAUTH_TOKEN}").with(hub_inputs).should have_been_made
       end
     end
@@ -39,7 +39,7 @@ describe Github::Repos::PubSubHubbub do
 
       it "should fail to subscribe to hub" do
         expect {
-          github.repos.subscribe topic, callback
+          github.repos.pubsubhubbub.subscribe topic, callback
         }.to raise_error(Github::Error::NotFound)
       end
     end
@@ -54,7 +54,7 @@ describe Github::Repos::PubSubHubbub do
       end
 
       it "should subscribe to hub" do
-        github.repos.unsubscribe topic, callback
+        github.repos.pubsubhubbub.unsubscribe topic, callback
         a_post("/hub?access_token=#{OAUTH_TOKEN}").with(hub_inputs).should have_been_made
       end
     end
@@ -68,7 +68,7 @@ describe Github::Repos::PubSubHubbub do
 
       it "should fail to subscribe to hub" do
         expect {
-          github.repos.unsubscribe topic, callback
+          github.repos.pubsubhubbub.unsubscribe topic, callback
         }.to raise_error(Github::Error::NotFound)
       end
     end
