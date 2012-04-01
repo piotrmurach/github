@@ -15,15 +15,6 @@ module Github
       :Watching      => 'watching',
       :PubSubHubbub  => 'pub_sub_hubbub'
 
-    include Github::Repos::Collaborators
-    include Github::Repos::Commits
-    include Github::Repos::Downloads
-    include Github::Repos::Forks
-    include Github::Repos::Hooks
-    include Github::Repos::Keys
-    include Github::Repos::Watching
-    include Github::Repos::PubSubHubbub
-
     DEFAULT_REPO_OPTIONS = {
       "homepage"   => "https://github.com",
       "public"     => true,
@@ -49,22 +40,62 @@ module Github
       super(options)
     end
 
+    # Access to Repos::Collaborators API
+    def collaborators
+      @collaborators ||= ApiFactory.new 'Repos::Collaborators'
+    end
+
+    # Access to Repos::Commits API
+    def commits
+      @commits ||= ApiFactory.new 'Repos::Commits'
+    end
+
+    # Access to Repos::Downloads API
+    def downloads
+      @downloads ||= ApiFactory.new 'Repos::Downloads'
+    end
+
+    # Access to Repos::Forks API
+    def forks
+      @forks ||= ApiFactory.new 'Repos::Forks'
+    end
+
+    # Access to Repos::Hooks API
+    def hooks
+      @hooks ||= ApiFactory.new 'Repos::Hooks'
+    end
+
+    # Access to Repos::Keys API
+    def keys
+      @keys ||= ApiFactory.new 'Repos::Keys'
+    end
+
+    # Access to Repos::Watchin API
+    def watching
+      @watching ||= ApiFactory.new 'Repos::Watching'
+    end
+
+    # Access to Repos::Watchin API
+    def pubsubhubbub
+      @pubsubhubbub ||= ApiFactory.new 'Repos::PubSubHubbub'
+    end
+
     # List branches
     #
     # = Examples
     #
-    #   @github = Github.new
-    #   @github.repos.branches 'user-name', 'repo-name'
+    #   github = Github.new
+    #   github.repos.branches 'user-name', 'repo-name'
     #
-    #   @repos = Github::Repos.new
-    #   @repos.branches 'user-name', 'repo-name'
+    #   repos = Github::Repos.new
+    #   repos.branches 'user-name', 'repo-name'
     #
     def branches(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless (user? && repo?)
       _normalize_params_keys(params)
 
-      response = get("/repos/#{user}/#{repo}/branches", params)
+      response = get_request("/repos/#{user}/#{repo}/branches", params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -82,8 +113,8 @@ module Github
     #  <tt>:has_downloads</tt> Optional boolean - <tt>true</tt> to enable downloads for this repository
     #
     # = Examples
-    #  @github = Github.new
-    #  @github.repos.create_repo "name" => 'repo-name'
+    #  github = Github.new
+    #  github.repos.create "name" => 'repo-name'
     #    "description": "This is your first repo",
     #    "homepage": "https://github.com",
     #    "public": true,
@@ -95,10 +126,10 @@ module Github
     # must be a member of this organisation
     #
     # Examples:
-    #   @github = Github.new :oauth_token => '...'
-    #   @github.repos.create_repo :name => 'repo-name', :org => 'organisation-name'
+    #   github = Github.new :oauth_token => '...'
+    #   github.repos.create :name => 'repo-name', :org => 'organisation-name'
     #
-    def create_repo(*args)
+    def create(*args)
       params = args.last.is_a?(Hash) ? args.pop : {}
       _normalize_params_keys(params)
       _filter_params_keys(VALID_REPO_OPTIONS + %w[ org ], params)
@@ -111,12 +142,11 @@ module Github
 
       # Requires authenticated user
       if (org = params.delete("org"))
-        post("/orgs/#{org}/repos", DEFAULT_REPO_OPTIONS.merge(params))
+        post_request("/orgs/#{org}/repos", DEFAULT_REPO_OPTIONS.merge(params))
       else
-        post("/user/repos", DEFAULT_REPO_OPTIONS.merge(params))
+        post_request("/user/repos", DEFAULT_REPO_OPTIONS.merge(params))
       end
     end
-    alias :create_repository :create_repo
 
     # List contributors
     #
@@ -125,17 +155,17 @@ module Github
     #
     # = Examples
     #
-    #  @github = Github.new
-    #  @github.repos.contributors 'user-name','repo-name'
-    #  @github.repos.contributors 'user-name','repo-name' { |cont| ... }
+    #  github = Github.new
+    #  github.repos.contributors 'user-name','repo-name'
+    #  github.repos.contributors 'user-name','repo-name' { |cont| ... }
     #
-    def contributors(user_name=nil, repo_name=nil, params={})
+    def contributors(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
       _normalize_params_keys(params)
       _filter_params_keys(['anon'], params)
 
-      response = get("/repos/#{user}/#{repo}/contributors", params)
+      response = get_request("/repos/#{user}/#{repo}/contributors", params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -155,10 +185,14 @@ module Github
     #
     # = Examples
     #
-    #  @github = Github.new
-    #  @github.repos.edit_repo('user-name', 'repo-name', { :name => 'hello-world', :description => 'This is your first repo', :homepage => "https://github.com", :public => true, :has_issues => true })
+    #  github = Github.new
+    #  github.repos.edit 'user-name', 'repo-name',
+    #    :name => 'hello-world',
+    #    :description => 'This is your first repo',
+    #    :homepage => "https://github.com",
+    #    :public => true, :has_issues => true
     #
-    def edit_repo(user_name=nil, repo_name=nil, params={})
+    def edit(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
 
@@ -169,39 +203,37 @@ module Github
         raise ArgumentError, "Required params are: #{%w[ :name ] }"
       end
 
-      patch("/repos/#{user}/#{repo}", DEFAULT_REPO_OPTIONS.merge(params))
+      patch_request("/repos/#{user}/#{repo}", DEFAULT_REPO_OPTIONS.merge(params))
     end
-    alias :edit_repository :edit_repo
 
     # Get a repository
     #
     # = Examples
-    #  @github = Github.new
-    #  @github.repos.get_repo('user-name', 'repo-name')
+    #  github = Github.new
+    #  github.repos.get 'user-name', 'repo-name'
     #
-    def get_repo(user_name=nil, repo_name=nil, params={})
+    def get(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
       _normalize_params_keys(params)
 
-      get("/repos/#{user}/#{repo}", params)
+      get_request("/repos/#{user}/#{repo}", params)
     end
-    alias :get_repository :get_repo
-
+    alias :find :get
 
     # List languages
     #
     # = Examples
-    #  @github = Github.new
-    #  @github.repos.languages('user-name', 'repo-name')
-    #  @github.repos.languages('user-name', 'repo-name') { |lang| ... }
+    #  github = Github.new
+    #  github.repos.languages 'user-name', 'repo-name'
+    #  github.repos.languages 'user-name', 'repo-name' { |lang| ... }
     #
-    def languages(user_name=nil, repo_name=nil, params={})
+    def languages(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
       _normalize_params_keys(params)
 
-      response = get("/repos/#{user}/#{repo}/languages", params)
+      response = get_request("/repos/#{user}/#{repo}/languages", params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -210,57 +242,56 @@ module Github
     # List repositories for the authenticated user
     #
     # = Examples
-    #   @github = Github.new :oauth_token => '...'
-    #   @github.repos.list_repos
-    #   @github.repos.list_repos { |repo| ... }
+    #   github = Github.new :oauth_token => '...'
+    #   github.repos.list
+    #   github.repos.list { |repo| ... }
     #
     # List public repositories for the specified user.
     #
     # = Examples
     #   github = Github.new
-    #   github.repos.list_repos :user => 'user-name'
-    #   github.repos.list_repos :user => 'user-name', { |repo| ... }
+    #   github.repos.list :user => 'user-name'
+    #   github.repos.list :user => 'user-name', { |repo| ... }
     #
     # List repositories for the specified organisation.
     #
     # = Examples
-    #  @github = Github.new
-    #  @github.repos.list_repos :org => 'org-name'
-    #  @github.repos.list_repos :org => 'org-name', { |repo| ... }
+    #  github = Github.new
+    #  github.repos.list :org => 'org-name'
+    #  github.repos.list :org => 'org-name', { |repo| ... }
     #
-    def repos(*args)
+    def list(*args)
       params = args.last.is_a?(Hash) ? args.pop : {}
       _normalize_params_keys(params)
       _merge_user_into_params!(params) unless params.has_key?('user')
       _filter_params_keys(%w[ org user type ], params)
 
       response = if (user_name = params.delete("user"))
-        get("/users/#{user_name}/repos", params)
+        get_request("/users/#{user_name}/repos", params)
       elsif (org_name = params.delete("org"))
-        get("/orgs/#{org_name}/repos", params)
+        get_request("/orgs/#{org_name}/repos", params)
       else
         # For authenticated user
-        get("/user/repos", params)
+        get_request("/user/repos", params)
       end
       return response unless block_given?
       response.each { |el| yield el }
     end
-    alias :list_repos :repos
-    alias :list_repositories :repos
+    alias :all :list
 
     # List tags
     #
     # = Examples
-    #   @github = Github.new
-    #   @github.repos.tags('user-name', 'repo-name')
-    #   @github.repos.tags('user-name', 'repo-name') { |tag| ... }
+    #   github = Github.new
+    #   github.repos.tags 'user-name', 'repo-name'
+    #   github.repos.tags 'user-name', 'repo-name' { |tag| ... }
     #
-    def tags(user_name=nil, repo_name=nil, params={})
+    def tags(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
       _normalize_params_keys(params)
 
-      response = get("/repos/#{user}/#{repo}/tags", params)
+      response = get_request("/repos/#{user}/#{repo}/tags", params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -271,16 +302,16 @@ module Github
     # List teams
     #
     # == Examples
-    #   @github = Github.new
-    #   @github.repos.teams('user-name', 'repo-name')
-    #   @github.repos.teams('user-name', 'repo-name') { |team| ... }
+    #   github = Github.new
+    #   github.repos.teams 'user-name', 'repo-name'
+    #   github.repos.teams 'user-name', 'repo-name' { |team| ... }
     #
-    def teams(user_name=nil, repo_name=nil, params={})
+    def teams(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
       _normalize_params_keys(params)
 
-      response = get("/repos/#{user}/#{repo}/teams", params)
+      response = get_request("/repos/#{user}/#{repo}/teams", params)
       return response unless block_given?
       response.each { |el| yield el }
     end
