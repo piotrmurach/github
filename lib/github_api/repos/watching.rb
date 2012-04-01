@@ -15,7 +15,7 @@ module Github
       _validate_user_repo_params(user, repo) unless user? && repo?
       _normalize_params_keys(params)
 
-      response = get("/repos/#{user}/#{repo}/watchers", params)
+      response = get_request("/repos/#{user}/#{repo}/watchers", params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -38,9 +38,9 @@ module Github
       _merge_user_into_params!(params) unless params.has_key?('user')
 
       response = if (user_name = params.delete('user'))
-        get("/users/#{user_name}/watched", params)
+        get_request("/users/#{user_name}/watched", params)
       else
-        get("/user/watched", params)
+        get_request("/user/watched", params)
       end
       return response unless block_given?
       response.each { |el| yield el }
@@ -56,7 +56,7 @@ module Github
     def watching?(user_name, repo_name, params={})
       _validate_presence_of user_name, repo_name
       _normalize_params_keys(params)
-      get("/user/watched/#{user_name}/#{repo_name}", params)
+      get_request("/user/watched/#{user_name}/#{repo_name}", params)
       true
     rescue Github::Error::NotFound
       false

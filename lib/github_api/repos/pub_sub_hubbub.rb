@@ -22,7 +22,7 @@ module Github
       _normalize_params_keys(params)
       _merge_action!("subscribe", topic, callback, params)
 
-      post("/hub", params)
+      post_request("/hub", params)
     end
 
     # Unsubscribe from existing topic/event through pubsubhubbub
@@ -44,7 +44,7 @@ module Github
       _normalize_params_keys(params)
       _merge_action!("unsubscribe", topic, callback, params)
 
-      post("/hub", params)
+      post_request("/hub", params)
     end
 
     # Subscribe repository to service hook through pubsubhubbub
