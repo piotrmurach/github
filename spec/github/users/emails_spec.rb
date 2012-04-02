@@ -7,7 +7,9 @@ describe Github::Users::Emails do
   before { github.oauth_token = OAUTH_TOKEN }
   after { reset_authentication_for github }
 
-  describe "#emails" do
+  describe "#list" do
+    it { github.users.emails.should respond_to :all }
+
     context "resource found for an authenticated user" do
       before do
         stub_get("/user/emails").
@@ -18,26 +20,26 @@ describe Github::Users::Emails do
       end
 
       it "should get the resources" do
-        github.users.emails
+        github.users.emails.list
         a_get("/user/emails").
           with(:query => { :access_token => "#{OAUTH_TOKEN}"}).
           should have_been_made
       end
 
       it "should return resource" do
-        emails = github.users.emails
+        emails = github.users.emails.list
         emails.should be_an Array
         emails.should have(2).items
       end
 
       it "should get emails information" do
-        emails = github.users.emails
+        emails = github.users.emails.list
         emails.first.should == email
       end
 
       it "should yield to a block" do
-        github.users.should_receive(:emails).and_yield('web')
-        github.users.emails { |param| 'web' }
+        github.users.emails.should_receive(:list).and_yield('web')
+        github.users.emails.list { |param| 'web' }
       end
     end
 
@@ -50,13 +52,13 @@ describe Github::Users::Emails do
 
       it "should return 404 with a message 'Not Found'" do
         expect {
-          github.users.emails
+          github.users.emails.list
         }.to raise_error(Github::Error::NotFound)
       end
     end
   end # emails
 
-  context '#add_email' do
+  context '#add' do
     let(:params) { { :per_page => 21, :page => 1 }}
 
     before do
@@ -68,20 +70,20 @@ describe Github::Users::Emails do
     end
 
     it 'extracts request parameters and email data' do
-      github.users.should_receive(:post).
+      github.users.emails.should_receive(:post_request).
         with("/user/emails", { "per_page" => 21, "page" => 1, "data" => [email] })
-      github.users.add_email email, params
+      github.users.emails.add email, params
     end
 
     it 'submits request successfully' do
-      github.users.add_email email
+      github.users.emails.add email
       a_post("/user/emails").
         with(:query => { :access_token => "#{OAUTH_TOKEN}"}).
         should have_been_made
     end
-  end # add_email
+  end # add
 
-  context '#delete_email' do
+  context '#delete' do
     let(:params) { { :per_page => 21, :page => 1 }}
 
     before do
@@ -93,17 +95,17 @@ describe Github::Users::Emails do
     end
 
     it 'extracts request parameters and email data' do
-      github.users.should_receive(:delete).
+      github.users.emails.should_receive(:delete_request).
         with("/user/emails", { "per_page" => 21, "page" => 1, "data" => [email] })
-      github.users.delete_email email, params
+      github.users.emails.delete email, params
     end
 
     it 'submits request successfully' do
-      github.users.delete_email email
+      github.users.emails.delete email
       a_delete("/user/emails").
         with(:query => { :access_token => "#{OAUTH_TOKEN}", :data => email } ).
         should have_been_made
     end
-  end # delete_email
+  end # delete
 
 end # Github::Users::Emails
