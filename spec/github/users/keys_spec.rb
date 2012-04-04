@@ -7,7 +7,9 @@ describe Github::Users::Keys do
   before { github.oauth_token = OAUTH_TOKEN }
   after { reset_authentication_for github }
 
-  describe "#keys" do
+  describe "#list" do
+    it { github.users.keys.should respond_to :all }
+
     context "resource found for an authenticated user" do
       before do
         stub_get("/user/keys").
@@ -18,26 +20,26 @@ describe Github::Users::Keys do
       end
 
       it "should get the resources" do
-        github.users.keys
+        github.users.keys.list
         a_get("/user/keys").
           with(:query => { :access_token => "#{OAUTH_TOKEN}"}).
           should have_been_made
       end
 
       it "should return resource" do
-        keys = github.users.keys
+        keys = github.users.keys.list
         keys.should be_an Array
         keys.should have(1).item
       end
 
       it "should get keys information" do
-        keys = github.users.keys
+        keys = github.users.keys.list
         keys.first.id.should == key_id
       end
 
       it "should yield to a block" do
-        github.users.should_receive(:keys).and_yield('web')
-        github.users.keys { |param| 'web' }
+        github.users.keys.should_receive(:list).and_yield('web')
+        github.users.keys.list { |param| 'web' }
       end
     end
 
@@ -50,13 +52,15 @@ describe Github::Users::Keys do
 
       it "should return 404 with a message 'Not Found'" do
         expect {
-          github.users.keys
+          github.users.keys.list
         }.to raise_error(Github::Error::NotFound)
       end
     end
-  end # keys
+  end # list
 
-  describe "#key" do
+  describe "#get" do
+    it { github.users.keys.should respond_to :find }
+
     context "resource found for an authenticated user" do
       before do
         stub_get("/user/keys/#{key_id}").
@@ -67,24 +71,24 @@ describe Github::Users::Keys do
       end
 
       it "should fail to get resource without key id" do
-        expect { github.users.key nil }.to raise_error(ArgumentError)
+        expect { github.users.keys.get nil }.to raise_error(ArgumentError)
       end
 
       it "should get the resource" do
-        github.users.key key_id
+        github.users.keys.get key_id
         a_get("/user/keys/#{key_id}").
           with(:query => { :access_token => "#{OAUTH_TOKEN}"}).
           should have_been_made
       end
 
       it "should get public key information" do
-        key = github.users.key key_id
+        key = github.users.keys.get key_id
         key.id.should == key_id
         key.title.should == 'octocat@octomac'
       end
 
       it "should return mash" do
-        key = github.users.key key_id
+        key = github.users.keys.get key_id
         key.should be_a Hashie::Mash
       end
     end
@@ -100,13 +104,13 @@ describe Github::Users::Keys do
 
       it "should fail to retrive resource" do
         expect {
-          github.users.key key_id
+          github.users.keys.get key_id
         }.to raise_error(Github::Error::NotFound)
       end
     end
-  end # key
+  end # get
 
-  describe "create_key" do
+  describe "#create" do
     let(:inputs) {
       {
         :title => "octocat@octomac",
@@ -125,18 +129,18 @@ describe Github::Users::Keys do
       end
 
       it "should create resource successfully" do
-        github.users.create_key inputs
+        github.users.keys.create inputs
         a_post("/user/keys?access_token=#{OAUTH_TOKEN}").
           with(inputs).should have_been_made
       end
 
       it "should return the resource" do
-        key = github.users.create_key inputs
+        key = github.users.keys.create inputs
         key.should be_a Hashie::Mash
       end
 
       it "should get the key information" do
-        key = github.users.create_key inputs
+        key = github.users.keys.create inputs
         key.title.should == 'octocat@octomac'
       end
     end
@@ -151,13 +155,13 @@ describe Github::Users::Keys do
 
       it "should fail to retrieve resource" do
         expect {
-          github.users.create_key inputs
+          github.users.keys.create inputs
         }.to raise_error(Github::Error::NotFound)
       end
     end
-  end # create_key
+  end # create
 
-  describe "#update_key" do
+  describe "#update" do
     let(:inputs) {
       {
         :title => "octocat@octomac",
@@ -176,22 +180,22 @@ describe Github::Users::Keys do
       end
 
       it "should fail to get resource without key id" do
-        expect { github.users.update_key nil }.to raise_error(ArgumentError)
+        expect { github.users.keys.update nil }.to raise_error(ArgumentError)
       end
 
       it "should create resource successfully" do
-        github.users.update_key key_id, inputs
+        github.users.keys.update key_id, inputs
         a_patch("/user/keys/#{key_id}?access_token=#{OAUTH_TOKEN}").
           with(inputs).should have_been_made
       end
 
       it "should return the resource" do
-        key = github.users.update_key key_id, inputs
+        key = github.users.keys.update key_id, inputs
         key.should be_a Hashie::Mash
       end
 
       it "should get the key information" do
-        key = github.users.update_key key_id, inputs
+        key = github.users.keys.update key_id, inputs
         key.title.should == 'octocat@octomac'
       end
     end
@@ -207,13 +211,13 @@ describe Github::Users::Keys do
 
       it "should fail to retrieve resource" do
         expect {
-          github.users.update_key key_id, inputs
+          github.users.keys.update key_id, inputs
         }.to raise_error(Github::Error::NotFound)
       end
     end
-  end # update_key
+  end # update
 
-  describe "#delete_key" do
+  describe "#delete" do
     context "resouce deleted" do
       before do
         stub_delete("/user/keys/#{key_id}?access_token=#{OAUTH_TOKEN}").
@@ -223,11 +227,11 @@ describe Github::Users::Keys do
       end
 
       it "should fail to get resource without key id" do
-        expect { github.users.delete_key nil }.to raise_error(ArgumentError)
+        expect { github.users.keys.delete nil }.to raise_error(ArgumentError)
       end
 
       it "should create resource successfully" do
-        github.users.delete_key key_id
+        github.users.keys.delete key_id
         a_delete("/user/keys/#{key_id}?access_token=#{OAUTH_TOKEN}").
           should have_been_made
       end
@@ -243,10 +247,10 @@ describe Github::Users::Keys do
 
       it "should fail to delete resource" do
         expect {
-          github.users.delete_key key_id
+          github.users.keys.delete key_id
         }.to raise_error(Github::Error::NotFound)
       end
     end
-  end # delete_key
+  end # delete
 
 end # Github::Users::Keys
