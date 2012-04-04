@@ -10,10 +10,6 @@ module Github
       :Followers => 'followers',
       :Keys      => 'keys'
 
-    include Github::Users::Emails
-    include Github::Users::Followers
-    include Github::Users::Keys
-
     VALID_USER_PARAMS_NAMES = %w[
       name
       email
@@ -29,27 +25,42 @@ module Github
       super(options)
     end
 
+    # Access to Users::Emails API
+    def emails
+      @emails ||= ApiFactory.new 'Users::Emails'
+    end
+
+    # Access to Users::Followers API
+    def followers
+      @followers ||= ApiFactory.new 'Users::Followers'
+    end
+
+    # Access to Users::Keys API
+    def keys
+      @keys ||= ApiFactory.new 'Users::Keys'
+    end
+
     # Get a single unauthenticated user
     #
     # = Examples
-    #  @github = Github.new
-    #  @github.users.get_user 'user-name'
+    #  github = Github.new
+    #  github.users.get 'user-name'
     #
     # Get the authenticated user
     #
     # = Examples
     #  @github = Github.new :oauth_token => '...'
-    #  @github.users.get_user
+    #  @github.users.get
     #
-    def get_user(user_name=nil, params={})
+    def get(user_name=nil, params={})
       _normalize_params_keys(params)
       if user_name
-        get("/users/#{user_name}", params)
+        get_request("/users/#{user_name}", params)
       else
-        get("/user", params)
+        get_request("/user", params)
       end
     end
-    alias :get_auth_user :get_user
+    alias :find :get
 
     # Update the authenticated user
     #
@@ -63,8 +74,8 @@ module Github
     # * <tt>:bio</tt> - Optional string
     #
     # = Examples
-    #  @github = Github.new :oauth_token => '..'
-    #  @github.users.update_user
+    #  github = Github.new :oauth_token => '..'
+    #  github.users.update
     #    "name" => "monalisa octocat",
     #    "email" => "octocat@github.com",
     #    "blog" => "https://github.com/blog",
@@ -73,12 +84,11 @@ module Github
     #    "hireable" => true,
     #    "bio" => "There once..."
     #
-    def update_user(params={})
+    def update(params={})
       _normalize_params_keys(params)
       _filter_params_keys(VALID_USER_PARAMS_NAMES, params)
-      patch("/user", params)
+      patch_request("/user", params)
     end
-    alias :update_authenticated_user :update_user
 
   end # Users
 end # Github
