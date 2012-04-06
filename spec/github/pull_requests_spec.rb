@@ -8,11 +8,8 @@ describe Github::PullRequests do
 
   after { reset_authentication_for github }
 
-  describe "#pull_requests" do
-    context 'check aliases' do
-      it { github.pull_requests.should respond_to :pulls }
-      it { github.pull_requests.should respond_to :requests }
-    end
+  describe "#list" do
+    it { github.pull_requests.should respond_to :all }
 
     context 'resource found' do
       let(:inputs) { { 'state'=> 'closed', 'unrelated' => true } }
@@ -26,34 +23,34 @@ describe Github::PullRequests do
       end
 
       it "throws error if pull_request id not provided" do
-        expect { github.pull_requests.pull_requests nil}.to raise_error(ArgumentError)
+        expect { github.pull_requests.list nil}.to raise_error(ArgumentError)
       end
 
       it "should get the resources" do
-        github.pull_requests.pull_requests user, repo, inputs
+        github.pull_requests.list user, repo, inputs
         a_get("/repos/#{user}/#{repo}/pulls").with(:query => inputs).should have_been_made
       end
 
       it "should return array of resources" do
-        pull_requests = github.pull_requests.pull_requests user, repo, inputs
+        pull_requests = github.pull_requests.list user, repo, inputs
         pull_requests.should be_an Array
         pull_requests.should have(1).items
       end
 
       it "should be a mash type" do
-        pull_requests = github.pull_requests.pull_requests user, repo, inputs
+        pull_requests = github.pull_requests.list user, repo, inputs
         pull_requests.first.should be_a Hashie::Mash
       end
 
       it "should get pull request information" do
-        pull_requests = github.pull_requests.pull_requests user, repo, inputs
+        pull_requests = github.pull_requests.list user, repo, inputs
         pull_requests.first.title.should == 'new-feature'
       end
 
       it "should yield to a block" do
-        github.pull_requests.should_receive(:pull_requests).with(user, repo).
+        github.pull_requests.should_receive(:list).with(user, repo).
           and_yield('web')
-        github.pull_requests.pull_requests(user, repo) { |param| 'web' }
+        github.pull_requests.list(user, repo) { |param| 'web' }
       end
     end
 
@@ -65,17 +62,14 @@ describe Github::PullRequests do
 
       it "should return 404 with a message 'Not Found'" do
         expect {
-          github.pull_requests.pull_requests user, repo
+          github.pull_requests.list user, repo
         }.to raise_error(Github::Error::NotFound)
       end
     end
-  end # pull_requests
+  end # list
 
-  describe "#pull_request" do
-    context 'check aliases' do
-      it { github.pull_requests.should respond_to :pull_request }
-      it { github.pull_requests.should respond_to :get_pull_request }
-    end
+  describe "#get" do
+    it { github.pull_requests.should respond_to :find }
 
     context 'resource found' do
       before do
@@ -86,23 +80,23 @@ describe Github::PullRequests do
       end
 
       it "should fail to get resource without pull_request id" do
-        expect { github.pull_requests.pull_request nil }.to raise_error(ArgumentError)
+        expect { github.pull_requests.get nil }.to raise_error(ArgumentError)
       end
 
       it "should get the resource" do
-        github.pull_requests.pull_request user, repo, pull_request_id
+        github.pull_requests.get user, repo, pull_request_id
         a_get("/repos/#{user}/#{repo}/pulls/#{pull_request_id}").
           should have_been_made
       end
 
       it "should get pull_request information" do
-        pull_request = github.pull_requests.pull_request user, repo, pull_request_id
+        pull_request = github.pull_requests.get user, repo, pull_request_id
         pull_request.number.should eq pull_request_id
         pull_request.head.user.login.should == 'octocat'
       end
 
       it "should return mash" do
-        pull_request = github.pull_requests.pull_request user, repo, pull_request_id
+        pull_request = github.pull_requests.get user, repo, pull_request_id
         pull_request.should be_a Hashie::Mash
       end
     end
@@ -117,13 +111,13 @@ describe Github::PullRequests do
 
       it "should fail to retrive resource" do
         expect {
-          github.pull_requests.pull_request user, repo, pull_request_id
+          github.pull_requests.get user, repo, pull_request_id
         }.to raise_error(Github::Error::NotFound)
       end
     end
-  end # pull_request
+  end # get
 
-  describe "create_request" do
+  describe "#create" do
     let(:inputs) {
       {
        "title" => "Amazing new feature",
@@ -143,17 +137,17 @@ describe Github::PullRequests do
       end
 
       it "should create resource successfully" do
-        github.pull_requests.create_request user, repo, inputs
+        github.pull_requests.create user, repo, inputs
         a_post("/repos/#{user}/#{repo}/pulls").with(inputs).should have_been_made
       end
 
       it "should return the resource" do
-        pull_request = github.pull_requests.create_request user, repo, inputs
+        pull_request = github.pull_requests.create user, repo, inputs
         pull_request.should be_a Hashie::Mash
       end
 
       it "should get the request information" do
-        pull_request = github.pull_requests.create_request user, repo, inputs
+        pull_request = github.pull_requests.create user, repo, inputs
         pull_request.title.should eql "new-feature"
       end
     end
@@ -167,13 +161,13 @@ describe Github::PullRequests do
 
       it "should faile to retrieve resource" do
         expect {
-          github.pull_requests.create_request user, repo, inputs
+          github.pull_requests.create user, repo, inputs
         }.to raise_error(Github::Error::NotFound)
       end
     end
-  end # create_request
+  end # create
 
-  describe "#update_request" do
+  describe "#update" do
     let(:inputs) {
       {
         "title" => "new title",
@@ -193,20 +187,18 @@ describe Github::PullRequests do
       end
 
       it "should create resource successfully" do
-        github.pull_requests.update_request user, repo, pull_request_id, inputs
+        github.pull_requests.update user, repo, pull_request_id, inputs
         a_patch("/repos/#{user}/#{repo}/pulls/#{pull_request_id}").with(inputs).
           should have_been_made
       end
 
       it "should return the resource" do
-        pull_request = github.pull_requests.update_request user, repo,
-                                                         pull_request_id, inputs
+        pull_request = github.pull_requests.update user, repo, pull_request_id, inputs
         pull_request.should be_a Hashie::Mash
       end
 
       it "should get the pull_request information" do
-        pull_request = github.pull_requests.update_request user, repo,
-                                                        pull_request_id, inputs
+        pull_request = github.pull_requests.update user, repo, pull_request_id, inputs
         pull_request.title.should == 'new-feature'
       end
     end
@@ -222,18 +214,13 @@ describe Github::PullRequests do
 
       it "should faile to retrieve resource" do
         expect {
-          github.pull_requests.update_request user, repo, pull_request_id, inputs
+          github.pull_requests.update user, repo, pull_request_id, inputs
         }.to raise_error(Github::Error::NotFound)
       end
     end
-  end # update_request
+  end # update
 
   describe "#commits" do
-    context 'check aliases' do
-      it { github.pull_requests.should respond_to :commits }
-      it { github.pull_requests.should respond_to :request_commits }
-    end
-
     context 'resource found' do
       before do
         stub_get("/repos/#{user}/#{repo}/pulls/#{pull_request_id}/commits").
@@ -292,10 +279,7 @@ describe Github::PullRequests do
   end # commits
 
   describe "#files" do
-    context 'check aliases' do
-      it { github.pull_requests.should respond_to :files }
-      it { github.pull_requests.should respond_to :request_files }
-    end
+    it { github.pull_requests.should respond_to :files }
 
     context 'resource found' do
       before do
