@@ -7,7 +7,7 @@ module Github
     autoload_all 'github_api/gists',
       :Comments => 'comments'
 
-    include Github::Gists::Comments
+    # include Github::Gists::Comments
 
     REQUIRED_GIST_INPUTS = %w[
       description
@@ -21,49 +21,54 @@ module Github
       super(options)
     end
 
+    # Access to Gists::Comments API
+    def comments
+      @comments ||= ApiFactory.new 'Gists::Comments'
+    end
+
     # List a user's gists.
     #
     # = Examples
-    #  @github = Github.new :user => 'user-name'
-    #  @github.gists.gists
+    #  github = Github.new :user => 'user-name'
+    #  github.gists.list
     #
     # List the authenticated user’s gists or if called anonymously,
     # this will returns all public gists
     #
     # = Examples
-    #  @github = Github.new :oauth_token => '...'
-    #  @github.gists.gists
+    #  github = Github.new :oauth_token => '...'
+    #  github.gists.list
     #
-    def gists(user_name=nil, params={})
+    def list(user_name=nil, params={})
       _update_user_repo_params(user_name)
       process_params do
         normalize params
       end
 
       response = if user
-        get("/users/#{user}/gists", params)
+        get_request("/users/#{user}/gists", params)
       elsif oauth_token
-        get("/gists", params)
+        get_request("/gists", params)
       else
-        get("/gists/public", params)
+        get_request("/gists/public", params)
       end
       return response unless block_given?
       response.each { |el| yield el }
     end
-    alias :list_gists :gists
+    alias :all :list
 
     # List the authenticated user's starred gists
     #
     # = Examples
-    #  @github = Github.new :oauth_token => '...'
-    #  @github.gists.starred
+    #  github = Github.new :oauth_token => '...'
+    #  github.gists.starred
     #
     def starred(params={})
       process_params do
         normalize params
       end
 
-      response = get("/gists/starred", params)
+      response = get_request("/gists/starred", params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -71,16 +76,16 @@ module Github
     # Get a single gist
     #
     # = Examples
-    #  @github = Github.new
-    #  @github.gists.get_gist 'gist-id'
+    #  github = Github.new
+    #  github.gists.get 'gist-id'
     #
-    def gist(gist_id, params={})
+    def get(gist_id, params={})
       _normalize_params_keys(params)
       _validate_presence_of(gist_id)
 
-      get("/gists/#{gist_id}", params)
+      get_request("/gists/#{gist_id}", params)
     end
-    alias :get_gist :gist
+    alias :find :get
 
     # Create a gist
     #
@@ -93,8 +98,8 @@ module Github
     #        <tt>:content</tt> - Required string - File contents.
     #
     # = Examples
-    #  @github = Github.new
-    #  @github.gists.create_gist
+    #  github = Github.new
+    #  github.gists.create
     #    'description' => 'the description for this gist',
     #    'public' => true,
     #    'files' => {
@@ -103,11 +108,11 @@ module Github
     #       }
     #    }
     #
-    def create_gist(params={})
+    def create(params={})
       _normalize_params_keys(params)
       _validate_inputs(REQUIRED_GIST_INPUTS, params)
 
-      post("/gists", params)
+      post_request("/gists", params)
     end
 
     # Edit a gist
@@ -121,8 +126,8 @@ module Github
     #        <tt>:filename</tt> - Optional string - New name for this file.
     #
     # = Examples
-    #  @github = Github.new :oauth_token => '...'
-    #  @github.gists.edit_gist 'gist-id', 
+    #  github = Github.new :oauth_token => '...'
+    #  github.gists.edit 'gist-id',
     #    'description' => 'the description for this gist',
     #    'files' => {
     #      'file1.txt' => {
@@ -138,50 +143,50 @@ module Github
     #       'delete_the_file.txt' => nil
     #    }
     #
-    def edit_gist(gist_id, params={})
+    def edit(gist_id, params={})
       _validate_presence_of(gist_id)
       _normalize_params_keys(params)
 
-      patch("/gists/#{gist_id}", params)
+      patch_request("/gists/#{gist_id}", params)
     end
 
     # Star a gist
     #
     # = Examples
-    #  @github = Github.new
-    #  @github.gists.star 'gist-id'
+    #  github = Github.new
+    #  github.gists.star 'gist-id'
     #
     def star(gist_id, params={})
       _validate_presence_of(gist_id)
       _normalize_params_keys(params)
 
-      put("/gists/#{gist_id}/star", params)
+      put_request("/gists/#{gist_id}/star", params)
     end
 
     # Unstar a gist
     #
     # = Examples
-    #  @github = Github.new
-    #  @github.gists.unstar 'gist-id'
+    #  github = Github.new
+    #  github.gists.unstar 'gist-id'
     #
     def unstar(gist_id, params={})
       _validate_presence_of(gist_id)
       _normalize_params_keys(params)
 
-      delete("/gists/#{gist_id}/star", params)
+      delete_request("/gists/#{gist_id}/star", params)
     end
 
     # Check if a gist is starred
     #
     # = Examples
-    #  @github = Github.new
-    #  @github.gists.unstar 'gist-id'
+    #  github = Github.new
+    #  github.gists.starred? 'gist-id'
     #
     def starred?(gist_id, params={})
       _validate_presence_of(gist_id)
       _normalize_params_keys(params)
 
-      get("/gists/#{gist_id}/star", params)
+      get_request("/gists/#{gist_id}/star", params)
       true
     rescue Github::Error::NotFound
       false
@@ -190,27 +195,27 @@ module Github
     # Fork a gist
     #
     # = Examples
-    #  @github = Github.new
-    #  @github.gists.fork 'gist-id'
+    #  github = Github.new
+    #  github.gists.fork 'gist-id'
     #
     def fork(gist_id, params={})
       _validate_presence_of(gist_id)
       _normalize_params_keys(params)
 
-      post("/gists/#{gist_id}/fork", params)
+      post_request("/gists/#{gist_id}/fork", params)
     end
 
     # Delete a gist
     #
     # = Examples
-    #  @github = Github.new
-    #  @github.gists.delete_gist 'gist-id'
+    #  github = Github.new
+    #  github.gists.delete 'gist-id'
     #
-    def delete_gist(gist_id, params={})
+    def delete(gist_id, params={})
       _validate_presence_of(gist_id)
       _normalize_params_keys(params)
 
-      delete("/gists/#{gist_id}", params)
+      delete_request("/gists/#{gist_id}", params)
     end
 
   end # Gists

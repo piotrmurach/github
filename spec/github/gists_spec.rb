@@ -7,45 +7,43 @@ describe Github::Gists do
   let(:user) { 'peter-murach' }
   let(:gist_id) { '1' }
 
-  after { github.user, github.repo, github.oauth_token = nil, nil, nil }
+  after { reset_authentication_for(github) }
 
-  describe "#gists" do
-    context 'check aliases' do
-      it { github.gists.should respond_to :gists }
-      it { github.gists.should respond_to :list_gists }
-    end
+  describe "#list" do
+    it { github.gists.should respond_to :all }
 
     context "- unauthenticated user" do
       context "resource found" do
         before do
           stub_get("/users/#{user}/gists").
-            to_return(:body => fixture('gists/gists.json'), :status => 200, :headers => {:content_type => "application/json; charset=utf-8"})
+            to_return(:body => fixture('gists/gists.json'), :status => 200,
+              :headers => {:content_type => "application/json; charset=utf-8"})
         end
 
         it "should get the resources" do
-          github.gists.gists user
+          github.gists.list user
           a_get("/users/#{user}/gists").should have_been_made
         end
 
         it "should return array of resources" do
-          gists = github.gists.gists user
+          gists = github.gists.list user
           gists.should be_an Array
           gists.should have(1).items
         end
 
         it "should be a mash type" do
-          gists = github.gists.gists user
+          gists = github.gists.list user
           gists.first.should be_a Hashie::Mash
         end
 
         it "should get gist information" do
-          gists = github.gists.gists user
+          gists = github.gists.list user
           gists.first.user.login.should == 'octocat'
         end
 
         it "should yield to a block" do
-          github.gists.should_receive(:gists).with(user).and_yield('web')
-          github.gists.gists(user) { |param| 'web' }
+          github.gists.should_receive(:list).with(user).and_yield('web')
+          github.gists.list(user) { |param| 'web' }
         end
       end
 
@@ -57,7 +55,7 @@ describe Github::Gists do
 
         it "should return 404 with a message 'Not Found'" do
           expect {
-            github.gists.gists user
+            github.gists.list user
           }.to raise_error(Github::Error::NotFound)
         end
       end
@@ -66,11 +64,12 @@ describe Github::Gists do
     context '- public' do
       before do
         stub_get("/gists/public").
-          to_return(:body => fixture('gists/gists.json'), :status => 200, :headers => {:content_type => "application/json; charset=utf-8"})
+          to_return(:body => fixture('gists/gists.json'), :status => 200,
+            :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
       it "should get the resources" do
-        github.gists.gists
+        github.gists.list
         a_get("/gists/public").should have_been_made
       end
     end
@@ -82,15 +81,15 @@ describe Github::Gists do
           with(:query => {:access_token => OAUTH_TOKEN}).
           to_return(:body => fixture('gists/gists.json'), :status => 200, :headers => {:content_type => "application/json; charset=utf-8"})
       end
-      after { github.oauth_token = nil }
+      # after { github.oauth_token = nil }
 
       it "should get the resources" do
-        github.gists.gists
+        github.gists.list
         a_get("/gists").with(:query => {:access_token => OAUTH_TOKEN}).
           should have_been_made
       end
     end
-  end # gists
+  end # list
 
   describe "#starred" do
     context "resource found" do
@@ -140,35 +139,33 @@ describe Github::Gists do
     end
   end # starred
 
-  describe "#gist" do
-    context 'check aliases' do
-      it { github.gists.should respond_to :gist }
-      it { github.gists.should respond_to :get_gist }
-    end
+  describe "#get" do
+    it { github.gists.should respond_to :find }
 
     context "resource found" do
       before do
         stub_get("/gists/#{gist_id}").
-          to_return(:body => fixture('gists/gist.json'), :status => 200, :headers => {:content_type => "application/json; charset=utf-8"})
+          to_return(:body => fixture('gists/gist.json'), :status => 200,
+            :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
       it "should fail to get resource without gist id" do
-        expect { github.gists.gist(nil)}.to raise_error(ArgumentError)
+        expect { github.gists.get nil }.to raise_error(ArgumentError)
       end
 
       it "should get the resource" do
-        github.gists.gist gist_id
+        github.gists.get gist_id
         a_get("/gists/#{gist_id}").should have_been_made
       end
 
       it "should get gist information" do
-        gist = github.gists.gist gist_id
+        gist = github.gists.get gist_id
         gist.id.should eq gist_id
         gist.user.login.should == 'octocat'
       end
 
       it "should return mash" do
-        gist = github.gists.gist gist_id
+        gist = github.gists.get gist_id
         gist.should be_a Hashie::Mash
       end
     end
@@ -181,13 +178,13 @@ describe Github::Gists do
 
       it "should fail to retrive resource" do
         expect {
-          github.gists.gist gist_id
+          github.gists.get gist_id
         }.to raise_error(Github::Error::NotFound)
       end
     end
-  end # gist
+  end # get
 
-  describe "#create_gist" do
+  describe "#create" do
     let(:inputs) {
       {
         "description" => "the description for this gist",
@@ -211,35 +208,35 @@ describe Github::Gists do
 
       it "should fail to create resource if 'files' input is missing" do
         expect {
-          github.gists.create_gist inputs.except('files')
+          github.gists.create inputs.except('files')
         }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should fail to create resource if 'content' input is missing" do
         pending 'add validation for nested attributes'
         expect {
-          github.gists.create_gist inputs.except('content')
+          github.gists.create inputs.except('content')
         }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should fail to create resource if 'public' input is missing" do
         expect {
-          github.gists.create_gist inputs.except('public')
+          github.gists.create inputs.except('public')
         }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should create resource successfully" do
-        github.gists.create_gist inputs
+        github.gists.create inputs
         a_post("/gists").with(inputs).should have_been_made
       end
 
       it "should return the resource" do
-        gist = github.gists.create_gist inputs
+        gist = github.gists.create inputs
         gist.should be_a Hashie::Mash
       end
 
       it "should get the gist information" do
-        gist = github.gists.create_gist inputs
+        gist = github.gists.create inputs
         gist.user.login.should == 'octocat'
       end
     end
@@ -254,13 +251,13 @@ describe Github::Gists do
 
       it "should faile to retrieve resource" do
         expect {
-          github.gists.create_gist inputs
+          github.gists.create inputs
         }.to raise_error(Github::Error::NotFound)
       end
     end
-  end # create_gist
+  end # create
 
-  describe "#edit_gist" do
+  describe "#edit" do
     let(:inputs) {
       {
         "description" => "the description for this gist",
@@ -290,17 +287,17 @@ describe Github::Gists do
       end
 
       it "should edit resource successfully" do
-        github.gists.edit_gist gist_id, inputs
+        github.gists.edit gist_id, inputs
         a_patch("/gists/#{gist_id}").with(inputs).should have_been_made
       end
 
       it "should return the resource" do
-        gist = github.gists.edit_gist gist_id, inputs
+        gist = github.gists.edit gist_id, inputs
         gist.should be_a Hashie::Mash
       end
 
       it "should get the gist information" do
-        gist = github.gists.edit_gist gist_id, inputs
+        gist = github.gists.edit gist_id, inputs
         gist.user.login.should == 'octocat'
       end
     end
@@ -315,11 +312,11 @@ describe Github::Gists do
 
       it "should fail to retrieve resource" do
         expect {
-          github.gists.edit_gist gist_id, inputs
+          github.gists.edit gist_id, inputs
         }.to raise_error(Github::Error::NotFound)
       end
     end
-  end # edit_gist
+  end # edit
 
   context '#star' do
     before do
@@ -336,7 +333,7 @@ describe Github::Gists do
     end
 
     it 'successfully stars a gist' do
-      github.gists.star(gist_id)
+      github.gists.star gist_id
       a_put("/gists/#{gist_id}/star").should have_been_made
     end
 
@@ -360,7 +357,7 @@ describe Github::Gists do
     end
 
     it 'successfully stars a gist' do
-      github.gists.unstar(gist_id)
+      github.gists.unstar gist_id
       a_delete("/gists/#{gist_id}/star").should have_been_made
     end
 
@@ -440,7 +437,7 @@ describe Github::Gists do
     end
   end # fork
 
-  context "#delete_gist" do
+  context "#delete" do
     before do
       stub_delete("/gists/#{gist_id}").
         to_return(:body => fixture('gists/gist.json'),
@@ -450,12 +447,12 @@ describe Github::Gists do
 
     it 'should raise error if gist id not present' do
       expect {
-        github.gists.delete_gist nil
+        github.gists.delete nil
       }.to raise_error(ArgumentError)
     end
 
     it "should remove resource successfully" do
-      github.gists.delete_gist gist_id
+      github.gists.delete gist_id
       a_delete("/gists/#{gist_id}").should have_been_made
     end
 
@@ -465,9 +462,9 @@ describe Github::Gists do
           :status => 404,
           :headers => {:content_type => "application/json; charset=utf-8"})
       expect {
-        github.gists.delete_gist gist_id
+        github.gists.delete gist_id
       }.to raise_error(Github::Error::NotFound)
     end
-  end # delete_gist
+  end # delete
 
 end # Github::Gists
