@@ -1,3 +1,7 @@
+0.4.9 (Apr 9, 2012)
+
+* Relax json and rspec gem dependencies.
+
 0.4.8 (March 17, 2012)
 
 * Change user emails api, fix bug with deleting emails, add specs.

@@ -4,7 +4,7 @@ PATH
     github_api (0.4.8)
       faraday (~> 0.7.6)
       hashie (~> 1.2.0)
-      multi_json (~> 1.1.0)
+      multi_json (~> 1.0)
       oauth2 (~> 0.5.2)
 
 GEM
@@ -81,7 +81,7 @@ DEPENDENCIES
   guard-rspec (= 0.5.7)
   rake
   rb-fsevent
-  rspec (~> 2.8.0)
+  rspec
   simplecov (~> 0.6.1)
   vcr (~> 2.0.0)
   webmock (~> 1.8.0)
