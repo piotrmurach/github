@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    github_api (0.4.8)
+    github_api (0.4.9)
       faraday (~> 0.7.6)
       hashie (~> 1.2.0)
       multi_json (~> 1.0)
