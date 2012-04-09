@@ -4,10 +4,10 @@ Feature: Accessing Gists Comments API
   Should return the expected results depending on passed parameters
 
   Background:
-    Given I have "Github::Gists" instance
+    Given I have "Github::Gists::Comments" instance
 
   Scenario: Lists comments on a gist
-    When I am looking for "comments" with the following params:
+    When I want to list resources with the following params:
       | gist_id |
       | 999390  |
       And I make request within a cassette named "gists/comments/all"
@@ -16,7 +16,7 @@ Feature: Accessing Gists Comments API
       And the response should have 18 items
 
   Scenario: Gets a single gist's comment
-    When I am looking for "comment" with the following params:
+    When I want to get resource with the following params:
       | comment_id |
       | 33469      |
     And I make request within a cassette named "gists/comments/first"

@@ -10,6 +10,18 @@ Then /^the response should be "([^"]*)"$/ do |expected_response|
   @response.status.should eql expected_response.to_i
 end
 
+Then /^the response should equal (.*)$/ do |expected_response|
+  expected = case expected_response
+  when /t/
+    true
+  when /f/
+    false
+  else
+    raise ArgumentError 'Expected boolean type!'
+  end
+  @response.should == expected
+end
+
 Then /^the response type should be "([^"]*)"$/ do |type|
   @response.content_type.should =~ /application\/#{type.downcase}/
 end

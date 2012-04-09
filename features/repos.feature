@@ -23,10 +23,10 @@ Feature: Accessing Repos Main API
       And the response type should be "JSON"
 
   Scenario: Returning all repositories for the user
-    When I am looking for "list_repos"
+    When I want to list resources
       And I pass the following request options:
         | user          |
         | peter-murach  |
-      And I make request within a cassette named "repos/tags"
+      And I make request within a cassette named "repos/list"
     Then the response should be "200"
       And the response type should be "JSON"
