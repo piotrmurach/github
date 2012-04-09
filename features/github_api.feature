@@ -1,7 +1,8 @@
 Feature: Github API components
 
-  In order to interact with full Github API
-  A user needs to request a Github class instance
+  In order to navigate within Github API hierachy
+  A user
+  I want to be able to with a given Github API instance
 
   Scenario: Accessing repositories API
     Given I have github instance
@@ -12,6 +13,16 @@ Feature: Github API components
     Given I have github instance
     When  I fetch "orgs"
     Then  I will have access to "Github::Orgs" API
+
+  Scenario: Accessing members API
+    Given I have "Github::Orgs" instance
+    When  I call members
+    Then  I will have access to "Github::Orgs::Members" API
+
+  Scenario: Accessing teams API
+    Given I have "Github::Orgs" instance
+    When  I call teams
+    Then  I will have access to "Github::Orgs::Teams" API
 
   Scenario: Accessing gists API
     Given I have github instance
