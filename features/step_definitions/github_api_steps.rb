@@ -14,8 +14,15 @@ When /^I will have access to "([^"]*)" API$/ do |api|
   @response.class.to_s.should match api
 end
 
-When /^I am looking for "([^"]*)"$/ do |method|
+When /^I want to (.*) (?:resource|resources)$/ do |method|
   @method = method
+end
+
+When /^I want to (.*) (?:resource|resources) with the following params:$/ do |method|
+  table.hashes.each do |attributes|
+    @method = method.to_sym
+    @attributes = attributes
+  end
 end
 
 When /^I pass the following request options:$/ do |table|

@@ -33,7 +33,7 @@ module Github
       Github::PagedRequest.page = params[PARAM_PAGE]
       Github::PagedRequest.per_page = params[PARAM_PER_PAGE]
 
-      Github.api_client.get path, params
+      Github.api_client.get_request path, params
     end
 
   end # PagedRequest

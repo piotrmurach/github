@@ -410,4 +410,49 @@ http_interactions:
 
     http_version: 
   recorded_at: Sat, 10 Mar 2012 23:14:13 GMT
+- request: 
+    method: get
+    uri: https://api.github.com/repos/https://api.github.com/users/wycats/repos/%7B%22page%22=%3E2,%20%22per_page%22=%3E30%7D
+    body: 
+      encoding: US-ASCII
+      string: ""
+    headers: 
+      Accept-Encoding: 
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept: 
+      - "*/*"
+      User-Agent: 
+      - Ruby
+  response: 
+    status: 
+      code: 404
+      message: Not Found
+    headers: 
+      Server: 
+      - nginx/1.0.13
+      Date: 
+      - Mon, 09 Apr 2012 15:18:37 GMT
+      Content-Type: 
+      - application/json; charset=utf-8
+      Transfer-Encoding: 
+      - chunked
+      Connection: 
+      - keep-alive
+      Status: 
+      - 404 Not Found
+      X-Ratelimit-Limit: 
+      - "5000"
+      Etag: 
+      - "\"e66a7a6c91e2c26803f3f49feb7a883f\""
+      X-Ratelimit-Remaining: 
+      - "4998"
+      Content-Encoding: 
+      - gzip
+    body: 
+      encoding: ASCII-8BIT
+      string: !binary |
+        H4sIAAAAAAAAA6tWyk0tLk5MT1WyUvLLL1Fwyy/NS1GqBQB8+Ys1FwAAAA==
+
+    http_version: 
+  recorded_at: Mon, 09 Apr 2012 15:18:37 GMT
 recorded_with: VCR 2.0.0
