@@ -29,19 +29,19 @@ gem "github_api"
 Create a new client instance
 
 ```ruby
-@github = Github.new
+github = Github.new
 ```
 
 At this stage you can also supply various configuration parameters, such as `:user`,`:repo`, `:org`, `:oauth_token`, `:login`, `:password` or `:basic_auth` which are used throughout the API
 
 ```ruby
-@github = Github.new :user => 'peter-murach', :repo => 'github-api'
+github = Github.new :user => 'peter-murach', :repo => 'github-api'
 ```
 
 or
 
 ```ruby
-@github = Github.new do |opts|
+github = Github.new do |opts|
   opts.user = 'peter-murach'
   opts.repo = 'github-api'
 end
@@ -50,40 +50,35 @@ end
 You can authenticate either using OAuth authentication convenience methods(see section OAuth) or through basic authentication by passing your login and password credentials
 
 ```ruby
-@github = Github.new :login => 'peter-murach', :password => '...'
+github = Github.new :login => 'peter-murach', :password => '...'
 ```
 
 or use convenience method:
 
 ```ruby
-@github = Github.new :basic_auth => 'login:password'
+github = Github.new :basic_auth => 'login:password'
 ```
 
-You can interact with GitHub interface, for example repositories, by issueing following calls
+You can interact with GitHub interface, for example repositories, by issueing following calls that correspond directly to the GitHub API hierarchy
 
 ```ruby
-@github.repos.commits
-@github.repos.branches
-@github.repos.contributors
+github.repos.commits.all  'user-name', 'repo-name'
+github.repos.hooks.create 'user-name', 'repo-name', name: "web", active: true
+github.repos.keys.get     'user-name', 'repo-name'
 ```
 
-The code base is modular and allows for you to work specifically with a given part of GitHub API e.g. repositories
+The code base is modular and allows for you to work specifically with a given part of GitHub API e.g. blobs
 
 ```ruby
-@repos = Github::Repos.new
-@repos.branches 'peter-murach', 'github'
-
-or
-
-@repos = Github::Repos.new :user => 'peter-murach', :repo => 'github'
-@repos.branches
+blobs = Github::GitData::Blobs.new
+blobs.create 'peter-murach', 'github', content: 'Blob content'
 ```
 
 The response is of type [Hashie::Mash] and allows to traverse all the json response attributes like method calls e.i.
 
 ```ruby
-@repos = Github::Repos.new :user => 'peter-murach', :repo => 'github'
-@repos.branches do |branch|
+repos = Github::Repos.new :user => 'peter-murach', :repo => 'github'
+repos.branches do |branch|
   puts branch.name
 end
 ```
@@ -94,15 +89,20 @@ Main API methods are grouped into the following classes that can be instantiated
 
 ```ruby
 Github         - full API access
+
 Github::Gists
-Github::GitData
-Github::Issues
 Github::Orgs
 Github::PullRequests
 Github::Repos
 Github::Users
 Github::Events
 Github::Authorizations
+
+Github::GitData::Blobs         Github::Issues
+Github::GitData::Commits       Github::Issues::Comments
+Github::GitData::References    Github::Issues::Events
+Github::GitData::Tags          Github::Issues::Labels
+Github::GitData::Trees         Github::Issues::Milestones
 ```
 
 Some parts of GitHub API v3 require you to be autheticated, for instance the following are examples of APIs only for the authenticated user
@@ -115,9 +115,9 @@ Github::Users::Keys
 All method calls form ruby like sentences and allow for intuitive api navigation, for instance
 
 ```ruby
-@github = Github.new :oauth_token => '...'
-@github.users.following 'wycats'  # => returns users that 'wycats' is following
-@github.users.following 'wycats' # => returns true if following, otherwise false
+github = Github.new :oauth_token => '...'
+github.users.following 'wycats'  # => returns users that 'wycats' is following
+github.users.following 'wycats' # => returns true if following, otherwise false
 ```
 
 For specification on all available methods go to http://developer.github.com/v3/ or
@@ -179,6 +179,8 @@ token = github.get_token( authorization_code )
 ```
 
 Once you have your access token, configure your github instance following instructions under Configuration.
+
+### Authorizations API
 
 Alternatively you can use OAuth Authorizations API. For instance, to create access token through GitHub API do following
 
@@ -336,11 +338,6 @@ class GithubController < ApplicationController
   end
 end
 ```
-
-## TODO
-
-* Add request caching - local filestore?, http caching?.
-* Add live api tests
 
 ## Development
 
