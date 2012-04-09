@@ -1,3 +1,10 @@
+0.5.0.rc1 (March , 2012)
+
+* Rewrote all apis method calls to be consistent with GitHub API v3, namely
+  regardless which resource is being currently used, the 'create', 'edit', 'delete' methods are used for CRUD operations.
+ * Further ActiveRecord style methods are used, that is, 'all' for listing collection of resoruces and 'find' for getting a single resource.
+ *
+
 0.4.8 (March 17, 2012)
 
 * Change user emails api, fix bug with deleting emails, add specs.
