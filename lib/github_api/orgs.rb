@@ -8,9 +8,6 @@ module Github
       :Members => 'members',
       :Teams   => 'teams'
 
-    include Github::Orgs::Members
-    include Github::Orgs::Teams
-
     VALID_ORG_PARAM_NAMES = %w[
       billing_email
       company
@@ -24,44 +21,52 @@ module Github
       super(options)
     end
 
+    # Access to Orgs::Members API
+    def members
+      @members ||= ApiFactory.new 'Orgs::Members'
+    end
+
+    # Access to Orgs::Teams API
+    def teams
+      @teams ||= ApiFactory.new 'Orgs::Teams'
+    end
+
     # List all public organizations for a user.
     #
     # = Examples
-    #  @github = Github.new :user => 'user-name'
-    #  @github.orgs.orgs
+    #  github = Github.new :user => 'user-name'
+    #  github.orgs.list
     #
     # List public and private organizations for the authenticated user.
     #
-    #  @github = Github.new :oauth_token => '..'
-    #  @github.orgs.orgs 'github'
+    #  github = Github.new :oauth_token => '..'
+    #  github.orgs.list 'github'
     #
-    def orgs(user_name=nil, params={})
+    def list(user_name=nil, params={})
       _update_user_repo_params(user_name)
       _normalize_params_keys(params)
 
       response = if user?
-        get("/users/#{user}/orgs", params)
+        get_request("/users/#{user}/orgs", params)
       else
-        get("/user/orgs", params)
+        get_request("/user/orgs", params)
       end
       return response unless block_given?
       response.each { |el| yield el }
     end
-    alias :list_orgs :orgs
-    alias :list_organizations :orgs
+    alias :all :list
 
     # Get properties for a single organization
     #
     # = Examples
-    #  @github = Github.new
-    #  @github.orgs.org 'github'
+    #  github = Github.new
+    #  github.orgs.get 'github'
     #
-    def org(org_name, params={})
+    def get(org_name, params={})
       _validate_presence_of org_name
-      get("/orgs/#{org_name}", params)
+      get_request("/orgs/#{org_name}", params)
     end
-    alias :get_org :org
-    alias :organisation :org
+    alias :find :get
 
     # Edit organization
     #
@@ -73,8 +78,8 @@ module Github
     # <tt>:name</tt> - Optional string
     #
     # = Examples
-    #  @github = Github.new :oauth_token => '...'
-    #  @github.orgs.edit_org 'github',
+    #  github = Github.new :oauth_token => '...'
+    #  github.orgs.edit 'github',
     #    "billing_email" => "support@github.com",
     #    "blog" => "https://github.com/blog",
     #    "company" => "GitHub",
@@ -82,14 +87,13 @@ module Github
     #    "location" => "San Francisco",
     #    "name" => "github"
     #
-    def edit_org(org_name, params={})
+    def edit(org_name, params={})
       _validate_presence_of org_name
       _normalize_params_keys(params)
       _filter_params_keys(VALID_ORG_PARAM_NAMES, params)
 
-      patch("/orgs/#{org_name}", params)
+      patch_request("/orgs/#{org_name}", params)
     end
-    alias :edit_organization :edit_org
 
   end # Orgs
 end # Github
