@@ -11,14 +11,14 @@ module Github
     # List all public events
     #
     # = Examples
-    #  @github = Github.new
-    #  @github.events.public
-    #  @github.events.public { |event| ... }
+    #  github = Github.new
+    #  github.events.public
+    #  github.events.public { |event| ... }
     #
     def public(params={})
       _normalize_params_keys(params)
 
-      response = get("/events", params)
+      response = get_request("/events", params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -29,16 +29,16 @@ module Github
     # List all repository events for a given user
     #
     # = Examples
-    #  @github = Github.new
-    #  @github.events.repository_events 'user-name', 'repo-name'
-    #  @github.events.repository_events 'user-name', 'repo-name' { |event| ... }
+    #  github = Github.new
+    #  github.events.repository 'user-name', 'repo-name'
+    #  github.events.repository 'user-name', 'repo-name' { |event| ... }
     #
     def repository(user_name=nil, repo_name=nil, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
       _normalize_params_keys(params)
 
-      response = get("/repos/#{user}/#{repo}/events", params)
+      response = get_request("/repos/#{user}/#{repo}/events", params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -50,16 +50,16 @@ module Github
     # List all issue events for a given repository
     #
     # = Examples
-    #  @github = Github.new
-    #  @github.events.issue 'user-name', 'repo-name'
-    #  @github.events.issue 'user-name', 'repo-name' { |event| ... }
+    #  github = Github.new
+    #  github.events.issue 'user-name', 'repo-name'
+    #  github.events.issue 'user-name', 'repo-name' { |event| ... }
     #
     def issue(user_name=nil, repo_name=nil, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
       _normalize_params_keys(params)
 
-      response = get("/repos/#{user}/#{repo}/issues/events", params)
+      response = get_request("/repos/#{user}/#{repo}/issues/events", params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -70,16 +70,16 @@ module Github
     # List all public events for a network of repositories
     #
     # = Examples
-    #  @github = Github.new
-    #  @github.events.network 'user-name', 'repo-name'
-    #  @github.events.network 'user-name', 'repo-name' { |event| ... }
+    #  github = Github.new
+    #  github.events.network 'user-name', 'repo-name'
+    #  github.events.network 'user-name', 'repo-name' { |event| ... }
     #
     def network(user_name=nil, repo_name=nil, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
       _normalize_params_keys(params)
 
-      response = get("/networks/#{user}/#{repo}/events", params)
+      response = get_request("/networks/#{user}/#{repo}/events", params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -91,15 +91,15 @@ module Github
     # List all public events for an organization
     #
     # = Examples
-    #  @github = Github.new
-    #  @github.events.org 'org-name'
-    #  @github.events.org 'org-name' { |event| ... }
+    #  github = Github.new
+    #  github.events.org 'org-name'
+    #  github.events.org 'org-name' { |event| ... }
     #
     def org(org_name, params={})
       _validate_presence_of org_name
       _normalize_params_keys(params)
 
-      response = get("/orgs/#{org_name}/events", params)
+      response = get_request("/orgs/#{org_name}/events", params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -115,16 +115,16 @@ module Github
     # Otherwise, you’ll only see public events.
     #
     # = Examples
-    #  @github = Github.new
-    #  @github.events.received 'user-name'
-    #  @github.events.received 'user-name' { |event| ... }
+    #  github = Github.new
+    #  github.events.received 'user-name'
+    #  github.events.received 'user-name' { |event| ... }
     #
     # List all public events that a user has received
     #
     # = Examples
-    #  @github = Github.new
-    #  @github.events.received 'user-name', :public => true
-    #  @github.events.received 'user-name', :public => true { |event| ... }
+    #  github = Github.new
+    #  github.events.received 'user-name', :public => true
+    #  github.events.received 'user-name', :public => true { |event| ... }
     #
     def received(user_name, params={})
       _validate_presence_of user_name
@@ -135,7 +135,7 @@ module Github
         '/public'
       end
 
-      response = get("/users/#{user_name}/received_events#{public_events}", params)
+      response = get_request("/users/#{user_name}/received_events#{public_events}", params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -148,16 +148,16 @@ module Github
     # events. Otherwise, you’ll only see public events.
     #
     # = Examples
-    #  @github = Github.new
-    #  @github.events.performed 'user-name'
-    #  @github.events.performed 'user-name' { |event| ... }
+    #  github = Github.new
+    #  github.events.performed 'user-name'
+    #  github.events.performed 'user-name' { |event| ... }
     #
     # List all public events that a user has performed
     #
     # = Examples
-    #  @github = Github.new
-    #  @github.events.performed 'user-name', :public => true
-    #  @github.events.performed 'user-name', :public => true { |event| ... }
+    #  github = Github.new
+    #  github.events.performed 'user-name', :public => true
+    #  github.events.performed 'user-name', :public => true { |event| ... }
     #
     def performed(user_name, params={})
       _validate_presence_of user_name
@@ -168,7 +168,7 @@ module Github
         '/public'
       end
 
-      response = get("/users/#{user_name}/events#{public_events}", params)
+      response = get_request("/users/#{user_name}/events#{public_events}", params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -181,15 +181,15 @@ module Github
     # as the user to view this.
     #
     # = Examples
-    #  @github = Github.new
-    #  @github.events.user_org 'user-name', 'org-name'
-    #  @github.events.user_org 'user-name', 'org-name' { |event| ... }
+    #  github = Github.new
+    #  github.events.user_org 'user-name', 'org-name'
+    #  github.events.user_org 'user-name', 'org-name' { |event| ... }
     #
     def user_org(user_name, org_name, params={})
       _validate_presence_of user_name, org_name
       _normalize_params_keys(params)
 
-      response = get("/users/#{user_name}/events/orgs/#{org_name}", params)
+      response = get_request("/users/#{user_name}/events/orgs/#{org_name}", params)
       return response unless block_given?
       response.each { |el| yield el }
     end
