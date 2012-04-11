@@ -162,7 +162,8 @@ end
 
 In order to authenticate the user through OAuth2 on GitHub you need to
 
-* visit https://github.com/account/applications/ and register your app
+* visit https://github.com/settings/applications/new and register your app
+  You will need to be logged in to initially register the application.
 
 * authorize your credentials https://github.com/login/oauth/authorize
   You can use convenience methods to help you achieve this that come with this gem:
@@ -205,7 +206,8 @@ In order to pass a mime type with your request do
 ## Configuration
 
 Certain methods require authentication. To get your GitHub OAuth v2 credentials,
-register an app at https://github.com/account/applications/
+register an app at https://github.com/settings/applications/
+You will need to be logged in to register the application.
 
 ```ruby
 Github.configure do |config|
