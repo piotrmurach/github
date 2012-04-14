@@ -265,4 +265,41 @@ describe Github::GitData::References do
     end
   end # update
 
+  describe "#delete" do
+    it { github.git_data.references.should respond_to :remove }
+
+    context "resouce delete" do
+      before do
+        stub_delete("/repos/#{user}/#{repo}/git/refs/#{ref}").
+          to_return(:body => '', :status => 204, 
+            :headers => {:content_type => "application/json; charset=utf-8"})
+      end
+
+      it "should fail to delete resource if 'ref' input is missing" do
+        expect {
+          github.git_data.references.delete user, repo, nil
+        }.to raise_error(ArgumentError)
+      end
+
+      it "should delete resource successfully" do
+        github.git_data.references.delete user, repo, ref
+        a_delete("/repos/#{user}/#{repo}/git/refs/#{ref}").should have_been_made
+      end
+    end
+
+    context "failed to create resource" do
+      before do
+        stub_delete("/repos/#{user}/#{repo}/git/refs/#{ref}").
+          to_return(:body => '', :status => 404,
+            :headers => {:content_type => "application/json; charset=utf-8"})
+      end
+
+      it "should faile to retrieve resource" do
+        expect {
+          github.git_data.references.delete user, repo, ref
+        }.to raise_error(Github::Error::NotFound)
+      end
+    end
+  end # delete
+
 end # Github::GitData::References

@@ -116,6 +116,23 @@ module Github
       patch_request("/repos/#{user}/#{repo}/git/refs/#{ref}", params)
     end
 
+    # Delete a reference
+    #
+    # = Examples
+    #  github = Github.new
+    #  github.git_data.references.delete 'user-name', 'repo-name',
+    #    "ref" => "refs/heads/master",
+    #
+    def delete(user_name, repo_name, ref, params={})
+      _update_user_repo_params(user_name, repo_name)
+      _validate_user_repo_params(user, repo) unless user? && repo?
+      _normalize_params_keys params
+      _validate_presence_of ref
+
+      delete_request("/repos/#{user}/#{repo}/git/refs/#{ref}", params)
+    end
+    alias :remove :delete
+
   private
 
     def _validate_reference ref
