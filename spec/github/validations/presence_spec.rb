@@ -15,4 +15,4 @@ describe Github::Validations::Presence do
     end
   end
 
-end # Github::Validations::Token
+end # Github::Validations::Presence

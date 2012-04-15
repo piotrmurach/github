@@ -36,7 +36,7 @@ module Github
       case params
       when Hash
         params.keys.each do |k, v|
-          unless (keys.include?(k) or Github::Validation::VALID_API_KEYS.include?(k))
+          unless (keys.include?(k) or Github::Validations::VALID_API_KEYS.include?(k))
             params.delete(k)
           else
             _filter_params_keys(keys, params[k]) if options[:recursive]

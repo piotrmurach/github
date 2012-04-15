@@ -3,8 +3,6 @@
 module Github
   module Validations
     extend AutoloadHelper
-    
-    extend self
 
     autoload_all 'github_api/validations',
       :Presence => 'presence',
