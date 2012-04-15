@@ -10,6 +10,19 @@ A Ruby wrapper for the GitHub REST API v3.
 
 Supports all the API methods(nearly 200). It's build in a modular way, that is, you can either instantiate the whole api wrapper Github.new or use parts of it e.i. Github::Repos.new if working solely with repositories is your main concern.
 
+## Important!!
+Since version 0.5 the way the gem queries the GitHub api underwent important changes. It closly mirros the Github api hierarchy e.i. if you want to create a download resource, lookup the github api spec and issue the request as in `github.repos.downloads.create`
+
+Old style: github.pull_requests.create_request
+           github.pull_requests.pull_requests
+           github.pull_requests.pull_request
+
+New style: github.pull_requests.create
+           github.pull_requests.all
+           github.pull_requests.find
+
+The way parameters are passed stayed the same.
+
 ## Installation
 
 Install the gem by issuing
@@ -18,7 +31,7 @@ Install the gem by issuing
 gem install github_api
 ```
 
-or put it in your Gemfile and run `bundle install`</tt>
+or put it in your Gemfile and run `bundle install`
 
 ```ruby
 gem "github_api"
