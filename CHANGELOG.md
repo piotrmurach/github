@@ -1,3 +1,9 @@
+0.4.10 (Apr 15, 2012)
+
+* Add xml resposne parsing.
+* Add ordered hash to core extensions.
+* Add amazon s3 services upload feature and integrate with downloads api upload method.
+
 0.4.9 (Apr 9, 2012)
 
 * Relax json and rspec gem dependencies.
