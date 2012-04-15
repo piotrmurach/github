@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require 'github_api/s3_uploader'
+
 module Github
   class Repos
     module Downloads
@@ -12,19 +14,6 @@ module Github
         description
         content_type
       ].freeze
-
-      REQUIRED_S3_PARAMS = %w[
-        path
-        acl
-        name
-        accesskeyid
-        policy
-        signature
-        mime_type
-      ].freeze
-
-      # Status code for successful upload to Amazon S3 service
-      SUCCESS_STATUS = 201
 
       # List downloads for a repository
       #
@@ -110,44 +99,17 @@ module Github
       # the response object as an argument to upload method.
       #
       # = Parameters
-      # * <tt>resource</tt> - Required Hashie::Mash -resource of the create_download call
-      # * <tt>:size</tt> - Required number - size of file in bytes.
+      # * <tt>resource</tt> - Required resource of the create_download call.
+      # * <tt>:filename</tt> - Required filename, a path to a file location.
       #
       def upload(resource, filename)
         _validate_presence_of resource, filename
-        raise ArgumentError, 'Need to provied resource of Github::Repose::Downloads#create_download call' unless resource.is_a? Hashie::Mash
 
-        REQUIRED_S3_PARAMS.each do |key|
-          raise ArgumentError, "Expected following key: #{key}" unless resource.respond_to?(key)
-        end
-
-        # TODO use ordered hash if Ruby < 1.9
-        hash = ruby_18 {
-          require 'active_support'
-          ActiveSupport::OrderedHash.new } || ruby_19 { Hash.new }
-
-        mapped_params = {
-          'key'                   => resource.path,
-          'acl'                   => resource.acl,
-          'success_action_status' => SUCCESS_STATUS,
-          'Filename'              => resource.name,
-          'AWSAccessKeyId'        => resource.accesskeyid,
-          'Policy'                => resource.policy,
-          'Signature'             => resource.signature,
-          'Content-Type'          => resource.mime_type,
-          'file'                  => prepend_at_for(filename.to_s)
-        }
-
-        post('', mapped_params, { :url => resource.s3_url })
+        response = Github::S3Uploader.new(resource, filename).send
+        response.body
       end
       alias :upload_to_s3 :upload
       alias :upload_to_amazon :upload
-
-    private
-
-      def prepend_at_for(file)
-        /^@.*/ =~ file ? '@' + file : file
-      end
 
     end # Downloads
   end # Repos
