@@ -15,6 +15,8 @@ describe Github::Authorizations do
   end
 
   describe "authorizations" do
+    it { github.authorizations.should respond_to :all }
+
     context "resource found" do
       before do
         stub_get("/authorizations", "https://#{basic_auth}@api.github.com").
@@ -24,33 +26,33 @@ describe Github::Authorizations do
 
       it "should fail to get resource without basic authentication" do
         reset_authentication_for github
-        expect { github.oauth.authorizations }.to raise_error(ArgumentError)
+        expect { github.oauth.list }.to raise_error(ArgumentError)
       end
 
       it "should get the resources" do
-        github.oauth.authorizations
+        github.oauth.list
         a_get("/authorizations", "https://#{basic_auth}@api.github.com").should have_been_made
       end
 
       it "should return array of resources" do
-        authorizations = github.oauth.authorizations
+        authorizations = github.oauth.list
         authorizations.should be_an Array
         authorizations.should have(1).items
       end
 
       it "should be a mash type" do
-        authorizations = github.oauth.authorizations
+        authorizations = github.oauth.list
         authorizations.first.should be_a Hashie::Mash
       end
 
       it "should get authorization information" do
-        authorizations = github.oauth.authorizations
+        authorizations = github.oauth.list
         authorizations.first.token.should == 'abc123'
       end
 
       it "should yield to a block" do
-        github.oauth.should_receive(:authorizations).and_yield('web')
-        github.oauth.authorizations { |param| 'web' }
+        github.oauth.should_receive(:list).and_yield('web')
+        github.oauth.list { |param| 'web' }
       end
     end
 
@@ -61,12 +63,12 @@ describe Github::Authorizations do
       end
 
       it "should return 404 with a message 'Not Found'" do
-        expect { github.oauth.authorizations }.to raise_error(Github::Error::NotFound)
+        expect { github.oauth.list }.to raise_error(Github::Error::NotFound)
       end
     end
   end # authorizations
 
-  describe "authorization" do
+  describe "#get" do
     let(:authorization_id) { 1 }
 
     context "resource found" do
@@ -76,22 +78,22 @@ describe Github::Authorizations do
       end
 
       it "should fail to get resource without authorization id" do
-        expect { github.oauth.authorization nil }.to raise_error(ArgumentError)
+        expect { github.oauth.get nil }.to raise_error(ArgumentError)
       end
 
       it "should get the resource" do
-        github.oauth.authorization authorization_id
+        github.oauth.get authorization_id
         a_get("/authorizations/#{authorization_id}", "https://#{basic_auth}@api.github.com").should have_been_made
       end
 
       it "should get authorization information" do
-        authorization = github.oauth.authorization authorization_id
+        authorization = github.oauth.get authorization_id
         authorization.id.should == authorization_id
         authorization.token.should == 'abc123'
       end
 
       it "should return mash" do
-        authorization = github.oauth.authorization authorization_id
+        authorization = github.oauth.get authorization_id
         authorization.should be_a Hashie::Mash
       end
     end
@@ -104,20 +106,20 @@ describe Github::Authorizations do
 
       it "should fail to retrive resource" do
         expect {
-          github.oauth.authorization authorization_id
+          github.oauth.get authorization_id
         }.to raise_error(Github::Error::NotFound)
       end
     end
-  end # authorization
+  end # list
 
-  describe "create_authorization" do
+  describe "#create" do
     let(:inputs) { { :scopes => ['repo'] } }
 
     context "resouce created" do
 
       it "should fail to get resource without basic authentication" do
         reset_authentication_for github
-        expect { github.oauth.create_authorization }.to raise_error(ArgumentError)
+        expect { github.oauth.create }.to raise_error(ArgumentError)
       end
 
       before do
@@ -126,17 +128,17 @@ describe Github::Authorizations do
       end
 
       it "should create resource successfully" do
-        github.oauth.create_authorization inputs
+        github.oauth.create inputs
         a_post("/authorizations", "https://#{basic_auth}@api.github.com").with(inputs).should have_been_made
       end
 
       it "should return the resource" do
-        authorization = github.oauth.create_authorization inputs
+        authorization = github.oauth.create inputs
         authorization.should be_a Hashie::Mash
       end
 
       it "should get the authorization information" do
-        authorization = github.oauth.create_authorization inputs
+        authorization = github.oauth.create inputs
         authorization.token.should == 'abc123'
       end
     end
@@ -150,13 +152,13 @@ describe Github::Authorizations do
 
       it "should fail to retrieve resource" do
         expect {
-          github.oauth.create_authorization inputs
+          github.oauth.create inputs
         }.to raise_error(Github::Error::NotFound)
       end
     end
-  end # create_authorization
+  end # create
 
-  describe "update_authorization" do
+  describe "#update" do
     let(:authorization_id) { 1 }
     let(:inputs) { { :add_scopes => ['repo'] } }
 
@@ -164,7 +166,7 @@ describe Github::Authorizations do
 
       it "should fail to get resource without basic authentication" do
         reset_authentication_for github
-        expect { github.oauth.update_authorization }.to raise_error(ArgumentError)
+        expect { github.oauth.update }.to raise_error(ArgumentError)
       end
 
       before do
@@ -173,17 +175,17 @@ describe Github::Authorizations do
       end
 
       it "should update resource successfully" do
-        github.oauth.update_authorization authorization_id, inputs
+        github.oauth.update authorization_id, inputs
         a_patch("/authorizations/#{authorization_id}", "https://#{basic_auth}@api.github.com").with(inputs).should have_been_made
       end
 
       it "should return the resource" do
-        authorization = github.oauth.update_authorization authorization_id, inputs
+        authorization = github.oauth.update authorization_id, inputs
         authorization.should be_a Hashie::Mash
       end
 
       it "should get the authorization information" do
-        authorization = github.oauth.update_authorization authorization_id, inputs
+        authorization = github.oauth.update authorization_id, inputs
         authorization.token.should == 'abc123'
       end
     end
@@ -197,13 +199,13 @@ describe Github::Authorizations do
 
       it "should fail to retrieve resource" do
         expect {
-          github.oauth.update_authorization authorization_id, inputs
+          github.oauth.update authorization_id, inputs
         }.to raise_error(Github::Error::NotFound)
       end
     end
-  end # update_authorization
+  end # update
 
-  describe "delete_authorization" do
+  describe "#delete" do
     let(:authorization_id) { 1 }
     let(:inputs) { { :add_scopes => ['repo'] } }
 
@@ -211,7 +213,7 @@ describe Github::Authorizations do
 
       it "should fail to get resource without basic authentication" do
         reset_authentication_for github
-        expect { github.oauth.delete_authorization nil }.to raise_error(ArgumentError)
+        expect { github.oauth.delete nil }.to raise_error(ArgumentError)
       end
 
       before do
@@ -220,7 +222,7 @@ describe Github::Authorizations do
       end
 
       it "should delete resource successfully" do
-        github.oauth.delete_authorization authorization_id
+        github.oauth.delete authorization_id
         a_delete("/authorizations/#{authorization_id}", "https://#{basic_auth}@api.github.com").should have_been_made
       end
     end
@@ -234,10 +236,10 @@ describe Github::Authorizations do
 
       it "should fail to retrieve resource" do
         expect {
-          github.oauth.delete_authorization authorization_id
+          github.oauth.delete authorization_id
         }.to raise_error(Github::Error::NotFound)
       end
     end
-  end # delete_authorization
+  end # delete
 
 end # Github::Authorizations

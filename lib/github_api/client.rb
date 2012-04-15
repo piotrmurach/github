@@ -50,6 +50,7 @@ module Github
     def oauth(options = {})
       @oauth ||= ApiFactory.new 'Authorizations', options
     end
+    alias :authorizations :oauth
 
   end # Client
 end # Github
