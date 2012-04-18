@@ -49,7 +49,7 @@ module Github
           request.url(path, params)
         when *METHODS_WITH_BODIES
           request.path = path
-          request.body = MultiJson.encode(_process_params(params)) unless params.empty?
+          request.body = MultiJson.dump(_process_params(params)) unless params.empty?
         end
       end
       response.body

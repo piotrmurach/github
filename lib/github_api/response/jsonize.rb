@@ -7,7 +7,7 @@ module Github
     dependency 'multi_json'
 
     define_parser do |body|
-      ::MultiJson.decode body
+      ::MultiJson.load body
     end
 
     def parse(body)
