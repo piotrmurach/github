@@ -1,3 +1,8 @@
+0.4.11 (Apr 22, 2012)
+
+* Add nokogiri as dependency.
+* Update json dependency and remove deprecation warnings.
+
 0.4.10 (Apr 15, 2012)
 
 * Add xml resposne parsing.
