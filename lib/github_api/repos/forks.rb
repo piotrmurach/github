@@ -6,6 +6,9 @@ module Github
 
       # List repository forks
       #
+      # = Parameters
+      # * <tt>:sort</tt> - newest, oldest, watchers, default: newest
+      #
       # = Examples
       #  @github = Github.new
       #  @github.repos.forks 'user-name', 'repo-name'
@@ -25,7 +28,7 @@ module Github
 
       # Create a fork for the authenticated user
       #
-      # = Inputs
+      # = Parameters
       # * <tt>:org</tt> - Optional string - the name of the service that is being called.
       #
       # = Examples
