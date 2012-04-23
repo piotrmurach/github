@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 require 'spec_helper'
+require 'github_api/s3_uploader'
 
 describe Github::Repos::Downloads do
   let(:github) { Github.new }
@@ -11,7 +12,6 @@ describe Github::Repos::Downloads do
 
   it { described_class::VALID_DOWNLOAD_PARAM_NAMES.should_not be_nil }
   it { described_class::REQUIRED_PARAMS.should_not be_nil }
-  it { described_class::REQUIRED_S3_PARAMS.should_not be_nil }
 
   describe "#list" do
     it { github.repos.downloads.should respond_to :list }
@@ -213,43 +213,25 @@ describe Github::Repos::Downloads do
   end # create
 
   describe 'upload' do
-    let(:inputs) do
-      { :name => 'new_file.jpg',
-        :size => 114034,
-        :description => "Latest release",
-        :content_type => 'text/plain' }
-    end
-    let(:resource) { Hashie::Mash.new ::JSON.parse(fixture('repos/download_s3.json').read) }
-    let(:file)     { 'filename' }
+    let(:resource) { stub(:resource) }
+    let(:filename) { 'filename' }
+    let(:res) { stub(:response, :body => 'success') }
+    let(:uploader) { stub(:uploader, :send => res) }
 
     context 'resource uploaded' do
       before do
-        stub_post('', 'https://github.s3.amazonaws.com/').with(resource).
-          to_return(:body => '', :status => 200, :headers => {})
+        Github::S3Uploader.stub(:new) { uploader }
       end
 
       it "should fail if resource is of incorrect type" do
-        expect {
-          github.repos.downloads.upload file, file
-        }.to raise_error(ArgumentError)
+        expect { github.repos.downloads.upload resource, nil }.to raise_error(ArgumentError)
       end
 
       it "should upload resource successfully" do
-        github.repos.downloads.upload resource, file
-        a_post('', 'https://github.s3.amazonaws.com').with(resource).should have_been_made
-      end
-
-    end
-    context 'failed to upload resource' do
-      before do
-        stub_post('', 'https://github.s3.amazonaws.com/').with(resource).
-          to_return(:body => '', :status => 404, :headers => {})
-      end
-
-      it "should faile to retrieve resource" do
-        expect {
-          github.repos.downloads.upload resource, file
-        }.to raise_error(Github::Error::NotFound)
+        res = stub(:response, :body => 'success')
+        uploader = stub(:uploader, :send => res)
+        Github::S3Uploader.should_receive(:new).with(resource, filename) { uploader }
+        github.repos.downloads.upload(resource, filename).should == 'success'
       end
     end
   end # upload

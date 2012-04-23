@@ -17,7 +17,7 @@ module Github
 
     DEFAULT_REPO_OPTIONS = {
       "homepage"   => "https://github.com",
-      "public"     => true,
+      "private"    => false,
       "has_issues" => true,
       "has_wiki"   => true,
       "has_downloads" => true
@@ -27,7 +27,7 @@ module Github
       name
       description
       homepage
-      public
+      private
       has_issues
       has_wiki
       has_downloads
@@ -107,7 +107,7 @@ module Github
     #  <tt>:name</tt> - Required string
     #  <tt>:description</tt> - Optional string
     #  <tt>:homepage</tt> - Optional string
-    #  <tt>:public</tt> - Optional boolean - true to create public repo, false to create a private one
+    #  <tt>:private</tt> - Optional boolean - <tt>false</tt> to create public reps, <tt>false</tt> to create a private one
     #  <tt>:has_issues</tt> - Optional boolean - <tt>true</tt> to enable issues for this repository, <tt>false</tt> to disable them
     #  <tt>:has_wiki</tt> - Optional boolean - <tt>true</tt> to enable the wiki for this repository, <tt>false</tt> to disable it. Default is <tt>true</tt>
     #  <tt>:has_downloads</tt> Optional boolean - <tt>true</tt> to enable downloads for this repository
@@ -117,7 +117,7 @@ module Github
     #  github.repos.create "name" => 'repo-name'
     #    "description": "This is your first repo",
     #    "homepage": "https://github.com",
-    #    "public": true,
+    #    "private": false,
     #    "has_issues": true,
     #    "has_wiki": true,
     #    "has_downloads": true
@@ -178,7 +178,7 @@ module Github
     # * <tt>:name</tt> Required string
     # * <tt>:description</tt>   Optional string
     # * <tt>:homepage</tt>      Optional string
-    # * <tt>:public</tt>        Optional boolean - true to create public repo, false to create a private one
+    #  <tt>:private</tt> - Optional boolean - <tt>false</tt> to create public reps, <tt>false</tt> to create a private one
     # * <tt>:has_issues</tt>    Optional boolean - <tt>true</tt> to enable issues for this repository, <tt>false</tt> to disable them
     # * <tt>:has_wiki</tt>      Optional boolean - <tt>true</tt> to enable the wiki for this repository, <tt>false</tt> to disable it. Default is <tt>true</tt>
     # * <tt>:has_downloads</tt> Optional boolean - <tt>true</tt> to enable downloads for this repository

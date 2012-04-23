@@ -3,11 +3,11 @@
 require 'faraday'
 
 module Github
-  class Response::Jsonize < Response
-    dependency 'multi_json'
+  class Response::Xmlize < Response
+    dependency 'nokogiri'
 
     define_parser do |body|
-      ::MultiJson.load body
+      ::Nokogiri::XML body
     end
 
     def parse(body)
@@ -22,5 +22,5 @@ module Github
         self.class.parser.call body
       end
     end
-  end # Response::Jsonize
+  end # Response::Xmlize
 end # Github

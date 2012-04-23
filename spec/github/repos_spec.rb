@@ -202,7 +202,7 @@ describe Github::Repos do
       { :name => 'web',
         :description => "This is your first repo",
         :homepage => "https://github.com",
-        :public => true,
+        :private => false,
         :has_issues => true,
         :has_wiki => true }
     end

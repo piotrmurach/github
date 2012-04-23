@@ -5,6 +5,9 @@ module Github
 
     # List repository forks
     #
+    # = Parameters
+    # * <tt>:sort</tt> - newest, oldest, watchers, default: newest
+    #
     # = Examples
     #  github = Github.new
     #  github.repos.forks.list 'user-name', 'repo-name'
@@ -34,7 +37,6 @@ module Github
     def create(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
-
       _normalize_params_keys(params)
       _filter_params_keys(%w[ org ], params)
 
