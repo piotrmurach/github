@@ -11,8 +11,9 @@ A Ruby wrapper for the GitHub REST API v3.
 Supports all the API methods(nearly 200). It's build in a modular way, that is, you can either instantiate the whole api wrapper Github.new or use parts of it e.i. Github::Repos.new if working solely with repositories is your main concern.
 
 ## Important!!
-Since version 0.5 the way the gem queries the GitHub api underwent important changes. It closly mirros the Github api hierarchy e.i. if you want to create a download resource, lookup the github api spec and issue the request as in `github.repos.downloads.create`
+Since version 0.5 the way the gem queries the GitHub api underwent important changes. It closely mirros the Github api hierarchy e.i. if you want to create a download resource, lookup the github api spec and issue the request as in `github.repos.downloads.create`
 
+```ruby
 Old style: github.pull_requests.create_request
            github.pull_requests.pull_requests
            github.pull_requests.pull_request
@@ -20,6 +21,7 @@ Old style: github.pull_requests.create_request
 New style: github.pull_requests.create
            github.pull_requests.all
            github.pull_requests.find
+```
 
 The way parameters are passed stayed the same.
 
@@ -48,7 +50,7 @@ github = Github.new
 At this stage you can also supply various configuration parameters, such as `:user`,`:repo`, `:org`, `:oauth_token`, `:login`, `:password` or `:basic_auth` which are used throughout the API
 
 ```ruby
-github = Github.new :user => 'peter-murach', :repo => 'github-api'
+github = Github.new user:'peter-murach', repo:'github-api'
 ```
 
 or
@@ -63,13 +65,13 @@ end
 You can authenticate either using OAuth authentication convenience methods(see section OAuth) or through basic authentication by passing your login and password credentials
 
 ```ruby
-github = Github.new :login => 'peter-murach', :password => '...'
+github = Github.new login:'peter-murach', password:'...'
 ```
 
 or use convenience method:
 
 ```ruby
-github = Github.new :basic_auth => 'login:password'
+github = Github.new basic_auth: 'login:password'
 ```
 
 You can interact with GitHub interface, for example repositories, by issueing following calls that correspond directly to the GitHub API hierarchy
@@ -153,18 +155,18 @@ Some API methods apart from required parameters such as username, repository nam
 or organisation name, allow you to switch the way the data is returned to you, for instance
 
 ```ruby
-@github = Github.new
-@github.git_data.tree 'peter-murach', 'github', 'c18647b75d72f19c1e0cc8af031e5d833b7f12ea'
+github = Github.new
+github.git_data.tree 'peter-murach', 'github', 'c18647b75d72f19c1e0cc8af031e5d833b7f12ea'
 # => gets a tree
 
-@github.git_data.tree 'peter-murach', 'github', 'c18647b75d72f19c1e0cc8af031e5d833b7f12ea', :recursive => true
+github.git_data.tree 'peter-murach', 'github', 'c18647b75d72f19c1e0cc8af031e5d833b7f12ea', :recursive => true
 # => gets a whole tree recursively
 ```
 
 by passing a block you can iterate over the file tree
 
 ```ruby
-@github.git_data.tree 'peter-murach', 'github', 'c18647b75d72f19c1e0cc8af031e5d833b7f12ea',
+github.git_data.tree 'peter-murach', 'github', 'c18647b75d72f19c1e0cc8af031e5d833b7f12ea',
   :recursive => true do |file|
 
   puts file.path
@@ -182,8 +184,8 @@ In order to authenticate the user through OAuth2 on GitHub you need to
   You can use convenience methods to help you achieve this that come with this gem:
 
 ```ruby
-@github = Github.new :client_id => '...', :client_secret => '...'
-@github.authorize_url :redirect_uri => 'http://localhost', :scope => 'repo'
+github = Github.new :client_id => '...', :client_secret => '...'
+github.authorize_url :redirect_uri => 'http://localhost', :scope => 'repo'
 # => "https://github.com/login/oauth/authorize?scope=repo&response_type=code&client_id='...'&redirect_uri=http%3A%2F%2Flocalhost"
 ```
 After you get your authorization code, call to receive your access_token
@@ -199,8 +201,8 @@ Once you have your access token, configure your github instance following instru
 Alternatively you can use OAuth Authorizations API. For instance, to create access token through GitHub API do following
 
 ```ruby
-@github = Github.new :basic_auth => 'login:password'
-@github.oauth.create_authorization 'scopes' => ['repo']
+github = Github.new basic_auth: 'login:password'
+github.oauth.create_authorization 'scopes' => ['repo']
 ```
 
 You can add more than one scope from the <tt>user</tt>, <tt>public_repo</tt>, <tt>repo</tt>, <tt>gist</tt> or leave the scopes parameter out, in which case, the default read-only access will be assumed(includes public user profile info, public repo info, and gists).
@@ -306,8 +308,8 @@ res.content_type        # "application/json; charset=utf-8"
 Some api methods require input parameters, these are added simply as a hash properties, for instance
 
 ```ruby
-@issues = Github::Issues.new :user => 'peter-murach', :repo => 'github-api'
-@issues.milestones :state => 'open', :sort => 'due_date', :direction => 'asc'
+issues = Github::Issues.new user:'peter-murach', repo: 'github-api'
+issues.milestones :state => 'open', :sort => 'due_date', :direction => 'asc'
 ```
 
 Other methods may require inputs as an array of strings
