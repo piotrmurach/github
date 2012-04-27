@@ -1,0 +1,452 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Github by peter-murach</title>
+    
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Github</h1>
+        <p>Ruby interface to github API v3</p>
+        <p class="view"><a href="https://github.com/peter-murach/github">View the Project on GitHub <small>peter-murach/github</small></a></p>
+        <ul>
+          <li><a href="https://github.com/peter-murach/github/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/peter-murach/github/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/peter-murach/github">Fork On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>GithubAPI</h1>
+
+<p><a href="http://travis-ci.org/peter-murach/github"><img src="https://secure.travis-ci.org/peter-murach/github.png?branch=master" alt="Build Status"></a> <a href="https://gemnasium.com/peter-murach/github"><img src="https://gemnasium.com/peter-murach/github.png?travis" alt="Dependency Status"></a></p>
+
+<p><a href="https://github.com/peter-murach/github/wiki">Wiki</a> | <a href="http://rubydoc.info/github/peter-murach/github/master/frames">RDocs</a></p>
+
+<p>A Ruby wrapper for the GitHub REST API v3.</p>
+
+<p>Supports all the API methods(nearly 200). It's build in a modular way, that is, you can either instantiate the whole api wrapper Github.new or use parts of it e.i. Github::Repos.new if working solely with repositories is your main concern.</p>
+
+<h2>Installation</h2>
+
+<p>Install the gem by issuing</p>
+
+<div class="highlight">
+<pre><span class="n">gem</span> <span class="n">install</span> <span class="n">github_api</span>
+</pre>
+</div>
+
+
+<p>or put it in your Gemfile and run <code>bundle install</code></p>
+
+<div class="highlight">
+<pre><span class="n">gem</span> <span class="s2">"github_api"</span>
+</pre>
+</div>
+
+
+<h2>Usage</h2>
+
+<p>Create a new client instance</p>
+
+<div class="highlight">
+<pre><span class="vi">@github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span>
+</pre>
+</div>
+
+
+<p>At this stage you can also supply various configuration parameters, such as <code>:user</code>,<code>:repo</code>, <code>:org</code>, <code>:oauth_token</code>, <code>:login</code>, <code>:password</code> or <code>:basic_auth</code> which are used throughout the API</p>
+
+<div class="highlight">
+<pre><span class="vi">@github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span> <span class="ss">:user</span> <span class="o">=&gt;</span> <span class="s1">'peter-murach'</span><span class="p">,</span> <span class="ss">:repo</span> <span class="o">=&gt;</span> <span class="s1">'github-api'</span>
+</pre>
+</div>
+
+
+<p>or</p>
+
+<div class="highlight">
+<pre><span class="vi">@github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">opts</span><span class="o">|</span>
+  <span class="n">opts</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="s1">'peter-murach'</span>
+  <span class="n">opts</span><span class="o">.</span><span class="n">repo</span> <span class="o">=</span> <span class="s1">'github-api'</span>
+<span class="k">end</span>
+</pre>
+</div>
+
+
+<p>You can authenticate either using OAuth authentication convenience methods(see section OAuth) or through basic authentication by passing your login and password credentials</p>
+
+<div class="highlight">
+<pre><span class="vi">@github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span> <span class="ss">:login</span> <span class="o">=&gt;</span> <span class="s1">'peter-murach'</span><span class="p">,</span> <span class="ss">:password</span> <span class="o">=&gt;</span> <span class="s1">'...'</span>
+</pre>
+</div>
+
+
+<p>or use convenience method:</p>
+
+<div class="highlight">
+<pre><span class="vi">@github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span> <span class="ss">:basic_auth</span> <span class="o">=&gt;</span> <span class="s1">'login:password'</span>
+</pre>
+</div>
+
+
+<p>You can interact with GitHub interface, for example repositories, by issueing following calls</p>
+
+<div class="highlight">
+<pre><span class="vi">@github</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">commits</span>
+<span class="vi">@github</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">branches</span>
+<span class="vi">@github</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">contributors</span>
+</pre>
+</div>
+
+
+<p>The code base is modular and allows for you to work specifically with a given part of GitHub API e.g. repositories</p>
+
+<div class="highlight">
+<pre><span class="vi">@repos</span> <span class="o">=</span> <span class="no">Github</span><span class="o">::</span><span class="no">Repos</span><span class="o">.</span><span class="n">new</span>
+<span class="vi">@repos</span><span class="o">.</span><span class="n">branches</span> <span class="s1">'peter-murach'</span><span class="p">,</span> <span class="s1">'github'</span>
+
+<span class="ow">or</span>
+
+<span class="vi">@repos</span> <span class="o">=</span> <span class="no">Github</span><span class="o">::</span><span class="no">Repos</span><span class="o">.</span><span class="n">new</span> <span class="ss">:user</span> <span class="o">=&gt;</span> <span class="s1">'peter-murach'</span><span class="p">,</span> <span class="ss">:repo</span> <span class="o">=&gt;</span> <span class="s1">'github'</span>
+<span class="vi">@repos</span><span class="o">.</span><span class="n">branches</span>
+</pre>
+</div>
+
+
+<p>The response is of type [Hashie::Mash] and allows to traverse all the json response attributes like method calls e.i.</p>
+
+<div class="highlight">
+<pre><span class="vi">@repos</span> <span class="o">=</span> <span class="no">Github</span><span class="o">::</span><span class="no">Repos</span><span class="o">.</span><span class="n">new</span> <span class="ss">:user</span> <span class="o">=&gt;</span> <span class="s1">'peter-murach'</span><span class="p">,</span> <span class="ss">:repo</span> <span class="o">=&gt;</span> <span class="s1">'github'</span>
+<span class="vi">@repos</span><span class="o">.</span><span class="n">branches</span> <span class="k">do</span> <span class="o">|</span><span class="n">branch</span><span class="o">|</span>
+  <span class="nb">puts</span> <span class="n">branch</span><span class="o">.</span><span class="n">name</span>
+<span class="k">end</span>
+</pre>
+</div>
+
+
+<h2>API</h2>
+
+<p>Main API methods are grouped into the following classes that can be instantiated on their own</p>
+
+<div class="highlight">
+<pre><span class="no">Github</span>         <span class="o">-</span> <span class="n">full</span> <span class="no">API</span> <span class="n">access</span>
+<span class="no">Github</span><span class="o">::</span><span class="no">Gists</span>
+<span class="no">Github</span><span class="o">::</span><span class="no">GitData</span>
+<span class="no">Github</span><span class="o">::</span><span class="no">Issues</span>
+<span class="no">Github</span><span class="o">::</span><span class="no">Orgs</span>
+<span class="no">Github</span><span class="o">::</span><span class="no">PullRequests</span>
+<span class="no">Github</span><span class="o">::</span><span class="no">Repos</span>
+<span class="no">Github</span><span class="o">::</span><span class="no">Users</span>
+<span class="no">Github</span><span class="o">::</span><span class="no">Events</span>
+<span class="no">Github</span><span class="o">::</span><span class="no">Authorizations</span>
+</pre>
+</div>
+
+
+<p>Some parts of GitHub API v3 require you to be autheticated, for instance the following are examples of APIs only for the authenticated user</p>
+
+<div class="highlight">
+<pre><span class="no">Github</span><span class="o">::</span><span class="no">Users</span><span class="o">::</span><span class="no">Emails</span>
+<span class="no">Github</span><span class="o">::</span><span class="no">Users</span><span class="o">::</span><span class="no">Keys</span>
+</pre>
+</div>
+
+
+<p>All method calls form ruby like sentences and allow for intuitive api navigation, for instance</p>
+
+<div class="highlight">
+<pre><span class="vi">@github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span> <span class="ss">:oauth_token</span> <span class="o">=&gt;</span> <span class="s1">'...'</span>
+<span class="vi">@github</span><span class="o">.</span><span class="n">users</span><span class="o">.</span><span class="n">following</span> <span class="s1">'wycats'</span>  <span class="c1"># =&gt; returns users that 'wycats' is following</span>
+<span class="vi">@github</span><span class="o">.</span><span class="n">users</span><span class="o">.</span><span class="n">following</span> <span class="s1">'wycats'</span> <span class="c1"># =&gt; returns true if following, otherwise false</span>
+</pre>
+</div>
+
+
+<p>For specification on all available methods go to <a href="http://developer.github.com/v3/">http://developer.github.com/v3/</a> or
+read the rdoc, all methods are documented there with examples of usage. Alternatively,
+you can find out supported methods by issuing the following in your <code>irb</code>:</p>
+
+<div class="highlight">
+<pre><span class="o">&gt;&gt;</span> <span class="no">Github</span><span class="o">::</span><span class="no">Repos</span><span class="o">.</span><span class="n">actions</span>
+<span class="o">---</span>
+<span class="o">|--&gt;</span> <span class="n">branches</span>
+<span class="o">|--&gt;</span> <span class="n">contribs</span>
+<span class="o">|--&gt;</span> <span class="n">contributors</span>
+<span class="o">|--&gt;</span> <span class="n">create_repo</span>
+<span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</pre>
+</div>
+
+
+<h2>Inputs</h2>
+
+<p>Some API methods apart from required parameters such as username, repository name
+or organisation name, allow you to switch the way the data is returned to you, for instance</p>
+
+<div class="highlight">
+<pre><span class="vi">@github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span>
+<span class="vi">@github</span><span class="o">.</span><span class="n">git_data</span><span class="o">.</span><span class="n">tree</span> <span class="s1">'peter-murach'</span><span class="p">,</span> <span class="s1">'github'</span><span class="p">,</span> <span class="s1">'c18647b75d72f19c1e0cc8af031e5d833b7f12ea'</span>
+<span class="c1"># =&gt; gets a tree</span>
+
+<span class="vi">@github</span><span class="o">.</span><span class="n">git_data</span><span class="o">.</span><span class="n">tree</span> <span class="s1">'peter-murach'</span><span class="p">,</span> <span class="s1">'github'</span><span class="p">,</span> <span class="s1">'c18647b75d72f19c1e0cc8af031e5d833b7f12ea'</span><span class="p">,</span> <span class="ss">:recursive</span> <span class="o">=&gt;</span> <span class="kp">true</span>
+<span class="c1"># =&gt; gets a whole tree recursively</span>
+</pre>
+</div>
+
+
+<p>by passing a block you can iterate over the file tree</p>
+
+<div class="highlight">
+<pre><span class="vi">@github</span><span class="o">.</span><span class="n">git_data</span><span class="o">.</span><span class="n">tree</span> <span class="s1">'peter-murach'</span><span class="p">,</span> <span class="s1">'github'</span><span class="p">,</span> <span class="s1">'c18647b75d72f19c1e0cc8af031e5d833b7f12ea'</span><span class="p">,</span>
+  <span class="ss">:recursive</span> <span class="o">=&gt;</span> <span class="kp">true</span> <span class="k">do</span> <span class="o">|</span><span class="n">file</span><span class="o">|</span>
+
+  <span class="nb">puts</span> <span class="n">file</span><span class="o">.</span><span class="n">path</span>
+<span class="k">end</span>
+</pre>
+</div>
+
+
+<h2>OAuth</h2>
+
+<p>In order to authenticate the user through OAuth2 on GitHub you need to</p>
+
+<ul>
+<li><p>visit <a href="https://github.com/settings/applications/new">https://github.com/settings/applications/new</a> and register your app
+You will need to be logged in to initially register the application.</p></li>
+<li><p>authorize your credentials <a href="https://github.com/login/oauth/authorize">https://github.com/login/oauth/authorize</a>
+You can use convenience methods to help you achieve this that come with this gem:</p></li>
+</ul><div class="highlight">
+<pre><span class="vi">@github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span> <span class="ss">:client_id</span> <span class="o">=&gt;</span> <span class="s1">'...'</span><span class="p">,</span> <span class="ss">:client_secret</span> <span class="o">=&gt;</span> <span class="s1">'...'</span>
+<span class="vi">@github</span><span class="o">.</span><span class="n">authorize_url</span> <span class="ss">:redirect_uri</span> <span class="o">=&gt;</span> <span class="s1">'http://localhost'</span><span class="p">,</span> <span class="ss">:scope</span> <span class="o">=&gt;</span> <span class="s1">'repo'</span>
+<span class="c1"># =&gt; "https://github.com/login/oauth/authorize?scope=repo&amp;response_type=code&amp;client_id='...'&amp;redirect_uri=http%3A%2F%2Flocalhost"</span>
+</pre>
+</div>
+
+
+<p>After you get your authorization code, call to receive your access_token</p>
+
+<div class="highlight">
+<pre><span class="n">token</span> <span class="o">=</span> <span class="n">github</span><span class="o">.</span><span class="n">get_token</span><span class="p">(</span> <span class="n">authorization_code</span> <span class="p">)</span>
+</pre>
+</div>
+
+
+<p>Once you have your access token, configure your github instance following instructions under Configuration.</p>
+
+<p>Alternatively you can use OAuth Authorizations API. For instance, to create access token through GitHub API do following</p>
+
+<div class="highlight">
+<pre><span class="vi">@github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span> <span class="ss">:basic_auth</span> <span class="o">=&gt;</span> <span class="s1">'login:password'</span>
+<span class="vi">@github</span><span class="o">.</span><span class="n">oauth</span><span class="o">.</span><span class="n">create_authorization</span> <span class="s1">'scopes'</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="s1">'repo'</span><span class="o">]</span>
+</pre>
+</div>
+
+
+<p>You can add more than one scope from the <tt>user</tt>, <tt>public_repo</tt>, <tt>repo</tt>, <tt>gist</tt> or leave the scopes parameter out, in which case, the default read-only access will be assumed(includes public user profile info, public repo info, and gists).</p>
+
+<h2>MIME Types</h2>
+
+<p>Issues, PullRequests and few other API leverage custom mime types which are <tt>:json</tt>, <tt>:blob</tt>, <tt>:raw</tt>, <tt>:text</tt>, <tt>:html</tt>, <tt>:full</tt>. By default <tt>:raw</tt> is used.</p>
+
+<p>In order to pass a mime type with your request do</p>
+
+<div class="highlight">
+<pre><span class="vi">@github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span>
+<span class="vi">@github</span><span class="o">.</span><span class="n">pull_requests</span><span class="o">.</span><span class="n">pull_requests</span> <span class="s1">'peter-murach'</span><span class="p">,</span> <span class="s1">'github'</span><span class="p">,</span> <span class="ss">:mime_type</span> <span class="o">=&gt;</span> <span class="ss">:full</span>
+</pre>
+</div>
+
+
+<p>Your header will contain 'Accept: "application/vnd.github-pull.full+json"' which in turn returns raw, text and html representations in response body.</p>
+
+<h2>Configuration</h2>
+
+<p>Certain methods require authentication. To get your GitHub OAuth v2 credentials,
+register an app at <a href="https://github.com/settings/applications/">https://github.com/settings/applications/</a>
+You will need to be logged in to register the application.</p>
+
+<div class="highlight">
+<pre><span class="no">Github</span><span class="o">.</span><span class="n">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">oauth_token</span>   <span class="o">=</span> <span class="no">YOUR_OAUTH_ACCESS_TOKEN</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">basic_auth</span>    <span class="o">=</span> <span class="s1">'login:password'</span>
+<span class="k">end</span>
+
+<span class="ow">or</span>
+
+<span class="no">Github</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">:oauth_token</span> <span class="o">=&gt;</span> <span class="no">YOUR_OAUTH_TOKEN</span><span class="p">)</span>
+<span class="no">Github</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">:basic_auth</span> <span class="o">=&gt;</span> <span class="s1">'login:password'</span><span class="p">)</span>
+</pre>
+</div>
+
+
+<p>All parameters can be overwirtten as per method call. By passing parameters hash...</p>
+
+<h2>Caching</h2>
+
+<p>Each <code>get</code> request by default is not going to be cached. In order to set the cache do... If no cache type is provided a default memoization is done.</p>
+
+<p>Github.cache do...</p>
+
+<h2>Pagination</h2>
+
+<p>Any request that returns multiple items will be paginated to 30 items by default. You can specify custom <tt>:page</tt> and <tt>:per_page</tt> query parameters to alter default behavior. For instance:</p>
+
+<div class="highlight">
+<pre><span class="n">res</span> <span class="o">=</span> <span class="no">Github</span><span class="o">::</span><span class="no">Repos</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">repos</span> <span class="ss">:user</span> <span class="o">=&gt;</span> <span class="s1">'wycats'</span><span class="p">,</span> <span class="ss">:per_page</span> <span class="o">=&gt;</span> <span class="mi">10</span>
+</pre>
+</div>
+
+
+<p>Then you can query pagination information included in the link header by:</p>
+
+<div class="highlight">
+<pre><span class="n">res</span><span class="o">.</span><span class="n">links</span><span class="o">.</span><span class="n">first</span>  <span class="c1"># Shows the URL of the first page of results.</span>
+<span class="n">res</span><span class="o">.</span><span class="n">links</span><span class="o">.</span><span class="n">next</span>   <span class="c1"># Shows the URL of the immediate next page of results.</span>
+<span class="n">res</span><span class="o">.</span><span class="n">links</span><span class="o">.</span><span class="n">prev</span>   <span class="c1"># Shows the URL of the immediate previous page of results.</span>
+<span class="n">res</span><span class="o">.</span><span class="n">links</span><span class="o">.</span><span class="n">last</span>   <span class="c1"># Shows the URL of the last page of results.</span>
+</pre>
+</div>
+
+
+<p>In order to iterate through the entire result set page by page, you can use convenience methods:</p>
+
+<div class="highlight">
+<pre><span class="n">res</span><span class="o">.</span><span class="n">each_page</span> <span class="k">do</span> <span class="o">|</span><span class="n">page</span><span class="o">|</span>
+  <span class="n">page</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">repo</span><span class="o">|</span>
+    <span class="nb">puts</span> <span class="n">repo</span><span class="o">.</span><span class="n">name</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre>
+</div>
+
+
+<p>or use <code>has_next_page?</code> and <code>next_page</code> like in the following:</p>
+
+<div class="highlight">
+<pre><span class="k">while</span> <span class="n">res</span><span class="o">.</span><span class="n">has_next_page?</span>
+  <span class="o">.</span><span class="n">.</span><span class="o">.</span> <span class="n">process</span> <span class="n">response</span> <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+  <span class="n">res</span><span class="o">.</span><span class="n">next_page</span>
+<span class="k">end</span>
+</pre>
+</div>
+
+
+<p>One can also navigate straight to specific page by:</p>
+
+<div class="highlight">
+<pre><span class="n">res</span><span class="o">.</span><span class="n">page</span> <span class="mi">5</span>     <span class="c1"># Requests given page if it exists, nil otherwise</span>
+<span class="n">res</span><span class="o">.</span><span class="n">first_page</span>
+<span class="n">res</span><span class="o">.</span><span class="n">prev_page</span>
+<span class="n">res</span><span class="o">.</span><span class="n">last_page</span>
+</pre>
+</div>
+
+
+<h2>Response Message</h2>
+
+<p>Each response comes packaged with methods allowing for inspection of HTTP start line and headers. For example to check for rate limits and status code issue</p>
+
+<div class="highlight">
+<pre><span class="n">res</span> <span class="o">=</span> <span class="no">Github</span><span class="o">::</span><span class="no">Repos</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">branches</span> <span class="s1">'peter-murach'</span><span class="p">,</span> <span class="s1">'github'</span>
+<span class="n">res</span><span class="o">.</span><span class="n">ratelimit_limit</span>     <span class="c1"># "5000"</span>
+<span class="n">res</span><span class="o">.</span><span class="n">ratelimit_remainig</span>  <span class="c1"># "4999"</span>
+<span class="n">res</span><span class="o">.</span><span class="n">status</span>              <span class="c1"># "200"</span>
+<span class="n">res</span><span class="o">.</span><span class="n">content_type</span>        <span class="c1"># "application/json; charset=utf-8"</span>
+</pre>
+</div>
+
+
+<h2>Examples</h2>
+
+<p>Some api methods require input parameters, these are added simply as a hash properties, for instance</p>
+
+<div class="highlight">
+<pre><span class="vi">@issues</span> <span class="o">=</span> <span class="no">Github</span><span class="o">::</span><span class="no">Issues</span><span class="o">.</span><span class="n">new</span> <span class="ss">:user</span> <span class="o">=&gt;</span> <span class="s1">'peter-murach'</span><span class="p">,</span> <span class="ss">:repo</span> <span class="o">=&gt;</span> <span class="s1">'github-api'</span>
+<span class="vi">@issues</span><span class="o">.</span><span class="n">milestones</span> <span class="ss">:state</span> <span class="o">=&gt;</span> <span class="s1">'open'</span><span class="p">,</span> <span class="ss">:sort</span> <span class="o">=&gt;</span> <span class="s1">'due_date'</span><span class="p">,</span> <span class="ss">:direction</span> <span class="o">=&gt;</span> <span class="s1">'asc'</span>
+</pre>
+</div>
+
+
+<p>Other methods may require inputs as an array of strings</p>
+
+<div class="highlight">
+<pre><span class="vi">@users</span> <span class="o">=</span> <span class="no">Github</span><span class="o">::</span><span class="no">Users</span><span class="o">.</span><span class="n">new</span> <span class="ss">:oauth_token</span> <span class="o">=&gt;</span> <span class="s1">'...'</span>
+<span class="vi">@users</span><span class="o">.</span><span class="n">add_email</span> <span class="s1">'email1'</span><span class="p">,</span> <span class="s1">'email2'</span><span class="p">,</span> <span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">,</span> <span class="s1">'emailn'</span> <span class="c1"># =&gt; Adds emails to the authenticated user</span>
+</pre>
+</div>
+
+
+<p>If a method returns a collection, you can iterator over it by supplying a block parameter,</p>
+
+<div class="highlight">
+<pre><span class="vi">@issues</span> <span class="o">=</span> <span class="no">Github</span><span class="o">::</span><span class="no">Issues</span><span class="o">.</span><span class="n">new</span> <span class="ss">:user</span> <span class="o">=&gt;</span> <span class="s1">'peter-murach'</span><span class="p">,</span> <span class="ss">:repo</span> <span class="o">=&gt;</span> <span class="s1">'github-api'</span>
+<span class="vi">@issues</span><span class="o">.</span><span class="n">events</span> <span class="k">do</span> <span class="o">|</span><span class="n">event</span><span class="o">|</span>
+  <span class="nb">puts</span> <span class="n">event</span><span class="o">.</span><span class="n">actor</span><span class="o">.</span><span class="n">login</span>
+<span class="k">end</span>
+</pre>
+</div>
+
+
+<p>Query requests instead of http responses return boolean values</p>
+
+<div class="highlight">
+<pre><span class="vi">@github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span>
+<span class="vi">@github</span><span class="o">.</span><span class="n">orgs</span><span class="o">.</span><span class="n">public_member?</span> <span class="s1">'github'</span><span class="p">,</span> <span class="s1">'technoweenie'</span> <span class="c1"># =&gt; true</span>
+</pre>
+</div>
+
+
+<h2>Rails Example</h2>
+
+<p>A Rails controller that allows a user to authorize their GitHub account and then perform request.</p>
+
+<div class="highlight">
+<pre><span class="k">class</span> <span class="nc">GithubController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+
+  <span class="k">def</span> <span class="nf">authorize</span>
+    <span class="n">github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span> <span class="ss">:client_id</span> <span class="o">=&gt;</span> <span class="s1">'...'</span><span class="p">,</span> <span class="ss">:client_secret</span> <span class="o">=&gt;</span> <span class="s1">'...'</span>
+    <span class="n">address</span> <span class="o">=</span> <span class="n">github</span><span class="o">.</span><span class="n">authorize_url</span> <span class="ss">:redirect_uri</span> <span class="o">=&gt;</span> <span class="s1">'http://...'</span><span class="p">,</span> <span class="ss">:scope</span> <span class="o">=&gt;</span> <span class="s1">'repo'</span>
+    <span class="n">redirect_to</span> <span class="n">address</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">callback</span>
+    <span class="n">authorization_code</span> <span class="o">=</span> <span class="n">params</span><span class="o">[</span><span class="ss">:code</span><span class="o">]</span>
+    <span class="n">token</span> <span class="o">=</span> <span class="n">github</span><span class="o">.</span><span class="n">get_token</span> <span class="n">authorization_code</span>
+    <span class="n">access_token</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">token</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre>
+</div>
+
+
+<h2>TODO</h2>
+
+<ul>
+<li>Add request caching - local filestore?, http caching?.</li>
+<li>Add live api tests</li>
+</ul><h2>Development</h2>
+
+<p>Questions or problems? Please post them on the <a href="https://github.com/peter-murach/github/issues">issue tracker</a>. You can contribute changes by forking the project and submitting a pull request. You can ensure the tests are passing by running <code>bundle</code> and <code>rake</code>.</p>
+
+<h2>Copyright</h2>
+
+<p>Copyright (c) 2011-2012 Piotr Murach. See LICENSE.txt for further details.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/peter-murach">peter-murach</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
