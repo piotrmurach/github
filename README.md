@@ -23,8 +23,6 @@ New style: github.pull_requests.create
            github.pull_requests.find
 ```
 
-The way parameters are passed stayed the same.
-
 ## Installation
 
 Install the gem by issuing
@@ -50,16 +48,7 @@ github = Github.new
 At this stage you can also supply various configuration parameters, such as `:user`,`:repo`, `:org`, `:oauth_token`, `:login`, `:password` or `:basic_auth` which are used throughout the API
 
 ```ruby
-github = Github.new user:'peter-murach', repo:'github-api'
-```
-
-or
-
-```ruby
-github = Github.new do |opts|
-  opts.user = 'peter-murach'
-  opts.repo = 'github-api'
-end
+github = Github.new oauth_token: 'token'
 ```
 
 You can authenticate either using OAuth authentication convenience methods(see section OAuth) or through basic authentication by passing your login and password credentials
@@ -105,19 +94,9 @@ Main API methods are grouped into the following classes that can be instantiated
 ```ruby
 Github         - full API access
 
-Github::Gists
-Github::Orgs
-Github::PullRequests
-Github::Repos
-Github::Users
-Github::Events
-Github::Authorizations
-
-Github::GitData::Blobs         Github::Issues
-Github::GitData::Commits       Github::Issues::Comments
-Github::GitData::References    Github::Issues::Events
-Github::GitData::Tags          Github::Issues::Labels
-Github::GitData::Trees         Github::Issues::Milestones
+Github::Gists           Github::GitData       Github::Repos
+Github::Orgs            Github::Issues        Github::Authorizations
+Github::PullRequests    Github::Users         Github::Events
 ```
 
 Some parts of GitHub API v3 require you to be autheticated, for instance the following are examples of APIs only for the authenticated user
@@ -131,13 +110,12 @@ All method calls form ruby like sentences and allow for intuitive api navigation
 
 ```ruby
 github = Github.new :oauth_token => '...'
-github.users.following 'wycats'  # => returns users that 'wycats' is following
-github.users.following 'wycats' # => returns true if following, otherwise false
+github.users.followers.following 'wycats'  # => returns users that 'wycats' is following
+github.users.followers.following 'wycats' # => returns true if following, otherwise false
 ```
 
 For specification on all available methods go to http://developer.github.com/v3/ or
-read the rdoc, all methods are documented there with examples of usage. Alternatively,
-you can find out supported methods by issuing the following in your `irb`:
+read the rdoc, all methods are documented there with examples of usage. Alternatively, you can find out about supported methods by issuing the following in your `irb`:
 
 ```ruby
 >> Github::Repos.actions
@@ -156,18 +134,18 @@ or organisation name, allow you to switch the way the data is returned to you, f
 
 ```ruby
 github = Github.new
-github.git_data.tree 'peter-murach', 'github', 'c18647b75d72f19c1e0cc8af031e5d833b7f12ea'
+github.git_data.trees.get 'peter-murach', 'github', 'c18647b75d72f19c1e0cc8af031e5d833b7f12ea'
 # => gets a tree
 
-github.git_data.tree 'peter-murach', 'github', 'c18647b75d72f19c1e0cc8af031e5d833b7f12ea', :recursive => true
+github.git_data.trees.get 'peter-murach', 'github', 'c18647b75d72f19c1e0cc8af031e5d833b7f12ea', recursive: true
 # => gets a whole tree recursively
 ```
 
 by passing a block you can iterate over the file tree
 
 ```ruby
-github.git_data.tree 'peter-murach', 'github', 'c18647b75d72f19c1e0cc8af031e5d833b7f12ea',
-  :recursive => true do |file|
+github.git_data.trees.get 'peter-murach', 'github', 'c18647b75d72f19c1e0cc8af031e5d833b7f12ea',
+  recursive: true do |file|
 
   puts file.path
 end
@@ -202,10 +180,10 @@ Alternatively you can use OAuth Authorizations API. For instance, to create acce
 
 ```ruby
 github = Github.new basic_auth: 'login:password'
-github.oauth.create_authorization 'scopes' => ['repo']
+github.oauth.create 'scopes' => ['repo']
 ```
 
-You can add more than one scope from the <tt>user</tt>, <tt>public_repo</tt>, <tt>repo</tt>, <tt>gist</tt> or leave the scopes parameter out, in which case, the default read-only access will be assumed(includes public user profile info, public repo info, and gists).
+You can add more than one scope from the `user`, `public_repo`, `repo`, `gist` or leave the scopes parameter out, in which case, the default read-only access will be assumed(includes public user profile info, public repo info, and gists).
 
 ## MIME Types
 
@@ -214,8 +192,8 @@ Issues, PullRequests and few other API leverage custom mime types which are <tt>
 In order to pass a mime type with your request do
 
 ```ruby
-@github = Github.new
-@github.pull_requests.pull_requests 'peter-murach', 'github', :mime_type => :full
+github = Github.new
+github.pull_requests.list 'peter-murach', 'github', :mime_type => :full
 ```
 
   Your header will contain 'Accept: "application/vnd.github-pull.full+json"' which in turn returns raw, text and html representations in response body.
@@ -240,18 +218,30 @@ Github.new(:basic_auth => 'login:password')
 
 All parameters can be overwirtten as per method call. By passing parameters hash...
 
-## Caching
+## Stack
 
-Each `get` request by default is not going to be cached. In order to set the cache do... If no cache type is provided a default memoization is done.
+By default the `github_api` gem will use the default middleware stack. However, a simple DSL is provided to create a custom stack, for instance:
 
-  Github.cache do...
+github = Github.stack do
+  request :filter
+  request :normalizer
+  request :validations
+
+  response :cache do
+    register :filestore
+  end
+
+  adapter :net_http
+end
+
+By default no caching will be performed. In order to set the cache do... If no cache type is provided a default memoization is done.
 
 ## Pagination
 
-Any request that returns multiple items will be paginated to 30 items by default. You can specify custom <tt>:page</tt> and <tt>:per_page</tt> query parameters to alter default behavior. For instance:
+Any request that returns multiple items will be paginated to 30 items by default. You can specify custom `:page` and `:per_page` query parameters to alter default behavior. For instance:
 
 ```ruby
-res = Github::Repos.new.repos :user => 'wycats', :per_page => 10
+res = Github::Repos.new.repos user: 'wycats', per_page: 10
 ```
 
 Then you can query pagination information included in the link header by:
@@ -309,21 +299,21 @@ Some api methods require input parameters, these are added simply as a hash prop
 
 ```ruby
 issues = Github::Issues.new user:'peter-murach', repo: 'github-api'
-issues.milestones :state => 'open', :sort => 'due_date', :direction => 'asc'
+issues.milestones.list state: 'open', sort: 'due_date', direction: 'asc'
 ```
 
 Other methods may require inputs as an array of strings
 
 ```ruby
-@users = Github::Users.new :oauth_token => '...'
-@users.add_email 'email1', 'email2', ..., 'emailn' # => Adds emails to the authenticated user
+users = Github::Users.new oauth_token: 'token'
+users.emails.add 'email1', 'email2', ..., 'emailn' # => Adds emails to the authenticated user
 ```
 
 If a method returns a collection, you can iterator over it by supplying a block parameter,
 
 ```ruby
-@issues = Github::Issues.new :user => 'peter-murach', :repo => 'github-api'
-@issues.events do |event|
+events = Github::Events.new
+events.public do |event|
   puts event.actor.login
 end
 ```
@@ -331,8 +321,8 @@ end
 Query requests instead of http responses return boolean values
 
 ```ruby
-@github = Github.new
-@github.orgs.public_member? 'github', 'technoweenie' # => true
+github = Github.new
+github.orgs.members.public_member? 'github', 'technoweenie' # => true
 ```
 
 ## Rails Example
