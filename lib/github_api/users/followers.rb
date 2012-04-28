@@ -20,9 +20,9 @@ module Github
     def list(user_name=nil, params={})
       _normalize_params_keys(params)
       response = if user_name
-        get("/users/#{user_name}/followers", params)
+        get_request("/users/#{user_name}/followers", params)
       else
-        get("/user/followers", params)
+        get_request("/user/followers", params)
       end
       return response unless block_given?
       response.each { |el| yield el }
