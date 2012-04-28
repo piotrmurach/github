@@ -222,6 +222,7 @@ All parameters can be overwirtten as per method call. By passing parameters hash
 
 By default the `github_api` gem will use the default middleware stack. However, a simple DSL is provided to create a custom stack, for instance:
 
+```ruby
 github = Github.stack do
   request :filter
   request :normalizer
@@ -233,6 +234,7 @@ github = Github.stack do
 
   adapter :net_http
 end
+```
 
 By default no caching will be performed. In order to set the cache do... If no cache type is provided a default memoization is done.
 
