@@ -9,7 +9,7 @@ describe Github::Issues do
   let(:repo)   { 'github' }
   let(:issue_id) { 1347 }
 
-  after { github.user, github.repo, github.oauth_token = nil, nil, nil }
+  after { reset_authentication_for github }
 
   context 'access to apis' do
     it { subject.comments.should be_a Github::Issues::Comments }
@@ -19,6 +19,8 @@ describe Github::Issues do
   end
 
   context '#list' do
+    it { github.issues.should respond_to(:all) }
+
     context "resource found" do
       before do
         stub_get("/issues").
