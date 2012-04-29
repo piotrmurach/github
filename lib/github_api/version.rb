@@ -5,8 +5,8 @@ module Github
     MAJOR = 0
     MINOR = 5
     PATCH = 0
-    BUILD = 'rc1'
+    BUILD = nil
 
     STRING = [MAJOR, MINOR, PATCH, BUILD].compact.join('.');
   end
-end
+end # Github
