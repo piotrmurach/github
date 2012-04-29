@@ -58,7 +58,7 @@
 <p>Create a new client instance</p>
 
 <div class="highlight">
-<pre><span class="vi">@github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span>
+<pre><span class="vi">github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span>
 </pre>
 </div>
 
@@ -66,7 +66,7 @@
 <p>At this stage you can also supply various configuration parameters, such as <code>:user</code>,<code>:repo</code>, <code>:org</code>, <code>:oauth_token</code>, <code>:login</code>, <code>:password</code> or <code>:basic_auth</code> which are used throughout the API</p>
 
 <div class="highlight">
-<pre><span class="vi">@github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span> <span class="ss">:user</span> <span class="o">=&gt;</span> <span class="s1">'peter-murach'</span><span class="p">,</span> <span class="ss">:repo</span> <span class="o">=&gt;</span> <span class="s1">'github-api'</span>
+<pre><span class="vi">github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span> <span class="ss">:user</span> <span class="o">=&gt;</span> <span class="s1">'peter-murach'</span><span class="p">,</span> <span class="ss">:repo</span> <span class="o">=&gt;</span> <span class="s1">'github-api'</span>
 </pre>
 </div>
 
@@ -74,7 +74,7 @@
 <p>or</p>
 
 <div class="highlight">
-<pre><span class="vi">@github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">opts</span><span class="o">|</span>
+<pre><span class="vi">github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">opts</span><span class="o">|</span>
   <span class="n">opts</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="s1">'peter-murach'</span>
   <span class="n">opts</span><span class="o">.</span><span class="n">repo</span> <span class="o">=</span> <span class="s1">'github-api'</span>
 <span class="k">end</span>
@@ -85,7 +85,7 @@
 <p>You can authenticate either using OAuth authentication convenience methods(see section OAuth) or through basic authentication by passing your login and password credentials</p>
 
 <div class="highlight">
-<pre><span class="vi">@github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span> <span class="ss">:login</span> <span class="o">=&gt;</span> <span class="s1">'peter-murach'</span><span class="p">,</span> <span class="ss">:password</span> <span class="o">=&gt;</span> <span class="s1">'...'</span>
+<pre><span class="vi">github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span> <span class="ss">:login</span> <span class="o">=&gt;</span> <span class="s1">'peter-murach'</span><span class="p">,</span> <span class="ss">:password</span> <span class="o">=&gt;</span> <span class="s1">'...'</span>
 </pre>
 </div>
 
@@ -93,7 +93,7 @@
 <p>or use convenience method:</p>
 
 <div class="highlight">
-<pre><span class="vi">@github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span> <span class="ss">:basic_auth</span> <span class="o">=&gt;</span> <span class="s1">'login:password'</span>
+<pre><span class="vi">github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span> <span class="ss">:basic_auth</span> <span class="o">=&gt;</span> <span class="s1">'login:password'</span>
 </pre>
 </div>
 
@@ -101,9 +101,9 @@
 <p>You can interact with GitHub interface, for example repositories, by issueing following calls</p>
 
 <div class="highlight">
-<pre><span class="vi">@github</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">commits</span>
-<span class="vi">@github</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">branches</span>
-<span class="vi">@github</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">contributors</span>
+<pre><span class="vi">github</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">commits</span><span class="o">.</span><span class="n">all</span> <span class="s1">'user-name'</span><span class="p">,</span> <span class="s1">'repo-name'</span>
+<span class="vi">github</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">hooks</span><span class="o">.</span><span class="n">create</span> <span class="s1">'user-name'</span><span class="p">,</span> <span class="s1">'repo-name'</span>
+<span class="vi">github</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">keys</span><span class="o">.</span><span class="n">get</span> <span class="s1">'user-name'</span><span class="p">,</span> <span class="s1">'repo-name'</span>
 </pre>
 </div>
 
@@ -111,13 +111,8 @@
 <p>The code base is modular and allows for you to work specifically with a given part of GitHub API e.g. repositories</p>
 
 <div class="highlight">
-<pre><span class="vi">@repos</span> <span class="o">=</span> <span class="no">Github</span><span class="o">::</span><span class="no">Repos</span><span class="o">.</span><span class="n">new</span>
-<span class="vi">@repos</span><span class="o">.</span><span class="n">branches</span> <span class="s1">'peter-murach'</span><span class="p">,</span> <span class="s1">'github'</span>
-
-<span class="ow">or</span>
-
-<span class="vi">@repos</span> <span class="o">=</span> <span class="no">Github</span><span class="o">::</span><span class="no">Repos</span><span class="o">.</span><span class="n">new</span> <span class="ss">:user</span> <span class="o">=&gt;</span> <span class="s1">'peter-murach'</span><span class="p">,</span> <span class="ss">:repo</span> <span class="o">=&gt;</span> <span class="s1">'github'</span>
-<span class="vi">@repos</span><span class="o">.</span><span class="n">branches</span>
+<pre><span class="vi">blobs</span> <span class="o">=</span> <span class="no">Github</span><span class="o">::</span><span class="no">GitData</span><span class="o">::</span><span class="no">Blobs</span><span class="o">.</span><span class="n">new</span>
+<span class="vi">blobs</span><span class="o">.</span><span class="n">create</span> <span class="s1">'peter-murach'</span><span class="p">,</span> <span class="s1">'github'</span><span class="p">,</span> <span class="s1">content</span><span class="p">:</span> <span class="s1">'github'</span>
 </pre>
 </div>
 
@@ -125,8 +120,8 @@
 <p>The response is of type [Hashie::Mash] and allows to traverse all the json response attributes like method calls e.i.</p>
 
 <div class="highlight">
-<pre><span class="vi">@repos</span> <span class="o">=</span> <span class="no">Github</span><span class="o">::</span><span class="no">Repos</span><span class="o">.</span><span class="n">new</span> <span class="ss">:user</span> <span class="o">=&gt;</span> <span class="s1">'peter-murach'</span><span class="p">,</span> <span class="ss">:repo</span> <span class="o">=&gt;</span> <span class="s1">'github'</span>
-<span class="vi">@repos</span><span class="o">.</span><span class="n">branches</span> <span class="k">do</span> <span class="o">|</span><span class="n">branch</span><span class="o">|</span>
+<pre><span class="vi">repos</span> <span class="o">=</span> <span class="no">Github</span><span class="o">::</span><span class="no">Repos</span><span class="o">.</span><span class="n">new</span> <span class="ss">:user</span> <span class="o">=&gt;</span> <span class="s1">'peter-murach'</span><span class="p">,</span> <span class="ss">:repo</span> <span class="o">=&gt;</span> <span class="s1">'github'</span>
+<span class="vi">repos</span><span class="o">.</span><span class="n">branches</span> <span class="k">do</span> <span class="o">|</span><span class="n">branch</span><span class="o">|</span>
   <span class="nb">puts</span> <span class="n">branch</span><span class="o">.</span><span class="n">name</span>
 <span class="k">end</span>
 </pre>
@@ -164,9 +159,9 @@
 <p>All method calls form ruby like sentences and allow for intuitive api navigation, for instance</p>
 
 <div class="highlight">
-<pre><span class="vi">@github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span> <span class="ss">:oauth_token</span> <span class="o">=&gt;</span> <span class="s1">'...'</span>
-<span class="vi">@github</span><span class="o">.</span><span class="n">users</span><span class="o">.</span><span class="n">following</span> <span class="s1">'wycats'</span>  <span class="c1"># =&gt; returns users that 'wycats' is following</span>
-<span class="vi">@github</span><span class="o">.</span><span class="n">users</span><span class="o">.</span><span class="n">following</span> <span class="s1">'wycats'</span> <span class="c1"># =&gt; returns true if following, otherwise false</span>
+<pre><span class="vi">github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span> <span class="ss">:oauth_token</span> <span class="o">=&gt;</span> <span class="s1">'...'</span>
+<span class="vi">github</span><span class="o">.</span><span class="n">users</span><span class="o">.</span><span class="n">followers</span><span class="o">.</span><span class="n">following</span> <span class="s1">'wycats'</span>  <span class="c1"># =&gt; returns users that 'wycats' is following</span>
+<span class="vi">github</span><span class="o">.</span><span class="n">users</span><span class="o">.</span><span class="n">followers</span><span class="o">.</span><span class="n">following</span> <span class="s1">'wycats'</span> <span class="c1"># =&gt; returns true if following, otherwise false</span>
 </pre>
 </div>
 
@@ -193,11 +188,11 @@ you can find out supported methods by issuing the following in your <code>irb</c
 or organisation name, allow you to switch the way the data is returned to you, for instance</p>
 
 <div class="highlight">
-<pre><span class="vi">@github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span>
-<span class="vi">@github</span><span class="o">.</span><span class="n">git_data</span><span class="o">.</span><span class="n">tree</span> <span class="s1">'peter-murach'</span><span class="p">,</span> <span class="s1">'github'</span><span class="p">,</span> <span class="s1">'c18647b75d72f19c1e0cc8af031e5d833b7f12ea'</span>
+<pre><span class="vi">github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span>
+<span class="vi">github</span><span class="o">.</span><span class="n">git_data</span><span class="o">.</span><span class="n">trees</span><span class="o">.</span><span class="n">get</span> <span class="s1">'peter-murach'</span><span class="p">,</span> <span class="s1">'github'</span><span class="p">,</span> <span class="s1">'c18647b75d72f19c1e0cc8af031e5d833b7f12ea'</span>
 <span class="c1"># =&gt; gets a tree</span>
 
-<span class="vi">@github</span><span class="o">.</span><span class="n">git_data</span><span class="o">.</span><span class="n">tree</span> <span class="s1">'peter-murach'</span><span class="p">,</span> <span class="s1">'github'</span><span class="p">,</span> <span class="s1">'c18647b75d72f19c1e0cc8af031e5d833b7f12ea'</span><span class="p">,</span> <span class="ss">:recursive</span> <span class="o">=&gt;</span> <span class="kp">true</span>
+<span class="vi">github</span><span class="o">.</span><span class="n">git_data</span><span class="o">.</span><span class="n">trees</span><span class="o">.</span><span class="n">get</span> <span class="s1">'peter-murach'</span><span class="p">,</span> <span class="s1">'github'</span><span class="p">,</span> <span class="s1">'c18647b75d72f19c1e0cc8af031e5d833b7f12ea'</span><span class="p">,</span> <span class="ss">:recursive</span> <span class="o">=&gt;</span> <span class="kp">true</span>
 <span class="c1"># =&gt; gets a whole tree recursively</span>
 </pre>
 </div>
@@ -206,7 +201,7 @@ or organisation name, allow you to switch the way the data is returned to you, f
 <p>by passing a block you can iterate over the file tree</p>
 
 <div class="highlight">
-<pre><span class="vi">@github</span><span class="o">.</span><span class="n">git_data</span><span class="o">.</span><span class="n">tree</span> <span class="s1">'peter-murach'</span><span class="p">,</span> <span class="s1">'github'</span><span class="p">,</span> <span class="s1">'c18647b75d72f19c1e0cc8af031e5d833b7f12ea'</span><span class="p">,</span>
+<pre><span class="vi">github</span><span class="o">.</span><span class="n">git_data</span><span class="o">.</span><span class="n">trees</span><span class="o">.</span><span class="n">get</span> <span class="s1">'peter-murach'</span><span class="p">,</span> <span class="s1">'github'</span><span class="p">,</span> <span class="s1">'c18647b75d72f19c1e0cc8af031e5d833b7f12ea'</span><span class="p">,</span>
   <span class="ss">:recursive</span> <span class="o">=&gt;</span> <span class="kp">true</span> <span class="k">do</span> <span class="o">|</span><span class="n">file</span><span class="o">|</span>
 
   <span class="nb">puts</span> <span class="n">file</span><span class="o">.</span><span class="n">path</span>
@@ -245,8 +240,8 @@ You can use convenience methods to help you achieve this that come with this gem
 <p>Alternatively you can use OAuth Authorizations API. For instance, to create access token through GitHub API do following</p>
 
 <div class="highlight">
-<pre><span class="vi">@github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span> <span class="ss">:basic_auth</span> <span class="o">=&gt;</span> <span class="s1">'login:password'</span>
-<span class="vi">@github</span><span class="o">.</span><span class="n">oauth</span><span class="o">.</span><span class="n">create_authorization</span> <span class="s1">'scopes'</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="s1">'repo'</span><span class="o">]</span>
+<pre><span class="vi">github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span> <span class="ss">:basic_auth</span> <span class="o">=&gt;</span> <span class="s1">'login:password'</span>
+<span class="vi">github</span><span class="o">.</span><span class="n">oauth</span><span class="o">.</span><span class="n">create</span> <span class="s1">'scopes'</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="s1">'repo'</span><span class="o">]</span>
 </pre>
 </div>
 
@@ -260,8 +255,8 @@ You can use convenience methods to help you achieve this that come with this gem
 <p>In order to pass a mime type with your request do</p>
 
 <div class="highlight">
-<pre><span class="vi">@github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span>
-<span class="vi">@github</span><span class="o">.</span><span class="n">pull_requests</span><span class="o">.</span><span class="n">pull_requests</span> <span class="s1">'peter-murach'</span><span class="p">,</span> <span class="s1">'github'</span><span class="p">,</span> <span class="ss">:mime_type</span> <span class="o">=&gt;</span> <span class="ss">:full</span>
+<pre><span class="vi">github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span>
+<span class="vi">github</span><span class="o">.</span><span class="n">pull_requests</span><span class="o">.</span><span class="n">list</span> <span class="s1">'peter-murach'</span><span class="p">,</span> <span class="s1">'github'</span><span class="p">,</span> <span class="ss">:mime_type</span> <span class="o">=&gt;</span> <span class="ss">:full</span>
 </pre>
 </div>
 
@@ -301,7 +296,7 @@ You will need to be logged in to register the application.</p>
 <p>Any request that returns multiple items will be paginated to 30 items by default. You can specify custom <tt>:page</tt> and <tt>:per_page</tt> query parameters to alter default behavior. For instance:</p>
 
 <div class="highlight">
-<pre><span class="n">res</span> <span class="o">=</span> <span class="no">Github</span><span class="o">::</span><span class="no">Repos</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">repos</span> <span class="ss">:user</span> <span class="o">=&gt;</span> <span class="s1">'wycats'</span><span class="p">,</span> <span class="ss">:per_page</span> <span class="o">=&gt;</span> <span class="mi">10</span>
+<pre><span class="n">res</span> <span class="o">=</span> <span class="no">Github</span><span class="o">::</span><span class="no">Repos</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">list</span> <span class="ss">:user</span> <span class="o">=&gt;</span> <span class="s1">'wycats'</span><span class="p">,</span> <span class="ss">:per_page</span> <span class="o">=&gt;</span> <span class="mi">10</span>
 </pre>
 </div>
 
@@ -370,8 +365,8 @@ You will need to be logged in to register the application.</p>
 <p>Some api methods require input parameters, these are added simply as a hash properties, for instance</p>
 
 <div class="highlight">
-<pre><span class="vi">@issues</span> <span class="o">=</span> <span class="no">Github</span><span class="o">::</span><span class="no">Issues</span><span class="o">.</span><span class="n">new</span> <span class="ss">:user</span> <span class="o">=&gt;</span> <span class="s1">'peter-murach'</span><span class="p">,</span> <span class="ss">:repo</span> <span class="o">=&gt;</span> <span class="s1">'github-api'</span>
-<span class="vi">@issues</span><span class="o">.</span><span class="n">milestones</span> <span class="ss">:state</span> <span class="o">=&gt;</span> <span class="s1">'open'</span><span class="p">,</span> <span class="ss">:sort</span> <span class="o">=&gt;</span> <span class="s1">'due_date'</span><span class="p">,</span> <span class="ss">:direction</span> <span class="o">=&gt;</span> <span class="s1">'asc'</span>
+<pre><span class="vi">issues</span> <span class="o">=</span> <span class="no">Github</span><span class="o">::</span><span class="no">Issues</span><span class="o">.</span><span class="n">new</span> <span class="ss">:user</span> <span class="o">=&gt;</span> <span class="s1">'peter-murach'</span><span class="p">,</span> <span class="ss">:repo</span> <span class="o">=&gt;</span> <span class="s1">'github-api'</span>
+<span class="vi">issues</span><span class="o">.</span><span class="n">milestones</span><span class="o">.</span><span class="n">list</span> <span class="ss">:state</span> <span class="o">=&gt;</span> <span class="s1">'open'</span><span class="p">,</span> <span class="ss">:sort</span> <span class="o">=&gt;</span> <span class="s1">'due_date'</span><span class="p">,</span> <span class="ss">:direction</span> <span class="o">=&gt;</span> <span class="s1">'asc'</span>
 </pre>
 </div>
 
@@ -379,8 +374,8 @@ You will need to be logged in to register the application.</p>
 <p>Other methods may require inputs as an array of strings</p>
 
 <div class="highlight">
-<pre><span class="vi">@users</span> <span class="o">=</span> <span class="no">Github</span><span class="o">::</span><span class="no">Users</span><span class="o">.</span><span class="n">new</span> <span class="ss">:oauth_token</span> <span class="o">=&gt;</span> <span class="s1">'...'</span>
-<span class="vi">@users</span><span class="o">.</span><span class="n">add_email</span> <span class="s1">'email1'</span><span class="p">,</span> <span class="s1">'email2'</span><span class="p">,</span> <span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">,</span> <span class="s1">'emailn'</span> <span class="c1"># =&gt; Adds emails to the authenticated user</span>
+<pre><span class="vi">users</span> <span class="o">=</span> <span class="no">Github</span><span class="o">::</span><span class="no">Users</span><span class="o">.</span><span class="n">new</span> <span class="ss">:oauth_token</span> <span class="o">=&gt;</span> <span class="s1">'...'</span>
+<span class="vi">users</span><span class="o">.</span><span class="n">emails</span><span class="o">.</span><span class="n">add</span> <span class="s1">'email1'</span><span class="p">,</span> <span class="s1">'email2'</span><span class="p">,</span> <span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">,</span> <span class="s1">'emailn'</span> <span class="c1"># =&gt; Adds emails to the authenticated user</span>
 </pre>
 </div>
 
@@ -388,8 +383,8 @@ You will need to be logged in to register the application.</p>
 <p>If a method returns a collection, you can iterator over it by supplying a block parameter,</p>
 
 <div class="highlight">
-<pre><span class="vi">@issues</span> <span class="o">=</span> <span class="no">Github</span><span class="o">::</span><span class="no">Issues</span><span class="o">.</span><span class="n">new</span> <span class="ss">:user</span> <span class="o">=&gt;</span> <span class="s1">'peter-murach'</span><span class="p">,</span> <span class="ss">:repo</span> <span class="o">=&gt;</span> <span class="s1">'github-api'</span>
-<span class="vi">@issues</span><span class="o">.</span><span class="n">events</span> <span class="k">do</span> <span class="o">|</span><span class="n">event</span><span class="o">|</span>
+<pre><span class="vi">events</span> <span class="o">=</span> <span class="no">Github</span><span class="o">::</span><span class="no">Events</span><span class="o">.</span><span class="n">new</span>
+<span class="vi">events</span><span class="o">.</span><span class="n">public</span> <span class="k">do</span> <span class="o">|</span><span class="n">event</span><span class="o">|</span>
   <span class="nb">puts</span> <span class="n">event</span><span class="o">.</span><span class="n">actor</span><span class="o">.</span><span class="n">login</span>
 <span class="k">end</span>
 </pre>
@@ -399,8 +394,8 @@ You will need to be logged in to register the application.</p>
 <p>Query requests instead of http responses return boolean values</p>
 
 <div class="highlight">
-<pre><span class="vi">@github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span>
-<span class="vi">@github</span><span class="o">.</span><span class="n">orgs</span><span class="o">.</span><span class="n">public_member?</span> <span class="s1">'github'</span><span class="p">,</span> <span class="s1">'technoweenie'</span> <span class="c1"># =&gt; true</span>
+<pre><span class="vi">github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span>
+<span class="vi">github</span><span class="o">.</span><span class="n">orgs</span><span class="o">.</span><span class="n">members</span><span class="o">.</span><span class="n">public_member?</span> <span class="s1">'github'</span><span class="p">,</span> <span class="s1">'technoweenie'</span> <span class="c1"># =&gt; true</span>
 </pre>
 </div>
 
