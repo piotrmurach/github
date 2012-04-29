@@ -63,7 +63,7 @@ or use convenience method:
 github = Github.new basic_auth: 'login:password'
 ```
 
-You can interact with GitHub interface, for example repositories, by issueing following calls that correspond directly to the GitHub API hierarchy
+You can interact with GitHub interface, for example repositories, by issuing following calls that correspond directly to the GitHub API hierarchy
 
 ```ruby
 github.repos.commits.all  'user-name', 'repo-name'
@@ -137,8 +137,8 @@ github = Github.new
 github.git_data.trees.get 'peter-murach', 'github', 'c18647b75d72f19c1e0cc8af031e5d833b7f12ea'
 # => gets a tree
 
-github.git_data.trees.get 'peter-murach', 'github', 'c18647b75d72f19c1e0cc8af031e5d833b7f12ea', recursive: true
-# => gets a whole tree recursively
+github.git_data.trees.get 'peter-murach', 'github', 'c18647b75d72f19c1e0cc8af031e5d833b7f12ea',
+  recursive: true # => gets a whole tree recursively
 ```
 
 by passing a block you can iterate over the file tree
@@ -146,8 +146,7 @@ by passing a block you can iterate over the file tree
 ```ruby
 github.git_data.trees.get 'peter-murach', 'github', 'c18647b75d72f19c1e0cc8af031e5d833b7f12ea',
   recursive: true do |file|
-
-  puts file.path
+    puts file.path
 end
 ```
 
@@ -218,7 +217,7 @@ Github.new(:basic_auth => 'login:password')
 
 All parameters can be overwirtten as per method call. By passing parameters hash...
 
-## Stack
+## Stack(work in progress)
 
 By default the `github_api` gem will use the default middleware stack. However, a simple DSL is provided to create a custom stack, for instance:
 
