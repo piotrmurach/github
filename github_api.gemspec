@@ -39,11 +39,12 @@ Thank you for installing github_api-#{Github::VERSION::STRING.dup}.
 *NOTE*: Version 0.5.0 introduces breaking changes to the way github api is queried.
 The interface has been rewritten to be more consistent with REST verbs that
 interact with GitHub hypermedia resources. Thus, to list resources 'list' or 'all'
-verb is used, to retrieve individual resource 'get' or 'find' verbs are used.
-Further CRUDE operations on all resources use preditable verbs as well.
+verbs are used, to retrieve individual resource 'get' or 'find' verbs are used.
+Other CRUDE operations on all resources use preditable verbs as well, such as
+'create', 'delete' etc...
 
-Again sorry for inconvenience but I trust that this will help in easier access to
-the GitHub API.
+Again sorry for the inconvenience but I trust that this will help in easier access to
+the GitHub API and library .
 
 For more information: http://rubydoc.info/github/peter-murach/github/master/frames
 
