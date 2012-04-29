@@ -7,7 +7,11 @@ module Github
     dependency 'multi_json'
 
     define_parser do |body|
-      ::MultiJson.load body
+      if MultiJson.respond_to?(:load)
+        MultiJson.load body
+      else
+        MultiJson.decode body
+      end
     end
 
     def parse(body)
