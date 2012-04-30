@@ -108,7 +108,7 @@ module Github
     #  <tt>:name</tt> - Required string
     #  <tt>:description</tt> - Optional string
     #  <tt>:homepage</tt> - Optional string
-    #  <tt>:private</tt> - Optional boolean - <tt>false</tt> to create public reps, <tt>false</tt> to create a private one
+    #  <tt>:private</tt> - Optional boolean - <tt>true</tt> to create a private repository, <tt>false</tt> to create a public one.
     #  <tt>:has_issues</tt> - Optional boolean - <tt>true</tt> to enable issues for this repository, <tt>false</tt> to disable them
     #  <tt>:has_wiki</tt> - Optional boolean - <tt>true</tt> to enable the wiki for this repository, <tt>false</tt> to disable it. Default is <tt>true</tt>
     #  <tt>:has_downloads</tt> Optional boolean - <tt>true</tt> to enable downloads for this repository
