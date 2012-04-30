@@ -50,6 +50,9 @@ module Github
     #
     # = Inputs
     # * <tt>:scopes</tt> - Optional array - A list of scopes that this authorization is in.
+    # * <tt>:note</tt> - Optional string - A note to remind you what the OAuth token is for.
+    # * <tt>:note_url</tt> - Optional string - A URL to remind you what the OAuth token is for.
+    #
     # = Examples
     #  github = Github.new :basic_auth => 'login:password'
     #  github.oauth.create
@@ -69,6 +72,8 @@ module Github
     # * <tt>:scopes</tt> - Optional array - A list of scopes that this authorization is in.
     # * <tt>:add_scopes</tt> - Optional array - A list of scopes to add to this authorization.
     # * <tt>:remove_scopes</tt> - Optional array - A list of scopes to remove from this authorization.
+    # * <tt>:note</tt> - Optional string - A note to remind you what the OAuth token is for.
+    # * <tt>:note_url</tt> - Optional string - A URL to remind you what the OAuth token is for.
     #
     # = Examples
     #  github = Github.new :basic_auth => 'login:password'
