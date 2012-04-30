@@ -100,6 +100,11 @@ module Github
     # * <tt>resource</tt> - Required resource of the create_download call.
     # * <tt>:filename</tt> - Required filename, a path to a file location.
     #
+    # = Examples
+    #  resource = github.repos.downloads.create 'user-name', 'repo-name'
+    #
+    #  github.repos.downloads.upload resource, '/users/octokit/image.jpg'
+    #
     def upload(resource, filename)
       _validate_presence_of resource, filename
 
