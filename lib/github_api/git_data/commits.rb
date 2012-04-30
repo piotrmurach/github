@@ -28,8 +28,8 @@ module Github
     # Get a commit
     #
     # = Examples
-    #  @github = Github.new
-    #  @github.git_data.commit 'user-name', 'repo-name', 'sha'
+    #  github = Github.new
+    #  github.git_data.commits.get 'user-name', 'repo-name', 'sha'
     #
     def get(user_name, repo_name, sha, params={})
       _update_user_repo_params(user_name, repo_name)
@@ -52,16 +52,16 @@ module Github
     #
     # The committer section is optional and will be filled with the author data if omitted. If the author section is omitted, it will be filled in with the authenticated users information and the current date.
     #
-    # * author.name:: String of the name of the author of the commit
-    # * author.email:: String of the email of the author of the commit
-    # * author.date:: Timestamp of when this commit was authored
-    # * committer.name:: String of the name of the committer of the commit
-    # * committer.email:: String of the email of the committer of the commit
-    # * committer.date:: Timestamp of when this commit was committed
+    # * author.name - String of the name of the author of the commit
+    # * author.email -  String of the email of the author of the commit
+    # * author.date -  Timestamp of when this commit was authored
+    # * committer.name - String of the name of the committer of the commit
+    # * committer.email -  String of the email of the committer of the commit
+    # * committer.date - Timestamp of when this commit was committed
     #
     # = Examples
-    #  @github = Github.new
-    #  @github.git_data.create_commit 'user-name', 'repo-name',
+    #  github = Github.new
+    #  github.git_data.commits.create 'user-name', 'repo-name',
     #    "message": "my commit message",
     #    "author": {
     #      "name": "Scott Chacon",
