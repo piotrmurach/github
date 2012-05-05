@@ -25,7 +25,7 @@ module Github
     #  github = Github.new
     #  github.git_data.references.list 'user-name', 'repo-name'
     #
-    #  github.git_data.references.list 'user-name', 'repo-name', 'tags'
+    #  github.git_data.references.list 'user-name', 'repo-name', 'refs/tags'
     #
     def list(user_name, repo_name, ref=nil, params={})
       _update_user_repo_params(user_name, repo_name)
@@ -34,7 +34,7 @@ module Github
 
       response = if ref
         _validate_reference ref
-        get_request("/repos/#{user}/#{repo}/git/refs/#{ref}", params)
+        get_request("/repos/#{user}/#{repo}/git/#{ref}", params)
       else
         get_request("/repos/#{user}/#{repo}/git/refs", params)
       end
@@ -52,7 +52,7 @@ module Github
     #
     # = Examples
     #  github = Github.new
-    #  github.git_data.references.get 'user-name', 'repo-name', 'reference'
+    #  github.git_data.references.get 'user-name', 'repo-name', 'refs/reference'
     #
     def get(user_name, repo_name, ref, params={})
       _update_user_repo_params(user_name, repo_name)
@@ -62,7 +62,7 @@ module Github
       _validate_reference ref
       _normalize_params_keys params
 
-      get_request("/repos/#{user}/#{repo}/git/refs/#{ref}", params)
+      get_request("/repos/#{user}/#{repo}/git/#{ref}", params)
     end
     alias :find :get
 
@@ -113,7 +113,7 @@ module Github
       _filter_params_keys(VALID_REF_PARAM_NAMES, params)
       _validate_inputs(%w[ sha ], params)
 
-      patch_request("/repos/#{user}/#{repo}/git/refs/#{ref}", params)
+      patch_request("/repos/#{user}/#{repo}/git/#{ref}", params)
     end
 
     # Delete a reference
