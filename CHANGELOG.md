@@ -1,9 +1,18 @@
-0.5.0.rc1 (May , 2012)
+0.5.1 (May 7, 2012)
 
-* Rewrote all apis method calls to be consistent with GitHub API v3, namely
+* Fix bugs with references api and add live test coverage.
+* Add live tests settings file.
+* Add new section called testing to main docs to explain on test setup.
+
+0.5.0 (April 27, 2012)
+
+* Mainly documentation updates for method parameters and the way they are invoked.
+
+0.5.0.rc1 (April 27, 2012)
+
+* Rewrote all apis method calls to be consistent with GitHub API v3, namely,
   regardless which resource is being currently used, the 'create', 'edit', 'delete' methods are used for CRUD operations.
 * Further ActiveRecord style methods are used, that is, 'all' for listing collection of resoruces and 'find' for getting a single resource.
-*
 
 0.4.11 (Apr 22, 2012)
 
