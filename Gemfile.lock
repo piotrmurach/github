@@ -63,7 +63,7 @@ GEM
     simplecov-html (0.5.3)
     term-ansicolor (1.0.7)
     thor (0.14.6)
-    vcr (2.0.1)
+    vcr (2.1.1)
     webmock (1.8.6)
       addressable (>= 2.2.7)
       crack (>= 0.1.7)
@@ -85,6 +85,6 @@ DEPENDENCIES
   rb-fsevent
   rspec
   simplecov (~> 0.6.1)
-  vcr (~> 2.0.0)
+  vcr (~> 2.1.0)
   webmock (~> 1.8.0)
   yajl-ruby (~> 1.1.0)
