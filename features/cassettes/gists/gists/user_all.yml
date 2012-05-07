@@ -1,0 +1,57 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://<BASIC_AUTH>@api.github.com/users/peter-murach/gists?access_token=<TOKEN>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.0.13
+      Date:
+      - Mon, 07 May 2012 16:12:16 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      Etag:
+      - ! '"79ee2622473ba4c9400d47d9d6f52c23"'
+      X-Ratelimit-Remaining:
+      - '4924'
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAA4VT246bMBD9lchS3whgMFdpte1Lv6BPrapoMAOxasCyzfay
+        yr93vAlqNqtuJCTGMJ4558yZb8/s6Cd9WK1mLYXeuDZJRuV8PCp/XLtYLlPC
+        87zmTckiNiiNjrXPTC7DgOikVcbvRr10oHczTOgMSAwJ/rehN/P4yydGg5rp
+        toZ5XGGk7/OqdcSc+kNxXqURs/DzDgjK2IAkQzrwuuTY1FVe8WaoRS+7IRxk
+        L1LMS97xvBzK5H2YZz4BNiF9P/V0itjq0AZqehmJTssMerT7abUgj8QOnsCD
+        vWHhUK4W49Ge/77IeQ6ToctE0xdFKSAdallA2pUNpn3F+6JuRPPYP2wDgUzU
+        McbwAyZQ8Yw+AefQu6shfcg+q4m0dRRs3a7jPRdpbOaRgL4eNhh1PetA0iU3
+        1LaCB9UT73vAqUXIE0LkPCPd+otP1BJU++Q96aXmcfcEVkFHhtr55a2HImbW
+        TivJWm9XjJi0CB77A3gqkqWc7+lJ8y9Z1hZNK6qv1JbUnXD25FCyFBn4YMhn
+        l4nQ8f/WDgoEZUx/t8e5rDv+K/vxZl/ay75sRV/t1o3c4aq7WrAXgbd9O33/
+        C3kYQ7GgAwAA
+    http_version: !!null 
+  recorded_at: Mon, 07 May 2012 16:12:16 GMT
+recorded_with: VCR 2.1.1

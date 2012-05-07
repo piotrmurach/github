@@ -7,5 +7,4 @@ pkg
 *.swp
 log
 *.sqlite3
-features/cassettes
 features/settings.yml
