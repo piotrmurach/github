@@ -6,6 +6,7 @@ VCR.configure do |conf|
   conf.default_cassette_options = { :record => :new_episodes }
   conf.filter_sensitive_data('<TOKEN>') { SETTINGS['oauth_token'] }
   conf.filter_sensitive_data('<BASIC_AUTH>') { SETTINGS['basic_auth'] }
+  conf.filter_sensitive_data('<USER>') { SETTINGS['user'] }
 end
 
 VCR.cucumber_tags do |t|
