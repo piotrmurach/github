@@ -16,7 +16,7 @@ Feature: Accessing GitData References API
       And the response type should be "JSON"
       And the response should not be empty
 
-  Scenario: Lists all references on a repository
+  Scenario: Lists all references on a repository scoped by branch
     Given I want to list resources with the following params:
       | user   | repo |
       | wycats | thor |
@@ -28,7 +28,7 @@ Feature: Accessing GitData References API
       And the response type should be "JSON"
       And the response should not be empty
 
-  Scenario: Gets a single git data reference
+  Scenario: Gets a single reference
     Given I want to get resource with the following params:
       | user   | repo | ref            |
       | wycats | thor | heads/gh-pages |
@@ -36,3 +36,14 @@ Feature: Accessing GitData References API
     Then the response should be "200"
       And the response type should be "JSON"
       And the response should not be empty
+
+#   Scenario: Create a reference
+#     Given I want to create resource with the following params:
+#       | user  | repo            |
+#       | murek | github_api_test |
+#     And I pass the following request options:
+#       | ref               | sha                                      |
+#       | refs/heads/master | 827efc6d56897b048c772eb4087f854f46256132 |
+#     When I make request within a cassette named "git_data/references/create"
+#     Then the response should be "200"
+#       And the response type should be "JSON"
