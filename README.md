@@ -347,6 +347,16 @@ class GithubController < ApplicationController
 end
 ```
 
+## Testing
+
+The test suite is split into two groups `live` and `mock`.
+
+The `live` tests are the ones in `features` folder and they simply exercise the GitHub API by making live requests and then being cached with VCR in directory named `features\cassettes`.
+
+The `mock` tests are in `spec` directory and their primary concern is to test the gem internals without the hindrance of external calls.
+
+For details on how to get setup please navigate to `features` folder.
+
 ## Development
 
 Questions or problems? Please post them on the [issue tracker](https://github.com/peter-murach/github/issues). You can contribute changes by forking the project and submitting a pull request. You can ensure the tests are passing by running `bundle` and `rake`.
