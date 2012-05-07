@@ -1,9 +1,21 @@
 Given /^I have github instance$/ do
-  @github = Github.new
+  @github = Github.new(
+    :basic_auth  => SETTINGS['basic_auth'],
+    :oauth_token => SETTINGS['oauth_token']
+  )
 end
 
 Given /^I have "([^"]*)" instance$/ do |api_classes|
-  @instance = convert_to_constant(api_classes).new
+  @instance = convert_to_constant(api_classes).new(
+    :basic_auth  => SETTINGS['basic_auth'],
+    :oauth_token => SETTINGS['oauth_token']
+  )
+end
+
+When /^I am not authorized$/ do
+  [:basic_auth, :login, :password, :oauth_token].each do |attr|
+    @instance.send("#{attr}=", nil)
+  end
 end
 
 When /^I fetch "([^"]*)"$/ do |method|
