@@ -6,6 +6,7 @@ Feature: Handles HTTP error codes
 
   Scenario: A response of '401 - Unauthorised access'
     Given I have "Github::Repos" instance
+    And I am not authorized
     When I want to create resource
       And I pass the following request options:
         | name       |
