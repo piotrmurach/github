@@ -6,7 +6,7 @@ module Github
     VALID_REF_PARAM_NAMES = %w[ ref sha force ].freeze
 
     VALID_REF_PARAM_VALUES = {
-      'ref' => %r{^refs\/\w+\/\w+(\/\w+)*} # test fully qualified reference
+      'ref' => %r{^refs\/\w+(\/\w+)*} # test fully qualified reference
     }
 
     # Creates new GitData::References API
@@ -25,14 +25,15 @@ module Github
     #  github = Github.new
     #  github.git_data.references.list 'user-name', 'repo-name'
     #
-    #  github.git_data.references.list 'user-name', 'repo-name', 'tags'
+    #  github.git_data.references.list 'user-name', 'repo-name', ref:'tags'
     #
-    def list(user_name, repo_name, ref=nil, params={})
+    def list(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
       _normalize_params_keys(params)
 
-      response = if ref
+      response = if params['ref']
+        ref = params.delete('ref')
         _validate_reference ref
         get_request("/repos/#{user}/#{repo}/git/refs/#{ref}", params)
       else
@@ -52,7 +53,7 @@ module Github
     #
     # = Examples
     #  github = Github.new
-    #  github.git_data.references.get 'user-name', 'repo-name', 'reference'
+    #  github.git_data.references.get 'user-name', 'repo-name', 'heads/branch'
     #
     def get(user_name, repo_name, ref, params={})
       _update_user_repo_params(user_name, repo_name)
@@ -85,6 +86,7 @@ module Github
 
       _normalize_params_keys params
       _filter_params_keys VALID_REF_PARAM_NAMES, params
+      _validate_presence_of params['ref']
       _validate_reference params['ref']
       _validate_inputs(%w[ ref sha ], params)
 
@@ -99,7 +101,7 @@ module Github
     #
     # = Examples
     #  github = Github.new
-    #  github.git_data.references.update 'user-name', 'repo-name',
+    #  github.git_data.references.update 'user-name', 'repo-name', 'heads/master',
     #    "sha" =>  "827efc6d56897b048c772eb4087f854f46256132",
     #    "force" => true
     #
@@ -136,7 +138,8 @@ module Github
   private
 
     def _validate_reference ref
-      unless VALID_REF_PARAM_VALUES['ref'] =~ "refs/#{ref}"
+      refs = ref.index('ref') ? ref : "refs/#{ref}"
+      unless VALID_REF_PARAM_VALUES['ref'] =~ refs
         raise ArgumentError, "Provided 'reference' is invalid"
       end
     end

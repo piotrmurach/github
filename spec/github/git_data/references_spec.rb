@@ -9,13 +9,14 @@ describe Github::GitData::References do
   let(:ref) { "heads/master" }
   let(:sha) { "3a0f86fb8db8eea7ccbb9a95f325ddbedfb25e15" }
 
-  after { github.user, github.repo, github.oauth_token = nil, nil, nil }
+  after { reset_authentication_for github }
 
   it { described_class::VALID_REF_PARAM_NAMES.should_not be_nil }
   it { described_class::VALID_REF_PARAM_VALUES.should_not be_nil }
 
   describe "#list" do
     it { github.git_data.references.should respond_to :all }
+
 
     context "get all the refernces based on sub-namespace" do
       before do
@@ -31,42 +32,43 @@ describe Github::GitData::References do
 
       it "should fail to call with invalid reference" do
         expect {
-          github.git_data.references.list user, repo, 'branch'
+          github.git_data.references.list user, repo, :ref => '/branch/featureA'
         }.to raise_error(ArgumentError)
       end
 
       it "should get the resources" do
-        github.git_data.references.list user, repo, ref
+        github.git_data.references.list user, repo, :ref => ref
         a_get("/repos/#{user}/#{repo}/git/refs/#{ref}").should have_been_made
       end
 
       it "should return array of resources" do
-        references = github.git_data.references.list user, repo, ref
+        references = github.git_data.references.list user, repo, :ref => ref
         references.should be_an Array
         references.should have(3).items
       end
 
       it "should be a mash type" do
-        references = github.git_data.references.list user, repo, ref
+        references = github.git_data.references.list user, repo, :ref => ref
         references.first.should be_a Hashie::Mash
       end
 
       it "should get reference information" do
-        references = github.git_data.references.list user, repo, ref
+        references = github.git_data.references.list user, repo, :ref => ref
         references.first.ref.should eql 'refs/heads/master'
       end
 
       it "should yield to a block" do
         github.git_data.references.should_receive(:list).
-          with(user, repo, ref).and_yield('web')
-        github.git_data.references.list(user, repo, ref) { |param| 'web' }
+          with(user, repo, :ref => ref).and_yield('web')
+        github.git_data.references.list(user, repo, :ref => ref) { |param| 'web' }
       end
     end
 
     context "get all the references on the system" do
       before do
         stub_get("/repos/#{user}/#{repo}/git/refs").
-          to_return(:body => fixture('git_data/references.json'), :status => 200, :headers => {:content_type => "application/json; charset=utf-8"})
+          to_return(:body => fixture('git_data/references.json'), :status => 200,
+            :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
       it "should get the resources" do
@@ -83,7 +85,7 @@ describe Github::GitData::References do
 
       it "should return 404 with a message 'Not Found'" do
         expect {
-          github.git_data.references.list user, repo, ref
+          github.git_data.references.list user, repo, :ref => ref
         }.to raise_error(Github::Error::NotFound)
       end
     end
@@ -106,7 +108,7 @@ describe Github::GitData::References do
 
       it "should fail to get resource with wrong ref" do
         expect {
-          github.git_data.references.get user, repo, 'branch'
+          github.git_data.references.get user, repo, '/branch'
         }.to raise_error(ArgumentError)
       end
 
@@ -153,7 +155,8 @@ describe Github::GitData::References do
       before do
         stub_post("/repos/#{user}/#{repo}/git/refs").
           with(:body => JSON.generate(inputs.except('unrelated'))).
-          to_return(:body => fixture('git_data/reference.json'), :status => 201, :headers => {:content_type => "application/json; charset=utf-8"})
+          to_return(:body => fixture('git_data/reference.json'), :status => 201,
+            :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
       it "should fail to create resource if 'ref' input is missing" do
@@ -170,7 +173,7 @@ describe Github::GitData::References do
 
       it "should fail to create resource if 'ref' is wrong" do
         expect {
-          github.git_data.references.create user, repo, 'branch'
+          github.git_data.references.create user, repo, :ref => '/heads/master', :sha => '13t2a1r3'
         }.to raise_error(ArgumentError)
       end
 
@@ -229,7 +232,7 @@ describe Github::GitData::References do
 
       it "should fail to update resource if 'ref' is wrong" do
         expect {
-          github.git_data.references.update user, repo, 'branch', inputs
+          github.git_data.references.update user, repo, nil, inputs
         }.to raise_error(ArgumentError)
       end
 
