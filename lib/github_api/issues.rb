@@ -124,6 +124,7 @@ module Github
     #    :sort   => 'comments',
     #    :direction => 'asc'
     #
+    # TODO: remove default nils from params
     def list_repo(user_name=nil, repo_name=nil, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
@@ -143,9 +144,9 @@ module Github
     #
     # = Examples
     #  github = Github.new
-    #  github.issues.find 'user-name', 'repo-name', 'issue-id'
+    #  github.issues.get 'user-name', 'repo-name', 'issue-id'
     #
-    def find(user_name, repo_name, issue_id, params={})
+    def get(user_name, repo_name, issue_id, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of issue_id
@@ -155,6 +156,7 @@ module Github
 
       get_request("/repos/#{user}/#{repo}/issues/#{issue_id}", params)
     end
+    alias :find :get
 
     # Create an issue
     #

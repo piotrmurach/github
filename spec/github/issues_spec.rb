@@ -122,7 +122,8 @@ describe Github::Issues do
     end
   end # list_repo
 
-  describe "#find" do
+  describe "#get" do
+    it { github.issues.should respond_to :find }
 
     context "resource found" do
       before do
@@ -133,22 +134,22 @@ describe Github::Issues do
       end
 
       it "should fail to get resource without issue id" do
-        expect { github.issues.find(user, repo, nil)}.to raise_error(ArgumentError)
+        expect { github.issues.get(user, repo, nil)}.to raise_error(ArgumentError)
       end
 
       it "should get the resource" do
-        github.issues.find user, repo, issue_id
+        github.issues.get user, repo, issue_id
         a_get("/repos/#{user}/#{repo}/issues/#{issue_id}").should have_been_made
       end
 
       it "should get issue information" do
-        issue = github.issues.find user, repo, issue_id
+        issue = github.issues.get user, repo, issue_id
         issue.number.should == issue_id
         issue.title.should == 'Found a bug'
       end
 
       it "should return mash" do
-        issue = github.issues.find user, repo, issue_id
+        issue = github.issues.get user, repo, issue_id
         issue.should be_a Hashie::Mash
       end
     end
@@ -163,7 +164,7 @@ describe Github::Issues do
 
       it "should fail to retrive resource" do
         expect {
-          github.issues.find user, repo, issue_id
+          github.issues.get user, repo, issue_id
         }.to raise_error(Github::Error::NotFound)
       end
     end
