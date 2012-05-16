@@ -21,23 +21,23 @@ describe Github::Gists do
         end
 
         it "should get the resources" do
-          github.gists.list user
+          github.gists.list :user => user
           a_get("/users/#{user}/gists").should have_been_made
         end
 
         it "should return array of resources" do
-          gists = github.gists.list user
+          gists = github.gists.list :user => user
           gists.should be_an Array
           gists.should have(1).items
         end
 
         it "should be a mash type" do
-          gists = github.gists.list user
+          gists = github.gists.list :user => user
           gists.first.should be_a Hashie::Mash
         end
 
         it "should get gist information" do
-          gists = github.gists.list user
+          gists = github.gists.list :user => user
           gists.first.user.login.should == 'octocat'
         end
 
@@ -55,7 +55,7 @@ describe Github::Gists do
 
         it "should return 404 with a message 'Not Found'" do
           expect {
-            github.gists.list user
+            github.gists.list :user => user
           }.to raise_error(Github::Error::NotFound)
         end
       end

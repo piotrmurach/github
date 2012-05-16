@@ -29,8 +29,8 @@ module Github
     # List a user's gists.
     #
     # = Examples
-    #  github = Github.new :user => 'user-name'
-    #  github.gists.list
+    #  github = Github.new
+    #  github.gists.list user: 'user-name'
     #
     # List the authenticated user’s gists or if called anonymously,
     # this will returns all public gists
@@ -39,11 +39,10 @@ module Github
     #  github = Github.new :oauth_token => '...'
     #  github.gists.list
     #
-    def list(user_name=nil, params={})
-      _update_user_repo_params(user_name)
-      process_params do
-        normalize params
-      end
+    def list(params={})
+      _normalize_params_keys(params)
+
+      user = params.delete('user')
 
       response = if user
         get_request("/users/#{user}/gists", params)
