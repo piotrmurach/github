@@ -1,7 +1,13 @@
+0.5.2 (May , 2012)
+
+* Change interface for listing unauthenticated user gists.
+* Change gists find to get signature.
+
 0.5.1 (May 7, 2012)
 
 * Fix bugs with references api and add live test coverage.
 * Add live tests settings file.
+* Add live tests for repository api.
 * Add new section called testing to main docs to explain on test setup.
 
 0.5.0 (April 27, 2012)
