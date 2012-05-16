@@ -7,34 +7,31 @@ Feature: Accessing Gists Main API
     Given I have "Github::Gists" instance
 
   Scenario: Lists all user's gists
-    When I want to list resources with the following params:
-      | user          |
-      | peter-murach  |
-    And I make request within a cassette named "gists/gists/user_all"
+    Given I want to list resources
+      And I pass the following request options:
+        | user          |
+        | peter-murach  |
+    When I make request within a cassette named "gists/gists/user_all"
     Then the response should be "200"
-    And the response type should be "JSON"
+      And the response type should be "JSON"
 
   Scenario: Lists all public gists
-    When I want to list resources with the following params:
-      | user |
-      | nil  |
-    And I make request within a cassette named "gists/gists/public_all"
+    Given I want to list resources
+    When I make request within a cassette named "gists/gists/public_all"
     Then the response should be "200"
-    And the response type should be "JSON"
+      And the response type should be "JSON"
 
   Scenario: Gets a single gist
-    When I want to get resource with the following params:
+    Given I want to get resource with the following params:
       | gist_id |
       | 1738161 |
-    And I make request within a cassette named "gists/gist"
+    When I make request within a cassette named "gists/gist"
     Then the response should be "200"
-    And the response type should be "JSON"
+      And the response type should be "JSON"
 
   Scenario: Check if gist is starred
-    When I want to starred? resource with the following params:
+    Given I want to starred? resource with the following params:
       | gist_id |
       | 1738161 |
-    And I make request within a cassette named "gists/starred"
+    When I make request within a cassette named "gists/starred"
     Then the response should equal false
-
-
