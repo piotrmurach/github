@@ -56,9 +56,11 @@ module Github
 
         page_request next_page_uri.split(QUERY_STR_SEP)[0], params
       else
-        page_request next_page_uri.split(QUERY_STR_SEP)[0],
-                                'page' => next_page,
-                                'per_page'=> parse_per_page_number(next_page_uri)
+        params = parse_query(next_page_uri.split(QUERY_STR_SEP).last)
+        params['page'] = next_page
+        params['per_page'] = parse_per_page_number(next_page_uri)
+
+        page_request next_page_uri.split(QUERY_STR_SEP)[0], params
       end
       update_page_links response.links
       response
