@@ -13,6 +13,16 @@ module Github
 
       def unescape(s) CGI.unescape s.to_s end
 
+      def build_query(params)
+        params.map { |k, v|
+          if v.class == Array
+            build_query(v.map { |x| [k, x] })
+          else
+            v.nil? ? escape(k) : "#{escape(k)}=#{escape(v)}"
+          end
+        }.join("&")
+      end
+
       def parse_query(query_string)
         return '' if query_string.nil? || query_string.empty?
         params = {}
