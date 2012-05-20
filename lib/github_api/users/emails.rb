@@ -1,4 +1,5 @@
 # encoding: utf-8
+require 'cgi'
 
 module Github
   class Users::Emails < API
@@ -30,7 +31,7 @@ module Github
     def add(*args)
       params = _extract_parameters(args)
       _normalize_params_keys(params)
-      params['data'] = [args].flatten if args
+      params['data'] = args if args
       post_request("/user/emails", params)
     end
     alias :<< :add
@@ -47,7 +48,7 @@ module Github
     def delete(*args)
       params = _extract_parameters(args)
       _normalize_params_keys(params)
-      params['data'] = [args].flatten
+      params['data'] = args if args
       delete_request("/user/emails", params)
     end
 

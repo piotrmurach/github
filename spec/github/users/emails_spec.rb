@@ -88,22 +88,21 @@ describe Github::Users::Emails do
 
     before do
       stub_delete("/user/emails").
-        with(:query => { :access_token => "#{OAUTH_TOKEN}", :data => email}).
-        to_return(:body => fixture('users/emails.json'),
-          :status => 200,
+        with(:query => { :access_token => "#{OAUTH_TOKEN}"}).
+        to_return(:body => fixture('users/emails.json'), :status => 204,
           :headers => {:content_type => "application/json; charset=utf-8"})
     end
 
     it 'extracts request parameters and email data' do
       github.users.emails.should_receive(:delete_request).
-        with("/user/emails", { "per_page" => 21, "page" => 1, "data" => [email] })
+        with("/user/emails", { "per_page" => 21, "page" => 1, 'data' => [email] })
       github.users.emails.delete email, params
     end
 
     it 'submits request successfully' do
       github.users.emails.delete email
       a_delete("/user/emails").
-        with(:query => { :access_token => "#{OAUTH_TOKEN}", :data => email } ).
+        with(:query => { :access_token => "#{OAUTH_TOKEN}" } ).
         should have_been_made
     end
   end # delete

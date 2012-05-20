@@ -85,5 +85,4 @@ describe Github::Request::Jsonize do
     end
   end
 
-
 end # Github::Request::Jsonize
