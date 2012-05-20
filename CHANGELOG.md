@@ -1,7 +1,13 @@
-0.5.2 (May , 2012)
+0.5.2 (May 20, 2012)
 
 * Change interface for listing unauthenticated user gists.
 * Change gists find to get signature.
+* Change oauth2 request.
+* Add request json body encoding.
+* Add live tests for emails api.
+* Add ability to include body for delete request.
+* Fix bug with deleting authenticated user emails.
+* Update gem dependencies to faraday 0.8, oauth2 0.7 and guard.
 
 0.5.1 (May 7, 2012)
 
