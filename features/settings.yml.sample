@@ -4,3 +4,4 @@ basic_auth: login:password
 user: username
 repo: repository name
 org: organisation this user belongs to
+email: username@example.com
