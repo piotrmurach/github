@@ -8,6 +8,7 @@ require 'github_api/response/helpers'
 require 'github_api/response/raise_error'
 require 'github_api/request/oauth2'
 require 'github_api/request/basic_auth'
+require 'github_api/request/jsonize'
 
 module Github
   module Connection
@@ -51,7 +52,7 @@ module Github
         Faraday.new(merged_options.merge(connection_options)) do |builder|
           puts options.inspect if ENV['DEBUG']
 
-          builder.use Faraday::Request::JSON
+          builder.use Github::Request::Jsonize
           builder.use Faraday::Request::Multipart
           builder.use Faraday::Request::UrlEncoded
           builder.use Faraday::Response::Logger if ENV['DEBUG']
