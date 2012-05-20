@@ -6,10 +6,6 @@ When /^(.*) within a cassette named "([^"]*)"$/ do |step_to_call, cassette_name|
   VCR.use_cassette(cassette_name) { step step_to_call }
 end
 
-Then /^the response should be "([^"]*)"$/ do |expected_response|
-  @response.status.should eql expected_response.to_i
-end
-
 Then /^the response should equal (.*)$/ do |expected_response|
   expected = case expected_response
   when /t/
@@ -22,7 +18,11 @@ Then /^the response should equal (.*)$/ do |expected_response|
   @response.should == expected
 end
 
-Then /^the response type should be "([^"]*)"$/ do |type|
+Then /^the response status should be (.*)$/ do |expected_response|
+  @response.status.should eql expected_response.to_i
+end
+
+Then /^the response type should be (.*)$/ do |type|
   @response.content_type.should =~ /application\/#{type.downcase}/
 end
 
@@ -32,4 +32,11 @@ end
 
 Then /^the response should not be empty$/ do
   @response.should_not be_empty
+end
+
+Then /^the response should contain (.*)$/ do |item|
+  case @response.body
+  when Array
+    @response.body.should include item
+  end
 end
