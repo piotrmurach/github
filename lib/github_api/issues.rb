@@ -31,7 +31,7 @@ module Github
       'state'     => %w[ open closed ],
       'sort'      => %w[ created updated comments ],
       'direction' => %w[ desc asc ],
-      'since'     => %r{\d{4}-\d{2}-\d{5}:\d{2}:\d{3}}
+      'since'     => %r{\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z}
     }
 
     # Creates new Issues API
@@ -75,7 +75,7 @@ module Github
     #
     # = Examples
     #  github = Github.new :oauth_token => '...'
-    #  github.issues.list :since => '2011-04-12312:12:121',
+    #  github.issues.list :since => '2011-04-12T12:12:12Z',
     #    :filter => 'created',
     #    :state  => 'open',
     #    :labels => "bug,ui,bla",
