@@ -15,7 +15,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = %w[ lib ]
 
   gem.add_dependency 'hashie', '~> 1.2.0'
-  gem.add_dependency 'faraday', '~> 0.7.6'
+  gem.add_dependency 'faraday', '~> 0.8.0'
   gem.add_dependency 'multi_json', '~> 1.3'
   gem.add_dependency 'oauth2', '~> 0.5.2'
   gem.add_dependency 'nokogiri', '~> 1.5.2'
