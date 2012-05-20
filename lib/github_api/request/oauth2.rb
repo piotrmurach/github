@@ -34,8 +34,6 @@ module Github
         if url.query.nil? or url.query.empty?
           {}
         else
-          puts "QUERY BEFORE #{url.query}"
-          puts "QUERY AFTER #{parse_query url.query}"
           parse_query url.query
         end
       end
