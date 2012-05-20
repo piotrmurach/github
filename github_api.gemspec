@@ -17,7 +17,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'hashie', '~> 1.2.0'
   gem.add_dependency 'faraday', '~> 0.8.0'
   gem.add_dependency 'multi_json', '~> 1.3'
-  gem.add_dependency 'oauth2', '~> 0.5.2'
+  gem.add_dependency 'oauth2', '~> 0.7'
   gem.add_dependency 'nokogiri', '~> 1.5.2'
 
   gem.add_development_dependency 'rspec', '>= 0'
@@ -26,9 +26,9 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'webmock', '~> 1.8.0'
   gem.add_development_dependency 'vcr', '~> 2.1.0'
   gem.add_development_dependency 'simplecov', '~> 0.6.1'
-  gem.add_development_dependency 'guard', '~> 0.8.8'
-  gem.add_development_dependency 'guard-rspec', '0.5.7'
-  gem.add_development_dependency 'guard-cucumber', '0.7.4'
+  gem.add_development_dependency 'guard'
+  gem.add_development_dependency 'guard-rspec'
+  gem.add_development_dependency 'guard-cucumber'
   gem.add_development_dependency 'rake'
   gem.add_development_dependency 'bundler'
 
