@@ -12,22 +12,22 @@ Feature: Accessing Gists Main API
         | user          |
         | peter-murach  |
     When I make request within a cassette named "gists/gists/user_all"
-    Then the response should be "200"
-      And the response type should be "JSON"
+    Then the response status should be 200
+      And the response type should be JSON
 
   Scenario: Lists all public gists
     Given I want to list resources
     When I make request within a cassette named "gists/gists/public_all"
-    Then the response should be "200"
-      And the response type should be "JSON"
+    Then the response status should be 200
+      And the response type should be JSON
 
   Scenario: Gets a single gist
     Given I want to get resource with the following params:
       | gist_id |
       | 1738161 |
     When I make request within a cassette named "gists/gist"
-    Then the response should be "200"
-      And the response type should be "JSON"
+    Then the response status should be 200
+      And the response type should be JSON
 
   Scenario: Check if gist is starred
     Given I want to starred? resource with the following params:

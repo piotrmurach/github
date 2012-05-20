@@ -11,8 +11,8 @@ Feature: Accessing Repos Main API
       | user          | repo   |
       | peter-murach  | github |
       And I make request within a cassette named "repos/branches"
-    Then the response should be "200"
-      And the response type should be "JSON"
+    Then the response status should be 200
+      And the response type should be JSON
       And the response should not be empty
 
   Scenario: Returning all repository tags
@@ -20,8 +20,8 @@ Feature: Accessing Repos Main API
       | user          | repo   |
       | peter-murach  | github |
       And I make request within a cassette named "repos/tags"
-    Then the response should be "200"
-      And the response type should be "JSON"
+    Then the response status should be 200
+      And the response type should be JSON
       And the response should not be empty
 
   Scenario: Returning all repositories for the user
@@ -30,8 +30,8 @@ Feature: Accessing Repos Main API
         | user          |
         | peter-murach  |
     When I make request within a cassette named "repos/list"
-    Then the response should be "200"
-      And the response type should be "JSON"
+    Then the response status should be 200
+      And the response type should be JSON
       And the response should not be empty
 
   Scenario: Get a repository
@@ -39,8 +39,8 @@ Feature: Accessing Repos Main API
       | user   | repo |
       | wycats | thor |
     When I make request within a cassette named "repos/get"
-    Then the response should be "200"
-      And the response type should be "JSON"
+    Then the response status should be 200
+      And the response type should be JSON
       And the response should not be empty
 
   Scenario: Listing repository languages
@@ -48,8 +48,8 @@ Feature: Accessing Repos Main API
       | user          | repo   |
       | peter-murach  | github |
       And I make request within a cassette named "repos/languages"
-    Then the response should be "200"
-      And the response type should be "JSON"
+    Then the response status should be 200
+      And the response type should be JSON
 
   Scenario: Create repository
     Given I want to create resource
@@ -57,6 +57,6 @@ Feature: Accessing Repos Main API
         | name            |
         | github_api_test |
     When I make request within a cassette named "repos/create"
-    Then the response should be "201"
-      And the response type should be "JSON"
+    Then the response status should be 201
+      And the response type should be JSON
       And the response should not be empty

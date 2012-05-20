@@ -10,12 +10,12 @@ Feature: Githu API pagination
         | user   | per_page |
         | wycats | 45       |
       And I make request within a cassette named "pagination/repos/list"
-    Then the response should be "200"
-      And the response type should be "JSON"
+    Then the response status should be 200
+      And the response type should be JSON
       And the response should have 45 items
 
     When I request "next" page within a cassette named "pagination/repos/list/next"
-    Then the response should be "200"
+    Then the response status should be 200
       And the response should have 45 items
 
   Scenario: Returned paginated resources are different
@@ -25,12 +25,12 @@ Feature: Githu API pagination
         | user   |
         | wycats |
       And I make request within a cassette named "pagination/repos/diff"
-    Then the response should be "200"
-      And the response type should be "JSON"
+    Then the response status should be 200
+      And the response type should be JSON
       And the response should have 30 items
 
     When I request "next" page within a cassette named "pagination/repos/diff/next"
-    Then the response should be "200"
+    Then the response status should be 200
       And the response should have 30 items
       And the response collection of resources is different for "name" attribute
 
@@ -43,12 +43,12 @@ Feature: Githu API pagination
         | per_page |
         | 45       |
       And I make request within a cassette named "pagination/repos/commits/list"
-    Then the response should be "200"
-      And the response type should be "JSON"
+    Then the response status should be 200
+      And the response type should be JSON
       And the response should have 45 items
 
     When I request "next" page within a cassette named "pagination/repos/commits/next"
-    Then the response should be "200"
+    Then the response status should be 200
       And the response should have 45 items
 
   Scenario: Calling 'list' for Github::Repos::Commits returns different collections
@@ -57,11 +57,11 @@ Feature: Githu API pagination
       | user          | repo   |
       | peter-murach  | github |
       And I make request within a cassette named "pagination/repos/commits/sha"
-    Then the response should be "200"
+    Then the response status should be 200
       And the response should have 30 items
 
     When I request "next" page within a cassette named "pagination/repos/commits/sha/next"
-    Then the response should be "200"
+    Then the response status should be 200
       And the response should have 30 items
       And the response collection of resources is different for "sha" attribute
 
@@ -72,7 +72,7 @@ Feature: Githu API pagination
         | user   |
         | wycats |
       And I make request within a cassette named "pagination/repos/per_page/first"
-    Then the response should be "200"
+    Then the response status should be 200
     When I iterate through collection pages within a cassette named "pagination/repos/per_page/each_page"
     Then this collection should include first page
 

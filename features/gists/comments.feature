@@ -11,8 +11,8 @@ Feature: Accessing Gists Comments API
       | gist_id |
       | 999390  |
       And I make request within a cassette named "gists/comments/all"
-    Then the response should be "200"
-      And the response type should be "JSON"
+    Then the response status should be 200
+      And the response type should be JSON
       And the response should have 18 items
 
   Scenario: Gets a single gist's comment
@@ -20,6 +20,6 @@ Feature: Accessing Gists Comments API
       | comment_id |
       | 33469      |
     And I make request within a cassette named "gists/comments/first"
-    Then the response should be "200"
-      And the response type should be "JSON"
+    Then the response status should be 200
+      And the response type should be JSON
       And the response should not be empty

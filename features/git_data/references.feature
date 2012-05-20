@@ -12,8 +12,8 @@ Feature: Accessing GitData References API
       | user   | repo |
       | wycats | thor |
     When I make request within a cassette named "git_data/references/all"
-    Then the response should be "200"
-      And the response type should be "JSON"
+    Then the response status should be 200
+      And the response type should be JSON
       And the response should not be empty
 
   Scenario: Lists all references on a repository scoped by branch
@@ -24,8 +24,8 @@ Feature: Accessing GitData References API
       | ref  |
       | tags |
     When I make request within a cassette named "git_data/references/all_tags"
-    Then the response should be "200"
-      And the response type should be "JSON"
+    Then the response status should be 200
+      And the response type should be JSON
       And the response should not be empty
 
   Scenario: Gets a single reference
@@ -33,8 +33,8 @@ Feature: Accessing GitData References API
       | user   | repo | ref            |
       | wycats | thor | heads/gh-pages |
     When I make request within a cassette named "git_data/references/one"
-    Then the response should be "200"
-      And the response type should be "JSON"
+    Then the response status should be 200
+      And the response type should be JSON
       And the response should not be empty
 
 #   Scenario: Create a reference
