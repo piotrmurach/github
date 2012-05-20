@@ -43,9 +43,10 @@ module Github
         case method.to_sym
         when *(METHODS - METHODS_WITH_BODIES)
           request.url(path, params)
+          request.body = params.delete('data') if params.has_key?('data')
         when *METHODS_WITH_BODIES
           request.path = path
-          request.body = MultiJson.dump(_process_params(params)) unless params.empty?
+          request.body = _process_params(params) unless params.empty?
         end
       end
       response.body
@@ -54,7 +55,7 @@ module Github
     private
 
     def _process_params(params) # :nodoc:
-      return params['data'] if params.has_key?('data') && !params['data'].nil?
+      return params['data'] if params.has_key?('data') and !params['data'].nil?
       return params
     end
 
