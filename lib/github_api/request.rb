@@ -42,8 +42,8 @@ module Github
       response = connection(options).send(method) do |request|
         case method.to_sym
         when *(METHODS - METHODS_WITH_BODIES)
-          request.url(path, params)
           request.body = params.delete('data') if params.has_key?('data')
+          request.url(path, params)
         when *METHODS_WITH_BODIES
           request.path = path
           request.body = _process_params(params) unless params.empty?
