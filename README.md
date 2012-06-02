@@ -115,16 +115,47 @@ github.users.followers.following 'wycats' # => returns true if following, otherw
 ```
 
 For specification on all available methods go to http://developer.github.com/v3/ or
-read the rdoc, all methods are documented there with examples of usage. Alternatively, you can find out about supported methods by issuing the following in your `irb`:
+read the rdoc, all methods are documented there with examples of usage. 
+
+Alternatively, you can find out a specific class supported methods by calling `actions` in your `irb`:
 
 ```ruby
 >> Github::Repos.actions
 ---
+|--> all
 |--> branches
+|--> collaborators
+|--> commits
 |--> contribs
 |--> contributors
-|--> create_repo
+|--> create
+|--> downloads
+|--> edit
+|--> find
+|--> forks
+|--> get
+|--> hooks
 ...
+```
+
+or you can call `actions` on chained query:
+
+```
+>> github.issues.actions
+---
+|--> all
+|--> comments
+|--> create
+|--> edit
+|--> events
+|--> find
+|--> get
+|--> labels
+|--> list
+|--> list_repo
+|--> list_repository
+|--> milestones
+---
 ```
 
 ## Inputs
@@ -239,10 +270,10 @@ By default no caching will be performed. In order to set the cache do... If no c
 
 ## Pagination
 
-Any request that returns multiple items will be paginated to 30 items by default. You can specify custom `:page` and `:per_page` query parameters to alter default behavior. For instance:
+Any request that returns multiple items will be paginated to 30 items by default. You can specify custom `page` and `per_page` query parameters to alter default behavior. For instance:
 
 ```ruby
-res = Github::Repos.new.repos user: 'wycats', per_page: 10
+res = Github::Repos.new.repos user: 'wycats', per_page: 10, page: 5
 ```
 
 Then you can query pagination information included in the link header by:
@@ -279,6 +310,7 @@ One can also navigate straight to specific page by:
 res.page 5     # Requests given page if it exists, nil otherwise
 res.first_page
 res.prev_page
+res.next_page
 res.last_page
 ```
 
