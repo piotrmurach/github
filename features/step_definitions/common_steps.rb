@@ -40,3 +40,11 @@ Then /^the response should contain (.*)$/ do |item|
     @response.body.should include item
   end
 end
+
+Then /^the response (.*) link should contain:$/ do |type, table|
+  table.hashes.each do |attributes|
+    attributes.each do |key, val|
+      @response.links.send(:"#{type}").should match /#{key}=#{val}/
+    end
+  end
+end
