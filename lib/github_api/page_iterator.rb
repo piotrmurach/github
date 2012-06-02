@@ -35,7 +35,7 @@ module Github
 
         page_request first_page_uri.split(QUERY_STR_SEP).first, params
       else
-        page_request first_page_uri.split(QUERY_STR_SEP)[0],
+        page_request first_page_uri.split(QUERY_STR_SEP).first,
                            'per_page' => parse_per_page_number(first_page_uri)
       end
 
@@ -54,13 +54,10 @@ module Github
         end
         params['per_page'] = parse_per_page_number(next_page_uri)
 
-        page_request next_page_uri.split(QUERY_STR_SEP)[0], params
+        page_request next_page_uri.split(QUERY_STR_SEP).first, params
       else
-        params = parse_query(next_page_uri.split(QUERY_STR_SEP).last)
-        params['page'] = next_page
-        params['per_page'] = parse_per_page_number(next_page_uri)
-
-        page_request next_page_uri.split(QUERY_STR_SEP)[0], params
+        params = parse_query next_page_uri.split(QUERY_STR_SEP).last
+        page_request next_page_uri.split(QUERY_STR_SEP).first, params
       end
       update_page_links response.links
       response
@@ -68,18 +65,18 @@ module Github
 
     def prev
       return nil unless prev_page_uri
-      response = page_request prev_page_uri.split(QUERY_STR_SEP)[0],
-                              'page' => prev_page,
-                              'per_page'=> parse_per_page_number(prev_page_uri)
+      params   = parse_query prev_page_uri.split(QUERY_STR_SEP).last
+      response = page_request prev_page_uri.split(QUERY_STR_SEP).first, params
+
       update_page_links response.links
       response
     end
 
     def last
       return nil unless last_page_uri
-      response = page_request last_page_uri.split(QUERY_STR_SEP)[0],
-                              'page' => last_page,
-                              'per_page' => parse_per_page_number(last_page_uri)
+      params   = parse_query last_page_uri.split(QUERY_STR_SEP).last
+      response = page_request last_page_uri.split(QUERY_STR_SEP).first, params
+
       update_page_links response.links
       response
     end
