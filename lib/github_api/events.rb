@@ -33,7 +33,7 @@ module Github
     #  github.events.repository 'user-name', 'repo-name'
     #  github.events.repository 'user-name', 'repo-name' { |event| ... }
     #
-    def repository(user_name=nil, repo_name=nil, params={})
+    def repository(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
       _normalize_params_keys(params)
@@ -54,7 +54,7 @@ module Github
     #  github.events.issue 'user-name', 'repo-name'
     #  github.events.issue 'user-name', 'repo-name' { |event| ... }
     #
-    def issue(user_name=nil, repo_name=nil, params={})
+    def issue(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
       _normalize_params_keys(params)
@@ -74,7 +74,7 @@ module Github
     #  github.events.network 'user-name', 'repo-name'
     #  github.events.network 'user-name', 'repo-name' { |event| ... }
     #
-    def network(user_name=nil, repo_name=nil, params={})
+    def network(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
       _normalize_params_keys(params)
