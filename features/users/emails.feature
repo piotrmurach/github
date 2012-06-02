@@ -8,6 +8,7 @@ Feature: Accessing Users Emails API
     Given I have "Github::Users::Emails" instance
 
   Scenario: Lists all emails for the authenticated user
+
     Given I want to list resources
     When I make request within a cassette named "users/emails/all"
     Then the response status should be 200
@@ -15,6 +16,7 @@ Feature: Accessing Users Emails API
       And the response should not be empty
 
   Scenario: Add email addresses for the authenticated user
+
     Given I want to add resource with the following params:
       | email1              | email2            |
       | octocat@example.com | terry@example.com |
@@ -26,6 +28,7 @@ Feature: Accessing Users Emails API
       And the response should contain terry@example.com
 
   Scenario: Remove email addresses for the authenticated user
+
     Given I want to add resource with the following params:
       | email1              | email2            |
       | octocat@example.com | terry@example.com |

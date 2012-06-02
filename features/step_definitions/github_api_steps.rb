@@ -60,7 +60,7 @@ When /^I make request$/ do
   @response = @instance.send @method, *@attributes.values, @options
 end
 
-When /^I request "([^"]*)" page$/ do |link|
+When /^I request (.*) page$/ do |link|
   @next_response = @response.send :"#{link}_page"
 end
 
