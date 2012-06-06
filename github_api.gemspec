@@ -24,7 +24,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'cucumber', '>= 0'
   gem.add_development_dependency 'yajl-ruby', '~> 1.1.0'
   gem.add_development_dependency 'webmock', '~> 1.8.0'
-  gem.add_development_dependency 'vcr', '~> 2.1.0'
+  gem.add_development_dependency 'vcr', '~> 2.2.0'
   gem.add_development_dependency 'simplecov', '~> 0.6.1'
   gem.add_development_dependency 'guard'
   gem.add_development_dependency 'guard-rspec'
