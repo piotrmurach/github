@@ -71,11 +71,11 @@ Feature: Githu API pagination
   Scenario: Requesting resources with per_page helper
 
     Given I have "Github::Repos" instance
-    When I want to list resources
+      And I want to list resources
       And I pass the following request options:
         | user   |
         | wycats |
-      And I make request within a cassette named "pagination/repos/per_page/first"
+    When I make request within a cassette named "pagination/repos/per_page/first"
     Then the response status should be 200
     When I iterate through collection pages within a cassette named "pagination/repos/per_page/each_page"
     Then this collection should include first page
