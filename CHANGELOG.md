@@ -1,3 +1,9 @@
+0.5.3 (June 6, 2012)
+
+* Fix bug with preserving query parameters during pagination.
+* Add feature tests to ensure correct pagination.
+* Update vcr dependency.
+
 0.5.2 (May 20, 2012)
 
 * Change interface for listing unauthenticated user gists.
