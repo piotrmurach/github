@@ -19,6 +19,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'multi_json', '~> 1.3'
   gem.add_dependency 'oauth2', '~> 0.7'
   gem.add_dependency 'nokogiri', '~> 1.5.2'
+  gem.add_dependency 'addressable', '~> 2.2.8'
 
   gem.add_development_dependency 'rspec', '>= 0'
   gem.add_development_dependency 'cucumber', '>= 0'
