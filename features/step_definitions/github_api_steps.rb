@@ -30,11 +30,11 @@ When /^I will have access to "([^"]*)" API$/ do |api|
   @response.class.to_s.should match api
 end
 
-When /^I want to (.*) (?:resource|resources)$/ do |method|
+When /^I want(?: to|) (.*) (?:resource|resources)$/ do |method|
   @method = method
 end
 
-When /^I want to (.*) (?:resource|resources) with the following params:$/ do |method, table|
+When /^I want(?: to|) (.*) (?:resource|resources) with the following params:$/ do |method, table|
   table.hashes.each do |attributes|
     @method = method.to_sym
     @attributes = attributes
