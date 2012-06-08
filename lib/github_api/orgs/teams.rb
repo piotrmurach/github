@@ -209,8 +209,11 @@ module Github
     alias :team_repository? :team_repo?
 
     # Add a team repository
+    #
     # In order to add a repo to a team, the authenticated user must be
-    # an owner of the org that the team is associated with.
+    # an owner of the org that the team is associated with. Also, the repo
+    # must be owned by the organization, or a direct for of a repo owned
+    # by the organization.
     #
     # = Examples
     #  github = Github.new :oauth_token => '...'
@@ -224,8 +227,9 @@ module Github
     alias :add_repository :add_repo
 
     # Remove a team repository
+    #
     # In order to add a repo to a team, the authenticated user must be
-    # an owner of the org that the team is associated with. 
+    # an owner of the org that the team is associated with.
     # note: This does not delete the repo, it just removes it from the team.
     #
     # = Examples
