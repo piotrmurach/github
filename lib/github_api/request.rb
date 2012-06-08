@@ -1,9 +1,5 @@
 # encoding: utf-8
 
-require 'base64'
-require 'addressable/uri'
-require 'multi_json'
-
 module Github
   # Defines HTTP verbs
   module Request
@@ -62,19 +58,6 @@ module Github
     def _extract_mime_type(params, options) # :nodoc:
       options['resource']  = params['resource'] ? params.delete('resource') : ''
       options['mime_type'] = params['resource'] ? params.delete('mime_type') : ''
-    end
-
-    # no need for this smizzle
-    def formatted_path(path, options={})
-      [ path, options.fetch(:format, format) ].compact.join('.')
-    end
-
-    def basic_auth(login, password) # :nodoc:
-      auth = Base64.encode("#{login}:#{password}")
-      auth.gsub!("\n", "")
-    end
-
-    def token_auth
     end
 
   end # Request
