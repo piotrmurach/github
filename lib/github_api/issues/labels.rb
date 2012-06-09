@@ -62,7 +62,7 @@ module Github
 
       _normalize_params_keys(params)
       _filter_params_keys(VALID_LABEL_INPUTS, params)
-      _validate_inputs(VALID_LABEL_INPUTS, params)
+      assert_required_keys(VALID_LABEL_INPUTS, params)
 
       post_request("/repos/#{user}/#{repo}/labels", params)
     end
@@ -85,7 +85,7 @@ module Github
 
       _normalize_params_keys(params)
       _filter_params_keys(VALID_LABEL_INPUTS, params)
-      _validate_inputs(VALID_LABEL_INPUTS, params)
+      assert_required_keys(VALID_LABEL_INPUTS, params)
 
       patch_request("/repos/#{user}/#{repo}/labels/#{label_id}", params)
     end

@@ -134,10 +134,10 @@ module Github
 
     # To let user know that the params supplied are wrong before request is made
     def _validate_reply_to(params)
-      if params['in_reply_to'] && !_validate_inputs(%w[ body in_reply_to ], params)
+      if params['in_reply_to'] && !assert_required_keys(%w[ body in_reply_to ], params)
         raise ArgumentError, "Required params are: #{%w[ body in_reply_to].join(',')}"
 
-      elsif !_validate_inputs(VALID_REQUEST_COM_PARAM_NAMES - %w[ in_reply_to ], params)
+      elsif !assert_required_keys(VALID_REQUEST_COM_PARAM_NAMES - %w[ in_reply_to ], params)
         raise ArgumentError, "Required params are: #{VALID_REQUEST_COM_PARAM_NAMES.join(', ')}"
       end
     end

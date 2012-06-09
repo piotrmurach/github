@@ -54,7 +54,7 @@ module Github
         _normalize_params_keys(params)
         _filter_params_keys(REQUIRED_COMMENT_PARAMS, params)
 
-        _validate_inputs(REQUIRED_COMMENT_PARAMS, params)
+        assert_required_keys(REQUIRED_COMMENT_PARAMS, params)
 
         post_request("/repos/#{user}/#{repo}/commits/#{sha}/comments", params)
       end
@@ -182,7 +182,7 @@ module Github
         _validate_presence_of comment_id
 
         _normalize_params_keys(params)
-        _validate_inputs(%w[ body ], params)
+        assert_required_keys(%w[ body ], params)
 
         patch_request("/repos/#{user}/#{repo}/comments/#{comment_id}", params)
       end

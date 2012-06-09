@@ -89,7 +89,7 @@ module Github
 
       _normalize_params_keys(params)
       _filter_params_keys(VALID_MILESTONE_INPUTS, params)
-      _validate_inputs(%w[ title ], params)
+      assert_required_keys(%w[ title ], params)
 
       post_request("/repos/#{user}/#{repo}/milestones", params)
     end
@@ -117,7 +117,7 @@ module Github
 
       _normalize_params_keys(params)
       _filter_params_keys(VALID_MILESTONE_INPUTS, params)
-      _validate_inputs(%w[ title ], params)
+      assert_required_keys(%w[ title ], params)
 
       patch_request("/repos/#{user}/#{repo}/milestones/#{milestone_id}", params)
     end

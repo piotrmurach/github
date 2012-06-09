@@ -107,7 +107,7 @@ module Github
     #
     def create(params={})
       _normalize_params_keys(params)
-      _validate_inputs(REQUIRED_GIST_INPUTS, params)
+      assert_required_keys(REQUIRED_GIST_INPUTS, params)
 
       post_request("/gists", params)
     end

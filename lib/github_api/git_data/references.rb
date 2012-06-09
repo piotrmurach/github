@@ -88,7 +88,7 @@ module Github
       _filter_params_keys VALID_REF_PARAM_NAMES, params
       _validate_presence_of params['ref']
       _validate_reference params['ref']
-      _validate_inputs(%w[ ref sha ], params)
+      assert_required_keys(%w[ ref sha ], params)
 
       post_request("/repos/#{user}/#{repo}/git/refs", params)
     end
@@ -113,7 +113,7 @@ module Github
       _validate_reference ref
       _normalize_params_keys(params)
       _filter_params_keys(VALID_REF_PARAM_NAMES, params)
-      _validate_inputs(%w[ sha ], params)
+      assert_required_keys(%w[ sha ], params)
 
       patch_request("/repos/#{user}/#{repo}/git/refs/#{ref}", params)
     end

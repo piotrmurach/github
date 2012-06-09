@@ -71,7 +71,7 @@ module Github
       _normalize_params_keys(params)
       # _merge_mime_type(:issue_comment, params)
       _filter_params_keys(VALID_ISSUE_COMMENT_PARAM_NAME, params)
-      _validate_inputs(%w[ body ], params)
+      assert_required_keys(%w[ body ], params)
 
       post_request("/repos/#{user}/#{repo}/issues/#{issue_id}/comments", params)
     end
@@ -94,7 +94,7 @@ module Github
       _normalize_params_keys(params)
       # _merge_mime_type(:issue_comment, params)
       _filter_params_keys(VALID_ISSUE_COMMENT_PARAM_NAME, params)
-      _validate_inputs(%w[ body ], params)
+      assert_required_keys(%w[ body ], params)
 
       patch_request("/repos/#{user}/#{repo}/issues/comments/#{comment_id}")
     end

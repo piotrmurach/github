@@ -92,7 +92,7 @@ module Github
 
       _normalize_params_keys(params)
       _filter_params_keys(VALID_HOOK_PARAM_NAMES, params, :recursive => false)
-      _validate_inputs(REQUIRED_PARAMS, params)
+      assert_required_keys(REQUIRED_PARAMS, params)
 
       post_request("/repos/#{user}/#{repo}/hooks", params)
     end
@@ -125,7 +125,7 @@ module Github
 
       _normalize_params_keys(params)
       _filter_params_keys(VALID_HOOK_PARAM_NAMES, params, :recursive => false)
-      _validate_inputs(REQUIRED_PARAMS, params)
+      assert_required_keys(REQUIRED_PARAMS, params)
 
       patch_request("/repos/#{user}/#{repo}/hooks/#{hook_id}", params)
     end

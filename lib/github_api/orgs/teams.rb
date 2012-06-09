@@ -66,7 +66,7 @@ module Github
       _normalize_params_keys(params)
       _filter_params_keys(VALID_TEAM_PARAM_NAMES, params)
       _validate_params_values(VALID_TEAM_PARAM_VALUES, params)
-      _validate_inputs(%w[ name ], params)
+      assert_required_keys(%w[ name ], params)
 
       post_request("/orgs/#{org_name}/teams", params)
     end
@@ -93,7 +93,7 @@ module Github
 
       _filter_params_keys(VALID_TEAM_PARAM_NAMES, params)
       _validate_params_values(VALID_TEAM_PARAM_VALUES, params)
-      _validate_inputs(%w[ name ], params)
+      assert_required_keys(%w[ name ], params)
 
       patch_request("/teams/#{team_name}", params)
     end

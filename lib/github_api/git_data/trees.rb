@@ -89,8 +89,7 @@ module Github
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
       _normalize_params_keys(params)
-
-      _validate_inputs(%w[ tree ], params)
+      assert_required_keys(%w[ tree ], params)
 
       _filter_params_keys(VALID_TREE_PARAM_NAMES, params['tree'])
       _validate_params_values(VALID_TREE_PARAM_VALUES, params['tree'])

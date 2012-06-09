@@ -136,12 +136,7 @@ module Github
       params = args.extract_options!
       _normalize_params_keys(params)
       _filter_params_keys(VALID_REPO_OPTIONS + %w[ org ], params)
-
-#       if !_validate_inputs(%w[ name ], params)
-#         raise ArgumentError, "Required params are: :name"
-#       end
-
-      _validate_inputs(%w[ name ], params)
+      assert_required_keys(%w[ name ], params)
 
       # Requires authenticated user
       if (org = params.delete("org"))
@@ -201,10 +196,7 @@ module Github
 
       _normalize_params_keys(params)
       _filter_params_keys(VALID_REPO_OPTIONS, params)
-
-      unless _validate_inputs(%w[ name ], params)
-        raise ArgumentError, "Required params are: #{%w[ :name ] }"
-      end
+      assert_required_keys(%w[ name ], params)
 
       patch_request("/repos/#{user}/#{repo}", DEFAULT_REPO_OPTIONS.merge(params))
     end

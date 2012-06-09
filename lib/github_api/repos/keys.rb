@@ -56,7 +56,7 @@ module Github
       _validate_user_repo_params(user, repo) unless user? && repo?
       _normalize_params_keys(params)
       _filter_params_keys(VALID_KEY_PARAM_NAMES, params)
-      _validate_inputs(VALID_KEY_PARAM_NAMES, params)
+      assert_required_keys(VALID_KEY_PARAM_NAMES, params)
 
       post_request("/repos/#{user}/#{repo}/keys", params)
     end
