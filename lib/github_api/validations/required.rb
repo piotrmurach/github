@@ -4,9 +4,12 @@ module Github
   module Validations
     module Required
 
-      # Ensures that esential input parameters are present before request is made.
+      # Validate all keys present in a provided hash against required set,
+      # on mismatch raise Github::Error::RequiredParams
+      # Note that keys need to be in the same format i.e. symbols or strings,
+      # otherwise the comparison will fail.
       #
-      def _validate_inputs(required, provided)
+      def assert_required_keys(required, provided)
         result = required.all? do |key|
           provided.has_deep_key? key
         end
