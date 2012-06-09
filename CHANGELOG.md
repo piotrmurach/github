@@ -1,3 +1,12 @@
+0.5.4 (June 9, 2012)
+
+* Update teams api documentation.
+* Remove unused code from request processing.
+* Remove require for addressable.
+* Add feature tests for events, gists, orgs apis.
+* Add core extension for extracting options from array.
+* Change parameter slurping for organizations listing.
+
 0.5.3 (June 6, 2012)
 
 * Fix bug with preserving query parameters during pagination.
