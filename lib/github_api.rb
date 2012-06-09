@@ -74,6 +74,7 @@ module Github
     :PullRequests => 'pull_requests',
     :Users        => 'users',
     :Events       => 'events',
+    :Search       => 'search',
     :CoreExt      => 'core_ext',
     :MimeType     => 'mime_type',
     :Authorization => 'authorization',

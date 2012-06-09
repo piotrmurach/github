@@ -45,6 +45,10 @@ module Github
       @events ||= ApiFactory.new 'Events', options
     end
 
+    def search(options = {})
+      @search ||= ApiFactory.new 'Search', options
+    end
+
     # An API for users to manage their own tokens. You can only access your own
     # tokens, and only through Basic Authentication.
     def oauth(options = {})
