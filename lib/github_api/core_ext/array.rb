@@ -10,4 +10,8 @@ class Array # :nodoc:
     copy
   end unless method_defined?(:except!)
 
+  def extract_options!
+    last.is_a?(::Hash) ? pop : {}
+  end
+
 end # Array
