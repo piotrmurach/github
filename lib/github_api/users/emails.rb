@@ -29,7 +29,7 @@ module Github
     #  github.users.emails.add "octocat@github.com", "support@github.com"
     #
     def add(*args)
-      params = _extract_parameters(args)
+      params = args.extract_options!
       _normalize_params_keys(params)
       params['data'] = args if args
       post_request("/user/emails", params)
@@ -46,7 +46,7 @@ module Github
     #  github.users.emails.delete "octocat@github.com", "support@github.com"
     #
     def delete(*args)
-      params = _extract_parameters(args)
+      params = args.extract_options!
       _normalize_params_keys(params)
       params['data'] = args if args
       delete_request("/user/emails", params)

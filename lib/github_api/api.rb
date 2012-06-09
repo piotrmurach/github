@@ -12,8 +12,6 @@ require 'github_api/api/actions'
 require 'github_api/api_factory'
 
 module Github
-
-  # @private
   class API
     include Authorization
     include MimeType
@@ -22,7 +20,6 @@ module Github
     # TODO Validation & Filter will be optional
     include Validations
     include Filter
-
 
     attr_reader *Configuration::VALID_OPTIONS_KEYS
     attr_accessor *VALID_API_KEYS
@@ -114,18 +111,6 @@ module Github
     def _merge_mime_type(resource, params) # :nodoc:
 #       params['resource'] = resource
 #       params['mime_type'] = params['mime_type'] || :raw
-    end
-
-    # TODO add to core extensions
-    def _extract_parameters(array)
-      if array.last.is_a?(Hash) && array.last.instance_of?(Hash)
-        array.pop
-      else
-        {}
-      end
-    end
-
-    def _token_required
     end
 
   end # API

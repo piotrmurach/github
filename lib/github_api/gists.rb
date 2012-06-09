@@ -7,8 +7,6 @@ module Github
     autoload_all 'github_api/gists',
       :Comments => 'comments'
 
-    # include Github::Gists::Comments
-
     REQUIRED_GIST_INPUTS = %w[
       description
       public
