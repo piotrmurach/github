@@ -1,4 +1,4 @@
-Feature: Githu API pagination
+Feature: Github API pagination
 
   The gem permits to paginate resources.
 

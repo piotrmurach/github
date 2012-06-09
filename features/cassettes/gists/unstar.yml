@@ -1,0 +1,38 @@
+--- 
+http_interactions: 
+- request: 
+    method: delete
+    uri: https://<BASIC_AUTH>@api.github.com/gists/2900588/star?access_token=<TOKEN>
+    body: 
+      encoding: US-ASCII
+      string: ""
+    headers: 
+      Accept: 
+      - "*/*"
+      User-Agent: 
+      - Ruby
+  response: 
+    status: 
+      code: 204
+      message: No Content
+    headers: 
+      Server: 
+      - nginx/1.0.13
+      Date: 
+      - Sat, 09 Jun 2012 11:17:39 GMT
+      Connection: 
+      - keep-alive
+      Status: 
+      - 204 No Content
+      X-Ratelimit-Limit: 
+      - "5000"
+      Etag: 
+      - "\"d41d8cd98f00b204e9800998ecf8427e\""
+      X-Ratelimit-Remaining: 
+      - "4998"
+    body: 
+      encoding: US-ASCII
+      string: ""
+    http_version: 
+  recorded_at: Sat, 09 Jun 2012 11:17:39 GMT
+recorded_with: VCR 2.2.0
