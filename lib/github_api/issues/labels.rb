@@ -129,7 +129,7 @@ module Github
     #  github.issues.labels.add 'user-name', 'repo-name', 'issue-id', 'label1', 'label2', ...
     #
     def add(user_name, repo_name, issue_id, *args)
-      params = args.last.is_a?(Hash) ? args.pop : {}
+      params = args.extract_options!
       params['data'] = args unless args.empty?
 
       _update_user_repo_params(user_name, repo_name)
@@ -174,7 +174,7 @@ module Github
     #  github.issues.labels.replace 'user-name', 'repo-name', 'issue-id', 'label1', 'label2', ...
     #
     def replace(user_name, repo_name, issue_id, *args)
-      params = args.last.is_a?(Hash) ? args.pop : {}
+      params = args.extract_options!
       params['data'] = args unless args.empty?
 
       _update_user_repo_params(user_name, repo_name)

@@ -133,7 +133,7 @@ module Github
     #   github.repos.create :name => 'repo-name', :org => 'organisation-name'
     #
     def create(*args)
-      params = args.last.is_a?(Hash) ? args.pop : {}
+      params = args.extract_options!
       _normalize_params_keys(params)
       _filter_params_keys(VALID_REPO_OPTIONS + %w[ org ], params)
 
@@ -264,7 +264,7 @@ module Github
     #  github.repos.list :org => 'org-name', { |repo| ... }
     #
     def list(*args)
-      params = args.last.is_a?(Hash) ? args.pop : {}
+      params = args.extract_options!
       _normalize_params_keys(params)
       _merge_user_into_params!(params) unless params.has_key?('user')
       _filter_params_keys(%w[ org user type ], params)

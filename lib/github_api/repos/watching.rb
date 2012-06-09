@@ -33,7 +33,7 @@ module Github
     #  github.repos.watching.watched
     #
     def watched(*args)
-      params = args.last.is_a?(Hash) ? args.pop : {}
+      params = args.extract_options!
       _normalize_params_keys(params)
       _merge_user_into_params!(params) unless params.has_key?('user')
 

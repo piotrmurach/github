@@ -17,7 +17,7 @@ module Github
       def initialize(app, *args)
         @app = app
         credentials = ""
-        options = args.last.is_a?(Hash) ? args.pop : {}
+        options = args.extract_options!
         if options.has_key? :login
           credentials = "#{options[:login]}:#{options[:password]}"
         elsif options.has_key? :basic_auth
