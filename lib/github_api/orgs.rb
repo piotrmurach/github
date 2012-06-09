@@ -34,21 +34,22 @@ module Github
     # List all public organizations for a user.
     #
     # = Examples
-    #  github = Github.new :user => 'user-name'
-    #  github.orgs.list
+    #  github = Github.new
+    #  github.orgs.list user: 'user-name'
     #
     # List public and private organizations for the authenticated user.
     #
-    #  github = Github.new :oauth_token => '..'
-    #  github.orgs.list 'github'
+    #  github = Github.new oauth_token: '..'
+    #  github.orgs.list
     #
-    def list(user_name=nil, params={})
-      _update_user_repo_params(user_name)
+    def list(*args)
+      params = args.extract_options!
       _normalize_params_keys(params)
 
-      response = if user?
-        get_request("/users/#{user}/orgs", params)
+      response = if (user_name = params.delete("user"))
+        get_request("/users/#{user_name}/orgs", params)
       else
+        # For the authenticated user
         get_request("/user/orgs", params)
       end
       return response unless block_given?

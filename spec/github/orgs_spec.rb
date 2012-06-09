@@ -24,29 +24,29 @@ describe Github::Orgs do
       end
 
       it "should get the resources" do
-        github.orgs.list user
+        github.orgs.list :user => user
         a_get("/users/#{user}/orgs").should have_been_made
       end
 
       it "should return array of resources" do
-        orgs = github.orgs.list user
+        orgs = github.orgs.list :user => user
         orgs.should be_an Array
         orgs.should have(1).items
       end
 
       it "should be a mash type" do
-        orgs = github.orgs.list user
+        orgs = github.orgs.list :user => user
         orgs.first.should be_a Hashie::Mash
       end
 
       it "should get org information" do
-        orgs = github.orgs.list user
+        orgs = github.orgs.list :user => user
         orgs.first.login.should == 'github'
       end
 
       it "should yield to a block" do
-        github.orgs.should_receive(:list).with(user).and_yield('web')
-        github.orgs.list(user) { |param| 'web' }
+        github.orgs.should_receive(:list).with(:user => user).and_yield('web')
+        github.orgs.list(:user => user) { |param| 'web' }
       end
     end
 
@@ -76,7 +76,7 @@ describe Github::Orgs do
 
       it "should return 404 with a message 'Not Found'" do
         expect {
-          github.orgs.list user
+          github.orgs.list :user => user
         }.to raise_error(Github::Error::NotFound)
       end
     end
