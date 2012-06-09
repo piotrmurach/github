@@ -1,46 +1,46 @@
---- 
-http_interactions: 
-- request: 
+---
+http_interactions:
+- request:
     method: get
     uri: https://<BASIC_AUTH>@api.github.com/orgs/github?access_token=<TOKEN>
-    body: 
+    body:
       encoding: US-ASCII
-      string: ""
-    headers: 
-      Accept-Encoding: 
+      string: ''
+    headers:
+      Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept: 
-      - "*/*"
-      User-Agent: 
+      Accept:
+      - ! '*/*'
+      User-Agent:
       - Ruby
-  response: 
-    status: 
+  response:
+    status:
       code: 200
       message: OK
-    headers: 
-      Server: 
+    headers:
+      Server:
       - nginx/1.0.13
-      Date: 
+      Date:
       - Sat, 09 Jun 2012 11:40:15 GMT
-      Content-Type: 
+      Content-Type:
       - application/json; charset=utf-8
-      Transfer-Encoding: 
+      Transfer-Encoding:
       - chunked
-      Connection: 
+      Connection:
       - keep-alive
-      Status: 
+      Status:
       - 200 OK
-      X-Ratelimit-Limit: 
-      - "5000"
-      Etag: 
-      - "\"41b3d78c36ddac34fd8b8917a4c33283\""
-      X-Ratelimit-Remaining: 
-      - "4991"
-      Content-Encoding: 
+      X-Ratelimit-Limit:
+      - '5000'
+      Etag:
+      - ! '"41b3d78c36ddac34fd8b8917a4c33283"'
+      X-Ratelimit-Remaining:
+      - '4991'
+      Content-Encoding:
       - gzip
-    body: 
+    body:
       encoding: ASCII-8BIT
-      string: !binary |
+      string: !binary |-
         H4sIAAAAAAAAA22Ry07DMBBFf6WyxC5NnGcbSwgQUmHHAlZsqonjpBaJbfkB
         Koh/Z0JaWhA7e+b4zp3rD2JCM0i+tcJoR1hZRcTvjSCMPNgelHwHL7UiEWkG
         3WN1571xLEl66XehibkeE2h08EggIBUicwsLYgQ5YMEFY7T116c32ORWgBft
@@ -49,7 +49,37 @@ http_interactions:
         fx8aFIFX8GD/yDjBgxVxb+fuHMs3mFQpzYp1XXVZneY0r9Ky4W3RrYC2vGtW
         xVV7eTQDCMYihhfA4GIlfALOCe/iU3AX2UaO0AuHh+O08/NS297FBr1H5Pem
         YOSZTjJxh09EVLaE1XVaf34BHPSdgxACAAA=
-
-    http_version: 
+    http_version: !!null 
   recorded_at: Sat, 09 Jun 2012 11:40:15 GMT
+- request:
+    method: get
+    uri: https://api.github.com/orgs/github?access_token=<TOKEN>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 500
+      message: Internal Server Error
+    headers:
+      Server:
+      - nginx/1.0.13
+      Date:
+      - Sat, 09 Jun 2012 14:59:20 GMT
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+    body:
+      encoding: US-ASCII
+      string: ''
+    http_version: !!null 
+  recorded_at: Sat, 09 Jun 2012 14:59:20 GMT
 recorded_with: VCR 2.2.0

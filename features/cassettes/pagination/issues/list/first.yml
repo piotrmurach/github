@@ -1,48 +1,50 @@
---- 
-http_interactions: 
-- request: 
+---
+http_interactions:
+- request:
     method: get
     uri: https://<BASIC_AUTH>@api.github.com/repos/wycats/thor/issues?access_token=<TOKEN>&per_page=50&state=closed
-    body: 
+    body:
       encoding: US-ASCII
-      string: ""
-    headers: 
-      Accept-Encoding: 
+      string: ''
+    headers:
+      Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept: 
-      - "*/*"
-      User-Agent: 
+      Accept:
+      - ! '*/*'
+      User-Agent:
       - Ruby
-  response: 
-    status: 
+  response:
+    status:
       code: 200
       message: OK
-    headers: 
-      Server: 
+    headers:
+      Server:
       - nginx/1.0.13
-      Date: 
+      Date:
       - Sat, 02 Jun 2012 19:20:33 GMT
-      Content-Type: 
+      Content-Type:
       - application/json; charset=utf-8
-      Transfer-Encoding: 
+      Transfer-Encoding:
       - chunked
-      Connection: 
+      Connection:
       - keep-alive
-      Status: 
+      Status:
       - 200 OK
-      X-Ratelimit-Limit: 
-      - "5000"
-      Etag: 
-      - "\"464b857ce68f30ee73353428719cebf1\""
-      Link: 
-      - <https://api.github.com/repos/wycats/thor/issues?access_token=<TOKEN>&page=2&per_page=50&state=closed>; rel="next", <https://api.github.com/repos/wycats/thor/issues?access_token=<TOKEN>&page=4&per_page=50&state=closed>; rel="last"
-      X-Ratelimit-Remaining: 
-      - "4983"
-      Content-Encoding: 
+      X-Ratelimit-Limit:
+      - '5000'
+      Etag:
+      - ! '"464b857ce68f30ee73353428719cebf1"'
+      Link:
+      - <https://api.github.com/repos/wycats/thor/issues?access_token=<TOKEN>&page=2&per_page=50&state=closed>;
+        rel="next", <https://api.github.com/repos/wycats/thor/issues?access_token=<TOKEN>&page=4&per_page=50&state=closed>;
+        rel="last"
+      X-Ratelimit-Remaining:
+      - '4983'
+      Content-Encoding:
       - gzip
-    body: 
+    body:
       encoding: ASCII-8BIT
-      string: !binary |
+      string: !binary |-
         H4sIAAAAAAAAA+1963rbRrblqyBS0pJPiyQAkiDIzqUd20l0Oo57bGcyfWx/
         EkCAEiKS0AFIy+okDzDPNS82a+2qAgGKIkHS6j4/3N/nDkXiUijU3rUva6/9
         5reD4TjN4+gsmB0MDlzbcRt2t+H0XzveoN0bdL3/Ojg5mCWzcYyfX8aT9H1s
@@ -394,7 +396,37 @@ http_interactions:
         IljQmEVfgxN2/JyiDl7C/8nolhp1cQv2UBIq1nPqQF5Z1eKpTgkcqOzTKGeB
         e4P+g1K2w4QIR1sSY9wbyR7mV6QhAkYpzZ7qF9x7BnoBXeg5KzTMu/8PzAA6
         5JMBAQA=
-
-    http_version: 
+    http_version: !!null 
   recorded_at: Sat, 02 Jun 2012 19:20:34 GMT
-recorded_with: VCR 2.1.1
+- request:
+    method: get
+    uri: https://api.github.com/repos/wycats/thor/issues?access_token=<TOKEN>&per_page=50&state=closed
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 500
+      message: Internal Server Error
+    headers:
+      Server:
+      - nginx/1.0.13
+      Date:
+      - Sat, 09 Jun 2012 14:59:25 GMT
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+    body:
+      encoding: US-ASCII
+      string: ''
+    http_version: !!null 
+  recorded_at: Sat, 09 Jun 2012 14:59:25 GMT
+recorded_with: VCR 2.2.0

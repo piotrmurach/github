@@ -82,4 +82,35 @@ http_interactions:
       string: ! '[]'
     http_version: !!null 
   recorded_at: Wed, 16 May 2012 21:39:39 GMT
-recorded_with: VCR 2.1.1
+- request:
+    method: get
+    uri: https://api.github.com/gists?access_token=<TOKEN>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 500
+      message: Internal Server Error
+    headers:
+      Server:
+      - nginx/1.0.13
+      Date:
+      - Sat, 09 Jun 2012 14:59:09 GMT
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+    body:
+      encoding: US-ASCII
+      string: ''
+    http_version: !!null 
+  recorded_at: Sat, 09 Jun 2012 14:59:09 GMT
+recorded_with: VCR 2.2.0

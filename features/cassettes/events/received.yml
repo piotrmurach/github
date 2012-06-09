@@ -1,48 +1,49 @@
---- 
-http_interactions: 
-- request: 
+---
+http_interactions:
+- request:
     method: get
     uri: https://<BASIC_AUTH>@api.github.com/users/josevalim/received_events?access_token=<TOKEN>
-    body: 
+    body:
       encoding: US-ASCII
-      string: ""
-    headers: 
-      Accept-Encoding: 
+      string: ''
+    headers:
+      Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept: 
-      - "*/*"
-      User-Agent: 
+      Accept:
+      - ! '*/*'
+      User-Agent:
       - Ruby
-  response: 
-    status: 
+  response:
+    status:
       code: 200
       message: OK
-    headers: 
-      Server: 
+    headers:
+      Server:
       - nginx/1.0.13
-      Date: 
+      Date:
       - Fri, 08 Jun 2012 21:52:16 GMT
-      Content-Type: 
+      Content-Type:
       - application/json; charset=utf-8
-      Transfer-Encoding: 
+      Transfer-Encoding:
       - chunked
-      Connection: 
+      Connection:
       - keep-alive
-      Status: 
+      Status:
       - 200 OK
-      X-Ratelimit-Limit: 
-      - "5000"
-      Etag: 
-      - "\"944bbf398b229c0428e2a56dcd3d05cf\""
-      Link: 
-      - <https://api.github.com/users/josevalim/received_events?access_token=<TOKEN>&page=2>; rel="next"
-      X-Ratelimit-Remaining: 
-      - "4990"
-      Content-Encoding: 
+      X-Ratelimit-Limit:
+      - '5000'
+      Etag:
+      - ! '"944bbf398b229c0428e2a56dcd3d05cf"'
+      Link:
+      - <https://api.github.com/users/josevalim/received_events?access_token=<TOKEN>&page=2>;
+        rel="next"
+      X-Ratelimit-Remaining:
+      - '4990'
+      Content-Encoding:
       - gzip
-    body: 
+    body:
       encoding: ASCII-8BIT
-      string: !binary |
+      string: !binary |-
         H4sIAAAAAAAAA+19e5/bRpbdV8G2k0j2NEm8H8yOx7Is20ok25G0Y28sp1UA
         CmxYfC1AqsXxz/vF8l8+Wc69VQDBbhIgu9kjeYaesSWSQKFQj1v3ce65P/92
         JpLFrDgb/nY2KsQ7sRDFRZ6eDc98M4wd23fN1MwSYUZB7Jpx4gs7TESaeNnZ
@@ -385,7 +386,37 @@ http_interactions:
         JlYSmBmwhnYkogi1W2IK+rSe4iqWMiqQzDTVxzTKVDZAW/VPh7rxu3p2TybC
         2o3/I5G1bIEY1dSMUKQLKmd6F2wPOLlXs5JKaQH6lryNYZ31xLKgQCLTNKI6
         J0j3a2TezsvRB7r+zKICN4EP1bpjZdjg+ER455f/DylDOQ8iPwEA
-
-    http_version: 
+    http_version: !!null 
   recorded_at: Fri, 08 Jun 2012 21:52:16 GMT
+- request:
+    method: get
+    uri: https://api.github.com/users/josevalim/received_events?access_token=<TOKEN>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 500
+      message: Internal Server Error
+    headers:
+      Server:
+      - nginx/1.0.13
+      Date:
+      - Sat, 09 Jun 2012 14:59:07 GMT
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+    body:
+      encoding: US-ASCII
+      string: ''
+    http_version: !!null 
+  recorded_at: Sat, 09 Jun 2012 14:59:07 GMT
 recorded_with: VCR 2.2.0
