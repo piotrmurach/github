@@ -1,0 +1,95 @@
+--- 
+http_interactions: 
+- request: 
+    method: get
+    uri: https://<BASIC_AUTH>@api.github.com/repos/tarball/master?access_token=<TOKEN>
+    body: 
+      encoding: US-ASCII
+      string: ""
+    headers: 
+      Accept-Encoding: 
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept: 
+      - "*/*"
+      User-Agent: 
+      - Ruby
+  response: 
+    status: 
+      code: 404
+      message: Not Found
+    headers: 
+      Server: 
+      - nginx/1.0.13
+      Date: 
+      - Mon, 11 Jun 2012 19:38:50 GMT
+      Content-Type: 
+      - application/json; charset=utf-8
+      Transfer-Encoding: 
+      - chunked
+      Connection: 
+      - keep-alive
+      Status: 
+      - 404 Not Found
+      X-Ratelimit-Limit: 
+      - "5000"
+      X-Ratelimit-Remaining: 
+      - "4996"
+      Etag: 
+      - "\"e66a7a6c91e2c26803f3f49feb7a883f\""
+      Content-Encoding: 
+      - gzip
+    body: 
+      encoding: ASCII-8BIT
+      string: !binary |
+        H4sIAAAAAAAAA6tWyk0tLk5MT1WyUvLLL1Fwyy/NS1GqBQB8+Ys1FwAAAA==
+
+    http_version: 
+  recorded_at: Mon, 11 Jun 2012 19:38:50 GMT
+- request: 
+    method: get
+    uri: https://<BASIC_AUTH>@api.github.com/repos/peter-murach/github/tarball/master?access_token=<TOKEN>
+    body: 
+      encoding: US-ASCII
+      string: ""
+    headers: 
+      Accept-Encoding: 
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept: 
+      - "*/*"
+      User-Agent: 
+      - Ruby
+  response: 
+    status: 
+      code: 302
+      message: Found
+    headers: 
+      Server: 
+      - nginx/1.0.13
+      Date: 
+      - Mon, 11 Jun 2012 19:40:39 GMT
+      Content-Type: 
+      - text/html;charset=utf-8
+      Connection: 
+      - keep-alive
+      Status: 
+      - 302 Found
+      X-Ratelimit-Limit: 
+      - "5000"
+      Etag: 
+      - "\"d41d8cd98f00b204e9800998ecf8427e\""
+      Location: 
+      - https://nodeload.github.com/peter-murach/github/tarball/master
+      X-Ratelimit-Remaining: 
+      - "4995"
+      Content-Length: 
+      - "0"
+      Expires: 
+      - Mon, 11 Jun 2012 19:40:39 GMT
+      Cache-Control: 
+      - public, must-revalidate, max-age=0
+    body: 
+      encoding: US-ASCII
+      string: ""
+    http_version: 
+  recorded_at: Mon, 11 Jun 2012 19:40:39 GMT
+recorded_with: VCR 2.2.0
