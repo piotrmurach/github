@@ -1,0 +1,62 @@
+--- 
+http_interactions: 
+- request: 
+    method: get
+    uri: https://<BASIC_AUTH>@api.github.com/users/peter-murach?access_token=<TOKEN>
+    body: 
+      encoding: US-ASCII
+      string: ""
+    headers: 
+      Accept-Encoding: 
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept: 
+      - "*/*"
+      User-Agent: 
+      - Ruby
+  response: 
+    status: 
+      code: 200
+      message: OK
+    headers: 
+      Server: 
+      - nginx/1.0.13
+      Date: 
+      - Mon, 11 Jun 2012 21:31:23 GMT
+      Content-Type: 
+      - application/json; charset=utf-8
+      Transfer-Encoding: 
+      - chunked
+      Connection: 
+      - keep-alive
+      Status: 
+      - 200 OK
+      X-Ratelimit-Limit: 
+      - "5000"
+      Vary: 
+      - Accept, Authorization, Cookie
+      Etag: 
+      - "\"87b8964bc91a72b5eda0f821aa6b5203\""
+      Last-Modified: 
+      - Sun, 20 May 2012 12:33:20 GMT
+      X-Ratelimit-Remaining: 
+      - "4998"
+      Cache-Control: 
+      - private, max-age=60
+      Content-Encoding: 
+      - gzip
+    body: 
+      encoding: ASCII-8BIT
+      string: !binary |
+        H4sIAAAAAAAAA4WRzWrDMBCEXyUIenP8FzmxDaW3Xkqh0ObSi1lba1tUtowk
+        t4TSd+8qiWmSS0GHXWl29DH7zXo3qGo2ipVUusmWUdRJ18912OghmtChWQ+z
+        gaZnAXOHCUm4t2ioI8EE44EuqKmV7qi6HAj/jLxAalaOs1IB6wx8ggNTSUEj
+        bZ3yQmTZlkPc5k0Gcb0tMBa7RGR5wQuaJW853rjTNQ4gPbhnMQgORQWO+jRO
+        4rU/+VuyKzdJGcfvR5cGnNTe6LXHtpWoRLDaj5IGV09y7IQeSHZmu87EYjMb
+        DBfyYzgnYfQf/4O4X5KFlOchhvABRB6O6CKwFp29SOoufZQDdGipWH67rNcJ
+        j8Np7Ai01UrpL+JmZZYG7BoYJnnhGs20Mnu7zpMBPbAyyQM2wuC3+yK1M6vn
+        ZefTXCvZVJ20zusC1kvKulYkbUFZDJjfIud8kxDEWW1w0l7Nf34BcE+elGIC
+        AAA=
+
+    http_version: 
+  recorded_at: Mon, 11 Jun 2012 21:31:23 GMT
+recorded_with: VCR 2.2.0
