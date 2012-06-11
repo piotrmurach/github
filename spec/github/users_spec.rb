@@ -18,28 +18,28 @@ describe Github::Users do
       end
 
       it "should get the resources" do
-        github.users.get user
+        github.users.get :user => user
         a_get("/users/#{user}").should have_been_made
       end
 
       it "should return resource" do
-        user_resource = github.users.get user
+        user_resource = github.users.get :user => user
         user_resource.should be_a Hash
       end
 
       it "should be a mash type" do
-        user_resource = github.users.get user
+        user_resource = github.users.get :user => user
         user_resource.should be_a Hashie::Mash
       end
 
       it "should get org information" do
-        user_resource = github.users.get user
+        user_resource = github.users.get :user => user
         user_resource.login.should == 'octocat'
       end
 
       it "should yield to a block" do
-        github.users.should_receive(:get).with(user).and_yield('web')
-        github.users.get(user) { |param| 'web' }
+        github.users.should_receive(:get).with(:user => user).and_yield('web')
+        github.users.get(:user => user) { |param| 'web' }
       end
     end
 
@@ -66,7 +66,7 @@ describe Github::Users do
 
       it "should return 404 with a message 'Not Found'" do
         expect {
-          github.users.get user
+          github.users.get :user => user
         }.to raise_error(Github::Error::NotFound)
       end
     end

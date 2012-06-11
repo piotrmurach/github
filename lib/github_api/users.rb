@@ -44,17 +44,18 @@ module Github
     #
     # = Examples
     #  github = Github.new
-    #  github.users.get 'user-name'
+    #  github.users.get user: 'user-name'
     #
     # Get the authenticated user
     #
     # = Examples
-    #  @github = Github.new :oauth_token => '...'
-    #  @github.users.get
+    #  github = Github.new oauth_token: '...'
+    #  github.users.get
     #
-    def get(user_name=nil, params={})
+    def get(*args)
+      params = args.extract_options!
       _normalize_params_keys(params)
-      if user_name
+      if user_name = params.delete('user')
         get_request("/users/#{user_name}", params)
       else
         get_request("/user", params)
@@ -84,7 +85,8 @@ module Github
     #    "hireable" => true,
     #    "bio" => "There once..."
     #
-    def update(params={})
+    def update(*args)
+      params = args.extract_options!
       _normalize_params_keys(params)
       _filter_params_keys(VALID_USER_PARAMS_NAMES, params)
       patch_request("/user", params)
