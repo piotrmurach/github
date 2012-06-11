@@ -8,6 +8,7 @@ module Github
     autoload_all 'github_api/repos',
       :Collaborators => 'collaborators',
       :Commits       => 'commits',
+      :Contents      => 'contents',
       :Downloads     => 'downloads',
       :Forks         => 'forks',
       :Hooks         => 'hooks',
@@ -49,6 +50,11 @@ module Github
     # Access to Repos::Commits API
     def commits
       @commits ||= ApiFactory.new 'Repos::Commits'
+    end
+
+    # Access to Repos::Contents API
+    def contents
+      @commits ||= ApiFactory.new 'Repos::Contents'
     end
 
     # Access to Repos::Downloads API
