@@ -1,0 +1,120 @@
+--- 
+http_interactions: 
+- request: 
+    method: get
+    uri: https://<BASIC_AUTH>@api.github.com/repos/peter-murach/github/pulls/f507880?access_token=<TOKEN>
+    body: 
+      encoding: US-ASCII
+      string: ""
+    headers: 
+      Accept-Encoding: 
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept: 
+      - "*/*"
+      User-Agent: 
+      - Ruby
+  response: 
+    status: 
+      code: 404
+      message: Not Found
+    headers: 
+      Server: 
+      - nginx/1.0.13
+      Date: 
+      - Tue, 12 Jun 2012 09:46:13 GMT
+      Content-Type: 
+      - application/json; charset=utf-8
+      Transfer-Encoding: 
+      - chunked
+      Connection: 
+      - keep-alive
+      Status: 
+      - 404 Not Found
+      X-Ratelimit-Limit: 
+      - "5000"
+      Etag: 
+      - "\"e66a7a6c91e2c26803f3f49feb7a883f\""
+      X-Ratelimit-Remaining: 
+      - "4993"
+      Content-Encoding: 
+      - gzip
+    body: 
+      encoding: ASCII-8BIT
+      string: !binary |
+        H4sIAAAAAAAAA6tWyk0tLk5MT1WyUvLLL1Fwyy/NS1GqBQB8+Ys1FwAAAA==
+
+    http_version: 
+  recorded_at: Tue, 12 Jun 2012 09:46:13 GMT
+- request: 
+    method: get
+    uri: https://<BASIC_AUTH>@api.github.com/repos/peter-murach/github/pulls/36?access_token=<TOKEN>
+    body: 
+      encoding: US-ASCII
+      string: ""
+    headers: 
+      Accept-Encoding: 
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept: 
+      - "*/*"
+      User-Agent: 
+      - Ruby
+  response: 
+    status: 
+      code: 200
+      message: OK
+    headers: 
+      Server: 
+      - nginx/1.0.13
+      Date: 
+      - Tue, 12 Jun 2012 09:46:32 GMT
+      Content-Type: 
+      - application/json; charset=utf-8
+      Transfer-Encoding: 
+      - chunked
+      Connection: 
+      - keep-alive
+      Status: 
+      - 200 OK
+      X-Ratelimit-Limit: 
+      - "5000"
+      Etag: 
+      - "\"0a34d3209e6417216815b84f3deb6f1f\""
+      X-Ratelimit-Remaining: 
+      - "4992"
+      Content-Encoding: 
+      - gzip
+    body: 
+      encoding: ASCII-8BIT
+      string: !binary |
+        H4sIAAAAAAAAA+1Y227jNhD9FUFFsS3gCymRkiWg2O5LgQX6UBR5alEolDiy
+        iehWUkqwu8i/d6iLLSd27KRF+7B9CCJL4lwOZ84Z6osroYBW1ZVxY7Jwk0JV
+        d3j5xd21ZdH/15C7Mf5sGxOv11vV7rp0ldXluoEW9LLstMh24/110xXF2g/c
+        x4VroMCFzwyIRq1mRjQ0tTlryoy2lDEd/B1jvYHJGgZfQtUOaR6nd3V0e4Pr
+        vTXMWcO9gofkn3BgkbQBz+yjg95t0mncmmu35JD6wpUqz1+3etzQlV3pLvqq
+        eJMBXFuC3oJIC9zIVnewcLOdqLYgk1wVgJtBF25nQNtt3mpxL1qhEyUx0SjM
+        eAghRBHzKYRBnmaE0dDPMsEpWkTbRb1VFb7aoEUt2s94a7RwjJWBrNOwmuz3
+        dTy8uL7k5b38YWoC4bHNClbiTpRCrSpo18IYaM2ssL/1flKl2ILBi8nb/HpJ
+        GVk11RYDPY7wSQVaRLA/DmlZRHxGN2Foe6wVLcLpZkVtQE4Y4xu5KAwiLKRU
+        Y3MjuqkwfROdRjlPPRZJzgMmSL7JuCBpEAGRIZV8E7FojvKs89+A9CVP/ynS
+        x6lZtBnDsvMs2juBWJOMB0ByGgnuZWkAOacB2YR+zjjxUk8CjZikPENgBm4p
+        hUGitPCJFGzjzokz3j+1TDgR76taDC3vhElk/VAVtZDYSUN7PYg222H1uHEQ
+        YrMVdfU65rDV3EddbTusZAz81y79hHckmEyrxhbWeNNRFaaYiwyctnYGenc+
+        /PLRuffxfWN2Y0L45McD+ccnFGR0ii8dllyUnXFRpgHbQSaixbA8QumSREuP
+        39Ao9oPY837DWHKk1aQSpU3nhPsRywd1pyYYLbYDh0538lrf7VusVFrXegi2
+        QuPoAh8j6B7H1m7kUUTekgRL6t0QjIjiGzaiF9v/rDxaWNVnzMLjAe5/XUIz
+        7JHlKARsnttcbwf0cXWjFVIsGhipom6g2ueJZGHuq9dWIRbgKfq+1O62xib6
+        /jqJZazHw950Zjer4ydVw2zVWGLyGA88Sh6Rmp6Wfr+EBLb0eRgz3y6xU4my
+        Uw/u7g4EGjgnBZekcL5jX5ng9hKQcxJuNiTzNkGwETxlREYQUSz0TUolC0gm
+        gZHASuYgAajDCf5pMMYOQMkWSovhpAcjhvHp164UhtHIOImj+QuigFVwSROO
+        Tf4LenDS4UtacHLBiWZgS4o6gJ1AYh4904GT0J3TgJEvBxEYlPasBuCJ6qQE
+        jJ3JY361BDyLcaB/5ntH9I/7/iKzY0QvM/szP2dY/X+OODeUX8PmTwqgHzOJ
+        74eEWTZv7OT2KvWdDt6rfikWQX/YkgnOa/EwlaS1xGv3o6netc7tjIxunRLH
+        G1VtHWEcCTgGSKiyTwsH7+E8p9p3xtHwZ6c0SJzznN9vC5VO5337AEy70unt
+        H99d+Y0gLep0zQmHkEEk8PwmIxJJGXjImiTHI53n+z7LweOUeeuDswSPRuuD
+        w29+Zt+/P2Rqh74h09MdF91QFvv+2P5vG7p6lPuvCIOaDh8RsAGH89d+8BzU
+        Fz16MQ1w0rOEU3VlaqcjH8e1Z58JsCttCVDUFRb4C7dVrT0mux+knG2JU+fO
+        bOPcx78A2Ntppb4RAAA=
+
+    http_version: 
+  recorded_at: Tue, 12 Jun 2012 09:46:32 GMT
+recorded_with: VCR 2.2.0
