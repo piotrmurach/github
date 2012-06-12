@@ -15,6 +15,10 @@ module Github
       loaded? ? @env[:response_headers][RATELIMIT_REMAINING] : nil
     end
 
+    def cache_control
+      loaded? ? @env[:response_headers][CACHE_CONTROL] : nil
+    end
+
     def content_type
       loaded? ? @env[:response_headers][CONTENT_TYPE] : nil
     end
@@ -29,6 +33,10 @@ module Github
 
     def date
       loaded? ? @env[:response_headers][DATE] : nil
+    end
+
+    def location
+      loaded? ? @env[:response_headers][LOCATION] : nil
     end
 
     def server

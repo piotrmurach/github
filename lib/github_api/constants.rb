@@ -11,11 +11,15 @@ module Github
 
     CONTENT_LENGTH = 'content-length'.freeze
 
+    CACHE_CONTROL = 'cache-control'.freeze
+
     ETAG = 'ETag'.freeze
 
     SERVER = 'Server'.freeze
 
     DATE = 'Date'.freeze
+
+    LOCATION = 'Location'.freeze
 
     # Link headers
     HEADER_LINK = "Link".freeze
