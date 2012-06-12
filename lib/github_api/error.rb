@@ -29,6 +29,7 @@ end # Github
   client_error
   invalid_options
   required_params
+  unknown_value
 ].each do |error|
   require "github_api/error/#{error}"
 end
