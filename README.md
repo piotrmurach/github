@@ -94,9 +94,9 @@ Main API methods are grouped into the following classes that can be instantiated
 ```ruby
 Github         - full API access
 
-Github::Gists           Github::GitData       Github::Repos
-Github::Orgs            Github::Issues        Github::Authorizations
-Github::PullRequests    Github::Users         Github::Events
+Github::Gists           Github::GitData    Github::Repos             Github::Search
+Github::Orgs            Github::Issues     Github::Authorizations
+Github::PullRequests    Github::Users      Github::Events
 ```
 
 Some parts of GitHub API v3 require you to be autheticated, for instance the following are examples of APIs only for the authenticated user
