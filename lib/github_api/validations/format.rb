@@ -11,9 +11,10 @@ module Github
         params.each do |k, v|
           next unless permitted.keys.include?(k)
           if permitted[k].is_a?(Array) && !permitted[k].include?(params[k])
-            raise ArgumentError, "Wrong value for #{k}, allowed: #{permitted[k].join(', ')}"
+            raise Github::Error::UnknownValue.new(k,v, permitted[k].join(', '))
+
           elsif permitted[k].is_a?(Regexp) && !(permitted[k] =~ params[k])
-            raise ArgumentError, "String does not match the parameter value."
+            raise Github::Error::UnknownValue.new(k,v, permitted[k])
           end
         end
       end

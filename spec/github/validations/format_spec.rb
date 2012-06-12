@@ -18,7 +18,7 @@ describe Github::Validations::Format do
       actual = { 'param_a' => 'x' }
       expect {
         validator._validate_params_values(permitted, actual)
-      }.to raise_error(ArgumentError)
+      }.to raise_error(Github::Error::UnknownValue)
     end
 
     it 'accepts known value for a given parameter key' do
@@ -30,7 +30,7 @@ describe Github::Validations::Format do
       actual = { 'param_b' => 'xgithub' }
       expect {
         validator._validate_params_values(permitted, actual)
-      }.to raise_error(ArgumentError)
+      }.to raise_error(Github::Error::UnknownValue)
     end
 
     it 'matches regex value for a given parameter key' do
