@@ -1,0 +1,44 @@
+--- 
+http_interactions: 
+- request: 
+    method: get
+    uri: https://<BASIC_AUTH>@api.github.com/issues?access_token=<TOKEN>&direction=asc&filter=created&sort=created&state=open
+    body: 
+      encoding: US-ASCII
+      string: ""
+    headers: 
+      Accept-Encoding: 
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept: 
+      - "*/*"
+      User-Agent: 
+      - Ruby
+  response: 
+    status: 
+      code: 200
+      message: OK
+    headers: 
+      Server: 
+      - nginx/1.0.13
+      Date: 
+      - Tue, 12 Jun 2012 09:11:03 GMT
+      Content-Type: 
+      - application/json; charset=utf-8
+      Connection: 
+      - keep-alive
+      Status: 
+      - 200 OK
+      X-Ratelimit-Limit: 
+      - "5000"
+      Etag: 
+      - "\"d751713988987e9331980363e24189ce\""
+      X-Ratelimit-Remaining: 
+      - "4999"
+      Content-Length: 
+      - "2"
+    body: 
+      encoding: US-ASCII
+      string: "[]"
+    http_version: 
+  recorded_at: Tue, 12 Jun 2012 09:11:03 GMT
+recorded_with: VCR 2.2.0
