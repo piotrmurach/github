@@ -82,7 +82,8 @@ module Github
     #    :sort   => 'comments',
     #    :direction => 'asc'
     #
-    def list(params={})
+    def list(*args)
+      params = args.extract_options!
       _normalize_params_keys(params)
       _filter_params_keys(VALID_ISSUE_PARAM_NAMES, params)
       # _merge_mime_type(:issue, params)
@@ -124,8 +125,7 @@ module Github
     #    :sort   => 'comments',
     #    :direction => 'asc'
     #
-    # TODO: remove default nils from params
-    def list_repo(user_name=nil, repo_name=nil, params={})
+    def list_repo(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
 
