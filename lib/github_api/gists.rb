@@ -61,9 +61,7 @@ module Github
     #  github.gists.starred
     #
     def starred(params={})
-      process_params do
-        normalize params
-      end
+      _normalize_params_keys(params)
 
       response = get_request("/gists/starred", params)
       return response unless block_given?

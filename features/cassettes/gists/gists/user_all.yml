@@ -85,4 +85,59 @@ http_interactions:
       string: ''
     http_version: !!null 
   recorded_at: Sat, 09 Jun 2012 14:59:09 GMT
+- request:
+    method: get
+    uri: https://<BASIC_AUTH>@api.github.com/gists?access_token=<TOKEN>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.0.13
+      Date:
+      - Tue, 12 Jun 2012 13:28:55 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      Etag:
+      - ! '"095ae959b7e2dcc66b9eca382124b3e7"'
+      X-Ratelimit-Remaining:
+      - '4999'
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAA4VTu47TQBT9FcsSXWLPjB2vbQkBDR0SBRUIRdeesTOKX5oZ
+        EyBKYdplRUu3WhoQK622pYGPsVYLf8F1NkYJEqSx5nHOnHvP8X2xthemLOat
+        KuwYl6bRsevmUhsnl2bRJk5aly6LCAkItSc2Hs6bVi92BNw+/Asc78ADHwmt
+        FsqO13au4BUYUHPJUSgkaZKSLA1S4nHfy/xoljDPZ4lHM+FngMSizmWF0LJV
+        Yon7Hf2wUC1SvHbGx7fF3gHdYxIP+P2xXWB+6AgHllCCdCphXNBaGL1nwT32
+        WJaQC42LUW1/PaU+cZoqHzo+sBIaue/kYId2x54GLyhjHp0Fm4mdyULorVdo
+        /7ChTomAtW3eNAKdMOK1cZsC0JaJrWB1JDREjMG5UeLT0McvD0/A5wRSj3nh
+        jHoi4ox7ERDOgzDJtsn/kcYQoMpbbBvVn4Ba8no1aGv5Fk/o7CS8K7qCckAc
+        cDfYEBc6VbIxsh6CRHdlBUpauSitvvtsmZU0Rijr16cvfXdlPWpN/RS1FL6O
+        9+9vry9uzj723eXN1fnth+/I6Luz/t0pYvvu9OfXH333re/OsZ5UCTCCz8Gg
+        DCOUTUkwJdEzSmMaxcR/jpimTQqZ2rFRrcCMGn6U8d8ch1713lzgj1eKymB8
+        ZBySYpwqHIR/z9RuTLZTMY7Z5uVvnUEbA5cDAAA=
+    http_version: !!null 
+  recorded_at: Tue, 12 Jun 2012 13:28:55 GMT
 recorded_with: VCR 2.2.0
