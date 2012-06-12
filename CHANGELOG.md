@@ -1,3 +1,14 @@
+0.6.0 (June 12, 2012)
+
+* Add search api with full test coverage.
+* Add repository contents api with full test coverage.
+* Change required keys validation and refactor all method calls.
+* Change parameter procesing in users api, add feature tests.
+* Change parameter processing in issues api, add feature tests.
+* Add cache and location to response headers.
+* Add unknown value error type and changed parameters values validation.
+* Add redirects following.
+
 0.5.4 (June 9, 2012)
 
 * Update teams api documentation.
