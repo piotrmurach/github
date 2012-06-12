@@ -87,7 +87,7 @@ module Github
       _normalize_params_keys(params)
       _filter_params_keys(VALID_ISSUE_PARAM_NAMES, params)
       # _merge_mime_type(:issue, params)
-      _validate_params_values(VALID_ISSUE_PARAM_VALUES, params)
+      assert_valid_values(VALID_ISSUE_PARAM_VALUES, params)
 
       response = get_request("/issues", params)
       return response unless block_given?
@@ -132,7 +132,7 @@ module Github
       _normalize_params_keys(params)
       _filter_params_keys(VALID_ISSUE_PARAM_NAMES, params)
       # _merge_mime_type(:issue, params)
-      _validate_params_values(VALID_ISSUE_PARAM_VALUES, params)
+      assert_valid_values(VALID_ISSUE_PARAM_VALUES, params)
 
       response = get_request("/repos/#{user}/#{repo}/issues", params)
       return response unless block_given?

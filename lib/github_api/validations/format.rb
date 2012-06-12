@@ -7,7 +7,7 @@ module Github
       # Ensures that value for a given key is of the correct form whether
       # matching regular expression or set of predefined values.
       #
-      def _validate_params_values(permitted, params)
+      def assert_valid_values(permitted, params)
         params.each do |k, v|
           next unless permitted.keys.include?(k)
           if permitted[k].is_a?(Array) && !permitted[k].include?(params[k])

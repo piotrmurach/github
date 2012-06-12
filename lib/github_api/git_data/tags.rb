@@ -77,7 +77,7 @@ module Github
       _normalize_params_keys(params)
 
       _filter_params_keys(VALID_TAG_PARAM_NAMES, params)
-      _validate_params_values(VALID_TAG_PARAM_VALUES, params)
+      assert_valid_values(VALID_TAG_PARAM_VALUES, params)
 
       post_request("/repos/#{user}/#{repo}/git/tags", params)
     end

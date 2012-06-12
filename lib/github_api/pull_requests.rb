@@ -50,7 +50,7 @@ module Github
       _normalize_params_keys(params)
       _filter_params_keys(VALID_REQUEST_PARAM_NAMES, params)
       # _merge_mime_type(:pull_request, params)
-      _validate_params_values(VALID_REQUEST_PARAM_VALUES, params)
+      assert_valid_values(VALID_REQUEST_PARAM_VALUES, params)
 
       response = get_request("/repos/#{user}/#{repo}/pulls", params)
       return response unless block_given?
@@ -141,7 +141,7 @@ module Github
       _normalize_params_keys(params)
       _filter_params_keys(VALID_REQUEST_PARAM_NAMES, params)
       # _merge_mime_type(:pull_request, params)
-      _validate_params_values(VALID_REQUEST_PARAM_VALUES, params)
+      assert_valid_values(VALID_REQUEST_PARAM_VALUES, params)
 
       patch_request("/repos/#{user}/#{repo}/pulls/#{request_id}", params)
     end

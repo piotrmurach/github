@@ -44,7 +44,7 @@ module Github
 
       _normalize_params_keys(params)
       _filter_params_keys(VALID_MILESTONE_OPTIONS.keys, params)
-      _validate_params_values(VALID_MILESTONE_OPTIONS, params)
+      assert_valid_values(VALID_MILESTONE_OPTIONS, params)
 
       response = get_request("/repos/#{user}/#{repo}/milestones", params)
       return response unless block_given?

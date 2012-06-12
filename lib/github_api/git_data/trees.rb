@@ -92,7 +92,7 @@ module Github
       assert_required_keys(%w[ tree ], params)
 
       _filter_params_keys(VALID_TREE_PARAM_NAMES, params['tree'])
-      _validate_params_values(VALID_TREE_PARAM_VALUES, params['tree'])
+      assert_valid_values(VALID_TREE_PARAM_VALUES, params['tree'])
 
       post_request("/repos/#{user}/#{repo}/git/trees", params)
     end
