@@ -38,7 +38,7 @@ module Github
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
       normalize! params
-      _filter_params_keys(%w[ org ], params)
+      filter! %w[ org ], params
 
       post_request("/repos/#{user}/#{repo}/forks", params)
     end

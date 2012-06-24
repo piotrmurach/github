@@ -61,7 +61,7 @@ module Github
       _validate_user_repo_params(user, repo) unless user? && repo?
 
       normalize! params
-      _filter_params_keys(VALID_LABEL_INPUTS, params)
+      filter! VALID_LABEL_INPUTS, params
       assert_required_keys(VALID_LABEL_INPUTS, params)
 
       post_request("/repos/#{user}/#{repo}/labels", params)
@@ -84,7 +84,7 @@ module Github
       _validate_presence_of label_id
 
       normalize! params
-      _filter_params_keys(VALID_LABEL_INPUTS, params)
+      filter! VALID_LABEL_INPUTS, params
       assert_required_keys(VALID_LABEL_INPUTS, params)
 
       patch_request("/repos/#{user}/#{repo}/labels/#{label_id}", params)

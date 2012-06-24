@@ -92,7 +92,7 @@ module Github
     def edit(org_name, params={})
       _validate_presence_of org_name
       normalize! params
-      _filter_params_keys(VALID_ORG_PARAM_NAMES, params)
+      filter! VALID_ORG_PARAM_NAMES, params
 
       patch_request("/orgs/#{org_name}", params)
     end

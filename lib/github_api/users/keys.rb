@@ -46,7 +46,7 @@ module Github
     #
     def create(params={})
       normalize! params
-      _filter_params_keys(VALID_KEY_PARAM_NAMES, params)
+      filter! VALID_KEY_PARAM_NAMES, params
       post_request("/user/keys", params)
     end
 
@@ -64,7 +64,7 @@ module Github
     def update(key_id, params={})
       _validate_presence_of key_id
       normalize! params
-      _filter_params_keys(VALID_KEY_PARAM_NAMES, params)
+      filter! VALID_KEY_PARAM_NAMES, params
       patch_request("/user/keys/#{key_id}", params)
     end
 

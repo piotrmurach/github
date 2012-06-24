@@ -54,7 +54,7 @@ module Github
     def create(gist_id, params={})
       normalize! params
       # _merge_mime_type(:gist_comment, params)
-      _filter_params_keys(ALLOWED_GIST_COMMENT_INPUTS, params)
+      filter! ALLOWED_GIST_COMMENT_INPUTS, params
       assert_required_keys(REQUIRED_GIST_COMMENT_INPUTS, params)
 
       post_request("/gists/#{gist_id}/comments", params)
@@ -70,7 +70,7 @@ module Github
       normalize! params
       _validate_presence_of(comment_id)
       # _merge_mime_type(:gist_comment, params)
-      _filter_params_keys(ALLOWED_GIST_COMMENT_INPUTS, params)
+      filter! ALLOWED_GIST_COMMENT_INPUTS, params
       assert_required_keys(REQUIRED_GIST_COMMENT_INPUTS, params)
 
       patch_request("/gists/comments/#{comment_id}", params)

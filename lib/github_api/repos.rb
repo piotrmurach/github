@@ -141,7 +141,7 @@ module Github
     def create(*args)
       params = args.extract_options!
       normalize! params
-      _filter_params_keys(VALID_REPO_OPTIONS + %w[ org ], params)
+      filter! VALID_REPO_OPTIONS + %w[ org ], params
       assert_required_keys(%w[ name ], params)
 
       # Requires authenticated user
@@ -167,7 +167,7 @@ module Github
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
       normalize! params
-      _filter_params_keys(['anon'], params)
+      filter! ['anon'], params
 
       response = get_request("/repos/#{user}/#{repo}/contributors", params)
       return response unless block_given?
@@ -201,7 +201,7 @@ module Github
       _validate_user_repo_params(user, repo) unless user? && repo?
 
       normalize! params
-      _filter_params_keys(VALID_REPO_OPTIONS, params)
+      filter! VALID_REPO_OPTIONS, params
       assert_required_keys(%w[ name ], params)
 
       patch_request("/repos/#{user}/#{repo}", DEFAULT_REPO_OPTIONS.merge(params))
@@ -265,7 +265,7 @@ module Github
       params = args.extract_options!
       normalize! params
       _merge_user_into_params!(params) unless params.has_key?('user')
-      _filter_params_keys(%w[ org user type ], params)
+      filter! %w[ org user type ], params
 
       response = if (user_name = params.delete("user"))
         get_request("/users/#{user_name}/repos", params)

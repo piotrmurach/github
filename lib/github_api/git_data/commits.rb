@@ -77,7 +77,7 @@ module Github
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
       normalize! params
-      _filter_params_keys(VALID_COMMIT_PARAM_NAMES, params)
+      filter! VALID_COMMIT_PARAM_NAMES, params
       assert_required_keys(REQUIRED_COMMIT_PARAMS, params)
 
       post_request("/repos/#{user}/#{repo}/git/commits", params)

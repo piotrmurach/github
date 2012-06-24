@@ -76,7 +76,7 @@ module Github
       _validate_user_repo_params(user, repo) unless user? && repo?
       normalize! params
 
-      _filter_params_keys(VALID_TAG_PARAM_NAMES, params)
+      filter! VALID_TAG_PARAM_NAMES, params
       assert_valid_values(VALID_TAG_PARAM_VALUES, params)
 
       post_request("/repos/#{user}/#{repo}/git/tags", params)

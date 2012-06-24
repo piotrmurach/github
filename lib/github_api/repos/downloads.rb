@@ -86,7 +86,7 @@ module Github
       _validate_user_repo_params(user, repo) unless user? && repo?
 
       normalize! params
-      _filter_params_keys(VALID_DOWNLOAD_PARAM_NAMES, params)
+      filter! VALID_DOWNLOAD_PARAM_NAMES, params
       assert_required_keys(REQUIRED_PARAMS, params)
 
       post_request("/repos/#{user}/#{repo}/downloads", params)

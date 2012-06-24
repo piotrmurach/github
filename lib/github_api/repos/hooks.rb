@@ -91,7 +91,7 @@ module Github
       _validate_user_repo_params(user, repo) unless user? && repo?
 
       normalize! params
-      _filter_params_keys(VALID_HOOK_PARAM_NAMES, params, :recursive => false)
+      filter! VALID_HOOK_PARAM_NAMES, params, :recursive => false
       assert_required_keys(REQUIRED_PARAMS, params)
 
       post_request("/repos/#{user}/#{repo}/hooks", params)
@@ -124,7 +124,7 @@ module Github
       _validate_presence_of hook_id
 
       normalize! params
-      _filter_params_keys(VALID_HOOK_PARAM_NAMES, params, :recursive => false)
+      filter! VALID_HOOK_PARAM_NAMES, params, :recursive => false
       assert_required_keys(REQUIRED_PARAMS, params)
 
       patch_request("/repos/#{user}/#{repo}/hooks/#{hook_id}", params)

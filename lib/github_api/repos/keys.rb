@@ -55,7 +55,7 @@ module Github
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
       normalize! params
-      _filter_params_keys(VALID_KEY_PARAM_NAMES, params)
+      filter! VALID_KEY_PARAM_NAMES, params
       assert_required_keys(VALID_KEY_PARAM_NAMES, params)
 
       post_request("/repos/#{user}/#{repo}/keys", params)
@@ -79,7 +79,7 @@ module Github
       _validate_presence_of key_id
 
       normalize! params
-      _filter_params_keys(VALID_KEY_PARAM_NAMES, params)
+      filter! VALID_KEY_PARAM_NAMES, params
 
       patch_request("/repos/#{user}/#{repo}/keys/#{key_id}", params)
     end

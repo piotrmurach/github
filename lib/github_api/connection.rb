@@ -45,7 +45,7 @@ module Github
 
     def connection(options = {}) # :nodoc:
 
-      merged_options = _filter_params_keys(ALLOWED_OPTIONS, default_options.merge(options))
+      merged_options = filter! ALLOWED_OPTIONS, default_options.merge(options)
       clear_cache unless options.empty?
 
       @connection ||= begin

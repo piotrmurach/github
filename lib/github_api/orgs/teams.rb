@@ -64,7 +64,7 @@ module Github
     def create(org_name, params={})
       _validate_presence_of org_name
       normalize! params
-      _filter_params_keys(VALID_TEAM_PARAM_NAMES, params)
+      filter! VALID_TEAM_PARAM_NAMES, params
       assert_valid_values(VALID_TEAM_PARAM_VALUES, params)
       assert_required_keys(%w[ name ], params)
 
@@ -90,8 +90,7 @@ module Github
     def edit(team_name, params={})
       _validate_presence_of team_name
       normalize! params
-
-      _filter_params_keys(VALID_TEAM_PARAM_NAMES, params)
+      filter! VALID_TEAM_PARAM_NAMES, params
       assert_valid_values(VALID_TEAM_PARAM_VALUES, params)
       assert_required_keys(%w[ name ], params)
 

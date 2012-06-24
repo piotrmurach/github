@@ -61,7 +61,7 @@ module Github
     def create(params={})
       _check_if_authenticated
       normalize! params
-      _filter_params_keys(VALID_AUTH_PARAM_NAMES, params)
+      filter! VALID_AUTH_PARAM_NAMES, params
 
       post_request("/authorizations", params)
     end
@@ -84,7 +84,7 @@ module Github
       _validate_presence_of(authorization_id)
 
       normalize! params
-      _filter_params_keys(VALID_AUTH_PARAM_NAMES, params)
+      filter! VALID_AUTH_PARAM_NAMES, params
 
       patch_request("/authorizations/#{authorization_id}", params)
     end
@@ -99,7 +99,7 @@ module Github
       _validate_presence_of(authorization_id)
 
       normalize! params
-      _filter_params_keys(VALID_AUTH_PARAM_NAMES, params)
+      filter! VALID_AUTH_PARAM_NAMES, params
 
       delete_request("/authorizations/#{authorization_id}", params)
     end

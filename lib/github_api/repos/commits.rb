@@ -52,7 +52,7 @@ module Github
         _validate_presence_of sha
 
         normalize! params
-        _filter_params_keys(REQUIRED_COMMENT_PARAMS, params)
+        filter! REQUIRED_COMMENT_PARAMS, params
 
         assert_required_keys(REQUIRED_COMMENT_PARAMS, params)
 
@@ -89,7 +89,7 @@ module Github
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
         normalize! params
-        _filter_params_keys(%w[ sha path], params)
+        filter! %w[ sha path], params
 
         response = get_request("/repos/#{user}/#{repo}/commits", params)
         return response unless block_given?

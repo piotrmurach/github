@@ -43,7 +43,7 @@ module Github
       _validate_user_repo_params(user, repo) unless user? && repo?
 
       normalize! params
-      _filter_params_keys(VALID_MILESTONE_OPTIONS.keys, params)
+      filter! VALID_MILESTONE_OPTIONS.keys, params
       assert_valid_values(VALID_MILESTONE_OPTIONS, params)
 
       response = get_request("/repos/#{user}/#{repo}/milestones", params)
@@ -88,7 +88,7 @@ module Github
       _validate_user_repo_params(user, repo) unless user? && repo?
 
       normalize! params
-      _filter_params_keys(VALID_MILESTONE_INPUTS, params)
+      filter! VALID_MILESTONE_INPUTS, params
       assert_required_keys(%w[ title ], params)
 
       post_request("/repos/#{user}/#{repo}/milestones", params)
@@ -116,7 +116,7 @@ module Github
       _validate_presence_of milestone_id
 
       normalize! params
-      _filter_params_keys(VALID_MILESTONE_INPUTS, params)
+      filter! VALID_MILESTONE_INPUTS, params
       assert_required_keys(%w[ title ], params)
 
       patch_request("/repos/#{user}/#{repo}/milestones/#{milestone_id}", params)

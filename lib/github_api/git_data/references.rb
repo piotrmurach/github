@@ -85,7 +85,7 @@ module Github
       _validate_user_repo_params(user, repo) unless user? && repo?
 
       normalize! params
-      _filter_params_keys VALID_REF_PARAM_NAMES, params
+      filter! VALID_REF_PARAM_NAMES, params
       _validate_presence_of params['ref']
       _validate_reference params['ref']
       assert_required_keys(%w[ ref sha ], params)
@@ -112,7 +112,7 @@ module Github
       _validate_presence_of ref
       _validate_reference ref
       normalize! params
-      _filter_params_keys(VALID_REF_PARAM_NAMES, params)
+      filter! VALID_REF_PARAM_NAMES, params
       assert_required_keys(%w[ sha ], params)
 
       patch_request("/repos/#{user}/#{repo}/git/refs/#{ref}", params)

@@ -88,7 +88,7 @@ module Github
     def update(*args)
       params = args.extract_options!
       normalize! params
-      _filter_params_keys(VALID_USER_PARAMS_NAMES, params)
+      filter! VALID_USER_PARAMS_NAMES, params
       patch_request("/user", params)
     end
 

@@ -85,7 +85,7 @@ module Github
 
       normalize! params
       # _merge_mime_type(:pull_comment, params)
-      _filter_params_keys(VALID_REQUEST_COM_PARAM_NAMES, params)
+      filter! VALID_REQUEST_COM_PARAM_NAMES, params
       # _validate_reply_to(params)
 
       post_request("/repos/#{user}/#{repo}/pulls/#{request_id}/comments", params)
@@ -108,7 +108,7 @@ module Github
 
       normalize! params
       # _merge_mime_type(:pull_comment, params)
-      _filter_params_keys(VALID_REQUEST_COM_PARAM_NAMES, params)
+      filter! VALID_REQUEST_COM_PARAM_NAMES, params
 
       patch_request("/repos/#{user}/#{repo}/pulls/comments/#{comment_id}", params)
     end
