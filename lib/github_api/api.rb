@@ -1,4 +1,4 @@
-# encoding: utf-8
+# -*- encoding: utf-8 -*-
 
 require 'github_api/configuration'
 require 'github_api/connection'
@@ -17,9 +17,11 @@ module Github
     include MimeType
     include Connection
     include Request
-    # TODO Validation & Filter will be optional
+
+    # TODO consider these optional in a stack
     include Validations
-    include Filter
+    include ParameterFilter
+    include Normalizer
 
     attr_reader *Configuration::VALID_OPTIONS_KEYS
     attr_accessor *VALID_API_KEYS

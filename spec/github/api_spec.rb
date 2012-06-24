@@ -52,7 +52,7 @@ describe Github::API do
     end
 
     it "should stringify all the keys inside nested hash" do
-      actual = api.send(:_normalize_params_keys, @params)
+      actual = api.normalize! @params
       expected = { 'a' => { 'b'=> { 'c' => 1 }, 'd' => [ 'a', { 'e'=> 2 }] } }
       actual.should be_eql expected
     end
