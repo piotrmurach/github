@@ -1,3 +1,11 @@
+0.6.1 (June 24, 2012)
+
+* Add request parameters normalizer and update code references.
+* Refactor Filter into ParameterFilter and update code references.
+* Drop oauth2 dependency version requirement and update faraday.
+* Add codeclimate integration in gem documentation.
+* Add rubinius & jruby to Travis.
+
 0.6.0 (June 12, 2012)
 
 * Add search api with full test coverage.
