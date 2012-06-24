@@ -11,6 +11,25 @@ describe Github::ParameterFilter do
   }
   let(:hash) {  { :a => { :b => { :c => 1 } } }  }
 
+  context '#filter!' do
+    it 'removes unwanted keys from hash' do
+      github.repos.filter!([:a], hash)
+      hash.all_keys.should     include :a
+      hash.all_keys.should_not include :b
+      hash.all_keys.should_not include :c
+    end
+
+    it 'recursively filters inputs tree' do
+      github.repos.filter!([:a, :b], hash)
+      hash.all_keys.should_not include :c
+    end
+
+    it 'filters inputs tree only on top level' do
+      github.repos.filter!([:a, :b], hash, :recursive => false)
+      hash.all_keys.should include :c
+    end
+  end
+
 #   context '#process_params' do
 # 
 #     it 'correctly yields current api instance' do
@@ -48,35 +67,5 @@ describe Github::ParameterFilter do
 #       hash.all_keys.should_not include :b
 #     end
 #   end
-# 
-#   context '#_normalize_params_keys' do
-#     it 'converts hash keys to string' do
-#       ['a', 'b', 'c'].each do |key|
-#         github.repos._normalize_params_keys(hash).all_keys.should include key
-#       end
-#       [:a, :b, :c].each do |key|
-#         github.repos._normalize_params_keys(hash).all_keys.should_not include key
-#       end
-#     end
-#   end
-
-  context '#_filter_params_keys' do
-    it 'removes unwanted keys from hash' do
-      github.repos._filter_params_keys([:a], hash)
-      hash.all_keys.should     include :a
-      hash.all_keys.should_not include :b
-      hash.all_keys.should_not include :c
-    end
-
-    it 'recursively filters inputs tree' do
-      github.repos._filter_params_keys([:a, :b], hash)
-      hash.all_keys.should_not include :c
-    end
-
-    it 'filters inputs tree only on top level' do
-      github.repos._filter_params_keys([:a, :b], hash, :recursive => false)
-      hash.all_keys.should include :c
-    end
-  end
 
 end # Github::ParameterFilter

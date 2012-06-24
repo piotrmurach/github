@@ -46,7 +46,7 @@ describe Github::API do
     end
   end
 
-  context '_normalize_params_keys' do
+  context 'normalize!' do
     before do
       @params = { 'a' => { :b => { 'c' => 1 }, 'd' => [ 'a', { :e => 2 }] } }
     end
@@ -58,11 +58,11 @@ describe Github::API do
     end
   end
 
-  context '_filter_params_key' do
+  context 'filter!' do
     it "should remove non valid param keys" do
       valid = ['a', 'b', 'e']
       hash = {'a' => 1, 'b' => 3, 'c' => 2, 'd'=> 4, 'e' => 5 }
-      actual = api.send(:_filter_params_keys, valid, hash)
+      actual = api.filter! valid, hash
       expected = {'a' => 1, 'b' => 3, 'e' => 5 }
       actual.should be_eql expected
     end
