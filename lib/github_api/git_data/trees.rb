@@ -43,7 +43,7 @@ module Github
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of sha
-      _normalize_params_keys(params)
+      normalize! params
 
       response = if params['recursive']
         params['recursive'] = 1
@@ -88,7 +88,7 @@ module Github
     def create(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
-      _normalize_params_keys(params)
+      normalize! params
       assert_required_keys(%w[ tree ], params)
 
       _filter_params_keys(VALID_TREE_PARAM_NAMES, params['tree'])

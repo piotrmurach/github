@@ -30,7 +30,7 @@ module Github
     def list(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
-      _normalize_params_keys(params)
+      normalize! params
 
       response = if params['ref']
         ref = params.delete('ref')
@@ -61,7 +61,7 @@ module Github
 
       _validate_presence_of ref
       _validate_reference ref
-      _normalize_params_keys params
+      normalize! params
 
       get_request("/repos/#{user}/#{repo}/git/refs/#{ref}", params)
     end
@@ -84,7 +84,7 @@ module Github
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
 
-      _normalize_params_keys params
+      normalize! params
       _filter_params_keys VALID_REF_PARAM_NAMES, params
       _validate_presence_of params['ref']
       _validate_reference params['ref']
@@ -111,7 +111,7 @@ module Github
 
       _validate_presence_of ref
       _validate_reference ref
-      _normalize_params_keys(params)
+      normalize! params
       _filter_params_keys(VALID_REF_PARAM_NAMES, params)
       assert_required_keys(%w[ sha ], params)
 
@@ -128,7 +128,7 @@ module Github
     def delete(user_name, repo_name, ref, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
-      _normalize_params_keys params
+      normalize! params
       _validate_presence_of ref
 
       delete_request("/repos/#{user}/#{repo}/git/refs/#{ref}", params)

@@ -19,7 +19,7 @@ module Github
     #
     def list(org_name, params={})
       _validate_presence_of org_name
-      _normalize_params_keys(params)
+      normalize! params
 
       response = get_request("/orgs/#{org_name}/teams", params)
       return response unless block_given?
@@ -35,7 +35,7 @@ module Github
     #
     def get(team_name, params={})
       _validate_presence_of team_name
-      _normalize_params_keys(params)
+      normalize! params
 
       get_request("/teams/#{team_name}", params)
     end
@@ -63,7 +63,7 @@ module Github
     #
     def create(org_name, params={})
       _validate_presence_of org_name
-      _normalize_params_keys(params)
+      normalize! params
       _filter_params_keys(VALID_TEAM_PARAM_NAMES, params)
       assert_valid_values(VALID_TEAM_PARAM_VALUES, params)
       assert_required_keys(%w[ name ], params)
@@ -89,7 +89,7 @@ module Github
     #
     def edit(team_name, params={})
       _validate_presence_of team_name
-      _normalize_params_keys(params)
+      normalize! params
 
       _filter_params_keys(VALID_TEAM_PARAM_NAMES, params)
       assert_valid_values(VALID_TEAM_PARAM_VALUES, params)
@@ -107,7 +107,7 @@ module Github
     #
     def delete(team_name, params={})
       _validate_presence_of team_name
-      _normalize_params_keys(params)
+      normalize! params
       delete_request("/teams/#{team_name}", params)
     end
     alias :remove :delete
@@ -122,7 +122,7 @@ module Github
     #
     def list_members(team_name, params={})
       _validate_presence_of team_name
-      _normalize_params_keys(params)
+      normalize! params
 
       response = get_request("/teams/#{team_name}/members", params)
       return response unless block_given?
@@ -138,7 +138,7 @@ module Github
     #
     def team_member?(team_name, member_name, params={})
       _validate_presence_of team_name, member_name
-      _normalize_params_keys(params)
+      normalize! params
       get_request("/teams/#{team_name}/members/#{member_name}", params)
       true
     rescue Github::Error::NotFound
@@ -154,7 +154,7 @@ module Github
     #
     def add_member(team_name, member_name, params={})
       _validate_presence_of team_name, member_name
-      _normalize_params_keys(params)
+      normalize! params
       put_request("/teams/#{team_name}/members/#{member_name}", params)
     end
     alias :add_team_member :add_member
@@ -171,7 +171,7 @@ module Github
     #
     def remove_member(team_name, member_name, params={})
       _validate_presence_of team_name, member_name
-      _normalize_params_keys(params)
+      normalize! params
       delete_request("/teams/#{team_name}/members/#{member_name}", params)
     end
     alias :remove_team_member :remove_member
@@ -184,7 +184,7 @@ module Github
     #
     def list_repos(team_name, params={})
       _validate_presence_of team_name
-      _normalize_params_keys(params)
+      normalize! params
 
       response = get_request("/teams/#{team_name}/repos", params)
       return response unless block_given?
@@ -200,7 +200,7 @@ module Github
     #
     def team_repo?(team_name, user_name, repo_name, params={})
       _validate_presence_of team_name, user_name, repo_name
-      _normalize_params_keys(params)
+      normalize! params
       get_request("/teams/#{team_name}/repos/#{user_name}/#{repo_name}", params)
       true
     rescue Github::Error::NotFound
@@ -221,7 +221,7 @@ module Github
     #
     def add_repo(team_name, user_name, repo_name, params={})
       _validate_presence_of team_name, user_name, repo_name
-      _normalize_params_keys(params)
+      normalize! params
       put_request("/teams/#{team_name}/repos/#{user_name}/#{repo_name}", params)
     end
     alias :add_repository :add_repo
@@ -238,7 +238,7 @@ module Github
     #
     def remove_repo(team_name, user_name, repo_name, params={})
       _validate_presence_of team_name, user_name, repo_name
-      _normalize_params_keys(params)
+      normalize! params
       delete_request("/teams/#{team_name}/repos/#{user_name}/#{repo_name}", params)
     end
     alias :remove_repository :remove_repo

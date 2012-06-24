@@ -26,7 +26,7 @@ module Github
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of issue_id
 
-      _normalize_params_keys(params)
+      normalize! params
       # _merge_mime_type(:issue_comment, params)
 
       response = get_request("/repos/#{user}/#{repo}/issues/#{issue_id}/comments", params)
@@ -46,7 +46,7 @@ module Github
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of comment_id
 
-      _normalize_params_keys(params)
+      normalize! params
       # _merge_mime_type(:issue_comment, params)
 
       get_request("/repos/#{user}/#{repo}/issues/comments/#{comment_id}", params)
@@ -68,7 +68,7 @@ module Github
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of issue_id
 
-      _normalize_params_keys(params)
+      normalize! params
       # _merge_mime_type(:issue_comment, params)
       _filter_params_keys(VALID_ISSUE_COMMENT_PARAM_NAME, params)
       assert_required_keys(%w[ body ], params)
@@ -91,7 +91,7 @@ module Github
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of comment_id
 
-      _normalize_params_keys(params)
+      normalize! params
       # _merge_mime_type(:issue_comment, params)
       _filter_params_keys(VALID_ISSUE_COMMENT_PARAM_NAME, params)
       assert_required_keys(%w[ body ], params)
@@ -110,7 +110,7 @@ module Github
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of comment_id
 
-      _normalize_params_keys(params)
+      normalize! params
       # _merge_mime_type(:issue_comment, params)
 
       delete_request("/repos/#{user}/#{repo}/issues/comments/#{comment_id}", params)

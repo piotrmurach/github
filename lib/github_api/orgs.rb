@@ -44,7 +44,7 @@ module Github
     #
     def list(*args)
       params = args.extract_options!
-      _normalize_params_keys(params)
+      normalize! params
 
       response = if (user_name = params.delete("user"))
         get_request("/users/#{user_name}/orgs", params)
@@ -65,6 +65,7 @@ module Github
     #
     def get(org_name, params={})
       _validate_presence_of org_name
+      normalize! params
       get_request("/orgs/#{org_name}", params)
     end
     alias :find :get
@@ -90,7 +91,7 @@ module Github
     #
     def edit(org_name, params={})
       _validate_presence_of org_name
-      _normalize_params_keys(params)
+      normalize! params
       _filter_params_keys(VALID_ORG_PARAM_NAMES, params)
 
       patch_request("/orgs/#{org_name}", params)

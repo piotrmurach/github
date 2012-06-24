@@ -13,7 +13,7 @@ module Github
     #  github.repos.contents.readme 'user-name', 'repo-name'
     #
     def readme(user_name, repo_name, params={})
-      _normalize_params_keys(params)
+      normalize! params
 
       get_request("/repos/#{user_name}/#{repo_name}/readme", params)
     end
@@ -27,7 +27,7 @@ module Github
     #  github.repos.contents.get 'user-name', 'repo-name', 'path'
     #
     def get(user_name, repo_name, path, params={})
-      _normalize_params_keys(params)
+      normalize! params
 
       get_request("/repos/#{user_name}/#{repo_name}/contents/#{path}", params)
     end
@@ -53,7 +53,7 @@ module Github
     #    "ref" => "master"
     #
     def archive(user_name, repo_name, params={})
-      _normalize_params_keys(params)
+      normalize! params
       archive_format = params.delete('archive_format') || 'zipball'
       ref = params.delete('ref') || 'master'
 

@@ -42,7 +42,7 @@ module Github
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
 
-      _normalize_params_keys(params)
+      normalize! params
       _filter_params_keys(VALID_MILESTONE_OPTIONS.keys, params)
       assert_valid_values(VALID_MILESTONE_OPTIONS, params)
 
@@ -62,7 +62,7 @@ module Github
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of milestone_id
-      _normalize_params_keys(params)
+      normalize! params
 
       get_request("/repos/#{user}/#{repo}/milestones/#{milestone_id}", params)
     end
@@ -87,7 +87,7 @@ module Github
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
 
-      _normalize_params_keys(params)
+      normalize! params
       _filter_params_keys(VALID_MILESTONE_INPUTS, params)
       assert_required_keys(%w[ title ], params)
 
@@ -115,7 +115,7 @@ module Github
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of milestone_id
 
-      _normalize_params_keys(params)
+      normalize! params
       _filter_params_keys(VALID_MILESTONE_INPUTS, params)
       assert_required_keys(%w[ title ], params)
 
@@ -132,7 +132,7 @@ module Github
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of milestone_id
-      _normalize_params_keys(params)
+      normalize! params
 
       delete_request("/repos/#{user}/#{repo}/milestones/#{milestone_id}", params)
     end

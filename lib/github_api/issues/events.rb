@@ -23,7 +23,7 @@ module Github
     def list(user_name, repo_name, issue_id=nil, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
-      _normalize_params_keys(params)
+      normalize! params
 
       response = if issue_id
         get_request("/repos/#{user}/#{repo}/issues/#{issue_id}/events", params)
@@ -45,7 +45,7 @@ module Github
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of event_id
-      _normalize_params_keys(params)
+      normalize! params
 
       get_request("/repos/#{user}/#{repo}/issues/events/#{event_id}")
     end

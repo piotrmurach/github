@@ -84,7 +84,7 @@ module Github
     #
     def list(*args)
       params = args.extract_options!
-      _normalize_params_keys(params)
+      normalize! params
       _filter_params_keys(VALID_ISSUE_PARAM_NAMES, params)
       # _merge_mime_type(:issue, params)
       assert_valid_values(VALID_ISSUE_PARAM_VALUES, params)
@@ -129,7 +129,7 @@ module Github
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
 
-      _normalize_params_keys(params)
+      normalize! params
       _filter_params_keys(VALID_ISSUE_PARAM_NAMES, params)
       # _merge_mime_type(:issue, params)
       assert_valid_values(VALID_ISSUE_PARAM_VALUES, params)
@@ -151,7 +151,7 @@ module Github
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of issue_id
 
-      _normalize_params_keys(params)
+      normalize! params
       # _merge_mime_type(:issue, params)
 
       get_request("/repos/#{user}/#{repo}/issues/#{issue_id}", params)
@@ -182,7 +182,7 @@ module Github
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
 
-      _normalize_params_keys(params)
+      normalize! params
       # _merge_mime_type(:issue, params)
       _filter_params_keys(VALID_ISSUE_PARAM_NAMES, params)
       assert_required_keys(%w[ title ], params)
@@ -217,7 +217,7 @@ module Github
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of issue_id
 
-      _normalize_params_keys(params)
+      normalize! params
       # _merge_mime_type(:issue, params)
       _filter_params_keys(VALID_ISSUE_PARAM_NAMES, params)
 

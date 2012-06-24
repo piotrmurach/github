@@ -23,7 +23,7 @@ module Github
       #
       def compare(user_name, repo_name, base, head, params={})
         _validate_presence_of base, head
-        _normalize_params_keys(params)
+        normalize! params
 
         get_request("/repos/#{user_name}/#{repo_name}/compare/#{base}...#{head}", params)
       end
@@ -51,7 +51,7 @@ module Github
         _validate_user_repo_params(user, repo) unless user? && repo?
         _validate_presence_of sha
 
-        _normalize_params_keys(params)
+        normalize! params
         _filter_params_keys(REQUIRED_COMMENT_PARAMS, params)
 
         assert_required_keys(REQUIRED_COMMENT_PARAMS, params)
@@ -69,7 +69,7 @@ module Github
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
         _validate_presence_of comment_id
-        _normalize_params_keys(params)
+        normalize! params
 
         delete_request("/repos/#{user}/#{repo}/comments/#{comment_id}", params)
       end
@@ -88,7 +88,7 @@ module Github
       def list(user_name, repo_name, params={})
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
-        _normalize_params_keys(params)
+        normalize! params
         _filter_params_keys(%w[ sha path], params)
 
         response = get_request("/repos/#{user}/#{repo}/commits", params)
@@ -107,7 +107,7 @@ module Github
       def repo_comments(user_name, repo_name, params={})
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
-        _normalize_params_keys(params)
+        normalize! params
 
         response = get_request("/repos/#{user}/#{repo}/comments", params)
         return response unless block_given?
@@ -126,7 +126,7 @@ module Github
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
         _validate_presence_of sha
-        _normalize_params_keys(params)
+        normalize! params
 
         response = get_request("/repos/#{user}/#{repo}/commits/#{sha}/comments", params)
         return response unless block_given?
@@ -144,7 +144,7 @@ module Github
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
         _validate_presence_of sha
-        _normalize_params_keys(params)
+        normalize! params
 
         get_request("/repos/#{user}/#{repo}/commits/#{sha}", params)
       end
@@ -160,7 +160,7 @@ module Github
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
         _validate_presence_of comment_id
-        _normalize_params_keys(params)
+        normalize! params
 
         get_request("/repos/#{user}/#{repo}/comments/#{comment_id}", params)
       end
@@ -181,7 +181,7 @@ module Github
         _validate_user_repo_params(user, repo) unless user? && repo?
         _validate_presence_of comment_id
 
-        _normalize_params_keys(params)
+        normalize! params
         assert_required_keys(%w[ body ], params)
 
         patch_request("/repos/#{user}/#{repo}/comments/#{comment_id}", params)

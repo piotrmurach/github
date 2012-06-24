@@ -44,7 +44,7 @@ module Github
     def list(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
-      _normalize_params_keys(params)
+      normalize! params
 
       response = get_request("/repos/#{user}/#{repo}/hooks", params)
       return response unless block_given?
@@ -62,7 +62,7 @@ module Github
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of hook_id
-      _normalize_params_keys(params)
+      normalize! params
 
       get_request("/repos/#{user}/#{repo}/hooks/#{hook_id}", params)
     end
@@ -90,7 +90,7 @@ module Github
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
 
-      _normalize_params_keys(params)
+      normalize! params
       _filter_params_keys(VALID_HOOK_PARAM_NAMES, params, :recursive => false)
       assert_required_keys(REQUIRED_PARAMS, params)
 
@@ -123,7 +123,7 @@ module Github
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of hook_id
 
-      _normalize_params_keys(params)
+      normalize! params
       _filter_params_keys(VALID_HOOK_PARAM_NAMES, params, :recursive => false)
       assert_required_keys(REQUIRED_PARAMS, params)
 
@@ -142,7 +142,7 @@ module Github
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of hook_id
-      _normalize_params_keys(params)
+      normalize! params
 
       post_request("/repos/#{user}/#{repo}/hooks/#{hook_id}/test", params)
     end
@@ -157,7 +157,7 @@ module Github
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of hook_id
-      _normalize_params_keys(params)
+      normalize! params
 
       delete_request("/repos/#{user}/#{repo}/hooks/#{hook_id}", params)
     end

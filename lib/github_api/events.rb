@@ -16,7 +16,7 @@ module Github
     #  github.events.public { |event| ... }
     #
     def public(params={})
-      _normalize_params_keys(params)
+      normalize! params
 
       response = get_request("/events", params)
       return response unless block_given?
@@ -36,7 +36,7 @@ module Github
     def repository(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
-      _normalize_params_keys(params)
+      normalize! params
 
       response = get_request("/repos/#{user}/#{repo}/events", params)
       return response unless block_given?
@@ -57,7 +57,7 @@ module Github
     def issue(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
-      _normalize_params_keys(params)
+      normalize! params
 
       response = get_request("/repos/#{user}/#{repo}/issues/events", params)
       return response unless block_given?
@@ -77,7 +77,7 @@ module Github
     def network(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
-      _normalize_params_keys(params)
+      normalize! params
 
       response = get_request("/networks/#{user}/#{repo}/events", params)
       return response unless block_given?
@@ -97,7 +97,7 @@ module Github
     #
     def org(org_name, params={})
       _validate_presence_of org_name
-      _normalize_params_keys(params)
+      normalize! params
 
       response = get_request("/orgs/#{org_name}/events", params)
       return response unless block_given?
@@ -128,7 +128,7 @@ module Github
     #
     def received(user_name, params={})
       _validate_presence_of user_name
-      _normalize_params_keys(params)
+      normalize! params
 
       public_events = if params['public']
         params.delete('public')
@@ -161,7 +161,7 @@ module Github
     #
     def performed(user_name, params={})
       _validate_presence_of user_name
-      _normalize_params_keys(params)
+      normalize! params
 
       public_events = if params['public']
         params.delete('public')
@@ -187,7 +187,7 @@ module Github
     #
     def user_org(user_name, org_name, params={})
       _validate_presence_of user_name, org_name
-      _normalize_params_keys(params)
+      normalize! params
 
       response = get_request("/users/#{user_name}/events/orgs/#{org_name}", params)
       return response unless block_given?

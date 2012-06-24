@@ -54,7 +54,7 @@ module Github
     #
     def get(*args)
       params = args.extract_options!
-      _normalize_params_keys(params)
+      normalize! params
       if user_name = params.delete('user')
         get_request("/users/#{user_name}", params)
       else
@@ -87,7 +87,7 @@ module Github
     #
     def update(*args)
       params = args.extract_options!
-      _normalize_params_keys(params)
+      normalize! params
       _filter_params_keys(VALID_USER_PARAMS_NAMES, params)
       patch_request("/user", params)
     end

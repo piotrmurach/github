@@ -24,7 +24,7 @@ module Github
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of request_id
 
-      _normalize_params_keys(params)
+      normalize! params
       # _merge_mime_type(:pull_comment, params)
 
       response = get_request("/repos/#{user}/#{repo}/pulls/#{request_id}/comments", params)
@@ -43,7 +43,7 @@ module Github
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of comment_id
 
-      _normalize_params_keys(params)
+      normalize! params
       # _merge_mime_type(:pull_comment, params)
 
       get_request("/repos/#{user}/#{repo}/pulls/comments/#{comment_id}", params)
@@ -83,7 +83,7 @@ module Github
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of request_id
 
-      _normalize_params_keys(params)
+      normalize! params
       # _merge_mime_type(:pull_comment, params)
       _filter_params_keys(VALID_REQUEST_COM_PARAM_NAMES, params)
       # _validate_reply_to(params)
@@ -106,7 +106,7 @@ module Github
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of comment_id
 
-      _normalize_params_keys(params)
+      normalize! params
       # _merge_mime_type(:pull_comment, params)
       _filter_params_keys(VALID_REQUEST_COM_PARAM_NAMES, params)
 
@@ -124,7 +124,7 @@ module Github
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of comment_id
 
-      _normalize_params_keys(params)
+      normalize! params
       # _merge_mime_type(:pull_comment, params)
 
       delete_request("/repos/#{user}/#{repo}/pulls/comments/#{comment_id}", params)

@@ -20,7 +20,7 @@ module Github
     #  github.gists.comments.list 'gist-id'
     #
     def list(gist_id, params={})
-      _normalize_params_keys(params)
+      normalize! params
       _validate_presence_of(gist_id)
       # _merge_mime_type(:gist_comment, params)
 
@@ -37,7 +37,7 @@ module Github
     #  github.gists.comments.get 'comment-id'
     #
     def get(comment_id, params={})
-      _normalize_params_keys(params)
+      normalize! params
       _validate_presence_of(comment_id)
       # _merge_mime_type(:gist_comment, params)
 
@@ -52,7 +52,7 @@ module Github
     #  github.gists.comments.create 'gist-id'
     #
     def create(gist_id, params={})
-      _normalize_params_keys(params)
+      normalize! params
       # _merge_mime_type(:gist_comment, params)
       _filter_params_keys(ALLOWED_GIST_COMMENT_INPUTS, params)
       assert_required_keys(REQUIRED_GIST_COMMENT_INPUTS, params)
@@ -67,7 +67,7 @@ module Github
     #  github.gists.comments.edit 'comment-id'
     #
     def edit(comment_id, params={})
-      _normalize_params_keys(params)
+      normalize! params
       _validate_presence_of(comment_id)
       # _merge_mime_type(:gist_comment, params)
       _filter_params_keys(ALLOWED_GIST_COMMENT_INPUTS, params)
@@ -83,7 +83,7 @@ module Github
     #  github.gists.comments.delete 'comment-id'
     #
     def delete(comment_id, params={})
-      _normalize_params_keys(params)
+      normalize! params
       _validate_presence_of(comment_id)
       # _merge_mime_type(:gist_comment, params)
 

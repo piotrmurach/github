@@ -22,7 +22,7 @@ module Github
     #
     def issues(*args)
       params = args.extract_options!
-      normalize params
+      normalize! params
 
       required = ['owner', 'repo', 'state', 'keyword']
       assert_required_keys required, params
@@ -48,7 +48,7 @@ module Github
     #
     def repos(*args)
       params = args.extract_options!
-      normalize params
+      normalize! params
       assert_required_keys %w[ keyword ], params
 
       get_request("/legacy/repos/search/#{params.delete('keyword')}", params)
@@ -68,7 +68,7 @@ module Github
     #
     def users(*args)
       params = args.extract_options!
-      normalize params
+      normalize! params
       assert_required_keys %w[ keyword ], params
 
       get_request("/legacy/user/search/#{params.delete('keyword')}", params)
@@ -88,7 +88,7 @@ module Github
     #
     def email(*args)
       params = args.extract_options!
-      normalize params
+      normalize! params
       assert_required_keys %w[ email ], params
 
       get_request("/legacy/user/email/#{params.delete('email')}", params)

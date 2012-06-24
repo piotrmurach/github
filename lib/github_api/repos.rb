@@ -100,7 +100,7 @@ module Github
     def branches(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless (user? && repo?)
-      _normalize_params_keys(params)
+      normalize! params
 
       response = get_request("/repos/#{user}/#{repo}/branches", params)
       return response unless block_given?
@@ -140,7 +140,7 @@ module Github
     #
     def create(*args)
       params = args.extract_options!
-      _normalize_params_keys(params)
+      normalize! params
       _filter_params_keys(VALID_REPO_OPTIONS + %w[ org ], params)
       assert_required_keys(%w[ name ], params)
 
@@ -166,7 +166,7 @@ module Github
     def contributors(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
-      _normalize_params_keys(params)
+      normalize! params
       _filter_params_keys(['anon'], params)
 
       response = get_request("/repos/#{user}/#{repo}/contributors", params)
@@ -200,7 +200,7 @@ module Github
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
 
-      _normalize_params_keys(params)
+      normalize! params
       _filter_params_keys(VALID_REPO_OPTIONS, params)
       assert_required_keys(%w[ name ], params)
 
@@ -216,7 +216,7 @@ module Github
     def get(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
-      _normalize_params_keys(params)
+      normalize! params
 
       get_request("/repos/#{user}/#{repo}", params)
     end
@@ -232,7 +232,7 @@ module Github
     def languages(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
-      _normalize_params_keys(params)
+      normalize! params
 
       response = get_request("/repos/#{user}/#{repo}/languages", params)
       return response unless block_given?
@@ -263,7 +263,7 @@ module Github
     #
     def list(*args)
       params = args.extract_options!
-      _normalize_params_keys(params)
+      normalize! params
       _merge_user_into_params!(params) unless params.has_key?('user')
       _filter_params_keys(%w[ org user type ], params)
 
@@ -290,7 +290,7 @@ module Github
     def tags(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
-      _normalize_params_keys(params)
+      normalize! params
 
       response = get_request("/repos/#{user}/#{repo}/tags", params)
       return response unless block_given?
@@ -310,7 +310,7 @@ module Github
     def teams(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
-      _normalize_params_keys(params)
+      normalize! params
 
       response = get_request("/repos/#{user}/#{repo}/teams", params)
       return response unless block_given?

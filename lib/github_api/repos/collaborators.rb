@@ -16,7 +16,7 @@ module Github
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of collaborator
-      _normalize_params_keys(params)
+      normalize! params
 
       put_request("/repos/#{user}/#{repo}/collaborators/#{collaborator}", params)
     end
@@ -32,7 +32,7 @@ module Github
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of collaborator
-      _normalize_params_keys(params)
+      normalize! params
 
       get_request("/repos/#{user}/#{repo}/collaborators/#{collaborator}", params)
       true
@@ -50,7 +50,7 @@ module Github
     def list(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless (user? && repo?)
-      _normalize_params_keys(params)
+      normalize! params
 
       response = get_request("/repos/#{user}/#{repo}/collaborators", params)
       return response unless block_given?
@@ -68,7 +68,7 @@ module Github
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of collaborator
-      _normalize_params_keys(params)
+      normalize! params
 
       delete_request("/repos/#{user}/#{repo}/collaborators/#{collaborator}", params)
     end

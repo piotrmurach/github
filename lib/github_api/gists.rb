@@ -38,7 +38,7 @@ module Github
     #  github.gists.list
     #
     def list(params={})
-      _normalize_params_keys(params)
+      normalize! params
 
       user = params.delete('user')
 
@@ -61,7 +61,7 @@ module Github
     #  github.gists.starred
     #
     def starred(params={})
-      _normalize_params_keys(params)
+      normalize! params
 
       response = get_request("/gists/starred", params)
       return response unless block_given?
@@ -75,7 +75,7 @@ module Github
     #  github.gists.get 'gist-id'
     #
     def get(gist_id, params={})
-      _normalize_params_keys(params)
+      normalize! params
       _validate_presence_of(gist_id)
 
       get_request("/gists/#{gist_id}", params)
@@ -104,7 +104,7 @@ module Github
     #    }
     #
     def create(params={})
-      _normalize_params_keys(params)
+      normalize! params
       assert_required_keys(REQUIRED_GIST_INPUTS, params)
 
       post_request("/gists", params)
@@ -140,7 +140,7 @@ module Github
     #
     def edit(gist_id, params={})
       _validate_presence_of(gist_id)
-      _normalize_params_keys(params)
+      normalize! params
 
       patch_request("/gists/#{gist_id}", params)
     end
@@ -153,7 +153,7 @@ module Github
     #
     def star(gist_id, params={})
       _validate_presence_of(gist_id)
-      _normalize_params_keys(params)
+      normalize! params
 
       put_request("/gists/#{gist_id}/star", params)
     end
@@ -166,7 +166,7 @@ module Github
     #
     def unstar(gist_id, params={})
       _validate_presence_of(gist_id)
-      _normalize_params_keys(params)
+      normalize! params
 
       delete_request("/gists/#{gist_id}/star", params)
     end
@@ -179,7 +179,7 @@ module Github
     #
     def starred?(gist_id, params={})
       _validate_presence_of(gist_id)
-      _normalize_params_keys(params)
+      normalize! params
 
       get_request("/gists/#{gist_id}/star", params)
       true
@@ -195,7 +195,7 @@ module Github
     #
     def fork(gist_id, params={})
       _validate_presence_of(gist_id)
-      _normalize_params_keys(params)
+      normalize! params
 
       post_request("/gists/#{gist_id}/fork", params)
     end
@@ -208,7 +208,7 @@ module Github
     #
     def delete(gist_id, params={})
       _validate_presence_of(gist_id)
-      _normalize_params_keys(params)
+      normalize! params
 
       delete_request("/gists/#{gist_id}", params)
     end

@@ -18,7 +18,7 @@ module Github
     #
     def list(org_name, params={})
       _validate_presence_of org_name
-      _normalize_params_keys(params)
+      normalize! params
       response = get_request("/orgs/#{org_name}/members", params)
       return response unless block_given?
       response.each { |el| yield el }
@@ -33,7 +33,7 @@ module Github
     #
     def member?(org_name, member_name, params={})
       _validate_presence_of org_name, member_name
-      _normalize_params_keys(params)
+      normalize! params
       get_request("/orgs/#{org_name}/members/#{member_name}", params)
       true
     rescue Github::Error::NotFound
@@ -50,7 +50,7 @@ module Github
     #
     def delete(org_name, member_name, params={})
       _validate_presence_of org_name, member_name
-      _normalize_params_keys(params)
+      normalize! params
       delete_request("/orgs/#{org_name}/members/#{member_name}", params)
     end
     alias :remove :delete
@@ -64,7 +64,7 @@ module Github
     #
     def list_public(org_name, params={})
       _validate_presence_of org_name
-      _normalize_params_keys(params)
+      normalize! params
       response = get_request("/orgs/#{org_name}/public_members", params)
       return response unless block_given?
       response.each { |el| yield el }
@@ -79,7 +79,7 @@ module Github
     #
     def public_member?(org_name, member_name, params={})
       _validate_presence_of org_name, member_name
-      _normalize_params_keys(params)
+      normalize! params
       get_request("/orgs/#{org_name}/public_members/#{member_name}", params)
       true
     rescue Github::Error::NotFound
@@ -94,7 +94,7 @@ module Github
     #
     def publicize(org_name, member_name, params={})
       _validate_presence_of org_name, member_name
-      _normalize_params_keys(params)
+      normalize! params
       put_request("/orgs/#{org_name}/public_members/#{member_name}", params)
     end
     alias :make_public :publicize
@@ -108,7 +108,7 @@ module Github
     #
     def conceal(org_name, member_name, params={})
       _validate_presence_of org_name, member_name
-      _normalize_params_keys(params)
+      normalize! params
       delete_request("/orgs/#{org_name}/public_members/#{member_name}", params)
     end
     alias :conceal_membership :conceal

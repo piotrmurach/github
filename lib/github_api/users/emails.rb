@@ -12,7 +12,7 @@ module Github
     #  github.users.emails.list { |email| ... }
     #
     def list(params={})
-      _normalize_params_keys(params)
+      normalize! params
       response = get_request("/user/emails", params)
       return response unless block_given?
       response.each { |el| yield el }
@@ -30,7 +30,7 @@ module Github
     #
     def add(*args)
       params = args.extract_options!
-      _normalize_params_keys(params)
+      normalize! params
       params['data'] = args if args
       post_request("/user/emails", params)
     end
@@ -47,7 +47,7 @@ module Github
     #
     def delete(*args)
       params = args.extract_options!
-      _normalize_params_keys(params)
+      normalize! params
       params['data'] = args if args
       delete_request("/user/emails", params)
     end

@@ -13,7 +13,7 @@ module Github
     #  github.users.followers.list { |key| ... }
     #
     def list(params={})
-      _normalize_params_keys(params)
+      normalize! params
       response = get_request("/user/keys", params)
       return response unless block_given?
       response.each { |el| yield el }
@@ -28,7 +28,7 @@ module Github
     #
     def get(key_id, params={})
       _validate_presence_of key_id
-      _normalize_params_keys(params)
+      normalize! params
       get_request("/user/keys/#{key_id}", params)
     end
     alias :find :get
@@ -45,7 +45,7 @@ module Github
     #    "key" => "ssh-rsa AAA..."
     #
     def create(params={})
-      _normalize_params_keys(params)
+      normalize! params
       _filter_params_keys(VALID_KEY_PARAM_NAMES, params)
       post_request("/user/keys", params)
     end
@@ -63,7 +63,7 @@ module Github
     #
     def update(key_id, params={})
       _validate_presence_of key_id
-      _normalize_params_keys(params)
+      normalize! params
       _filter_params_keys(VALID_KEY_PARAM_NAMES, params)
       patch_request("/user/keys/#{key_id}", params)
     end
@@ -76,7 +76,7 @@ module Github
     #
     def delete(key_id, params={})
       _validate_presence_of key_id
-      _normalize_params_keys(params)
+      normalize! params
       delete_request("/user/keys/#{key_id}", params)
     end
 

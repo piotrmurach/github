@@ -47,7 +47,7 @@ module Github
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless (user? && repo?)
 
-      _normalize_params_keys(params)
+      normalize! params
       _filter_params_keys(VALID_REQUEST_PARAM_NAMES, params)
       # _merge_mime_type(:pull_request, params)
       assert_valid_values(VALID_REQUEST_PARAM_VALUES, params)
@@ -72,7 +72,7 @@ module Github
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of request_id
 
-      _normalize_params_keys(params)
+      normalize! params
       # _merge_mime_type(:pull_request, params)
 
       get_request("/repos/#{user}/#{repo}/pulls/#{request_id}", params)
@@ -112,7 +112,7 @@ module Github
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
 
-      _normalize_params_keys(params)
+      normalize! params
       # _merge_mime_type(:pull_request, params)
       _filter_params_keys(VALID_REQUEST_PARAM_NAMES, params)
 
@@ -138,7 +138,7 @@ module Github
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of request_id
 
-      _normalize_params_keys(params)
+      normalize! params
       _filter_params_keys(VALID_REQUEST_PARAM_NAMES, params)
       # _merge_mime_type(:pull_request, params)
       assert_valid_values(VALID_REQUEST_PARAM_VALUES, params)
@@ -157,7 +157,7 @@ module Github
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of request_id
 
-      _normalize_params_keys(params)
+      normalize! params
       # _merge_mime_type(:pull_request, params)
 
       response = get_request("/repos/#{user}/#{repo}/pulls/#{request_id}/commits", params)
@@ -176,7 +176,7 @@ module Github
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of request_id
 
-      _normalize_params_keys(params)
+      normalize! params
       # _merge_mime_type(:pull_request, params)
 
       response = get_request("/repos/#{user}/#{repo}/pulls/#{request_id}/files", params)
@@ -195,7 +195,7 @@ module Github
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of request_id
 
-      _normalize_params_keys(params)
+      normalize! params
       # _merge_mime_type(:pull_request, params)
 
       get_request("/repos/#{user}/#{repo}/pulls/#{request_id}/merge", params)
@@ -218,7 +218,7 @@ module Github
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of request_id
 
-      _normalize_params_keys(params)
+      normalize! params
       # _merge_mime_type(:pull_request, params)
       _filter_params_keys(VALID_REQUEST_PARAM_NAMES, params)
 

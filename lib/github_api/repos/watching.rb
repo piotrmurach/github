@@ -13,7 +13,7 @@ module Github
     def watchers(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
-      _normalize_params_keys(params)
+      normalize! params
 
       response = get_request("/repos/#{user}/#{repo}/watchers", params)
       return response unless block_given?
@@ -34,7 +34,7 @@ module Github
     #
     def watched(*args)
       params = args.extract_options!
-      _normalize_params_keys(params)
+      normalize! params
       _merge_user_into_params!(params) unless params.has_key?('user')
 
       response = if (user_name = params.delete('user'))
@@ -55,7 +55,7 @@ module Github
     #
     def watching?(user_name, repo_name, params={})
       _validate_presence_of user_name, repo_name
-      _normalize_params_keys(params)
+      normalize! params
       get_request("/user/watched/#{user_name}/#{repo_name}", params)
       true
     rescue Github::Error::NotFound
@@ -72,7 +72,7 @@ module Github
     #
     def start_watching(user_name, repo_name, params={})
       _validate_presence_of user_name, repo_name
-      _normalize_params_keys(params)
+      normalize! params
       put_request("/user/watched/#{user_name}/#{repo_name}", params)
     end
 
@@ -85,7 +85,7 @@ module Github
     #
     def stop_watching(user_name, repo_name, params={})
       _validate_presence_of user_name, repo_name
-      _normalize_params_keys(params)
+      normalize! params
       delete_request("/user/watched/#{user_name}/#{repo_name}", params)
     end
 

@@ -23,7 +23,7 @@ module Github
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
       _validate_presence_of sha
-      _normalize_params_keys params
+      normalize! params
 
       get_request("/repos/#{user}/#{repo}/git/blobs/#{sha}", params)
     end
@@ -44,7 +44,7 @@ module Github
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
 
-      _normalize_params_keys(params)
+      normalize! params
       _filter_params_keys(VALID_BLOB_PARAM_NAMES, params)
       assert_required_keys(VALID_BLOB_PARAM_NAMES, params)
 

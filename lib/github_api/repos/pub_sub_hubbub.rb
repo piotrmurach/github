@@ -19,7 +19,7 @@ module Github
     #
     def subscribe(topic, callback, params={})
       _validate_presence_of topic, callback
-      _normalize_params_keys(params)
+      normalize! params
       _merge_action!("subscribe", topic, callback, params)
 
       post_request("/hub", params)
@@ -41,7 +41,7 @@ module Github
     #
     def unsubscribe(topic, callback, params={})
       _validate_presence_of topic, callback
-      _normalize_params_keys(params)
+      normalize! params
       _merge_action!("unsubscribe", topic, callback, params)
 
       post_request("/hub", params)
@@ -64,7 +64,7 @@ module Github
     #
     def subscribe_service(user_name, repo_name, service_name, params={})
       _validate_presence_of user_name, repo_name, service_name
-      _normalize_params_keys(params)
+      normalize! params
       event = params.delete('event') || 'push'
       topic = "https://github.com/#{user_name}/#{repo_name}/events/#{event}"
       callback = "github://#{service_name}?#{params.serialize}"
@@ -87,7 +87,7 @@ module Github
     #
     def unsubscribe_service(user_name, repo_name, service_name, params={})
       _validate_presence_of user_name, repo_name, service_name
-      _normalize_params_keys(params)
+      normalize! params
       event = params.delete('event') || 'push'
       topic = "https://github.com/#{user_name}/#{repo_name}/events/#{event}"
       callback = "github://#{service_name}"

@@ -18,7 +18,7 @@ module Github
     #  github.users.followers { |user| ... }
     #
     def list(user_name=nil, params={})
-      _normalize_params_keys(params)
+      normalize! params
       response = if user_name
         get_request("/users/#{user_name}/followers", params)
       else
@@ -44,7 +44,7 @@ module Github
     #  github.users.followers.following
     #
     def following(user_name=nil, params={})
-      _normalize_params_keys(params)
+      normalize! params
       response = if user_name
         get_request("/users/#{user_name}/following", params)
       else
@@ -62,7 +62,7 @@ module Github
     #
     def following?(user_name, params={})
       _validate_presence_of user_name
-      _normalize_params_keys(params)
+      normalize! params
       get_request("/user/following/#{user_name}", params)
       true
     rescue Github::Error::NotFound
@@ -77,7 +77,7 @@ module Github
     #
     def follow(user_name, params={})
       _validate_presence_of user_name
-      _normalize_params_keys(params)
+      normalize! params
       put_request("/user/following/#{user_name}", params)
     end
 
@@ -89,7 +89,7 @@ module Github
     #
     def unfollow(user_name, params={})
       _validate_presence_of user_name
-      _normalize_params_keys(params)
+      normalize! params
       delete_request("/user/following/#{user_name}", params)
     end
 

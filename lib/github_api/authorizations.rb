@@ -23,7 +23,7 @@ module Github
     #
     def list(params={})
       _check_if_authenticated
-      _normalize_params_keys(params)
+      normalize! params
 
       response = get_request("/authorizations", params)
       return response unless block_given?
@@ -40,7 +40,7 @@ module Github
     def get(authorization_id, params={})
       _validate_presence_of(authorization_id)
       _check_if_authenticated
-      _normalize_params_keys params
+      normalize! params
 
       get_request("/authorizations/#{authorization_id}", params)
     end
@@ -60,7 +60,7 @@ module Github
     #
     def create(params={})
       _check_if_authenticated
-      _normalize_params_keys(params)
+      normalize! params
       _filter_params_keys(VALID_AUTH_PARAM_NAMES, params)
 
       post_request("/authorizations", params)
@@ -83,7 +83,7 @@ module Github
       _check_if_authenticated
       _validate_presence_of(authorization_id)
 
-      _normalize_params_keys(params)
+      normalize! params
       _filter_params_keys(VALID_AUTH_PARAM_NAMES, params)
 
       patch_request("/authorizations/#{authorization_id}", params)
@@ -98,7 +98,7 @@ module Github
       _check_if_authenticated
       _validate_presence_of(authorization_id)
 
-      _normalize_params_keys(params)
+      normalize! params
       _filter_params_keys(VALID_AUTH_PARAM_NAMES, params)
 
       delete_request("/authorizations/#{authorization_id}", params)
