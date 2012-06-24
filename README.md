@@ -1,8 +1,9 @@
 # GithubAPI
-[![Build Status](https://secure.travis-ci.org/peter-murach/github.png?branch=master)][travis] [![Dependency Status](https://gemnasium.com/peter-murach/github.png?travis)][gemnasium]
+[![Build Status](https://secure.travis-ci.org/peter-murach/github.png?branch=master)][travis] [![Dependency Status](https://gemnasium.com/peter-murach/github.png?travis)][gemnasium] [![Code Climate](https://codeclimate.com/badge.png)][codeclimate]
 
 [travis]: http://travis-ci.org/peter-murach/github
 [gemnasium]: https://gemnasium.com/peter-murach/github
+[codeclimate]: https://codeclimate.com/github/peter-murach/github
 
 [Wiki](https://github.com/peter-murach/github/wiki) | [RDocs](http://rubydoc.info/github/peter-murach/github/master/frames)
 
