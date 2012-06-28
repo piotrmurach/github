@@ -22,6 +22,9 @@ module Github
     #
     # This method returns the contents of any file or directory in a repository.
     #
+    # = Parameters
+    # * <tt>:ref</tt> - Optional string - valid Git reference, defaults to master
+    #
     # = Examples
     #  github = Github.new
     #  github.repos.contents.get 'user-name', 'repo-name', 'path'
