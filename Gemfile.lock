@@ -68,7 +68,6 @@ GEM
     webmock (1.8.6)
       addressable (>= 2.2.7)
       crack (>= 0.1.7)
-    yajl-ruby (1.1.0)
 
 PLATFORMS
   ruby
@@ -88,4 +87,3 @@ DEPENDENCIES
   simplecov (~> 0.6.1)
   vcr (~> 2.2.0)
   webmock (~> 1.8.0)
-  yajl-ruby (~> 1.1.0)
