@@ -108,6 +108,19 @@ module Github
     end
     alias :list_branches :branches
 
+    # Get branch
+    #
+    # = Examples
+    #
+    #   github = Github.new
+    #   github.repos.branch 'user-name', 'repo-name', 'branch-name'
+    #
+    def branch(user_name, repo_name, branch, params={})
+      normalize! params
+
+      get_request("repos/#{user_name}/#{repo_name}/branches/#{branch}", params)
+    end
+
     # Create a new repository for the autheticated user.
     #
     # = Parameters
