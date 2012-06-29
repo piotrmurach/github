@@ -79,6 +79,46 @@ describe Github::Repos do
     end
   end # branches
 
+  describe "#branch" do
+    let(:branch) { 'master' }
+
+    context "resource found" do
+      before do
+        stub_get("/repos/#{user}/#{repo}/branches/#{branch}").
+          to_return(:body => fixture('repos/branch.json'), :status => 200, :headers => {:content_type => "application/json; charset=utf-8"})
+      end
+
+      it "should find resources" do
+        github.repos.branch user, repo, branch
+        a_get("/repos/#{user}/#{repo}/branches/#{branch}").should have_been_made
+      end
+
+      it "should return repository mash" do
+        repo_branch = github.repos.branch user, repo, branch
+        repo_branch.should be_a Hashie::Mash
+      end
+
+      it "should get repository branch information" do
+        repo_branch = github.repos.branch user, repo, branch
+        repo_branch.name.should == 'master'
+      end
+    end
+
+    context "resource not found" do
+      before do
+        stub_get("/repos/#{user}/#{repo}/branches/#{branch}").
+          to_return(:body => '', :status => 404,
+            :headers => {:content_type => "application/json; charset=utf-8"})
+      end
+
+      it "should fail to get resource" do
+        expect {
+          github.repos.branch user, repo, branch
+        }.to raise_error(Github::Error::NotFound)
+      end
+    end
+  end # branch
+
   describe "contributors" do
     context "resource found" do
       before do

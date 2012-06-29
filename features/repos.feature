@@ -13,6 +13,16 @@ Feature: Repositories API
       And the response type should be JSON
       And the response should not be empty
 
+  Scenario: Get Branch
+
+    Given I want branch resource with the following params:
+      | user          | repo   | branch  |
+      | peter-murach  | github | new_dsl |
+    When I make request within a cassette named "repos/branch"
+    Then the response status should be 200
+      And the response type should be JSON
+      And the response should not be empty
+
   Scenario: Tags
 
     Given I want tags resource with the following params:

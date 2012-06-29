@@ -1,0 +1,61 @@
+--- 
+http_interactions: 
+- request: 
+    method: get
+    uri: https://<BASIC_AUTH>@api.github.com/repos/peter-murach/github/branches/new_dsl?access_token=<TOKEN>
+    body: 
+      encoding: US-ASCII
+      string: ""
+    headers: 
+      Accept-Encoding: 
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept: 
+      - "*/*"
+      User-Agent: 
+      - Ruby
+  response: 
+    status: 
+      code: 200
+      message: OK
+    headers: 
+      Server: 
+      - nginx/1.0.13
+      Date: 
+      - Fri, 29 Jun 2012 20:55:08 GMT
+      Content-Type: 
+      - application/json; charset=utf-8
+      Transfer-Encoding: 
+      - chunked
+      Connection: 
+      - keep-alive
+      Status: 
+      - 200 OK
+      Cache-Control: 
+      - max-age=0, private, must-revalidate
+      X-Ratelimit-Limit: 
+      - "5000"
+      Etag: 
+      - "\"9671c6f2ca93115c89db73e8e95a228d\""
+      X-Ratelimit-Remaining: 
+      - "4999"
+      Content-Encoding: 
+      - gzip
+    body: 
+      encoding: ASCII-8BIT
+      string: !binary |
+        H4sIAAAAAAAAA+1US2/UMBD+K6tI3LqJ7TgPR0LAhRsSB24IrSb25KHdPGQ7
+        cKj2vzPuNm2KEF1aceOUicbz+Ob7Zm4jPQ1D76PqNnIdRFXUlCJtijSTwLgo
+        S6gzA8pgIzAXWok0z2tINcjoZhPqLeJjihoxb4TiGXDF0wwEN4IhpYBUFUrq
+        tDYFaFZTisWeqGbn/eyqJIG5j9ved0sdU1uJxXlyyYwe7X5YLOguuXjDJwk1
+        XXJ1rfNNNKBz0FKj0Qdjds1kB/C+H9tg7pwHfdz1YzPF1BcsvptsgGTAhwhB
+        09gzuRflF1ZWklei3LOiYowe4wB9gDFfmnzfhv+AgHwjDCH8cz95u/t0ByKi
+        Vl6B+0KYS/6aKBrjvwJEiB4nBt/Bgz08hehQLxbj1l68d/xezKSphVQmy3KS
+        XFPqDFidK2Sm4CYrlVTvzNsHgQhZxhjDEWjE8Yg+AefQu41q3oiP/UAsOzLW
+        alt7zyWL57Elbk5T24+Bt43CntPk4tA+1SRFrHUOvQkb9AweCgjvpJQpFzS5
+        GSyO3kXV13UHFcsaU+jcSFQpZLSCORfSSMWxZNBohVwbIcIOvlBIq4iurnT+
+        tu77vYz+s/xn1f7K8iuJunrbSVCHUz8eSU8kJzw1L7mvtYVRd3ReR/xxMO5E
+        YDo/bE/15kz/7kCH4/wQTC3dn8E13fknlX5IHHgGAAA=
+
+    http_version: 
+  recorded_at: Fri, 29 Jun 2012 20:55:08 GMT
+recorded_with: VCR 2.2.0
