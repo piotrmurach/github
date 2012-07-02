@@ -3,6 +3,12 @@
 module Github
   class Client < API
 
+    # This is a read-only API to the GitHub events.
+    # These events power the various activity streams on the site.
+    def events(options = {})
+      @events ||= ApiFactory.new 'Events', options
+    end
+
     def gists(options = {})
       @gists ||= ApiFactory.new 'Gists', options
     end
@@ -19,6 +25,17 @@ module Github
       @issues ||= ApiFactory.new 'Issues', options
     end
 
+    def markdown(options = {})
+      @markdown ||= ApiFactory.new 'Markdown', options
+    end
+
+    # An API for users to manage their own tokens. You can only access your own
+    # tokens, and only through Basic Authentication.
+    def oauth(options = {})
+      @oauth ||= ApiFactory.new 'Authorizations', options
+    end
+    alias :authorizations :oauth
+
     def orgs(options = {})
       @orgs ||= ApiFactory.new 'Orgs', options
     end
@@ -33,28 +50,15 @@ module Github
     end
     alias :repositories :repos
 
+    def search(options = {})
+      @search ||= ApiFactory.new 'Search', options
+    end
+
     # Many of the resources on the users API provide a shortcut for getting 
     # information about the currently authenticated user.
     def users(options = {})
       @users ||= ApiFactory.new 'Users', options
     end
-
-    # This is a read-only API to the GitHub events.
-    # These events power the various activity streams on the site.
-    def events(options = {})
-      @events ||= ApiFactory.new 'Events', options
-    end
-
-    def search(options = {})
-      @search ||= ApiFactory.new 'Search', options
-    end
-
-    # An API for users to manage their own tokens. You can only access your own
-    # tokens, and only through Basic Authentication.
-    def oauth(options = {})
-      @oauth ||= ApiFactory.new 'Authorizations', options
-    end
-    alias :authorizations :oauth
 
   end # Client
 end # Github

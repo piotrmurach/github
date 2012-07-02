@@ -24,6 +24,7 @@ module Github
     include Normalizer
 
     attr_reader *Configuration::VALID_OPTIONS_KEYS
+
     attr_accessor *VALID_API_KEYS
 
     # Callback to update global configuration options
@@ -93,6 +94,7 @@ module Github
       { 'user' => self.user, 'repo' => self.repo }.merge!(params)
     end
 
+    # TODO: See whether still needed, consider adding to core_exts
     def _hash_traverse(hash, &block)
       hash.each do |key, val|
         block.call(key)

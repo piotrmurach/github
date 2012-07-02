@@ -75,6 +75,7 @@ module Github
     :Users           => 'users',
     :Events          => 'events',
     :Search          => 'search',
+    :Markdown        => 'markdown',
     :CoreExt         => 'core_ext',
     :MimeType        => 'mime_type',
     :Authorization   => 'authorization',
