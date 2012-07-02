@@ -12,27 +12,29 @@ require 'github_api/request/jsonize'
 
 module Github
   module Connection
+    include Github::Constants
 
-  ALLOWED_OPTIONS = [
-    :headers,
-    :url,
-    :params,
-    :request,
-    :ssl
-  ].freeze
-
-  private
+    ALLOWED_OPTIONS = [
+      :headers,
+      :url,
+      :params,
+      :request,
+      :ssl
+    ].freeze
 
     def default_options(options={}) # :nodoc:
       {
         :headers => {
-          :accept       => '*/*', #accepts,
-          :user_agent   => user_agent,
-          :content_type => 'application/x-www-form-urlencoded'
+          "Accept"         => "application/vnd.github.v3.raw+json," \
+                              "application/vnd.github.beta.raw+json;q=0.5," \
+                              "application/json;q=0.1",
+          "Accept-Charset" => "utf-8",
+          "User-Agent"     => user_agent,
+          CONTENT_TYPE     => 'application/x-www-form-urlencoded'
         },
         :ssl => { :verify => false },
         :url => endpoint
-      }
+      }.merge(options)
     end
 
     def clear_cache # :nodoc:
@@ -45,12 +47,12 @@ module Github
 
     def connection(options = {}) # :nodoc:
 
-      merged_options = filter! ALLOWED_OPTIONS, default_options.merge(options)
+      conn_options = default_options(options)
       clear_cache unless options.empty?
 
       @connection ||= begin
-        Faraday.new(merged_options.merge(connection_options)) do |builder|
-          puts options.inspect if ENV['DEBUG']
+        Faraday.new(conn_options) do |builder|
+          puts conn_options.inspect if ENV['DEBUG']
 
           builder.use Github::Request::Jsonize
           builder.use Faraday::Request::Multipart

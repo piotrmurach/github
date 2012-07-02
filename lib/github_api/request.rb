@@ -31,7 +31,7 @@ module Github
       if !METHODS.include?(method)
         raise ArgumentError, "unkown http method: #{method}"
       end
-      _extract_mime_type(params, options)
+      # _extract_mime_type(params, options)
 
       puts "EXECUTED: #{method} - #{path} with #{params} and #{options}" if ENV['DEBUG']
 
@@ -42,7 +42,7 @@ module Github
           request.url(path, params)
         when *METHODS_WITH_BODIES
           request.path = path
-          request.body = _process_params(params) unless params.empty?
+          request.body = extract_data_from_params(params) unless params.empty?
         end
       end
       response.body
@@ -50,7 +50,7 @@ module Github
 
     private
 
-    def _process_params(params) # :nodoc:
+    def extract_data_from_params(params) # :nodoc:
       return params['data'] if params.has_key?('data') and !params['data'].nil?
       return params
     end
