@@ -23,7 +23,12 @@ Then /^the response status should be (.*)$/ do |expected_response|
 end
 
 Then /^the response type should be (.*)$/ do |type|
-  @response.content_type.should =~ /application\/#{type.downcase}/
+  case type.downcase
+  when 'json'
+    @response.content_type.should =~ /application\/json/
+  when 'html'
+    @response.content_type.should =~ /text\/html/
+  end
 end
 
 Then /^the response should have (\d+) items$/ do |size|
