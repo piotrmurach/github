@@ -1,0 +1,46 @@
+--- 
+http_interactions: 
+- request: 
+    method: post
+    uri: https://<BASIC_AUTH>@api.github.com/markdown?access_token=<TOKEN>
+    body: 
+      encoding: UTF-8
+      string: "{\"text\":\"Hello world\",\"mode\":\"gfm\",\"context\":\"<USER>/github_api_test\"}"
+    headers: 
+      Content-Type: 
+      - application/json
+      Accept: 
+      - "*/*"
+      User-Agent: 
+      - Ruby
+  response: 
+    status: 
+      code: 200
+      message: OK
+    headers: 
+      Server: 
+      - nginx/1.0.13
+      Date: 
+      - Sun, 01 Jul 2012 19:15:21 GMT
+      Content-Type: 
+      - text/html;charset=utf-8
+      Connection: 
+      - keep-alive
+      Status: 
+      - 200 OK
+      Content-Length: 
+      - "18"
+      X-Ratelimit-Remaining: 
+      - "4998"
+      Etag: 
+      - "\"4114864e259a6fdcc545904ac07b9885\""
+      Cache-Control: 
+      - max-age=0, private, must-revalidate
+      X-Ratelimit-Limit: 
+      - "5000"
+    body: 
+      encoding: US-ASCII
+      string: <p>Hello world</p>
+    http_version: 
+  recorded_at: Sun, 01 Jul 2012 19:15:21 GMT
+recorded_with: VCR 2.2.0
