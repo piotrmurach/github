@@ -138,7 +138,7 @@ describe Github::PullRequests::Comments do
     context "resouce created" do
       before do
         stub_post("/repos/#{user}/#{repo}/pulls/#{pull_request_id}/comments").
-          with(:body => JSON.generate(inputs.except('unrelated'))).
+          with(inputs.except('unrelated')).
           to_return(:body => fixture('pull_requests/comment.json'), :status => 201, :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
@@ -192,7 +192,7 @@ describe Github::PullRequests::Comments do
     context "resouce edited" do
       before do
         stub_patch("/repos/#{user}/#{repo}/pulls/comments/#{comment_id}").
-          with(:body => JSON.generate(inputs.except('unrelated'))).
+          with(inputs.except('unrelated')).
           to_return(:body => fixture('pull_requests/comment.json'),
                 :status => 200,
                 :headers => {:content_type => "application/json; charset=utf-8"})

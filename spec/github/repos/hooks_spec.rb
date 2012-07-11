@@ -120,36 +120,37 @@ describe Github::Repos::Hooks do
   describe "#create" do
     let(:inputs) {
       {
-        :name => 'web',
-        :config => {
-          :url => "http://something.com/webhook",
-          :address => "test@example.com",
-          :subdomain => "github",
-          :room => "Commits",
-          :token => "abc123"
+        'name' => 'web',
+        'config' => {
+          'url' => "http://something.com/webhook",
+          'address' => "test@example.com",
+          'subdomain' => "github",
+          'room' => "Commits",
+          'token' => "abc123"
         },
-        :active => true,
-        :unrelated => true
+        'active' => true,
+        'unrelated' => true
       }
     }
 
     context "resouce created" do
       before do
         stub_post("/repos/#{user}/#{repo}/hooks").
-          with(:body => JSON.generate(inputs.except(:unrelated))).
-          to_return(:body => fixture('repos/hook.json'), :status => 201,
+          with(inputs.except('unrelated')).
+          to_return(:body => fixture('repos/hook.json'),
+            :status => 201,
             :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
       it "should fail to create resource if 'name' input is missing" do
         expect {
-          github.repos.hooks.create user, repo, inputs.except(:name)
+          github.repos.hooks.create user, repo, inputs.except('name')
         }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should failt to create resource if 'config' input is missing" do
         expect {
-          github.repos.hooks.create user, repo, inputs.except(:config)
+          github.repos.hooks.create user, repo, inputs.except('config')
         }.to raise_error(Github::Error::RequiredParams)
       end
 
@@ -204,7 +205,7 @@ describe Github::Repos::Hooks do
     context "resource edited successfully" do
       before do
         stub_patch("/repos/#{user}/#{repo}/hooks/#{hook_id}").
-          with(:body => JSON.generate(inputs.except(:unrelated))).
+          with(inputs.except(:unrelated)).
           to_return(:body => fixture("repos/hook.json"), :status => 200,
             :headers => { :content_type => "application/json; charset=utf-8"})
       end

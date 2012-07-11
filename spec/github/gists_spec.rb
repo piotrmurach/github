@@ -200,10 +200,10 @@ describe Github::Gists do
     context "resouce created" do
       before do
         stub_post("/gists").
-          with(:body => JSON.generate(inputs)).
+          with(inputs).
           to_return(:body => fixture('gists/gist.json'),
-                :status => 201,
-                :headers => {:content_type => "application/json; charset=utf-8"})
+            :status => 201,
+            :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
       it "should fail to create resource if 'files' input is missing" do
@@ -280,10 +280,10 @@ describe Github::Gists do
     context "resouce edited" do
       before do
         stub_patch("/gists/#{gist_id}").
-          with(:body => JSON.generate(inputs)).
+          with(inputs).
           to_return(:body => fixture('gists/gist.json'),
-                :status => 200,
-                :headers => {:content_type => "application/json; charset=utf-8"})
+            :status => 200,
+            :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
       it "should edit resource successfully" do

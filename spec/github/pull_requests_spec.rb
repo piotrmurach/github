@@ -132,7 +132,7 @@ describe Github::PullRequests do
     context "resouce created" do
       before do
         stub_post("/repos/#{user}/#{repo}/pulls").
-          with(:body => JSON.generate(inputs.except('unrelated'))).
+          with(inputs.except('unrelated')).
           to_return(:body => fixture('pull_requests/pull_request.json'), :status => 201, :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
@@ -180,10 +180,10 @@ describe Github::PullRequests do
     context "resouce updateed" do
       before do
         stub_patch("/repos/#{user}/#{repo}/pulls/#{pull_request_id}").
-          with(:body => JSON.generate(inputs.except('unrelated'))).
+          with(inputs.except('unrelated')).
           to_return(:body => fixture('pull_requests/pull_request.json'),
-                :status => 201,
-                :headers => {:content_type => "application/json; charset=utf-8"})
+            :status => 201,
+            :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
       it "should create resource successfully" do

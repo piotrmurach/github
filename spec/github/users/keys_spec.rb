@@ -122,7 +122,7 @@ describe Github::Users::Keys do
     context "resouce created" do
       before do
         stub_post("/user/keys?access_token=#{OAUTH_TOKEN}").
-          with(:body => JSON.generate(inputs.except(:unrelated))).
+          with(inputs.except(:unrelated)).
           to_return(:body => fixture('users/key.json'),
             :status => 201,
             :headers => {:content_type => "application/json; charset=utf-8"})
@@ -173,7 +173,7 @@ describe Github::Users::Keys do
     context "resouce updated" do
       before do
         stub_patch("/user/keys/#{key_id}?access_token=#{OAUTH_TOKEN}").
-          with(:body => JSON.generate(inputs.except(:unrelated))).
+          with(inputs.except(:unrelated)).
           to_return(:body => fixture('users/key.json'),
             :status => 201,
             :headers => {:content_type => "application/json; charset=utf-8"})

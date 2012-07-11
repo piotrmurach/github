@@ -96,8 +96,10 @@ describe Github::GitData::Trees do
     context "resouce created" do
       before do
         stub_post("/repos/#{user}/#{repo}/git/trees").
-          with(:body => JSON.generate(inputs)).
-          to_return(:body => fixture('git_data/tree.json'), :status => 201, :headers => {:content_type => "application/json; charset=utf-8"})
+          with(inputs).
+          to_return(:body => fixture('git_data/tree.json'),
+            :status => 201,
+            :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
       it "should fail to create resource if 'content' input is missing" do

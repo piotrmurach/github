@@ -79,7 +79,7 @@ describe Github::GitData::Commits, :type => :base do
     context "resouce created" do
       before do
         stub_post("/repos/#{user}/#{repo}/git/commits").
-          with(:body => JSON.generate(inputs.except('unrelated'))).
+          with(inputs.except('unrelated')).
           to_return(:body => fixture('git_data/commit.json'), :status => 201, :headers => {:content_type => "application/json; charset=utf-8"})
       end
 

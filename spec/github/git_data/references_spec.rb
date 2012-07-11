@@ -154,7 +154,7 @@ describe Github::GitData::References do
     context "resouce created" do
       before do
         stub_post("/repos/#{user}/#{repo}/git/refs").
-          with(:body => JSON.generate(inputs.except('unrelated'))).
+          with(inputs.except('unrelated')).
           to_return(:body => fixture('git_data/reference.json'), :status => 201,
             :headers => {:content_type => "application/json; charset=utf-8"})
       end
@@ -220,7 +220,7 @@ describe Github::GitData::References do
     context "resouce updated" do
       before do
         stub_patch("/repos/#{user}/#{repo}/git/refs/#{ref}").
-          with(:body => JSON.generate(inputs.except('unrelated'))).
+          with(inputs.except('unrelated')).
           to_return(:body => fixture('git_data/reference.json'), :status => 201, :headers => {:content_type => "application/json; charset=utf-8"})
       end
 

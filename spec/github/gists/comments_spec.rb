@@ -121,7 +121,7 @@ describe Github::Gists::Comments do
     context "resouce created" do
       before do
         stub_post("/gists/#{gist_id}/comments").
-          with(:body => JSON.generate(inputs.except('unrelated'))).
+          with(inputs.except('unrelated')).
           to_return(:body => fixture('gists/comment.json'),
                 :status => 201,
                 :headers => {:content_type => "application/json; charset=utf-8"})
@@ -173,7 +173,7 @@ describe Github::Gists::Comments do
     context "resouce edited" do
       before do
         stub_patch("/gists/comments/#{comment_id}").
-          with(:body => JSON.generate(inputs.except('unrelated'))).
+          with(inputs.except('unrelated')).
           to_return(:body => fixture('gists/comment.json'),
                 :status => 201,
                 :headers => {:content_type => "application/json; charset=utf-8"})

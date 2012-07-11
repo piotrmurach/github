@@ -73,7 +73,7 @@ describe Github::GitData::Blobs do
     context "resouce created" do
       before do
         stub_post("/repos/#{user}/#{repo}/git/blobs").
-          with(:body => JSON.generate(inputs.except('unrelated'))).
+          with(inputs.except('unrelated')).
           to_return(:body => fixture('git_data/blob_sha.json'),
             :status => 201,
             :headers => {:content_type => "application/json; charset=utf-8"})

@@ -79,7 +79,7 @@ describe Github::GitData::Tags do
     context "resouce created" do
       before do
         stub_post("/repos/#{user}/#{repo}/git/tags").
-          with(:body => JSON.generate(inputs.except('unrelated'))).
+          with(inputs.except('unrelated')).
           to_return(:body => fixture('git_data/tag.json'), :status => 201, :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
