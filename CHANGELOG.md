@@ -1,3 +1,10 @@
+0.6.2 (July x, 2012)
+
+* Drop yajl from development dependencies to allow jruby pass.
+* Add repository single branch retrieval.
+* Add markdown api support.
+* Rewrite connection to set proper http headers to agree with GitHub Api spec.
+
 0.6.1 (June 24, 2012)
 
 * Add request parameters normalizer and update code references.
