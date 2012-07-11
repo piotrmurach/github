@@ -21,6 +21,12 @@ module Github
 
     LOCATION = 'Location'.freeze
 
+    USER_AGENT = 'User-Agent'.freeze
+
+    ACCEPT = 'Accept'.freeze
+
+    ACCEPT_CHARSET = 'Accept-Charset'.freeze
+
     # Link headers
     HEADER_LINK = "Link".freeze
 

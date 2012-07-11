@@ -25,11 +25,11 @@ module Github
     def default_options(options={}) # :nodoc:
       {
         :headers => {
-          "Accept"         => "application/vnd.github.v3.raw+json," \
+          ACCEPT           => "application/vnd.github.v3.raw+json," \
                               "application/vnd.github.beta.raw+json;q=0.5," \
                               "application/json;q=0.1",
-          "Accept-Charset" => "utf-8",
-          "User-Agent"     => user_agent,
+          ACCEPT_CHARSET   => "utf-8",
+          USER_AGENT       => user_agent,
           CONTENT_TYPE     => 'application/x-www-form-urlencoded'
         },
         :ssl => { :verify => false },
