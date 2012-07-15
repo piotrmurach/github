@@ -12,6 +12,7 @@ require 'github_api/request/jsonize'
 
 module Github
   module Connection
+    extend self
     include Github::Constants
 
     ALLOWED_OPTIONS = [
@@ -33,9 +34,11 @@ module Github
           CONTENT_TYPE     => 'application/x-www-form-urlencoded'
         },
         :ssl => { :verify => false },
-        :url => endpoint
+        :url => options.fetch(:endpoint) { Github.endpoint }
       }.merge(options)
     end
+
+    @connection = nil
 
     def clear_cache # :nodoc:
       @connection = nil
@@ -52,7 +55,7 @@ module Github
 
       @connection ||= begin
         Faraday.new(conn_options) do |builder|
-          puts conn_options.inspect if ENV['DEBUG']
+          puts "OPTIONS:#{conn_options.inspect}" if ENV['DEBUG']
 
           builder.use Github::Request::Jsonize
           builder.use Faraday::Request::Multipart
