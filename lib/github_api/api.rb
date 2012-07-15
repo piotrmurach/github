@@ -38,8 +38,10 @@ module Github
     end
 
     # Creates new API
-    def initialize(options = {}, &block)
+    def initialize(options={}, &block)
+      super()
       options = Github.options.merge(options)
+
       Configuration::VALID_OPTIONS_KEYS.each do |key|
         send("#{key}=", options[key])
       end
