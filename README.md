@@ -14,16 +14,6 @@ Supports all the API methods(nearly 200). It's build in a modular way, that is, 
 ## Important!!
 Since version 0.5 the way the gem queries the GitHub api underwent important changes. It closely mirros the Github api hierarchy e.i. if you want to create a download resource, lookup the github api spec and issue the request as in `github.repos.downloads.create`
 
-```ruby
-Old style: github.pull_requests.create_request
-           github.pull_requests.pull_requests
-           github.pull_requests.pull_request
-
-New style: github.pull_requests.create
-           github.pull_requests.all
-           github.pull_requests.find
-```
-
 ## Installation
 
 Install the gem by issuing
@@ -46,10 +36,20 @@ Create a new client instance
 github = Github.new
 ```
 
-At this stage you can also supply various configuration parameters, such as `:user`,`:repo`, `:org`, `:oauth_token`, `:login`, `:password` or `:basic_auth` which are used throughout the API
+At this stage you can also supply various configuration parameters, such as `:user`,`:repo`, `:org`, `:oauth_token`, `:basic_auth`, `:endpoint` which are used throughout the API. These can be passed directly as hash options:
 
 ```ruby
 github = Github.new oauth_token: 'token'
+```
+
+Alternatively, you can configure the Github settings by passing a block, for instance, with custom enteprise endpoint like
+
+```ruby
+github = Github.new do |config|
+  config.endpoint    = 'https://github.company.com/api/v3'
+  config.oauth_token = 'token'
+  config.adapter     = :net_http
+end
 ```
 
 You can authenticate either using OAuth authentication convenience methods(see section OAuth) or through basic authentication by passing your login and password credentials
@@ -88,6 +88,29 @@ repos.branches do |branch|
 end
 ```
 
+## Inputs
+
+Some API methods apart from required parameters such as username, repository name
+or organisation name, allow you to switch the way the data is returned to you, for instance
+
+```ruby
+github = Github.new
+github.git_data.trees.get 'peter-murach', 'github', 'c18647b75d72f19c1e0cc8af031e5d833b7f12ea'
+# => gets a tree
+
+github.git_data.trees.get 'peter-murach', 'github', 'c18647b75d72f19c1e0cc8af031e5d833b7f12ea',
+  recursive: true # => gets a whole tree recursively
+```
+
+by passing a block you can iterate over the file tree
+
+```ruby
+github.git_data.trees.get 'peter-murach', 'github', 'c18647b75d72f19c1e0cc8af031e5d833b7f12ea',
+  recursive: true do |file|
+    puts file.path
+end
+```
+
 ## API
 
 Main API methods are grouped into the following classes that can be instantiated on their own
@@ -116,70 +139,27 @@ github.users.followers.following 'wycats' # => returns true if following, otherw
 ```
 
 For specification on all available methods go to http://developer.github.com/v3/ or
-read the rdoc, all methods are documented there with examples of usage. 
+read the rdoc, all methods are documented there with examples of usage.
 
-Alternatively, you can find out a specific class supported methods by calling `actions` in your `irb`:
+Alternatively, you can find out supported methods by calling `actions` on a class instance in your `irb`:
 
 ```ruby
->> Github::Repos.actions
----
-|--> all
-|--> branches
-|--> collaborators
-|--> commits
-|--> contribs
-|--> contributors
-|--> create
-|--> downloads
-|--> edit
-|--> find
-|--> forks
-|--> get
-|--> hooks
+>> Github::Repos.actions                    >> github.issues.actions
+---                                         ---
+|--> all                                    |--> all
+|--> branches                               |--> comments
+|--> collaborators                          |--> create
+|--> commits                                |--> edit
+|--> contribs                               |--> events
+|--> contributors                           |--> find
+|--> create                                 |--> get
+|--> downloads                              |--> labels
+|--> edit                                   |--> list
+|--> find                                   |--> list_repo
+|--> forks                                  |--> list_repository
+|--> get                                    |--> milestones
+|--> hooks                                  ...
 ...
-```
-
-or you can call `actions` on chained query:
-
-```
->> github.issues.actions
----
-|--> all
-|--> comments
-|--> create
-|--> edit
-|--> events
-|--> find
-|--> get
-|--> labels
-|--> list
-|--> list_repo
-|--> list_repository
-|--> milestones
----
-```
-
-## Inputs
-
-Some API methods apart from required parameters such as username, repository name
-or organisation name, allow you to switch the way the data is returned to you, for instance
-
-```ruby
-github = Github.new
-github.git_data.trees.get 'peter-murach', 'github', 'c18647b75d72f19c1e0cc8af031e5d833b7f12ea'
-# => gets a tree
-
-github.git_data.trees.get 'peter-murach', 'github', 'c18647b75d72f19c1e0cc8af031e5d833b7f12ea',
-  recursive: true # => gets a whole tree recursively
-```
-
-by passing a block you can iterate over the file tree
-
-```ruby
-github.git_data.trees.get 'peter-murach', 'github', 'c18647b75d72f19c1e0cc8af031e5d833b7f12ea',
-  recursive: true do |file|
-    puts file.path
-end
 ```
 
 ## OAuth
