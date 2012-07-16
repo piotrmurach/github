@@ -23,7 +23,7 @@ module Github
       :ssl
     ].freeze
 
-    def default_options(options={}) # :nodoc:
+    def default_options(options={})
       {
         :headers => {
           ACCEPT           => "application/vnd.github.v3.raw+json," \
@@ -38,43 +38,61 @@ module Github
       }.merge(options)
     end
 
+    # Default middleware stack that uses default adapter as specified at
+    # configuration stage.
+    #
+    def default_middleware(options={})
+      Proc.new do |builder|
+        builder.use Github::Request::Jsonize
+        builder.use Faraday::Request::Multipart
+        builder.use Faraday::Request::UrlEncoded
+        builder.use Github::Request::OAuth2, oauth_token if oauth_token?
+        builder.use Github::Request::BasicAuth, authentication if basic_authed?
+
+        builder.use Faraday::Response::Logger if ENV['DEBUG']
+        builder.use Github::Response::Helpers
+        unless options[:raw]
+          builder.use Github::Response::Mashify
+          builder.use Github::Response::Jsonize
+        end
+        builder.use Github::Response::RaiseError
+        builder.adapter adapter
+      end
+    end
+
     @connection = nil
 
-    def clear_cache # :nodoc:
+    @stack = nil
+
+    def clear_cache
       @connection = nil
     end
 
-    def caching? # :nodoc:
+    def caching?
       !@connection.nil?
     end
 
-    def connection(options = {}) # :nodoc:
-
-      conn_options = default_options(options)
-      clear_cache unless options.empty?
-
-      @connection ||= begin
-        Faraday.new(conn_options) do |builder|
-          puts "OPTIONS:#{conn_options.inspect}" if ENV['DEBUG']
-
-          builder.use Github::Request::Jsonize
-          builder.use Faraday::Request::Multipart
-          builder.use Faraday::Request::UrlEncoded
-          builder.use Faraday::Response::Logger if ENV['DEBUG']
-
-          builder.use Github::Request::OAuth2, oauth_token if oauth_token?
-          builder.use Github::Request::BasicAuth, authentication if basic_authed?
-
-          builder.use Github::Response::Helpers
-          unless options[:raw]
-            builder.use Github::Response::Mashify
-            builder.use Github::Response::Jsonize
-          end
-
-          builder.use Github::Response::RaiseError
-          builder.adapter adapter
+    # Exposes middleware builder to facilitate custom stacks and easy
+    # addition of new extensions such as cache adapter.
+    #
+    def stack(options={}, &block)
+      @stack ||= begin
+        if block_given?
+          Faraday::Builder.new(&block)
+        else
+          Faraday::Builder.new(&default_middleware(options))
         end
       end
+    end
+
+    # Returns a Fraday::Connection object
+    #
+    def connection(options = {})
+      conn_options = default_options(options)
+      clear_cache unless options.empty?
+      puts "OPTIONS:#{conn_options.inspect}" if ENV['DEBUG']
+
+      @connection ||= Faraday.new(conn_options.merge(:builder => stack(options)))
     end
 
   end # Connection
