@@ -111,6 +111,29 @@ github.git_data.trees.get 'peter-murach', 'github', 'c18647b75d72f19c1e0cc8af031
 end
 ```
 
+## Advanced Configuration
+
+The `github_api` gem will use the default middleware stack which is exposed by calling `stack` on client instance. However, this stack can be freely modified with methods such as `insert`, `insert_after`, `delete` and `swap`. For instance to add your `CustomMiddleware` do
+
+```ruby
+github = Github.new do |config|
+  config.stack.insert_after Github::Response::Helpers, CustomMiddleware
+end
+```
+
+Furthermore, you can build your entire custom stack and specify other connection options such as `adapter`
+
+```ruby
+github = Github.new do |config|
+  config.adapter :excon
+
+  config.stack do |builder|
+    builder.use Github::Response::Helpers
+    builder.use Github::Response::Jsonize
+  end
+end
+```
+
 ## API
 
 Main API methods are grouped into the following classes that can be instantiated on their own
@@ -229,23 +252,6 @@ Github.new(:basic_auth => 'login:password')
 
 All parameters can be overwirtten as per method call. By passing parameters hash...
 
-## Stack(work in progress)
-
-By default the `github_api` gem will use the default middleware stack. However, a simple DSL is provided to create a custom stack, for instance:
-
-```ruby
-github = Github.stack do
-  request :filter
-  request :normalizer
-  request :validations
-
-  response :cache do
-    register :filestore
-  end
-
-  adapter :net_http
-end
-```
 
 By default no caching will be performed. In order to set the cache do... If no cache type is provided a default memoization is done.
 
