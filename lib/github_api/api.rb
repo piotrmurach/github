@@ -40,26 +40,26 @@ module Github
     # Creates new API
     def initialize(options={}, &block)
       super()
-      options = Github.options.merge(options)
-
-      Configuration::VALID_OPTIONS_KEYS.each do |key|
-        send("#{key}=", options[key])
-      end
-      _process_basic_auth(options[:basic_auth])
-      _set_api_client
+      setup options
+      set_api_client
       client if client_id? && client_secret?
 
       self.instance_eval(&block) if block_given?
     end
 
-  private
+    def setup(options={})
+      options = Github.options.merge(options)
+      Configuration::VALID_OPTIONS_KEYS.each do |key|
+        send("#{key}=", options[key])
+      end
+      process_basic_auth(options[:basic_auth])
+    end
 
     # Extract login and password from basic_auth parameter
-    def _process_basic_auth(auth)
+    def process_basic_auth(auth)
       case auth
       when String
-        self.login    = auth.split(':').first
-        self.password = auth.split(':').last
+        self.login, self.password = auth.split(':', 2)
       when Hash
         self.login    = auth[:login]
         self.password = auth[:password]
@@ -67,7 +67,7 @@ module Github
     end
 
     # Assigns current api class
-    def _set_api_client
+    def set_api_client
       Github.api_client = self
     end
 
