@@ -1,3 +1,9 @@
+0.6.3 (July 17, 2012)
+
+* Add ability to modify default middleware stack or create custome one.
+* Refactored and simplified main api initialization process.
+* Fixed issues #39 with json encoding request bodies.
+
 0.6.2 (July 15, 2012)
 
 * Drop yajl from development dependencies to allow jruby pass.
