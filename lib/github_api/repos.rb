@@ -54,7 +54,7 @@ module Github
 
     # Access to Repos::Contents API
     def contents
-      @commits ||= ApiFactory.new 'Repos::Contents'
+      @contents ||= ApiFactory.new 'Repos::Contents'
     end
 
     # Access to Repos::Downloads API
