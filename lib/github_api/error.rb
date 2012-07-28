@@ -5,15 +5,22 @@ module Github
     class GithubError < StandardError
       attr_reader :response_message, :response_headers
 
-      def initialize(message)
-        super message
-        @response_message = message
+      # Initialize a new Github error object.
+      #
+      def initialize(message=$!)
+        if message.respond_to?(:backtrace)
+          super(message.message)
+          @response_message = message
+        else
+          super(message.to_s)
+        end
       end
 
-#       def inspect
-#         %(#<#{self.class}>)
-#       end
-    end
+      def backtrace
+        @response_message ? @response_message.backtrace : super
+      end
+
+    end # GithubError
   end # Error
 end # Github
 
