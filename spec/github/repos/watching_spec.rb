@@ -67,7 +67,7 @@ describe Github::Repos::Watching do
     context "if user unauthenticated" do
       it "should fail to get resource without username " do
         stub_get("/user/watched").
-          to_return(:body => fixture("repos/watched.json"), :status => 401, :headers => {})
+          to_return(:body => '', :status => 401, :headers => {})
         expect {
           github.repos.watching.watched
         }.to raise_error(Github::Error::Unauthorized)

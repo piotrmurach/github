@@ -67,7 +67,7 @@ describe Github::Repos do
     context "resource not found" do
       before do
         stub_get("/repos/#{user}/#{repo}/branches").
-          to_return(:body => fixture('repos/branches.json'), :status => 404, :headers => {:content_type => "application/json; charset=utf-8"})
+          to_return(:body => '', :status => 404, :headers => {:content_type => "application/json; charset=utf-8"})
 
       end
 
@@ -163,8 +163,8 @@ describe Github::Repos do
     context "resource not found" do
       before do
         stub_get("/repos/#{user}/#{repo}/contributors").
-          to_return(:body => fixture('repos/contributors.json'), :status => 404, :headers => {:content_type => "application/json; charset=utf-8"})
-
+          to_return(:body => '', :status => 404, 
+            :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
       it "should fail to get resource" do
@@ -525,7 +525,8 @@ describe Github::Repos do
     context "resource not found" do
       before do
         stub_get("/repos/#{user}/#{repo}/tags").
-          to_return(:body => fixture('repos/branches.json'), :status => 404, :headers => {:content_type => "application/json; charset=utf-8"})
+          to_return(:body => '', :status => 404,
+            :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
       it "should fail to get resource" do
@@ -580,7 +581,8 @@ describe Github::Repos do
     context "resource not found" do
       before do
         stub_get("/repos/#{user}/#{repo}/teams").
-          to_return(:body => fixture('repos/teams.json'), :status => 404, :headers => {:content_type => "application/json; charset=utf-8"})
+          to_return(:body => '', :status => 404,
+            :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
       it "should fail to get resource" do

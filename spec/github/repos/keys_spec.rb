@@ -43,7 +43,7 @@ describe Github::Repos::Keys do
     context "resource not found" do
       before do
         stub_get("/repos/#{user}/#{repo}/keys").
-          to_return(:body => fixture("repos/keys.json"), :status => 404)
+          to_return(:body => '', :status => 404)
       end
 
       it "should fail to retrieve resource" do
@@ -85,7 +85,7 @@ describe Github::Repos::Keys do
     context "resource not found" do
       before do
         stub_get("/repos/#{user}/#{repo}/keys/#{key_id}").
-          to_return(:body => fixture("repos/keys.json"), :status => 404)
+          to_return(:body => '', :status => 404)
       end
 
       it "should fail to retrieve resource" do

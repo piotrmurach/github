@@ -52,7 +52,7 @@ describe Github::Orgs::Teams do
     context "resource not found" do
       before do
         stub_get("/orgs/#{org}/teams").
-          to_return(:body => fixture('orgs/teams.json'), :status => 404,
+          to_return(:body => '', :status => 404,
             :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
@@ -146,7 +146,7 @@ describe Github::Orgs::Teams do
     context "failed to create resource" do
       before do
         stub_post("/orgs/#{org}/teams").with(inputs).
-          to_return(:body => fixture('orgs/team.json'), :status => 404,
+          to_return(:body => '', :status => 404,
             :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
@@ -285,7 +285,8 @@ describe Github::Orgs::Teams do
     context "resource not found" do
       before do
         stub_get("/teams/#{team}/members").
-          to_return(:body => fixture('orgs/teams.json'), :status => 404, :headers => {:content_type => "application/json; charset=utf-8"})
+          to_return(:body => '', :status => 404,
+            :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
       it "should return 404 with a message 'Not Found'" do

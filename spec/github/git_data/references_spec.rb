@@ -131,7 +131,7 @@ describe Github::GitData::References do
     context "resource not found" do
       before do
         stub_get("/repos/#{user}/#{repo}/git/refs/#{ref}").
-          to_return(:body => fixture('git_data/reference.json'), :status => 404, :headers => {:content_type => "application/json; charset=utf-8"})
+          to_return(:body => '', :status => 404, :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
       it "should fail to retrive resource" do
@@ -196,8 +196,8 @@ describe Github::GitData::References do
     context "failed to create resource" do
       before do
         stub_post("/repos/#{user}/#{repo}/git/refs").with(inputs).
-          to_return(:body => fixture('git_data/reference.json'), :status => 404, :headers => {:content_type => "application/json; charset=utf-8"})
-
+          to_return(:body => '', :status => 404,
+            :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
       it "should faile to retrieve resource" do
@@ -256,8 +256,8 @@ describe Github::GitData::References do
     context "failed to update resource" do
       before do
         stub_patch("/repos/#{user}/#{repo}/git/refs/#{ref}").with(inputs).
-          to_return(:body => fixture('git_data/reference.json'), :status => 404, :headers => {:content_type => "application/json; charset=utf-8"})
-
+          to_return(:body => '', :status => 404,
+            :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
       it "should faile to retrieve resource" do

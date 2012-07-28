@@ -51,7 +51,7 @@ describe Github::Orgs::Members do
     context "resource not found" do
       before do
         stub_get("/orgs/#{org}/members").
-          to_return(:body => fixture('orgs/members.json'), :status => 404,
+          to_return(:body => '', :status => 404,
             :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
@@ -136,7 +136,8 @@ describe Github::Orgs::Members do
     context "resource not found" do
       before do
         stub_get("/orgs/#{org}/public_members").
-          to_return(:body => fixture('orgs/members.json'), :status => 404, :headers => {:content_type => "application/json; charset=utf-8"})
+          to_return(:body => '', :status => 404,
+            :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
       it "should return 404 with a message 'Not Found'" do
@@ -197,7 +198,7 @@ describe Github::Orgs::Members do
     context "resource not found" do
       before do
         stub_put("/orgs/#{org}/public_members/#{member}").
-          to_return(:body => fixture('orgs/members.json'), :status => 404,
+          to_return(:body => '', :status => 404,
             :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
@@ -232,7 +233,7 @@ describe Github::Orgs::Members do
     context "resource not found" do
       before do
         stub_delete("/orgs/#{org}/public_members/#{member}").
-          to_return(:body => fixture('orgs/members.json'), :status => 404,
+          to_return(:body => '', :status => 404,
             :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
