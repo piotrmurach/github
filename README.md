@@ -301,6 +301,24 @@ res.next_page
 res.last_page
 ```
 
+## Error Handling
+
+The generic error class `Github::Error::GithubError` will handle both the client(`Github::Error::ClientError`) and service(`Github::Error::ServiceError`) side errors. For instance in your code you can catch erros like
+
+```ruby
+begin
+  # Do something with github_api gem
+rescue Github::Error::GithubError => e
+  puts e.message
+
+  if e.is_a? Github::Error::ServiceError
+    # handle GitHub service errors such as 404
+  elsif e.is_a? Github::Error::ClientError
+    # handle client errors e.i. missing required parameter in request
+  end
+end
+```
+
 ## Response Message
 
 Each response comes packaged with methods allowing for inspection of HTTP start line and headers. For example to check for rate limits and status code issue
