@@ -3,7 +3,7 @@
 module Github #:nodoc
   # Raised when GitHub returns the HTTP status code 406
   module Error
-    class NotAcceptable < GithubError
+    class NotAcceptable < ServiceError
       http_status_code 406
 
       def initialize(response)
