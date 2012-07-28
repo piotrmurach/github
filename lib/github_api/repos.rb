@@ -277,7 +277,6 @@ module Github
     def list(*args)
       params = args.extract_options!
       normalize! params
-      _merge_user_into_params!(params) unless params.has_key?('user')
       filter! %w[ org user type ], params
 
       response = if (user_name = params.delete("user"))

@@ -88,10 +88,6 @@ module Github
       self.repo = repo_name || self.repo
     end
 
-    def _merge_user_into_params!(params)  #  :nodoc:
-      params.merge!({ 'user' => self.user }) if user?
-    end
-
     def _merge_user_repo_into_params!(params)   #  :nodoc:
       { 'user' => self.user, 'repo' => self.repo }.merge!(params)
     end

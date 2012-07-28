@@ -35,7 +35,6 @@ module Github
     def watched(*args)
       params = args.extract_options!
       normalize! params
-      _merge_user_into_params!(params) unless params.has_key?('user')
 
       response = if (user_name = params.delete('user'))
         get_request("/users/#{user_name}/watched", params)
