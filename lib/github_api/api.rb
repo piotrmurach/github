@@ -88,10 +88,6 @@ module Github
       self.repo = repo_name || self.repo
     end
 
-    def _merge_user_repo_into_params!(params)   #  :nodoc:
-      { 'user' => self.user, 'repo' => self.repo }.merge!(params)
-    end
-
     # TODO: See whether still needed, consider adding to core_exts
     def _hash_traverse(hash, &block)
       hash.each do |key, val|
