@@ -1,3 +1,14 @@
+0.6.4 (July 28, 2012)
+
+* Fix bug Issue#41 - content stays encoded in base64 and
+  caching Contents api call to correct instance.
+* Fix bug Issue#46  - remove user parameters merging.
+* Add response body parsing and http status code setup to ServiceError.
+* Change all service errors to include http status code and
+  to inherit from service error class.
+* Update readme with error handling explanation.
+* Add ratelimit requests.
+
 0.6.3 (July 17, 2012)
 
 * Add ability to modify default middleware stack or create custome one.
