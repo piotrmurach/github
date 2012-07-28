@@ -1,12 +1,15 @@
 # encoding: utf-8
 
 module Github #:nodoc
-  # Raised when Github returns the HTTP status code 404
+  # Raised when Github returns the HTTP status code 503
   module Error
-    class ServiceUnavailable < GithubError
-      def initialize(env)
-        super(env)
+    class ServiceUnavailable < ServiceError
+      http_status_code 503
+
+      def initialize(response)
+        super(response)
       end
-    end
+
+    end # ServiceUnavailable
   end # Error
 end # Github
