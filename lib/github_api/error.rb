@@ -26,17 +26,19 @@ end # Github
 
 %w[
   service_error
-  not_found
-  forbidden
   bad_request
   unauthorized
-  service_unavailable
-  internal_server_error
+  forbidden
+  not_found
+  not_acceptable
   unprocessable_entity
+  internal_server_error
+  service_unavailable
   client_error
   invalid_options
   required_params
   unknown_value
+  validations
 ].each do |error|
   require "github_api/error/#{error}"
 end

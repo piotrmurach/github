@@ -16,6 +16,8 @@ module Github
         raise Github::Error::Forbidden.new(env)
       when 404
         raise Github::Error::NotFound.new(env)
+      when 406
+        raise Github::Error::NotAcceptable.new(env)
       when 422
         raise Github::Error::UnprocessableEntity.new(env)
       when 500
