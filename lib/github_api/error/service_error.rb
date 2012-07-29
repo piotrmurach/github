@@ -51,6 +51,12 @@ module Github
         define_method(:http_status_code) { code }
       end
 
+      def self.errors
+        @errors ||= Hash[
+          descendants.map { |klass| [klass.new({}).http_status_code, klass] }
+        ]
+      end
+
     end
   end # Error
 end # Github
