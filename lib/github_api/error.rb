@@ -1,8 +1,12 @@
 # encoding: utf-8
 
+require 'github_api/descendants'
+
 module Github
   module Error
     class GithubError < StandardError
+      extend Descendants
+
       attr_reader :response_message, :response_headers
 
       # Initialize a new Github error object.
