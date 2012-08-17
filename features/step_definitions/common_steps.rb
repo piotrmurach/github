@@ -22,6 +22,20 @@ Then /^the response status should be (.*)$/ do |expected_response|
   @response.status.should eql expected_response.to_i
 end
 
+Then /^the response should be (.*)$/ do |expected_response|
+  expected_response = case expected_response
+  when /false/
+    false
+  when /true/
+    true
+  when /\d+/
+    expected_response.to_i
+  else
+    expected_response
+  end
+  @response.should eql expected_response
+end
+
 Then /^the response type should be (.*)$/ do |type|
   case type.downcase
   when 'json'
