@@ -1,0 +1,46 @@
+--- 
+http_interactions: 
+- request: 
+    method: get
+    uri: https://<BASIC_AUTH>@api.github.com/repos/peter-murach/github/assignees/peter-murach?access_token=<TOKEN>
+    body: 
+      encoding: US-ASCII
+      string: ""
+    headers: 
+      Accept: 
+      - application/jsonapplication/vnd.github+json;q=0.7application/vnd.github.v3.raw+json;q=0.5application/vnd.github.beta.raw+json;q=0.1
+      Accept-Charset: 
+      - utf-8
+      User-Agent: 
+      - Github Ruby Gem 0.6.4
+      Content-Type: 
+      - application/json
+      Accept-Encoding: 
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response: 
+    status: 
+      code: 204
+      message: No Content
+    headers: 
+      Server: 
+      - nginx/1.0.13
+      Date: 
+      - Fri, 17 Aug 2012 15:53:52 GMT
+      Connection: 
+      - keep-alive
+      Status: 
+      - 204 No Content
+      X-Ratelimit-Remaining: 
+      - "4996"
+      X-Content-Type-Options: 
+      - nosniff
+      X-Ratelimit-Limit: 
+      - "5000"
+      Cache-Control: 
+      - ""
+    body: 
+      encoding: US-ASCII
+      string: ""
+    http_version: 
+  recorded_at: Fri, 17 Aug 2012 15:53:52 GMT
+recorded_with: VCR 2.2.0

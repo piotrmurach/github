@@ -1,0 +1,64 @@
+--- 
+http_interactions: 
+- request: 
+    method: get
+    uri: https://<BASIC_AUTH>@api.github.com/repos/peter-murach/github/assignees?access_token=<TOKEN>
+    body: 
+      encoding: US-ASCII
+      string: ""
+    headers: 
+      Accept: 
+      - application/jsonapplication/vnd.github+json;q=0.7application/vnd.github.v3.raw+json;q=0.5application/vnd.github.beta.raw+json;q=0.1
+      Accept-Charset: 
+      - utf-8
+      User-Agent: 
+      - Github Ruby Gem 0.6.4
+      Content-Type: 
+      - application/json
+      Accept-Encoding: 
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response: 
+    status: 
+      code: 200
+      message: OK
+    headers: 
+      Server: 
+      - nginx/1.0.13
+      Date: 
+      - Fri, 17 Aug 2012 15:27:01 GMT
+      Content-Type: 
+      - application/json; charset=utf-8
+      Transfer-Encoding: 
+      - chunked
+      Connection: 
+      - keep-alive
+      Status: 
+      - 200 OK
+      Last-Modified: 
+      - Wed, 15 Aug 2012 10:37:36 GMT
+      X-Ratelimit-Limit: 
+      - "5000"
+      X-Ratelimit-Remaining: 
+      - "4999"
+      Vary: 
+      - Accept, Authorization, Cookie
+      X-Content-Type-Options: 
+      - nosniff
+      Etag: 
+      - "\"403ae5e19651c30babab5ad588c763fd\""
+      Cache-Control: 
+      - private, s-maxage=60, max-age=60
+      Content-Encoding: 
+      - gzip
+    body: 
+      encoding: ASCII-8BIT
+      string: !binary |
+        H4sIAAAAAAAAA4WPyw6CMBRE/6WJO2kBCwKJcedPGGMu9FoaeTR9uDH+u/WB
+        QTfuJjczc+bur6QbpRpIRTQ6NFHvDTQtWRJvunBsndO2Ygy0olK51te0GXvm
+        LRrLfhLSwAUcmKMSIXmqU16KLMs5xKeiySCu8xJjsU5EVpS8DIi3/ZtksfEG
+        6VT2xL2M7F/lVmw+e1NeUKRwhh4UHdAxsBadnT2xSHeqB4k2iIk211HCY6oH
+        GYY+HuKcr5L0drgD23Et5DIBAAA=
+
+    http_version: 
+  recorded_at: Fri, 17 Aug 2012 15:27:01 GMT
+recorded_with: VCR 2.2.0
