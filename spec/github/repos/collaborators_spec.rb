@@ -54,7 +54,8 @@ describe Github::Repos::Collaborators do
     context "resource not found" do
       before do
         stub_get("/repos/#{user}/#{repo}/collaborators").
-          to_return(:body => "", :status => [404, "Not Found"], :headers => {:content_type => "application/json; charset=utf-8"})
+          to_return(:body => "", :status => [404, "Not Found"],
+            :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
       it "should return 404 with a message 'Not Found'" do
@@ -65,12 +66,12 @@ describe Github::Repos::Collaborators do
     end
   end # collaborators
 
-
   describe "collaborator?" do
     context "resource found " do
       before do
         stub_get("/repos/#{user}/#{repo}/collaborators/#{collaborator}").
-          to_return(:body => '', :status => 204, :headers => {:content_type => "application/json; charset=utf-8"})
+          to_return(:body => '', :status => 204,
+            :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
       it "should fail to get resource without collaborator name" do
@@ -95,7 +96,8 @@ describe Github::Repos::Collaborators do
     context "resource not found" do
       before do
         stub_get("/repos/#{user}/#{repo}/collaborators/#{collaborator}").
-          to_return(:body => '', :status => 404, :headers => {:content_type => "application/json; charset=utf-8"})
+          to_return(:body => '', :status => 404,
+            :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
       it "should fail to retrieve resource" do
