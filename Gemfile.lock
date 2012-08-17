@@ -83,7 +83,7 @@ DEPENDENCIES
   guard-rspec
   rake
   rb-fsevent
-  rspec (= 2.10.0)
+  rspec
   simplecov (~> 0.6.1)
   vcr (~> 2.2.0)
   webmock (~> 1.8.0)
