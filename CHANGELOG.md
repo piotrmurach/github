@@ -1,3 +1,10 @@
+0.6.5 (August 17, 2012)
+
+* Add ability to list class subclasses.
+* Change http error handling to allow for easy extensions of error classes.
+* Add assignee api with tests.
+* Add emojis api with tests.
+
 0.6.4 (July 28, 2012)
 
 * Fix bug Issue#41 - content stays encoded in base64 and
