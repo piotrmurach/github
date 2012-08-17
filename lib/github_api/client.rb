@@ -9,6 +9,10 @@ module Github
       @events ||= ApiFactory.new 'Events', options
     end
 
+    def emojis(options = {})
+      @emojis ||= ApiFactory.new 'Emojis', options
+    end
+
     def gists(options = {})
       @gists ||= ApiFactory.new 'Gists', options
     end
