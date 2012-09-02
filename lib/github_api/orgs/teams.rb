@@ -31,13 +31,13 @@ module Github
     #
     # = Examples
     #  github = Github.new :oauth_token => '...'
-    #  github.orgs.teams.get 'team-name'
+    #  github.orgs.teams.get 'team-id'
     #
-    def get(team_name, params={})
-      _validate_presence_of team_name
+    def get(team_id, params={})
+      _validate_presence_of team_id
       normalize! params
 
-      get_request("/teams/#{team_name}", params)
+      get_request("/teams/#{team_id}", params)
     end
     alias :find :get
 
@@ -83,18 +83,18 @@ module Github
     #
     # = Examples
     #  github = Github.new :oauth_token => '...'
-    #  github.orgs.teams.edit 'team-name',
+    #  github.orgs.teams.edit 'team-id',
     #    "name" => "new team name",
     #    "permission" => "push"
     #
-    def edit(team_name, params={})
-      _validate_presence_of team_name
+    def edit(team_id, params={})
+      _validate_presence_of team_id
       normalize! params
       filter! VALID_TEAM_PARAM_NAMES, params
       assert_valid_values(VALID_TEAM_PARAM_VALUES, params)
       assert_required_keys(%w[ name ], params)
 
-      patch_request("/teams/#{team_name}", params)
+      patch_request("/teams/#{team_id}", params)
     end
 
     # Delete a team
@@ -102,12 +102,12 @@ module Github
     #
     # = Examples
     #  github = Github.new :oauth_token => '...'
-    #  github.orgs.teams.delete 'team-name'
+    #  github.orgs.teams.delete 'team-id'
     #
-    def delete(team_name, params={})
-      _validate_presence_of team_name
+    def delete(team_id, params={})
+      _validate_presence_of team_id
       normalize! params
-      delete_request("/teams/#{team_name}", params)
+      delete_request("/teams/#{team_id}", params)
     end
     alias :remove :delete
 
@@ -116,14 +116,14 @@ module Github
     #
     # = Examples
     #  github = Github.new :oauth_token => '...'
-    #  github.orgs.teams.list_members 'team-name'
-    #  github.orgs.teams.list_members 'team-name' { |member| ... }
+    #  github.orgs.teams.list_members 'team-id'
+    #  github.orgs.teams.list_members 'team-id' { |member| ... }
     #
-    def list_members(team_name, params={})
-      _validate_presence_of team_name
+    def list_members(team_id, params={})
+      _validate_presence_of team_id
       normalize! params
 
-      response = get_request("/teams/#{team_name}/members", params)
+      response = get_request("/teams/#{team_id}/members", params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -133,12 +133,12 @@ module Github
     #
     # = Examples
     #  github = Github.new :oauth_token => '...'
-    #  github.orgs.teams.team_member? 'team-name', 'user-name'
+    #  github.orgs.teams.team_member? 'team-id', 'user-name'
     #
-    def team_member?(team_name, member_name, params={})
-      _validate_presence_of team_name, member_name
+    def team_member?(team_id, member_name, params={})
+      _validate_presence_of team_id, member_name
       normalize! params
-      get_request("/teams/#{team_name}/members/#{member_name}", params)
+      get_request("/teams/#{team_id}/members/#{member_name}", params)
       true
     rescue Github::Error::NotFound
       false
@@ -149,12 +149,12 @@ module Github
     #
     # = Examples
     #  github = Github.new :oauth_token => '...'
-    #  github.orgs.teams.add_member 'team-name', 'user-name'
+    #  github.orgs.teams.add_member 'team-id', 'user-name'
     #
-    def add_member(team_name, member_name, params={})
-      _validate_presence_of team_name, member_name
+    def add_member(team_id, member_name, params={})
+      _validate_presence_of team_id, member_name
       normalize! params
-      put_request("/teams/#{team_name}/members/#{member_name}", params)
+      put_request("/teams/#{team_id}/members/#{member_name}", params)
     end
     alias :add_team_member :add_member
 
@@ -166,12 +166,12 @@ module Github
     #
     # = Examples
     #  github = Github.new :oauth_token => '...'
-    #  github.orgs.teams.remove_member 'team-name', 'member-name'
+    #  github.orgs.teams.remove_member 'team-id', 'member-name'
     #
-    def remove_member(team_name, member_name, params={})
-      _validate_presence_of team_name, member_name
+    def remove_member(team_id, member_name, params={})
+      _validate_presence_of team_id, member_name
       normalize! params
-      delete_request("/teams/#{team_name}/members/#{member_name}", params)
+      delete_request("/teams/#{team_id}/members/#{member_name}", params)
     end
     alias :remove_team_member :remove_member
 
@@ -179,13 +179,13 @@ module Github
     #
     # = Examples
     #  github = Github.new :oauth_token => '...'
-    #  github.orgs.teams.list_repos 'team-name'
+    #  github.orgs.teams.list_repos 'team-id'
     #
-    def list_repos(team_name, params={})
-      _validate_presence_of team_name
+    def list_repos(team_id, params={})
+      _validate_presence_of team_id
       normalize! params
 
-      response = get_request("/teams/#{team_name}/repos", params)
+      response = get_request("/teams/#{team_id}/repos", params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -195,12 +195,12 @@ module Github
     #
     # = Examples
     #  github = Github.new :oauth_token => '...'
-    #  github.orgs.teams.team_repo? 'team-name', 'user-name', 'repo-name'
+    #  github.orgs.teams.team_repo? 'team-id', 'user-name', 'repo-name'
     #
-    def team_repo?(team_name, user_name, repo_name, params={})
-      _validate_presence_of team_name, user_name, repo_name
+    def team_repo?(team_id, user_name, repo_name, params={})
+      _validate_presence_of team_id, user_name, repo_name
       normalize! params
-      get_request("/teams/#{team_name}/repos/#{user_name}/#{repo_name}", params)
+      get_request("/teams/#{team_id}/repos/#{user_name}/#{repo_name}", params)
       true
     rescue Github::Error::NotFound
       false
@@ -216,12 +216,12 @@ module Github
     #
     # = Examples
     #  github = Github.new :oauth_token => '...'
-    #  github.orgs.teams.add_repo 'team-name', 'user-name', 'repo-name'
+    #  github.orgs.teams.add_repo 'team-id', 'user-name', 'repo-name'
     #
-    def add_repo(team_name, user_name, repo_name, params={})
-      _validate_presence_of team_name, user_name, repo_name
+    def add_repo(team_id, user_name, repo_name, params={})
+      _validate_presence_of team_id, user_name, repo_name
       normalize! params
-      put_request("/teams/#{team_name}/repos/#{user_name}/#{repo_name}", params)
+      put_request("/teams/#{team_id}/repos/#{user_name}/#{repo_name}", params)
     end
     alias :add_repository :add_repo
 
@@ -233,12 +233,12 @@ module Github
     #
     # = Examples
     #  github = Github.new :oauth_token => '...'
-    #  github.orgs.teams.remove_repo 'team-name', 'user-name', 'repo-name'
+    #  github.orgs.teams.remove_repo 'team-id', 'user-name', 'repo-name'
     #
-    def remove_repo(team_name, user_name, repo_name, params={})
-      _validate_presence_of team_name, user_name, repo_name
+    def remove_repo(team_id, user_name, repo_name, params={})
+      _validate_presence_of team_id, user_name, repo_name
       normalize! params
-      delete_request("/teams/#{team_name}/repos/#{user_name}/#{repo_name}", params)
+      delete_request("/teams/#{team_id}/repos/#{user_name}/#{repo_name}", params)
     end
     alias :remove_repository :remove_repo
 
