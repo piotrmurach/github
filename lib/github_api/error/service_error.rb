@@ -1,10 +1,13 @@
 # encoding: utf-8
-require 'multi_json'
+# require 'multi_json'
+require 'github_api/jsonable'
 
 module Github
   # Raised when GitHub returns any of the HTTP status codes
   module Error
     class ServiceError < GithubError
+      include ::Github::Jsonable
+
       attr_reader :http_headers
 
       def initialize(response)
@@ -20,7 +23,7 @@ module Github
 
       def decode_body(body)
         if body.respond_to?(:to_str) && body.length >= 2
-           MultiJson.load(body, :symbolize_keys => true)
+           decode body, :symbolize_keys => true
         else
           body
         end
