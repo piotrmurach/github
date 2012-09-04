@@ -79,7 +79,7 @@ module Github
       # = Parameters
       # * <tt>:sha</tt>     Optional string. Sha or branch to start listing commits from.
       # * <tt>:path</tt>    Optional string. Only commits containing this file path will be returned.
-      # * <tt>:author</tt>  Optional string. Only commits from this author will be returned.
+      # * <tt>:author</tt>  GitHub login, name, or email by which to filter by commit author.
       #
       # = Examples
       #  github = Github.new
