@@ -77,8 +77,9 @@ module Github
       # List commits on a repository
       #
       # = Parameters
-      # * <tt>:sha</tt>   Optional string. Sha or branch to start listing commits from.
-      # * <tt>:path</tt>  Optional string. Only commits containing this file path will be returned
+      # * <tt>:sha</tt>     Optional string. Sha or branch to start listing commits from.
+      # * <tt>:path</tt>    Optional string. Only commits containing this file path will be returned.
+      # * <tt>:author</tt>  Optional string. Only commits from this author will be returned.
       #
       # = Examples
       #  github = Github.new
@@ -89,7 +90,7 @@ module Github
         _update_user_repo_params(user_name, repo_name)
         _validate_user_repo_params(user, repo) unless user? && repo?
         normalize! params
-        filter! %w[ sha path], params
+        filter! %w[sha path author], params
 
         response = get_request("/repos/#{user}/#{repo}/commits", params)
         return response unless block_given?
