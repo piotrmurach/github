@@ -15,7 +15,8 @@ module Github
       :Hooks         => 'hooks',
       :Keys          => 'keys',
       :Watching      => 'watching',
-      :PubSubHubbub  => 'pub_sub_hubbub'
+      :PubSubHubbub  => 'pub_sub_hubbub',
+      :Statuses         => 'statuses'
 
     DEFAULT_REPO_OPTIONS = {
       "homepage"   => "https://github.com",
@@ -92,6 +93,11 @@ module Github
     def pubsubhubbub
       @pubsubhubbub ||= ApiFactory.new 'Repos::PubSubHubbub'
     end
+
+    # Access to Repos::Statuses API
+    def statuses
+      @statuses ||= ApiFactory.new 'Repos::Statuses'
+    end    
 
     # List branches
     #
