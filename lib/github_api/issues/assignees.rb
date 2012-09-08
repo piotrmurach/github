@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 module Github
-  class Repos::Assignees < API
+  class Issues::Assignees < API
 
     # lists all the available assignees (owner + collaborators) 
     # to which issues may be assigned.
@@ -35,5 +35,5 @@ module Github
       false
     end
 
-  end # Repos::Assignees
+  end # Issues::Assignees
 end # Github

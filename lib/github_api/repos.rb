@@ -6,7 +6,6 @@ module Github
 
     # Load all the modules after initializing Repos to avoid superclass mismatch
     autoload_all 'github_api/repos',
-      :Assignees     => 'assignees',
       :Collaborators => 'collaborators',
       :Commits       => 'commits',
       :Contents      => 'contents',
@@ -42,11 +41,6 @@ module Github
     # Creates new Repositories API
     def initialize(options = {})
       super(options)
-    end
-
-    # Access to Repos::Collaborators API
-    def assignees
-      @assignees ||= ApiFactory.new 'Repos::Assignees'
     end
 
     # Access to Repos::Collaborators API

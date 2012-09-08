@@ -5,6 +5,7 @@ module Github
     extend AutoloadHelper
 
     autoload_all 'github_api/issues',
+      :Assignees  => 'assignees',
       :Comments   => 'comments',
       :Events     => 'events',
       :Labels     => 'labels',
@@ -37,6 +38,11 @@ module Github
     # Creates new Issues API
     def initialize(options = {})
       super(options)
+    end
+
+    # Access to Issues::Assignees API
+    def assignees
+      @assignees ||= ApiFactory.new 'Issues::Assignees'
     end
 
     # Access to Issues::Comments API

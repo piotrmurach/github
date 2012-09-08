@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Github::Repos::Assignees do
-  let(:github) { Github::Repos::Assignees.new }
+describe Github::Issues::Assignees do
+  let(:github) { Github::Issues::Assignees.new }
   let(:user) { 'peter-murach' }
   let(:repo) { 'github' }
   let(:assignee) { 'octocat' }

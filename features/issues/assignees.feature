@@ -1,14 +1,14 @@
-Feature: Contents API
+Feature: Assignees API
 
   Background:
-    Given I have "Github::Repos::Assignees" instance
+    Given I have "Github::Issues::Assignees" instance
 
   Scenario: List
 
     Given I want to list resources with the following params:
       | user         | repo   |
       | peter-murach | github |
-    When I make request within a cassette named "repos/assignees/list"
+    When I make request within a cassette named "issues/assignees/list"
     Then the response status should be 200
       And the response type should be JSON
       And the response should not be empty
@@ -18,7 +18,7 @@ Feature: Contents API
     Given I want to check resource with the following params:
       | user         | repo   | assignee |
       | peter-murach | github | wycats   |
-    When I make request within a cassette named "repos/assignees/ckeck_not"
+    When I make request within a cassette named "issues/assignees/ckeck_not"
     Then the response should be false
 
   Scenario: Check assignee belongs to repository
@@ -26,5 +26,5 @@ Feature: Contents API
     Given I want to check resource with the following params:
       | user         | repo   | assignee     |
       | peter-murach | github | peter-murach |
-    When I make request within a cassette named "repos/assignees/ckeck"
+    When I make request within a cassette named "issues/assignees/ckeck"
     Then the response should be true
