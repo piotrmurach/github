@@ -13,10 +13,11 @@ module Github
       :Forks         => 'forks',
       :Hooks         => 'hooks',
       :Keys          => 'keys',
-      :Watching      => 'watching',
+      :Merging       => 'merging',
       :PubSubHubbub  => 'pub_sub_hubbub',
       :Starring      => 'starring',
-      :Statuses      => 'statuses'
+      :Statuses      => 'statuses',
+      :Watching      => 'watching'
 
     DEFAULT_REPO_OPTIONS = {
       "homepage"   => "https://github.com",
@@ -77,6 +78,11 @@ module Github
     # Access to Repos::Keys API
     def keys
       @keys ||= ApiFactory.new 'Repos::Keys'
+    end
+
+    # Access to Repos::Merging API
+    def merging
+      @mergin ||= ApiFactory.new 'Repos::Merging'
     end
 
     # Access to Repos::Watchin API
