@@ -1,24 +1,27 @@
 # encoding: utf-8
 
 module Github
+  # Watching a Repository registers the user to receive notificactions on new
+  # discussions, as well as events in the user’s activity feed.
   class Repos::Watching < API
 
     # List repo watchers
     #
     # = Examples
     #  github = Github.new :user => 'user-name', :repo => 'repo-name'
-    #  github.repos.watching.watchers
-    #  github.repos.watching.watchers { |watcher| ... }
+    #  github.repos.watching.list
+    #  github.repos.watching.list { |watcher| ... }
     #
-    def watchers(user_name, repo_name, params={})
+    def list(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
       _validate_user_repo_params(user, repo) unless user? && repo?
       normalize! params
 
-      response = get_request("/repos/#{user}/#{repo}/watchers", params)
+      response = get_request("/repos/#{user}/#{repo}/subscribers", params)
       return response unless block_given?
       response.each { |el| yield el }
     end
+    alias :all :list
 
     # List repos being watched by a user
     #
@@ -37,9 +40,9 @@ module Github
       normalize! params
 
       response = if (user_name = params.delete('user'))
-        get_request("/users/#{user_name}/watched", params)
+        get_request("/users/#{user_name}/subscriptions", params)
       else
-        get_request("/user/watched", params)
+        get_request("/user/subscriptions", params)
       end
       return response unless block_given?
       response.each { |el| yield el }
@@ -55,7 +58,7 @@ module Github
     def watching?(user_name, repo_name, params={})
       _validate_presence_of user_name, repo_name
       normalize! params
-      get_request("/user/watched/#{user_name}/#{repo_name}", params)
+      get_request("/user/subscriptions/#{user_name}/#{repo_name}", params)
       true
     rescue Github::Error::NotFound
       false
@@ -67,12 +70,12 @@ module Github
     #
     # = Examples
     #  github = Github.new
-    #  github.repos.watching.start_watching 'user-name', 'repo-name'
+    #  github.repos.watching.watch 'user-name', 'repo-name'
     #
-    def start_watching(user_name, repo_name, params={})
+    def watch(user_name, repo_name, params={})
       _validate_presence_of user_name, repo_name
       normalize! params
-      put_request("/user/watched/#{user_name}/#{repo_name}", params)
+      put_request("/user/subscriptions/#{user_name}/#{repo_name}", params)
     end
 
     # Stop watching a repository
@@ -80,12 +83,12 @@ module Github
     # You need to be authenticated to stop watching a repository.
     # = Examples
     #  github = Github.new
-    #  github.repos.watching.start_watching 'user-name', 'repo-name'
+    #  github.repos.watching.unwatch 'user-name', 'repo-name'
     #
-    def stop_watching(user_name, repo_name, params={})
+    def unwatch(user_name, repo_name, params={})
       _validate_presence_of user_name, repo_name
       normalize! params
-      delete_request("/user/watched/#{user_name}/#{repo_name}", params)
+      delete_request("/user/subscriptions/#{user_name}/#{repo_name}", params)
     end
 
   end # Repos::Watching
