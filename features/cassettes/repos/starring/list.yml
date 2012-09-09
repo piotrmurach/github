@@ -1,0 +1,98 @@
+--- 
+http_interactions: 
+- request: 
+    method: get
+    uri: https://<BASIC_AUTH>@api.github.com/repos/peter-murach/github/stargazers?access_token=<TOKEN>
+    body: 
+      encoding: US-ASCII
+      string: ""
+    headers: 
+      Accept: 
+      - application/jsonapplication/vnd.github+json;q=0.7application/vnd.github.v3.raw+json;q=0.5application/vnd.github.beta.raw+json;q=0.1
+      Accept-Charset: 
+      - utf-8
+      User-Agent: 
+      - Github Ruby Gem 0.6.5
+      Content-Type: 
+      - application/json
+      Accept-Encoding: 
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response: 
+    status: 
+      code: 200
+      message: OK
+    headers: 
+      Server: 
+      - nginx
+      Date: 
+      - Sun, 09 Sep 2012 14:49:28 GMT
+      Content-Type: 
+      - application/json; charset=utf-8
+      Transfer-Encoding: 
+      - chunked
+      Connection: 
+      - keep-alive
+      Status: 
+      - 200 OK
+      X-Content-Type-Options: 
+      - nosniff
+      Link: 
+      - <https://api.github.com/repos/peter-murach/github/stargazers?access_token=<TOKEN>&page=2>; rel="next", <https://api.github.com/repos/peter-murach/github/stargazers?access_token=<TOKEN>&page=4>; rel="last"
+      Last-Modified: 
+      - Fri, 07 Sep 2012 17:39:17 GMT
+      Vary: 
+      - Accept, Authorization, Cookie
+      X-Ratelimit-Limit: 
+      - "5000"
+      X-Github-Media-Type: 
+      - github.beta
+      Cache-Control: 
+      - private, max-age=60, s-maxage=60
+      X-Ratelimit-Remaining: 
+      - "4999"
+      Etag: 
+      - "\"b1636fa76bd97d01ad3264220b2f1db9\""
+      Content-Encoding: 
+      - gzip
+    body: 
+      encoding: ASCII-8BIT
+      string: !binary |
+        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
+        ExUjAAA=
+
+    http_version: 
+  recorded_at: Sun, 09 Sep 2012 14:49:28 GMT
+recorded_with: VCR 2.2.0

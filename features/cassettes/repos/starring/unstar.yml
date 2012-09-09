@@ -1,0 +1,46 @@
+--- 
+http_interactions: 
+- request: 
+    method: delete
+    uri: https://<BASIC_AUTH>@api.github.com/user/starred/peter-murach/github?access_token=<TOKEN>
+    body: 
+      encoding: US-ASCII
+      string: ""
+    headers: 
+      Accept: 
+      - application/jsonapplication/vnd.github+json;q=0.7application/vnd.github.v3.raw+json;q=0.5application/vnd.github.beta.raw+json;q=0.1
+      Accept-Charset: 
+      - utf-8
+      User-Agent: 
+      - Github Ruby Gem 0.6.5
+      Content-Type: 
+      - application/json
+  response: 
+    status: 
+      code: 204
+      message: No Content
+    headers: 
+      Server: 
+      - nginx
+      Date: 
+      - Sun, 09 Sep 2012 15:00:21 GMT
+      Connection: 
+      - keep-alive
+      Status: 
+      - 204 No Content
+      X-Ratelimit-Remaining: 
+      - "4994"
+      X-Github-Media-Type: 
+      - github.beta
+      Cache-Control: 
+      - ""
+      X-Ratelimit-Limit: 
+      - "5000"
+      X-Content-Type-Options: 
+      - nosniff
+    body: 
+      encoding: US-ASCII
+      string: ""
+    http_version: 
+  recorded_at: Sun, 09 Sep 2012 15:00:21 GMT
+recorded_with: VCR 2.2.0
