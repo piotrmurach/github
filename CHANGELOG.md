@@ -1,3 +1,13 @@
+0.7.0 (September 9, 2012)
+
+* Fix multi json compatibility issues.
+* Move assigness api inside the issues scope.
+* Add Statuses Api.
+* Add Starring Api.
+* Change Watching api(old Watching available as Starring Api), rename
+  'start_watching' to 'watch' and 'stop_watching' to 'unwatch'.
+* Add Repository Merging Api.
+
 0.6.5 (August 17, 2012)
 
 * Add ability to list class subclasses.
