@@ -32,14 +32,6 @@ Feature: Watching API
     When I make request within a cassette named "repos/watching/watching"
     Then the response should be false
 
-  Scenario: Watching
-
-    Given I want to watching? resource with the following params:
-      | user  | repo            |
-      | murek | github_api_test |
-    When I make request within a cassette named "repos/watching/watching_ok"
-    Then the response should be true
-
   Scenario: Watch
 
     Given I want to watch resource with the following params:

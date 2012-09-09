@@ -32,14 +32,6 @@ Feature: Starring API
     When I make request within a cassette named "repos/starring/starring"
     Then the response should be false
 
-  Scenario: Starring
-
-    Given I want to starring? resource with the following params:
-      | user  | repo            |
-      | murek | github_api_test |
-    When I make request within a cassette named "repos/starring/starring_ok"
-    Then the response should be true
-
   Scenario: Star
 
     Given I want to star resource with the following params:
