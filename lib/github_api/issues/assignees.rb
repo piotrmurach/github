@@ -8,8 +8,8 @@ module Github
     #
     # = Examples
     #
-    #  Github.repos.assignees.list 'user', 'repo'
-    #  Github.repos.assignees.list 'user', 'repo' { |assignee| ... }
+    #  Github.issues.assignees.list 'user', 'repo'
+    #  Github.issues.assignees.list 'user', 'repo' { |assignee| ... }
     #
     def list(user_name, repo_name, params={})
       normalize! params
@@ -23,7 +23,7 @@ module Github
     #
     # = Examples
     #
-    #  Github.repos.assignees.check 'user', 'repo', 'assignee'
+    #  Github.issues.assignees.check 'user', 'repo', 'assignee'
     #
     def check(user_name, repo_name, assignee, params={})
       _validate_presence_of assignee
