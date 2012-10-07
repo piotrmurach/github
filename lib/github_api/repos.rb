@@ -183,6 +183,21 @@ module Github
       end
     end
 
+    # Delete a repository
+    # Deleting a repository requires admin access. If OAuth is used, the delete_repo scope is required.
+    #
+    # = Examples
+    #  github = Github.new :oauth_token => '...'
+    #  github.repos.delete 'user-name', 'repo-name'
+    def delete(user_name, repo_name, params={})
+      _update_user_repo_params(user_name, repo_name)
+      _validate_user_repo_params(user, repo) unless user? && repo?
+      normalize! params
+
+      delete_request("/repos/#{user}/#{repo}")
+    end
+    alias :remove :delete
+
     # List contributors
     #
     # = Parameters
