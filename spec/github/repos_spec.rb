@@ -237,6 +237,40 @@ describe Github::Repos do
     end
   end
 
+  describe "#delete" do
+    before do
+      stub_delete("/repos/#{user}/#{repo}").
+      to_return(:body => '', :status => 204, :headers => { :content_type => "application/json; charset=utf-8"})
+    end
+
+    it { github.repos.should respond_to :remove }
+
+    it "should delete the resource successfully" do
+      github.repos.delete user, repo
+      a_delete("/repos/#{user}/#{repo}").should have_been_made
+    end
+
+    it "should fail to delete resource without 'user' parameter" do
+      expect{
+        github.repos.delete nil, repo
+      }.to raise_error(ArgumentError)
+    end
+
+    it "should fail to delete resource without 'repo' parameter" do
+      expect{
+        github.repos.delete user, nil
+      }.to raise_error(ArgumentError)
+    end
+
+    it "should fail to delete resource that is not found" do
+      stub_delete("/repos/#{user}/#{repo}").
+      to_return(:body => '', :status => 404, :headers => { :content_type => "application/json; charset=utf-8"})
+      expect {
+        github.repos.delete user, repo
+      }.to raise_error(Github::Error::NotFound)
+    end
+  end # delete
+
   describe "#edit" do
     let(:inputs) do
       { :name => 'web',
