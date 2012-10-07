@@ -9,7 +9,7 @@ describe Github::PullRequests do
   after { reset_authentication_for github }
 
   describe "#list" do
-    it { github.pull_requests.should respond_to :all }
+    it { should respond_to :all }
 
     context 'resource found' do
       let(:inputs) { { 'state'=> 'closed', 'unrelated' => true } }

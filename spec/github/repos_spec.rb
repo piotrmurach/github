@@ -9,16 +9,14 @@ describe Github::Repos do
 
   after { reset_authentication_for github }
 
-  context 'access to apis' do
-    it { subject.collaborators.should be_a Github::Repos::Collaborators }
-    it { subject.commits.should be_a Github::Repos::Commits }
-    it { subject.downloads.should be_a Github::Repos::Downloads }
-    it { subject.forks.should be_a Github::Repos::Forks }
-    it { subject.hooks.should be_a Github::Repos::Hooks }
-    it { subject.keys.should be_a Github::Repos::Keys }
-    it { subject.watching.should be_a Github::Repos::Watching }
-    it { subject.pubsubhubbub.should be_a Github::Repos::PubSubHubbub }
-  end
+  its(:collaborators) { should be_a Github::Repos::Collaborators }
+  its(:commits)   { should be_a Github::Repos::Commits }
+  its(:downloads) { should be_a Github::Repos::Downloads }
+  its(:forks)     { should be_a Github::Repos::Forks }
+  its(:hooks)     { should be_a Github::Repos::Hooks }
+  its(:keys)      { should be_a Github::Repos::Keys }
+  its(:watching)  { should be_a Github::Repos::Watching }
+  its(:pubsubhubbub) { should be_a Github::Repos::PubSubHubbub }
 
   describe "#branches" do
     context "resource found" do
@@ -240,10 +238,11 @@ describe Github::Repos do
   describe "#delete" do
     before do
       stub_delete("/repos/#{user}/#{repo}").
-      to_return(:body => '', :status => 204, :headers => { :content_type => "application/json; charset=utf-8"})
+        to_return(:body => '', :status => 204,
+          :headers => { :content_type => "application/json; charset=utf-8"})
     end
 
-    it { github.repos.should respond_to :remove }
+    it { should respond_to :remove }
 
     it "should delete the resource successfully" do
       github.repos.delete user, repo
@@ -264,7 +263,8 @@ describe Github::Repos do
 
     it "should fail to delete resource that is not found" do
       stub_delete("/repos/#{user}/#{repo}").
-      to_return(:body => '', :status => 404, :headers => { :content_type => "application/json; charset=utf-8"})
+        to_return(:body => '', :status => 404,
+          :headers => { :content_type => "application/json; charset=utf-8"})
       expect {
         github.repos.delete user, repo
       }.to raise_error(Github::Error::NotFound)

@@ -10,10 +10,8 @@ describe Github::Orgs do
 
   after { reset_authentication_for github }
 
-  context 'access to apis' do
-    it { subject.members.should be_a Github::Orgs::Members }
-    it { subject.teams.should be_a Github::Orgs::Teams }
-  end
+  its(:members) { should be_a Github::Orgs::Members }
+  its(:teams)   { should be_a Github::Orgs::Teams }
 
   describe "#list" do
     context "resource found for a user" do

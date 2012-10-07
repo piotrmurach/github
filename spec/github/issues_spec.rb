@@ -11,20 +11,19 @@ describe Github::Issues do
 
   after { reset_authentication_for github }
 
-  context 'access to apis' do
-    it { subject.comments.should be_a Github::Issues::Comments }
-    it { subject.events.should be_a Github::Issues::Events }
-    it { subject.labels.should be_a Github::Issues::Labels }
-    it { subject.milestones.should be_a Github::Issues::Milestones }
-  end
+  its(:comments) { should be_a Github::Issues::Comments }
+  its(:events)   { should be_a Github::Issues::Events }
+  its(:labels)   { should be_a Github::Issues::Labels }
+  its(:milestones) { should be_a Github::Issues::Milestones }
 
   context '#list' do
-    it { github.issues.should respond_to(:all) }
+    it { should respond_to(:all) }
 
     context "resource found" do
       before do
         stub_get("/issues").
-          to_return(:body => fixture('issues/issues.json'), :status => 200, :headers => {:content_type => "application/json; charset=utf-8"})
+          to_return(:body => fixture('issues/issues.json'), :status => 200,
+            :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
       it "should get the resources" do
@@ -67,12 +66,13 @@ describe Github::Issues do
   end # list
 
   describe '#list_repo' do
-    it { github.issues.should respond_to :list_repository }
+    it { should respond_to :list_repository }
 
     context "resource found" do
       before do
         stub_get("/repos/#{user}/#{repo}/issues").
-          to_return(:body => fixture('issues/issues.json'), :status => 200, :headers => {:content_type => "application/json; charset=utf-8"})
+          to_return(:body => fixture('issues/issues.json'), :status => 200,
+           :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
       it "should raise error if user-name empty" do
@@ -123,7 +123,7 @@ describe Github::Issues do
   end # list_repo
 
   describe "#get" do
-    it { github.issues.should respond_to :find }
+    it { should respond_to :find }
 
     context "resource found" do
       before do
@@ -279,6 +279,6 @@ describe Github::Issues do
         }.to raise_error(Github::Error::NotFound)
       end
     end
-  end # edit_issue
+  end # edit
 
 end # Github::Issues
