@@ -313,15 +313,17 @@ module Github
     def list(*args)
       params = args.extract_options!
       normalize! params
-      filter! %w[ org user type ], params
+
+      valid_user_repos_params = %w(type sort direction)
+      valid_org_repos_params  = %w(type)
 
       response = if (user_name = params.delete("user"))
-        get_request("/users/#{user_name}/repos", params)
+        get_request("/users/#{user_name}/repos", params.delete_if { |k, v| !valid_user_repos_params.include? k })
       elsif (org_name = params.delete("org"))
-        get_request("/orgs/#{org_name}/repos", params)
+        get_request("/orgs/#{org_name}/repos", params.delete_if { |k, v| !valid_org_repos_params.include? k })
       else
         # For authenticated user
-        get_request("/user/repos", params)
+        get_request("/user/repos", params.delete_if { |k, v| !valid_user_repos_params.include? k })
       end
       return response unless block_given?
       response.each { |el| yield el }
