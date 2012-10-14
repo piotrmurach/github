@@ -442,6 +442,8 @@ describe Github::Repos do
         github.oauth_token = OAUTH_TOKEN
         stub_get("/user/repos?access_token=#{OAUTH_TOKEN}").
           to_return(:body => fixture('repos/repos.json'), :status => 200,:headers => {:content_type => "application/json; charset=utf-8"} )
+        stub_get("/user/repos?access_token=#{OAUTH_TOKEN}&sort=pushed").
+          to_return(:body => fixture('repos/repos_sorted_by_pushed.json'), :status => 200,:headers => {:content_type => "application/json; charset=utf-8"} )
       end
 
       it "fails if user is unauthenticated" do
@@ -460,6 +462,11 @@ describe Github::Repos do
         repositories = github.repos.list
         repositories.should be_an Array
         repositories.should have(1).items
+      end
+
+      it "should return array of resources sorted by pushed_at time" do
+        repositories = github.repos.list(:sort => 'pushed')
+        repositories.first.name.should == "Hello-World-2"
       end
 
       it "should get resource information" do
