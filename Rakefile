@@ -10,4 +10,6 @@ end
 
 Cucumber::Rake::Task.new(:features)
 
+FileList['tasks/**/*.rake'].each { |task| import task }
+
 task :default => [:spec, :features]

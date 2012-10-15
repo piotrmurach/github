@@ -1,0 +1,8 @@
+---
+AbcMetricMethodCheck:            { score: 10.3 }
+AssignmentInConditionalCheck:    { }
+CaseMissingElseCheck:            { }
+ClassLineCountCheck:             { line_count: 293 }
+ClassVariableCheck:              { }
+CyclomaticComplexityBlockCheck:  { complexity: 2 }
+CyclomaticComplexityMethodCheck: { complexity: 4 }
