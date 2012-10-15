@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require 'spec_helper'
 
 describe Github::Repos::Forks do
@@ -5,17 +7,20 @@ describe Github::Repos::Forks do
   let(:user) { 'peter-murach' }
   let(:repo) { 'github' }
 
-  after { github.user, github.repo, github.oauth_token = nil, nil, nil }
+  after { reset_authentication_for(github) }
 
   describe "#list" do
-    it { github.repos.forks.should respond_to :all }
+    before do
+      stub_get("/repos/#{user}/#{repo}/forks").
+        to_return(:body => body, :status => status,
+          :headers => {:content_type => "application/json; charset=utf-8"})
+    end
 
     context "resource found" do
-      before do
-        stub_get("/repos/#{user}/#{repo}/forks").
-          to_return(:body => fixture('repos/forks.json'), :status => 200,
-            :headers => {:content_type => "application/json; charset=utf-8"})
-      end
+      let(:body)   { fixture('repos/forks.json') }
+      let(:status) { 200 }
+
+      it { github.repos.forks.should respond_to :all }
 
       it "should fail to get resource without username" do
         expect { github.repos.forks.list }.to raise_error(ArgumentError)
@@ -49,10 +54,8 @@ describe Github::Repos::Forks do
     end
 
     context "resource not found" do
-      before do
-        stub_get("/repos/#{user}/#{repo}/forks").
-          to_return(:body => "", :status => [404, "Not Found"])
-      end
+      let(:body)   { "" }
+      let(:status) { [404, "Not Found"] }
 
       it "should return 404 with a message 'Not Found'" do
         expect {
@@ -65,12 +68,15 @@ describe Github::Repos::Forks do
   describe "#create" do
     let(:inputs) { {:org => 'github'} }
 
+    before do
+      stub_post("/repos/#{user}/#{repo}/forks").with(inputs).
+        to_return(:body => body, :status => status,
+          :headers => {:content_type => "application/json; charset=utf-8"})
+    end
+
     context "resouce created" do
-      before do
-        stub_post("/repos/#{user}/#{repo}/forks").with(inputs).
-          to_return(:body => fixture('repos/fork.json'), :status => 201,
-            :headers => {:content_type => "application/json; charset=utf-8"})
-      end
+      let(:body)   { fixture('repos/fork.json') }
+      let(:status) { 202 }
 
       it "should create resource successfully" do
         github.repos.forks.create(user, repo, inputs)
@@ -89,11 +95,8 @@ describe Github::Repos::Forks do
     end
 
     context "failed to create resource" do
-      before do
-        stub_post("/repos/#{user}/#{repo}/forks").with(inputs).
-          to_return(:body => fixture('repos/fork.json'), :status => 404,
-            :headers => {:content_type => "application/json; charset=utf-8"})
-      end
+      let(:body)   { "" }
+      let(:status) { 404 }
 
       it "should faile to retrieve resource" do
         expect {

@@ -8,20 +8,25 @@ describe Github::Repos::Downloads do
   let(:user) { 'peter-murach' }
   let(:repo) { 'github' }
 
-  after { github.user, github.repo, github.oauth_token = nil, nil, nil }
+  after { reset_authentication_for(github) }
 
   it { described_class::VALID_DOWNLOAD_PARAM_NAMES.should_not be_nil }
+
   it { described_class::REQUIRED_PARAMS.should_not be_nil }
 
   describe "#list" do
-    it { github.repos.downloads.should respond_to :list }
+
+    before do
+      stub_get("/repos/#{user}/#{repo}/downloads").
+        to_return(:body => body, :status => status,
+          :headers => {:content_type => "application/json; charset=utf-8"})
+    end
 
     context "resource found" do
-      before do
-        stub_get("/repos/#{user}/#{repo}/downloads").
-          to_return(:body => fixture('repos/downloads.json'), :status => 200,
-            :headers => {:content_type => "application/json; charset=utf-8"})
-      end
+      let(:body)   { fixture('repos/downloads.json') }
+      let(:status) { 200 }
+
+      it { should respond_to :list }
 
       it "should fail to get resource without username" do
         expect { github.repos.downloads.list }.to raise_error(ArgumentError)
@@ -56,10 +61,8 @@ describe Github::Repos::Downloads do
     end
 
     context "resource not found" do
-      before do
-        stub_get("/repos/#{user}/#{repo}/downloads").
-          to_return(:body => "", :status => [404, "Not Found"])
-      end
+      let(:body)   { "" }
+      let(:status) { [404, "Not Found"] }
 
       it "should return 404 with a message 'Not Found'" do
         expect {
@@ -72,14 +75,17 @@ describe Github::Repos::Downloads do
   describe "#get" do
     let(:download_id) { 1 }
 
-    it { github.repos.downloads.should respond_to :find }
+    before do
+      stub_get("/repos/#{user}/#{repo}/downloads/#{download_id}").
+        to_return(:body => body, :status => status,
+          :headers => {:content_type => "application/json; charset=utf-8"})
+    end
 
     context "resource found" do
-      before do
-        stub_get("/repos/#{user}/#{repo}/downloads/#{download_id}").
-          to_return(:body => fixture('repos/download.json'), :status => 200,
-            :headers => {:content_type => "application/json; charset=utf-8"})
-      end
+      let(:body)   { fixture('repos/download.json') }
+      let(:status) { 200 }
+
+      it { github.repos.downloads.should respond_to :find }
 
       it "should fail to get resource without download id" do
         expect {
@@ -105,10 +111,8 @@ describe Github::Repos::Downloads do
     end
 
     context "resource not found" do
-      before do
-        stub_get("/repos/#{user}/#{repo}/downloads/#{download_id}").
-          to_return(:body => fixture('repos/download.json'), :status => 404, :headers => {:content_type => "application/json; charset=utf-8"})
-      end
+      let(:body) { "" }
+      let(:status) { [404, "Not Found"] }
 
       it "should fail to retrive resource" do
         expect {
@@ -121,12 +125,15 @@ describe Github::Repos::Downloads do
   describe "#delete" do
     let(:download_id) { 1 }
 
-    context "resource edited successfully" do
-      before do
-        stub_delete("/repos/#{user}/#{repo}/downloads/#{download_id}").
-          to_return(:body => '', :status => 204,
-            :headers => { :content_type => "application/json; charset=utf-8"})
-      end
+    before do
+      stub_delete("/repos/#{user}/#{repo}/downloads/#{download_id}").
+        to_return(:body => body, :status => status,
+          :headers => { :content_type => "application/json; charset=utf-8"})
+    end
+
+    context "resource deleted successfully" do
+      let(:body)   { "" }
+      let(:status) { 204 }
 
       it "should fail to delete without 'user/repo' parameters" do
         expect { github.repos.downloads.delete }.to raise_error(ArgumentError)
@@ -144,12 +151,9 @@ describe Github::Repos::Downloads do
       end
     end
 
-    context "failed to edit resource" do
-      before do
-        stub_delete("/repos/#{user}/#{repo}/downloads/#{download_id}").
-          to_return(:body => fixture("repos/download.json"), :status => 404,
-            :headers => { :content_type => "application/json; charset=utf-8"})
-      end
+    context "failed to delete resource" do
+      let(:body)   { "" }
+      let(:status) { [404, "Not Found"] }
 
       it "should fail to find resource" do
         expect {
@@ -162,12 +166,15 @@ describe Github::Repos::Downloads do
   describe "#create" do
     let(:inputs) { {:name => 'new_file.jpg', :size => 114034, :description => "Latest release", :content_type => 'text/plain'} }
 
-    context "resouce created" do
-      before do
-        stub_post("/repos/#{user}/#{repo}/downloads").with(inputs).
-          to_return(:body => fixture('repos/download_s3.json'), :status => 201, :headers => {:content_type => "application/json; charset=utf-8"})
+    before do
+      stub_post("/repos/#{user}/#{repo}/downloads").with(inputs).
+        to_return(:body => body, :status => status,
+          :headers => {:content_type => "application/json; charset=utf-8"})
+    end
 
-      end
+    context "resouce created" do
+      let(:body)   { fixture('repos/download_s3.json') }
+      let(:status) { 201}
 
       it "should fail to create resource if 'name' input is missing" do
         expect {
@@ -198,11 +205,8 @@ describe Github::Repos::Downloads do
     end
 
     context "failed to create resource" do
-      before do
-        stub_post("/repos/#{user}/#{repo}/downloads").with(inputs).
-          to_return(:body => fixture('repos/download_s3.json'), :status => 404,
-            :headers => {:content_type => "application/json; charset=utf-8"})
-      end
+      let(:body)   { "" }
+      let(:status) { [404, "Not Found"] }
 
       it "should faile to retrieve resource" do
         expect {
@@ -215,7 +219,7 @@ describe Github::Repos::Downloads do
   describe 'upload' do
     let(:resource) { stub(:resource) }
     let(:filename) { 'filename' }
-    let(:res) { stub(:response, :body => 'success') }
+    let(:res)      { stub(:response, :body => 'success') }
     let(:uploader) { stub(:uploader, :send => res) }
 
     context 'resource uploaded' do
@@ -224,7 +228,9 @@ describe Github::Repos::Downloads do
       end
 
       it "should fail if resource is of incorrect type" do
-        expect { github.repos.downloads.upload resource, nil }.to raise_error(ArgumentError)
+        expect {
+          github.repos.downloads.upload resource, nil
+        }.to raise_error(ArgumentError)
       end
 
       it "should upload resource successfully" do
