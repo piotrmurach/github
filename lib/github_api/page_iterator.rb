@@ -1,4 +1,6 @@
-# encoding: utf-8 require 'github_api/utils/url'
+# encoding: utf-8
+
+require 'github_api/utils/url'
 
 module Github
   class PageIterator
