@@ -40,7 +40,7 @@ module Github
     #
     def list(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
+      assert_presence_of user, repo
 
       normalize! params
       filter! VALID_MILESTONE_OPTIONS.keys, params
@@ -60,8 +60,7 @@ module Github
     #
     def get(user_name, repo_name, milestone_id, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
-      _validate_presence_of milestone_id
+      assert_presence_of user, repo, milestone_id
       normalize! params
 
       get_request("/repos/#{user}/#{repo}/milestones/#{milestone_id}", params)
@@ -85,7 +84,7 @@ module Github
     #
     def create(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
+      assert_presence_of user, repo
 
       normalize! params
       filter! VALID_MILESTONE_INPUTS, params
@@ -112,8 +111,7 @@ module Github
     #
     def update(user_name, repo_name, milestone_id, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
-      _validate_presence_of milestone_id
+      assert_presence_of user, repo, milestone_id
 
       normalize! params
       filter! VALID_MILESTONE_INPUTS, params
@@ -130,8 +128,7 @@ module Github
     #
     def delete(user_name, repo_name, milestone_id, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
-      _validate_presence_of milestone_id
+      assert_presence_of user, repo, milestone_id
       normalize! params
 
       delete_request("/repos/#{user}/#{repo}/milestones/#{milestone_id}", params)

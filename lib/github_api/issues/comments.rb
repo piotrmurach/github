@@ -23,8 +23,7 @@ module Github
     #
     def list(user_name, repo_name, issue_id, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
-      _validate_presence_of issue_id
+      assert_presence_of user, repo, issue_id
 
       normalize! params
       # _merge_mime_type(:issue_comment, params)
@@ -43,8 +42,7 @@ module Github
     #
     def get(user_name, repo_name, comment_id, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
-      _validate_presence_of comment_id
+      assert_presence_of user, repo, comment_id
 
       normalize! params
       # _merge_mime_type(:issue_comment, params)
@@ -65,8 +63,7 @@ module Github
     #
     def create(user_name, repo_name, issue_id, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
-      _validate_presence_of issue_id
+      assert_presence_of user, repo, issue_id
 
       normalize! params
       # _merge_mime_type(:issue_comment, params)
@@ -88,8 +85,7 @@ module Github
     #
     def edit(user_name, repo_name, comment_id, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
-      _validate_presence_of comment_id
+      assert_presence_of user, repo, comment_id
 
       normalize! params
       # _merge_mime_type(:issue_comment, params)
@@ -107,8 +103,7 @@ module Github
     #
     def delete(user_name, repo_name, comment_id, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
-      _validate_presence_of comment_id
+      assert_presence_of user, repo, comment_id
 
       normalize! params
       # _merge_mime_type(:issue_comment, params)

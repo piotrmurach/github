@@ -1,8 +1,9 @@
 # encoding: utf-8
 
 module Github
+  # The Repository Hooks API manages the post-receive web and
+  # service hooks for a repository.
   class Repos::Hooks < API
-    # The Repository Hooks API manages the post-receive web and service hooks for a repository.
 
     VALID_HOOK_PARAM_NAMES = %w[
       name
@@ -13,8 +14,8 @@ module Github
       remove_events
     ].freeze # :nodoc:
 
-    # Active hooks can be configured to trigger for one or more events. The default event is push.
-    # The available events are:
+    # Active hooks can be configured to trigger for one or more events.
+    # The default event is push. The available events are:
     VALID_HOOK_PARAM_VALUES = {
       'events' => %w[
         push
@@ -43,7 +44,7 @@ module Github
     #
     def list(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
+      assert_presence_of user, repo
       normalize! params
 
       response = get_request("/repos/#{user}/#{repo}/hooks", params)
@@ -60,8 +61,7 @@ module Github
     #
     def get(user_name, repo_name, hook_id, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
-      _validate_presence_of hook_id
+      assert_presence_of user, repo, hook_id
       normalize! params
 
       get_request("/repos/#{user}/#{repo}/hooks/#{hook_id}", params)
@@ -88,7 +88,7 @@ module Github
     #
     def create(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
+      assert_presence_of user, repo
 
       normalize! params
       filter! VALID_HOOK_PARAM_NAMES, params, :recursive => false
@@ -120,8 +120,7 @@ module Github
     #
     def edit(user_name, repo_name, hook_id, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
-      _validate_presence_of hook_id
+      assert_presence_of user, repo, hook_id
 
       normalize! params
       filter! VALID_HOOK_PARAM_NAMES, params, :recursive => false
@@ -140,8 +139,7 @@ module Github
     #
     def test(user_name, repo_name, hook_id, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
-      _validate_presence_of hook_id
+      assert_presence_of user, repo, hook_id
       normalize! params
 
       post_request("/repos/#{user}/#{repo}/hooks/#{hook_id}/test", params)
@@ -155,8 +153,7 @@ module Github
     #
     def delete(user_name, repo_name, hook_id, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
-      _validate_presence_of hook_id
+      assert_presence_of user, repo, hook_id
       normalize! params
 
       delete_request("/repos/#{user}/#{repo}/hooks/#{hook_id}", params)

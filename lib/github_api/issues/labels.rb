@@ -10,8 +10,6 @@ module Github
       super(options)
     end
 
-    # TODO Merge repository, issues and milesonte labels insdie one query
-
     # List all labels for a repository
     #
     # = Examples
@@ -21,7 +19,7 @@ module Github
     #
     def list(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
+      assert_presence_of user, repo
       normalize! params
 
       response = get_request("/repos/#{user}/#{repo}/labels", params)
@@ -38,8 +36,7 @@ module Github
     #
     def get(user_name, repo_name, label_id, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
-      _validate_presence_of label_id
+      assert_presence_of user, repo, label_id
       normalize! params
 
       get_request("/repos/#{user}/#{repo}/labels/#{label_id}", params)
@@ -58,7 +55,7 @@ module Github
     #
     def create(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
+      assert_presence_of user, repo
 
       normalize! params
       filter! VALID_LABEL_INPUTS, params
@@ -80,8 +77,7 @@ module Github
     #
     def update(user_name, repo_name, label_id, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
-      _validate_presence_of label_id
+      assert_presence_of user, repo, label_id
 
       normalize! params
       filter! VALID_LABEL_INPUTS, params
@@ -99,9 +95,9 @@ module Github
     #
     def delete(user_name, repo_name, label_id, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
+      assert_presence_of user, repo
 
-      _validate_presence_of label_id
+      assert_presence_of label_id
       normalize! params
 
       delete_request("/repos/#{user}/#{repo}/labels/#{label_id}", params)
@@ -115,8 +111,7 @@ module Github
     #
     def issue(user_name, repo_name, issue_id, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
-      _validate_presence_of(issue_id)
+      assert_presence_of user, repo, issue_id
       normalize! params
 
       get_request("/repos/#{user}/#{repo}/issues/#{issue_id}/labels", params)
@@ -133,8 +128,7 @@ module Github
       params['data'] = args unless args.empty?
 
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
-      _validate_presence_of(issue_id)
+      assert_presence_of user, repo, issue_id
       normalize! params
 
       post_request("/repos/#{user}/#{repo}/issues/#{issue_id}/labels", params)
@@ -154,8 +148,7 @@ module Github
     #
     def remove(user_name, repo_name, issue_id, label_id=nil, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
-      _validate_presence_of issue_id
+      assert_presence_of user, repo, issue_id
       normalize! params
 
       if label_id
@@ -178,8 +171,7 @@ module Github
       params['data'] = args unless args.empty?
 
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
-      _validate_presence_of issue_id
+      assert_presence_of user, repo, issue_id
       normalize! params
 
       put_request("/repos/#{user}/#{repo}/issues/#{issue_id}/labels", params)
@@ -193,8 +185,7 @@ module Github
     #
     def milestone(user_name, repo_name, milestone_id, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
-      _validate_presence_of milestone_id
+      assert_presence_of user, repo, milestone_id
       normalize! params
 
       response = get_request("/repos/#{user}/#{repo}/milestones/#{milestone_id}/labels", params)

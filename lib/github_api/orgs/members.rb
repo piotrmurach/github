@@ -17,7 +17,7 @@ module Github
     #  github.orgs.members.list 'org-name' { |memb| ... }
     #
     def list(org_name, params={})
-      _validate_presence_of org_name
+      assert_presence_of org_name
       normalize! params
       response = get_request("/orgs/#{org_name}/members", params)
       return response unless block_given?
@@ -32,7 +32,7 @@ module Github
     #  github.orgs.members.member? 'org-name', 'member-name'
     #
     def member?(org_name, member_name, params={})
-      _validate_presence_of org_name, member_name
+      assert_presence_of org_name, member_name
       normalize! params
       get_request("/orgs/#{org_name}/members/#{member_name}", params)
       true
@@ -49,7 +49,7 @@ module Github
     #  github.orgs.members.remove 'org-name', 'member-name'
     #
     def delete(org_name, member_name, params={})
-      _validate_presence_of org_name, member_name
+      assert_presence_of org_name, member_name
       normalize! params
       delete_request("/orgs/#{org_name}/members/#{member_name}", params)
     end
@@ -63,7 +63,7 @@ module Github
     #  github.orgs.members.list_public 'org-name' { |memb| ... }
     #
     def list_public(org_name, params={})
-      _validate_presence_of org_name
+      assert_presence_of org_name
       normalize! params
       response = get_request("/orgs/#{org_name}/public_members", params)
       return response unless block_given?
@@ -78,7 +78,7 @@ module Github
     #  github.orgs.members.public_member? 'org-name', 'member-name'
     #
     def public_member?(org_name, member_name, params={})
-      _validate_presence_of org_name, member_name
+      assert_presence_of org_name, member_name
       normalize! params
       get_request("/orgs/#{org_name}/public_members/#{member_name}", params)
       true
@@ -93,7 +93,7 @@ module Github
     #  github.orgs.members.publicize 'org-name', 'member-name'
     #
     def publicize(org_name, member_name, params={})
-      _validate_presence_of org_name, member_name
+      assert_presence_of org_name, member_name
       normalize! params
       put_request("/orgs/#{org_name}/public_members/#{member_name}", params)
     end
@@ -107,7 +107,7 @@ module Github
     #  github.orgs.members.conceal 'org-name', 'member-name'
     #
     def conceal(org_name, member_name, params={})
-      _validate_presence_of org_name, member_name
+      assert_presence_of org_name, member_name
       normalize! params
       delete_request("/orgs/#{org_name}/public_members/#{member_name}", params)
     end

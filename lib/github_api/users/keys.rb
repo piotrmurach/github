@@ -27,7 +27,7 @@ module Github
     #  github.users.followers.get 'key-id'
     #
     def get(key_id, params={})
-      _validate_presence_of key_id
+      assert_presence_of key_id
       normalize! params
       get_request("/user/keys/#{key_id}", params)
     end
@@ -62,7 +62,7 @@ module Github
     #    "key" => "ssh-rsa AAA..."
     #
     def update(key_id, params={})
-      _validate_presence_of key_id
+      assert_presence_of key_id
       normalize! params
       filter! VALID_KEY_PARAM_NAMES, params
       patch_request("/user/keys/#{key_id}", params)
@@ -75,7 +75,7 @@ module Github
     #  github.users.followers.delete 'key-id'
     #
     def delete(key_id, params={})
-      _validate_presence_of key_id
+      assert_presence_of key_id
       normalize! params
       delete_request("/user/keys/#{key_id}", params)
     end

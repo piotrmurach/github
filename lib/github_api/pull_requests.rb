@@ -45,7 +45,7 @@ module Github
     #
     def list(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless (user? && repo?)
+      assert_presence_of user, repo
 
       normalize! params
       filter! VALID_REQUEST_PARAM_NAMES, params
@@ -69,9 +69,7 @@ module Github
     #
     def get(user_name, repo_name, request_id, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
-      _validate_presence_of request_id
-
+      assert_presence_of user, repo, request_id
       normalize! params
       # _merge_mime_type(:pull_request, params)
 
@@ -110,7 +108,7 @@ module Github
     #
     def create(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
+      assert_presence_of user, repo
 
       normalize! params
       # _merge_mime_type(:pull_request, params)
@@ -135,8 +133,7 @@ module Github
     #
     def update(user_name, repo_name, request_id, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
-      _validate_presence_of request_id
+      assert_presence_of user, repo, request_id
 
       normalize! params
       filter! VALID_REQUEST_PARAM_NAMES, params
@@ -154,8 +151,7 @@ module Github
     #
     def commits(user_name, repo_name, request_id, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
-      _validate_presence_of request_id
+      assert_presence_of user, repo, request_id
 
       normalize! params
       # _merge_mime_type(:pull_request, params)
@@ -173,9 +169,7 @@ module Github
     #
     def files(user_name, repo_name, request_id, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
-      _validate_presence_of request_id
-
+      assert_presence_of user, repo, request_id
       normalize! params
       # _merge_mime_type(:pull_request, params)
 
@@ -192,8 +186,7 @@ module Github
     #
     def merged?(user_name, repo_name, request_id, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
-      _validate_presence_of request_id
+      assert_presence_of user, repo, request_id
 
       normalize! params
       # _merge_mime_type(:pull_request, params)
@@ -215,8 +208,7 @@ module Github
     #
     def merge(user_name, repo_name, request_id, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
-      _validate_presence_of request_id
+      assert_presence_of user, repo, request_id
 
       normalize! params
       # _merge_mime_type(:pull_request, params)

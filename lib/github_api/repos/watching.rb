@@ -14,7 +14,7 @@ module Github
     #
     def list(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
+      assert_presence_of user, repo
       normalize! params
 
       response = get_request("/repos/#{user}/#{repo}/subscribers", params)
@@ -56,7 +56,7 @@ module Github
     #  github.repos.watching.watching? 'user-name', 'repo-name'
     #
     def watching?(user_name, repo_name, params={})
-      _validate_presence_of user_name, repo_name
+      assert_presence_of user_name, repo_name
       normalize! params
       get_request("/user/subscriptions/#{user_name}/#{repo_name}", params)
       true
@@ -73,7 +73,7 @@ module Github
     #  github.repos.watching.watch 'user-name', 'repo-name'
     #
     def watch(user_name, repo_name, params={})
-      _validate_presence_of user_name, repo_name
+      assert_presence_of user_name, repo_name
       normalize! params
       put_request("/user/subscriptions/#{user_name}/#{repo_name}", params)
     end
@@ -86,7 +86,7 @@ module Github
     #  github.repos.watching.unwatch 'user-name', 'repo-name'
     #
     def unwatch(user_name, repo_name, params={})
-      _validate_presence_of user_name, repo_name
+      assert_presence_of user_name, repo_name
       normalize! params
       delete_request("/user/subscriptions/#{user_name}/#{repo_name}", params)
     end

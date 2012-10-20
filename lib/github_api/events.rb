@@ -35,7 +35,7 @@ module Github
     #
     def repository(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
+      assert_presence_of user, repo
       normalize! params
 
       response = get_request("/repos/#{user}/#{repo}/events", params)
@@ -56,7 +56,7 @@ module Github
     #
     def issue(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
+      assert_presence_of user, repo
       normalize! params
 
       response = get_request("/repos/#{user}/#{repo}/issues/events", params)
@@ -96,7 +96,7 @@ module Github
     #  github.events.org 'org-name' { |event| ... }
     #
     def org(org_name, params={})
-      _validate_presence_of org_name
+      assert_presence_of org_name
       normalize! params
 
       response = get_request("/orgs/#{org_name}/events", params)
@@ -127,7 +127,7 @@ module Github
     #  github.events.received 'user-name', :public => true { |event| ... }
     #
     def received(user_name, params={})
-      _validate_presence_of user_name
+      assert_presence_of user_name
       normalize! params
 
       public_events = if params['public']
@@ -160,7 +160,7 @@ module Github
     #  github.events.performed 'user-name', :public => true { |event| ... }
     #
     def performed(user_name, params={})
-      _validate_presence_of user_name
+      assert_presence_of user_name
       normalize! params
 
       public_events = if params['public']
@@ -186,7 +186,7 @@ module Github
     #  github.events.user_org 'user-name', 'org-name' { |event| ... }
     #
     def user_org(user_name, org_name, params={})
-      _validate_presence_of user_name, org_name
+      assert_presence_of user_name, org_name
       normalize! params
 
       response = get_request("/users/#{user_name}/events/orgs/#{org_name}", params)

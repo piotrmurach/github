@@ -41,8 +41,7 @@ module Github
     #
     def get(user_name, repo_name, sha, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
-      _validate_presence_of sha
+      assert_presence_of user, repo, sha
       normalize! params
 
       response = if params['recursive']
@@ -87,7 +86,7 @@ module Github
     #
     def create(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
+      assert_presence_of user, repo
       normalize! params
       assert_required_keys(%w[ tree ], params)
 

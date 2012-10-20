@@ -22,7 +22,7 @@ module Github
       #    'master'
       #
       def compare(user_name, repo_name, base, head, params={})
-        _validate_presence_of base, head
+        assert_presence_of base, head
         normalize! params
 
         get_request("/repos/#{user_name}/#{repo_name}/compare/#{base}...#{head}", params)
@@ -48,8 +48,7 @@ module Github
       #
       def create_comment(user_name, repo_name, sha, params={})
         _update_user_repo_params(user_name, repo_name)
-        _validate_user_repo_params(user, repo) unless user? && repo?
-        _validate_presence_of sha
+        assert_presence_of user, repo, sha
 
         normalize! params
         filter! REQUIRED_COMMENT_PARAMS, params
@@ -67,8 +66,7 @@ module Github
       #
       def delete_comment(user_name, repo_name, comment_id, params={})
         _update_user_repo_params(user_name, repo_name)
-        _validate_user_repo_params(user, repo) unless user? && repo?
-        _validate_presence_of comment_id
+        assert_presence_of user, repo, comment_id
         normalize! params
 
         delete_request("/repos/#{user}/#{repo}/comments/#{comment_id}", params)
@@ -88,7 +86,7 @@ module Github
       #
       def list(user_name, repo_name, params={})
         _update_user_repo_params(user_name, repo_name)
-        _validate_user_repo_params(user, repo) unless user? && repo?
+        assert_presence_of user, repo
         normalize! params
         filter! %w[sha path author], params
 
@@ -107,7 +105,7 @@ module Github
       #
       def repo_comments(user_name, repo_name, params={})
         _update_user_repo_params(user_name, repo_name)
-        _validate_user_repo_params(user, repo) unless user? && repo?
+        assert_presence_of user, repo
         normalize! params
 
         response = get_request("/repos/#{user}/#{repo}/comments", params)
@@ -125,8 +123,7 @@ module Github
       #
       def commit_comments(user_name, repo_name, sha, params={})
         _update_user_repo_params(user_name, repo_name)
-        _validate_user_repo_params(user, repo) unless user? && repo?
-        _validate_presence_of sha
+        assert_presence_of user, repo, sha
         normalize! params
 
         response = get_request("/repos/#{user}/#{repo}/commits/#{sha}/comments", params)
@@ -143,8 +140,7 @@ module Github
       #
       def get(user_name, repo_name, sha, params={})
         _update_user_repo_params(user_name, repo_name)
-        _validate_user_repo_params(user, repo) unless user? && repo?
-        _validate_presence_of sha
+        assert_presence_of user, repo, sha
         normalize! params
 
         get_request("/repos/#{user}/#{repo}/commits/#{sha}", params)
@@ -159,8 +155,7 @@ module Github
       #
       def commit_comment(user_name, repo_name, comment_id, params={})
         _update_user_repo_params(user_name, repo_name)
-        _validate_user_repo_params(user, repo) unless user? && repo?
-        _validate_presence_of comment_id
+        assert_presence_of user, repo, comment_id
         normalize! params
 
         get_request("/repos/#{user}/#{repo}/comments/#{comment_id}", params)
@@ -179,9 +174,7 @@ module Github
       #
       def update_comment(user_name, repo_name, comment_id, params={})
         _update_user_repo_params(user_name, repo_name)
-        _validate_user_repo_params(user, repo) unless user? && repo?
-        _validate_presence_of comment_id
-
+        assert_presence_of user, repo, comment_id
         normalize! params
         assert_required_keys(%w[ body ], params)
 

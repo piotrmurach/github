@@ -76,7 +76,7 @@ module Github
     #
     def get(gist_id, params={})
       normalize! params
-      _validate_presence_of(gist_id)
+      assert_presence_of gist_id
 
       get_request("/gists/#{gist_id}", params)
     end
@@ -139,7 +139,7 @@ module Github
     #    }
     #
     def edit(gist_id, params={})
-      _validate_presence_of(gist_id)
+      assert_presence_of gist_id
       normalize! params
 
       patch_request("/gists/#{gist_id}", params)
@@ -152,7 +152,7 @@ module Github
     #  github.gists.star 'gist-id'
     #
     def star(gist_id, params={})
-      _validate_presence_of(gist_id)
+      assert_presence_of gist_id
       normalize! params
 
       put_request("/gists/#{gist_id}/star", params)
@@ -165,7 +165,7 @@ module Github
     #  github.gists.unstar 'gist-id'
     #
     def unstar(gist_id, params={})
-      _validate_presence_of(gist_id)
+      assert_presence_of gist_id
       normalize! params
 
       delete_request("/gists/#{gist_id}/star", params)
@@ -178,7 +178,7 @@ module Github
     #  github.gists.starred? 'gist-id'
     #
     def starred?(gist_id, params={})
-      _validate_presence_of(gist_id)
+      assert_presence_of gist_id
       normalize! params
 
       get_request("/gists/#{gist_id}/star", params)
@@ -194,7 +194,7 @@ module Github
     #  github.gists.fork 'gist-id'
     #
     def fork(gist_id, params={})
-      _validate_presence_of(gist_id)
+      assert_presence_of gist_id
       normalize! params
 
       post_request("/gists/#{gist_id}/fork", params)
@@ -207,7 +207,7 @@ module Github
     #  github.gists.delete 'gist-id'
     #
     def delete(gist_id, params={})
-      _validate_presence_of(gist_id)
+      assert_presence_of gist_id
       normalize! params
 
       delete_request("/gists/#{gist_id}", params)

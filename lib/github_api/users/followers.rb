@@ -61,7 +61,7 @@ module Github
     #  github.users.followers.following? 'user-name'
     #
     def following?(user_name, params={})
-      _validate_presence_of user_name
+      assert_presence_of user_name
       normalize! params
       get_request("/user/following/#{user_name}", params)
       true
@@ -76,7 +76,7 @@ module Github
     #  github.users.followers.follow 'user-name'
     #
     def follow(user_name, params={})
-      _validate_presence_of user_name
+      assert_presence_of user_name
       normalize! params
       put_request("/user/following/#{user_name}", params)
     end
@@ -88,7 +88,7 @@ module Github
     #  github.users.followers.unfollow 'user-name'
     #
     def unfollow(user_name, params={})
-      _validate_presence_of user_name
+      assert_presence_of user_name
       normalize! params
       delete_request("/user/following/#{user_name}", params)
     end

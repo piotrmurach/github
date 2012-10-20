@@ -12,6 +12,7 @@ module Github
     #  Github.issues.assignees.list 'user', 'repo' { |assignee| ... }
     #
     def list(user_name, repo_name, params={})
+      assert_presence_of user_name, repo_name
       normalize! params
 
       response = get_request("/repos/#{user_name}/#{repo_name}/assignees", params)
@@ -26,7 +27,7 @@ module Github
     #  Github.issues.assignees.check 'user', 'repo', 'assignee'
     #
     def check(user_name, repo_name, assignee, params={})
-      _validate_presence_of assignee
+      assert_presence_of user_name, repo_name, assignee
       normalize! params
 
       get_request("/repos/#{user_name}/#{repo_name}/assignees/#{assignee}",params)

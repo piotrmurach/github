@@ -14,8 +14,7 @@ module Github
     #
     def add(user_name, repo_name, collaborator, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
-      _validate_presence_of collaborator
+      assert_presence_of user, repo, collaborator
       normalize! params
 
       put_request("/repos/#{user}/#{repo}/collaborators/#{collaborator}", params)
@@ -30,8 +29,7 @@ module Github
     #
     def collaborator?(user_name, repo_name, collaborator, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
-      _validate_presence_of collaborator
+      assert_presence_of user, repo, collaborator
       normalize! params
 
       get_request("/repos/#{user}/#{repo}/collaborators/#{collaborator}", params)
@@ -49,7 +47,7 @@ module Github
     #
     def list(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless (user? && repo?)
+      assert_presence_of user, repo
       normalize! params
 
       response = get_request("/repos/#{user}/#{repo}/collaborators", params)
@@ -66,8 +64,7 @@ module Github
     #
     def remove(user_name, repo_name, collaborator, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
-      _validate_presence_of collaborator
+      assert_presence_of collaborator
       normalize! params
 
       delete_request("/repos/#{user}/#{repo}/collaborators/#{collaborator}", params)

@@ -18,7 +18,7 @@ module Github
     #    :secret => '...'
     #
     def subscribe(topic, callback, params={})
-      _validate_presence_of topic, callback
+      assert_presence_of topic, callback
       normalize! params
       _merge_action!("subscribe", topic, callback, params)
 
@@ -40,7 +40,7 @@ module Github
     #    :secret => '...'
     #
     def unsubscribe(topic, callback, params={})
-      _validate_presence_of topic, callback
+      assert_presence_of topic, callback
       normalize! params
       _merge_action!("unsubscribe", topic, callback, params)
 
@@ -63,7 +63,7 @@ module Github
     #    :event => 'watch'
     #
     def subscribe_service(user_name, repo_name, service_name, params={})
-      _validate_presence_of user_name, repo_name, service_name
+      assert_presence_of user_name, repo_name, service_name
       normalize! params
       event = params.delete('event') || 'push'
       topic = "https://github.com/#{user_name}/#{repo_name}/events/#{event}"
@@ -86,7 +86,7 @@ module Github
     #  github.repos.pubsubhubbub.unsubscribe_service 'user-name', 'repo-name', 'campfire'
     #
     def unsubscribe_service(user_name, repo_name, service_name, params={})
-      _validate_presence_of user_name, repo_name, service_name
+      assert_presence_of user_name, repo_name, service_name
       normalize! params
       event = params.delete('event') || 'push'
       topic = "https://github.com/#{user_name}/#{repo_name}/events/#{event}"

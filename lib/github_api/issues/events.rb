@@ -22,7 +22,7 @@ module Github
     #
     def list(user_name, repo_name, issue_id=nil, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
+      assert_presence_of user, repo
       normalize! params
 
       response = if issue_id
@@ -43,8 +43,7 @@ module Github
     #
     def get(user_name, repo_name, event_id, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
-      _validate_presence_of event_id
+      assert_presence_of user, repo, event_id
       normalize! params
 
       get_request("/repos/#{user}/#{repo}/issues/events/#{event_id}")

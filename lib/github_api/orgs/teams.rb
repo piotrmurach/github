@@ -18,7 +18,7 @@ module Github
     #  github.orgs.teams.list 'org-name'
     #
     def list(org_name, params={})
-      _validate_presence_of org_name
+      assert_presence_of org_name
       normalize! params
 
       response = get_request("/orgs/#{org_name}/teams", params)
@@ -34,7 +34,7 @@ module Github
     #  github.orgs.teams.get 'team-id'
     #
     def get(team_id, params={})
-      _validate_presence_of team_id
+      assert_presence_of team_id
       normalize! params
 
       get_request("/teams/#{team_id}", params)
@@ -62,7 +62,7 @@ module Github
     #     ]
     #
     def create(org_name, params={})
-      _validate_presence_of org_name
+      assert_presence_of org_name
       normalize! params
       filter! VALID_TEAM_PARAM_NAMES, params
       assert_valid_values(VALID_TEAM_PARAM_VALUES, params)
@@ -88,7 +88,7 @@ module Github
     #    "permission" => "push"
     #
     def edit(team_id, params={})
-      _validate_presence_of team_id
+      assert_presence_of team_id
       normalize! params
       filter! VALID_TEAM_PARAM_NAMES, params
       assert_valid_values(VALID_TEAM_PARAM_VALUES, params)
@@ -105,7 +105,7 @@ module Github
     #  github.orgs.teams.delete 'team-id'
     #
     def delete(team_id, params={})
-      _validate_presence_of team_id
+      assert_presence_of team_id
       normalize! params
       delete_request("/teams/#{team_id}", params)
     end
@@ -120,7 +120,7 @@ module Github
     #  github.orgs.teams.list_members 'team-id' { |member| ... }
     #
     def list_members(team_id, params={})
-      _validate_presence_of team_id
+      assert_presence_of team_id
       normalize! params
 
       response = get_request("/teams/#{team_id}/members", params)
@@ -136,7 +136,7 @@ module Github
     #  github.orgs.teams.team_member? 'team-id', 'user-name'
     #
     def team_member?(team_id, member_name, params={})
-      _validate_presence_of team_id, member_name
+      assert_presence_of team_id, member_name
       normalize! params
       get_request("/teams/#{team_id}/members/#{member_name}", params)
       true
@@ -152,7 +152,7 @@ module Github
     #  github.orgs.teams.add_member 'team-id', 'user-name'
     #
     def add_member(team_id, member_name, params={})
-      _validate_presence_of team_id, member_name
+      assert_presence_of team_id, member_name
       normalize! params
       put_request("/teams/#{team_id}/members/#{member_name}", params)
     end
@@ -169,7 +169,7 @@ module Github
     #  github.orgs.teams.remove_member 'team-id', 'member-name'
     #
     def remove_member(team_id, member_name, params={})
-      _validate_presence_of team_id, member_name
+      assert_presence_of team_id, member_name
       normalize! params
       delete_request("/teams/#{team_id}/members/#{member_name}", params)
     end
@@ -182,7 +182,7 @@ module Github
     #  github.orgs.teams.list_repos 'team-id'
     #
     def list_repos(team_id, params={})
-      _validate_presence_of team_id
+      assert_presence_of team_id
       normalize! params
 
       response = get_request("/teams/#{team_id}/repos", params)
@@ -198,7 +198,7 @@ module Github
     #  github.orgs.teams.team_repo? 'team-id', 'user-name', 'repo-name'
     #
     def team_repo?(team_id, user_name, repo_name, params={})
-      _validate_presence_of team_id, user_name, repo_name
+      assert_presence_of team_id, user_name, repo_name
       normalize! params
       get_request("/teams/#{team_id}/repos/#{user_name}/#{repo_name}", params)
       true
@@ -219,7 +219,7 @@ module Github
     #  github.orgs.teams.add_repo 'team-id', 'user-name', 'repo-name'
     #
     def add_repo(team_id, user_name, repo_name, params={})
-      _validate_presence_of team_id, user_name, repo_name
+      assert_presence_of team_id, user_name, repo_name
       normalize! params
       put_request("/teams/#{team_id}/repos/#{user_name}/#{repo_name}", params)
     end
@@ -236,7 +236,7 @@ module Github
     #  github.orgs.teams.remove_repo 'team-id', 'user-name', 'repo-name'
     #
     def remove_repo(team_id, user_name, repo_name, params={})
-      _validate_presence_of team_id, user_name, repo_name
+      assert_presence_of team_id, user_name, repo_name
       normalize! params
       delete_request("/teams/#{team_id}/repos/#{user_name}/#{repo_name}", params)
     end

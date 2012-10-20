@@ -38,7 +38,7 @@ module Github
     #  github.oauth.get 'authorization-id'
     #
     def get(authorization_id, params={})
-      _validate_presence_of(authorization_id)
+      assert_presence_of(authorization_id)
       _check_if_authenticated
       normalize! params
 
@@ -81,7 +81,7 @@ module Github
     #
     def update(authorization_id, params={})
       _check_if_authenticated
-      _validate_presence_of(authorization_id)
+      assert_presence_of authorization_id
 
       normalize! params
       filter! VALID_AUTH_PARAM_NAMES, params
@@ -96,7 +96,7 @@ module Github
     #
     def delete(authorization_id, params={})
       _check_if_authenticated
-      _validate_presence_of(authorization_id)
+      assert_presence_of authorization_id
 
       normalize! params
       filter! VALID_AUTH_PARAM_NAMES, params

@@ -11,7 +11,7 @@ module Github
     # = Examples
     #  github = Github.new
     #  github.repos.forks.list 'user-name', 'repo-name'
-    #  github.repos.forks.list 'user-name', 'repo-name' { |hook| ... }
+    #  github.repos.forks.list 'user-name', 'repo-name' { |fork| ... }
     #
     def list(user_name, repo_name, params = {})
       _update_user_repo_params(user_name, repo_name)

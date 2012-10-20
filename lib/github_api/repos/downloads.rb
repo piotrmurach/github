@@ -23,7 +23,7 @@ module Github
     #
     def list(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
+      assert_presence_of user, repo
       normalize! params
 
       response = get_request("/repos/#{user}/#{repo}/downloads", params)
@@ -40,8 +40,7 @@ module Github
     #
     def get(user_name, repo_name, download_id, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
-      _validate_presence_of download_id
+      assert_presence_of user, repo, download_id
       normalize! params
 
       get_request("/repos/#{user}/#{repo}/downloads/#{download_id}", params)
@@ -56,8 +55,7 @@ module Github
     #
     def delete(user_name, repo_name, download_id, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
-      _validate_presence_of download_id
+      assert_presence_of user, repo, download_id
       normalize! params
 
       delete_request("/repos/#{user}/#{repo}/downloads/#{download_id}", params)
@@ -83,7 +81,7 @@ module Github
     #
     def create(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
+      assert_presence_of user, repo
 
       normalize! params
       filter! VALID_DOWNLOAD_PARAM_NAMES, params
@@ -106,7 +104,7 @@ module Github
     #  github.repos.downloads.upload resource, '/users/octokit/image.jpg'
     #
     def upload(resource, filename)
-      _validate_presence_of resource, filename
+      assert_presence_of resource, filename
 
       response = Github::S3Uploader.new(resource, filename).send
       response.body

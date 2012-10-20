@@ -64,7 +64,7 @@ module Github
     #  github.orgs.get 'github'
     #
     def get(org_name, params={})
-      _validate_presence_of org_name
+      assert_presence_of org_name
       normalize! params
       get_request("/orgs/#{org_name}", params)
     end
@@ -90,7 +90,7 @@ module Github
     #    "name" => "github"
     #
     def edit(org_name, params={})
-      _validate_presence_of org_name
+      assert_presence_of org_name
       normalize! params
       filter! VALID_ORG_PARAM_NAMES, params
 
