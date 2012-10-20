@@ -1,0 +1,49 @@
+# encoding: utf-8
+
+require 'spec_helper'
+
+describe Github::Repos::Forks, '#create' do
+  let(:user) { 'peter-murach' }
+  let(:repo) { 'github' }
+  let(:request_path) { "/repos/#{user}/#{repo}/forks" }
+  let(:inputs) { {:org => 'github'} }
+
+  before {
+    stub_post(request_path).with(inputs).
+      to_return(:body => body, :status => status,
+        :headers => {:content_type => "application/json; charset=utf-8"})
+  }
+
+  after { reset_authentication_for(subject) }
+
+  context "resouce created" do
+    let(:body)   { fixture('repos/fork.json') }
+    let(:status) { 202 }
+
+    it "should create resource successfully" do
+      subject.create(user, repo, inputs)
+      a_post(request_path).with(inputs).should have_been_made
+    end
+
+    it "should return the resource" do
+      fork = subject.create user, repo, inputs
+      fork.should be_a Hashie::Mash
+    end
+
+    it "should get the fork information" do
+      fork = subject.create user, repo, inputs
+      fork.name.should == 'Hello-World'
+    end
+  end
+
+  context "failed to create resource" do
+    let(:body)   { "" }
+    let(:status) { 404 }
+
+    it "should faile to retrieve resource" do
+      expect {
+        subject.create user, repo, inputs
+      }.to raise_error(Github::Error::NotFound)
+    end
+  end
+end # create
