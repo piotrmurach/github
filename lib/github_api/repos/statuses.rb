@@ -23,7 +23,7 @@ module Github
     #
     def list(user_name, repo_name, sha, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
+      assert_presence_of user, repo
       normalize! params
 
       response = get_request("/repos/#{user}/#{repo}/statuses/#{sha}", params)
@@ -51,7 +51,7 @@ module Github
     #
     def create(user_name, repo_name, sha, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
+      assert_presence_of user, repo
 
       normalize! params
       filter! VALID_STATUS_PARAM_NAMES, params, :recursive => false

@@ -117,7 +117,7 @@ module Github
     #
     def branches(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless (user? && repo?)
+      assert_presence_of user, repo
       normalize! params
 
       response = get_request("/repos/#{user}/#{repo}/branches", params)
@@ -134,6 +134,7 @@ module Github
     #   github.repos.branch 'user-name', 'repo-name', 'branch-name'
     #
     def branch(user_name, repo_name, branch, params={})
+      assert_presence_of user_name, repo_name, branch
       normalize! params
 
       get_request("repos/#{user_name}/#{repo_name}/branches/#{branch}", params)
@@ -194,7 +195,7 @@ module Github
     #
     def delete(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
+      assert_presence_of user, repo
       normalize! params
 
       delete_request("/repos/#{user}/#{repo}")
@@ -214,7 +215,7 @@ module Github
     #
     def contributors(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
+      assert_presence_of user, repo
       normalize! params
       filter! ['anon'], params
 
@@ -247,7 +248,7 @@ module Github
     #
     def edit(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
+      assert_presence_of user, repo
 
       normalize! params
       filter! VALID_REPO_OPTIONS, params
@@ -264,7 +265,7 @@ module Github
     #
     def get(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
+      assert_presence_of user, repo
       normalize! params
 
       get_request("/repos/#{user}/#{repo}", params)
@@ -280,7 +281,7 @@ module Github
     #
     def languages(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
+      assert_presence_of user, repo
       normalize! params
 
       response = get_request("/repos/#{user}/#{repo}/languages", params)
@@ -337,7 +338,7 @@ module Github
     #
     def tags(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
+      assert_presence_of user, repo
       normalize! params
 
       response = get_request("/repos/#{user}/#{repo}/tags", params)
@@ -357,7 +358,7 @@ module Github
     #
     def teams(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
+      assert_presence_of user, repo
       normalize! params
 
       response = get_request("/repos/#{user}/#{repo}/teams", params)

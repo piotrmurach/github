@@ -15,7 +15,7 @@ module Github
     #
     def list(user_name, repo_name, params = {})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
+      assert_presence_of user, repo
       normalize! params
 
       response = get_request("/repos/#{user}/#{repo}/forks", params)
@@ -36,7 +36,7 @@ module Github
     #
     def create(user_name, repo_name, params={})
       _update_user_repo_params(user_name, repo_name)
-      _validate_user_repo_params(user, repo) unless user? && repo?
+      assert_presence_of user, repo
       normalize! params
       filter! %w[ org ], params
 
