@@ -5,6 +5,7 @@ doc
 .bundle
 pkg
 *.swp
+*.swo
 log
 *.sqlite3
 features/settings.yml
