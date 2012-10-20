@@ -21,16 +21,11 @@ describe Github::Repos, '#get' do
     it { should respond_to(:find) }
 
     it "should raise error when no user/repo parameters" do
-      expect {
-        subject.get nil, repo
-      }.to raise_error(ArgumentError, /\[user\] parameter cannot be nil/)
+      expect { subject.get nil, repo }.to raise_error(ArgumentError)
     end
 
     it "should raise error when no repository" do
-      # github.user, github.repo = nil, nil
-      expect {
-        subject.get user, nil
-      }.to raise_error(ArgumentError, /\[repo\] parameter cannot be nil/)
+      expect { subject.get user, nil }.to raise_error(ArgumentError)
     end
 
     it "should find resources" do

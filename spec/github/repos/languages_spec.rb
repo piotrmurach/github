@@ -19,15 +19,11 @@ describe Github::Repos, '#languages' do
     let(:status) { 200 }
 
     it "should raise error when no user/repo parameters" do
-      expect {
-        subject.languages nil, repo
-      }.to raise_error(ArgumentError, /\[user\] parameter cannot be nil/)
+      expect { subject.languages nil, repo }.to raise_error(ArgumentError)
     end
 
     it "should raise error when no repository" do
-      expect {
-        subject.languages user, nil
-      }.to raise_error(ArgumentError, /\[repo\] parameter cannot be nil/)
+      expect { subject.languages user, nil }.to raise_error(ArgumentError)
     end
 
     it "should find resources" do
