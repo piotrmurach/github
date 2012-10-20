@@ -2,22 +2,27 @@
 
 module Github
   module Validations
+    # A mixin to help validate presence of non-empty values
     module Presence
 
-      # Ensures that esential arguments are present before request is made
+      # Ensure that esential arguments are present before request is made.
       #
-      def _validate_presence_of(*params)
-        params.each do |param|
-          raise ArgumentError, "parameter cannot be nil" if param.nil?
+      # == Parameters
+      #  Hash/Array of arguments to be checked against nil and empty string
+      #
+      # == Example
+      #  assert_presence_of user: '...', repo: '...'
+      #  assert_presence_of user, repo
+      #
+      def assert_presence_of(*args)
+        hash = args.last.is_a?(::Hash) ? args.pop : {}
+
+        errors = hash.select { |key, val| val.to_s.empty? }
+        raise Github::Error::Validations.new(errors) unless errors.empty?
+
+        args.each do |arg|
+          raise ArgumentError, "parameter cannot be nil" if arg.nil?
         end
-      end
-
-
-      # Check if user or repository parameters are passed
-      #
-      def _validate_user_repo_params(user_name, repo_name)
-        raise ArgumentError, "[user] parameter cannot be nil" if user_name.nil?
-        raise ArgumentError, "[repo] parameter cannot be nil" if repo_name.nil?
       end
 
     end # Presence
