@@ -28,41 +28,38 @@ describe Github::Repos, '#edit' do
     let(:status) { 200 }
 
     it "should fail to edit without 'user/repo' parameters" do
-      expect { github.repos.edit user, nil }.to raise_error(ArgumentError)
+      expect { subject.edit user, nil }.to raise_error(ArgumentError)
     end
 
     it "should fail to edit resource without 'name' parameter" do
       expect{
-        github.repos.edit user, repo, inputs.except(:name)
+        subject.edit user, repo, inputs.except(:name)
       }.to raise_error(Github::Error::RequiredParams)
     end
 
     it "should edit the resource" do
-      github.repos.edit user, repo, inputs
-      a_patch("/repos/#{user}/#{repo}").with(inputs).should have_been_made
+      subject.edit user, repo, inputs
+      a_patch(request_path).with(inputs).should have_been_made
     end
 
     it "should return resource" do
-      repository = github.repos.edit user, repo, inputs
+      repository = subject.edit user, repo, inputs
       repository.should be_a Hashie::Mash
     end
 
     it "should be able to retrieve information" do
-      repository = github.repos.edit user, repo, inputs
+      repository = subject.edit user, repo, inputs
       repository.name.should == 'Hello-World'
     end
   end
 
   context "failed to edit resource" do
-    before do
-      stub_patch("/repos/#{user}/#{repo}").with(inputs).
-        to_return(:body => fixture("repos/repo.json"), :status => 404,
-          :headers => { :content_type => "application/json; charset=utf-8"})
-    end
+    let(:body)   { '' }
+    let(:status) { 404 }
 
     it "should fail to find resource" do
       expect {
-        github.repos.edit user, repo, inputs
+        subject.edit user, repo, inputs
       }.to raise_error(Github::Error::NotFound)
     end
   end
