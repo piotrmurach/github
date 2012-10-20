@@ -1,3 +1,12 @@
+0.7.1 (October 20, 2012)
+
+* Add delete call to repositories api.
+* Allow for type, sort & direction parameters when listing repositories.
+* Change unit tests for repositories.
+* Add code metrics tasks.
+* Add assertion for checking non-empty request arguments.
+* Change all requests to use new presence assertion.
+
 0.7.0 (September 9, 2012)
 
 * Fix multi json compatibility issues.
