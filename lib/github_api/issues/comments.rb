@@ -96,7 +96,7 @@ module Github
       filter! VALID_ISSUE_COMMENT_PARAM_NAME, params
       assert_required_keys(%w[ body ], params)
 
-      patch_request("/repos/#{user}/#{repo}/issues/comments/#{comment_id}")
+      patch_request("/repos/#{user}/#{repo}/issues/comments/#{comment_id}", params)
     end
 
     # Delete a comment
