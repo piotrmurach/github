@@ -95,10 +95,11 @@ module Github
       # last page URI then there is only one page.
       page_uri = first_page_uri || last_page_uri
       return nil unless page_uri
+      params   = parse_query page_uri.split(QUERY_STR_SEP).last
+      params['page'] = page_number
+      params['per_page'] = parse_per_page_number(page_uri)
+      response = page_request page_uri.split(QUERY_STR_SEP).first, params
 
-      response = page_request page_uri.split(QUERY_STR_SEP).first,
-                              'page' => page_number,
-                              'per_page' => parse_per_page_number(page_uri)
       update_page_links response.links
       response
     end
