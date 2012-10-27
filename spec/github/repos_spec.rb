@@ -8,6 +8,8 @@ describe Github::Repos, 'integration' do
 
   its(:collaborators) { should be_a Github::Repos::Collaborators }
 
+  its(:comments)      { should be_a Github::Repos::Comments }
+
   its(:commits)       { should be_a Github::Repos::Commits }
 
   its(:downloads)     { should be_a Github::Repos::Downloads }
