@@ -11,6 +11,17 @@ A Ruby wrapper for the GitHub REST API v3.
 
 Supports all the API methods(nearly 200). It's build in a modular way, that is, you can either instantiate the whole api wrapper Github.new or use parts of it e.i. Github::Repos.new if working solely with repositories is your main concern.
 
+## Features
+
+* Intuitive GitHub API interface navigation.
+* Modular design allows for working with parts of API.
+* Fully customizable including advanced middleware stack construction.
+* Requests pagination.
+* Easy error handling.
+* Custom Mime Types specification (TODO)
+* Flexible arguments parsing (In progress).
+* Full tested with test coverage above 90%.
+
 ## Installation
 
 Install the gem by issuing
