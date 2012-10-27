@@ -53,4 +53,21 @@ class Hash # :nodoc:
     self.all_keys.include? key
   end unless method_defined?(:has_deep_key?)
 
+  def self.hash_traverse(hash, &block)
+    hash.each do |key, val|
+      block.call(key)
+      case val
+      when Hash
+        val.keys.each do |k|
+          _hash_traverse(val, &block)
+        end
+      when Array
+        val.each do |item|
+          _hash_traverse(item, &block)
+        end
+      end
+    end
+    return hash
+  end
+
 end # Hash
