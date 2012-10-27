@@ -7,6 +7,7 @@ module Github
     # Load all the modules after initializing Repos to avoid superclass mismatch
     autoload_all 'github_api/repos',
       :Collaborators => 'collaborators',
+      :Comments      => 'comments',
       :Commits       => 'commits',
       :Contents      => 'contents',
       :Downloads     => 'downloads',
@@ -48,6 +49,11 @@ module Github
     # Access to Repos::Collaborators API
     def collaborators
       @collaborators ||= ApiFactory.new 'Repos::Collaborators'
+    end
+
+    # Access to Repos::Comments API
+    def comments
+      @commits ||= ApiFactory.new 'Repos::Comments'
     end
 
     # Access to Repos::Commits API

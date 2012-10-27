@@ -1,0 +1,120 @@
+# encoding: utf-8
+
+require 'spec_helper'
+
+describe Github::Repos::Comments, '#list' do
+  let(:user) { 'peter-murach' }
+  let(:repo) { 'github' }
+
+  after { reset_authentication_for subject }
+
+  context 'without sha' do
+    let(:request_path) { "/repos/#{user}/#{repo}/comments" }
+
+    before {
+      stub_get(request_path).to_return(:body => body, :status => status,
+        :headers => {:content_type => "application/json; charset=utf-8"})
+    }
+
+    context "resource found" do
+      let(:body)   { fixture('repos/repo_comments.json') }
+      let(:status) { 200 }
+
+      it { should respond_to(:all) }
+
+      it "should fail to get resource without username" do
+        expect { subject.list }.to raise_error(ArgumentError)
+      end
+
+      it "should get the resources" do
+        subject.list user, repo
+        a_get(request_path).should have_been_made
+      end
+
+      it "should return array of resources" do
+        repo_comments = subject.list user, repo
+        repo_comments.should be_an Array
+        repo_comments.should have(1).items
+      end
+
+      it "should be a mash type" do
+        repo_comments = subject.list user, repo
+        repo_comments.first.should be_a Hashie::Mash
+      end
+
+      it "should get commit comment information" do
+        repo_comments = subject.list user, repo
+        repo_comments.first.user.login.should == 'octocat'
+      end
+
+      it "should yield to a block" do
+        subject.should_receive(:list).with(user, repo).and_yield('web')
+        subject.list(user, repo) { |param| 'web' }
+      end
+    end
+
+    context "resource not found" do
+      let(:body) { '' }
+      let(:status) { [404, "Not Found"] }
+
+      it "should return 404 with a message 'Not Found'" do
+        expect {
+          subject.list user, repo
+        }.to raise_error(Github::Error::NotFound)
+      end
+    end
+  end # without sha
+
+  context 'with sha' do
+    let(:sha) { '23432dfosfsufd' }
+    let(:request_path) { "/repos/#{user}/#{repo}/commits/#{sha}/comments" }
+
+    before {
+      stub_get(request_path).to_return(:body => body, :status => status,
+        :headers => {:content_type => "application/json; charset=utf-8"})
+    }
+
+    context "resource found" do
+      let(:body) { fixture('repos/commit_comments.json') }
+      let(:status) { 200 }
+
+      it "should get the resource" do
+        subject.list user, repo, :sha => sha
+        a_get(request_path).should have_been_made
+      end
+
+      it "should return array of resources" do
+        commit_comments = subject.list user, repo, :sha => sha
+        commit_comments.should be_an Array
+        commit_comments.should have(1).items
+      end
+
+      it "should be a mash type" do
+        commit_comments = subject.list user, repo, :sha => sha
+        commit_comments.first.should be_a Hashie::Mash
+      end
+
+      it "should get commit comment information" do
+        commit_comments = subject.list user, repo, :sha => sha
+        commit_comments.first.user.login.should == 'octocat'
+      end
+
+      it "should yield to a block" do
+        subject.should_receive(:list).with(user, repo, :sha=>sha).and_yield('web')
+        subject.list(user, repo, :sha => sha) { |param| 'web' }
+      end
+    end
+
+    context "resource not found" do
+      let(:body) { '' }
+      let(:status) { 404 }
+
+      it "should fail to retrive resource" do
+        expect {
+          subject.list user, repo, :sha => sha
+        }.to raise_error(Github::Error::NotFound)
+      end
+    end
+  end # with sha
+
+end # list
