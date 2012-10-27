@@ -13,6 +13,7 @@ require 'github_api/api/actions'
 require 'github_api/api_factory'
 
 module Github
+  # Core class for api interface operations
   class API
     include Constants
     include Authorization
@@ -86,27 +87,33 @@ module Github
       end
     end
 
+    # Set an option to a given value
+    def set(option, value=(not_set = true), &block)
+      raise ArgumentError, 'value not set' if block and !not_set
+
+      if not_set
+        set_options option
+        return self
+      end
+
+      if respond_to?("#{option}=")
+        return __send__("#{option}=", value)
+      end
+
+      self
+    end
+
+    # Set multiple options
+    def set_options(options)
+      unless options.respond_to?(:each)
+        raise ArgumentError, 'cannot iterate over value'
+      end
+      options.each { |key, value| set(key, value) }
+    end
+
     def _update_user_repo_params(user_name, repo_name=nil) # :nodoc:
       self.user = user_name || self.user
       self.repo = repo_name || self.repo
-    end
-
-    # TODO: See whether still needed, consider adding to core_exts
-    def _hash_traverse(hash, &block)
-      hash.each do |key, val|
-        block.call(key)
-        case val
-        when Hash
-          val.keys.each do |k|
-            _hash_traverse(val, &block)
-          end
-        when Array
-          val.each do |item|
-            _hash_traverse(item, &block)
-          end
-        end
-      end
-      return hash
     end
 
     def _merge_mime_type(resource, params) # :nodoc:
