@@ -1,3 +1,12 @@
+0.7.2 (October 27, 2012)
+
+* Fix bug with editing issues comment.
+* Fix bug with retrieving single page from paginated set.
+* Add repository comments api and remove old api calls from commits api.
+* Add options setting inside api.
+* Replace all api endpoints to use new options setter for user and repo.
+* Update documentation with main features list.
+
 0.7.1 (October 20, 2012)
 
 * Add delete call to repositories api.
