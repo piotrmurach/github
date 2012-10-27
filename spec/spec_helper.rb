@@ -92,6 +92,7 @@ OAUTH_TOKEN = 'bafec72922f31fe86aacc8aca4261117f3bd62cf'
 
 def reset_authentication_for(object)
   [ 'user', 'repo', 'basic_auth', 'oauth_token', 'login', 'password' ].each do |item|
+    Github.send("#{item}=", nil)
     object.send("#{item}=", nil)
   end
 end
