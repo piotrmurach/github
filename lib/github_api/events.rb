@@ -34,7 +34,7 @@ module Github
     #  github.events.repository 'user-name', 'repo-name' { |event| ... }
     #
     def repository(user_name, repo_name, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
       normalize! params
 
@@ -55,7 +55,7 @@ module Github
     #  github.events.issue 'user-name', 'repo-name' { |event| ... }
     #
     def issue(user_name, repo_name, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
       normalize! params
 
@@ -75,7 +75,7 @@ module Github
     #  github.events.network 'user-name', 'repo-name' { |event| ... }
     #
     def network(user_name, repo_name, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
       normalize! params
 

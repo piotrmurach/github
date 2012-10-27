@@ -29,6 +29,7 @@ module Github
     #    "commit_message": "Shipped cool_feature!"
     #
     def merge(user_name, repo_name, params={})
+      set :user => user_name, :repo => repo_name
       normalize! params
       filter! VALID_MERGE_PARAM_NAMES, params
       assert_required_keys REQUIRED_MERGE_PARAMS, params

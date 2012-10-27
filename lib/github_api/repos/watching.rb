@@ -13,7 +13,7 @@ module Github
     #  github.repos.watching.list { |watcher| ... }
     #
     def list(user_name, repo_name, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
       normalize! params
 

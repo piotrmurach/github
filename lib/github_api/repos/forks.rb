@@ -14,7 +14,7 @@ module Github
     #  github.repos.forks.list 'user-name', 'repo-name' { |fork| ... }
     #
     def list(user_name, repo_name, params = {})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
       normalize! params
 
@@ -35,7 +35,7 @@ module Github
     #    "org" =>  "github"
     #
     def create(user_name, repo_name, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
       normalize! params
       filter! %w[ org ], params

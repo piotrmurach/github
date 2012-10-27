@@ -16,7 +16,7 @@ module Github
     #  github.repos.commits.list 'user-name', 'repo-name', :sha => '...' { |commit| ... }
     #
     def list(user_name, repo_name, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
       normalize! params
       filter! %w[sha path author], params
@@ -34,7 +34,7 @@ module Github
     #  github.repos.commits.get 'user-name', 'repo-name', '6dcb09b5b57875f334f61aebed6')
     #
     def get(user_name, repo_name, sha, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, sha
       normalize! params
 
@@ -53,6 +53,7 @@ module Github
     #    'master'
     #
     def compare(user_name, repo_name, base, head, params={})
+      set :user => user_name, :repo => repo_name
       assert_presence_of base, head
       normalize! params
 

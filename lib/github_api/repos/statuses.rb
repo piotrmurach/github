@@ -22,7 +22,7 @@ module Github
     #  github.repos.statuses.list 'user-name', 'repo-name', 'sha' { |status| ... }
     #
     def list(user_name, repo_name, sha, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
       normalize! params
 
@@ -50,7 +50,7 @@ module Github
     #    "description" => "Successful build #3 from origin/master"
     #
     def create(user_name, repo_name, sha, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
 
       normalize! params

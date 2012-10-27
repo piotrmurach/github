@@ -39,7 +39,7 @@ module Github
     #     :direction => 'asc'
     #
     def list(user_name, repo_name, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
 
       normalize! params
@@ -59,7 +59,7 @@ module Github
     #  github.issues.milestones.get 'user-name', 'repo-name', 'milestone-id'
     #
     def get(user_name, repo_name, milestone_id, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, milestone_id
       normalize! params
 
@@ -83,7 +83,7 @@ module Github
     #    :due_on => "Time"
     #
     def create(user_name, repo_name, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
 
       normalize! params
@@ -110,7 +110,7 @@ module Github
     #    :due_on => "Time"
     #
     def update(user_name, repo_name, milestone_id, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, milestone_id
 
       normalize! params
@@ -127,7 +127,7 @@ module Github
     #  github.issues.milestones.delete 'user-name', 'repo-name', 'milestone-id'
     #
     def delete(user_name, repo_name, milestone_id, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, milestone_id
       normalize! params
 

@@ -13,7 +13,7 @@ module Github
     #  collaborators.add 'user', 'repo', 'collaborator'
     #
     def add(user_name, repo_name, collaborator, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, collaborator
       normalize! params
 
@@ -28,7 +28,7 @@ module Github
     #  github.collaborators.collaborator?('user', 'repo', 'collaborator')
     #
     def collaborator?(user_name, repo_name, collaborator, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, collaborator
       normalize! params
 
@@ -46,7 +46,7 @@ module Github
     #  github.repos.collaborators.list 'user-name', 'repo-name' { |cbr| .. }
     #
     def list(user_name, repo_name, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
       normalize! params
 
@@ -63,7 +63,7 @@ module Github
     #  github.repos.collaborators.remove 'user', 'repo', 'collaborator'
     #
     def remove(user_name, repo_name, collaborator, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of collaborator
       normalize! params
 

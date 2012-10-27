@@ -43,7 +43,7 @@ module Github
     #  github.repos.hooks.list 'user-name', 'repo-name' { |hook| ... }
     #
     def list(user_name, repo_name, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
       normalize! params
 
@@ -60,7 +60,7 @@ module Github
     #  github.repos.hooks.get 'user-name', 'repo-name'
     #
     def get(user_name, repo_name, hook_id, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, hook_id
       normalize! params
 
@@ -87,7 +87,7 @@ module Github
     #    }
     #
     def create(user_name, repo_name, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
 
       normalize! params
@@ -119,7 +119,7 @@ module Github
     #    }
     #
     def edit(user_name, repo_name, hook_id, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, hook_id
 
       normalize! params
@@ -138,7 +138,7 @@ module Github
     #  github.repos.hooks.test 'user-name', 'repo-name', 'hook-id'
     #
     def test(user_name, repo_name, hook_id, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, hook_id
       normalize! params
 
@@ -152,7 +152,7 @@ module Github
     #  github.repos.hooks.delete 'user-name', 'repo-name', 'hook-id'
     #
     def delete(user_name, repo_name, hook_id, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, hook_id
       normalize! params
 

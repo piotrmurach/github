@@ -28,7 +28,7 @@ module Github
     #  github.git_data.references.list 'user-name', 'repo-name', ref:'tags'
     #
     def list(user_name, repo_name, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
       normalize! params
 
@@ -56,7 +56,7 @@ module Github
     #  github.git_data.references.get 'user-name', 'repo-name', 'heads/branch'
     #
     def get(user_name, repo_name, ref, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, ref
       validate_reference ref
       normalize! params
@@ -79,7 +79,7 @@ module Github
     #    "sha" =>  "827efc6d56897b048c772eb4087f854f46256132"
     #
     def create(user_name, repo_name, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       normalize! params
       filter! VALID_REF_PARAM_NAMES, params
       assert_presence_of user, repo, params['ref']
@@ -102,7 +102,7 @@ module Github
     #    "force" => true
     #
     def update(user_name, repo_name, ref, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, ref
       validate_reference ref
       normalize! params
@@ -120,7 +120,7 @@ module Github
     #    "ref" => "refs/heads/master",
     #
     def delete(user_name, repo_name, ref, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, ref
       normalize! params
 

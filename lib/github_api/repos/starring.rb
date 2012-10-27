@@ -13,7 +13,7 @@ module Github
     #  github.repos.starring.list { |star| ... }
     #
     def list(user_name, repo_name, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
       normalize! params
 
@@ -74,6 +74,7 @@ module Github
     #  github.repos.starring.star 'user-name', 'repo-name'
     #
     def star(user_name, repo_name, params={})
+      set :user => user_name, :repo => repo_name
       assert_presence_of user_name, repo_name
       normalize! params
       put_request("/user/starred/#{user_name}/#{repo_name}", params)
@@ -88,6 +89,7 @@ module Github
     #  github.repos.starring.unstar 'user-name', 'repo-name'
     #
     def unstar(user_name, repo_name, params={})
+      set :user => user_name, :repo => repo_name
       assert_presence_of user_name, repo_name
       normalize! params
       delete_request("/user/starred/#{user_name}/#{repo_name}", params)

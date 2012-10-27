@@ -44,7 +44,7 @@ module Github
     #  pull_reqs.pull_requests.list 'user-name', 'repo-name'
     #
     def list(user_name, repo_name, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
 
       normalize! params
@@ -68,7 +68,7 @@ module Github
     #  @pull_reqs.get 'user-name', 'repo-name', 'request-id'
     #
     def get(user_name, repo_name, request_id, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, request_id
       normalize! params
       # _merge_mime_type(:pull_request, params)
@@ -107,7 +107,7 @@ module Github
     #    "base" => "master"
     #
     def create(user_name, repo_name, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
 
       normalize! params
@@ -132,7 +132,7 @@ module Github
     #    "state" => "open",
     #
     def update(user_name, repo_name, request_id, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, request_id
 
       normalize! params
@@ -150,7 +150,7 @@ module Github
     #  github.pull_requests.commits 'user-name', 'repo-name', 'request-id'
     #
     def commits(user_name, repo_name, request_id, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, request_id
 
       normalize! params
@@ -168,7 +168,7 @@ module Github
     #  github.pull_requests.files 'user-name', 'repo-name', 'request-id'
     #
     def files(user_name, repo_name, request_id, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, request_id
       normalize! params
       # _merge_mime_type(:pull_request, params)
@@ -185,7 +185,7 @@ module Github
     #  github.pull_requests.merged? 'user-name', 'repo-name', 'request-id'
     #
     def merged?(user_name, repo_name, request_id, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, request_id
 
       normalize! params
@@ -207,7 +207,7 @@ module Github
     #  github.pull_requests.merge 'user-name', 'repo-name', 'request-id'
     #
     def merge(user_name, repo_name, request_id, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, request_id
 
       normalize! params

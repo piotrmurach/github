@@ -132,7 +132,7 @@ module Github
     #    :direction => 'asc'
     #
     def list_repo(user_name, repo_name, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
 
       normalize! params
@@ -153,7 +153,7 @@ module Github
     #  github.issues.get 'user-name', 'repo-name', 'issue-id'
     #
     def get(user_name, repo_name, issue_id, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, issue_id
 
       normalize! params
@@ -184,7 +184,7 @@ module Github
     #    ]
     #
     def create(user_name, repo_name, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
 
       normalize! params
@@ -218,7 +218,7 @@ module Github
     #    ]
     #
     def edit(user_name, repo_name, issue_id, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, issue_id
 
       normalize! params

@@ -18,7 +18,7 @@ module Github
     #  github.issues.labels.list { |label| ... }
     #
     def list(user_name, repo_name, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
       normalize! params
 
@@ -35,7 +35,7 @@ module Github
     #  github.issues.labels.find 'user-name', 'repo-name', 'label-id'
     #
     def get(user_name, repo_name, label_id, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, label_id
       normalize! params
 
@@ -54,7 +54,7 @@ module Github
     #  github.issues.labels.create :name => 'API', :color => 'FFFFFF'
     #
     def create(user_name, repo_name, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
 
       normalize! params
@@ -76,7 +76,7 @@ module Github
     #    :name => 'API', :color => "FFFFFF"
     #
     def update(user_name, repo_name, label_id, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, label_id
 
       normalize! params
@@ -94,7 +94,7 @@ module Github
     #  github.issues.labels.delete 'user-name', 'repo-name', 'label-id'
     #
     def delete(user_name, repo_name, label_id, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
 
       assert_presence_of label_id
@@ -110,7 +110,7 @@ module Github
     #  @github.issues.labels.issue 'user-name', 'repo-name', 'issue-id'
     #
     def issue(user_name, repo_name, issue_id, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, issue_id
       normalize! params
 
@@ -127,7 +127,7 @@ module Github
       params = args.extract_options!
       params['data'] = args unless args.empty?
 
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, issue_id
       normalize! params
 
@@ -147,7 +147,7 @@ module Github
     #  github.issues.labels.remove 'user-name', 'repo-name', 'issue-id'
     #
     def remove(user_name, repo_name, issue_id, label_id=nil, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, issue_id
       normalize! params
 
@@ -170,7 +170,7 @@ module Github
       params = args.extract_options!
       params['data'] = args unless args.empty?
 
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, issue_id
       normalize! params
 
@@ -184,7 +184,7 @@ module Github
     #  github.issues.labels. 'user-name', 'repo-name', 'milestone-id'
     #
     def milestone(user_name, repo_name, milestone_id, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, milestone_id
       normalize! params
 

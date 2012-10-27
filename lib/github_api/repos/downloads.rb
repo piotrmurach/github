@@ -22,7 +22,7 @@ module Github
     #  github.repos.downloads.list 'user-name', 'repo-name' { |downl| ... }
     #
     def list(user_name, repo_name, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
       normalize! params
 
@@ -39,7 +39,7 @@ module Github
     #  github.repos.downloads.get 'user-name', 'repo-name', 'download-id'
     #
     def get(user_name, repo_name, download_id, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, download_id
       normalize! params
 
@@ -54,7 +54,7 @@ module Github
     #  github.repos.downloads.delete 'user-name', 'repo-name', 'download-id'
     #
     def delete(user_name, repo_name, download_id, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, download_id
       normalize! params
 
@@ -80,7 +80,7 @@ module Github
     #    "content_type" => "text/plain"
     #
     def create(user_name, repo_name, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
 
       normalize! params

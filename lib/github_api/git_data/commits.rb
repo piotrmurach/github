@@ -32,7 +32,7 @@ module Github
     #  github.git_data.commits.get 'user-name', 'repo-name', 'sha'
     #
     def get(user_name, repo_name, sha, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, sha
       normalize! params
 
@@ -73,7 +73,7 @@ module Github
     #    "tree": "827efc6d56897b048c772eb4087f854f46256132"]
     #
     def create(user_name, repo_name, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
       normalize! params
       filter! VALID_COMMIT_PARAM_NAMES, params

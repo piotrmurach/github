@@ -25,7 +25,7 @@ module Github
     #   :sha => '6dcb09b5b57875f334f61aebed695e2e4193db5e'
     #
     def list(user_name, repo_name, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
       normalize! params
 
@@ -46,7 +46,7 @@ module Github
     #  github.repos.comments.get 'user-name', 'repo-name', 'comment-id'
     #
     def get(user_name, repo_name, comment_id, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, comment_id
       normalize! params
 
@@ -73,7 +73,7 @@ module Github
     #    "position" =>  4
     #
     def create(user_name, repo_name, sha, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, sha
 
       normalize! params
@@ -95,7 +95,7 @@ module Github
     #    'comment-id', "body" => "Nice change"
     #
     def update(user_name, repo_name, comment_id, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, comment_id
       normalize! params
       assert_required_keys(%w[ body ], params)
@@ -110,7 +110,7 @@ module Github
     #  github.repos.comments.delete 'user-name', 'repo-name', 'comment-id'
     #
     def delete(user_name, repo_name, comment_id, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, comment_id
       normalize! params
 

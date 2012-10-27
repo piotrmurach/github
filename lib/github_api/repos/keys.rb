@@ -13,7 +13,7 @@ module Github
     #  github.repos.keys.list 'user-name', 'repo-name' { |key| ... }
     #
     def list(user_name, repo_name, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
       normalize! params
 
@@ -30,7 +30,7 @@ module Github
     #  github.repos.keys.get 'user-name', 'repo-name', 'key-id'
     #
     def get(user_name, repo_name, key_id, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, key_id
       normalize! params
 
@@ -51,7 +51,7 @@ module Github
     #    "key" =>  "ssh-rsa AAA..."
     #
     def create(user_name, repo_name, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
       normalize! params
       filter! VALID_KEY_PARAM_NAMES, params
@@ -73,7 +73,7 @@ module Github
     #    "key" =>  "ssh-rsa AAA..."
     #
     def edit(user_name, repo_name, key_id, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, key_id
 
       normalize! params
@@ -89,7 +89,7 @@ module Github
     #  @github.repos.keys.delete 'user-name', 'repo-name', 'key-id'
     #
     def delete(user_name, repo_name, key_id, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, key_id
       normalize! params
 

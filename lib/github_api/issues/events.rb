@@ -21,7 +21,7 @@ module Github
     #  github.issues.events.list 'user-name', 'repo-name'
     #
     def list(user_name, repo_name, issue_id=nil, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
       normalize! params
 
@@ -42,7 +42,7 @@ module Github
     #  github.issues.events.get 'user-name', 'repo-name', 'event-id'
     #
     def get(user_name, repo_name, event_id, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, event_id
       normalize! params
 

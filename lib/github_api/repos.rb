@@ -122,7 +122,7 @@ module Github
     #   repos.branches 'user-name', 'repo-name'
     #
     def branches(user_name, repo_name, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
       normalize! params
 
@@ -140,6 +140,7 @@ module Github
     #   github.repos.branch 'user-name', 'repo-name', 'branch-name'
     #
     def branch(user_name, repo_name, branch, params={})
+      set :user => user_name, :repo => repo_name
       assert_presence_of user_name, repo_name, branch
       normalize! params
 
@@ -200,7 +201,7 @@ module Github
     #  github.repos.delete 'user-name', 'repo-name'
     #
     def delete(user_name, repo_name, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
       normalize! params
 
@@ -220,7 +221,7 @@ module Github
     #  github.repos.contributors 'user-name','repo-name' { |cont| ... }
     #
     def contributors(user_name, repo_name, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
       normalize! params
       filter! ['anon'], params
@@ -253,7 +254,7 @@ module Github
     #    :public => true, :has_issues => true
     #
     def edit(user_name, repo_name, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
 
       normalize! params
@@ -270,7 +271,7 @@ module Github
     #  github.repos.get 'user-name', 'repo-name'
     #
     def get(user_name, repo_name, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
       normalize! params
 
@@ -286,7 +287,7 @@ module Github
     #  github.repos.languages 'user-name', 'repo-name' { |lang| ... }
     #
     def languages(user_name, repo_name, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
       normalize! params
 
@@ -343,7 +344,7 @@ module Github
     #   github.repos.tags 'user-name', 'repo-name' { |tag| ... }
     #
     def tags(user_name, repo_name, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
       normalize! params
 
@@ -363,7 +364,7 @@ module Github
     #   github.repos.teams 'user-name', 'repo-name' { |team| ... }
     #
     def teams(user_name, repo_name, params={})
-      _update_user_repo_params(user_name, repo_name)
+      set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
       normalize! params
 
