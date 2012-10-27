@@ -103,17 +103,14 @@ module Github
       self
     end
 
+    private
+
     # Set multiple options
     def set_options(options)
       unless options.respond_to?(:each)
         raise ArgumentError, 'cannot iterate over value'
       end
       options.each { |key, value| set(key, value) }
-    end
-
-    def _update_user_repo_params(user_name, repo_name=nil) # :nodoc:
-      self.user = user_name || self.user
-      self.repo = repo_name || self.repo
     end
 
     def _merge_mime_type(resource, params) # :nodoc:
