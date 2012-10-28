@@ -121,12 +121,12 @@ module Github
     #   repos = Github::Repos.new
     #   repos.branches 'user-name', 'repo-name'
     #
-    def branches(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-      normalize! params
+    # def branches(user_name, repo_name, params={})
+    def branches(*args)
+      arguments = Arguments.new(self, :args_required => [:user, :repo]).parse *args
+      params = arguments.params
 
-      response = get_request("/repos/#{user}/#{repo}/branches", params)
+      response = get_request("/repos/#{user}/#{repo}/branches", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -253,11 +253,9 @@ module Github
     #    :homepage => "https://github.com",
     #    :public => true, :has_issues => true
     #
-    def edit(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-
-      normalize! params
+    def edit(*args)
+      arguments = Arguments.new(self, :args_required => [:user, :repo]).parse *args
+      params = arguments.params
       filter! VALID_REPO_OPTIONS, params
       assert_required_keys(%w[ name ], params)
 
@@ -270,10 +268,11 @@ module Github
     #  github = Github.new
     #  github.repos.get 'user-name', 'repo-name'
     #
-    def get(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-      normalize! params
+    #  github.repos(user: 'user-name', repo: 'repo-name').get
+    #
+    def get(*args)
+      arguments = Arguments.new(self, :args_required => [:user, :repo]).parse *args
+      params = arguments.params
 
       get_request("/repos/#{user}/#{repo}", params)
     end
@@ -286,10 +285,9 @@ module Github
     #  github.repos.languages 'user-name', 'repo-name'
     #  github.repos.languages 'user-name', 'repo-name' { |lang| ... }
     #
-    def languages(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-      normalize! params
+    def languages(*args)
+      arguments = Arguments.new(self, :args_required => [:user, :repo]).parse *args
+      params = arguments.params
 
       response = get_request("/repos/#{user}/#{repo}/languages", params)
       return response unless block_given?
@@ -308,8 +306,11 @@ module Github
     #
     # = Examples
     #   github = Github.new
-    #   github.repos.list :user => 'user-name'
-    #   github.repos.list :user => 'user-name', { |repo| ... }
+    #   github.repos.list user: 'user-name'
+    #   github.repos.list user: 'user-name' { |repo| ... }
+    #
+    #   github.repos(user: 'user-name').list
+    #   github.repos(user: 'user-name').list { |repo| ... }
     #
     # List repositories for the specified organisation.
     #
@@ -319,13 +320,13 @@ module Github
     #  github.repos.list :org => 'org-name', { |repo| ... }
     #
     def list(*args)
-      params = args.extract_options!
-      normalize! params
+      arguments = Arguments.new(self).parse(*args)
+      params = arguments.params
       filter! %w[ user org type sort direction ], params
 
-      response = if (user_name = params.delete("user"))
+      response = if (user_name = (params.delete("user") || user))
         get_request("/users/#{user_name}/repos", params)
-      elsif (org_name = params.delete("org"))
+      elsif (org_name = (params.delete("org") || org))
         get_request("/orgs/#{org_name}/repos", params)
       else
         # For authenticated user
@@ -343,10 +344,9 @@ module Github
     #   github.repos.tags 'user-name', 'repo-name'
     #   github.repos.tags 'user-name', 'repo-name' { |tag| ... }
     #
-    def tags(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-      normalize! params
+    def tags(*args)
+      arguments = Arguments.new(self, :args_required => [:user, :repo]).parse *args
+      params = arguments.params
 
       response = get_request("/repos/#{user}/#{repo}/tags", params)
       return response unless block_given?
@@ -363,10 +363,9 @@ module Github
     #   github.repos.teams 'user-name', 'repo-name'
     #   github.repos.teams 'user-name', 'repo-name' { |team| ... }
     #
-    def teams(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-      normalize! params
+    def teams(*args)
+      arguments = Arguments.new(self, :args_required => [:user, :repo]).parse *args
+      params = arguments.params
 
       response = get_request("/repos/#{user}/#{repo}/teams", params)
       return response unless block_given?
