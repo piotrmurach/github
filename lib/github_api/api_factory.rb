@@ -13,7 +13,7 @@ module Github
 
     # Passes configuration options to instantiated class
     def self.create_instance(klass, options)
-      options.symbolize_keys!
+      # options.symbolize_keys!
       instance = convert_to_constant(klass.to_s).new options
       Github.api_client = instance
       instance
