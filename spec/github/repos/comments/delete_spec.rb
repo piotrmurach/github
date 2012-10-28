@@ -14,6 +14,8 @@ describe Github::Repos::Comments, '#delete' do
         :headers => { :content_type => "application/json; charset=utf-8"})
   }
 
+  after { reset_authentication_for subject }
+
   context "resource deleted successfully" do
     let(:body) { '' }
     let(:status) { 204 }
