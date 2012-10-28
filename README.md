@@ -16,11 +16,12 @@ Supports all the API methods(nearly 200). It's build in a modular way, that is, 
 * Intuitive GitHub API interface navigation.
 * Modular design allows for working with parts of API.
 * Fully customizable including advanced middleware stack construction.
+* Its comprehensive, you can request all GitHub API resources.
 * Requests pagination.
 * Easy error handling.
-* Custom Mime Types specification (TODO)
-* Flexible arguments parsing (In progress).
-* Full tested with test coverage above 90%.
+* Custom mime types specification (Status: TODO)
+* Flexible arguments parsing (Status: In progress).
+* Fully tested with test coverage above 90% with over 1,200 specs and 500 features.
 
 ## Installation
 
