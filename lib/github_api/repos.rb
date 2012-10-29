@@ -111,41 +111,64 @@ module Github
       @watching ||= ApiFactory.new 'Repos::Watching'
     end
 
-    # List branches
+    # List repositories for the authenticated user
     #
     # = Examples
+    #   github = Github.new :oauth_token => '...'
+    #   github.repos.list
+    #   github.repos.list { |repo| ... }
     #
+    # List public repositories for the specified user.
+    #
+    # = Examples
     #   github = Github.new
-    #   github.repos.branches 'user-name', 'repo-name'
+    #   github.repos.list user: 'user-name'
+    #   github.repos.list user: 'user-name' { |repo| ... }
     #
-    #   repos = Github::Repos.new
-    #   repos.branches 'user-name', 'repo-name'
+    #   github.repos(user: 'user-name').list
+    #   github.repos(user: 'user-name').list { |repo| ... }
     #
-    # def branches(user_name, repo_name, params={})
-    def branches(*args)
-      arguments = Arguments.new(self, :args_required => [:user, :repo]).parse *args
+    # List repositories for the specified organisation.
+    #
+    # = Examples
+    #  github = Github.new
+    #  github.repos.list :org => 'org-name'
+    #  github.repos.list :org => 'org-name', { |repo| ... }
+    #
+    def list(*args)
+      arguments = Arguments.new(self).parse(*args)
       params = arguments.params
+      filter! %w[ user org type sort direction ], params
 
-      response = get_request("/repos/#{user}/#{repo}/branches", arguments.params)
+      response = if (user_name = (params.delete("user") || user))
+        get_request("/users/#{user_name}/repos", params)
+      elsif (org_name = (params.delete("org") || org))
+        get_request("/orgs/#{org_name}/repos", params)
+      else
+        # For authenticated user
+        get_request("/user/repos", params)
+      end
       return response unless block_given?
       response.each { |el| yield el }
     end
-    alias :list_branches :branches
+    alias :all :list
 
-    # Get branch
+    # Get a repository
     #
     # = Examples
+    #  github = Github.new
+    #  github.repos.get 'user-name', 'repo-name'
     #
-    #   github = Github.new
-    #   github.repos.branch 'user-name', 'repo-name', 'branch-name'
+    #  github.repos(user: 'user-name', repo: 'repo-name').get
     #
-    def branch(user_name, repo_name, branch, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user_name, repo_name, branch
-      normalize! params
+    def get(*args)
+      arguments = Arguments.new(self, :args_required => [:user, :repo]).parse *args
+      params = arguments.params
 
-      get_request("repos/#{user_name}/#{repo_name}/branches/#{branch}", params)
+      get_request("/repos/#{user}/#{repo}", params)
     end
+    alias :find :get
+
 
     # Create a new repository for the autheticated user.
     #
@@ -191,48 +214,6 @@ module Github
       end
     end
 
-    # Delete a repository
-    #
-    # Deleting a repository requires admin access.
-    # If OAuth is used, the delete_repo scope is required.
-    #
-    # = Examples
-    #  github = Github.new :oauth_token => '...'
-    #  github.repos.delete 'user-name', 'repo-name'
-    #
-    def delete(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-      normalize! params
-
-      delete_request("/repos/#{user}/#{repo}")
-    end
-    alias :remove :delete
-
-    # List contributors
-    #
-    # = Parameters
-    #  <tt>:anon</tt> - Optional flag. Set to 1 or true to include anonymous contributors.
-    #
-    # = Examples
-    #
-    #  github = Github.new
-    #  github.repos.contributors 'user-name','repo-name'
-    #  github.repos.contributors 'user-name','repo-name' { |cont| ... }
-    #
-    def contributors(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-      normalize! params
-      filter! ['anon'], params
-
-      response = get_request("/repos/#{user}/#{repo}/contributors", params)
-      return response unless block_given?
-      response.each { |el| yield el }
-    end
-    alias :list_contributors :contributors
-    alias :contribs :contributors
-
     # Edit a repository
     #
     # = Parameters
@@ -262,21 +243,83 @@ module Github
       patch_request("/repos/#{user}/#{repo}", DEFAULT_REPO_OPTIONS.merge(params))
     end
 
-    # Get a repository
+    # Delete a repository
+    #
+    # Deleting a repository requires admin access.
+    # If OAuth is used, the delete_repo scope is required.
     #
     # = Examples
-    #  github = Github.new
-    #  github.repos.get 'user-name', 'repo-name'
+    #  github = Github.new :oauth_token => '...'
+    #  github.repos.delete 'user-name', 'repo-name'
     #
-    #  github.repos(user: 'user-name', repo: 'repo-name').get
+    def delete(user_name, repo_name, params={})
+      set :user => user_name, :repo => repo_name
+      assert_presence_of user, repo
+      normalize! params
+
+      delete_request("/repos/#{user}/#{repo}")
+    end
+    alias :remove :delete
+
+    # List branches
     #
-    def get(*args)
+    # = Examples
+    #
+    #   github = Github.new
+    #   github.repos.branches 'user-name', 'repo-name'
+    #   github.repos(user: 'user-name', repo: 'repo-name').branches
+    #
+    #   repos = Github::Repos.new
+    #   repos.branches 'user-name', 'repo-name'
+    #
+    # def branches(user_name, repo_name, params={})
+    def branches(*args)
       arguments = Arguments.new(self, :args_required => [:user, :repo]).parse *args
       params = arguments.params
 
-      get_request("/repos/#{user}/#{repo}", params)
+      response = get_request("/repos/#{user}/#{repo}/branches", arguments.params)
+      return response unless block_given?
+      response.each { |el| yield el }
     end
-    alias :find :get
+    alias :list_branches :branches
+
+    # Get branch
+    #
+    # = Examples
+    #
+    #   github = Github.new
+    #   github.repos.branch 'user-name', 'repo-name', 'branch-name'
+    #
+    def branch(user_name, repo_name, branch, params={})
+      set :user => user_name, :repo => repo_name
+      assert_presence_of user_name, repo_name, branch
+      normalize! params
+
+      get_request("repos/#{user_name}/#{repo_name}/branches/#{branch}", params)
+    end
+
+    # List contributors
+    #
+    # = Parameters
+    #  <tt>:anon</tt> - Optional flag. Set to 1 or true to include anonymous contributors.
+    #
+    # = Examples
+    #
+    #  github = Github.new
+    #  github.repos.contributors 'user-name','repo-name'
+    #  github.repos.contributors 'user-name','repo-name' { |cont| ... }
+    #
+    def contributors(*args)
+      arguments = Arguments.new(self, :args_required => [:user, :repo],
+        :filter => ['anon']).parse *args
+      params = arguments.params
+
+      response = get_request("/repos/#{user}/#{repo}/contributors", params)
+      return response unless block_given?
+      response.each { |el| yield el }
+    end
+    alias :list_contributors :contributors
+    alias :contribs :contributors
 
     # List languages
     #
@@ -295,47 +338,6 @@ module Github
     end
     alias :list_languages :languages
 
-    # List repositories for the authenticated user
-    #
-    # = Examples
-    #   github = Github.new :oauth_token => '...'
-    #   github.repos.list
-    #   github.repos.list { |repo| ... }
-    #
-    # List public repositories for the specified user.
-    #
-    # = Examples
-    #   github = Github.new
-    #   github.repos.list user: 'user-name'
-    #   github.repos.list user: 'user-name' { |repo| ... }
-    #
-    #   github.repos(user: 'user-name').list
-    #   github.repos(user: 'user-name').list { |repo| ... }
-    #
-    # List repositories for the specified organisation.
-    #
-    # = Examples
-    #  github = Github.new
-    #  github.repos.list :org => 'org-name'
-    #  github.repos.list :org => 'org-name', { |repo| ... }
-    #
-    def list(*args)
-      arguments = Arguments.new(self).parse(*args)
-      params = arguments.params
-      filter! %w[ user org type sort direction ], params
-
-      response = if (user_name = (params.delete("user") || user))
-        get_request("/users/#{user_name}/repos", params)
-      elsif (org_name = (params.delete("org") || org))
-        get_request("/orgs/#{org_name}/repos", params)
-      else
-        # For authenticated user
-        get_request("/user/repos", params)
-      end
-      return response unless block_given?
-      response.each { |el| yield el }
-    end
-    alias :all :list
 
     # List tags
     #
@@ -362,6 +364,8 @@ module Github
     #   github = Github.new
     #   github.repos.teams 'user-name', 'repo-name'
     #   github.repos.teams 'user-name', 'repo-name' { |team| ... }
+    #
+    #   github.repos(user: 'user-name, repo: 'repo-name').teams
     #
     def teams(*args)
       arguments = Arguments.new(self, :args_required => [:user, :repo]).parse *args
