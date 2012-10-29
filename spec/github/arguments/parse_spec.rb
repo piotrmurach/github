@@ -46,4 +46,11 @@ describe Github::Arguments, '#parse' do
       expect { subject }.to raise_error(ArgumentError, /wrong number/)
     end
   end
+
+  context 'without required arguments' do
+    let(:args_required) { [] }
+    let(:arguments) { [params] }
+
+    its(:params) { should == params }
+  end
 end
