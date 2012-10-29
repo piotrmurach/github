@@ -27,6 +27,11 @@ describe Github::Repos, '#contributors' do
       expect { subject.contributors user, nil }.to raise_error(ArgumentError)
     end
 
+    it 'filters out unkown parameters' do
+      subject.contributors user, repo, :unknown => true
+      a_get(request_path).with({}).should have_been_made
+    end
+
     it "should find resources" do
       subject.contributors user, repo
       a_get(request_path).should have_been_made
