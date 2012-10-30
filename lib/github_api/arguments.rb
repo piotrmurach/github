@@ -24,22 +24,15 @@ module Github
     attr_reader :args_required
     private :args_required
 
-    # Allowed keys inside parameter hash
-    #
-    attr_reader :filter
-    private :filter
-
     # Takes api, filters and required arguments
     #
     # = Parameters
     #  :args_required - arguments that must be present before request is fired
-    #  :filter        - allowed keys inside parameter hash
     #
     def initialize(api, options={})
       normalize! options
       @api           = api
       @args_required = options.fetch('args_required', []).map(&:to_s)
-      @filter        = options.fetch('filter', nil)
     end
 
     # Parse arguments to allow for flexible api calls.
@@ -55,8 +48,18 @@ module Github
         # Arguments are inside the parameters hash
         parse_options options
       end
-      filter!(filter, options) if filter
       @params = options
+      yield self if block_given?
+      self
+    end
+
+    def sift(keys)
+      filter! keys, params if keys.any?
+      self
+    end
+
+    def assert_required(required)
+      assert_required_keys required, params
       self
     end
 
