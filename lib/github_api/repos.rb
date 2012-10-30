@@ -136,9 +136,10 @@ module Github
     #  github.repos.list :org => 'org-name', { |repo| ... }
     #
     def list(*args)
-      arguments = Arguments.new(self).parse(*args)
+      arguments = Arguments.new(self).parse *args do |args|
+        args.sift %w[ user org type sort direction ]
+      end
       params = arguments.params
-      filter! %w[ user org type sort direction ], params
 
       response = if (user_name = (params.delete("user") || user))
         get_request("/users/#{user_name}/repos", params)
@@ -158,7 +159,7 @@ module Github
     # = Examples
     #  github = Github.new
     #  github.repos.get 'user-name', 'repo-name'
-    #
+    #  github.repos.get user: 'user-name', repo: 'repo-name'
     #  github.repos(user: 'user-name', repo: 'repo-name').get
     #
     def get(*args)
@@ -168,7 +169,6 @@ module Github
       get_request("/repos/#{user}/#{repo}", params)
     end
     alias :find :get
-
 
     # Create a new repository for the autheticated user.
     #
@@ -201,10 +201,12 @@ module Github
     #   github.repos.create :name => 'repo-name', :org => 'organisation-name'
     #
     def create(*args)
-      params = args.extract_options!
-      normalize! params
-      filter! VALID_REPO_OPTIONS + %w[ org ], params
-      assert_required_keys(%w[ name ], params)
+      arguments = Arguments.new(self, :args_required => [:user, :repo])
+      arguments.parse *args do |args|
+        args.sift VALID_REPO_OPTIONS + %w[ org ]
+        args.assert_required %w[ name ]
+      end
+      params = arguments.params
 
       # Requires authenticated user
       if (org = params.delete("org"))
@@ -235,10 +237,12 @@ module Github
     #    :public => true, :has_issues => true
     #
     def edit(*args)
-      arguments = Arguments.new(self, :args_required => [:user, :repo]).parse *args
+      arguments = Arguments.new(self, :args_required => [:user, :repo])
+      arguments.parse *args do |args|
+        args.sift VALID_REPO_OPTIONS
+        args.assert_required %w[ name ]
+      end
       params = arguments.params
-      filter! VALID_REPO_OPTIONS, params
-      assert_required_keys(%w[ name ], params)
 
       patch_request("/repos/#{user}/#{repo}", DEFAULT_REPO_OPTIONS.merge(params))
     end
@@ -252,10 +256,9 @@ module Github
     #  github = Github.new :oauth_token => '...'
     #  github.repos.delete 'user-name', 'repo-name'
     #
-    def delete(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-      normalize! params
+    def delete(*args)
+      arguments = Arguments.new(self, :args_required => [:user, :repo]).parse *args
+      params = arguments.params
 
       delete_request("/repos/#{user}/#{repo}")
     end
@@ -289,13 +292,14 @@ module Github
     #
     #   github = Github.new
     #   github.repos.branch 'user-name', 'repo-name', 'branch-name'
+    #   github.repos.branch user: 'user-name', repo: 'repo-name', branch: 'branch-name'
+    #   github.repos(user: 'user-name', repo: 'repo-name', branch: 'branch-name').branch
     #
-    def branch(user_name, repo_name, branch, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user_name, repo_name, branch
-      normalize! params
+    def branch(*args)
+      arguments = Arguments.new(self, :args_required => [:user, :repo, :branch])
+      params = arguments.parse(*args).params
 
-      get_request("repos/#{user_name}/#{repo_name}/branches/#{branch}", params)
+      get_request("repos/#{user}/#{repo}/branches/#{branch}", params)
     end
 
     # List contributors
@@ -310,8 +314,10 @@ module Github
     #  github.repos.contributors 'user-name','repo-name' { |cont| ... }
     #
     def contributors(*args)
-      arguments = Arguments.new(self, :args_required => [:user, :repo],
-        :filter => ['anon']).parse *args
+      arguments = Arguments.new(self, :args_required => [:user, :repo])
+      arguments.parse *args do |args|
+        args.sift ['anon']
+      end
       params = arguments.params
 
       response = get_request("/repos/#{user}/#{repo}/contributors", params)
@@ -337,7 +343,6 @@ module Github
       response.each { |el| yield el }
     end
     alias :list_languages :languages
-
 
     # List tags
     #
