@@ -76,5 +76,42 @@ module Github
       get_request("/notifications/threads/#{thread_id}/subscription", params)
     end
 
+    # Create a thread subscription
+    #
+    # This lets you subscribe to a thread, or ignore it. Subscribing to a thread
+    # is unnecessary if the user is already subscribed to the repository. Ignoring
+    # a thread will mute all future notifications (until you comment or get
+    # @mentioned).
+    #
+    # = Parameters
+    # * <tt>:subscribed</tt> - boolean - determines if notifications should be
+    #                          received from this thread.
+    # * <tt>:ignored</tt> - boolean - deterimines if all notifications should be
+    #                       blocked from this thread.
+    # = Examples
+    #  github = Github.new oauth_token: 'token'
+    #  github.activity.notifications.create 'thread-id',
+    #    'subscribed': true
+    #    'ignored': false
+    #
+    def create(thread_id, params={})
+      assert_presence_of thread_id
+      normalize! params
+      put_request("/notifications/threads/#{thread_id}/subscription", params)
+    end
+
+    # Delete a thread subscription
+    #
+    # = Examples
+    #  github = Github.new oauth_token: 'token'
+    #  github.activity.notifications.delete 'thread_id'
+    #
+    def delete(thread_id, params={})
+      assert_presence_of thread_id
+      normalize! params
+      delete_request("/notifications/threads/#{thread_id}/subscription", params)
+    end
+    alias :remove :delete
+
   end # Activity::Notifications
 end # Github
