@@ -162,7 +162,7 @@ module Github
     #
     # = Examples
     #  github = Github.new
-    #  github.repos.create "name" => 'repo-name'
+    #  github.repos.create "name": 'repo-name'
     #    "description": "This is your first repo",
     #    "homepage": "https://github.com",
     #    "private": false,

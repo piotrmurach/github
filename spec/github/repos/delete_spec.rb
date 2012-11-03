@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Repos do
+describe Github::Repos, '#delete' do
   let(:user) { 'peter-murach' }
   let(:repo) { 'github' }
   let(:request_path) { "/repos/#{user}/#{repo}" }
