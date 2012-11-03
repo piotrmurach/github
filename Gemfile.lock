@@ -79,7 +79,7 @@ GEM
     simplecov-html (0.7.1)
     term-ansicolor (1.0.7)
     thor (0.14.6)
-    vcr (2.2.0)
+    vcr (2.3.0)
     webmock (1.8.6)
       addressable (>= 2.2.7)
       crack (>= 0.1.7)
@@ -102,5 +102,5 @@ DEPENDENCIES
   roodi (~> 2.1.0)
   rspec
   simplecov (~> 0.7.1)
-  vcr (~> 2.2.0)
+  vcr (~> 2.3.0)
   webmock (~> 1.8.0)
