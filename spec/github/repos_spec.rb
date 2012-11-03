@@ -22,8 +22,6 @@ describe Github::Repos, 'integration' do
 
   its(:merging)       { should be_a Github::Repos::Merging }
 
-  its(:starring)      { should be_a Github::Repos::Starring }
-
   its(:statuses)      { should be_a Github::Repos::Statuses }
 
   its(:watching)      { should be_a Github::Repos::Watching }

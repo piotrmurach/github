@@ -8,4 +8,5 @@ describe Github::Activity, 'integration' do
 
   its(:notifications) { should be_a Github::Activity::Notifications }
 
+  its(:starring)      { should be_a Github::Activity::Starring }
 end

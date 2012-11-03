@@ -16,7 +16,6 @@ module Github
       :Keys          => 'keys',
       :Merging       => 'merging',
       :PubSubHubbub  => 'pub_sub_hubbub',
-      :Starring      => 'starring',
       :Statuses      => 'statuses',
       :Watching      => 'watching'
 
@@ -94,11 +93,6 @@ module Github
     # Access to Repos::Watchin API
     def pubsubhubbub
       @pubsubhubbub ||= ApiFactory.new 'Repos::PubSubHubbub'
-    end
-
-    # Access to Repos::Starring API
-    def starring
-      @starring ||= ApiFactory.new 'Repos::Starring'
     end
 
     # Access to Repos::Statuses API

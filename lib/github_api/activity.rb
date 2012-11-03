@@ -5,7 +5,8 @@ module Github
     extend AutoloadHelper
 
     autoload_all 'github_api/activity',
-      :Notifications => 'notifications'
+      :Notifications => 'notifications',
+      :Starring      => 'starring'
 
     # Create new Activity API
     def initialize(options = {})
@@ -15,6 +16,11 @@ module Github
     # Access to Activity::Notifications API
     def notifications
       @notifications ||= ApiFactory.new 'Activity::Notifications'
+    end
+
+    # Access to Activity::Starring API
+    def starring
+      @starring ||= ApiFactory.new 'Activity::Starring'
     end
 
   end # Activity
