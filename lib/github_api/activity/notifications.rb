@@ -64,6 +64,51 @@ module Github
     end
     alias :find :get
 
+    # Mark as read
+    #
+    # Marking a notification as “read” removes it from the default view on GitHub.com.
+    #
+    # = Parameters
+    #
+    # * <tt>:unread</tt> - boolean - Changes the unread status of the threads.
+    # * <tt>:read</tt> - boolean - Inverse of "unread"
+    # * <tt>:last_read_at</tt> - optional string time - describes the last point 
+    #                            that notifications were checked. Anything updated 
+    #                            since this time will not be updated. Default: Now.
+    #                            Expected in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
+    #                            Example: “2012-10-09T23:39:01Z”.
+    #
+    # = Examples
+    #  github = Github.new oauth_token: 'token'
+    #  github.activity.notifications.mark read: true
+    #
+    # Mark notifications as read in a repository
+    #
+    # = Examples
+    #  github.activity.notifications.mark user: 'user-name', repo: 'repo-name',
+    #    read: true
+    #
+    # Mark a thread as read
+    #
+    # = Examples
+    #  github.activity.notifications.mark thread_id: 'id', read: true
+    #
+    def mark(*args)
+      params = args.extract_options!
+      normalize! params
+      filter! %w[ unread read last_read_at user repo thread_id], params
+
+      if ( (user_name = params.delete("user")) &&
+           (repo_name = params.delete("repo")) )
+
+        put_request("/repos/#{user_name}/#{repo_name}/notifications", params)
+      elsif (thread_id = params.delete("thread_id"))
+        patch_request("/notifications/threads/#{thread_id}", params)
+      else
+        put_request("/notifications", params)
+      end
+    end
+
     # Check to see if the current user is subscribed to a thread.
     #
     # = Examples
