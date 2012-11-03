@@ -48,5 +48,21 @@ module Github
     end
     alias :all :list
 
+    # View a single thread
+    #
+    # = Examples
+    #  github = Github.new oauth_token: 'token'
+    #  github.activity.notifications.get 'thread_id'
+    #  github.activity.notifications.get 'thread_id' { |thread| ... }
+    #
+    def get(thread_id, params={})
+      assert_presence_of thread_id
+      normalize! params
+      response = get_request("/notifications/threads/#{thread_id}", params)
+      return response unless block_given?
+      response.each { |el| yield el }
+    end
+    alias :find :get
+
   end # Activity::Notifications
 end # Github
