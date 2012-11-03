@@ -29,7 +29,7 @@ describe Github::Activity::Notifications, '#list' do
         should have_been_made
     end
 
-    it 'shoudl get the resource' do
+    it 'should get the resource' do
       subject.list
       a_get(request_path).with(:query => {:access_token => OAUTH_TOKEN}).
         should have_been_made

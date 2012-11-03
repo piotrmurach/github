@@ -64,5 +64,17 @@ module Github
     end
     alias :find :get
 
+    # Check to see if the current user is subscribed to a thread.
+    #
+    # = Examples
+    #  github = Github.new oauth_token: 'token'
+    #  github.activity.notifications.subscribed? 'thread-id'
+    #
+    def subscribed?(thread_id, params={})
+      assert_presence_of thread_id
+      normalize! params
+      get_request("/notifications/threads/#{thread_id}/subscription", params)
+    end
+
   end # Activity::Notifications
 end # Github
