@@ -1,14 +1,14 @@
 Feature: Starring API
 
   Background:
-    Given I have "Github::Repos::Starring" instance
+    Given I have "Github::Activity::Starring" instance
 
   Scenario: List
 
     Given I want to list resources with the following params:
       | user         | repo   |
       | peter-murach | github |
-    When I make request within a cassette named "repos/starring/list"
+    When I make request within a cassette named "activity/starring/list"
     Then the response status should be 200
       And the response type should be JSON
       And the response should not be empty
@@ -19,7 +19,7 @@ Feature: Starring API
       And I pass the following request options:
       | user   |
       | wycats |
-    When I make request within a cassette named "repos/starring/starred"
+    When I make request within a cassette named "activity/starring/starred"
     Then the response status should be 200
       And the response type should be JSON
       And the response should not be empty
@@ -29,7 +29,7 @@ Feature: Starring API
     Given I want to starring? resource with the following params:
       | user         | repo   |
       | peter-murach | github |
-    When I make request within a cassette named "repos/starring/starring"
+    When I make request within a cassette named "activity/starring/starring"
     Then the response should be false
 
   Scenario: Star
@@ -37,7 +37,7 @@ Feature: Starring API
     Given I want to star resource with the following params:
       | user         | repo   |
       | peter-murach | github |
-    When I make request within a cassette named "repos/starring/star"
+    When I make request within a cassette named "activity/starring/star"
     Then the response status should be 204
 
   Scenario: Unstar
@@ -45,6 +45,6 @@ Feature: Starring API
     Given I want to unstar resource with the following params:
       | user         | repo   |
       | peter-murach | github |
-    When I make request within a cassette named "repos/starring/unstar"
+    When I make request within a cassette named "activity/starring/unstar"
     Then the response status should be 204
 
