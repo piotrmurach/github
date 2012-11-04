@@ -40,12 +40,12 @@ describe Github::Authorization do
 
     it "should throw an error if no client_id" do
       github.client_id = nil
-      expect { github.auth_code }.should raise_error(ArgumentError)
+      expect { github.auth_code }.to raise_error(ArgumentError)
     end
 
     it "should throw an error if no client_secret" do
       github.client_secret = nil
-      expect { github.auth_code }.should raise_error(ArgumentError)
+      expect { github.auth_code }.to raise_error(ArgumentError)
     end
 
     it "should return authentication token code" do
