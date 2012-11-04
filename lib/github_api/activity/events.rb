@@ -1,9 +1,9 @@
 # encoding: utf-8
 
 module Github
-  class Events < API
+  class Activity::Events < API
 
-    # Creates new Gists API
+    # Creates new Activity::Events API
     def initialize(options = {})
       super(options)
     end
@@ -12,8 +12,8 @@ module Github
     #
     # = Examples
     #  github = Github.new
-    #  github.events.public
-    #  github.events.public { |event| ... }
+    #  github.activity.events.public
+    #  github.activity.events.public { |event| ... }
     #
     def public(params={})
       normalize! params
@@ -198,5 +198,5 @@ module Github
     alias :list_user_org_events :user_org
     alias :list_user_organization_events :user_org
 
-  end # Events
+  end # Activity::Events
 end # Github

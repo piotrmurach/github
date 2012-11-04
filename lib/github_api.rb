@@ -74,7 +74,6 @@ module Github
     :Orgs            => 'orgs',
     :PullRequests    => 'pull_requests',
     :Users           => 'users',
-    :Events          => 'events',
     :Emojis          => 'emojis',
     :Search          => 'search',
     :Markdown        => 'markdown',

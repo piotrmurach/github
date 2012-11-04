@@ -10,13 +10,6 @@ module Github
       @activity ||= ApiFactory.new 'Activity', options
     end
 
-    # This is a read-only API to the GitHub events.
-    # These events power the various activity streams on the site.
-    #
-    def events(options = {})
-      @events ||= ApiFactory.new 'Events', options
-    end
-
     def emojis(options = {})
       @emojis ||= ApiFactory.new 'Emojis', options
     end
