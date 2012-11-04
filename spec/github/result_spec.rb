@@ -5,7 +5,7 @@ require 'spec_helper'
 describe Github::Result do
   let(:github) { Github.new }
   let(:user)   { 'wycats' }
-  let(:res)    { github.events.public({ 'per_page' => 20 }) }
+  let(:res)    { github.activity.events.public({ 'per_page' => 20 }) }
   let(:pages)  { ['1', '5', '6'] }
   let(:link) {
     "<https://api.github.com/users/wycats/repos?page=6&per_page=20>; rel=\"last\", <https://api.github.com/users/wycats/repos?page=1&per_page=20>; rel=\"first\""
