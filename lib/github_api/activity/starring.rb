@@ -86,7 +86,7 @@ module Github
     #
     # = Examples
     #  github = Github.new
-    #  github.repos.starring.unstar 'user-name', 'repo-name'
+    #  github.activity.starring.unstar 'user-name', 'repo-name'
     #
     def unstar(user_name, repo_name, params={})
       set :user => user_name, :repo => repo_name
@@ -95,5 +95,5 @@ module Github
       delete_request("/user/starred/#{user_name}/#{repo_name}", params)
     end
 
-  end # Repos::Starring
+  end # Activity::Starring
 end # Github

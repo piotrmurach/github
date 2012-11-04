@@ -24,8 +24,6 @@ describe Github::Repos, 'integration' do
 
   its(:statuses)      { should be_a Github::Repos::Statuses }
 
-  its(:watching)      { should be_a Github::Repos::Watching }
-
   its(:pubsubhubbub)  { should be_a Github::Repos::PubSubHubbub }
 
 end # Github::Repos

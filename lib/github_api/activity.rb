@@ -6,7 +6,8 @@ module Github
 
     autoload_all 'github_api/activity',
       :Notifications => 'notifications',
-      :Starring      => 'starring'
+      :Starring      => 'starring',
+      :Watching      => 'watching'
 
     # Create new Activity API
     def initialize(options = {})
@@ -21,6 +22,11 @@ module Github
     # Access to Activity::Starring API
     def starring
       @starring ||= ApiFactory.new 'Activity::Starring'
+    end
+
+    # Access to Activity::Watching API
+    def watching
+      @watching ||= ApiFactory.new 'Activity::Watching'
     end
 
   end # Activity

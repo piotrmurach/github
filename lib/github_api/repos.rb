@@ -16,8 +16,7 @@ module Github
       :Keys          => 'keys',
       :Merging       => 'merging',
       :PubSubHubbub  => 'pub_sub_hubbub',
-      :Statuses      => 'statuses',
-      :Watching      => 'watching'
+      :Statuses      => 'statuses'
 
     DEFAULT_REPO_OPTIONS = {
       "homepage"   => "https://github.com",
@@ -98,11 +97,6 @@ module Github
     # Access to Repos::Statuses API
     def statuses
       @statuses ||= ApiFactory.new 'Repos::Statuses'
-    end
-
-    # Access to Repos::Watching API
-    def watching
-      @watching ||= ApiFactory.new 'Repos::Watching'
     end
 
     # List branches
