@@ -31,15 +31,10 @@ describe Github::Repos::Comments, '#list' do
         a_get(request_path).should have_been_made
       end
 
-      it "should return array of resources" do
-        repo_comments = subject.list user, repo
-        repo_comments.should be_an Array
-        repo_comments.should have(1).items
-      end
-
-      it "should be a mash type" do
-        repo_comments = subject.list user, repo
-        repo_comments.first.should be_a Hashie::Mash
+      it_should_behave_like 'an array of resources' do
+        def requestable
+          subject.list user, repo
+        end
       end
 
       it "should get commit comment information" do
@@ -83,15 +78,10 @@ describe Github::Repos::Comments, '#list' do
         a_get(request_path).should have_been_made
       end
 
-      it "should return array of resources" do
-        commit_comments = subject.list user, repo, :sha => sha
-        commit_comments.should be_an Array
-        commit_comments.should have(1).items
-      end
-
-      it "should be a mash type" do
-        commit_comments = subject.list user, repo, :sha => sha
-        commit_comments.first.should be_a Hashie::Mash
+      it_should_behave_like 'an array of resources' do
+        def requestable
+          subject.list user, repo, :sha => sha
+        end
       end
 
       it "should get commit comment information" do

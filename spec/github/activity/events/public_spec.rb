@@ -21,15 +21,10 @@ describe Github::Activity::Events, '#public' do
       a_get(request_path).should have_been_made
     end
 
-    it "should return array of resources" do
-      events = subject.public
-      events.should be_an Array
-      events.should have(1).items
-    end
-
-    it "should be a mash type" do
-      events = subject.public
-      events.first.should be_a Hashie::Mash
+    it_should_behave_like 'an array of resources' do
+      def requestable
+        subject.public
+      end
     end
 
     it "should get event information" do

@@ -35,10 +35,10 @@ describe Github::Activity::Notifications, '#list' do
         should have_been_made
     end
 
-    it "should return array of resources" do
-      notifications = subject.list
-      notifications.should be_an Array
-      notifications.should have(1).items
+    it_should_behave_like 'an array of resources' do
+      def requestable
+        subject.list
+      end
     end
 
     it "should get resource information" do

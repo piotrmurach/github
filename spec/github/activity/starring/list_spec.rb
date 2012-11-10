@@ -34,15 +34,10 @@ describe Github::Activity::Starring, '#list' do
       a_get(request_path).should have_been_made
     end
 
-    it "should return array of resources" do
-      stargazers = subject.list user, repo
-      stargazers.should be_an Array
-      stargazers.should have(1).items
-    end
-
-    it "should return result of mash type" do
-      stargazers = subject.list user, repo
-      stargazers.first.should be_a Hashie::Mash
+    it_should_behave_like 'an array of resources' do
+      def requestable
+        subject.list user, repo
+      end
     end
 
     it "should get watcher information" do
