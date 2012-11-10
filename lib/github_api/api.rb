@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 require 'github_api/configuration'
-require 'github_api/connection'
+# require 'github_api/connection'
 require 'github_api/validations'
 require 'github_api/request'
 require 'github_api/mime_type'
@@ -11,15 +11,16 @@ require 'github_api/core_ext/array'
 require 'github_api/compatibility'
 require 'github_api/api/actions'
 require 'github_api/api_factory'
+require 'github_api/request/actions'
 
 module Github
   # Core class for api interface operations
   class API
     include Constants
     include Authorization
-    include MimeType
-    include Connection
-    include Request
+    # include MimeType
+    # include Connection
+    include Request::Actions
     include RateLimit
 
     # TODO consider these optional in a stack
