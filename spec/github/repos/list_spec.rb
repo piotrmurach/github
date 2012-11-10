@@ -35,9 +35,7 @@ describe Github::Repos, '#list' do
     end
 
     it_should_behave_like 'an array of resources' do
-      def requestable
-        subject.list
-      end
+      let(:requestable) { subject.list }
     end
 
     it "should return array of resources sorted by pushed_at time" do

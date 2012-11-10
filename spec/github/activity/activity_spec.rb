@@ -6,6 +6,8 @@ describe Github::Activity, 'integration' do
 
   after { reset_authentication_for subject }
 
+  it_should_behave_like 'api interface'
+
   its(:events)        { should be_a Github::Activity::Events }
 
   its(:notifications) { should be_a Github::Activity::Notifications }

@@ -6,6 +6,8 @@ describe Github::Repos, 'integration' do
 
   after { reset_authentication_for subject }
 
+  it_should_behave_like 'api interface'
+
   its(:collaborators) { should be_a Github::Repos::Collaborators }
 
   its(:comments)      { should be_a Github::Repos::Comments }
