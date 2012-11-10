@@ -1,38 +1,40 @@
 # encoding: utf-8
 
+require 'github_api/request/actions'
+require 'github_api/request/connection'
+
 module Github
-  # Defines HTTP verbs
-  module Request
 
-    METHODS = [:get, :post, :put, :delete, :patch]
-    METHODS_WITH_BODIES = [ :post, :put, :patch ]
+  # Base class for HTTP requests
+  class Request
+    extend Request::Actions
+    include Request::Connection
 
-    def get_request(path, params={}, options={})
-      request(:get, path, params, options)
-    end
+    METHODS = [:get, :post, :put, :delete, :patch].freeze
 
-    def patch_request(path, params={}, options={})
-      request(:patch, path, params, options)
-    end
+    METHODS_WITH_BODIES = [ :post, :put, :patch ].freeze
 
-    def post_request(path, params={}, options={})
-      request(:post, path, params, options)
-    end
+    attr_reader :method
 
-    def put_request(path, params={}, options={})
-      request(:put, path, params, options)
-    end
+    attr_reader :path
 
-    def delete_request(path, params={}, options={})
-      request(:delete, path, params, options)
-    end
+    attr_reader :params
 
-    def request(method, path, params, options)
+    attr_reader :options
+
+    def initialize(method, path, params={}, options={})
       if !METHODS.include?(method)
         raise ArgumentError, "unkown http method: #{method}"
       end
-      # _extract_mime_type(params, options)
+      @method  = method
+      @path    = path
+      @params  = params
+      @options = options
+    end
 
+    # Run a request
+    #
+    def run
       puts "EXECUTED: #{method} - #{path} with #{params} and #{options}" if ENV['DEBUG']
 
       conn = connection(options)
@@ -51,6 +53,10 @@ module Github
       response.body
     end
 
+    def finish(response)
+      
+    end
+
     private
 
     def extract_data_from_params(params) # :nodoc:
@@ -58,10 +64,10 @@ module Github
       return params
     end
 
-    def _extract_mime_type(params, options) # :nodoc:
-      options['resource']  = params['resource'] ? params.delete('resource') : ''
-      options['mime_type'] = params['resource'] ? params.delete('mime_type') : ''
-    end
+#     def _extract_mime_type(params, options) # :nodoc:
+#       options['resource']  = params['resource'] ? params.delete('resource') : ''
+#       options['mime_type'] = params['resource'] ? params.delete('mime_type') : ''
+#     end
 
   end # Request
 end # Github
