@@ -43,14 +43,8 @@ describe Github::Repos::Commits, '#get' do
     end
   end
 
-  context "resource not found" do
-    let(:body)   { '' }
-    let(:status) { 404 }
-
-    it "should fail to retrive resource" do
-      expect {
-        subject.get user, repo, sha
-      }.to raise_error(Github::Error::NotFound)
-    end
+  it_should_behave_like 'request failure' do
+    let(:requestable) { subject.get user, repo, sha }
   end
+
 end # get

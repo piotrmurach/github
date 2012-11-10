@@ -53,14 +53,8 @@ describe Github::Repos, '#edit' do
     end
   end
 
-  context "failed to edit resource" do
-    let(:body)   { '' }
-    let(:status) { 404 }
-
-    it "should fail to find resource" do
-      expect {
-        subject.edit user, repo, inputs
-      }.to raise_error(Github::Error::NotFound)
-    end
+  it_should_behave_like 'request failure' do
+    let(:requestable) { subject.edit user, repo, inputs }
   end
+
 end # edit

@@ -31,13 +31,8 @@ describe Github::Repos, '#delete' do
     expect { subject.delete user, nil }.to raise_error(ArgumentError)
   end
 
-  context 'failed to delete' do
-    let(:status) { 404 }
-
-    it "should fail to delete resource that is not found" do
-      expect {
-        subject.delete user, repo
-      }.to raise_error(Github::Error::NotFound)
-    end
+  it_should_behave_like 'request failure' do
+    let(:requestable) { subject.delete user, repo }
   end
+
 end # delete

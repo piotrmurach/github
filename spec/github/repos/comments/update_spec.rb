@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Repos::Comments, '#delete' do
+describe Github::Repos::Comments, '#update' do
   let(:user) { 'peter-murach' }
   let(:repo) { 'github' }
   let(:comment_id) { 1 }
@@ -41,14 +41,8 @@ describe Github::Repos::Comments, '#delete' do
     end
   end
 
-  context "failed to update resource" do
-    let(:body)   { '' }
-    let(:status) { 404 }
-
-    it "should fail to retrieve resource" do
-      expect {
-        subject.update user, repo, comment_id, inputs
-      }.to raise_error(Github::Error::NotFound)
-    end
+  it_should_behave_like 'request failure' do
+    let(:requestable) { subject.update user, repo, comment_id, inputs }
   end
-end # update_comment
+
+end # update

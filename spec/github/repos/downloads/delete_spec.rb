@@ -35,14 +35,8 @@ describe Github::Repos::Downloads, '#delete' do
     end
   end
 
-  context "failed to delete resource" do
-    let(:body)   { "" }
-    let(:status) { [404, "Not Found"] }
-
-    it "should fail to find resource" do
-      expect {
-        subject.delete user, repo, download_id
-      }.to raise_error(Github::Error::NotFound)
-    end
+  it_should_behave_like 'request failure' do
+    let(:requestable) { subject.delete user, repo, download_id }
   end
+
 end # delete
