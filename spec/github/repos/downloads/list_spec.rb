@@ -31,9 +31,7 @@ describe Github::Repos::Downloads, '#list' do
     end
 
     it_should_behave_like 'an array of resources' do
-      def requestable
-        subject.list user, repo
-      end
+      let(:requestable) { subject.list user, repo }
     end
 
     it "should get download information" do
