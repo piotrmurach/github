@@ -1,3 +1,11 @@
+0.8.0 (Nov 4, 2012)
+
+* Add activity namespace
+* Add notifications API inside activity namespace.
+* Move starring api inside activity namespace.
+* Move watching api inside activity namespace.
+* Move events api inside activity namespace.
+
 0.7.2 (October 27, 2012)
 
 * Fix bug with editing issues comment.

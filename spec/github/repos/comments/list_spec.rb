@@ -31,15 +31,8 @@ describe Github::Repos::Comments, '#list' do
         a_get(request_path).should have_been_made
       end
 
-      it "should return array of resources" do
-        repo_comments = subject.list user, repo
-        repo_comments.should be_an Array
-        repo_comments.should have(1).items
-      end
-
-      it "should be a mash type" do
-        repo_comments = subject.list user, repo
-        repo_comments.first.should be_a Hashie::Mash
+      it_should_behave_like 'an array of resources' do
+        let(:requestable) { subject.list user, repo }
       end
 
       it "should get commit comment information" do
@@ -53,16 +46,10 @@ describe Github::Repos::Comments, '#list' do
       end
     end
 
-    context "resource not found" do
-      let(:body) { '' }
-      let(:status) { [404, "Not Found"] }
-
-      it "should return 404 with a message 'Not Found'" do
-        expect {
-          subject.list user, repo
-        }.to raise_error(Github::Error::NotFound)
-      end
+    it_should_behave_like 'request failure' do
+      let(:requestable) { subject.list user, repo }
     end
+
   end # without sha
 
   context 'with sha' do
@@ -83,15 +70,8 @@ describe Github::Repos::Comments, '#list' do
         a_get(request_path).should have_been_made
       end
 
-      it "should return array of resources" do
-        commit_comments = subject.list user, repo, :sha => sha
-        commit_comments.should be_an Array
-        commit_comments.should have(1).items
-      end
-
-      it "should be a mash type" do
-        commit_comments = subject.list user, repo, :sha => sha
-        commit_comments.first.should be_a Hashie::Mash
+      it_should_behave_like 'an array of resources' do
+        let(:requestable) { subject.list user, repo, :sha => sha }
       end
 
       it "should get commit comment information" do
@@ -105,16 +85,10 @@ describe Github::Repos::Comments, '#list' do
       end
     end
 
-    context "resource not found" do
-      let(:body) { '' }
-      let(:status) { 404 }
-
-      it "should fail to retrive resource" do
-        expect {
-          subject.list user, repo, :sha => sha
-        }.to raise_error(Github::Error::NotFound)
-      end
+    it_should_behave_like 'request failure' do
+      let(:requestable) { subject.list user, repo, :sha => sha }
     end
+
   end # with sha
 
 end # list

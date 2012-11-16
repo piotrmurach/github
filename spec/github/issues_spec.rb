@@ -78,7 +78,7 @@ describe Github::Issues do
       it "should raise error if user-name empty" do
         expect {
           github.issues.list_repo nil, repo
-        }.should raise_error(ArgumentError)
+        }.to raise_error(ArgumentError)
       end
 
       it "should get the resources" do

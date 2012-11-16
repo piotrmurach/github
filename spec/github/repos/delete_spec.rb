@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Repos do
+describe Github::Repos, '#delete' do
   let(:user) { 'peter-murach' }
   let(:repo) { 'github' }
   let(:request_path) { "/repos/#{user}/#{repo}" }
@@ -31,13 +31,8 @@ describe Github::Repos do
     expect { subject.delete user, nil }.to raise_error(ArgumentError)
   end
 
-  context 'failed to delete' do
-    let(:status) { 404 }
-
-    it "should fail to delete resource that is not found" do
-      expect {
-        subject.delete user, repo
-      }.to raise_error(Github::Error::NotFound)
-    end
+  it_should_behave_like 'request failure' do
+    let(:requestable) { subject.delete user, repo }
   end
+
 end # delete

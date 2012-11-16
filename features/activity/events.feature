@@ -1,12 +1,12 @@
 Feature: Events API
 
   Background:
-    Given I have "Github::Events" instance
+    Given I have "Github::Activity::Events" instance
 
   Scenario: Public
 
     Given I want public resources
-    When I make request within a cassette named "events/public"
+    When I make request within a cassette named "activity/events/public"
     Then the response status should be 200
       And the response type should be JSON
       And the response should not be empty
@@ -16,7 +16,7 @@ Feature: Events API
     Given I want repository resources with the following params:
       | user   | repo |
       | wycats | thor |
-    When I make request within a cassette named "events/repo"
+    When I make request within a cassette named "activity/events/repo"
     Then the response status should be 200
       And the response type should be JSON
       And the response should not be empty
@@ -26,7 +26,7 @@ Feature: Events API
     Given I want issue resources with the following params:
       | user   | repo |
       | wycats | thor |
-    When I make request within a cassette named "events/issue"
+    When I make request within a cassette named "activity/events/issue"
     Then the response status should be 200
       And the response type should be JSON
       And the response should not be empty
@@ -36,7 +36,7 @@ Feature: Events API
     Given I want network resources with the following params:
       | user   | repo |
       | wycats | thor |
-    When I make request within a cassette named "events/network"
+    When I make request within a cassette named "activity/events/network"
     Then the response status should be 200
       And the response type should be JSON
       And the response should not be empty
@@ -46,7 +46,7 @@ Feature: Events API
     Given I want org resources with the following params:
       | org   |
       | rails |
-    When I make request within a cassette named "events/org"
+    When I make request within a cassette named "activity/events/org"
     Then the response status should be 200
       And the response type should be JSON
       And the response should not be empty
@@ -56,7 +56,7 @@ Feature: Events API
     Given I want received resources with the following params:
       | user      |
       | josevalim |
-    When I make request within a cassette named "events/received"
+    When I make request within a cassette named "activity/events/received"
     Then the response status should be 200
       And the response type should be JSON
       And the response should not be empty
@@ -66,7 +66,7 @@ Feature: Events API
     Given I want performed resources with the following params:
       | user      |
       | josevalim |
-    When I make request within a cassette named "events/performed"
+    When I make request within a cassette named "activity/events/performed"
     Then the response status should be 200
       And the response type should be JSON
       And the response should not be empty

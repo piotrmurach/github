@@ -161,7 +161,7 @@ Github         - full API access
 
 Github::Gists           Github::GitData    Github::Repos             Github::Search
 Github::Orgs            Github::Issues     Github::Authorizations
-Github::PullRequests    Github::Users      Github::Events
+Github::PullRequests    Github::Users      Github::Activity
 ```
 
 Some parts of GitHub API v3 require you to be autheticated, for instance the following are examples of APIs only for the authenticated user
@@ -368,7 +368,7 @@ users.emails.add 'email1', 'email2', ..., 'emailn' # => Adds emails to the authe
 If a method returns a collection, you can iterator over it by supplying a block parameter,
 
 ```ruby
-events = Github::Events.new
+events = Github::Activity::Events.new
 events.public do |event|
   puts event.actor.login
 end

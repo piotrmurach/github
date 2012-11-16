@@ -36,14 +36,8 @@ describe Github::Repos::Comments, '#delete' do
     end
   end
 
-  context "failed to delete resource" do
-    let(:body) { '' }
-    let(:status) { 404 }
-
-    it "should fail to find resource" do
-      expect {
-        subject.delete user, repo, comment_id
-      }.to raise_error(Github::Error::NotFound)
-    end
+  it_should_behave_like 'request failure' do
+    let(:requestable) { subject.delete user, repo, comment_id }
   end
+
 end # delete

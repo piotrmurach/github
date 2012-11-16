@@ -3,14 +3,14 @@
 module Github
   # Watching a Repository registers the user to receive notificactions on new
   # discussions, as well as events in the user’s activity feed.
-  class Repos::Watching < API
+  class Activity::Watching < API
 
     # List repo watchers
     #
     # = Examples
     #  github = Github.new :user => 'user-name', :repo => 'repo-name'
-    #  github.repos.watching.list
-    #  github.repos.watching.list { |watcher| ... }
+    #  github.activity.watching.list
+    #  github.activity.watching.list { |watcher| ... }
     #
     def list(user_name, repo_name, params={})
       set :user => user_name, :repo => repo_name
@@ -27,13 +27,13 @@ module Github
     #
     # = Examples
     #  github = Github.new
-    #  github.repos.watching.watched :user => 'user-name'
+    #  github.activity.watching.watched :user => 'user-name'
     #
     # List repos being watched by the authenticated user
     #
     # = Examples
     #  github = Github.new :oauth_token => '...'
-    #  github.repos.watching.watched
+    #  github.activity.watching.watched
     #
     def watched(*args)
       params = args.extract_options!
@@ -53,7 +53,7 @@ module Github
     # Returns <tt>true</tt> if this repo is watched by you, <tt>false</tt> otherwise
     # = Examples
     #  github = Github.new
-    #  github.repos.watching.watching? 'user-name', 'repo-name'
+    #  github.activity.watching.watching? 'user-name', 'repo-name'
     #
     def watching?(user_name, repo_name, params={})
       assert_presence_of user_name, repo_name
@@ -70,7 +70,7 @@ module Github
     #
     # = Examples
     #  github = Github.new
-    #  github.repos.watching.watch 'user-name', 'repo-name'
+    #  github.activity.watching.watch 'user-name', 'repo-name'
     #
     def watch(user_name, repo_name, params={})
       assert_presence_of user_name, repo_name
@@ -83,7 +83,7 @@ module Github
     # You need to be authenticated to stop watching a repository.
     # = Examples
     #  github = Github.new
-    #  github.repos.watching.unwatch 'user-name', 'repo-name'
+    #  github.activity.watching.unwatch 'user-name', 'repo-name'
     #
     def unwatch(user_name, repo_name, params={})
       assert_presence_of user_name, repo_name
@@ -91,5 +91,5 @@ module Github
       delete_request("/user/subscriptions/#{user_name}/#{repo_name}", params)
     end
 
-  end # Repos::Watching
+  end # Activity::Watching
 end # Github

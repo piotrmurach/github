@@ -35,14 +35,8 @@ describe Github::Repos, '#branch' do
     end
   end
 
-  context "resource not found" do
-    let(:body)   { '' }
-    let(:status) { 404 }
-
-    it "should fail to get resource" do
-      expect {
-        subject.branch user, repo, branch
-      }.to raise_error(Github::Error::NotFound)
-    end
+  it_should_behave_like 'request failure' do
+    let(:requestable) { subject.branch user, repo, branch }
   end
+
 end # branch

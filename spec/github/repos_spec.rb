@@ -6,6 +6,8 @@ describe Github::Repos, 'integration' do
 
   after { reset_authentication_for subject }
 
+  it_should_behave_like 'api interface'
+
   its(:collaborators) { should be_a Github::Repos::Collaborators }
 
   its(:comments)      { should be_a Github::Repos::Comments }
@@ -22,11 +24,7 @@ describe Github::Repos, 'integration' do
 
   its(:merging)       { should be_a Github::Repos::Merging }
 
-  its(:starring)      { should be_a Github::Repos::Starring }
-
   its(:statuses)      { should be_a Github::Repos::Statuses }
-
-  its(:watching)      { should be_a Github::Repos::Watching }
 
   its(:pubsubhubbub)  { should be_a Github::Repos::PubSubHubbub }
 

@@ -14,7 +14,6 @@ describe Github::Repos::Forks, '#list' do
 
   after { reset_authentication_for(subject) }
 
-
   context "resource found" do
     let(:body)   { fixture('repos/forks.json') }
     let(:status) { 200 }
@@ -30,15 +29,8 @@ describe Github::Repos::Forks, '#list' do
       a_get(request_path).should have_been_made
     end
 
-    it "should return array of resources" do
-      forks = subject.list user, repo
-      forks.should be_an Array
-      forks.should have(1).items
-    end
-
-    it "should be a mash type" do
-      forks = subject.list user, repo
-      forks.first.should be_a Hashie::Mash
+    it_should_behave_like 'an array of resources' do
+      let(:requestable) { subject.list user, repo }
     end
 
     it "should get fork information" do
@@ -52,14 +44,8 @@ describe Github::Repos::Forks, '#list' do
     end
   end
 
-  context "resource not found" do
-    let(:body)   { "" }
-    let(:status) { [404, "Not Found"] }
-
-    it "should return 404 with a message 'Not Found'" do
-      expect {
-        subject.list user, repo
-      }.to raise_error(Github::Error::NotFound)
-    end
+  it_should_behave_like 'request failure' do
+    let(:requestable) { subject.list user, repo }
   end
+
 end # list

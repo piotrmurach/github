@@ -16,9 +16,7 @@ module Github
       :Keys          => 'keys',
       :Merging       => 'merging',
       :PubSubHubbub  => 'pub_sub_hubbub',
-      :Starring      => 'starring',
-      :Statuses      => 'statuses',
-      :Watching      => 'watching'
+      :Statuses      => 'statuses'
 
     DEFAULT_REPO_OPTIONS = {
       "homepage"   => "https://github.com",
@@ -37,6 +35,8 @@ module Github
       has_wiki
       has_downloads
       team_id
+      auto_init
+      gitignore_template
     ].freeze
 
     VALID_REPO_TYPES = %w[ all public private member ].freeze
@@ -94,11 +94,6 @@ module Github
     # Access to Repos::Watchin API
     def pubsubhubbub
       @pubsubhubbub ||= ApiFactory.new 'Repos::PubSubHubbub'
-    end
-
-    # Access to Repos::Starring API
-    def starring
-      @starring ||= ApiFactory.new 'Repos::Starring'
     end
 
     # Access to Repos::Statuses API
@@ -185,7 +180,7 @@ module Github
     #
     # = Examples
     #  github = Github.new
-    #  github.repos.create "name" => 'repo-name'
+    #  github.repos.create "name": 'repo-name'
     #    "description": "This is your first repo",
     #    "homepage": "https://github.com",
     #    "private": false,

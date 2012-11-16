@@ -36,14 +36,8 @@ describe Github::Repos::Forks, '#create' do
     end
   end
 
-  context "failed to create resource" do
-    let(:body)   { "" }
-    let(:status) { 404 }
-
-    it "should faile to retrieve resource" do
-      expect {
-        subject.create user, repo, inputs
-      }.to raise_error(Github::Error::NotFound)
-    end
+  it_should_behave_like 'request failure' do
+    let(:requestable) { subject.create user, repo, inputs }
   end
+
 end # create

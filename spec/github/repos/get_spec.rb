@@ -8,8 +8,8 @@ describe Github::Repos, '#get' do
   let(:request_path) { "/repos/#{user}/#{repo}" }
 
   before {
-    stub_get(request_path).
-      to_return(:body => body, :status => status, :headers => {:content_type => "application/json; charset=utf-8"})
+    stub_get(request_path).to_return(:body => body, :status => status,
+      :headers => {:content_type => "application/json; charset=utf-8"})
   }
 
   after { reset_authentication_for subject }
@@ -44,14 +44,8 @@ describe Github::Repos, '#get' do
     end
   end
 
-  context "resource not found" do
-    let(:body)   { '' }
-    let(:status) { 404 }
-
-    it "should fail to get resource" do
-      expect {
-        subject.get user, repo
-      }.to raise_error(Github::Error::NotFound)
-    end
+  it_should_behave_like 'request failure' do
+    let(:requestable) { subject.get user, repo }
   end
+
 end # get

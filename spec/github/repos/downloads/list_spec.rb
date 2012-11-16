@@ -30,15 +30,8 @@ describe Github::Repos::Downloads, '#list' do
       a_get(request_path).should have_been_made
     end
 
-    it "should return array of resources" do
-      downloads = subject.list user, repo
-      downloads.should be_an Array
-      downloads.should have(1).items
-    end
-
-    it "should be a mash type" do
-      downloads = subject.list user, repo
-      downloads.first.should be_a Hashie::Mash
+    it_should_behave_like 'an array of resources' do
+      let(:requestable) { subject.list user, repo }
     end
 
     it "should get download information" do
@@ -52,12 +45,8 @@ describe Github::Repos::Downloads, '#list' do
     end
   end
 
-  context "resource not found" do
-    let(:body)   { "" }
-    let(:status) { [404, "Not Found"] }
-
-    it "should return 404 with a message 'Not Found'" do
-      expect { subject.list user, repo }.to raise_error(Github::Error::NotFound)
-    end
+  it_should_behave_like 'request failure' do
+    let(:requestable) { subject.list user, repo }
   end
+
 end # list

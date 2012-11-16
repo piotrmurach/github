@@ -31,10 +31,8 @@ describe Github::Repos, '#branches' do
       a_get(request_path).should have_been_made
     end
 
-    it "should return array of resources" do
-      branches = subject.branches user, repo
-      branches.should be_an Array
-      branches.should have(1).items
+    it_should_behave_like 'an array of resources' do
+      let(:requestable) { subject.branches user, repo }
     end
 
     it "should get branch information" do
@@ -49,14 +47,8 @@ describe Github::Repos, '#branches' do
     end
   end
 
-  context "resource not found" do
-    let(:body)   { '' }
-    let(:status) { 404 }
-
-    it "should fail to get resource" do
-      expect {
-        subject.branches user, repo
-      }.to raise_error(Github::Error::NotFound)
-    end
+  it_should_behave_like 'request failure' do
+    let(:requestable) { subject.branches user, repo }
   end
+
 end # branches

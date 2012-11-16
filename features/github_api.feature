@@ -49,10 +49,10 @@ Feature: Github API components
     When  I fetch "users"
     Then  I will have access to "Github::Users" API
 
-  Scenario: Accessing users API
+  Scenario: Accessing activity API
     Given I have github instance
-    When  I fetch "events"
-    Then  I will have access to "Github::Events" API
+    When  I fetch "activity"
+    Then  I will have access to "Github::Activity" API
 
   Scenario: Accessing authorizations API
     Given I have github instance

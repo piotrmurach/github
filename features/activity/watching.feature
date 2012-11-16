@@ -1,50 +1,50 @@
-Feature: Starring API
+Feature: Watching API
 
   Background:
-    Given I have "Github::Repos::Starring" instance
+    Given I have "Github::Activity::Watching" instance
 
   Scenario: List
 
     Given I want to list resources with the following params:
       | user         | repo   |
       | peter-murach | github |
-    When I make request within a cassette named "repos/starring/list"
+    When I make request within a cassette named "activity/watching/list"
     Then the response status should be 200
       And the response type should be JSON
       And the response should not be empty
 
-  Scenario: Starred
+  Scenario: Watched
 
-    Given I want to starred resources
+    Given I want to watched resources
       And I pass the following request options:
       | user   |
       | wycats |
-    When I make request within a cassette named "repos/starring/starred"
+    When I make request within a cassette named "activity/watching/watched"
     Then the response status should be 200
       And the response type should be JSON
       And the response should not be empty
 
-  Scenario: Starring
+  Scenario: Watching
 
-    Given I want to starring? resource with the following params:
+    Given I want to watching? resource with the following params:
       | user         | repo   |
       | peter-murach | github |
-    When I make request within a cassette named "repos/starring/starring"
+    When I make request within a cassette named "activity/watching/watching"
     Then the response should be false
 
-  Scenario: Star
+  Scenario: Watch
 
-    Given I want to star resource with the following params:
+    Given I want to watch resource with the following params:
       | user         | repo   |
       | peter-murach | github |
-    When I make request within a cassette named "repos/starring/star"
+    When I make request within a cassette named "activity/watching/watch"
     Then the response status should be 204
 
-  Scenario: Unstar
+  Scenario: Unwatch
 
-    Given I want to unstar resource with the following params:
+    Given I want to unwatch resource with the following params:
       | user         | repo   |
       | peter-murach | github |
-    When I make request within a cassette named "repos/starring/unstar"
+    When I make request within a cassette named "activity/watching/unwatch"
     Then the response status should be 204
 

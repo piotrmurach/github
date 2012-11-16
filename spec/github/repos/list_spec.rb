@@ -34,10 +34,8 @@ describe Github::Repos, '#list' do
       a_get(request_path).should have_been_made
     end
 
-    it "should return array of resources" do
-      repositories = subject.list
-      repositories.should be_an Array
-      repositories.should have(1).items
+    it_should_behave_like 'an array of resources' do
+      let(:requestable) { subject.list }
     end
 
     it "should return array of resources sorted by pushed_at time" do

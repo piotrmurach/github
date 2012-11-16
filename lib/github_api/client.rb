@@ -3,10 +3,11 @@
 module Github
   class Client < API
 
-    # This is a read-only API to the GitHub events.
-    # These events power the various activity streams on the site.
-    def events(options = {})
-      @events ||= ApiFactory.new 'Events', options
+    # Serving up the ‘social’ in Social Coding™, the Activity APIs
+    # provide access to notifications, subscriptions, and timelines.
+    #
+    def activity(options = {})
+      @activity ||= ApiFactory.new 'Activity', options
     end
 
     def emojis(options = {})
@@ -60,6 +61,7 @@ module Github
 
     # Many of the resources on the users API provide a shortcut for getting 
     # information about the currently authenticated user.
+    #
     def users(options = {})
       @users ||= ApiFactory.new 'Users', options
     end
