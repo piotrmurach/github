@@ -75,7 +75,7 @@ module Github
       Github.api_client = self
     end
 
-    # Responds to attribute query or attribute clear
+    # Responds to attribute query or attribute clear.
     def method_missing(method, *args, &block) # :nodoc:
       case method.to_s
       when /^(.*)\?$/
@@ -84,6 +84,16 @@ module Github
         self.send("#{$1.to_s}=", nil)
       else
         super
+      end
+    end
+
+    # Acts as setter and getter for api requests arguments parsing.
+    #
+    def arguments(api=(not_set = true), options={})
+      if not_set
+        @arguments
+      else
+        @arguments = Arguments.new(api, options)
       end
     end
 
