@@ -59,7 +59,7 @@ module Github
     #  github.issues.milestones.get 'user-name', 'repo-name', 'milestone-id'
     #
     def get(user_name, repo_name, milestone_id, params={})
-      set :user => user_name, :repo => repo_name
+      set :user => user_name, :repo => repo_name, :milestone_id => milestone_id
       assert_presence_of user, repo, milestone_id
       normalize! params
 

@@ -90,6 +90,7 @@ module Github
     # Set an option to a given value
     def set(option, value=(not_set = true), &block)
       raise ArgumentError, 'value not set' if block and !not_set
+      return self if !not_set and value.nil?
 
       if not_set
         set_options option
@@ -125,7 +126,7 @@ module Github
 
     # Dynamically define a method for setting request option
     #
-    def define_singleton_metohd(name, content=Proc.new)
+    def define_singleton_method(name, content=Proc.new)
       (class << self; self; end).class_eval do
         undef_method(name) if method_defined? name
         if String === content
