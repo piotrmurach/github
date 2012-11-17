@@ -8,8 +8,8 @@ module Github #:nodoc
         super(
           generate_message(
             :problem => "Attempted to send request with nil arguments for #{errors.keys.join(', ')}.",
-            :summary => 'Each request expects certain number of arguments.',
-            :resolution => 'Double check that the provided arguments are set to some value.'
+            :summary => 'Each request expects certain number of required arguments.',
+            :resolution => 'Double check that the provided arguments are set to some value that is neither nil nor empty string.'
           )
         )
       end
