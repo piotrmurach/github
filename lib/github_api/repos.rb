@@ -101,11 +101,6 @@ module Github
       @statuses ||= ApiFactory.new 'Repos::Statuses'
     end
 
-    # Access to Repos::Watching API
-    def watching
-      @watching ||= ApiFactory.new 'Repos::Watching'
-    end
-
     # List repositories for the authenticated user
     #
     # = Examples
