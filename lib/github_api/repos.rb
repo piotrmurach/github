@@ -35,6 +35,8 @@ module Github
       has_wiki
       has_downloads
       team_id
+      auto_init
+      gitignore_template
     ].freeze
 
     VALID_REPO_TYPES = %w[ all public private member ].freeze
