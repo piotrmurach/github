@@ -27,33 +27,13 @@ describe Github::Repos::Comments, '#create' do
     let(:body)   { fixture('repos/commit_comment.json') }
     let(:status) { 201 }
 
+    it { expect { subject.create user }.to raise_error(ArgumentError) }
+
+    it { expect { subject.create }.to raise_error(Github::Error::Validations) }
+
     it "should fail to create resource if 'body' input is missing" do
       expect {
         subject.create user, repo, sha, inputs.except('body')
-      }.to raise_error(Github::Error::RequiredParams)
-    end
-
-    it "should fail to create resource if 'commit_id' input is missing" do
-      expect {
-        subject.create user, repo, sha, inputs.except(:commit_id)
-      }.to raise_error(Github::Error::RequiredParams)
-    end
-
-    it "should fail to create resource if 'line' input is missing" do
-      expect {
-        subject.create user, repo, sha, inputs.except(:line)
-      }.to raise_error(Github::Error::RequiredParams)
-    end
-
-    it "should fail to create resource if 'path' input is missing" do
-      expect {
-        subject.create user, repo, sha, inputs.except(:path)
-      }.to raise_error(Github::Error::RequiredParams)
-    end
-
-    it "should fail to create resource if 'position' input is missing" do
-      expect {
-        subject.create user, repo, sha, inputs.except(:position)
       }.to raise_error(Github::Error::RequiredParams)
     end
 

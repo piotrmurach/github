@@ -3,9 +3,10 @@
 module Github
   class Repos::Comments < API
 
-    REQUIRED_COMMENT_PARAMS = %w[
+    REQUIRED_COMMENT_OPTIONS = %w[ body ].freeze
+
+    VALID_COMMENT_OPTIONS = %w[
       body
-      commit_id
       line
       path
       position
@@ -24,10 +25,9 @@ module Github
     #  github.repos.comments.list 'user-name', 'repo-name',
     #   :sha => '6dcb09b5b57875f334f61aebed695e2e4193db5e'
     #
-    def list(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-      normalize! params
+    def list(*args)
+      arguments(self, :args_required => [:user, :repo]).parse *args
+      params = arguments.params
 
       response = if (sha = params.delete('sha'))
         get_request("/repos/#{user}/#{repo}/commits/#{sha}/comments", params)
@@ -45,10 +45,9 @@ module Github
     #  github = Github.new
     #  github.repos.comments.get 'user-name', 'repo-name', 'comment-id'
     #
-    def get(user_name, repo_name, comment_id, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, comment_id
-      normalize! params
+    def get(*args)
+      arguments(self, :args_required => [:user, :repo, :comment_id]).parse *args
+      params = arguments.params
 
       get_request("/repos/#{user}/#{repo}/comments/#{comment_id}", params)
     end
@@ -72,14 +71,12 @@ module Github
     #    "path" =>  "file1.txt",
     #    "position" =>  4
     #
-    def create(user_name, repo_name, sha, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, sha
-
-      normalize! params
-      filter! REQUIRED_COMMENT_PARAMS, params
-
-      assert_required_keys(REQUIRED_COMMENT_PARAMS, params)
+    def create(*args)
+      arguments(self, :args_required => [:user, :repo, :sha]).parse *args do
+        sift VALID_COMMENT_OPTIONS
+        assert_required REQUIRED_COMMENT_OPTIONS
+      end
+      params = arguments.params
 
       post_request("/repos/#{user}/#{repo}/commits/#{sha}/comments", params)
     end
@@ -94,11 +91,11 @@ module Github
     #  github.repos.comments.update 'user-name', 'repo-name',
     #    'comment-id', "body" => "Nice change"
     #
-    def update(user_name, repo_name, comment_id, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, comment_id
-      normalize! params
-      assert_required_keys(%w[ body ], params)
+    def update(*args)
+      arguments(self, :args_required => [:user, :repo, :comment_id]).parse *args do
+        assert_required REQUIRED_COMMENT_OPTIONS
+      end
+      params = arguments.params
 
       patch_request("/repos/#{user}/#{repo}/comments/#{comment_id}", params)
     end
@@ -109,10 +106,9 @@ module Github
     #  github = Github.new
     #  github.repos.comments.delete 'user-name', 'repo-name', 'comment-id'
     #
-    def delete(user_name, repo_name, comment_id, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, comment_id
-      normalize! params
+    def delete(*args)
+      arguments(self, :args_required => [:user, :repo, :comment_id]).parse *args
+      params = arguments.params
 
       delete_request("/repos/#{user}/#{repo}/comments/#{comment_id}", params)
     end

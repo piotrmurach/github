@@ -21,8 +21,12 @@ describe Github::Repos::Comments, '#get' do
 
     it { should respond_to(:find) }
 
-    it "should fail to get resource without comment id" do
-      expect { subject.get user, repo, nil }.to raise_error(ArgumentError)
+    it 'failse to get resource without required arguments' do
+      expect { subject.get }.to raise_error(Github::Error::Validations)
+    end
+
+    it 'fails to get resource without all required arguments' do
+      expect { subject.get user }.to raise_error(ArgumentError)
     end
 
     it "should get the resource" do
