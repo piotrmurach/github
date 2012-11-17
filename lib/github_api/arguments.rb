@@ -65,7 +65,7 @@ module Github
 
     private
 
-    # Check and set all requried arguments
+    # Check and set all requried arguments.
     #
     def parse_arguments(*args)
       assert_presence_of *args
@@ -75,7 +75,8 @@ module Github
       check_requirement!(*args)
     end
 
-    # Remove required arguments from parameters
+    # Remove required arguments from parameters and
+    # validate their presence(if not nil or empty string).
     #
     def parse_options(options)
       options.each do |key, val|
@@ -86,9 +87,19 @@ module Github
           api.set key, val
         end
       end
+      check_assignment!(options)
     end
 
-    # Check if required arguments are present
+    # Check if required arguments have been set on instance.
+    #
+    def check_assignment!(options)
+      assert_presence_of args_required.inject({}) { |hash, arg|
+        hash[arg] = api.send(:"#{arg}")
+        hash
+      }
+    end
+
+    # Check if required arguments are present.
     #
     def check_requirement!(*args)
       args_length          = args.length
