@@ -3,9 +3,10 @@
 module Github
   class Repos::Comments < API
 
-    REQUIRED_COMMENT_PARAMS = %w[
+    REQUIRED_COMMENT_OPTIONS = %w[ body ].freeze
+
+    VALID_COMMENT_OPTIONS = %w[
       body
-      commit_id
       line
       path
       position
@@ -77,9 +78,9 @@ module Github
       assert_presence_of user, repo, sha
 
       normalize! params
-      filter! REQUIRED_COMMENT_PARAMS, params
+      filter! VALID_COMMENT_OPTIONS, params
 
-      assert_required_keys(REQUIRED_COMMENT_PARAMS, params)
+      assert_required_keys(REQUIRED_COMMENT_OPTIONS, params)
 
       post_request("/repos/#{user}/#{repo}/commits/#{sha}/comments", params)
     end
@@ -98,7 +99,7 @@ module Github
       set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, comment_id
       normalize! params
-      assert_required_keys(%w[ body ], params)
+      assert_required_keys(REQUIRED_COMMENT_OPTIONS, params)
 
       patch_request("/repos/#{user}/#{repo}/comments/#{comment_id}", params)
     end
