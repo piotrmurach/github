@@ -94,6 +94,7 @@ module Github
     #
     def check_assignment!(options)
       assert_presence_of args_required.inject({}) { |hash, arg|
+        api.set(:"#{arg}", '') unless api.respond_to? :"#{arg}"
         hash[arg] = api.send(:"#{arg}")
         hash
       }
