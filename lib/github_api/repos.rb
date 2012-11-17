@@ -191,8 +191,7 @@ module Github
     #   github.repos.create :name => 'repo-name', :org => 'organisation-name'
     #
     def create(*args)
-      arguments(self, :args_required => [:user, :repo])
-      arguments.parse *args do |args|
+      arguments(self).parse *args do |args|
         args.sift VALID_REPO_OPTIONS + %w[ org ]
         args.assert_required %w[ name ]
       end
