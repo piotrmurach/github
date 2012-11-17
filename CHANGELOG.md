@@ -1,3 +1,11 @@
+0.8.1 (Nov 17, 2012)
+
+* Fix bug with validating options on Repository API create method.
+* Fix bug with Repository Comments API valid parameters filtering.
+* Fix bug with parameters passing in Repository API delete method.
+* Add shared behaviour examples for unit testing.
+* Changed Git Comments API request paths and method signatures to take gist-id.
+
 0.8.0 (Nov 4, 2012)
 
 * Add activity namespace
