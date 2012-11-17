@@ -21,8 +21,12 @@ describe Github::Repos::Downloads, '#delete' do
     let(:body)   { "" }
     let(:status) { 204 }
 
+    it { should respond_to :remove }
+
+    it { expect { subject.delete }.to raise_error(Github::Error::Validations) }
+
     it "should fail to delete without 'user/repo' parameters" do
-      expect { subject.delete }.to raise_error(ArgumentError)
+      expect { subject.delete user }.to raise_error(ArgumentError)
     end
 
     it "should fail to delete resource without 'download_id'" do

@@ -5,7 +5,7 @@ require 'github_api/s3_uploader'
 module Github
   class Repos::Downloads < API
 
-    REQUIRED_PARAMS = %w[ name size ]
+    REQUIRED_PARAMS = %w[ name size ].freeze
 
     VALID_DOWNLOAD_PARAM_NAMES = %w[
       name
@@ -21,10 +21,9 @@ module Github
     #  github.repos.downloads.list 'user-name', 'repo-name'
     #  github.repos.downloads.list 'user-name', 'repo-name' { |downl| ... }
     #
-    def list(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-      normalize! params
+    def list(*args)
+      arguments(self, :args_required => [:user, :repo]).parse *args
+      params = arguments.params
 
       response = get_request("/repos/#{user}/#{repo}/downloads", params)
       return response unless block_given?
@@ -38,10 +37,9 @@ module Github
     #  github = Github.new
     #  github.repos.downloads.get 'user-name', 'repo-name', 'download-id'
     #
-    def get(user_name, repo_name, download_id, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, download_id
-      normalize! params
+    def get(*args)
+      arguments(self, :args_required => [:user, :repo, :download_id]).parse *args
+      params = arguments.params
 
       get_request("/repos/#{user}/#{repo}/downloads/#{download_id}", params)
     end
@@ -53,13 +51,13 @@ module Github
     #  github = Github.new
     #  github.repos.downloads.delete 'user-name', 'repo-name', 'download-id'
     #
-    def delete(user_name, repo_name, download_id, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, download_id
-      normalize! params
+    def delete(*args)
+      arguments(self, :args_required => [:user, :repo, :download_id]).parse *args
+      params = arguments.params
 
       delete_request("/repos/#{user}/#{repo}/downloads/#{download_id}", params)
     end
+    alias :remove :delete
 
     # Creating a new download is a two step process.
     # You must first create a new download resource using this method.
@@ -79,13 +77,12 @@ module Github
     #    "description" => "Latest release",
     #    "content_type" => "text/plain"
     #
-    def create(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-
-      normalize! params
-      filter! VALID_DOWNLOAD_PARAM_NAMES, params
-      assert_required_keys(REQUIRED_PARAMS, params)
+    def create(*args)
+      arguments(self, :args_required => [:user, :repo]).parse *args do
+        sift VALID_DOWNLOAD_PARAM_NAMES
+        assert_required REQUIRED_PARAMS
+      end
+      params = arguments.params
 
       post_request("/repos/#{user}/#{repo}/downloads", params)
     end
