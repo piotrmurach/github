@@ -79,15 +79,19 @@ module Github
     # validate their presence(if not nil or empty string).
     #
     def parse_options(options)
-      options.each do |key, val|
-        key = key.to_s
-        if args_required.include? key
-          assert_presence_of val
-          options.delete key
-          api.set key, val
-        end
-      end
+      options.each { |key, val| remove_required options, key, val }
       check_assignment!(options)
+    end
+
+    # Remove required argument from parameters
+    #
+    def remove_required(options, key, val)
+      key = key.to_s
+      if args_required.include? key
+        assert_presence_of val
+        options.delete key
+        api.set key, val
+      end
     end
 
     # Check if required arguments have been set on instance.
