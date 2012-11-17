@@ -26,6 +26,8 @@ module Github
       "has_downloads" => true
     }.freeze
 
+    REQUIRED_REPO_OPTIONS = %w[ name ]
+
     VALID_REPO_OPTIONS = %w[
       name
       description
@@ -191,9 +193,9 @@ module Github
     #   github.repos.create :name => 'repo-name', :org => 'organisation-name'
     #
     def create(*args)
-      arguments(self).parse *args do |args|
-        args.sift VALID_REPO_OPTIONS + %w[ org ]
-        args.assert_required %w[ name ]
+      arguments(self).parse *args do
+        sift VALID_REPO_OPTIONS + %w[ org ]
+        assert_required %w[ name ]
       end
       params = arguments.params
 
@@ -227,9 +229,9 @@ module Github
     #
     def edit(*args)
       arguments(self, :args_required => [:user, :repo])
-      arguments.parse *args do |args|
-        args.sift VALID_REPO_OPTIONS
-        args.assert_required %w[ name ]
+      arguments.parse *args do
+        sift VALID_REPO_OPTIONS
+        assert_required %w[ name ]
       end
       params = arguments.params
 
