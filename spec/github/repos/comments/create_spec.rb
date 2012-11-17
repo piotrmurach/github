@@ -33,30 +33,6 @@ describe Github::Repos::Comments, '#create' do
       }.to raise_error(Github::Error::RequiredParams)
     end
 
-    it "should fail to create resource if 'commit_id' input is missing" do
-      expect {
-        subject.create user, repo, sha, inputs.except(:commit_id)
-      }.to raise_error(Github::Error::RequiredParams)
-    end
-
-    it "should fail to create resource if 'line' input is missing" do
-      expect {
-        subject.create user, repo, sha, inputs.except(:line)
-      }.to raise_error(Github::Error::RequiredParams)
-    end
-
-    it "should fail to create resource if 'path' input is missing" do
-      expect {
-        subject.create user, repo, sha, inputs.except(:path)
-      }.to raise_error(Github::Error::RequiredParams)
-    end
-
-    it "should fail to create resource if 'position' input is missing" do
-      expect {
-        subject.create user, repo, sha, inputs.except(:position)
-      }.to raise_error(Github::Error::RequiredParams)
-    end
-
     it "should create resource successfully" do
       subject.create user, repo, sha, inputs
       a_post(request_path).with(inputs).should have_been_made
