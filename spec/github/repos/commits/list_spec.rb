@@ -19,6 +19,7 @@ describe Github::Repos::Commits, '#list' do
     let(:status) { 200 }
 
     it { should respond_to :all }
+
     it "should fail to get resource without username" do
       expect { subject.list }.to raise_error(ArgumentError)
     end
@@ -38,8 +39,9 @@ describe Github::Repos::Commits, '#list' do
     end
 
     it "should yield to a block" do
-      subject.should_receive(:list).with(user, repo).and_yield('web')
-      subject.list(user, repo) { |param| 'web' }
+      yielded = []
+      result = subject.list(user, repo) { |obj| yielded << obj }
+      yielded.should == result
     end
   end
 

@@ -25,8 +25,9 @@ describe Github::Activity::Starring, '#list' do
     end
 
     it "should yield iterator if block given" do
-      subject.should_receive(:list).with(user, repo).and_yield('github')
-      subject.list(user, repo) { |param| 'github' }
+      yielded = []
+      result = subject.list(user, repo) { |obj| yielded << obj }
+      yielded.should == result
     end
 
     it "should get the resources" do
@@ -35,25 +36,16 @@ describe Github::Activity::Starring, '#list' do
     end
 
     it_should_behave_like 'an array of resources' do
-      def requestable
-        subject.list user, repo
-      end
+      let(:requestable) { subject.list user, repo }
     end
 
     it "should get watcher information" do
       stargazers = subject.list user, repo
       stargazers.first.login.should == 'octocat'
     end
+  end
 
-    context "fail to find resource" do
-      let(:body) { '' }
-      let(:status) { 404 }
-
-      it "should return 404 not found message" do
-        expect {
-          subject.list user, repo
-        }.to raise_error(Github::Error::NotFound)
-      end
-    end
+  it_should_behave_like 'request failure' do
+    let(:requestable) { subject.list user, repo }
   end
 end # list
