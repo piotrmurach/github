@@ -70,36 +70,36 @@ describe Github::Gists::Comments do
 
     context 'resource found' do
       before do
-        stub_get("/gists/comments/#{comment_id}").
+        stub_get("/gists/#{gist_id}/comments/#{comment_id}").
           to_return(:body => fixture('gists/comment.json'),
           :status => 200,
           :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
       it "should fail to get resource without comment id" do
-        expect { github.gists.comments.get nil }.to raise_error(ArgumentError)
+        expect { github.gists.comments.get nil, nil }.to raise_error(ArgumentError)
       end
 
       it "should get the resource" do
-        github.gists.comments.get comment_id
-        a_get("/gists/comments/#{comment_id}").should have_been_made
+        github.gists.comments.get gist_id, comment_id
+        a_get("/gists/#{gist_id}/comments/#{comment_id}").should have_been_made
       end
 
       it "should get comment information" do
-        comment = github.gists.comments.get comment_id
+        comment = github.gists.comments.get gist_id, comment_id
         comment.id.should eq comment_id
         comment.user.login.should == 'octocat'
       end
 
       it "should return mash" do
-        comment = github.gists.comments.get comment_id
+        comment = github.gists.comments.get gist_id, comment_id
         comment.should be_a Hashie::Mash
       end
     end
 
     context 'resource not found' do
       before do
-        stub_get("/gists/comments/#{comment_id}").
+        stub_get("/gists/#{gist_id}/comments/#{comment_id}").
           to_return(:body => fixture('gists/comment.json'),
             :status => 404,
             :headers => {:content_type => "application/json; charset=utf-8"})
@@ -107,7 +107,7 @@ describe Github::Gists::Comments do
 
       it "should fail to retrive resource" do
         expect {
-          github.gists.comments.get comment_id
+          github.gists.comments.get gist_id, comment_id
         }.to raise_error(Github::Error::NotFound)
       end
     end
@@ -115,7 +115,8 @@ describe Github::Gists::Comments do
 
   describe "#create" do
     let(:inputs) {
-      { "body" =>"Just commenting for the sake of commenting", "unrelated" => true }
+      { "body" =>"Just commenting for the sake of commenting",
+        "unrelated" => true }
     }
 
     context "resouce created" do
@@ -172,7 +173,7 @@ describe Github::Gists::Comments do
 
     context "resouce edited" do
       before do
-        stub_patch("/gists/comments/#{comment_id}").
+        stub_patch("/gists/#{gist_id}/comments/#{comment_id}").
           with(inputs.except('unrelated')).
           to_return(:body => fixture('gists/comment.json'),
                 :status => 201,
@@ -181,29 +182,29 @@ describe Github::Gists::Comments do
 
       it "should fail to create resource if 'content' input is missing" do
         expect {
-          github.gists.comments.edit comment_id, inputs.except('body')
+          github.gists.comments.edit gist_id, comment_id, inputs.except('body')
         }.to raise_error(Github::Error::RequiredParams)
       end
 
       it "should create resource successfully" do
-        github.gists.comments.edit comment_id, inputs
-        a_patch("/gists/comments/#{comment_id}").with(inputs).should have_been_made
+        github.gists.comments.edit gist_id, comment_id, inputs
+        a_patch("/gists/#{gist_id}/comments/#{comment_id}").with(inputs).should have_been_made
       end
 
       it "should return the resource" do
-        comment = github.gists.comments.edit comment_id, inputs
+        comment = github.gists.comments.edit gist_id, comment_id, inputs
         comment.should be_a Hashie::Mash
       end
 
       it "should get the comment information" do
-        comment = github.gists.comments.edit comment_id, inputs
+        comment = github.gists.comments.edit gist_id, comment_id, inputs
         comment.user.login.should == 'octocat'
       end
     end
 
     context "failed to create resource" do
       before do
-        stub_patch("/gists/comments/#{comment_id}").with(inputs).
+        stub_patch("/gists/#{gist_id}/comments/#{comment_id}").with(inputs).
           to_return(:body => fixture('gists/comment.json'),
             :status => 404,
             :headers => {:content_type => "application/json; charset=utf-8"})
@@ -211,7 +212,7 @@ describe Github::Gists::Comments do
 
       it "should faile to retrieve resource" do
         expect {
-          github.gists.comments.edit comment_id, inputs
+          github.gists.comments.edit gist_id, comment_id, inputs
         }.to raise_error(Github::Error::NotFound)
       end
     end
@@ -220,25 +221,25 @@ describe Github::Gists::Comments do
   describe "#delete" do
     context "resouce deleted" do
       before do
-        stub_delete("/gists/comments/#{comment_id}").
+        stub_delete("/gists/#{gist_id}/comments/#{comment_id}").
           to_return(:body => '',
                 :status => 204,
                 :headers => {:content_type => "application/json; charset=utf-8"})
       end
 
       it "should fail to create resource if 'content' input is missing" do
-        expect { github.gists.comments.delete nil }.to raise_error(ArgumentError)
+        expect { github.gists.comments.delete gist_id, nil }.to raise_error(ArgumentError)
       end
 
       it "should create resource successfully" do
-        github.gists.comments.delete comment_id
-        a_delete("/gists/comments/#{comment_id}").should have_been_made
+        github.gists.comments.delete gist_id, comment_id
+        a_delete("/gists/#{gist_id}/comments/#{comment_id}").should have_been_made
       end
     end
 
     context "failed to create resource" do
       before do
-        stub_delete("/gists/comments/#{comment_id}").
+        stub_delete("/gists/#{gist_id}/comments/#{comment_id}").
           to_return(:body => fixture('gists/comment.json'),
             :status => 404,
             :headers => {:content_type => "application/json; charset=utf-8"})
@@ -246,7 +247,7 @@ describe Github::Gists::Comments do
 
       it "should faile to retrieve resource" do
         expect {
-          github.gists.comments.delete comment_id
+          github.gists.comments.delete gist_id, comment_id
         }.to raise_error(Github::Error::NotFound)
       end
     end
