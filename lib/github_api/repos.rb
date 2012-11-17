@@ -193,7 +193,7 @@ module Github
       assert_presence_of user, repo
       normalize! params
 
-      delete_request("/repos/#{user}/#{repo}")
+      delete_request("/repos/#{user}/#{repo}", params)
     end
     alias :remove :delete
 
