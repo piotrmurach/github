@@ -106,7 +106,7 @@ repos.branches do |branch|
 end
 ```
 
-## Arguments and Parameters
+## Arguments & Parameters
 
 The request arguments are thought of as required variables that form the request resource url. Wherease parameters are thought of as the additional variables passed in to configure the request.
 
@@ -117,7 +117,7 @@ The gem allows for flexible arguments parsing. Therefore arguments can be passed
   issues.milestones.list
 ```
 
-Further, arguments can be passed directly inside method called but then the order of parameters matters and hence please consulte the method call documentation. For instance:
+Further, arguments can be passed directly inside method called but then the order of parameters matters and hence please consult the method documentation. For instance:
 
 ```ruby
   issues = Github::Issues.new
@@ -147,7 +147,7 @@ Finally, you can use a bit of syntactic sugar common among ruby libraries whereb
   issues.milestones.list 'peter-murach/github'
 ```
 
-Finally, use `with` scope to denote your requests
+Finally, use `with` scope to clearly denote your requests
 
 ```ruby
   issues = Github::Issues.new
