@@ -21,7 +21,7 @@ Supports all the API methods(nearly 200). It's build in a modular way, that is, 
 * Easy error handling.
 * Custom mime types specification (Status: TODO)
 * Flexible arguments parsing (Status: In progress).
-* Fully tested with test coverage above 90% with over 1,200 specs and 500 features.
+* Fully tested with test coverage above 90% with over 1,300 specs and 500 features.
 
 ## Installation
 
@@ -106,7 +106,53 @@ repos.branches do |branch|
 end
 ```
 
-## Inputs
+## Arguments and Parameters
+
+The request arguments are thought of as required variables that form the request resource url. Wherease parameters are thought of as the additional variables passed in to configure the request.
+
+The gem allows for flexible arguments parsing. Therefore arguments can be passed during instance creation:
+
+```ruby
+  issues = Github::Issues.new user: 'peter-murach', repo: 'github'
+  issues.milestones.list
+```
+
+Further, arguments can be passed directly inside method called but then the order of parameters matters and hence please consulte the method call documentation. For instance:
+
+```ruby
+  issues = Github::Issues.new
+  issues.milestones.list 'peter-murach', 'github'
+```
+
+Similarly, the argument for the request can be passed inside the current scope such as:
+
+```ruby
+  issues = Github::Issues.new
+  issues.milestones(user: 'peter-murach', repo: 'github').list
+```
+
+But why limit ourselves? You can mix and match arguments, for example:
+
+```ruby
+  issues = Github::Issues.new user: 'peter-murach'
+  issues.milestones(repo: 'github').list
+  issues.milestones(repo: 'tty').list
+```
+
+Finally, you can use a bit of syntactic sugar common among ruby libraries whereby "username/repository" can be passed as well:
+
+```ruby
+  issues = Github::Issues.new
+  issues.milestones('peter-murach/github').list
+  issues.milestones.list 'peter-murach/github'
+```
+
+Finally, use `with` scope to denote your requests
+
+```ruby
+  issues = Github::Issues.new
+  issues.milestones.with(user:'peter-murach', repo: 'github').list
+```
 
 Some API methods apart from required parameters such as username, repository name
 or organisation name, allow you to switch the way the data is returned to you, for instance
