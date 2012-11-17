@@ -38,7 +38,7 @@ module Github
     # Parse arguments to allow for flexible api calls.
     # Arguments can be part of parameters hash or be simple string arguments.
     #
-    def parse(*args)
+    def parse(*args, &block)
       options = args.extract_options!
       normalize! options
 
@@ -49,7 +49,7 @@ module Github
         parse_options options
       end
       @params = options
-      yield self if block_given?
+      yield_or_eval(&block)
       self
     end
 
@@ -109,6 +109,13 @@ module Github
       if args_length < args_required_length
         ::Kernel.raise ArgumentError, "wrong number of arguments (#{args_length} for #{args_required_length})"
       end
+    end
+
+    # Evaluate block
+    #
+    def yield_or_eval(&block)
+      return unless block
+      block.arity > 0 ? yield(self) : self.instance_eval(&block)
     end
 
   end # Arguments
