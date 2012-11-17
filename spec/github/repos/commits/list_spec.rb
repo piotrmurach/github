@@ -19,9 +19,10 @@ describe Github::Repos::Commits, '#list' do
     let(:status) { 200 }
 
     it { should respond_to :all }
-    it "should fail to get resource without username" do
-      expect { subject.list }.to raise_error(ArgumentError)
-    end
+
+    it { expect { subject.list }.to raise_error(Github::Error::Validations) }
+
+    it { expect { subject user }.to raise_error(ArgumentError) }
 
     it "should get the resources" do
       subject.list user, repo
