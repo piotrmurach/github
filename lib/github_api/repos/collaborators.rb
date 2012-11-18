@@ -11,7 +11,7 @@ module Github
     #  github.repos.collaborators.list 'user-name', 'repo-name' { |cbr| .. }
     #
     def list(*args)
-      arguments(self, :args_required => [:user, :repo]).parse *args
+      arguments(self, :required => [:user, :repo]).parse *args
       params = arguments.params
 
       response = get_request("/repos/#{user}/#{repo}/collaborators", params)
@@ -30,7 +30,7 @@ module Github
     #  collaborators.add 'user', 'repo', 'collaborator'
     #
     def add(*args)
-      arguments(self, :args_required => [:user, :repo, :collaborator]).parse *args
+      arguments(self, :required => [:user, :repo, :collaborator]).parse *args
       params = arguments.params
 
       put_request("/repos/#{user}/#{repo}/collaborators/#{collaborator}", params)
@@ -47,7 +47,7 @@ module Github
     #  github.collaborators.collaborator? collaborator: 'collaborator'
     #
     def collaborator?(*args)
-      arguments(self, :args_required => [:user, :repo, :collaborator]).parse *args
+      arguments(self, :required => [:user, :repo, :collaborator]).parse *args
       params = arguments.params
 
       get_request("/repos/#{user}/#{repo}/collaborators/#{collaborator}", params)
@@ -63,7 +63,7 @@ module Github
     #  github.repos.collaborators.remove 'user', 'repo', 'collaborator'
     #
     def remove(*args)
-      arguments(self, :args_required => [:user, :repo, :collaborator]).parse *args
+      arguments(self, :required => [:user, :repo, :collaborator]).parse *args
       params = arguments.params
 
       delete_request("/repos/#{user}/#{repo}/collaborators/#{collaborator}", params)

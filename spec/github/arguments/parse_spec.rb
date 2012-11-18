@@ -4,14 +4,14 @@ require 'spec_helper'
 
 describe Github::Arguments, '#parse' do
   let(:api)    { Github::Repos.new }
-  let(:object) { described_class.new api, 'args_required' => args_required }
+  let(:object) { described_class.new api, 'required' => required }
   let(:arguments) { ['peter-murach', 'github', params] }
   let(:params) { { :page => 23 } }
 
   subject { object.parse *arguments }
 
   context 'with required arguments' do
-    let(:args_required) { [:user, :repo] }
+    let(:required) { [:user, :repo] }
 
     it { should == object }
 
@@ -39,7 +39,7 @@ describe Github::Arguments, '#parse' do
   end
 
   context 'with less than required arguments' do
-    let(:args_required) { [:user, :repo] }
+    let(:required) { [:user, :repo] }
     let(:arguments) { ['peter-murach', params] }
 
     it 'raises an error' do
@@ -48,7 +48,7 @@ describe Github::Arguments, '#parse' do
   end
 
   context 'without required arguments' do
-    let(:args_required) { [] }
+    let(:required) { [] }
     let(:arguments) { [params] }
 
     its(:params) { should == params }

@@ -21,18 +21,18 @@ module Github
 
     # Required arguments
     #
-    attr_reader :args_required
-    private :args_required
+    attr_reader :required
+    private :required
 
     # Takes api, filters and required arguments
     #
     # = Parameters
-    #  :args_required - arguments that must be present before request is fired
+    #  :required - arguments that must be present before request is fired
     #
     def initialize(api, options={})
       normalize! options
-      @api           = api
-      @args_required = options.fetch('args_required', []).map(&:to_s)
+      @api      = api
+      @required = options.fetch('required', []).map(&:to_s)
     end
 
     # Parse arguments to allow for flexible api calls.
@@ -70,7 +70,7 @@ module Github
     def parse_arguments(*args)
       assert_presence_of *args
       args.each_with_index do |arg, indx|
-        api.set args_required[indx], arg
+        api.set required[indx], arg
       end
       check_requirement!(*args)
     end
@@ -87,7 +87,7 @@ module Github
     #
     def remove_required(options, key, val)
       key = key.to_s
-      if args_required.include? key
+      if required.include? key
         assert_presence_of val
         options.delete key
         api.set key, val
@@ -97,7 +97,7 @@ module Github
     # Check if required arguments have been set on instance.
     #
     def check_assignment!(options)
-      assert_presence_of args_required.inject({}) { |hash, arg|
+      assert_presence_of required.inject({}) { |hash, arg|
         api.set(:"#{arg}", '') unless api.respond_to? :"#{arg}"
         hash[arg] = api.send(:"#{arg}")
         hash
@@ -107,11 +107,11 @@ module Github
     # Check if required arguments are present.
     #
     def check_requirement!(*args)
-      args_length          = args.length
-      args_required_length = args_required.length
+      args_length     = args.length
+      required_length = required.length
 
-      if args_length < args_required_length
-        ::Kernel.raise ArgumentError, "wrong number of arguments (#{args_length} for #{args_required_length})"
+      if args_length < required_length
+        ::Kernel.raise ArgumentError, "wrong number of arguments (#{args_length} for #{required_length})"
       end
     end
 

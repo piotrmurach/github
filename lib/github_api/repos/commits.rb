@@ -18,7 +18,7 @@ module Github
     #  github.repos.commits.list 'user-name', 'repo-name', :sha => '...' { |commit| ... }
     #
     def list(*args)
-      arguments(self, :args_required => [:user, :repo]).parse *args do
+      arguments(self, :required => [:user, :repo]).parse *args do
         sift VALID_COMMIT_OPTIONS
       end
       params = arguments.params
@@ -36,7 +36,7 @@ module Github
     #  github.repos.commits.get 'user-name', 'repo-name', '6dcb09b5b57875f334f61aebed6')
     #
     def get(*args)
-      arguments(self, :args_required => [:user, :repo, :sha]).parse *args
+      arguments(self, :required => [:user, :repo, :sha]).parse *args
       params = arguments.params
 
       get_request("/repos/#{user}/#{repo}/commits/#{sha}", params)
@@ -54,7 +54,7 @@ module Github
     #    'master'
     #
     def compare(*args)
-      arguments(self, :args_required => [:user, :repo, :base, :head]).parse *args
+      arguments(self, :required => [:user, :repo, :base, :head]).parse *args
       params = arguments.params
 
       get_request("/repos/#{user}/#{repo}/compare/#{base}...#{head}", params)

@@ -14,7 +14,7 @@ module Github
     #  github.repos.forks.list 'user-name', 'repo-name' { |fork| ... }
     #
     def list(*args)
-      arguments(self, :args_required => [:user, :repo]).parse *args
+      arguments(self, :required => [:user, :repo]).parse *args
       params = arguments.params
 
       response = get_request("/repos/#{user}/#{repo}/forks", params)
@@ -34,7 +34,7 @@ module Github
     #    "org" =>  "github"
     #
     def create(*args)
-      arguments(self, :args_required => [:user, :repo]).parse *args
+      arguments(self, :required => [:user, :repo]).parse *args
       params = arguments.params
 
       post_request("/repos/#{user}/#{repo}/forks", params)
