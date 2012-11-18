@@ -21,9 +21,7 @@ describe Github::Repos::Collaborators, '#collaborator?' do
     let(:status) { 204 }
 
     it "should fail to get resource without collaborator name" do
-      expect {
-        subject.collaborator? user, repo, nil
-      }.to raise_error(ArgumentError)
+      expect { subject.collaborator? user, repo }.to raise_error(ArgumentError)
     end
 
     it "should get the resource" do

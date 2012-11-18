@@ -19,8 +19,12 @@ describe Github::Repos::Collaborators, '#list' do
     let(:body) { fixture('repos/collaborators.json') }
     let(:status) { 200 }
 
-    it "should fail to get resource without username" do
-      expect { subject.list }.to raise_error(ArgumentError)
+    it "should fail to get resource without arguments" do
+      expect { subject.list }.to raise_error(Github::Error::Validations)
+    end
+
+    it "failse to get resource with missing arguments" do
+      expect { subject.list user }.to raise_error(ArgumentError)
     end
 
     it "should get the resources" do
