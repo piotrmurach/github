@@ -97,6 +97,20 @@ module Github
       end
     end
 
+    # Scope for passing request required arguments.
+    #
+    def with(args)
+      case args
+      when Hash
+        set args
+      when /.*\/.*/i
+        user, repo = args.split('/')
+        set :user => user, :repo => repo
+      else
+        ::Kernel.raise ArgumentError, 'This api does not support passed in arguments'
+      end
+    end
+
     # Set an option to a given value
     def set(option, value=(not_set = true), &block)
       raise ArgumentError, 'value not set' if block and !not_set
