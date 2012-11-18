@@ -3,6 +3,8 @@
 require 'spec_helper'
 
 describe Github::Repos, '#list' do
+  include Github::Jsonable
+
   let(:user) { 'peter-murach' }
   let(:repo) { 'github' }
   let(:request_path) { "/user/repos?access_token=#{OAUTH_TOKEN}" }
@@ -48,9 +50,10 @@ describe Github::Repos, '#list' do
       repositories.first.name.should == 'Hello-World'
     end
 
-    it "should yield repositories to a block" do
-      subject.should_receive(:list).and_yield('octocat')
-      subject.list { |repo| 'octocat' }
+    it "should yield result to a block" do
+      yielded = []
+      result = subject.list { |obj| yielded << obj }
+      yielded.should == result
     end
   end
 

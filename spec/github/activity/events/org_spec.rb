@@ -28,9 +28,7 @@ describe Github::Activity::Events, '#org' do
     end
 
     it_should_behave_like 'an array of resources' do
-      def requestable
-        subject.org org
-      end
+      let(:requestable) { subject.org org }
     end
 
     it "should get event information" do
@@ -39,17 +37,14 @@ describe Github::Activity::Events, '#org' do
     end
 
     it "should yield to a block" do
-      subject.should_receive(:org).with(org).and_yield('web')
-      subject.org(org) { |param| 'web' }
+      yielded = []
+      result = subject.org(org) { |obj| yielded << obj }
+      yielded.should == result
     end
   end
 
-  context "resource not found" do
-    let(:body) { '' }
-    let(:status) { [404, "Not Found"] }
-
-    it "should return 404 with a message 'Not Found'" do
-      expect { subject.org org }.to raise_error(Github::Error::NotFound)
-    end
+  it_should_behave_like 'request failure' do
+    let(:requestable) { subject.org org }
   end
+
 end # org

@@ -31,9 +31,7 @@ describe Github::Activity::Watching, '#list' do
   end
 
   it_should_behave_like 'an array of resources' do
-    def requestable
-      subject.list user, repo
-    end
+    let(:requestable) { subject.list user, repo }
   end
 
   it "should get watcher information" do
@@ -41,14 +39,7 @@ describe Github::Activity::Watching, '#list' do
     watchers.first.login.should == 'octocat'
   end
 
-  context "fail to find resource" do
-    let(:body)   { '' }
-    let(:status) { 404 }
-
-    it "should return 404 not found message" do
-      expect {
-        subject.list user, repo
-      }.to raise_error(Github::Error::NotFound)
-    end
+  it_should_behave_like 'request failure' do
+    let(:requestable) { subject.list user, repo }
   end
 end # list

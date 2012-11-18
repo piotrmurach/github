@@ -207,6 +207,48 @@ module Github
       end
     end
 
+    # Delete a repository
+    #
+    # Deleting a repository requires admin access.
+    # If OAuth is used, the delete_repo scope is required.
+    #
+    # = Examples
+    #  github = Github.new :oauth_token => '...'
+    #  github.repos.delete 'user-name', 'repo-name'
+    #
+    def delete(user_name, repo_name, params={})
+      set :user => user_name, :repo => repo_name
+      assert_presence_of user, repo
+      normalize! params
+
+      delete_request("/repos/#{user}/#{repo}", params)
+    end
+    alias :remove :delete
+
+    # List contributors
+    #
+    # = Parameters
+    #  <tt>:anon</tt> - Optional flag. Set to 1 or true to include anonymous contributors.
+    #
+    # = Examples
+    #
+    #  github = Github.new
+    #  github.repos.contributors 'user-name','repo-name'
+    #  github.repos.contributors 'user-name','repo-name' { |cont| ... }
+    #
+    def contributors(user_name, repo_name, params={})
+      set :user => user_name, :repo => repo_name
+      assert_presence_of user, repo
+      normalize! params
+      filter! ['anon'], params
+
+      response = get_request("/repos/#{user}/#{repo}/contributors", params)
+      return response unless block_given?
+      response.each { |el| yield el }
+    end
+    alias :list_contributors :contributors
+    alias :contribs :contributors
+
     # Edit a repository
     #
     # = Parameters

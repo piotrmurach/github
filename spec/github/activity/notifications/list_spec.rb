@@ -36,9 +36,7 @@ describe Github::Activity::Notifications, '#list' do
     end
 
     it_should_behave_like 'an array of resources' do
-      def requestable
-        subject.list
-      end
+      let(:requestable) { subject.list }
     end
 
     it "should get resource information" do
@@ -51,13 +49,8 @@ describe Github::Activity::Notifications, '#list' do
       subject.list { |repo| 'octocat' }
     end
 
-    context "resource not found for a user" do
-      let(:body) { '' }
-      let(:status) { [404, "Not Found"] }
-
-      it "should return 404 with a message 'Not Found'" do
-        expect { subject.list }.to raise_error(Github::Error::NotFound)
-      end
+    it_should_behave_like 'request failure' do
+      let(:requestable) { subject.list }
     end
   end
 

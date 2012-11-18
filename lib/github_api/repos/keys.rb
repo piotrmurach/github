@@ -3,7 +3,7 @@
 module Github
   class Repos::Keys < API
 
-    VALID_KEY_PARAM_NAMES = %w[ title key ].freeze
+    VALID_KEY_OPTIONS = %w[ title key ].freeze
 
     # List deploy keys
     #
@@ -54,8 +54,8 @@ module Github
       set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
       normalize! params
-      filter! VALID_KEY_PARAM_NAMES, params
-      assert_required_keys(VALID_KEY_PARAM_NAMES, params)
+      filter! VALID_KEY_OPTIONS, params
+      assert_required_keys(VALID_KEY_OPTIONS, params)
 
       post_request("/repos/#{user}/#{repo}/keys", params)
     end
@@ -77,7 +77,7 @@ module Github
       assert_presence_of user, repo, key_id
 
       normalize! params
-      filter! VALID_KEY_PARAM_NAMES, params
+      filter! VALID_KEY_OPTIONS, params
 
       patch_request("/repos/#{user}/#{repo}/keys/#{key_id}", params)
     end
