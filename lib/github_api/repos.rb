@@ -93,7 +93,7 @@ module Github
       @mergin ||= ApiFactory.new 'Repos::Merging'
     end
 
-    # Access to Repos::Watchin API
+    # Access to Repos::PubSubHubbub API
     def pubsubhubbub
       @pubsubhubbub ||= ApiFactory.new 'Repos::PubSubHubbub'
     end
@@ -216,10 +216,9 @@ module Github
     #  github = Github.new :oauth_token => '...'
     #  github.repos.delete 'user-name', 'repo-name'
     #
-    def delete(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-      normalize! params
+    def delete(*args)
+      arguments(self, :args_required => [:user, :repo]).parse *args
+      params = arguments.params
 
       delete_request("/repos/#{user}/#{repo}", params)
     end
@@ -236,11 +235,11 @@ module Github
     #  github.repos.contributors 'user-name','repo-name'
     #  github.repos.contributors 'user-name','repo-name' { |cont| ... }
     #
-    def contributors(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-      normalize! params
-      filter! ['anon'], params
+    def contributors(*args)
+      arguments(self, :args_required => [:user, :repo]).parse *args do
+        sift %w[ anon ]
+      end
+      params = arguments.params
 
       response = get_request("/repos/#{user}/#{repo}/contributors", params)
       return response unless block_given?

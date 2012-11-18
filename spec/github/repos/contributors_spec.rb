@@ -20,11 +20,11 @@ describe Github::Repos, '#contributors' do
     let(:status) { 200 }
 
     it "should raise error when no user/repo parameters" do
-      expect { subject.contributors nil, repo }.to raise_error(ArgumentError)
+      expect { subject.contributors }.to raise_error(Github::Error::Validations)
     end
 
     it "should raise error when no repository" do
-      expect { subject.contributors user, nil }.to raise_error(ArgumentError)
+      expect { subject.contributors user }.to raise_error(ArgumentError)
     end
 
     it 'filters out unkown parameters' do
