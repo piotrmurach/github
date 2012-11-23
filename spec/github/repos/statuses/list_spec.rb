@@ -15,7 +15,6 @@ describe Github::Repos::Statuses, '#list' do
 
   after { reset_authentication_for(subject) }
 
-
   context "resource found" do
     let(:body) { fixture('repos/statuses.json') }
     let(:status) { 200 }
