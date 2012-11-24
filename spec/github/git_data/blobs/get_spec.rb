@@ -23,7 +23,7 @@ describe Github::GitData::Blobs, '#get' do
     it { should respond_to :find }
 
     it "should fail to get resource without sha" do
-      expect { subject.get user, repo, nil }.to raise_error(ArgumentError)
+      expect { subject.get user, repo }.to raise_error(ArgumentError)
     end
 
     it "should get the resource" do

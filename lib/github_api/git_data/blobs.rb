@@ -1,10 +1,11 @@
 # encoding: utf-8
 
 module Github
+
+  # Since blobs can be any arbitrary binary data, the input and responses for
+  # the blob api takes an encoding parameter that can be either utf-8 or base64.
+  # If your data cannot be losslessly sent as a UTF-8 string, you can base64 encode it.
   class GitData::Blobs < API
-    # Since blobs can be any arbitrary binary data, the input and responses for
-    # the blob api takes an encoding parameter that can be either utf-8 or base64.
-    # If your data cannot be losslessly sent as a UTF-8 string, you can base64 encode it.
 
     VALID_BLOB_PARAM_NAMES = %w[ content encoding ].freeze
 
@@ -19,10 +20,9 @@ module Github
     #  github = Github.new
     #  github.git_data.blobs.get 'user-name', 'repo-name', 'sha'
     #
-    def get(user_name, repo_name, sha, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, sha
-      normalize! params
+    def get(*args)
+      arguments(self, :required => [:user, :repo, :sha]).parse *args
+      params = arguments.params
 
       get_request("/repos/#{user}/#{repo}/git/blobs/#{sha}", params)
     end
@@ -39,13 +39,12 @@ module Github
     #    "content" => "Content of the blob",
     #    "encoding" => "utf-8"
     #
-    def create(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-
-      normalize! params
-      filter! VALID_BLOB_PARAM_NAMES, params
-      assert_required_keys(VALID_BLOB_PARAM_NAMES, params)
+    def create(*args)
+      arguments(self, :required => [:user, :repo]).parse *args do
+        sift VALID_BLOB_PARAM_NAMES
+        assert_required VALID_BLOB_PARAM_NAMES
+      end
+      params = arguments.params
 
       post_request("/repos/#{user}/#{repo}/git/blobs", params)
     end

@@ -27,6 +27,8 @@ describe Github::GitData::Blobs, '#create' do
     let(:body) { fixture('git_data/blob_sha.json') }
     let(:status) { 201 }
 
+    it { expect { subject.create user }.to raise_error(ArgumentError) }
+
     it "should fail to create resource if 'content' input is missing" do
       expect {
         subject.create user, repo, inputs.except('content')
