@@ -51,8 +51,11 @@ module Github
 
     # Remove unkown parameters.
     #
-    def sift(keys)
-      filter! keys, params if keys.any?
+    # = Parameters
+    #  :recursive - boolean that toggles whether nested filtering should be applied
+    #
+    def sift(keys, options={})
+      filter! keys, params, options if keys.any?
       self
     end
 
