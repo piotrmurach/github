@@ -20,7 +20,7 @@ describe Github::Repos::Hooks, '#test' do
     let(:status) { 204 }
 
     it "should fail to test without 'user/repo' parameters" do
-      expect { subject.test }.to raise_error(ArgumentError)
+      expect { subject.test }.to raise_error(Github::Error::Validations)
     end
 
     it "should fail to test resource without 'hook_id'" do

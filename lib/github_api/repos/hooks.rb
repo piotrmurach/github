@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 module Github
+
   # The Repository Hooks API manages the post-receive web and
   # service hooks for a repository.
   class Repos::Hooks < API
@@ -42,10 +43,9 @@ module Github
     #  github.repos.hooks.list 'user-name', 'repo-name'
     #  github.repos.hooks.list 'user-name', 'repo-name' { |hook| ... }
     #
-    def list(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-      normalize! params
+    def list(*args)
+      arguments(self, :required => [:user, :repo]).parse *args
+      params = arguments.params
 
       response = get_request("/repos/#{user}/#{repo}/hooks", params)
       return response unless block_given?
@@ -59,10 +59,9 @@ module Github
     #  github = Github.new
     #  github.repos.hooks.get 'user-name', 'repo-name'
     #
-    def get(user_name, repo_name, hook_id, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, hook_id
-      normalize! params
+    def get(*args)
+      arguments(self, :required => [:user, :repo, :hook_id]).parse *args
+      params = arguments.params
 
       get_request("/repos/#{user}/#{repo}/hooks/#{hook_id}", params)
     end
@@ -86,13 +85,12 @@ module Github
     #      }
     #    }
     #
-    def create(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-
-      normalize! params
-      filter! VALID_HOOK_PARAM_NAMES, params, :recursive => false
-      assert_required_keys(REQUIRED_PARAMS, params)
+    def create(*args)
+      arguments(self, :required => [:user, :repo]).parse *args do
+        sift VALID_HOOK_PARAM_NAMES, :recursive => false
+        assert_required REQUIRED_PARAMS
+      end
+      params = arguments.params
 
       post_request("/repos/#{user}/#{repo}/hooks", params)
     end
@@ -118,13 +116,12 @@ module Github
     #      "token" => "abc123"
     #    }
     #
-    def edit(user_name, repo_name, hook_id, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, hook_id
-
-      normalize! params
-      filter! VALID_HOOK_PARAM_NAMES, params, :recursive => false
-      assert_required_keys(REQUIRED_PARAMS, params)
+    def edit(*args)
+      arguments(self, :required => [:user, :repo, :hook_id]).parse *args do
+        sift VALID_HOOK_PARAM_NAMES, :recursive => false
+        assert_required REQUIRED_PARAMS
+      end
+      params = arguments.params
 
       patch_request("/repos/#{user}/#{repo}/hooks/#{hook_id}", params)
     end
@@ -137,10 +134,9 @@ module Github
     #  github = Github.new
     #  github.repos.hooks.test 'user-name', 'repo-name', 'hook-id'
     #
-    def test(user_name, repo_name, hook_id, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, hook_id
-      normalize! params
+    def test(*args)
+      arguments(self, :required => [:user, :repo, :hook_id]).parse *args
+      params = arguments.params
 
       post_request("/repos/#{user}/#{repo}/hooks/#{hook_id}/test", params)
     end
@@ -151,10 +147,9 @@ module Github
     #  github = Github.new
     #  github.repos.hooks.delete 'user-name', 'repo-name', 'hook-id'
     #
-    def delete(user_name, repo_name, hook_id, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, hook_id
-      normalize! params
+    def delete(*args)
+      arguments(self, :required => [:user, :repo, :hook_id]).parse *args
+      params = arguments.params
 
       delete_request("/repos/#{user}/#{repo}/hooks/#{hook_id}", params)
     end
