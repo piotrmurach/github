@@ -25,6 +25,8 @@ describe Github::Repos::Statuses, '#create' do
     let(:body) { fixture('repos/status.json') }
     let(:status) { 201 }
 
+    it { expect { subject.create user, repo }.to raise_error(ArgumentError) }
+
     it "should fail to create resource if 'state' input is missing" do
       expect {
         subject.create user, repo, sha, inputs.except('state')
