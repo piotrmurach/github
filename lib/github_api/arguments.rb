@@ -8,10 +8,6 @@ module Github
     include ParameterFilter
     include Validations
 
-    # Arguments used to construct request path
-    #
-    attr_reader :arguments
-
     # Parameters passed to request
     attr_reader :params
 
@@ -53,11 +49,15 @@ module Github
       self
     end
 
+    # Remove unkown parameters.
+    #
     def sift(keys)
       filter! keys, params if keys.any?
       self
     end
 
+    # Check if required parameters are present.
+    #
     def assert_required(required)
       assert_required_keys required, params
       self
