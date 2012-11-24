@@ -19,8 +19,20 @@ describe Github::Repos::Contents, '#get' do
   let(:body) { '' }
   let(:status) { 302 }
 
+
   it "should get the resources" do
     subject.archive user, repo, :archive_format => archive_format, :ref => ref
     a_get(request_path).should have_been_made
+  end
+
+  context 'with defaults' do
+    let(:request_path) { "/repos/#{user}/#{repo}/zipball/master" }
+
+    it { expect { subject.archive user }.to raise_error(ArgumentError) }
+
+    it 'should get the resource' do
+      subject.archive user, repo
+      a_get(request_path).should have_been_made
+    end
   end
 end
