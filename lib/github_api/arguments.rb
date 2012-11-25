@@ -54,8 +54,8 @@ module Github
     # = Parameters
     #  :recursive - boolean that toggles whether nested filtering should be applied
     #
-    def sift(keys, options={})
-      filter! keys, params, options if keys.any?
+    def sift(keys, key=nil, options={})
+      filter! keys, (key.nil? ? params : params[key]), options if keys.any?
       self
     end
 
@@ -68,8 +68,8 @@ module Github
 
     # Check if parameters match expected values.
     #
-    def assert_values(values)
-      assert_valid_values values, params
+    def assert_values(values, key=nil)
+      assert_valid_values values, (key.nil? ? params : params[key])
       self
     end
 
