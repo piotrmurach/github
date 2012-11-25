@@ -34,6 +34,8 @@ describe Github::GitData::Commits, '#get' do
     let(:body) { fixture('git_data/commit.json') }
     let(:status) { 201 }
 
+    it { expect { subject.create user }.to raise_error(ArgumentError)}
+
     it "should fail to create resource if 'message' input is missing" do
       expect {
         subject.create user, repo, inputs.except('message')
