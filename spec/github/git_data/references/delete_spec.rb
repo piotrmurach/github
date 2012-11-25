@@ -21,8 +21,10 @@ describe Github::GitData::References, '#delete' do
 
     it { should respond_to :remove }
 
+    it { expect { subject.delete }.to raise_error(Github::Error::Validations) }
+
     it "should fail to delete resource if 'ref' input is missing" do
-      expect { subject.delete user, repo, nil }.to raise_error(ArgumentError)
+      expect { subject.delete user, repo }.to raise_error(ArgumentError)
     end
 
     it "should delete resource successfully" do
