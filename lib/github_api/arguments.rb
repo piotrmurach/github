@@ -66,6 +66,13 @@ module Github
       self
     end
 
+    # Check if parameters match expected values.
+    #
+    def assert_values(values)
+      assert_valid_values values, params
+      self
+    end
+
     private
 
     # Check and set all requried arguments.
