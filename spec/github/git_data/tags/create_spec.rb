@@ -38,6 +38,8 @@ describe Github::GitData::Tags, '#create' do
     let(:body) { fixture('git_data/tag.json') }
     let(:status) { 201 }
 
+    it { expect { subject.create user }.to raise_error(ArgumentError) }
+
     it "should create resource successfully" do
       subject.create user, repo, inputs
       a_post(request_path).with(inputs).should have_been_made
