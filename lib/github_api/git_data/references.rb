@@ -5,6 +5,8 @@ module Github
 
     VALID_REF_PARAM_NAMES = %w[ ref sha force ].freeze
 
+    REQUIRED_REF_PARAMS = %w[ ref sha ].freeze
+
     VALID_REF_PARAM_VALUES = {
       'ref' => %r{^refs\/\w+(\/\w+)*} # test fully qualified reference
     }
@@ -27,13 +29,11 @@ module Github
     #
     #  github.git_data.references.list 'user-name', 'repo-name', ref:'tags'
     #
-    def list(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-      normalize! params
+    def list(*args)
+      arguments(self, :required => [:user, :repo]).parse *args
+      params = arguments.params
 
-      response = if params['ref']
-        ref = params.delete('ref')
+      response = if (ref = params.delete('ref'))
         validate_reference ref
         get_request("/repos/#{user}/#{repo}/git/refs/#{ref}", params)
       else
@@ -55,16 +55,14 @@ module Github
     #  github = Github.new
     #  github.git_data.references.get 'user-name', 'repo-name', 'heads/branch'
     #
-    def get(user_name, repo_name, ref, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, ref
+    def get(*args)
+      arguments(self, :required => [:user, :repo, :ref]).parse *args
       validate_reference ref
-      normalize! params
+      params = arguments.params
 
       get_request("/repos/#{user}/#{repo}/git/refs/#{ref}", params)
     end
     alias :find :get
-
 
     # Create a reference
     #
@@ -78,13 +76,13 @@ module Github
     #    "ref" => "refs/heads/master",
     #    "sha" =>  "827efc6d56897b048c772eb4087f854f46256132"
     #
-    def create(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      normalize! params
-      filter! VALID_REF_PARAM_NAMES, params
-      assert_presence_of user, repo, params['ref']
+    def create(*args)
+      arguments(self, :required => [:user, :repo]).parse *args do
+        sift VALID_REF_PARAM_NAMES
+        assert_required REQUIRED_REF_PARAMS
+      end
+      params = arguments.params
       validate_reference params['ref']
-      assert_required_keys(%w[ ref sha ], params)
 
       post_request("/repos/#{user}/#{repo}/git/refs", params)
     end
@@ -101,13 +99,12 @@ module Github
     #    "sha" =>  "827efc6d56897b048c772eb4087f854f46256132",
     #    "force" => true
     #
-    def update(user_name, repo_name, ref, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, ref
-      validate_reference ref
-      normalize! params
-      filter! VALID_REF_PARAM_NAMES, params
-      assert_required_keys(%w[ sha ], params)
+    def update(*args)
+      arguments(self, :required => [:user, :repo, :ref]).parse *args do
+        sift VALID_REF_PARAM_NAMES
+        assert_required %w[ sha ]
+      end
+      params = arguments.params
 
       patch_request("/repos/#{user}/#{repo}/git/refs/#{ref}", params)
     end
@@ -119,10 +116,9 @@ module Github
     #  github.git_data.references.delete 'user-name', 'repo-name',
     #    "ref" => "refs/heads/master",
     #
-    def delete(user_name, repo_name, ref, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, ref
-      normalize! params
+    def delete(*args)
+      arguments(self, :required => [:user, :repo, :ref]).parse *args
+      params = arguments.params
 
       delete_request("/repos/#{user}/#{repo}/git/refs/#{ref}", params)
     end
