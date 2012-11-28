@@ -278,7 +278,8 @@ By default no caching will be performed. In order to set the cache do... If no c
 Any request that returns multiple items will be paginated to 30 items by default. You can specify custom `page` and `per_page` query parameters to alter default behavior. For instance:
 
 ```ruby
-res = Github::Repos.new.repos user: 'wycats', per_page: 10, page: 5
+repos = Github::Repos.new
+repos.list user: 'wycats', per_page: 10, page: 5
 ```
 
 Then you can query pagination information included in the link header by:
