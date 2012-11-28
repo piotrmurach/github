@@ -9,8 +9,8 @@ module Github
     #
     # = Examples
     #  github = Github.new :oauth_token => '...'
-    #  github.users.followers.list
-    #  github.users.followers.list { |key| ... }
+    #  github.users.keys.list
+    #  github.users.keys.list { |key| ... }
     #
     def list(params={})
       normalize! params
@@ -24,7 +24,7 @@ module Github
     #
     # = Examples
     #  github = Github.new :oauth_token => '...'
-    #  github.users.followers.get 'key-id'
+    #  github.users.keys.get 'key-id'
     #
     def get(key_id, params={})
       assert_presence_of key_id
@@ -41,7 +41,7 @@ module Github
     #
     # = Examples
     #  github = Github.new :oauth_token => '...'
-    #  github.users.followers.create "title" => "octocat@octomac",
+    #  github.users.keys.create "title" => "octocat@octomac",
     #    "key" => "ssh-rsa AAA..."
     #
     def create(params={})
@@ -58,7 +58,7 @@ module Github
     #
     # = Examples
     #  github = Github.new :oauth_token => '...'
-    #  github.users.followers.update 'key-id', "title" => "octocat@octomac",
+    #  github.users.keys.update 'key-id', "title" => "octocat@octomac",
     #    "key" => "ssh-rsa AAA..."
     #
     def update(key_id, params={})
@@ -72,7 +72,7 @@ module Github
     #
     # = Examples
     #  github = Github.new :oauth_token => '...'
-    #  github.users.followers.delete 'key-id'
+    #  github.users.keys.delete 'key-id'
     #
     def delete(key_id, params={})
       assert_presence_of key_id
