@@ -1,0 +1,60 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://<BASIC_AUTH>@api.github.com/gitignore/templates/Ruby?access_token=<TOKEN>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/jsonapplication/vnd.github+json;q=0.7application/vnd.github.v3.raw+json;q=0.5application/vnd.github.beta.raw+json;q=0.1
+      Accept-Charset:
+      - utf-8
+      User-Agent:
+      - Github Ruby Gem 0.8.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Fri, 30 Nov 2012 22:52:55 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      X-Github-Media-Type:
+      - github.beta
+      X-Ratelimit-Remaining:
+      - '4998'
+      X-Content-Type-Options:
+      - nosniff
+      X-Ratelimit-Limit:
+      - '5000'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Etag:
+      - ! '"87b19b4e40c1a7bb73fc667f70a10309"'
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAAzWOQQvCMAxG/4rU25D27k0QwetuQmGkXTaKbVrSThjifzdj
+        evt4vDzyVjUv7FGdVadnTJY6zc5b0m6hMaIMn2kKsyWfX8gwC7pTbRAjjrcQ
+        sVqKwZldZ5OALJWn+Dxm6dSC3jCWzE3MhrWZlspvSbCGTMNONmzpeHhc+usB
+        uIUJ/HakV9hbw39I2VhSJ0WQttf7xa3q8wV9nKFdzAAAAA==
+    http_version: !!null 
+  recorded_at: Fri, 30 Nov 2012 22:52:55 GMT
+recorded_with: VCR 2.3.0

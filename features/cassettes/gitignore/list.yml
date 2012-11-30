@@ -1,0 +1,67 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://<BASIC_AUTH>@api.github.com/gitignore/templates?access_token=<TOKEN>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/jsonapplication/vnd.github+json;q=0.7application/vnd.github.v3.raw+json;q=0.5application/vnd.github.beta.raw+json;q=0.1
+      Accept-Charset:
+      - utf-8
+      User-Agent:
+      - Github Ruby Gem 0.8.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Fri, 30 Nov 2012 22:46:25 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      X-Content-Type-Options:
+      - nosniff
+      X-Ratelimit-Limit:
+      - '5000'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Etag:
+      - ! '"cc8e8df5d003cd489fd90931fa7f751a"'
+      X-Github-Media-Type:
+      - github.beta
+      X-Ratelimit-Remaining:
+      - '4999'
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAA02S0XbTMAyG36W3A84YhwfYsrVjNGvXZJTB4UJxtMSNbRnF
+        Kc3bI7njHC4sfZJj65ecn4trkyyF0bCNafFucR1aJtsqxWjQIUMirm2CYCev
+        6SlRInKj8A0E04NAoeviQu1y3yPm3aKEAdVXPXBUkHh7v1VydJg4b1KLX7pg
+        E3KOfIQxH6ZgGBN+zvxb7C262FuFA4SOFHiK4ATu2ElK4RQZx1EaugudDVpg
+        aQO4DMQGbylJDY0mdGctq30t8UovXDHYLP0exgGdXv0AR1DXUJb1gMN8zhN5
+        l3fm1FMQ+Eo9BM2socbv6tEGGzrUzTV6CpUMUSe7tm6O9IapP8+1BPkyqYoS
+        jvnMo4xG3KYAr0o2zQHlrY74vtAoaqkNg3EonXkVt0XWD7cO5iWDxz/Eg8b/
+        FD4RnVrSEk9JzE7XW8O7XoqNYj01No9rNzWzuMpAbrNqjVGH4FdZXTVgMv1z
+        VJw64GJXKs7+lUI+eKarM0aZ0VyUlUQ1cIfp0+XlxxyMXh2eUoQkP4FeXU/c
+        0AqBRz39LD+HXvjt5sMjqu49vKolbvNjC79YK/YHhvb/vjtDR0kHCKTSKWIw
+        wGnx6y8o6qPR9QIAAA==
+    http_version: !!null 
+  recorded_at: Fri, 30 Nov 2012 22:46:25 GMT
+recorded_with: VCR 2.3.0
