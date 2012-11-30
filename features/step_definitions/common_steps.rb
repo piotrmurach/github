@@ -42,6 +42,8 @@ Then /^the response type should be (.*)$/ do |type|
     @response.content_type.should =~ /application\/json/
   when 'html'
     @response.content_type.should =~ /text\/html/
+  when 'raw'
+    @response.content_type.should =~ /raw/
   end
 end
 
