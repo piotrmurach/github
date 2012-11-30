@@ -71,6 +71,7 @@ module Github
     :Issues          => 'issues',
     :Gists           => 'gists',
     :GitData         => 'git_data',
+    :Gitignore       => 'gitignore',
     :Orgs            => 'orgs',
     :PullRequests    => 'pull_requests',
     :Users           => 'users',
