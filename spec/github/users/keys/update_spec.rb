@@ -8,10 +8,10 @@ describe Github::Users::Keys, '#update' do
 
   before {
     subject.oauth_token = OAUTH_TOKEN
-      stub_patch(request_path).with(:body => inputs.except(:unrelated),
-        :query => {:access_token => OAUTH_TOKEN}).
-      to_return(:body => body, :status => status,
-        :headers => {:content_type => "application/json; charset=utf-8"})
+    stub_patch(request_path).with(:body => inputs.except(:unrelated),
+      :query => {:access_token => OAUTH_TOKEN}).
+    to_return(:body => body, :status => status,
+      :headers => {:content_type => "application/json; charset=utf-8"})
   }
 
   after { reset_authentication_for(subject) }
