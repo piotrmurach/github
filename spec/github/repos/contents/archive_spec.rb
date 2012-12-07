@@ -16,7 +16,7 @@ describe Github::Repos::Contents, '#get' do
 
   let(:archive_format) { 'tarball' }
   let(:ref) { 'master' }
-  let(:body) { '' }
+  let(:body) { '[]' }
   let(:status) { 302 }
 
   it "should get the resources" do

@@ -13,7 +13,7 @@ describe Github::Activity::Starring, '#list' do
     context "this repo is being watched by the user"
       before do
         stub_get(request_path).
-          to_return(:body => "", :status => 404,
+          to_return(:body => "[]", :status => 404,
                     :headers => {:user_agent => subject.user_agent})
       end
 
@@ -23,7 +23,7 @@ describe Github::Activity::Starring, '#list' do
     end
 
     it "should return true if resoure found" do
-        stub_get(request_path).to_return(:body => "", :status => 200,
+        stub_get(request_path).to_return(:body => "[]", :status => 200,
           :headers => {:user_agent => subject.user_agent})
       starring = subject.starring? user, repo
       starring.should be_true

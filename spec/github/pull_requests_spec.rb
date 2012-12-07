@@ -57,7 +57,7 @@ describe Github::PullRequests do
     context 'resource not found' do
       before do
         stub_get("/repos/#{user}/#{repo}/pulls").
-          to_return(:body => "", :status => [404, "Not Found"])
+          to_return(:body => "[]", :status => [404, "Not Found"])
       end
 
       it "should return 404 with a message 'Not Found'" do
@@ -338,7 +338,7 @@ describe Github::PullRequests do
         github.oauth_token = nil
         github.user = nil
         stub_get("/repos/#{user}/#{repo}/pulls/#{pull_request_id}/merge").
-          to_return(:body => "", :status => 404, :headers => {:user_agent => github.user_agent})
+          to_return(:body => "[]", :status => 404, :headers => {:user_agent => github.user_agent})
       end
 
       it "should fail validation " do
@@ -354,7 +354,7 @@ describe Github::PullRequests do
 
       it "should return true if resoure found" do
         stub_get("/repos/#{user}/#{repo}/pulls/#{pull_request_id}/merge").
-          to_return(:body => "", :status => 200,
+          to_return(:body => "[]", :status => 200,
                     :headers => {:user_agent => github.user_agent})
         merged = github.pull_requests.merged? user, repo, pull_request_id
         merged.should be_true
