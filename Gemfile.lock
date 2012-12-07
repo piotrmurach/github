@@ -80,7 +80,7 @@ GEM
     term-ansicolor (1.0.7)
     thor (0.14.6)
     vcr (2.3.0)
-    webmock (1.8.7)
+    webmock (1.9.0)
       addressable (>= 2.2.7)
       crack (>= 0.1.7)
 
@@ -103,4 +103,4 @@ DEPENDENCIES
   rspec
   simplecov (~> 0.7.1)
   vcr (~> 2.3.0)
-  webmock (~> 1.8.0)
+  webmock (~> 1.9.0)
