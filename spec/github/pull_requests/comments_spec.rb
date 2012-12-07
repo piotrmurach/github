@@ -14,8 +14,7 @@ describe Github::PullRequests::Comments do
   describe "#list" do
     it { github.pull_requests.comments.should respond_to :all }
 
-    context 'resource found' do
-
+    context 'on a pull request' do
       before do
         stub_get("/repos/#{user}/#{repo}/pulls/#{pull_request_id}/comments").
           to_return(:body => fixture('pull_requests/comments.json'),
@@ -25,36 +24,72 @@ describe Github::PullRequests::Comments do
 
       it "throws error if comment id not provided" do
         expect {
-          github.pull_requests.comments.list user, repo, nil
+          github.pull_requests.comments.list user, nil
         }.to raise_error(ArgumentError)
       end
 
       it "should get the resources" do
-        github.pull_requests.comments.list user, repo, pull_request_id
+        github.pull_requests.comments.list user, repo, :request_id => pull_request_id
         a_get("/repos/#{user}/#{repo}/pulls/#{pull_request_id}/comments").
           should have_been_made
       end
 
       it "should return array of resources" do
-        comments = github.pull_requests.comments.list user, repo, pull_request_id
+        comments = github.pull_requests.comments.list user, repo, :request_id => pull_request_id
         comments.should be_an Array
         comments.should have(1).items
       end
 
       it "should be a mash type" do
-        comments = github.pull_requests.comments.list user, repo, pull_request_id
+        comments = github.pull_requests.comments.list user, repo, :request_id => pull_request_id
         comments.first.should be_a Hashie::Mash
       end
 
       it "should get pull request comment information" do
-        comments = github.pull_requests.comments.list user, repo, pull_request_id
+        comments = github.pull_requests.comments.list user, repo, :request_id => pull_request_id
         comments.first.id.should == pull_request_id
       end
 
       it "should yield to a block" do
-        github.pull_requests.comments.should_receive(:list).
-          with(user, repo, pull_request_id).and_yield('web')
-        github.pull_requests.comments.list(user, repo, pull_request_id) {|param| 'web' }
+        yielded = []
+        result = github.pull_requests.comments.list(user, repo, :request_id => pull_request_id) { |obj| yielded << obj }
+        yielded.should == result
+      end
+    end
+
+    context 'in a repository' do
+      before do
+        stub_get("/repos/#{user}/#{repo}/pulls/comments").
+          to_return(:body => fixture('pull_requests/comments.json'),
+            :status => 200,
+            :headers => {:content_type => "application/json; charset=utf-8"})
+      end
+
+      it "should get the resources" do
+        github.pull_requests.comments.list user, repo
+        a_get("/repos/#{user}/#{repo}/pulls/comments").should have_been_made
+      end
+
+      it "should return array of resources" do
+        comments = github.pull_requests.comments.list user, repo
+        comments.should be_an Array
+        comments.should have(1).items
+      end
+
+      it "should be a mash type" do
+        comments = github.pull_requests.comments.list user, repo
+        comments.first.should be_a Hashie::Mash
+      end
+
+      it "should get pull request comment information" do
+        comments = github.pull_requests.comments.list user, repo
+        comments.first.id.should == pull_request_id
+      end
+
+      it "should yield to a block" do
+        yielded = []
+        result = github.pull_requests.comments.list(user, repo) { |obj| yielded << obj }
+        yielded.should == result
       end
     end
 
@@ -66,7 +101,7 @@ describe Github::PullRequests::Comments do
 
       it "should return 404 with a message 'Not Found'" do
         expect {
-          github.pull_requests.comments.list user, repo, pull_request_id
+          github.pull_requests.comments.list user, repo, :request_id => pull_request_id
         }.to raise_error(Github::Error::NotFound)
       end
     end
