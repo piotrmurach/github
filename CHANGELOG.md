@@ -1,3 +1,13 @@
+0.8.2 (Dec 7, 2012)
+
+* Add Gitignore api.
+* Add listing of all repositories(a dump of every repository).
+* Add listing of all users (a dump of every user).
+* Add pull request comments listing in a repository.
+* Add issue comments listing in a repository.
+* Change unit tests for users api.
+* Update rspec, cucumber etc... dependencies
+
 0.8.1 (Nov 17, 2012)
 
 * Fix bug with validating options on Repository API create method.
