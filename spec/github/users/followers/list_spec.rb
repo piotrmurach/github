@@ -15,7 +15,6 @@ describe Github::Users::Followers, '#list' do
 
   after { reset_authentication_for(subject) }
 
-
   context "resource found for a user" do
     let(:status) { 200 }
     let(:body) { fixture('users/followers.json') }
@@ -56,13 +55,8 @@ describe Github::Users::Followers, '#list' do
     end
   end
 
-  context "rosource not found for authenticated user" do
-    let(:body) { '' }
-    let(:status) { 404 }
-
-    it "fail to find resources" do
-      expect { subject.list user }.to raise_error(Github::Error::NotFound)
-    end
+  it_should_behave_like 'request failure' do
+    let(:requestable) { subject.list user }
   end
 
 end # list
