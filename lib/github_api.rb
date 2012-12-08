@@ -77,6 +77,7 @@ module Github
     :Users           => 'users',
     :Emojis          => 'emojis',
     :Search          => 'search',
+    :Say             => 'say',
     :Markdown        => 'markdown',
     :CoreExt         => 'core_ext',
     :MimeType        => 'mime_type',

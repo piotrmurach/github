@@ -60,6 +60,10 @@ module Github
     end
     alias :repositories :repos
 
+    def octocat(options = {})
+      @octocat ||= ApiFactory.new 'Say', options
+    end
+
     def search(options = {})
       @search ||= ApiFactory.new 'Search', options
     end
