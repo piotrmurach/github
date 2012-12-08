@@ -62,6 +62,10 @@ Then /^the response should contain (.*)$/ do |item|
   end
 end
 
+Then /^the response should contain:$/ do |string|
+  unescape(@response.body).should include(unescape(string))
+end
+
 Then /^the response (.*) link should contain:$/ do |type, table|
   table.hashes.each do |attributes|
     attributes.each do |key, val|
