@@ -228,7 +228,7 @@ Once you have your access token, configure your github instance following instru
 
 ### Authorizations API
 
-Alternatively you can use OAuth Authorizations API. For instance, to create access token through GitHub API do following
+Alternatively you can use OAuth Authorizations API. For instance, to create access token through GitHub API you required to pass your basic credentials as in the following:
 
 ```ruby
 github = Github.new basic_auth: 'login:password'
@@ -236,6 +236,25 @@ github.oauth.create 'scopes' => ['repo']
 ```
 
 You can add more than one scope from the `user`, `public_repo`, `repo`, `gist` or leave the scopes parameter out, in which case, the default read-only access will be assumed(includes public user profile info, public repo info, and gists).
+
+### Scopes
+
+You can check OAuth scopes you have by:
+
+```ruby
+  github = Github.new :oauth_token => 'token'
+  github.scopes.list    # => ['repo']
+```
+
+To list the scopes that the particular Github API action checks for do:
+
+```ruby
+  repos = Github::Repos.new
+  res = repos.list :user => 'peter-murach'
+  res.accepted_oauth_scopes    # => ['delete_repo', 'repo', 'public_repo', 'repo:status']
+```
+
+To understand what each scope means refer to [documentation](http://developer.github.com/v3/oauth/#scopes)
 
 ## MIME Types
 
