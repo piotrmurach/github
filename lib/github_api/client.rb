@@ -64,6 +64,10 @@ module Github
       @octocat ||= ApiFactory.new 'Say', options
     end
 
+    def scopes(options = {})
+      @scopes ||= ApiFactory.new 'Scopes', options
+    end
+
     def search(options = {})
       @search ||= ApiFactory.new 'Search', options
     end

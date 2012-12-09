@@ -78,6 +78,7 @@ module Github
     :Emojis          => 'emojis',
     :Search          => 'search',
     :Say             => 'say',
+    :Scopes          => 'scopes',
     :Markdown        => 'markdown',
     :CoreExt         => 'core_ext',
     :MimeType        => 'mime_type',
