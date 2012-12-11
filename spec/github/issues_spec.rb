@@ -16,55 +16,6 @@ describe Github::Issues do
   its(:labels)   { should be_a Github::Issues::Labels }
   its(:milestones) { should be_a Github::Issues::Milestones }
 
-  context '#list' do
-    it { should respond_to(:all) }
-
-    context "resource found" do
-      before do
-        stub_get("/issues").
-          to_return(:body => fixture('issues/issues.json'), :status => 200,
-            :headers => {:content_type => "application/json; charset=utf-8"})
-      end
-
-      it "should get the resources" do
-        github.issues.list
-        a_get("/issues").should have_been_made
-      end
-
-      it "should return array of resources" do
-        issues = github.issues.list
-        issues.should be_an Array
-        issues.should have(1).items
-      end
-
-      it "should be a mash type" do
-        issues = github.issues.list
-        issues.first.should be_a Hashie::Mash
-      end
-
-      it "should get issue information" do
-        issues = github.issues.list
-        issues.first.title.should == 'Found a bug'
-      end
-
-      it "should yield to a block" do
-        github.issues.should_receive(:list).and_yield('web')
-        github.issues.list { |param| 'web' }.should == 'web'
-      end
-    end
-
-    context "resource not found" do
-      before do
-        stub_get("/issues").
-          to_return(:body => "", :status => [404, "Not Found"])
-      end
-
-      it "should return 404 with a message 'Not Found'" do
-        expect { github.issues.list }.to raise_error(Github::Error::NotFound)
-      end
-    end
-  end # list
-
   describe '#list_repo' do
     it { should respond_to :list_repository }
 
@@ -121,54 +72,6 @@ describe Github::Issues do
       end
     end
   end # list_repo
-
-  describe "#get" do
-    it { should respond_to :find }
-
-    context "resource found" do
-      before do
-        stub_get("/repos/#{user}/#{repo}/issues/#{issue_id}").
-          to_return(:body => fixture('issues/issue.json'),
-          :status => 200,
-          :headers => {:content_type => "application/json; charset=utf-8"})
-      end
-
-      it "should fail to get resource without issue id" do
-        expect { github.issues.get(user, repo, nil)}.to raise_error(ArgumentError)
-      end
-
-      it "should get the resource" do
-        github.issues.get user, repo, issue_id
-        a_get("/repos/#{user}/#{repo}/issues/#{issue_id}").should have_been_made
-      end
-
-      it "should get issue information" do
-        issue = github.issues.get user, repo, issue_id
-        issue.number.should == issue_id
-        issue.title.should == 'Found a bug'
-      end
-
-      it "should return mash" do
-        issue = github.issues.get user, repo, issue_id
-        issue.should be_a Hashie::Mash
-      end
-    end
-
-    context "resource not found" do
-      before do
-        stub_get("/repos/#{user}/#{repo}/issues/#{issue_id}").
-          to_return(:body => fixture('issues/issue.json'),
-          :status => 404,
-          :headers => {:content_type => "application/json; charset=utf-8"})
-      end
-
-      it "should fail to retrive resource" do
-        expect {
-          github.issues.get user, repo, issue_id
-        }.to raise_error(Github::Error::NotFound)
-      end
-    end
-  end # get_issue
 
   describe "#create" do
     let(:inputs) {
