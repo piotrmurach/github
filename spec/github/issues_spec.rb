@@ -16,63 +16,6 @@ describe Github::Issues do
   its(:labels)   { should be_a Github::Issues::Labels }
   its(:milestones) { should be_a Github::Issues::Milestones }
 
-  describe '#list_repo' do
-    it { should respond_to :list_repository }
-
-    context "resource found" do
-      before do
-        stub_get("/repos/#{user}/#{repo}/issues").
-          to_return(:body => fixture('issues/issues.json'), :status => 200,
-           :headers => {:content_type => "application/json; charset=utf-8"})
-      end
-
-      it "should raise error if user-name empty" do
-        expect {
-          github.issues.list_repo nil, repo
-        }.to raise_error(ArgumentError)
-      end
-
-      it "should get the resources" do
-        github.issues.list_repo user, repo
-        a_get("/repos/#{user}/#{repo}/issues").should have_been_made
-      end
-
-      it "should return array of resources" do
-        repo_issues = github.issues.list_repo user, repo
-        repo_issues.should be_an Array
-        repo_issues.should have(1).items
-      end
-
-      it "should be a mash type" do
-        repo_issues = github.issues.list_repo user, repo
-        repo_issues.first.should be_a Hashie::Mash
-      end
-
-      it "should get repository issue information" do
-        repo_issues = github.issues.list_repo user, repo
-        repo_issues.first.title.should == 'Found a bug'
-      end
-
-      it "should yield to a block" do
-        github.issues.should_receive(:list_repo).with(user, repo).and_yield('web')
-        github.issues.list_repo(user, repo) { |param| 'web' }.should == 'web'
-      end
-    end
-
-    context "resource not found" do
-      before do
-        stub_get("/repos/#{user}/#{repo}/issues").
-          to_return(:body => "", :status => [404, "Not Found"])
-      end
-
-      it "should return 404 with a message 'Not Found'" do
-        expect {
-          github.issues.list_repo user, repo
-        }.to raise_error(Github::Error::NotFound)
-      end
-    end
-  end # list_repo
-
   describe "#create" do
     let(:inputs) {
       {
