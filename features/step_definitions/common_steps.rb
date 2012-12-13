@@ -30,6 +30,8 @@ Then /^the response should be (.*)$/ do |expected_response|
     true
   when /\d+/
     expected_response.to_i
+  when /empty/
+    []
   else
     expected_response
   end
