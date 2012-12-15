@@ -29,10 +29,10 @@ Feature: Milestones API
   Scenario: Create
 
     Given I want to create resource with the following params:
-      | user | repo |
+      | user  | repo            |
       | murek | github_api_test |
     And I pass the following request options:
-      | title   | state | description |
+      | title   | state | description       |
       | fix-all | open  | fixing all issues |
     When I make request within a cassette named "issues/milestones/create"
     Then the response status should be 201
@@ -42,11 +42,11 @@ Feature: Milestones API
   Scenario: Update
 
     Given I want to update resource with the following params:
-      | user | repo | milestone_id |
-      | murek | github_api_test | 1 |
+      | user  | repo            | milestone_id |
+      | murek | github_api_test | 1            |
     And I pass the following request options:
-      |  state |
-      |  closed  |
+      | state  |
+      | closed |
     When I make request within a cassette named "issues/milestones/update"
     Then the response status should be 200
       And the response type should be JSON
@@ -55,8 +55,8 @@ Feature: Milestones API
   Scenario: Delete
 
     Given I want to delete resource with the following params:
-      | user | repo | milestone_id |
-      | murek | github_api_test | 1 |
+      | user  | repo            | milestone_id |
+      | murek | github_api_test | 1            |
     When I make request within a cassette named "issues/milestones/delete"
     Then the response status should be 204
 
