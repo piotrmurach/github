@@ -1,0 +1,46 @@
+---
+http_interactions:
+- request:
+    method: delete
+    uri: https://<BASIC_AUTH>@api.github.com/repos/<USER>/github_api_test/milestones/1?access_token=<TOKEN>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/jsonapplication/vnd.github+json;q=0.7application/vnd.github.v3.raw+json;q=0.5application/vnd.github.beta.raw+json;q=0.1
+      Accept-Charset:
+      - utf-8
+      User-Agent:
+      - Github Ruby Gem 0.8.2
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 204
+      message: No Content
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 15 Dec 2012 12:06:25 GMT
+      Connection:
+      - keep-alive
+      Status:
+      - 204 No Content
+      X-Content-Type-Options:
+      - nosniff
+      X-Ratelimit-Remaining:
+      - '4997'
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Github-Media-Type:
+      - github.beta
+      Cache-Control:
+      - ''
+    body:
+      encoding: US-ASCII
+      string: ''
+    http_version: !!null 
+  recorded_at: Sat, 15 Dec 2012 12:06:26 GMT
+recorded_with: VCR 2.3.0
