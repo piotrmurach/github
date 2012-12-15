@@ -1,3 +1,12 @@
+0.8.3 (Dec 7, 2012)
+
+* Add oauth scopes listing method and helpers for reading scopes on a resource
+  accepted_oauth_scopes and oauth_scopes
+* Add say method call for printing octocat ASCII
+* Change issues listing to accept additional org and repo parameters.
+* Fix bug with milestones update method incorrect validation.
+* Change events listing to take issue_id as an optional parameter.
+
 0.8.2 (Dec 7, 2012)
 
 * Add Gitignore api.
