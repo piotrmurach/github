@@ -76,23 +76,23 @@ describe Github::Issues::Events do
         end
 
         it "should get the resources" do
-          github.issues.events.list user, repo, issue_id
+          github.issues.events.list user, repo, :issue_id => issue_id
           a_get("/repos/#{user}/#{repo}/issues/#{issue_id}/events").should have_been_made
         end
 
         it "should return array of resources" do
-          events = github.issues.events.list user, repo, issue_id
+          events = github.issues.events.list user, repo, :issue_id => issue_id
           events.should be_an Array
           events.should have(1).items
         end
 
         it "should be a mash type" do
-          events = github.issues.events.list user, repo, issue_id
+          events = github.issues.events.list user, repo, :issue_id => issue_id
           events.first.should be_a Hashie::Mash
         end
 
         it "should get issue information" do
-          events = github.issues.events.list user, repo, issue_id
+          events = github.issues.events.list user, repo, :issue_id => issue_id
           events.first.actor.login.should == 'octocat'
         end
 
