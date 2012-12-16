@@ -1,0 +1,65 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://<BASIC_AUTH>@api.github.com/repos/plataformatec/devise/milestones/3/labels?access_token=<TOKEN>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/jsonapplication/vnd.github+json;q=0.7application/vnd.github.v3.raw+json;q=0.5application/vnd.github.beta.raw+json;q=0.1
+      Accept-Charset:
+      - utf-8
+      User-Agent:
+      - Github Ruby Gem 0.8.3
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sun, 16 Dec 2012 19:08:27 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      Vary:
+      - Accept, Authorization, Cookie
+      Cache-Control:
+      - private, s-maxage=60, max-age=60
+      Etag:
+      - ! '"47e7baf692b7eca1a1a96f53b1d97483"'
+      Last-Modified:
+      - Sun, 16 Dec 2012 16:39:05 GMT
+      X-Content-Type-Options:
+      - nosniff
+      X-Github-Media-Type:
+      - github.beta
+      X-Ratelimit-Remaining:
+      - '4999'
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAA63QPQ+CMBAG4L9iukqoEALR0cHNhdU4HO0VmhTa9MPEGP+7
+        NGpAHTE3ve9wT+5ON8K00pbsiBAFKxhJSLBqjJ33xu0oBSPTVvouNCnTPbVo
+        tKNGgQehbQ8eGeV4kQ6pggaVowcEHyyOiwbocdz0Lu7JhGUoQMByLE/zCYph
+        jmyzUpRiOXLUQ6slXzehnbBXuYrlHEUeZzm6n2MxzJFNzivMliN1aK6fZ8Xm
+        56aKYyb+8MgapHJfXqye4PkBkAR/k40CAAA=
+    http_version: !!null 
+  recorded_at: Sun, 16 Dec 2012 19:08:28 GMT
+recorded_with: VCR 2.3.0
