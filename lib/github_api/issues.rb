@@ -29,7 +29,7 @@ module Github
     ].freeze
 
     VALID_ISSUE_PARAM_VALUES = {
-      'filter'    => %w[ assigned created mentioned subscribed ],
+      'filter'    => %w[ assigned created mentioned subscribed all ],
       'state'     => %w[ open closed ],
       'sort'      => %w[ created updated comments ],
       'direction' => %w[ desc asc ],
