@@ -29,7 +29,7 @@ module Github
     ].freeze
 
     VALID_ISSUE_PARAM_VALUES = {
-      'filter'    => %w[ assigned created mentioned subscribed ],
+      'filter'    => %w[ assigned created mentioned subscribed all ],
       'state'     => %w[ open closed ],
       'sort'      => %w[ created updated comments ],
       'direction' => %w[ desc asc ],
@@ -98,9 +98,10 @@ module Github
     # = Parameters
     # <tt>:filter</tt>
     #  * <tt>assigned</tt>   Issues assigned to you (default)
-    #  * <tt>created</tt>    Issues assigned to you (default)
-    #  * <tt>mentioned</tt>  Issues assigned to you (default)
-    #  * <tt>subscribed</tt> Issues assigned to you (default)
+    #  * <tt>created</tt>    Issues created by you 
+    #  * <tt>mentioned</tt>  Issues mentioning you 
+    #  * <tt>subscribed</tt> Issues you've subscribed to updates for 
+    #  * <tt>all</tt>        All issues the user can see 
     # <tt>:milestone</tt>
     #  * Integer Milestone number
     #  * <tt>none</tt> for Issues with no Milestone.
