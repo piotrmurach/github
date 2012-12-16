@@ -98,9 +98,10 @@ module Github
     # = Parameters
     # <tt>:filter</tt>
     #  * <tt>assigned</tt>   Issues assigned to you (default)
-    #  * <tt>created</tt>    Issues assigned to you (default)
-    #  * <tt>mentioned</tt>  Issues assigned to you (default)
-    #  * <tt>subscribed</tt> Issues assigned to you (default)
+    #  * <tt>created</tt>    Issues created by you 
+    #  * <tt>mentioned</tt>  Issues mentioning you 
+    #  * <tt>subscribed</tt> Issues you've subscribed to updates for 
+    #  * <tt>all</tt>        All issues the user can see 
     # <tt>:milestone</tt>
     #  * Integer Milestone number
     #  * <tt>none</tt> for Issues with no Milestone.
