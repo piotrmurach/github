@@ -6,6 +6,11 @@ When /^(.*) within a cassette named "([^"]*)"$/ do |step_to_call, cassette_name|
   VCR.use_cassette(cassette_name) { step step_to_call }
 end
 
+When /^(.*) within a cassette named "([^"]*)" and match on (.*)$/ do |step_to_call, cassette_name, matchers|
+  matches = matchers.split(',').map { |m| m.gsub(/\s*/,'') }.map(&:to_sym)
+  VCR.use_cassette(cassette_name, :match_requests_on => matches) { step step_to_call }
+end
+
 Then /^the response should equal (.*)$/ do |expected_response|
   expected = case expected_response
   when /t/
