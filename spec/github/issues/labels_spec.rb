@@ -10,62 +10,6 @@ describe Github::Issues::Labels do
 
   it { described_class::VALID_LABEL_INPUTS.should_not be_nil }
 
-  describe '#list' do
-    it { github.issues.should respond_to :all }
-
-    context "resource found" do
-      before do
-        stub_get("/repos/#{user}/#{repo}/labels").
-          to_return(:body => fixture('issues/labels.json'), :status => 200, :headers => {:content_type => "application/json; charset=utf-8"})
-      end
-
-      it "should fail to get resource without username" do
-        expect {
-          github.issues.labels.list nil, repo
-        }.to raise_error(ArgumentError)
-      end
-
-      it "should get the resources" do
-        github.issues.labels.list user, repo
-        a_get("/repos/#{user}/#{repo}/labels").should have_been_made
-      end
-
-      it "should return array of resources" do
-        labels = github.issues.labels.list user, repo
-        labels.should be_an Array
-        labels.should have(1).items
-      end
-
-      it "should be a mash type" do
-        labels = github.issues.labels.list user, repo
-        labels.first.should be_a Hashie::Mash
-      end
-
-      it "should get issue information" do
-        labels = github.issues.labels.list user, repo
-        labels.first.name.should == 'bug'
-      end
-
-      it "should yield to a block" do
-        github.issues.labels.should_receive(:list).with(user, repo).and_yield('web')
-        github.issues.labels.list(user, repo) { |param| 'web' }.should == 'web'
-      end
-    end
-
-    context "resource not found" do
-      before do
-        stub_get("/repos/#{user}/#{repo}/labels").
-          to_return(:body => "", :status => [404, "Not Found"])
-      end
-
-      it "should return 404 with a message 'Not Found'" do
-        expect {
-          github.issues.labels.list user, repo
-        }.to raise_error(Github::Error::NotFound)
-      end
-    end
-  end # list
-
   describe "#find" do
     context "resource found" do
       before do
@@ -258,63 +202,6 @@ describe Github::Issues::Labels do
     end
   end # delete
 
-  describe '#issue' do
-    let(:issue_id) { 1 }
-
-    context "resource found" do
-      before do
-        stub_get("/repos/#{user}/#{repo}/issues/#{issue_id}/labels").
-          to_return(:body => fixture('issues/labels.json'), :status => 200, :headers => {:content_type => "application/json; charset=utf-8"})
-      end
-
-      it "should fail to get resource without issue_id" do
-        expect {
-          github.issues.labels.issue user, repo, nil
-        }.to raise_error(ArgumentError)
-      end
-
-      it "should get the resources" do
-        github.issues.labels.issue user, repo, issue_id
-        a_get("/repos/#{user}/#{repo}/issues/#{issue_id}/labels").
-          should have_been_made
-      end
-
-      it "should return array of resources" do
-        labels = github.issues.labels.issue user, repo, issue_id
-        labels.should be_an Array
-        labels.should have(1).items
-      end
-
-      it "should be a mash type" do
-        labels = github.issues.labels.issue user, repo, issue_id
-        labels.first.should be_a Hashie::Mash
-      end
-
-      it "should get issue information" do
-        labels = github.issues.labels.issue user, repo, issue_id
-        labels.first.name.should == 'bug'
-      end
-
-      it "should yield to a block" do
-        github.issues.labels.should_receive(:issue).
-          with(user, repo, issue_id).and_yield('web')
-        github.issues.labels.issue(user, repo, issue_id) { |param| 'web' }.should == 'web'
-      end
-    end
-
-    context "resource not found" do
-      before do
-        stub_get("/repos/#{user}/#{repo}/issues/#{issue_id}/labels").
-          to_return(:body => "", :status => [404, "Not Found"])
-      end
-
-      it "should return 404 with a message 'Not Found'" do
-        expect {
-          github.issues.labels.issue user, repo, issue_id
-        }.to raise_error(Github::Error::NotFound)
-      end
-    end
-  end # issue
 
   describe "#add" do
     let(:issue_id) { 1 }
@@ -467,62 +354,5 @@ describe Github::Issues::Labels do
       end
     end
   end # replace
-
-  describe '#milestone' do
-    let(:milestone_id) { 1 }
-
-    context "resource found" do
-      before do
-        stub_get("/repos/#{user}/#{repo}/milestones/#{milestone_id}/labels").
-          to_return(:body => fixture('issues/labels.json'), :status => 200, :headers => {:content_type => "application/json; charset=utf-8"})
-      end
-
-      it "should throw exception if milestone-id not present" do
-        expect {
-          github.issues.labels.milestone user, repo, nil
-        }.to raise_error(ArgumentError)
-      end
-
-      it "should get the resources" do
-        github.issues.labels.milestone user, repo, milestone_id
-        a_get("/repos/#{user}/#{repo}/milestones/#{milestone_id}/labels").should have_been_made
-      end
-
-      it "should return array of resources" do
-        labels = github.issues.labels.milestone user, repo, milestone_id
-        labels.should be_an Array
-        labels.should have(1).items
-      end
-
-      it "should be a mash type" do
-        labels = github.issues.labels.milestone user, repo, milestone_id
-        labels.first.should be_a Hashie::Mash
-      end
-
-      it "should get issue information" do
-        labels = github.issues.labels.milestone user, repo, milestone_id
-        labels.first.name.should == 'bug'
-      end
-
-      it "should yield to a block" do
-        github.issues.labels.should_receive(:milestone).
-          with(user, repo, milestone_id).and_yield('web')
-        github.issues.labels.milestone(user, repo, milestone_id) { |param| 'web' }.should == 'web'
-      end
-    end
-
-    context "resource not found" do
-      before do
-        stub_get("/repos/#{user}/#{repo}/milestones/#{milestone_id}/labels").
-          to_return(:body => "", :status => [404, "Not Found"])
-      end
-
-      it "should return 404 with a message 'Not Found'" do
-        expect {
-          github.issues.labels.milestone user, repo, milestone_id
-        }.to raise_error(Github::Error::NotFound)
-      end
-    end
-  end # milestone
 
 end # Github::Issues::Labels
