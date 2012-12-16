@@ -16,7 +16,7 @@ describe Github::Issues::Comments do
   describe '#list' do
     it { github.issues.should respond_to :all }
 
-    context "resource found" do
+    context "on an issue" do
       before do
         stub_get("/repos/#{user}/#{repo}/issues/#{issue_id}/comments").
           to_return(:body => fixture('issues/comments.json'),
@@ -26,36 +26,71 @@ describe Github::Issues::Comments do
 
       it "should fail to get resource without username" do
         expect {
-          github.issues.comments.list user, repo, nil
+          github.issues.comments.list user, nil
         }.to raise_error(ArgumentError)
       end
 
       it "should get the resources" do
-        github.issues.comments.list user, repo, issue_id
+        github.issues.comments.list user, repo, :issue_id => issue_id
         a_get("/repos/#{user}/#{repo}/issues/#{issue_id}/comments").should have_been_made
       end
 
       it "should return array of resources" do
-        comments = github.issues.comments.list user, repo, issue_id
+        comments = github.issues.comments.list user, repo, :issue_id => issue_id
         comments.should be_an Array
         comments.should have(1).items
       end
 
       it "should be a mash type" do
-        comments = github.issues.comments.list user, repo, issue_id
+        comments = github.issues.comments.list user, repo, :issue_id => issue_id
         comments.first.should be_a Hashie::Mash
       end
 
       it "should get issue comment information" do
-        comments = github.issues.comments.list user, repo, issue_id
+        comments = github.issues.comments.list user, repo, :issue_id => issue_id
         comments.first.user.login.should == 'octocat'
       end
 
       it "should yield to a block" do
-        github.issues.comments.should_receive(:list).
-          with(user, repo, issue_id).and_yield('web')
-        github.issues.comments.list(user, repo, issue_id) { |param| 'web' }.
-          should == 'web'
+        yielded = []
+        result = github.issues.comments.list(user, repo, :issue_id => issue_id) { |obj| yielded << obj }
+        yielded.should == result
+      end
+    end
+
+    context "in a repository" do
+      before do
+        stub_get("/repos/#{user}/#{repo}/issues/comments").
+          to_return(:body => fixture('issues/comments.json'),
+            :status => 200,
+            :headers => {:content_type => "application/json; charset=utf-8"})
+      end
+
+      it "should get the resources" do
+        github.issues.comments.list user, repo
+        a_get("/repos/#{user}/#{repo}/issues/comments").should have_been_made
+      end
+
+      it "should return array of resources" do
+        comments = github.issues.comments.list user, repo
+        comments.should be_an Array
+        comments.should have(1).items
+      end
+
+      it "should be a mash type" do
+        comments = github.issues.comments.list user, repo
+        comments.first.should be_a Hashie::Mash
+      end
+
+      it "should get issue comment information" do
+        comments = github.issues.comments.list user, repo
+        comments.first.user.login.should == 'octocat'
+      end
+
+      it "should yield to a block" do
+        yielded = []
+        result = github.issues.comments.list(user, repo) { |obj| yielded << obj }
+        yielded.should == result
       end
     end
 
@@ -67,7 +102,7 @@ describe Github::Issues::Comments do
 
       it "should return 404 with a message 'Not Found'" do
         expect {
-          github.issues.comments.list user, repo, issue_id
+          github.issues.comments.list user, repo, :issue_id => issue_id
         }.to raise_error(Github::Error::NotFound)
       end
     end

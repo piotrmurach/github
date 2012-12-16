@@ -5,3 +5,7 @@ def convert_to_constant(classes)
   end
   return constant
 end
+
+def unescape(string)
+  string.gsub('\n', "\n").gsub('\"', '"').gsub('\e', "\e")
+end

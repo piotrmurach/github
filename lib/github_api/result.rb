@@ -6,6 +6,19 @@ module Github
 
     # TODO Add result counts method to check total items looking at result links
 
+    # All request headers
+    def headers
+      loaded? ? @env[:response_headers] : nil
+    end
+
+    def oauth_scopes
+      loaded? ? @env[:response_headers][OAUTH_SCOPES] : nil
+    end
+
+    def accepted_oauth_scopes
+      loaded? ? @env[:response_headers][ACCEPTED_OAUTH_SCOPES] : nil
+    end
+
     # Requests are limited to API v3 to 5000 per hour.
     def ratelimit_limit
       loaded? ? @env[:response_headers][RATELIMIT_LIMIT] : nil

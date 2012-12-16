@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe Github::Activity::Notifications, '#mark' do
-  let(:body) { '' }
+  let(:body) { '[]' }
   let(:status) { 205 }
   let(:inputs) { {
     :read => true,

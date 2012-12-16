@@ -17,16 +17,34 @@ module Github
     #
     # = Examples
     #  github = Github.new
-    #  github.pull_requests.comments.list 'user-name', 'repo-name', 'request-id'
+    #  github.pull_requests.comments.list 'user-name', 'repo-name', request_id: 'id'
     #
-    def list(user_name, repo_name, request_id, params={})
+    # List comments in a repository
+    #
+    # By default, Review Comments are ordered by ascending ID.
+    #
+    # = Parameters
+    #
+    # * <tt>:sort</tt>      - Optional string, <tt>created</tt> or <tt>updated</tt>
+    # * <tt>:direction</tt> - Optional string, <tt>asc</tt> or <tt>desc</tt>.
+    #                         Ignored with sort parameter.
+    # * <tt>:since</tt>     - Optional string of a timestamp in ISO 8601
+    #                         format: YYYY-MM-DDTHH:MM:SSZ
+    # = Examples
+    #  github = Github.new
+    #  github.pull_requests.comments.list 'user-name', 'repo-name'
+    #  github.pull_requests.comments.list 'user-name', 'repo-name' { |comm| ... }
+    #
+    def list(user_name, repo_name, params={})
       set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, request_id
-
+      assert_presence_of user, repo
       normalize! params
-      # _merge_mime_type(:pull_comment, params)
 
-      response = get_request("/repos/#{user}/#{repo}/pulls/#{request_id}/comments", params)
+      response = if (request_id = params.delete('request_id'))
+        get_request("/repos/#{user}/#{repo}/pulls/#{request_id}/comments", params)
+      else
+        get_request("/repos/#{user}/#{repo}/pulls/comments", params)
+      end
       return response unless block_given?
       response.each { |el| yield el }
     end

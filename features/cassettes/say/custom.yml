@@ -1,0 +1,60 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://<BASIC_AUTH>@api.github.com/octocat?access_token=<TOKEN>&s=Hello%20cool%20world
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/jsonapplication/vnd.github+json;q=0.7application/vnd.github.v3.raw+json;q=0.5application/vnd.github.beta.raw+json;q=0.1
+      Accept-Charset:
+      - utf-8
+      User-Agent:
+      - Github Ruby Gem 0.8.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 08 Dec 2012 12:40:26 GMT
+      Content-Type:
+      - text/plain
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Etag:
+      - ! '"b3fb1a0738afea59be10ba210c1eb0d5"'
+      X-Ratelimit-Remaining:
+      - '4999'
+      X-Ratelimit-Limit:
+      - '5000'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Content-Type-Options:
+      - nosniff
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAA5VROw7CMAzdewrvVc2eqjtLr0AHYIsUiYUl8tmxX0Lj8BHC
+        SlPbz8+/DNRkXVd2Jqs99LB6OvkBF/L2Jo72mhG28bKrXNXceB9pIGY6XmNM
+        dE4p0j3d4oUa7wsNvE2vvtOeF8JEUygCbe/04PuSIJpIEFc0qWtkJtQPgYkV
+        HfWDBi8xu7Xo7pGBeGOCpm/jt03INQOaTa3gVLZnG0PaHTipY8Qiq7973OpT
+        rJy+lHH+hlh08HbEtS8qOqCBCNLhzLUXNUNkWey0v48gH/IM7AJs0lBz1IDh
+        AWrVM8ztAgAA
+    http_version: !!null 
+  recorded_at: Sat, 08 Dec 2012 12:40:26 GMT
+recorded_with: VCR 2.3.0

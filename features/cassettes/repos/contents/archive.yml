@@ -1,95 +1,54 @@
---- 
-http_interactions: 
-- request: 
-    method: get
-    uri: https://<BASIC_AUTH>@api.github.com/repos/tarball/master?access_token=<TOKEN>
-    body: 
-      encoding: US-ASCII
-      string: ""
-    headers: 
-      Accept-Encoding: 
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept: 
-      - "*/*"
-      User-Agent: 
-      - Ruby
-  response: 
-    status: 
-      code: 404
-      message: Not Found
-    headers: 
-      Server: 
-      - nginx/1.0.13
-      Date: 
-      - Mon, 11 Jun 2012 19:38:50 GMT
-      Content-Type: 
-      - application/json; charset=utf-8
-      Transfer-Encoding: 
-      - chunked
-      Connection: 
-      - keep-alive
-      Status: 
-      - 404 Not Found
-      X-Ratelimit-Limit: 
-      - "5000"
-      X-Ratelimit-Remaining: 
-      - "4996"
-      Etag: 
-      - "\"e66a7a6c91e2c26803f3f49feb7a883f\""
-      Content-Encoding: 
-      - gzip
-    body: 
-      encoding: ASCII-8BIT
-      string: !binary |
-        H4sIAAAAAAAAA6tWyk0tLk5MT1WyUvLLL1Fwyy/NS1GqBQB8+Ys1FwAAAA==
-
-    http_version: 
-  recorded_at: Mon, 11 Jun 2012 19:38:50 GMT
-- request: 
+---
+http_interactions:
+- request:
     method: get
     uri: https://<BASIC_AUTH>@api.github.com/repos/peter-murach/github/tarball/master?access_token=<TOKEN>
-    body: 
+    body:
       encoding: US-ASCII
-      string: ""
-    headers: 
-      Accept-Encoding: 
+      string: ''
+    headers:
+      Accept:
+      - application/jsonapplication/vnd.github+json;q=0.7application/vnd.github.v3.raw+json;q=0.5application/vnd.github.beta.raw+json;q=0.1
+      Accept-Charset:
+      - utf-8
+      User-Agent:
+      - Github Ruby Gem 0.8.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept: 
-      - "*/*"
-      User-Agent: 
-      - Ruby
-  response: 
-    status: 
+  response:
+    status:
       code: 302
       message: Found
-    headers: 
-      Server: 
-      - nginx/1.0.13
-      Date: 
-      - Mon, 11 Jun 2012 19:40:39 GMT
-      Content-Type: 
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 08 Dec 2012 11:16:57 GMT
+      Content-Type:
       - text/html;charset=utf-8
-      Connection: 
+      Connection:
       - keep-alive
-      Status: 
+      Status:
       - 302 Found
-      X-Ratelimit-Limit: 
-      - "5000"
-      Etag: 
-      - "\"d41d8cd98f00b204e9800998ecf8427e\""
-      Location: 
-      - https://nodeload.github.com/peter-murach/github/tarball/master
-      X-Ratelimit-Remaining: 
-      - "4995"
-      Content-Length: 
-      - "0"
-      Expires: 
-      - Mon, 11 Jun 2012 19:40:39 GMT
-      Cache-Control: 
+      Content-Length:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      Expires:
+      - Sat, 08 Dec 2012 11:16:57 GMT
+      X-Ratelimit-Limit:
+      - '5000'
+      Location:
+      - https://nodeload.github.com/peter-murach/github/legacy.tar.gz/master
+      X-Ratelimit-Remaining:
+      - '4999'
+      Cache-Control:
       - public, must-revalidate, max-age=0
-    body: 
+    body:
       encoding: US-ASCII
-      string: ""
-    http_version: 
-  recorded_at: Mon, 11 Jun 2012 19:40:39 GMT
-recorded_with: VCR 2.2.0
+      string: '[]'
+    http_version: !!null 
+  recorded_at: Sat, 08 Dec 2012 11:16:57 GMT
+recorded_with: VCR 2.3.0

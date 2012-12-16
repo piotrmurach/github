@@ -322,6 +322,7 @@ module Github
     #
     # = Examples
     #
+<<<<<<< HEAD
     #   github = Github.new
     #   github.repos.branch 'user-name', 'repo-name', 'branch-name'
     #   github.repos.branch user: 'user-name', repo: 'repo-name', branch: 'branch-name'

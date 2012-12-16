@@ -1,0 +1,53 @@
+---
+http_interactions:
+- request:
+    method: patch
+    uri: https://<BASIC_AUTH>@api.github.com/repos/<USER>/github_api_test/milestones/1?access_token=<TOKEN>
+    body:
+      encoding: UTF-8
+      string: ! '{"state":"closed"}'
+    headers:
+      Accept:
+      - application/jsonapplication/vnd.github+json;q=0.7application/vnd.github.v3.raw+json;q=0.5application/vnd.github.beta.raw+json;q=0.1
+      Accept-Charset:
+      - utf-8
+      User-Agent:
+      - Github Ruby Gem 0.8.2
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 15 Dec 2012 12:02:08 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      X-Ratelimit-Remaining:
+      - '4998'
+      X-Ratelimit-Limit:
+      - '5000'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Etag:
+      - ! '"ae207bf21af972a4038be37b63dc5051"'
+      Content-Length:
+      - '1251'
+      X-Github-Media-Type:
+      - github.beta
+      X-Content-Type-Options:
+      - nosniff
+    body:
+      encoding: US-ASCII
+      string: ! '{"state":"closed","labels_url":"https://api.github.com/repos/<USER>/github_api_test/milestones/1/labels","url":"https://api.github.com/repos/<USER>/github_api_test/milestones/1","due_on":null,"creator":{"type":"User","events_url":"https://api.github.com/users/<USER>/events{/privacy}","gists_url":"https://api.github.com/users/<USER>/gists{/gist_id}","received_events_url":"https://api.github.com/users/<USER>/received_events","organizations_url":"https://api.github.com/users/<USER>/orgs","url":"https://api.github.com/users/<USER>","gravatar_id":"80cbc0fc6c03d43f495b2342b31fe4fa","followers_url":"https://api.github.com/users/<USER>/followers","following_url":"https://api.github.com/users/<USER>/following","login":"<USER>","subscriptions_url":"https://api.github.com/users/<USER>/subscriptions","starred_url":"https://api.github.com/users/<USER>/starred{/owner}{/repo}","repos_url":"https://api.github.com/users/<USER>/repos","avatar_url":"https://secure.gravatar.com/avatar/80cbc0fc6c03d43f495b2342b31fe4fa?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png","id":1223156},"open_issues":0,"created_at":"2012-12-15T11:52:52Z","closed_issues":0,"title":"fix-all","number":1,"id":230459,"description":"fixing
+        all issues"}'
+    http_version: !!null 
+  recorded_at: Sat, 15 Dec 2012 12:02:08 GMT
+recorded_with: VCR 2.3.0

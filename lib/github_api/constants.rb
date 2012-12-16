@@ -27,6 +27,10 @@ module Github
 
     ACCEPT_CHARSET = 'Accept-Charset'.freeze
 
+    OAUTH_SCOPES = 'X-Oauth-Scopes'.freeze
+
+    ACCEPTED_OAUTH_SCOPES = 'X-Accepted-Oauth-Scopes'.freeze
+
     # Link headers
     HEADER_LINK = "Link".freeze
 

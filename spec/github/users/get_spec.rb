@@ -11,7 +11,7 @@ describe Github::Users, '#get' do
       :headers => {:content_type => "application/json; charset=utf-8"})
   }
 
-  after { reset_authentication_for subject }
+  after { reset_authentication_for(subject) }
 
   context "resource found for a user" do
     let(:body) { fixture('users/user.json') }
@@ -41,19 +41,20 @@ describe Github::Users, '#get' do
   end
 
   context "resource found for an authenticated user" do
-    let(:body) { nil}
-    let(:status) { nil }
+    let(:request_path) { "/user" }
+    let(:body) { fixture('users/user.json') }
+    let(:status) { 200 }
 
     before do
       subject.oauth_token = OAUTH_TOKEN
-      stub_get("/user").with(:query => { :access_token => "#{OAUTH_TOKEN}"}).
+      stub_get(request_path).with(:query => { :access_token => OAUTH_TOKEN}).
         to_return(:body => fixture('users/user.json'), :status => 200,
         :headers => {:content_type => "application/json; charset=utf-8"})
     end
 
     it "should get the resources" do
       subject.get
-      a_get("/user").with(:query => {:access_token => "#{OAUTH_TOKEN}"}).
+      a_get(request_path).with(:query => {:access_token => OAUTH_TOKEN}).
         should have_been_made
     end
   end

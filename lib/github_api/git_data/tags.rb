@@ -59,12 +59,12 @@ module Github
     # = Examples
     #  github = Github.new
     #  github.git_data.tags.create 'user-name', 'repo-name',
-    #    "tag" =>  "v0.0.1",
+    #    "tag" => "v0.0.1",
     #    "message" => "initial version\n",
-    #    "type": "commit",
-    #    "object": "c3d0be41ecbe669545ee3e94d31ed9a4bc91ee3c",
+    #    "type" => "commit",
+    #    "object" => "c3d0be41ecbe669545ee3e94d31ed9a4bc91ee3c",
     #    "tagger" => {
-    #      "name" =>  "Scott Chacon",
+    #      "name" => "Scott Chacon",
     #      "email" => "schacon@gmail.com",
     #      "date" => "2011-06-17T14:53:3"
     #    }
