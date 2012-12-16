@@ -110,15 +110,23 @@ module Github
     #   github.repos.list
     #   github.repos.list { |repo| ... }
     #
+    # List all repositories
+    #
+    # This provides a dump of every repository, in the order that they were created.
+    # = Parameters
+    # * <tt>:since</tt> - the integer ID of the last Repository that you've seen.
+    #
+    # = Examples
+    #   github = Github.new
+    #   github.repos.list
+    #   github.repos.list { |repo| ... }
+    #
     # List public repositories for the specified user.
     #
     # = Examples
     #   github = Github.new
-    #   github.repos.list user: 'user-name'
-    #   github.repos.list user: 'user-name' { |repo| ... }
-    #
-    #   github.repos(user: 'user-name').list
-    #   github.repos(user: 'user-name').list { |repo| ... }
+    #   github.repos.list :user => 'user-name'
+    #   github.repos.list :user => 'user-name', { |repo| ... }
     #
     # List repositories for the specified organisation.
     #
@@ -133,13 +141,15 @@ module Github
       end
       params = arguments.params
 
-      response = if (user_name = (params.delete("user") || user))
+      response = if (user_name = (params.delete("user")))
         get_request("/users/#{user_name}/repos", params)
-      elsif (org_name = (params.delete("org") || org))
+      elsif (org_name = (params.delete("org")))
         get_request("/orgs/#{org_name}/repos", params)
-      else
+      elsif authenticated?
         # For authenticated user
         get_request("/user/repos", params)
+      else
+        get_request("/repositories", params)
       end
       return response unless block_given?
       response.each { |el| yield el }
@@ -322,7 +332,6 @@ module Github
     #
     # = Examples
     #
-<<<<<<< HEAD
     #   github = Github.new
     #   github.repos.branch 'user-name', 'repo-name', 'branch-name'
     #   github.repos.branch user: 'user-name', repo: 'repo-name', branch: 'branch-name'

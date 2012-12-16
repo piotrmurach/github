@@ -58,9 +58,6 @@ describe Github::Repos, '#list' do
     end
   end
 
-<<<<<<< HEAD
-  context "resource found for an organization" do
-=======
   context 'all repositories' do
     let(:request_path) { '/repositories' }
 
