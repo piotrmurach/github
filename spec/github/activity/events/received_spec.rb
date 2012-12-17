@@ -18,7 +18,7 @@ describe Github::Activity::Events, '#received' do
   context "resource found" do
 
     it "should fail to get resource without username" do
-      expect { subject.received nil }.to raise_error(ArgumentError)
+      expect { subject.received nil }.to raise_error(Github::Error::Validations)
     end
 
     it "should get the resources" do

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Activity::Events, '#org' do
+describe Github::Activity::Events, '#organization' do
   let(:org) { 'github' }
   let(:request_path) { "/orgs/#{org}/events" }
   let(:body) { fixture('events/events.json') }
@@ -19,11 +19,13 @@ describe Github::Activity::Events, '#org' do
     it { should respond_to :organization }
 
     it "should fail to get resource without orgname" do
-      expect { subject.org nil }.to raise_error(ArgumentError)
+      expect {
+        subject.organization nil
+      }.to raise_error(Github::Error::Validations)
     end
 
     it "should get the resources" do
-      subject.org org
+      subject.organization org
       a_get(request_path).should have_been_made
     end
 
@@ -32,19 +34,19 @@ describe Github::Activity::Events, '#org' do
     end
 
     it "should get event information" do
-      events = subject.org org
+      events = subject.organization org
       events.first.type.should == 'Event'
     end
 
     it "should yield to a block" do
       yielded = []
-      result = subject.org(org) { |obj| yielded << obj }
+      result = subject.organization(org) { |obj| yielded << obj }
       yielded.should == result
     end
   end
 
   it_should_behave_like 'request failure' do
-    let(:requestable) { subject.org org }
+    let(:requestable) { subject.organization org }
   end
 
 end # org
