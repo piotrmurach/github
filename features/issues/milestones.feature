@@ -34,7 +34,7 @@ Feature: Milestones API
     And I pass the following request options:
       | title   | state | description       |
       | fix-all | open  | fixing all issues |
-    When I make request within a cassette named "issues/milestones/create" and match on method, host, path
+    When I make request within a cassette named "issues/milestones/create" and match on method
     Then the response status should be 201
       And the response type should be JSON
       And the response should not be empty
@@ -47,7 +47,7 @@ Feature: Milestones API
     And I pass the following request options:
       | state  |
       | closed |
-    When I make request within a cassette named "issues/milestones/update" and match on method, host, path
+    When I make request within a cassette named "issues/milestones/update" and match on method
     Then the response status should be 200
       And the response type should be JSON
       And the response should not be empty
@@ -57,6 +57,6 @@ Feature: Milestones API
     Given I want to delete resource with the following params:
       | user  | repo            | milestone_id |
       | murek | github_api_test | 1            |
-    When I make request within a cassette named "issues/milestones/delete" and match on method, host, path
+    When I make request within a cassette named "issues/milestones/delete" and match on method
     Then the response status should be 204
 

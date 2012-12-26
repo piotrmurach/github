@@ -1,4 +1,10 @@
-0.8.3 (Dec 7, 2012)
+0.8.4 (Dec 17, 2012)
+
+* Fix bug with listing issues.
+* Change labels listing to merge mileston & issue listings.
+* Add features tests for issues milestones, events, labels.
+
+0.8.3 (Dec 15, 2012)
 
 * Add oauth scopes listing method and helpers for reading scopes on a resource
   accepted_oauth_scopes and oauth_scopes

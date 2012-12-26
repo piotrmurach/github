@@ -341,7 +341,7 @@ module Github
       arguments(self, :required => [:user, :repo, :branch]).parse *args
       params = arguments.params
 
-      get_request("repos/#{user}/#{repo}/branches/#{branch}", params)
+      get_request("/repos/#{user}/#{repo}/branches/#{branch}", params)
     end
 
     # List contributors
