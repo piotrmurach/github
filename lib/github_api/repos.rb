@@ -134,7 +134,7 @@ module Github
       assert_presence_of user_name, repo_name, branch
       normalize! params
 
-      get_request("repos/#{user_name}/#{repo_name}/branches/#{branch}", params)
+      get_request("/repos/#{user_name}/#{repo_name}/branches/#{branch}", params)
     end
 
     # Create a new repository for the autheticated user.
