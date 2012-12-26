@@ -7,18 +7,30 @@ describe Github::Arguments, '#parse' do
   let(:object) { described_class.new api, 'required' => required }
   let(:arguments) { ['peter-murach', 'github', params] }
   let(:params) { { :page => 23 } }
+  let(:required) { [:user, :repo] }
 
   subject { object.parse *arguments }
 
+  after { api.user =nil; api.repo = nil }
+
   context 'with required arguments' do
-    let(:required) { [:user, :repo] }
 
     it { should == object }
 
     its(:params) { should == params }
 
-    it 'sets parameters' do
-      subject.api.user.should == 'peter-murach'
+    context 'sets parameters' do
+      it { subject.api.user.should == 'peter-murach' }
+
+      it { subject.api.repo.should == 'github' }
+    end
+
+    context 'with no arguments search parameters hash' do
+      let(:arguments) { nil }
+
+      it 'asserts lack of presence of hash parameters' do
+        expect { subject }.to raise_error(Github::Error::Validations)
+      end
     end
 
     context 'with nil argument' do
