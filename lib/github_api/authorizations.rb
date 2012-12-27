@@ -9,6 +9,8 @@ module Github
       remove_scopes
       note
       note_url
+      client_id
+      client_secret
     ].freeze
 
     # Creates new OAuth Authorizations API
@@ -84,12 +86,12 @@ module Github
     def update(authorization_id, params={})
       _check_if_authenticated
       assert_presence_of authorization_id
-
       normalize! params
       filter! VALID_AUTH_PARAM_NAMES, params
 
       patch_request("/authorizations/#{authorization_id}", params)
     end
+    alias :edit :update
 
     # Delete an authorization
     #
@@ -99,9 +101,7 @@ module Github
     def delete(authorization_id, params={})
       _check_if_authenticated
       assert_presence_of authorization_id
-
       normalize! params
-      filter! VALID_AUTH_PARAM_NAMES, params
 
       delete_request("/authorizations/#{authorization_id}", params)
     end
