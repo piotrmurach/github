@@ -7,6 +7,8 @@ module Github
       scopes
       add_scopes
       remove_scopes
+      note
+      note_url
     ].freeze
 
     # Creates new OAuth Authorizations API
