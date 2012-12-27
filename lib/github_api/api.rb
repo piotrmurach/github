@@ -89,11 +89,13 @@ module Github
 
     # Acts as setter and getter for api requests arguments parsing.
     #
-    def arguments(api=(not_set = true), options={})
+    # Returns Arguments instance.
+    #
+    def arguments(args=(not_set = true), options={}, &block)
       if not_set
         @arguments
       else
-        @arguments = Arguments.new(api, options)
+        @arguments = Arguments.new(self, options).parse(*args, &block)
       end
     end
 
