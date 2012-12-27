@@ -44,10 +44,9 @@ module Github
     #  github.repos.hooks.list 'user-name', 'repo-name' { |hook| ... }
     #
     def list(*args)
-      arguments(self, :required => [:user, :repo]).parse *args
-      params = arguments.params
+      arguments(args, :required => [:user, :repo])
 
-      response = get_request("/repos/#{user}/#{repo}/hooks", params)
+      response = get_request("/repos/#{user}/#{repo}/hooks", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -60,10 +59,9 @@ module Github
     #  github.repos.hooks.get 'user-name', 'repo-name'
     #
     def get(*args)
-      arguments(self, :required => [:user, :repo, :hook_id]).parse *args
-      params = arguments.params
+      arguments(args, :required => [:user, :repo, :hook_id])
 
-      get_request("/repos/#{user}/#{repo}/hooks/#{hook_id}", params)
+      get_request("/repos/#{user}/#{repo}/hooks/#{hook_id}", arguments.params)
     end
     alias :find :get
 
@@ -86,13 +84,12 @@ module Github
     #    }
     #
     def create(*args)
-      arguments(self, :required => [:user, :repo]).parse *args do
+      arguments(args, :required => [:user, :repo]) do
         sift VALID_HOOK_PARAM_NAMES, :recursive => false
         assert_required REQUIRED_PARAMS
       end
-      params = arguments.params
 
-      post_request("/repos/#{user}/#{repo}/hooks", params)
+      post_request("/repos/#{user}/#{repo}/hooks", arguments.params)
     end
 
     # Edit a hook
@@ -117,13 +114,12 @@ module Github
     #    }
     #
     def edit(*args)
-      arguments(self, :required => [:user, :repo, :hook_id]).parse *args do
+      arguments(args, :required => [:user, :repo, :hook_id]) do
         sift VALID_HOOK_PARAM_NAMES, :recursive => false
         assert_required REQUIRED_PARAMS
       end
-      params = arguments.params
 
-      patch_request("/repos/#{user}/#{repo}/hooks/#{hook_id}", params)
+      patch_request("/repos/#{user}/#{repo}/hooks/#{hook_id}", arguments.params)
     end
 
     # Test a hook
@@ -135,7 +131,7 @@ module Github
     #  github.repos.hooks.test 'user-name', 'repo-name', 'hook-id'
     #
     def test(*args)
-      arguments(self, :required => [:user, :repo, :hook_id]).parse *args
+      arguments(args, :required => [:user, :repo, :hook_id])
       params = arguments.params
 
       post_request("/repos/#{user}/#{repo}/hooks/#{hook_id}/test", params)
@@ -148,7 +144,7 @@ module Github
     #  github.repos.hooks.delete 'user-name', 'repo-name', 'hook-id'
     #
     def delete(*args)
-      arguments(self, :required => [:user, :repo, :hook_id]).parse *args
+      arguments(args, :required => [:user, :repo, :hook_id])
       params = arguments.params
 
       delete_request("/repos/#{user}/#{repo}/hooks/#{hook_id}", params)

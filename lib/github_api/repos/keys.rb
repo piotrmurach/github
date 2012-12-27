@@ -16,7 +16,7 @@ module Github
     #  keys.list
     #
     def list(*args)
-      arguments(self, :required => [:user, :repo]).parse *args
+      arguments(args, :required => [:user, :repo])
       params = arguments.params
 
       response = get_request("/repos/#{user}/#{repo}/keys", params)
@@ -32,7 +32,7 @@ module Github
     #  github.repos.keys.get 'user-name', 'repo-name', 'key-id'
     #
     def get(*args)
-      arguments(self, :required => [:user, :repo, :key_id]).parse *args
+      arguments(args, :required => [:user, :repo, :key_id])
       params = arguments.params
 
       get_request("/repos/#{user}/#{repo}/keys/#{key_id}", params)
@@ -52,13 +52,12 @@ module Github
     #    "key" =>  "ssh-rsa AAA..."
     #
     def create(*args)
-      arguments(self, :required => [:user, :repo]).parse *args do
+      arguments(args, :required => [:user, :repo]) do
         sift VALID_KEY_OPTIONS
         assert_required VALID_KEY_OPTIONS
       end
-      params= arguments.params
 
-      post_request("/repos/#{user}/#{repo}/keys", params)
+      post_request("/repos/#{user}/#{repo}/keys", arguments.params)
     end
 
     # Edit a key
@@ -74,7 +73,7 @@ module Github
     #    "key" =>  "ssh-rsa AAA..."
     #
     def edit(*args)
-      arguments(self, :required => [:user, :repo, :key_id]).parse *args do
+      arguments(args, :required => [:user, :repo, :key_id]) do
         sift VALID_KEY_OPTIONS
       end
       params = arguments.params
@@ -89,7 +88,7 @@ module Github
     #  github.repos.keys.delete 'user-name', 'repo-name', 'key-id'
     #
     def delete(*args)
-      arguments(self, :required => [:user, :repo, :key_id]).parse *args
+      arguments(args, :required => [:user, :repo, :key_id])
       params = arguments.params
 
       delete_request("/repos/#{user}/#{repo}/keys/#{key_id}", params)

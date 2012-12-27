@@ -16,7 +16,7 @@ module Github
     #  github.activity.events.public { |event| ... }
     #
     def public(*args)
-      arguments(self).parse *args
+      arguments(args)
 
       response = get_request("/events", arguments.params)
       return response unless block_given?
@@ -37,7 +37,7 @@ module Github
     #  github.events.repository user: 'user-name', repo: 'repo-name' {|event| ... }
     #
     def repository(*args)
-      arguments(self, :required => [:user, :repo]).parse *args
+      arguments(args, :required => [:user, :repo])
 
       response = get_request("/repos/#{user}/#{repo}/events", arguments.params)
       return response unless block_given?
@@ -59,7 +59,7 @@ module Github
     #  github.events.issue user: 'user-name', repo: 'repo-name' { |event| ... }
     #
     def issue(*args)
-      arguments(self, :required => [:user, :repo]).parse *args
+      arguments(args, :required => [:user, :repo])
       params = arguments.params
 
       response = get_request("/repos/#{user}/#{repo}/issues/events", params)
@@ -81,7 +81,7 @@ module Github
     #  github.events.network user: 'user-name', repo: 'repo-name' { |event| ... }
     #
     def network(*args)
-      arguments(self, :required => [:user, :repo]).parse *args
+      arguments(args, :required => [:user, :repo])
 
       response = get_request("/networks/#{user}/#{repo}/events", arguments.params)
       return response unless block_given?
@@ -103,7 +103,7 @@ module Github
     #  github.events.org org: 'org-name' { |event| ... }
     #
     def org(*args)
-      arguments(self, :required => [:org_name]).parse *args
+      arguments(args, :required => [:org_name])
 
       response = get_request("/orgs/#{org_name}/events", arguments.params)
       return response unless block_given?
@@ -133,7 +133,7 @@ module Github
     #  github.events.received 'user-name', public: true { |event| ... }
     #
     def received(*args)
-      arguments(self, :required => [:user]).parse *args
+      arguments(args, :required => [:user])
       params = arguments.params
 
       public_events = if params['public']
@@ -166,7 +166,7 @@ module Github
     #  github.events.performed 'user-name', public: true { |event| ... }
     #
     def performed(*args)
-      arguments(self, :required => [:user]).parse *args
+      arguments(args, :required => [:user])
       params = arguments.params
 
       public_events = if params['public']
@@ -195,7 +195,7 @@ module Github
     #  github.events.user_org user: 'user-name', org_name: 'org-name' {|event| ...}
     #
     def user_org(*args)
-      arguments(self, :required => [:user, :org_name]).parse *args
+      arguments(args, :required => [:user, :org_name])
       params = arguments.params
 
       response = get_request("/users/#{user}/events/orgs/#{org_name}", params)

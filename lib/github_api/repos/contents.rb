@@ -18,7 +18,7 @@ module Github
     #  content.readme
     #
     def readme(*args)
-      arguments(self, :required => [:user, :repo]).parse *args
+      arguments(args, :required => [:user, :repo])
       params = arguments.params
 
       get_request("/repos/#{user}/#{repo}/readme", params)
@@ -39,7 +39,7 @@ module Github
     #  github.repos.contents.get path: 'README.md'
     #
     def get(*args)
-      arguments(self, :required => [:user, :repo, :path]).parse *args
+      arguments(args, :required => [:user, :repo, :path])
       params = arguments.params
 
       get_request("/repos/#{user}/#{repo}/contents/#{path}", params)
@@ -66,7 +66,7 @@ module Github
     #    "ref" => "master"
     #
     def archive(*args)
-      arguments(self, :required => [:user, :repo]).parse *args
+      arguments(args, :required => [:user, :repo])
       params         = arguments.params
       archive_format = params.delete('archive_format') || 'zipball'
       ref            = params.delete('ref') || 'master'

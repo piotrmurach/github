@@ -30,7 +30,7 @@ module Github
     #  github.git_data.references.list 'user-name', 'repo-name', ref:'tags'
     #
     def list(*args)
-      arguments(self, :required => [:user, :repo]).parse *args
+      arguments(args, :required => [:user, :repo])
       params = arguments.params
 
       response = if (ref = params.delete('ref'))
@@ -56,7 +56,7 @@ module Github
     #  github.git_data.references.get 'user-name', 'repo-name', 'heads/branch'
     #
     def get(*args)
-      arguments(self, :required => [:user, :repo, :ref]).parse *args
+      arguments(args, :required => [:user, :repo, :ref])
       validate_reference ref
       params = arguments.params
 
@@ -77,7 +77,7 @@ module Github
     #    "sha" =>  "827efc6d56897b048c772eb4087f854f46256132"
     #
     def create(*args)
-      arguments(self, :required => [:user, :repo]).parse *args do
+      arguments(args, :required => [:user, :repo]) do
         sift VALID_REF_PARAM_NAMES
         assert_required REQUIRED_REF_PARAMS
       end
@@ -100,7 +100,7 @@ module Github
     #    "force" => true
     #
     def update(*args)
-      arguments(self, :required => [:user, :repo, :ref]).parse *args do
+      arguments(args, :required => [:user, :repo, :ref]) do
         sift VALID_REF_PARAM_NAMES
         assert_required %w[ sha ]
       end
@@ -117,7 +117,7 @@ module Github
     #    "ref" => "refs/heads/master",
     #
     def delete(*args)
-      arguments(self, :required => [:user, :repo, :ref]).parse *args
+      arguments(args, :required => [:user, :repo, :ref])
       params = arguments.params
 
       delete_request("/repos/#{user}/#{repo}/git/refs/#{ref}", params)

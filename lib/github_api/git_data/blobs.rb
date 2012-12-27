@@ -21,10 +21,9 @@ module Github
     #  github.git_data.blobs.get 'user-name', 'repo-name', 'sha'
     #
     def get(*args)
-      arguments(self, :required => [:user, :repo, :sha]).parse *args
-      params = arguments.params
+      arguments(args, :required => [:user, :repo, :sha])
 
-      get_request("/repos/#{user}/#{repo}/git/blobs/#{sha}", params)
+      get_request("/repos/#{user}/#{repo}/git/blobs/#{sha}", arguments.params)
     end
     alias :find :get
 
@@ -40,13 +39,12 @@ module Github
     #    "encoding" => "utf-8"
     #
     def create(*args)
-      arguments(self, :required => [:user, :repo]).parse *args do
+      arguments(args, :required => [:user, :repo]) do
         sift VALID_BLOB_PARAM_NAMES
         assert_required VALID_BLOB_PARAM_NAMES
       end
-      params = arguments.params
 
-      post_request("/repos/#{user}/#{repo}/git/blobs", params)
+      post_request("/repos/#{user}/#{repo}/git/blobs", arguments.params)
     end
 
   end # GitData::Blobs

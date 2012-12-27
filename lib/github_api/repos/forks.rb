@@ -14,10 +14,9 @@ module Github
     #  github.repos.forks.list 'user-name', 'repo-name' { |fork| ... }
     #
     def list(*args)
-      arguments(self, :required => [:user, :repo]).parse *args
-      params = arguments.params
+      arguments(args, :required => [:user, :repo])
 
-      response = get_request("/repos/#{user}/#{repo}/forks", params)
+      response = get_request("/repos/#{user}/#{repo}/forks", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -34,10 +33,9 @@ module Github
     #    "org" =>  "github"
     #
     def create(*args)
-      arguments(self, :required => [:user, :repo]).parse *args
-      params = arguments.params
+      arguments(args, :required => [:user, :repo])
 
-      post_request("/repos/#{user}/#{repo}/forks", params)
+      post_request("/repos/#{user}/#{repo}/forks", arguments.params)
     end
 
   end # Repos::Forks

@@ -23,7 +23,7 @@ module Github
     #  github.repos.statuses.list 'user-name', 'repo-name', 'sha' { |status| ... }
     #
     def list(*args)
-      arguments(self, :required => [:user, :repo, :sha]).parse *args
+      arguments(args, :required => [:user, :repo, :sha])
       params = arguments.params
 
       response = get_request("/repos/#{user}/#{repo}/statuses/#{sha}", params)
@@ -50,7 +50,7 @@ module Github
     #    "description" => "Successful build #3 from origin/master"
     #
     def create(*args)
-      arguments(self, :required => [:user, :repo, :sha]).parse *args do
+      arguments(args, :required => [:user, :repo, :sha]) do
         sift VALID_STATUS_PARAM_NAMES, :recursive => false
         assert_required REQUIRED_PARAMS
       end

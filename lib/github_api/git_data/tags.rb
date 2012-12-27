@@ -34,7 +34,7 @@ module Github
     #  github.git_data.tags.get 'user-name', 'repo-name', 'sha'
     #
     def get(*args)
-      arguments(self, :required => [:user, :repo, :sha]).parse *args
+      arguments(args, :required => [:user, :repo, :sha])
       params = arguments.params
 
       get_request("/repos/#{user}/#{repo}/git/tags/#{sha}", params)
@@ -70,7 +70,7 @@ module Github
     #    }
     #
     def create(*args)
-      arguments(self, :required => [:user, :repo]).parse *args do
+      arguments(args, :required => [:user, :repo]) do
         sift VALID_TAG_PARAM_NAMES
         assert_values VALID_TAG_PARAM_VALUES
       end

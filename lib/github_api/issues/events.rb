@@ -21,7 +21,7 @@ module Github
     #  github.issues.events.list 'user-name', 'repo-name'
     #
     def list(*args)
-      arguments(self, :required => [:user, :repo]).parse *args
+      arguments(args, :required => [:user, :repo])
       params = arguments.params
 
       response = if (issue_id = params.delete('issue_id'))
@@ -41,7 +41,7 @@ module Github
     #  github.issues.events.get 'user-name', 'repo-name', 'event-id'
     #
     def get(*args)
-      arguments(self, :required => [:user, :repo, :event_id]).parse *args
+      arguments(args, :required => [:user, :repo, :event_id])
       params = arguments.params
 
       get_request("/repos/#{user}/#{repo}/issues/events/#{event_id}", params)

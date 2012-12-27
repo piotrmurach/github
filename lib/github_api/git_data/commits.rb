@@ -35,7 +35,7 @@ module Github
     #  commits.get sha: '...'
     #
     def get(*args)
-      arguments(self, :required => [:user, :repo, :sha]).parse *args
+      arguments(args, :required => [:user, :repo, :sha])
       params = arguments.params
 
       get_request("/repos/#{user}/#{repo}/git/commits/#{sha}", params)
@@ -75,7 +75,7 @@ module Github
     #    "tree": "827efc6d56897b048c772eb4087f854f46256132"]
     #
     def create(*args)
-      arguments(self, :required => [:user, :repo]).parse *args do
+      arguments(args, :required => [:user, :repo]) do
         sift VALID_COMMIT_PARAM_NAMES
         assert_required REQUIRED_COMMIT_PARAMS
       end

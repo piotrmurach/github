@@ -26,7 +26,7 @@ module Github
     #   :sha => '6dcb09b5b57875f334f61aebed695e2e4193db5e'
     #
     def list(*args)
-      arguments(self, :required => [:user, :repo]).parse *args
+      arguments(args, :required => [:user, :repo])
       params = arguments.params
 
       response = if (sha = params.delete('sha'))
@@ -46,7 +46,7 @@ module Github
     #  github.repos.comments.get 'user-name', 'repo-name', 'comment-id'
     #
     def get(*args)
-      arguments(self, :required => [:user, :repo, :comment_id]).parse *args
+      arguments(args, :required => [:user, :repo, :comment_id])
       params = arguments.params
 
       get_request("/repos/#{user}/#{repo}/comments/#{comment_id}", params)
@@ -72,7 +72,7 @@ module Github
     #    "position" =>  4
     #
     def create(*args)
-      arguments(self, :required => [:user, :repo, :sha]).parse *args do
+      arguments(args, :required => [:user, :repo, :sha]) do
         sift VALID_COMMENT_OPTIONS
         assert_required REQUIRED_COMMENT_OPTIONS
       end
@@ -92,7 +92,7 @@ module Github
     #    'comment-id', "body" => "Nice change"
     #
     def update(*args)
-      arguments(self, :required => [:user, :repo, :comment_id]).parse *args do
+      arguments(args, :required => [:user, :repo, :comment_id]) do
         assert_required REQUIRED_COMMENT_OPTIONS
       end
       params = arguments.params
@@ -107,7 +107,7 @@ module Github
     #  github.repos.comments.delete 'user-name', 'repo-name', 'comment-id'
     #
     def delete(*args)
-      arguments(self, :required => [:user, :repo, :comment_id]).parse *args
+      arguments(args, :required => [:user, :repo, :comment_id])
       params = arguments.params
 
       delete_request("/repos/#{user}/#{repo}/comments/#{comment_id}", params)

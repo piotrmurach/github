@@ -12,7 +12,7 @@ module Github
     #  Github.issues.assignees.list 'user', 'repo' { |assignee| ... }
     #
     def list(*args)
-      arguments(self, :required => [:user, :repo]).parse *args
+      arguments(args, :required => [:user, :repo])
       params = arguments.params
 
       response = get_request("/repos/#{user}/#{repo}/assignees", params)
@@ -31,7 +31,7 @@ module Github
     #  github.issues.assignees.check 'assignee'
     #
     def check(*args)
-      arguments(self, :required => [:user, :repo, :assignee]).parse *args
+      arguments(args, :required => [:user, :repo, :assignee])
       params = arguments.params
 
       get_request("/repos/#{user}/#{repo}/assignees/#{assignee}",params)

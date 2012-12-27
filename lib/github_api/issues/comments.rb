@@ -36,7 +36,7 @@ module Github
     #  github.issues.comments.all 'user-name', 'repo-name' {|com| .. }
     #
     def list(*args)
-      arguments(self, :required => [:user, :repo]).parse *args
+      arguments(args, :required => [:user, :repo])
       params = arguments.params
 
       response = if (issue_id = params.delete('issue_id'))
@@ -56,7 +56,7 @@ module Github
     #  github.issues.comments.find 'user-name', 'repo-name', 'comment-id'
     #
     def get(*args)
-      arguments(self, :required => [:user, :repo, :comment_id]).parse *args
+      arguments(args, :required => [:user, :repo, :comment_id])
       params = arguments.params
 
       get_request("/repos/#{user}/#{repo}/issues/comments/#{comment_id}", params)
@@ -74,7 +74,7 @@ module Github
     #     "body" => 'a new comment'
     #
     def create(*args)
-      arguments(self, :required => [:user, :repo, :issue_id]).parse *args do
+      arguments(args, :required => [:user, :repo, :issue_id]) do
         sift VALID_ISSUE_COMMENT_PARAM_NAME
         assert_required %w[ body ]
       end
@@ -94,7 +94,7 @@ module Github
     #     "body" => 'a new comment'
     #
     def edit(*args)
-      arguments(self, :required => [:user, :repo, :comment_id]).parse *args do
+      arguments(args, :required => [:user, :repo, :comment_id]) do
         sift VALID_ISSUE_COMMENT_PARAM_NAME
         assert_required %w[ body ]
       end
@@ -110,7 +110,7 @@ module Github
     #  github.issues.comments.delete 'user-name', 'repo-name', 'comment-id'
     #
     def delete(*args)
-      arguments(self, :required => [:user, :repo, :comment_id]).parse *args
+      arguments(args, :required => [:user, :repo, :comment_id])
       params = arguments.params
 
       delete_request("/repos/#{user}/#{repo}/issues/comments/#{comment_id}", params)

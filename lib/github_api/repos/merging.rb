@@ -29,7 +29,7 @@ module Github
     #    "commit_message": "Shipped cool_feature!"
     #
     def merge(*args)
-      arguments(self, :required => [:user, :repo]).parse *args do
+      arguments(args, :required => [:user, :repo]) do
         sift VALID_MERGE_PARAM_NAMES
         assert_required REQUIRED_MERGE_PARAMS
       end

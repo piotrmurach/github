@@ -136,8 +136,8 @@ module Github
     #  github.repos.list :org => 'org-name', { |repo| ... }
     #
     def list(*args)
-      arguments(self).parse *args do |args|
-        args.sift %w[ user org type sort direction ]
+      arguments(args) do
+        sift %w[ user org type sort direction ]
       end
       params = arguments.params
 
@@ -165,7 +165,7 @@ module Github
     #  github.repos(user: 'user-name', repo: 'repo-name').get
     #
     def get(*args)
-      arguments(self, :required => [:user, :repo]).parse *args
+      arguments(args, :required => [:user, :repo])
       params = arguments.params
 
       get_request("/repos/#{user}/#{repo}", params)
@@ -203,7 +203,7 @@ module Github
     #   github.repos.create :name => 'repo-name', :org => 'organisation-name'
     #
     def create(*args)
-      arguments(self).parse *args do
+      arguments(args) do
         sift VALID_REPO_OPTIONS + %w[ org ]
         assert_required %w[ name ]
       end
@@ -227,7 +227,7 @@ module Github
     #  github.repos.delete 'user-name', 'repo-name'
     #
     def delete(*args)
-      arguments(self, :required => [:user, :repo]).parse *args
+      arguments(args, :required => [:user, :repo])
       params = arguments.params
 
       delete_request("/repos/#{user}/#{repo}", params)
@@ -246,7 +246,7 @@ module Github
     #  github.repos.contributors 'user-name','repo-name' { |cont| ... }
     #
     def contributors(*args)
-      arguments(self, :required => [:user, :repo]).parse *args do
+      arguments(args, :required => [:user, :repo]) do
         sift %w[ anon ]
       end
       params = arguments.params
@@ -279,8 +279,7 @@ module Github
     #    :public => true, :has_issues => true
     #
     def edit(*args)
-      arguments(self, :required => [:user, :repo])
-      arguments.parse *args do
+      arguments(args, :required => [:user, :repo]) do
         sift VALID_REPO_OPTIONS
         assert_required %w[ name ]
       end
@@ -299,7 +298,7 @@ module Github
     #  github.repos.delete 'user-name', 'repo-name'
     #
     def delete(*args)
-      arguments(self, :required => [:user, :repo]).parse *args
+      arguments(args, :required => [:user, :repo])
       params = arguments.params
 
       delete_request("/repos/#{user}/#{repo}", params)
@@ -319,7 +318,7 @@ module Github
     #
     # def branches(user_name, repo_name, params={})
     def branches(*args)
-      arguments(self, :required => [:user, :repo]).parse *args
+      arguments(args, :required => [:user, :repo])
       params = arguments.params
 
       response = get_request("/repos/#{user}/#{repo}/branches", arguments.params)
@@ -338,7 +337,7 @@ module Github
     #   github.repos(user: 'user-name', repo: 'repo-name', branch: 'branch-name').branch
     #
     def branch(*args)
-      arguments(self, :required => [:user, :repo, :branch]).parse *args
+      arguments(args, :required => [:user, :repo, :branch])
       params = arguments.params
 
       get_request("/repos/#{user}/#{repo}/branches/#{branch}", params)
@@ -356,9 +355,8 @@ module Github
     #  github.repos.contributors 'user-name','repo-name' { |cont| ... }
     #
     def contributors(*args)
-      arguments(self, :required => [:user, :repo])
-      arguments.parse *args do |args|
-        args.sift ['anon']
+      arguments(args, :required => [:user, :repo]) do
+        sift ['anon']
       end
       params = arguments.params
 
@@ -377,7 +375,7 @@ module Github
     #  github.repos.languages 'user-name', 'repo-name' { |lang| ... }
     #
     def languages(*args)
-      arguments(self, :required => [:user, :repo]).parse *args
+      arguments(args, :required => [:user, :repo])
       params = arguments.params
 
       response = get_request("/repos/#{user}/#{repo}/languages", params)
@@ -394,7 +392,7 @@ module Github
     #   github.repos.tags 'user-name', 'repo-name' { |tag| ... }
     #
     def tags(*args)
-      arguments(self, :required => [:user, :repo]).parse *args
+      arguments(args, :required => [:user, :repo])
       params = arguments.params
 
       response = get_request("/repos/#{user}/#{repo}/tags", params)
@@ -415,7 +413,7 @@ module Github
     #   github.repos(user: 'user-name, repo: 'repo-name').teams
     #
     def teams(*args)
-      arguments(self, :required => [:user, :repo]).parse *args
+      arguments(args, :required => [:user, :repo])
       params = arguments.params
 
       response = get_request("/repos/#{user}/#{repo}/teams", params)

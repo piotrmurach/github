@@ -22,10 +22,9 @@ module Github
     #  github.repos.downloads.list 'user-name', 'repo-name' { |downl| ... }
     #
     def list(*args)
-      arguments(self, :required => [:user, :repo]).parse *args
-      params = arguments.params
+      arguments(args, :required => [:user, :repo])
 
-      response = get_request("/repos/#{user}/#{repo}/downloads", params)
+      response = get_request("/repos/#{user}/#{repo}/downloads", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -38,7 +37,7 @@ module Github
     #  github.repos.downloads.get 'user-name', 'repo-name', 'download-id'
     #
     def get(*args)
-      arguments(self, :required => [:user, :repo, :download_id]).parse *args
+      arguments(args, :required => [:user, :repo, :download_id])
       params = arguments.params
 
       get_request("/repos/#{user}/#{repo}/downloads/#{download_id}", params)
@@ -52,7 +51,7 @@ module Github
     #  github.repos.downloads.delete 'user-name', 'repo-name', 'download-id'
     #
     def delete(*args)
-      arguments(self, :required => [:user, :repo, :download_id]).parse *args
+      arguments(args, :required => [:user, :repo, :download_id])
       params = arguments.params
 
       delete_request("/repos/#{user}/#{repo}/downloads/#{download_id}", params)
@@ -78,7 +77,7 @@ module Github
     #    "content_type" => "text/plain"
     #
     def create(*args)
-      arguments(self, :required => [:user, :repo]).parse *args do
+      arguments(args, :required => [:user, :repo]) do
         sift VALID_DOWNLOAD_PARAM_NAMES
         assert_required REQUIRED_PARAMS
       end
