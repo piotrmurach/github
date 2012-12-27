@@ -20,10 +20,9 @@ module Github
     #  github = Github.new
     #  github.issues.events.list 'user-name', 'repo-name'
     #
-    def list(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-      normalize! params
+    def list(*args)
+      arguments(self, :required => [:user, :repo]).parse *args
+      params = arguments.params
 
       response = if (issue_id = params.delete('issue_id'))
         get_request("/repos/#{user}/#{repo}/issues/#{issue_id}/events", params)
@@ -41,12 +40,11 @@ module Github
     #  github = Github.new
     #  github.issues.events.get 'user-name', 'repo-name', 'event-id'
     #
-    def get(user_name, repo_name, event_id, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, event_id
-      normalize! params
+    def get(*args)
+      arguments(self, :required => [:user, :repo, :event_id]).parse *args
+      params = arguments.params
 
-      get_request("/repos/#{user}/#{repo}/issues/events/#{event_id}")
+      get_request("/repos/#{user}/#{repo}/issues/events/#{event_id}", params)
     end
     alias :find :get
 
