@@ -19,8 +19,10 @@ describe Github::Issues::Labels, '#list' do
   context "for this repository" do
     it { should respond_to :all }
 
+    it { expect { subject.list }.to raise_error(Github::Error::Validations) }
+
     it "should fail to get resource without username" do
-      expect { subject.list nil, repo }.to raise_error(ArgumentError)
+      expect { subject.list user }.to raise_error(ArgumentError)
     end
 
     it "should get the resources" do
