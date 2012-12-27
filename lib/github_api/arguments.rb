@@ -11,6 +11,8 @@ module Github
     # Parameters passed to request
     attr_reader :params
 
+    attr_reader :remaining
+
     # The request api
     #
     attr_reader :api
@@ -19,6 +21,11 @@ module Github
     #
     attr_reader :required
     private :required
+
+    # Optional arguments
+    #
+    attr_reader :optional
+    private :optional
 
     # Takes api, filters and required arguments
     #
@@ -29,6 +36,7 @@ module Github
       normalize! options
       @api      = api
       @required = options.fetch('required', []).map(&:to_s)
+      @optional = options.fetch('optional', []).map(&:to_s)
     end
 
     # Parse arguments to allow for flexible api calls.
@@ -45,11 +53,12 @@ module Github
         parse_options options
       end
       @params = options
+      @remaining = extract_remaining(args)
       yield_or_eval(&block)
       self
     end
 
-    # Remove unkown parameters.
+    # Remove unkown keys from parameters hash.
     #
     # = Parameters
     #  :recursive - boolean that toggles whether nested filtering should be applied
@@ -59,7 +68,7 @@ module Github
       self
     end
 
-    # Check if required parameters are present.
+    # Check if required keys are present inside parameters hash.
     #
     def assert_required(required)
       assert_required_keys required, params
@@ -79,10 +88,16 @@ module Github
     #
     def parse_arguments(*args)
       assert_presence_of *args
-      args.each_with_index do |arg, indx|
-        api.set required[indx], arg
+      required.each_with_index do |req, indx|
+        api.set req, args[indx]
       end
       check_requirement!(*args)
+    end
+
+    # Find remaining arguments
+    #
+    def extract_remaining(args)
+      args[required.size..-1]
     end
 
     # Remove required arguments from parameters and
