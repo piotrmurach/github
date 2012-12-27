@@ -21,7 +21,8 @@ Supports all the API methods(nearly 200). It's build in a modular way, that is, 
 * Easy error handling.
 * Custom mime types specification (Status: TODO)
 * Flexible arguments parsing (Status: In progress).
-* Fully tested with test coverage above 90% with over 1,300 specs and 500 features.
+* Request results caching (Status: TODO)
+* Fully tested with test coverage above 90% with over 1,300 specs and 700 features.
 
 ## Installation
 

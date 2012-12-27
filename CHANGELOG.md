@@ -1,3 +1,9 @@
+0.8.5 (Dec 27, 2012)
+
+* Fix bug with getting repository branch for enteprise apis.
+* Fix bug with creating authorization tokens.
+* Add features for issues comments api.
+
 0.8.4 (Dec 17, 2012)
 
 * Fix bug with listing issues.
