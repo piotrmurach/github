@@ -141,10 +141,9 @@ module Github
     #  github = Github.new
     #  github.issues.labels.remove 'user-name', 'repo-name', 'issue-id'
     #
-    def remove(user_name, repo_name, issue_id, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, issue_id
-      normalize! params
+    def remove(*args)
+      arguments(args, :required => [:user, :repo, :issue_id])
+      params = arguments.params
 
       if (label_name = params.delete('label_name'))
         delete_request("/repos/#{user}/#{repo}/issues/#{issue_id}/labels/#{label_name}", params)

@@ -46,12 +46,12 @@ describe 'Arguments' do
     it { expect { subject.milestone_id }.to raise_error(NoMethodError) }
 
     it {
-      subject.get nil, nil, milestone_id
+      subject.get user, repo, milestone_id
       a_get(request_path).should have_been_made
     }
 
     it 'creates setter' do
-      subject.get nil, nil, milestone_id
+      subject.get user, repo, milestone_id
       subject.milestone_id.should == milestone_id
     end
   end
