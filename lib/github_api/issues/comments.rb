@@ -73,14 +73,13 @@ module Github
     # = Examples
     #  github = Github.new
     #  github.issues.comments.create 'user-name', 'repo-name', 'issue-id',
-    #     "body" => 'a new comment'
+    #     'body': 'a new comment'
     #
     def create(user_name, repo_name, issue_id, params={})
       set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, issue_id
 
       normalize! params
-      # _merge_mime_type(:issue_comment, params)
       filter! VALID_ISSUE_COMMENT_PARAM_NAME, params
       assert_required_keys(%w[ body ], params)
 
@@ -95,14 +94,13 @@ module Github
     # = Examples
     #  github = Github.new
     #  github.issues.comments.edit 'user-name', 'repo-name', 'comment-id',
-    #     "body" => 'a new comment'
+    #     'body': 'a new comment'
     #
     def edit(user_name, repo_name, comment_id, params={})
       set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, comment_id
 
       normalize! params
-      # _merge_mime_type(:issue_comment, params)
       filter! VALID_ISSUE_COMMENT_PARAM_NAME, params
       assert_required_keys(%w[ body ], params)
 
@@ -118,9 +116,7 @@ module Github
     def delete(user_name, repo_name, comment_id, params={})
       set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, comment_id
-
       normalize! params
-      # _merge_mime_type(:issue_comment, params)
 
       delete_request("/repos/#{user}/#{repo}/issues/comments/#{comment_id}", params)
     end

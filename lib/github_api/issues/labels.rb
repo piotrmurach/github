@@ -13,7 +13,7 @@ module Github
     # List all labels for a repository
     #
     # = Examples
-    #  github = Github.new :user => 'user-name', :repo => 'repo-name'
+    #  github = Github.new user: 'user-name', repo: 'repo-name'
     #  github.issues.labels.list
     #  github.issues.labels.list { |label| ... }
     #
@@ -68,8 +68,8 @@ module Github
     #  <tt>:color</tt> - Required string - 6 character hex code, without leading #
     #
     # = Examples
-    #  github = Github.new :user => 'user-name', :repo => 'repo-name'
-    #  github.issues.labels.create :name => 'API', :color => 'FFFFFF'
+    #  github = Github.new user: 'user-name', repo: 'repo-name'
+    #  github.issues.labels.create name: 'API', color: 'FFFFFF'
     #
     def create(user_name, repo_name, params={})
       set :user => user_name, :repo => repo_name
@@ -91,7 +91,7 @@ module Github
     # = Examples
     #  @github = Github.new
     #  @github.issues.labels.update 'user-name', 'repo-name', 'label-name',
-    #    :name => 'API', :color => "FFFFFF"
+    #    name: 'API', color: "FFFFFF"
     #
     def update(user_name, repo_name, label_name, params={})
       set :user => user_name, :repo => repo_name
