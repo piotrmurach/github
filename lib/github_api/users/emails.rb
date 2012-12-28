@@ -11,9 +11,9 @@ module Github
     #  github.users.emails.list
     #  github.users.emails.list { |email| ... }
     #
-    def list(params={})
-      normalize! params
-      response = get_request("/user/emails", params)
+    def list(*args)
+      arguments(args)
+      response = get_request("/user/emails", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -29,9 +29,10 @@ module Github
     #  github.users.emails.add "octocat@github.com", "support@github.com"
     #
     def add(*args)
-      params = args.extract_options!
-      normalize! params
-      params['data'] = args if args
+      arguments(args)
+      params = arguments.params
+      params['data'] = arguments.remaining unless arguments.remaining.empty?
+
       post_request("/user/emails", params)
     end
     alias :<< :add
@@ -46,9 +47,10 @@ module Github
     #  github.users.emails.delete "octocat@github.com", "support@github.com"
     #
     def delete(*args)
-      params = args.extract_options!
-      normalize! params
-      params['data'] = args if args
+      arguments(args)
+      params = arguments.params
+      params['data'] = arguments.remaining unless arguments.remaining.empty?
+
       delete_request("/user/emails", params)
     end
 

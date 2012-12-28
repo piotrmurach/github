@@ -8,13 +8,13 @@ module Github
     # List public keys for the authenticated user
     #
     # = Examples
-    #  github = Github.new :oauth_token => '...'
+    #  github = Github.new oauth_token: '...'
     #  github.users.keys.list
     #  github.users.keys.list { |key| ... }
     #
-    def list(params={})
-      normalize! params
-      response = get_request("/user/keys", params)
+    def list(*args)
+      arguments(args)
+      response = get_request("/user/keys", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -23,13 +23,12 @@ module Github
     # Get a single pulic key for the authenticated user
     #
     # = Examples
-    #  github = Github.new :oauth_token => '...'
+    #  github = Github.new oauth_token: '...'
     #  github.users.keys.get 'key-id'
     #
-    def get(key_id, params={})
-      assert_presence_of key_id
-      normalize! params
-      get_request("/user/keys/#{key_id}", params)
+    def get(*args)
+      arguments(args, :required => [:key_id])
+      get_request("/user/keys/#{key_id}", arguments.params)
     end
     alias :find :get
 
@@ -40,14 +39,14 @@ module Github
     # * <tt>:key</tt> - Required string. sha key
     #
     # = Examples
-    #  github = Github.new :oauth_token => '...'
-    #  github.users.keys.create "title" => "octocat@octomac",
-    #    "key" => "ssh-rsa AAA..."
+    #  github = Github.new oauth_token: '...'
+    #  github.users.keys.create "title": "octocat@octomac", "key": "ssh-rsa AAA..."
     #
-    def create(params={})
-      normalize! params
-      filter! VALID_KEY_PARAM_NAMES, params
-      post_request("/user/keys", params)
+    def create(*args)
+      arguments(args) do
+        sift VALID_KEY_PARAM_NAMES
+      end
+      post_request("/user/keys", arguments.params)
     end
 
     # Update a public key for the authenticated user
@@ -57,27 +56,26 @@ module Github
     # * <tt>:key</tt> - Required string. sha key
     #
     # = Examples
-    #  github = Github.new :oauth_token => '...'
-    #  github.users.keys.update 'key-id', "title" => "octocat@octomac",
-    #    "key" => "ssh-rsa AAA..."
+    #  github = Github.new oauth_token: '...'
+    #  github.users.keys.update 'key-id', "title": "octocat@octomac",
+    #    "key": "ssh-rsa AAA..."
     #
-    def update(key_id, params={})
-      assert_presence_of key_id
-      normalize! params
-      filter! VALID_KEY_PARAM_NAMES, params
-      patch_request("/user/keys/#{key_id}", params)
+    def update(*args)
+      arguments(args, :required => [:key_id]) do
+        sift VALID_KEY_PARAM_NAMES
+      end
+      patch_request("/user/keys/#{key_id}", arguments.params)
     end
 
     # Delete a public key for the authenticated user
     #
     # = Examples
-    #  github = Github.new :oauth_token => '...'
+    #  github = Github.new oauth_token: '...'
     #  github.users.keys.delete 'key-id'
     #
-    def delete(key_id, params={})
-      assert_presence_of key_id
-      normalize! params
-      delete_request("/user/keys/#{key_id}", params)
+    def delete(*args)
+      arguments(args, :required => [:key_id])
+      delete_request("/user/keys/#{key_id}", arguments.params)
     end
 
   end # Users::Keys
