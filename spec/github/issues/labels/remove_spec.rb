@@ -25,17 +25,17 @@ describe Github::Issues::Labels, '#remove' do
     end
 
     it "should remove label successfully" do
-      subject.remove user, repo, issue_id, label_id
+      subject.remove user, repo, issue_id, :label_name => label_id
       a_delete(request_path).should have_been_made
     end
 
     it "should return the resource" do
-      labels = subject.remove user, repo, issue_id, label_id
+      labels = subject.remove user, repo, issue_id, :label_name => label_id
       labels.first.should be_a Hashie::Mash
     end
 
     it "should get the label information" do
-      labels = subject.remove user, repo, issue_id, label_id
+      labels = subject.remove user, repo, issue_id, :label_name => label_id
       labels.first.name.should == 'bug'
     end
   end
@@ -52,7 +52,7 @@ describe Github::Issues::Labels, '#remove' do
   end
 
   it_should_behave_like 'request failure' do
-    let(:requestable) { subject.remove user, repo, issue_id, label_id }
+    let(:requestable) { subject.remove user, repo, issue_id, :label_name => label_id }
   end
 
 end # remove

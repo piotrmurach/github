@@ -71,7 +71,7 @@ module Github
     # = Examples
     #  github = Github.new
     #  github.issues.comments.create 'user-name', 'repo-name', 'issue-id',
-    #     "body" => 'a new comment'
+    #     'body': 'a new comment'
     #
     def create(*args)
       arguments(args, :required => [:user, :repo, :issue_id]) do
@@ -91,7 +91,7 @@ module Github
     # = Examples
     #  github = Github.new
     #  github.issues.comments.edit 'user-name', 'repo-name', 'comment-id',
-    #     "body" => 'a new comment'
+    #     'body': 'a new comment'
     #
     def edit(*args)
       arguments(args, :required => [:user, :repo, :comment_id]) do

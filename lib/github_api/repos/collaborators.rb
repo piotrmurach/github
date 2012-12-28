@@ -41,7 +41,7 @@ module Github
     #
     # Examples:
     #  github = Github.new
-    #  github.collaborators.collaborator?('user', 'repo', 'collaborator')
+    #  github.repos.collaborators.collaborator?('user', 'repo', 'collaborator')
     #
     #  github = Github.new user: 'user-name', repo: 'repo-name'
     #  github.collaborators.collaborator? collaborator: 'collaborator'
