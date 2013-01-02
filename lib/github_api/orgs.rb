@@ -80,14 +80,14 @@ module Github
     # <tt>:name</tt> - Optional string
     #
     # = Examples
-    #  github = Github.new :oauth_token => '...'
+    #  github = Github.new oauth_token: '...'
     #  github.orgs.edit 'github',
-    #    "billing_email" => "support@github.com",
-    #    "blog" => "https://github.com/blog",
-    #    "company" => "GitHub",
-    #    "email" => "support@github.com",
-    #    "location" => "San Francisco",
-    #    "name" => "github"
+    #    "billing_email": "support@github.com",
+    #    "blog": "https://github.com/blog",
+    #    "company": "GitHub",
+    #    "email": "support@github.com",
+    #    "location": "San Francisco",
+    #    "name": "github"
     #
     def edit(org_name, params={})
       assert_presence_of org_name
