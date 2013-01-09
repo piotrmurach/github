@@ -198,7 +198,7 @@ module Github
     #  github = Github.new
     #  github.pull_requests.merge 'user-name', 'repo-name', 'number'
     #
-    def merge(user_name, repo_name, request_id, params={})
+    def merge(user_name, repo_name, number, params={})
       set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, number
 
