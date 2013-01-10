@@ -11,7 +11,8 @@ module Github
         {
           :site          => options.fetch(:site) { Github.site },
           :authorize_url => 'login/oauth/authorize',
-          :token_url     => 'login/oauth/access_token'
+          :token_url     => 'login/oauth/access_token',
+          :ssl           => { :verify => false }
         }
       )
     end
