@@ -2,6 +2,11 @@
 
 module Github
   class Repos::PubSubHubbub < API
+    OPTIONS = {
+      :headers => {
+        CONTENT_TYPE => 'application/x-www-form-urlencoded'
+      }
+    }
 
     # Subscribe to existing topic/event through pubsubhubbub
     #
@@ -22,7 +27,7 @@ module Github
       normalize! params
       _merge_action!("subscribe", topic, callback, params)
 
-      post_request("/hub", params)
+      post_request("/hub", params, OPTIONS)
     end
 
     # Unsubscribe from existing topic/event through pubsubhubbub
@@ -44,7 +49,7 @@ module Github
       normalize! params
       _merge_action!("unsubscribe", topic, callback, params)
 
-      post_request("/hub", params)
+      post_request("/hub", params, OPTIONS)
     end
 
     # Subscribe repository to service hook through pubsubhubbub

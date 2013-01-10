@@ -1,3 +1,40 @@
+0.8.6 (Jan 2, 2013)
+
+* Fix bug with content type header for pubsubhubbub
+* Change labels api remove call to take labe_name as parameter
+* Add feature tests for forks api.
+
+0.8.5 (Dec 27, 2012)
+
+* Fix bug with getting repository branch for enteprise apis.
+* Fix bug with creating authorization tokens.
+* Add features for issues comments api.
+
+0.8.4 (Dec 17, 2012)
+
+* Fix bug with listing issues.
+* Change labels listing to merge mileston & issue listings.
+* Add features tests for issues milestones, events, labels.
+
+0.8.3 (Dec 15, 2012)
+
+* Add oauth scopes listing method and helpers for reading scopes on a resource
+  accepted_oauth_scopes and oauth_scopes
+* Add say method call for printing octocat ASCII
+* Change issues listing to accept additional org and repo parameters.
+* Fix bug with milestones update method incorrect validation.
+* Change events listing to take issue_id as an optional parameter.
+
+0.8.2 (Dec 7, 2012)
+
+* Add Gitignore api.
+* Add listing of all repositories(a dump of every repository).
+* Add listing of all users (a dump of every user).
+* Add pull request comments listing in a repository.
+* Add issue comments listing in a repository.
+* Change unit tests for users api.
+* Update rspec, cucumber etc... dependencies
+
 0.8.1 (Nov 17, 2012)
 
 * Fix bug with validating options on Repository API create method.

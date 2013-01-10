@@ -24,11 +24,12 @@ describe Github::Repos, '#list' do
         to_return(:body => fixture('repos/repos_sorted_by_pushed.json'), :status => 200,:headers => {:content_type => "application/json; charset=utf-8"} )
     }
 
-    it "fails if user is unauthenticated" do
+    it "falls back to all if user is unauthenticated" do
       subject.oauth_token = nil
-      stub_get("/user/repos").to_return(:body => '', :status => 401,
+      stub_get("/repositories").to_return(:body => '[]', :status => 200,
         :headers => {:content_type => "application/json; charset=utf-8"} )
-      expect { subject.list }.to raise_error(Github::Error::Unauthorized)
+      subject.list
+      a_get('/repositories').should have_been_made
     end
 
     it "should get the resources" do
@@ -55,6 +56,21 @@ describe Github::Repos, '#list' do
       result = subject.list { |obj| yielded << obj }
       yielded.should == result
     end
+  end
+
+  context 'all repositories' do
+    let(:request_path) { '/repositories' }
+
+    before {
+      stub_get(request_path).to_return(:body => body, :status => status,
+        :headers => {:content_type => "application/json; charset=utf-8"} )
+    }
+
+    it "should get the resources" do
+      subject.list
+      a_get(request_path).should have_been_made
+    end
+
   end
 
   context "resource found for organization" do

@@ -12,7 +12,7 @@ module Github
     #
     # = Examples
     #  github = Github.new
-    #  github.issues.events.list 'user-name', 'repo-name', 'issue-id'
+    #  github.issues.events.list 'user-name', 'repo-name', issue_id: 'issue-id'
     #
     # List events for a repository
     #
@@ -20,12 +20,12 @@ module Github
     #  github = Github.new
     #  github.issues.events.list 'user-name', 'repo-name'
     #
-    def list(user_name, repo_name, issue_id=nil, params={})
+    def list(user_name, repo_name, params={})
       set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
       normalize! params
 
-      response = if issue_id
+      response = if (issue_id = params.delete('issue_id'))
         get_request("/repos/#{user}/#{repo}/issues/#{issue_id}/events", params)
       else
         get_request("/repos/#{user}/#{repo}/issues/events", params)

@@ -40,6 +40,27 @@ module Github
       @keys ||= ApiFactory.new 'Users::Keys'
     end
 
+    # List all users.
+    #
+    # This provides a dump of every user, in the order that they signed up
+    # for GitHub.
+    #
+    # = Parameters
+    # * <tt>:since</tt> - The integer ID of the last User that you’ve seen.
+    #
+    # = Examples
+    #  users = Github::Users.new
+    #  users.list
+    #
+    def list(params={})
+      normalize! params
+
+      response = get_request("/users", params)
+      return response unless block_given?
+      response.each { |el| yield el }
+    end
+    alias :all :list
+
     # Get a single unauthenticated user
     #
     # = Examples

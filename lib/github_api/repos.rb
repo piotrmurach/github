@@ -134,7 +134,7 @@ module Github
       assert_presence_of user_name, repo_name, branch
       normalize! params
 
-      get_request("repos/#{user_name}/#{repo_name}/branches/#{branch}", params)
+      get_request("/repos/#{user_name}/#{repo_name}/branches/#{branch}", params)
     end
 
     # Create a new repository for the autheticated user.
@@ -294,6 +294,17 @@ module Github
     #   github.repos.list
     #   github.repos.list { |repo| ... }
     #
+    # List all repositories
+    #
+    # This provides a dump of every repository, in the order that they were created.
+    # = Parameters
+    # * <tt>:since</tt> - the integer ID of the last Repository that you've seen.
+    #
+    # = Examples
+    #   github = Github.new
+    #   github.repos.list
+    #   github.repos.list { |repo| ... }
+    #
     # List public repositories for the specified user.
     #
     # = Examples
@@ -317,9 +328,11 @@ module Github
         get_request("/users/#{user_name}/repos", params)
       elsif (org_name = params.delete("org"))
         get_request("/orgs/#{org_name}/repos", params)
-      else
+      elsif authenticated?
         # For authenticated user
         get_request("/user/repos", params)
+      else
+        get_request("/repositories", params)
       end
       return response unless block_given?
       response.each { |el| yield el }

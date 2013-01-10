@@ -1,0 +1,139 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://<BASIC_AUTH>@api.github.com/repos/peter-murach/github/issues/events/1?access_token=<TOKEN>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/jsonapplication/vnd.github+json;q=0.7application/vnd.github.v3.raw+json;q=0.5application/vnd.github.beta.raw+json;q=0.1
+      Accept-Charset:
+      - utf-8
+      User-Agent:
+      - Github Ruby Gem 0.8.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 500
+      message: Internal Server Error
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 15 Dec 2012 12:35:47 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Connection:
+      - keep-alive
+      Status:
+      - 500 Internal Server Error
+      Content-Length:
+      - '26'
+      X-Content-Type-Options:
+      - nosniff
+      X-Ratelimit-Limit:
+      - '5000'
+      Cache-Control:
+      - ''
+      X-Github-Media-Type:
+      - github.beta
+      X-Ratelimit-Remaining:
+      - '4992'
+    body:
+      encoding: US-ASCII
+      string: ! '{"message":"Server Error"}'
+    http_version: !!null 
+  recorded_at: Sat, 15 Dec 2012 12:35:47 GMT
+- request:
+    method: get
+    uri: https://<BASIC_AUTH>@api.github.com/repos/peter-murach/github/issues/events/29376722?access_token=<TOKEN>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/jsonapplication/vnd.github+json;q=0.7application/vnd.github.v3.raw+json;q=0.5application/vnd.github.beta.raw+json;q=0.1
+      Accept-Charset:
+      - utf-8
+      User-Agent:
+      - Github Ruby Gem 0.8.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 15 Dec 2012 12:36:44 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Vary:
+      - Accept, Authorization, Cookie
+      Last-Modified:
+      - Wed, 21 Nov 2012 09:52:45 GMT
+      X-Ratelimit-Remaining:
+      - '4991'
+      X-Ratelimit-Limit:
+      - '5000'
+      Cache-Control:
+      - private, s-maxage=60, max-age=60
+      X-Github-Media-Type:
+      - github.beta
+      Etag:
+      - ! '"d132491c5290a778408cb1af702d1a64"'
+      X-Content-Type-Options:
+      - nosniff
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        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
+        O779D8aCmkb0EgAA
+    http_version: !!null 
+  recorded_at: Sat, 15 Dec 2012 12:36:44 GMT
+recorded_with: VCR 2.3.0

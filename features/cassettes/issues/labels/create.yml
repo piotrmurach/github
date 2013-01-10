@@ -1,0 +1,54 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://<BASIC_AUTH>@api.github.com/repos/<USER>/github_api_test/labels?access_token=<TOKEN>
+    body:
+      encoding: UTF-8
+      string: ! '{"name":"api","color":"FFFFFF"}'
+    headers:
+      Accept:
+      - application/jsonapplication/vnd.github+json;q=0.7application/vnd.github.v3.raw+json;q=0.5application/vnd.github.beta.raw+json;q=0.1
+      Accept-Charset:
+      - utf-8
+      User-Agent:
+      - Github Ruby Gem 0.8.3
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sun, 16 Dec 2012 18:02:49 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Connection:
+      - keep-alive
+      Status:
+      - 201 Created
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Ratelimit-Limit:
+      - '5000'
+      Content-Length:
+      - '101'
+      Etag:
+      - ! '"07b4f902ae0cd3ce75cd445626222079"'
+      Location:
+      - https://api.github.com/repos/<USER>/github_api_test/labels/api
+      X-Content-Type-Options:
+      - nosniff
+      X-Github-Media-Type:
+      - github.beta
+      X-Ratelimit-Remaining:
+      - '4998'
+    body:
+      encoding: US-ASCII
+      string: ! '{"color":"FFFFFF","url":"https://api.github.com/repos/<USER>/github_api_test/labels/api","name":"api"}'
+    http_version: !!null 
+  recorded_at: Sun, 16 Dec 2012 18:02:49 GMT
+recorded_with: VCR 2.3.0

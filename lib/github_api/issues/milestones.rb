@@ -115,7 +115,6 @@ module Github
 
       normalize! params
       filter! VALID_MILESTONE_INPUTS, params
-      assert_required_keys(%w[ title ], params)
 
       patch_request("/repos/#{user}/#{repo}/milestones/#{milestone_id}", params)
     end

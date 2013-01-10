@@ -19,8 +19,8 @@ Feature: Pull Requests API
   Scenario: Get
 
     Given I want to get resource with the following params:
-      | user          | repo   | request_id |
-      | peter-murach  | github | 36         |
+      | user          | repo   | number |
+      | peter-murach  | github | 36     |
     When I make request within a cassette named "pull_requests/get"
     Then the response status should be 200
       And the response type should be JSON

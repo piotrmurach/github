@@ -21,7 +21,8 @@ Supports all the API methods(nearly 200). It's build in a modular way, that is, 
 * Easy error handling.
 * Custom mime types specification (Status: TODO)
 * Flexible arguments parsing (Status: In progress).
-* Fully tested with test coverage above 90% with over 1,200 specs and 500 features.
+* Request results caching (Status: TODO)
+* Fully tested with test coverage above 90% with over 1,300 specs and 700 features.
 
 ## Installation
 
@@ -228,7 +229,7 @@ Once you have your access token, configure your github instance following instru
 
 ### Authorizations API
 
-Alternatively you can use OAuth Authorizations API. For instance, to create access token through GitHub API do following
+Alternatively you can use OAuth Authorizations API. For instance, to create access token through GitHub API you required to pass your basic credentials as in the following:
 
 ```ruby
 github = Github.new basic_auth: 'login:password'
@@ -236,6 +237,25 @@ github.oauth.create 'scopes' => ['repo']
 ```
 
 You can add more than one scope from the `user`, `public_repo`, `repo`, `gist` or leave the scopes parameter out, in which case, the default read-only access will be assumed(includes public user profile info, public repo info, and gists).
+
+### Scopes
+
+You can check OAuth scopes you have by:
+
+```ruby
+  github = Github.new :oauth_token => 'token'
+  github.scopes.list    # => ['repo']
+```
+
+To list the scopes that the particular Github API action checks for do:
+
+```ruby
+  repos = Github::Repos.new
+  res = repos.list :user => 'peter-murach'
+  res.accepted_oauth_scopes    # => ['delete_repo', 'repo', 'public_repo', 'repo:status']
+```
+
+To understand what each scope means refer to [documentation](http://developer.github.com/v3/oauth/#scopes)
 
 ## MIME Types
 
@@ -278,7 +298,8 @@ By default no caching will be performed. In order to set the cache do... If no c
 Any request that returns multiple items will be paginated to 30 items by default. You can specify custom `page` and `per_page` query parameters to alter default behavior. For instance:
 
 ```ruby
-res = Github::Repos.new.repos user: 'wycats', per_page: 10, page: 5
+repos = Github::Repos.new
+repos.list user: 'wycats', per_page: 10, page: 5
 ```
 
 Then you can query pagination information included in the link header by:
@@ -416,4 +437,4 @@ Questions or problems? Please post them on the [issue tracker](https://github.co
 
 ## Copyright
 
-Copyright (c) 2011-2012 Piotr Murach. See LICENSE.txt for further details.
+Copyright (c) 2011-2013 Piotr Murach. See LICENSE.txt for further details.

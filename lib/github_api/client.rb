@@ -18,6 +18,11 @@ module Github
       @gists ||= ApiFactory.new 'Gists', options
     end
 
+    def gitignore(options = {})
+      @gitignore ||= ApiFactory.new 'Gitignore', options
+    end
+    alias :git_ignore :gitignore
+
     # The Git Database API gives you access to read and write raw Git objects
     # to your Git database on GitHub and to list and update your references
     # (branch heads and tags).
@@ -54,6 +59,14 @@ module Github
       @repos ||= ApiFactory.new 'Repos', options
     end
     alias :repositories :repos
+
+    def octocat(options = {})
+      @octocat ||= ApiFactory.new 'Say', options
+    end
+
+    def scopes(options = {})
+      @scopes ||= ApiFactory.new 'Scopes', options
+    end
 
     def search(options = {})
       @search ||= ApiFactory.new 'Search', options

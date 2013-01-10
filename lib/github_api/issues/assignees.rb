@@ -3,7 +3,7 @@
 module Github
   class Issues::Assignees < API
 
-    # lists all the available assignees (owner + collaborators) 
+    # lists all the available assignees (owner + collaborators)
     # to which issues may be assigned.
     #
     # = Examples
@@ -19,6 +19,7 @@ module Github
       return response unless block_given?
       response.each { |el| yield el }
     end
+    alias :all :list
 
     # Check to see if a particular user is an assignee for a repository.
     #

@@ -25,7 +25,7 @@ module Github
     #
     # Examples:
     #  github = Github.new
-    #  github.collaborators.collaborator?('user', 'repo', 'collaborator')
+    #  github.repos.collaborators.collaborator?('user', 'repo', 'collaborator')
     #
     def collaborator?(user_name, repo_name, collaborator, params={})
       set :user => user_name, :repo => repo_name

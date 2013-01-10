@@ -18,17 +18,33 @@ module Github
     #
     # = Examples
     #  github = Github.new
-    #  github.issues.comments.all 'user-name', 'repo-name', 'issue-id'
-    #  github.issues.comments.all 'user-name', 'repo-name', 'issue-id' {|com| .. }
+    #  github.issues.comments.all 'user-name', 'repo-name', issue_id: 'id'
+    #  github.issues.comments.all 'user-name', 'repo-name', issue_id: 'id' {|com| .. }
     #
-    def list(user_name, repo_name, issue_id, params={})
+    # List comments in a repository
+    #
+    # = Parameters
+    # * <tt>:sort</tt>      - Optional string, <tt>created</tt> or <tt>updated</tt>
+    # * <tt>:direction</tt> - Optional string, <tt>asc</tt> or <tt>desc</tt>.
+    #                         Ignored with sort parameter.
+    # * <tt>:since</tt>     - Optional string of a timestamp in ISO 8601
+    #                         format: YYYY-MM-DDTHH:MM:SSZ
+    #
+    # = Examples
+    #  github = Github.new
+    #  github.issues.comments.all 'user-name', 'repo-name'
+    #  github.issues.comments.all 'user-name', 'repo-name' {|com| .. }
+    #
+    def list(user_name, repo_name, params={})
       set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, issue_id
-
+      assert_presence_of user, repo
       normalize! params
-      # _merge_mime_type(:issue_comment, params)
 
-      response = get_request("/repos/#{user}/#{repo}/issues/#{issue_id}/comments", params)
+      response = if (issue_id = params.delete('issue_id'))
+        get_request("/repos/#{user}/#{repo}/issues/#{issue_id}/comments", params)
+      else
+        get_request("/repos/#{user}/#{repo}/issues/comments", params)
+      end
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -43,9 +59,7 @@ module Github
     def get(user_name, repo_name, comment_id, params={})
       set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, comment_id
-
       normalize! params
-      # _merge_mime_type(:issue_comment, params)
 
       get_request("/repos/#{user}/#{repo}/issues/comments/#{comment_id}", params)
     end
@@ -59,14 +73,13 @@ module Github
     # = Examples
     #  github = Github.new
     #  github.issues.comments.create 'user-name', 'repo-name', 'issue-id',
-    #     "body" => 'a new comment'
+    #     'body': 'a new comment'
     #
     def create(user_name, repo_name, issue_id, params={})
       set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, issue_id
 
       normalize! params
-      # _merge_mime_type(:issue_comment, params)
       filter! VALID_ISSUE_COMMENT_PARAM_NAME, params
       assert_required_keys(%w[ body ], params)
 
@@ -81,14 +94,13 @@ module Github
     # = Examples
     #  github = Github.new
     #  github.issues.comments.edit 'user-name', 'repo-name', 'comment-id',
-    #     "body" => 'a new comment'
+    #     'body': 'a new comment'
     #
     def edit(user_name, repo_name, comment_id, params={})
       set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, comment_id
 
       normalize! params
-      # _merge_mime_type(:issue_comment, params)
       filter! VALID_ISSUE_COMMENT_PARAM_NAME, params
       assert_required_keys(%w[ body ], params)
 
@@ -104,9 +116,7 @@ module Github
     def delete(user_name, repo_name, comment_id, params={})
       set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, comment_id
-
       normalize! params
-      # _merge_mime_type(:issue_comment, params)
 
       delete_request("/repos/#{user}/#{repo}/issues/comments/#{comment_id}", params)
     end
