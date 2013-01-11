@@ -33,12 +33,12 @@ module Github
     #  github.events.repository 'user-name', 'repo-name'
     #  github.events.repository 'user-name', 'repo-name' { |event| ... }
     #
-    def repository(user_name, repo_name, params={}, options={})
+    def repository(user_name, repo_name, params={})
       set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
       normalize! params
 
-      response = get_request("/repos/#{user}/#{repo}/events", params, options)
+      response = get_request("/repos/#{user}/#{repo}/events", params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -54,12 +54,12 @@ module Github
     #  github.events.issue 'user-name', 'repo-name'
     #  github.events.issue 'user-name', 'repo-name' { |event| ... }
     #
-    def issue(user_name, repo_name, params={}, options={})
+    def issue(user_name, repo_name, params={})
       set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
       normalize! params
 
-      response = get_request("/repos/#{user}/#{repo}/issues/events", params, options)
+      response = get_request("/repos/#{user}/#{repo}/issues/events", params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -74,12 +74,12 @@ module Github
     #  github.events.network 'user-name', 'repo-name'
     #  github.events.network 'user-name', 'repo-name' { |event| ... }
     #
-    def network(user_name, repo_name, params={}, options={})
+    def network(user_name, repo_name, params={})
       set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
       normalize! params
 
-      response = get_request("/networks/#{user}/#{repo}/events", params, options)
+      response = get_request("/networks/#{user}/#{repo}/events", params)
       return response unless block_given?
       response.each { |el| yield el }
     end

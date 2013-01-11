@@ -48,12 +48,7 @@ module Github
           request.body = extract_data_from_params(params) unless params.empty?
         end
       end
-
-      if options[:full]
-        response
-      else
-        response.body
-      end
+      response.body
     end
 
     private
