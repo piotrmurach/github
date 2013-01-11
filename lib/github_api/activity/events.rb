@@ -30,8 +30,8 @@ module Github
     #
     # = Examples
     #  github = Github.new
-    #  github.events.repository 'user-name', 'repo-name'
-    #  github.events.repository 'user-name', 'repo-name' { |event| ... }
+    #  github.activity.events.repository 'user-name', 'repo-name'
+    #  github.activity.events.repository 'user-name', 'repo-name' { |event| ... }
     #
     def repository(user_name, repo_name, params={})
       set :user => user_name, :repo => repo_name
@@ -51,8 +51,8 @@ module Github
     #
     # = Examples
     #  github = Github.new
-    #  github.events.issue 'user-name', 'repo-name'
-    #  github.events.issue 'user-name', 'repo-name' { |event| ... }
+    #  github.activity.events.issue 'user-name', 'repo-name'
+    #  github.activity.events.issue 'user-name', 'repo-name' { |event| ... }
     #
     def issue(user_name, repo_name, params={})
       set :user => user_name, :repo => repo_name
@@ -71,8 +71,8 @@ module Github
     #
     # = Examples
     #  github = Github.new
-    #  github.events.network 'user-name', 'repo-name'
-    #  github.events.network 'user-name', 'repo-name' { |event| ... }
+    #  github.activity.events.network 'user-name', 'repo-name'
+    #  github.activity.events.network 'user-name', 'repo-name' { |event| ... }
     #
     def network(user_name, repo_name, params={})
       set :user => user_name, :repo => repo_name
@@ -92,8 +92,8 @@ module Github
     #
     # = Examples
     #  github = Github.new
-    #  github.events.org 'org-name'
-    #  github.events.org 'org-name' { |event| ... }
+    #  github.activity.events.org 'org-name'
+    #  github.activity.events.org 'org-name' { |event| ... }
     #
     def org(org_name, params={})
       assert_presence_of org_name
@@ -116,15 +116,15 @@ module Github
     #
     # = Examples
     #  github = Github.new
-    #  github.events.received 'user-name'
-    #  github.events.received 'user-name' { |event| ... }
+    #  github.activity.events.received 'user-name'
+    #  github.activity.events.received 'user-name' { |event| ... }
     #
     # List all public events that a user has received
     #
     # = Examples
     #  github = Github.new
-    #  github.events.received 'user-name', :public => true
-    #  github.events.received 'user-name', :public => true { |event| ... }
+    #  github.activity.events.received 'user-name', :public => true
+    #  github.activity.events.received 'user-name', :public => true { |event| ... }
     #
     def received(user_name, params={})
       assert_presence_of user_name
@@ -149,15 +149,15 @@ module Github
     #
     # = Examples
     #  github = Github.new
-    #  github.events.performed 'user-name'
-    #  github.events.performed 'user-name' { |event| ... }
+    #  github.activity.events.performed 'user-name'
+    #  github.activity.events.performed 'user-name' { |event| ... }
     #
     # List all public events that a user has performed
     #
     # = Examples
     #  github = Github.new
-    #  github.events.performed 'user-name', :public => true
-    #  github.events.performed 'user-name', :public => true { |event| ... }
+    #  github.activity.events.performed 'user-name', :public => true
+    #  github.activity.events.performed 'user-name', :public => true { |event| ... }
     #
     def performed(user_name, params={})
       assert_presence_of user_name
@@ -182,8 +182,8 @@ module Github
     #
     # = Examples
     #  github = Github.new
-    #  github.events.user_org 'user-name', 'org-name'
-    #  github.events.user_org 'user-name', 'org-name' { |event| ... }
+    #  github.activity.events.user_org 'user-name', 'org-name'
+    #  github.activity.events.user_org 'user-name', 'org-name' { |event| ... }
     #
     def user_org(user_name, org_name, params={})
       assert_presence_of user_name, org_name
