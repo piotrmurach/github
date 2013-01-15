@@ -34,7 +34,6 @@ module Github
           USER_AGENT       => user_agent,
           CONTENT_TYPE     => 'application/json'
         },
-        :ssl => { :verify => false },
         :url => options.fetch(:endpoint) { Github.endpoint }
       }.merge(options)
     end
