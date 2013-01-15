@@ -1,3 +1,8 @@
+0.8.7 (Jan 15, 2013)
+
+* Fix bug with repository commits param listing.
+* Stop bypassing ssl verification.
+
 0.8.6 (Jan 2, 2013)
 
 * Fix bug with content type header for pubsubhubbub
