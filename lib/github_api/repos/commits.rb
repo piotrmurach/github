@@ -3,6 +3,14 @@
 module Github
   class Repos::Commits < API
 
+    VALID_COMMITS_OPTIONS = %w[
+      sha
+      path
+      author
+      since
+      until
+    ].freeze
+
     # List commits on a repository
     #
     # = Parameters
@@ -19,7 +27,7 @@ module Github
       set :user => user_name, :repo => repo_name
       assert_presence_of user, repo
       normalize! params
-      filter! %w[sha path author], params
+      filter! VALID_COMMITS_OPTIONS, params
 
       response = get_request("/repos/#{user}/#{repo}/commits", params)
       return response unless block_given?
