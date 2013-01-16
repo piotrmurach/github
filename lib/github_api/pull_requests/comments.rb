@@ -58,9 +58,7 @@ module Github
     def get(user_name, repo_name, comment_id, params={})
       set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, comment_id
-
       normalize! params
-      # _merge_mime_type(:pull_comment, params)
 
       get_request("/repos/#{user}/#{repo}/pulls/comments/#{comment_id}", params)
     end
@@ -97,9 +95,7 @@ module Github
     def create(user_name, repo_name, request_id, params={})
       set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, request_id
-
       normalize! params
-      # _merge_mime_type(:pull_comment, params)
       filter! VALID_REQUEST_COM_PARAM_NAMES, params
       # _validate_reply_to(params)
 
@@ -119,9 +115,7 @@ module Github
     def edit(user_name, repo_name, comment_id, params={})
       set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, comment_id
-
       normalize! params
-      # _merge_mime_type(:pull_comment, params)
       filter! VALID_REQUEST_COM_PARAM_NAMES, params
 
       patch_request("/repos/#{user}/#{repo}/pulls/comments/#{comment_id}", params)
@@ -136,9 +130,7 @@ module Github
     def delete(user_name, repo_name, comment_id, params={})
       set :user => user_name, :repo => repo_name
       assert_presence_of user, repo, comment_id
-
       normalize! params
-      # _merge_mime_type(:pull_comment, params)
 
       delete_request("/repos/#{user}/#{repo}/pulls/comments/#{comment_id}", params)
     end
