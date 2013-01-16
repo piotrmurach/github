@@ -54,6 +54,7 @@ module Github
     def pull_requests(options = {})
       @pull_requests ||= ApiFactory.new 'PullRequests', options
     end
+    alias :pulls :pull_requests
 
     def repos(options = {})
       @repos ||= ApiFactory.new 'Repos', options
