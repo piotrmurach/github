@@ -1,3 +1,14 @@
+0.8.7 (Jan 15, 2013)
+
+* Fix bug with repository commits param listing.
+* Stop bypassing ssl verification.
+
+0.8.6 (Jan 2, 2013)
+
+* Fix bug with content type header for pubsubhubbub
+* Change labels api remove call to take labe_name as parameter
+* Add feature tests for forks api.
+
 0.8.5 (Dec 27, 2012)
 
 * Fix bug with getting repository branch for enteprise apis.

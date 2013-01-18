@@ -483,4 +483,4 @@ Questions or problems? Please post them on the [issue tracker](https://github.co
 
 ## Copyright
 
-Copyright (c) 2011-2012 Piotr Murach. See LICENSE.txt for further details.
+Copyright (c) 2011-2013 Piotr Murach. See LICENSE.txt for further details.

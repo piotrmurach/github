@@ -3,7 +3,13 @@
 module Github
   class Repos::Commits < API
 
-    VALID_COMMIT_OPTIONS = %w[ sha path author since until ]
+    VALID_COMMITS_OPTIONS = %w[
+      sha
+      path
+      author
+      since
+      until
+    ].freeze
 
     # List commits on a repository
     #

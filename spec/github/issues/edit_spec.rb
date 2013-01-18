@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Issues, '#create' do
+describe Github::Issues, '#edit' do
   let(:user)   { 'peter-murach' }
   let(:repo)   { 'github' }
   let(:issue_id) { 1347 }
