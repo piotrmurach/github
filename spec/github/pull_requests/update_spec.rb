@@ -28,6 +28,10 @@ describe Github::PullRequests, '#update' do
     let(:body)   { fixture('pull_requests/pull_request.json') }
     let(:status) { 201 }
 
+    it { expect { subject.update }.to raise_error(Github::Error::Validations) }
+
+    it { expect { subject.update user }.to raise_error(ArgumentError) }
+
     it "should create resource successfully" do
       subject.update user, repo, number, inputs
       a_patch(request_path).with(inputs).should have_been_made

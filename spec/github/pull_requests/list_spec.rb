@@ -22,9 +22,9 @@ describe Github::PullRequests, '#list' do
 
     it { should respond_to :all }
 
-    it "throws error if pull_request id not provided" do
-      expect { subject.list nil }.to raise_error(ArgumentError)
-    end
+    it { expect { subject.list }.to raise_error(Github::Error::Validations) }
+
+    it { expect { subject.list user }.to raise_error(ArgumentError) }
 
     it "should get the resources" do
       subject.list user, repo, inputs
