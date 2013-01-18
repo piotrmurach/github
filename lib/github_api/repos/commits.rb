@@ -25,7 +25,7 @@ module Github
     #
     def list(*args)
       arguments(args, :required => [:user, :repo]) do
-        sift VALID_COMMIT_OPTIONS
+        sift VALID_COMMITS_OPTIONS
       end
       params = arguments.params
 
