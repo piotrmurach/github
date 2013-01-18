@@ -26,6 +26,8 @@ describe Github::PullRequests::Comments, '#edit' do
     let(:body) { fixture('pull_requests/comment.json') }
     let(:status) { 200 }
 
+    it { expect { subject.edit }.to raise_error(Github::Error::Validations) }
+
     it "should edit resource successfully" do
       subject.edit user, repo, comment_id, inputs
       a_patch(request_path).with(inputs).should have_been_made
