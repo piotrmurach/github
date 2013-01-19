@@ -20,7 +20,7 @@ describe Github::Activity::Notifications, '#get' do
     it { should respond_to(:find) }
 
     it "should raise error when no thread-id parameter" do
-      expect { subject.get nil }.to raise_error(ArgumentError)
+      expect { subject.get }.to raise_error(Github::Error::Validations)
     end
 
     it "should find resources" do
