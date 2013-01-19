@@ -12,12 +12,10 @@ module Github
     #  github.activity.watching.list
     #  github.activity.watching.list { |watcher| ... }
     #
-    def list(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-      normalize! params
+    def list(*args)
+      arguments(args, :required => [:user, :repo])
 
-      response = get_request("/repos/#{user}/#{repo}/subscribers", params)
+      response = get_request("/repos/#{user}/#{repo}/subscribers", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -36,8 +34,7 @@ module Github
     #  github.activity.watching.watched
     #
     def watched(*args)
-      params = args.extract_options!
-      normalize! params
+      params = arguments(args).params
 
       response = if (user_name = params.delete('user'))
         get_request("/users/#{user_name}/subscriptions", params)
@@ -55,10 +52,10 @@ module Github
     #  github = Github.new
     #  github.activity.watching.watching? 'user-name', 'repo-name'
     #
-    def watching?(user_name, repo_name, params={})
-      assert_presence_of user_name, repo_name
-      normalize! params
-      get_request("/user/subscriptions/#{user_name}/#{repo_name}", params)
+    def watching?(*args)
+      arguments(args, :required => [:user, :repo])
+
+      get_request("/user/subscriptions/#{user}/#{repo}", arguments.params)
       true
     rescue Github::Error::NotFound
       false
@@ -72,10 +69,10 @@ module Github
     #  github = Github.new
     #  github.activity.watching.watch 'user-name', 'repo-name'
     #
-    def watch(user_name, repo_name, params={})
-      assert_presence_of user_name, repo_name
-      normalize! params
-      put_request("/user/subscriptions/#{user_name}/#{repo_name}", params)
+    def watch(*args)
+      arguments(args, :required => [:user, :repo])
+
+      put_request("/user/subscriptions/#{user}/#{repo}", arguments.params)
     end
 
     # Stop watching a repository
@@ -85,10 +82,10 @@ module Github
     #  github = Github.new
     #  github.activity.watching.unwatch 'user-name', 'repo-name'
     #
-    def unwatch(user_name, repo_name, params={})
-      assert_presence_of user_name, repo_name
-      normalize! params
-      delete_request("/user/subscriptions/#{user_name}/#{repo_name}", params)
+    def unwatch(*args)
+      arguments(args, :required => [:user, :repo])
+
+      delete_request("/user/subscriptions/#{user}/#{repo}", arguments.params)
     end
 
   end # Activity::Watching
