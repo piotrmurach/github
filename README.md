@@ -260,13 +260,13 @@ To understand what each scope means refer to [documentation](http://developer.gi
 
 ## SSL
 
-By default requests over SSL are set to OpenSSL::SSL::VERIFY_PEER. However, you can to turn off peer verification by
+By default requests over SSL are set to OpenSSL::SSL::VERIFY_PEER. However, you can turn off peer verification by
 
 ```ruby
   Github.new ssl: { verify: false }
 ```
 
-If your client fails to find CA certs you can pass other SSL options to specify exactly how these information is sourced
+If your client fails to find CA certs you can pass other SSL options to specify exactly how the information is sourced
 
 ```ruby
   ssl: {
