@@ -20,8 +20,10 @@ describe Github::Activity::Starring, '#list' do
 
     it { should respond_to :all }
 
+    it { expect { subject.list user }.to raise_error(ArgumentError) }
+
     it "should fail to get resource without username" do
-      expect { subject.list }.to raise_error(ArgumentError)
+      expect { subject.list }.to raise_error(Github::Error::Validations)
     end
 
     it "should yield iterator if block given" do

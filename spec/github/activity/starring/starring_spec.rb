@@ -32,7 +32,7 @@ describe Github::Activity::Starring, '#list' do
 
   context "without username and reponame passed" do
     it "should fail validation " do
-      expect { subject.starring? nil, nil }.to raise_error(ArgumentError)
+      expect { subject.starring? user }.to raise_error(ArgumentError)
     end
   end
 end # starring?
