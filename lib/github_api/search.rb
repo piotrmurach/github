@@ -32,7 +32,7 @@ module Github
         hash
       end
 
-      get_request("/legacy/issues/search/#{options['owner']}/#{options['repo']}/#{options['state']}/#{options['keyword']}", params)
+      get_request("/legacy/issues/search/#{options['owner']}/#{options['repo']}/#{options['state']}/#{CGI.escape(options['keyword'])}", params)
     end
 
     # Search repositories
@@ -51,7 +51,7 @@ module Github
       normalize! params
       assert_required_keys %w[ keyword ], params
 
-      get_request("/legacy/repos/search/#{params.delete('keyword')}", params)
+      get_request("/legacy/repos/search/#{CGI.escape(params.delete('keyword'))}", params)
     end
     alias :repositories :repos
 
@@ -71,7 +71,7 @@ module Github
       normalize! params
       assert_required_keys %w[ keyword ], params
 
-      get_request("/legacy/user/search/#{params.delete('keyword')}", params)
+      get_request("/legacy/user/search/#{CGI.escape(params.delete('keyword'))}", params)
     end
 
     # Search email
