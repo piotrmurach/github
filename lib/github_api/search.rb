@@ -2,6 +2,7 @@
 
 module Github
   class Search < API
+    include Github::Utils::Url
 
     # Creates new Search API
     def initialize(options = {})
@@ -32,7 +33,7 @@ module Github
         hash
       end
 
-      get_request("/legacy/issues/search/#{options['owner']}/#{options['repo']}/#{options['state']}/#{CGI.escape(options['keyword'])}", params)
+      get_request("/legacy/issues/search/#{options['owner']}/#{options['repo']}/#{options['state']}/#{escape(options['keyword'])}", params)
     end
 
     # Search repositories
@@ -51,7 +52,7 @@ module Github
       normalize! params
       assert_required_keys %w[ keyword ], params
 
-      get_request("/legacy/repos/search/#{CGI.escape(params.delete('keyword'))}", params)
+      get_request("/legacy/repos/search/#{escape(params.delete('keyword'))}", params)
     end
     alias :repositories :repos
 
@@ -71,7 +72,7 @@ module Github
       normalize! params
       assert_required_keys %w[ keyword ], params
 
-      get_request("/legacy/user/search/#{CGI.escape(params.delete('keyword'))}", params)
+      get_request("/legacy/user/search/#{escape(params.delete('keyword'))}", params)
     end
 
     # Search email
