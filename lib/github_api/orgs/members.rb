@@ -38,17 +38,28 @@ module Github
     end
     alias :all :list
 
-    # Check if user is a member of an organization
+    # Check if user is, publicly or privately, a member of an organization
     #
     # = Examples
     #  github = Github.new
     #  github.orgs.members.member? 'org-name', 'member-name'
     #
+    # Check if a user is a public member of an organization
+    #
+    # = Examples
+    #  github = Github.new
+    #  github.orgs.members.member? 'org-name', 'member-name', :public => true
+    #
     def member?(org_name, member_name, params={})
       assert_presence_of org_name, member_name
       normalize! params
-      get_request("/orgs/#{org_name}/members/#{member_name}", params)
-      true
+
+      response = if params.delete('public')
+        get_request("/orgs/#{org_name}/public_members/#{member_name}", params)
+      else
+        get_request("/orgs/#{org_name}/members/#{member_name}", params)
+      end
+      response.status == 204
     rescue Github::Error::NotFound
       false
     end
@@ -67,37 +78,6 @@ module Github
       delete_request("/orgs/#{org_name}/members/#{member_name}", params)
     end
     alias :remove :delete
-
-    # List public members
-    # Members of an organization can choose to have their membership publicized or not.
-    # = Examples
-    #  github = Github.new
-    #  github.orgs.members.list_public 'org-name'
-    #  github.orgs.members.list_public 'org-name' { |memb| ... }
-    #
-    def list_public(org_name, params={})
-      assert_presence_of org_name
-      normalize! params
-      response = get_request("/orgs/#{org_name}/public_members", params)
-      return response unless block_given?
-      response.each { |el| yield el }
-    end
-    alias :public_members :list_public
-
-    # Get if a user is a public member of an organization
-    #
-    # = Examples
-    #  github = Github.new
-    #  github.orgs.members.public_member? 'org-name', 'member-name'
-    #
-    def public_member?(org_name, member_name, params={})
-      assert_presence_of org_name, member_name
-      normalize! params
-      get_request("/orgs/#{org_name}/public_members/#{member_name}", params)
-      true
-    rescue Github::Error::NotFound
-      false
-    end
 
     # Publicize a user’s membership
     #
