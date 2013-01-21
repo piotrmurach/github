@@ -16,10 +16,23 @@ module Github
     #  github.orgs.members.list 'org-name'
     #  github.orgs.members.list 'org-name' { |memb| ... }
     #
+    # List public members
+    #
+    # Members of an organization can choose to have their membership publicized or not.
+    # = Examples
+    #  github = Github.new
+    #  github.orgs.members.list 'org-name', :public => true
+    #  github.orgs.members.list 'org-name', :public => true { |memb| ... }
+    #
     def list(org_name, params={})
       assert_presence_of org_name
       normalize! params
-      response = get_request("/orgs/#{org_name}/members", params)
+
+      response = if params.delete('public')
+        get_request("/orgs/#{org_name}/public_members", params)
+      else
+        get_request("/orgs/#{org_name}/members", params)
+      end
       return response unless block_given?
       response.each { |el| yield el }
     end
