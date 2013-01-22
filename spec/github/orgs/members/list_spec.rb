@@ -4,8 +4,8 @@ require 'spec_helper'
 
 describe Github::Orgs::Members, '#list' do
   let(:org) { 'github' }
-    let(:body) { fixture('orgs/members.json') }
-    let(:status) { 200 }
+  let(:body) { fixture('orgs/members.json') }
+  let(:status) { 200 }
 
   before {
     stub_get(request_path).to_return(:body => body, :status => status,
