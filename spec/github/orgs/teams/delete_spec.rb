@@ -6,13 +6,6 @@ describe Github::Orgs::Teams, '#delete' do
   let(:team_id)   { 1 }
   let(:request_path) { "/teams/#{team_id}" }
 
-  let(:inputs) {
-    { :name => 'new team',
-      :permissions => 'push',
-      :repo_names => [ 'github/dotfiles' ]
-    }
-  }
-
   before {
     stub_delete(request_path).to_return(:body => body, :status => status,
       :headers => {:content_type => "application/json; charset=utf-8"})
