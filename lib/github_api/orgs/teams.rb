@@ -135,10 +135,10 @@ module Github
     #  github = Github.new :oauth_token => '...'
     #  github.orgs.teams.team_member? 'team-id', 'user-name'
     #
-    def team_member?(team_id, member_name, params={})
-      assert_presence_of team_id, member_name
+    def team_member?(team_id, user_name, params={})
+      assert_presence_of team_id, user_name
       normalize! params
-      get_request("/teams/#{team_id}/members/#{member_name}", params)
+      get_request("/teams/#{team_id}/members/#{user_name}", params)
       true
     rescue Github::Error::NotFound
       false
@@ -151,10 +151,10 @@ module Github
     #  github = Github.new :oauth_token => '...'
     #  github.orgs.teams.add_member 'team-id', 'user-name'
     #
-    def add_member(team_id, member_name, params={})
-      assert_presence_of team_id, member_name
+    def add_member(team_id, user_name, params={})
+      assert_presence_of team_id, user_name
       normalize! params
-      put_request("/teams/#{team_id}/members/#{member_name}", params)
+      put_request("/teams/#{team_id}/members/#{user_name}", params)
     end
     alias :add_team_member :add_member
 
