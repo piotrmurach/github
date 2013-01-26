@@ -18,8 +18,7 @@ module Github
     #  github.users.followers { |user| ... }
     #
     def list(*args)
-      arguments(args)
-      params = arguments.params
+      params = arguments(args).params
 
       response = if user_name = arguments.remaining.first
         get_request("/users/#{user_name}/followers", params)
@@ -46,8 +45,7 @@ module Github
     #  github.users.followers.following
     #
     def following(*args)
-      arguments(args)
-      params = arguments.params
+      params = arguments(args).params
 
       response = if user_name = arguments.remaining.first
         get_request("/users/#{user_name}/following", params)

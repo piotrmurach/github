@@ -52,10 +52,10 @@ module Github
     #  users = Github::Users.new
     #  users.list
     #
-    def list(params={})
-      normalize! params
+    def list(*args)
+      arguments(args)
 
-      response = get_request("/users", params)
+      response = get_request("/users", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -74,8 +74,8 @@ module Github
     #  github.users.get
     #
     def get(*args)
-      params = args.extract_options!
-      normalize! params
+      params = arguments(args).params
+
       if user_name = params.delete('user')
         get_request("/users/#{user_name}", params)
       else
@@ -107,10 +107,11 @@ module Github
     #    "bio" => "There once..."
     #
     def update(*args)
-      params = args.extract_options!
-      normalize! params
-      filter! VALID_USER_PARAMS_NAMES, params
-      patch_request("/user", params)
+      arguments(args) do
+        sift VALID_USER_PARAMS_NAMES
+      end
+
+      patch_request("/user", arguments.params)
     end
 
   end # Users
