@@ -135,11 +135,11 @@ module Github
     #  github = Github.new :oauth_token => '...'
     #  github.orgs.teams.team_member? 'team-id', 'user-name'
     #
-    def team_member?(team_id, member_name, params={})
-      assert_presence_of team_id, member_name
+    def team_member?(team_id, user_name, params={})
+      assert_presence_of team_id, user_name
       normalize! params
-      get_request("/teams/#{team_id}/members/#{member_name}", params)
-      true
+      response = get_request("/teams/#{team_id}/members/#{user_name}", params)
+      response.status == 204
     rescue Github::Error::NotFound
       false
     end
@@ -151,14 +151,15 @@ module Github
     #  github = Github.new :oauth_token => '...'
     #  github.orgs.teams.add_member 'team-id', 'user-name'
     #
-    def add_member(team_id, member_name, params={})
-      assert_presence_of team_id, member_name
+    def add_member(team_id, user_name, params={})
+      assert_presence_of team_id, user_name
       normalize! params
-      put_request("/teams/#{team_id}/members/#{member_name}", params)
+      put_request("/teams/#{team_id}/members/#{user_name}", params)
     end
     alias :add_team_member :add_member
 
     # Remove a team member
+    #
     # In order to remove a user from a team, the authenticated user must
     # have ‘admin’ permissions to the team or be an owner of the org that
     # the team is associated with.
@@ -166,12 +167,12 @@ module Github
     #
     # = Examples
     #  github = Github.new :oauth_token => '...'
-    #  github.orgs.teams.remove_member 'team-id', 'member-name'
+    #  github.orgs.teams.remove_member 'team-id', 'user-name'
     #
-    def remove_member(team_id, member_name, params={})
-      assert_presence_of team_id, member_name
+    def remove_member(team_id, user_name, params={})
+      assert_presence_of team_id, user_name
       normalize! params
-      delete_request("/teams/#{team_id}/members/#{member_name}", params)
+      delete_request("/teams/#{team_id}/members/#{user_name}", params)
     end
     alias :remove_team_member :remove_member
 
@@ -200,8 +201,8 @@ module Github
     def team_repo?(team_id, user_name, repo_name, params={})
       assert_presence_of team_id, user_name, repo_name
       normalize! params
-      get_request("/teams/#{team_id}/repos/#{user_name}/#{repo_name}", params)
-      true
+      response = get_request("/teams/#{team_id}/repos/#{user_name}/#{repo_name}", params)
+      response.status == 204
     rescue Github::Error::NotFound
       false
     end

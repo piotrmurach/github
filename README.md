@@ -1,5 +1,6 @@
 # GithubAPI
-[![Build Status](https://secure.travis-ci.org/peter-murach/github.png?branch=master)][travis] [![Dependency Status](https://gemnasium.com/peter-murach/github.png?travis)][gemnasium] [![Code Climate](https://codeclimate.com/badge.png)][codeclimate]
+
+[![Gem Version](https://badge.fury.io/rb/github_api.png)](http://badge.fury.io/rb/github_api)[![Build Status](https://secure.travis-ci.org/peter-murach/github.png?branch=master)][travis] [![Dependency Status](https://gemnasium.com/peter-murach/github.png?travis)][gemnasium] [![Code Climate](https://codeclimate.com/badge.png)][codeclimate]
 
 [travis]: http://travis-ci.org/peter-murach/github
 [gemnasium]: https://gemnasium.com/peter-murach/github
@@ -52,7 +53,7 @@ or create a new client instance
 github = Github.new
 ```
 
-At this stage you can also supply various configuration parameters, such as `:user`,`:repo`, `:org`, `:oauth_token`, `:basic_auth`, `:endpoint` which are used throughout the API. These can be passed directly as hash options:
+At this stage you can also supply various configuration parameters, such as `:user`,`:repo`, `:org`, `:oauth_token`, `:basic_auth`, `:endpoint`, `:ssl` which are used throughout the API. These can be passed directly as hash options:
 
 ```ruby
 github = Github.new oauth_token: 'token'
@@ -65,6 +66,7 @@ github = Github.new do |config|
   config.endpoint    = 'https://github.company.com/api/v3'
   config.oauth_token = 'token'
   config.adapter     = :net_http
+  config.ssl         = {:verify => false}
 end
 ```
 
@@ -302,6 +304,25 @@ To list the scopes that the particular Github API action checks for do:
 ```
 
 To understand what each scope means refer to [documentation](http://developer.github.com/v3/oauth/#scopes)
+
+## SSL
+
+By default requests over SSL are set to OpenSSL::SSL::VERIFY_PEER. However, you can turn off peer verification by
+
+```ruby
+  Github.new ssl: { verify: false }
+```
+
+If your client fails to find CA certs you can pass other SSL options to specify exactly how the information is sourced
+
+```ruby
+  ssl: {
+    client_cert: "/usr/local/www.example.com/client_cert.pem"
+    client_key:  "/user/local/www.example.com/client_key.pem"
+    ca_file:     "example.com.cert"
+    ca_path:     "/etc/ssl/"
+  }
+```
 
 ## MIME Types
 

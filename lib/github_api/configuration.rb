@@ -10,6 +10,7 @@ module Github
       :oauth_token,
       :endpoint,
       :site,
+      :ssl,
       :mime_type,
       :user_agent,
       :connection_options,
@@ -47,6 +48,9 @@ module Github
 
     # The web endpoint used to connect to GitHub if none is set
     DEFAULT_SITE = 'https://github.com'.freeze
+
+    # The default SSL configuration
+    DEFAULT_SSL = {}
 
     # The value sent in the http header for 'User-Agent' if none is set
     DEFAULT_USER_AGENT = "Github Ruby Gem #{Github::VERSION::STRING}".freeze
@@ -90,6 +94,7 @@ module Github
       self.oauth_token        = DEFAULT_OAUTH_TOKEN
       self.endpoint           = DEFAULT_ENDPOINT
       self.site               = DEFAULT_SITE
+      self.ssl                = DEFAULT_SSL
       self.user_agent         = DEFAULT_USER_AGENT
       self.connection_options = DEFAULT_CONNECTION_OPTIONS
       self.mime_type          = DEFAULT_MIME_TYPE
