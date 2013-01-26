@@ -1,3 +1,9 @@
+0.8.9 (Jan 26, 2013)
+
+* Fix broken accepts header.
+* Change organization members listing to include flag for public listings.
+* Fix organization teams & members api query methods checking for response status.
+
 0.8.8 (Jan 20, 2013)
 
 * Add :ssl configuration option.
