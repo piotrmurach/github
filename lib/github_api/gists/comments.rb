@@ -22,7 +22,6 @@ module Github
     def list(gist_id, params={})
       normalize! params
       assert_presence_of gist_id
-      # _merge_mime_type(:gist_comment, params)
 
       response = get_request("/gists/#{gist_id}/comments", params)
       return response unless block_given?
@@ -39,7 +38,6 @@ module Github
     def get(gist_id, comment_id, params={})
       normalize! params
       assert_presence_of comment_id
-      # _merge_mime_type(:gist_comment, params)
 
       get_request("/gists/#{gist_id}/comments/#{comment_id}", params)
     end
@@ -53,7 +51,6 @@ module Github
     #
     def create(gist_id, params={})
       normalize! params
-      # _merge_mime_type(:gist_comment, params)
       filter! VALID_GIST_COMMENT_OPTIONS, params
       assert_required_keys(REQUIRED_GIST_COMMENT_OPTIONS, params)
 
@@ -69,7 +66,6 @@ module Github
     def edit(gist_id, comment_id, params={})
       normalize! params
       assert_presence_of comment_id
-      # _merge_mime_type(:gist_comment, params)
       filter! VALID_GIST_COMMENT_OPTIONS, params
       assert_required_keys(REQUIRED_GIST_COMMENT_OPTIONS, params)
 
@@ -85,7 +81,6 @@ module Github
     def delete(gist_id, comment_id, params={})
       normalize! params
       assert_presence_of comment_id
-      # _merge_mime_type(:gist_comment, params)
 
       delete_request("/gists/#{gist_id}/comments/#{comment_id}", params)
     end
