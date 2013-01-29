@@ -9,62 +9,6 @@ describe Github::Gists::Comments do
 
   after { reset_authentication_for(github) }
 
-  describe "#list" do
-    it { github.gists.comments.should respond_to :all }
-
-    context 'resource found' do
-      before do
-        stub_get("/gists/#{gist_id}/comments").
-          to_return(:body => fixture('gists/comments.json'),
-            :status => 200,
-            :headers => {:content_type => "application/json; charset=utf-8"})
-      end
-
-      it "throws error if gist id not provided" do
-        expect { github.gists.comments.list nil}.to raise_error(ArgumentError)
-      end
-
-      it "should get the resources" do
-        github.gists.comments.list gist_id
-        a_get("/gists/#{gist_id}/comments").should have_been_made
-      end
-
-      it "should return array of resources" do
-        comments = github.gists.comments.list gist_id
-        comments.should be_an Array
-        comments.should have(1).items
-      end
-
-      it "should be a mash type" do
-        comments = github.gists.comments.list gist_id
-        comments.first.should be_a Hashie::Mash
-      end
-
-      it "should get gist information" do
-        comments = github.gists.comments.list gist_id
-        comments.first.user.login.should == 'octocat'
-      end
-
-      it "should yield to a block" do
-        github.gists.comments.should_receive(:list).with(gist_id).and_yield('web')
-        github.gists.comments.list(gist_id) { |param| 'web' }
-      end
-    end
-
-    context 'resource not found' do
-      before do
-        stub_get("/gists/#{gist_id}/comments").
-          to_return(:body => "", :status => [404, "Not Found"])
-      end
-
-      it "should return 404 with a message 'Not Found'" do
-        expect {
-          github.gists.comments.list gist_id
-        }.to raise_error(Github::Error::NotFound)
-      end
-    end
-  end # list
-
   describe "#get" do
     it { github.gists.should respond_to :find }
 
