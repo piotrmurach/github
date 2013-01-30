@@ -131,7 +131,7 @@ module Github
   private
 
     def validate_reference ref
-      refs = ref.index('ref') ? ref : "refs/#{ref}"
+      refs = ref.start_with?('ref/') ? ref : "refs/#{ref}"
       unless VALID_REF_PARAM_VALUES['ref'] =~ refs
         raise ArgumentError, "Provided 'reference' is invalid"
       end
