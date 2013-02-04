@@ -1,3 +1,7 @@
+0.8.10 (Feb 4, 2013)
+
+* Fix reference validation in GitData::References.validate_reference
+
 0.8.9 (Jan 26, 2013)
 
 * Fix broken accepts header.
