@@ -4,4 +4,8 @@ require 'spec_helper'
 
 describe Github::Gists do
 
+  after { reset_authentication_for subject }
+
+  its(:comments)   { should be_a Github::Gists::Comments }
+
 end # Github::Gists

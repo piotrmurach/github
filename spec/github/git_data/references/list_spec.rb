@@ -25,10 +25,44 @@ describe Github::GitData::References, '#list' do
       expect { subject.list nil, repo }.to raise_error(ArgumentError)
     end
 
-    it "should fail to call with invalid reference" do
-      expect {
-        subject.list user, repo, :ref => '/branch/featureA'
-      }.to raise_error(ArgumentError)
+    context 'with invalid reference' do
+      let(:ref) { '/branch/featureA' }
+
+      it "should fail to call" do
+        expect {
+          subject.list user, repo, :ref => ref
+        }.to raise_error(ArgumentError)
+      end
+    end
+
+    context 'with valid reference' do
+      let(:ref) { 'heads/lleger-refactor' }
+
+      it "should pass with valid reference" do
+        expect {
+          subject.list user, repo, :ref => ref
+        }.to_not raise_error(ArgumentError)
+      end
+    end
+
+    context 'with valid reference and refs branch name' do
+      let(:ref) { 'refactors/lleger-refactor' }
+
+      it "should pass with valid reference" do
+        expect {
+          subject.list user, repo, :ref => ref
+        }.to_not raise_error(ArgumentError)
+      end
+    end
+
+    context 'with valid renference and refs' do
+      let(:ref) { 'refs/heads/lleger-refactor' }
+
+      it "should pass with valid reference" do
+        expect {
+          subject.list user, repo, :ref => ref
+        }.to_not raise_error(ArgumentError)
+      end
     end
 
     it "should get the resources" do
