@@ -37,12 +37,10 @@ module Github
     #  github = Github.new :oauth_token => '...'
     #  github.gists.list
     #
-    def list(params={})
-      normalize! params
+    def list(*args)
+      params = arguments(args).params
 
-      user = params.delete('user')
-
-      response = if user
+      response = if (user = params.delete('user'))
         get_request("/users/#{user}/gists", params)
       elsif oauth_token
         get_request("/gists", params)
@@ -60,10 +58,9 @@ module Github
     #  github = Github.new :oauth_token => '...'
     #  github.gists.starred
     #
-    def starred(params={})
-      normalize! params
-
-      response = get_request("/gists/starred", params)
+    def starred(*args)
+      arguments(args)
+      response = get_request("/gists/starred", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -74,11 +71,10 @@ module Github
     #  github = Github.new
     #  github.gists.get 'gist-id'
     #
-    def get(gist_id, params={})
-      normalize! params
-      assert_presence_of gist_id
+    def get(*args)
+      arguments(args, :required => [:gist_id])
 
-      get_request("/gists/#{gist_id}", params)
+      get_request("/gists/#{gist_id}", arguments.params)
     end
     alias :find :get
 
@@ -103,11 +99,12 @@ module Github
     #       }
     #    }
     #
-    def create(params={})
-      normalize! params
-      assert_required_keys(REQUIRED_GIST_INPUTS, params)
+    def create(*args)
+      arguments(args) do
+        assert_required REQUIRED_GIST_INPUTS
+      end
 
-      post_request("/gists", params)
+      post_request("/gists", arguments.params)
     end
 
     # Edit a gist
@@ -138,11 +135,10 @@ module Github
     #       'delete_the_file.txt' => nil
     #    }
     #
-    def edit(gist_id, params={})
-      assert_presence_of gist_id
-      normalize! params
+    def edit(*args)
+      arguments(args, :required => [:gist_id])
 
-      patch_request("/gists/#{gist_id}", params)
+      patch_request("/gists/#{gist_id}", arguments.params)
     end
 
     # Star a gist
@@ -151,11 +147,10 @@ module Github
     #  github = Github.new
     #  github.gists.star 'gist-id'
     #
-    def star(gist_id, params={})
-      assert_presence_of gist_id
-      normalize! params
+    def star(*args)
+      arguments(args, :required => [:gist_id])
 
-      put_request("/gists/#{gist_id}/star", params)
+      put_request("/gists/#{gist_id}/star", arguments.params)
     end
 
     # Unstar a gist
@@ -164,11 +159,10 @@ module Github
     #  github = Github.new
     #  github.gists.unstar 'gist-id'
     #
-    def unstar(gist_id, params={})
-      assert_presence_of gist_id
-      normalize! params
+    def unstar(*args)
+      arguments(args, :required => [:gist_id])
 
-      delete_request("/gists/#{gist_id}/star", params)
+      delete_request("/gists/#{gist_id}/star", arguments.params)
     end
 
     # Check if a gist is starred
@@ -177,11 +171,9 @@ module Github
     #  github = Github.new
     #  github.gists.starred? 'gist-id'
     #
-    def starred?(gist_id, params={})
-      assert_presence_of gist_id
-      normalize! params
-
-      get_request("/gists/#{gist_id}/star", params)
+    def starred?(*args)
+      arguments(args, :required => [:gist_id])
+      get_request("/gists/#{gist_id}/star", arguments.params)
       true
     rescue Github::Error::NotFound
       false
@@ -193,11 +185,10 @@ module Github
     #  github = Github.new
     #  github.gists.fork 'gist-id'
     #
-    def fork(gist_id, params={})
-      assert_presence_of gist_id
-      normalize! params
+    def fork(*args)
+      arguments(args, :required => [:gist_id])
 
-      post_request("/gists/#{gist_id}/fork", params)
+      post_request("/gists/#{gist_id}/fork", arguments.params)
     end
 
     # Delete a gist
@@ -206,11 +197,10 @@ module Github
     #  github = Github.new
     #  github.gists.delete 'gist-id'
     #
-    def delete(gist_id, params={})
-      assert_presence_of gist_id
-      normalize! params
+    def delete(*args)
+      arguments(args, :required => [:gist_id])
 
-      delete_request("/gists/#{gist_id}", params)
+      delete_request("/gists/#{gist_id}", arguments.params)
     end
 
   end # Gists

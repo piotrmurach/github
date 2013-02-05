@@ -16,7 +16,7 @@ describe Github::Gists, '#star' do
   after { reset_authentication_for(subject) }
 
   it "should raise error if gist id not present" do
-    expect { subject.star nil }.to raise_error(ArgumentError)
+    expect { subject.star }.to raise_error(Github::Error::Validations)
   end
 
   it 'successfully stars a gist' do
