@@ -20,7 +20,7 @@ describe Github::Orgs::Teams, '#delete' do
     it { should respond_to :remove }
 
     it "should fail to delete without 'team_id' parameter" do
-      expect { subject.delete nil }.to raise_error(ArgumentError)
+      expect { subject.delete }.to raise_error(Github::Error::Validations)
     end
 
     it "should delete the resource" do

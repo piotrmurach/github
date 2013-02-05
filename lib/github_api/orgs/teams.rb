@@ -17,11 +17,10 @@ module Github
     #  github = Github.new :oauth_token => '...'
     #  github.orgs.teams.list 'org-name'
     #
-    def list(org_name, params={})
-      assert_presence_of org_name
-      normalize! params
+    def list(*args)
+      arguments(args, :required => [:org_name])
 
-      response = get_request("/orgs/#{org_name}/teams", params)
+      response = get_request("/orgs/#{org_name}/teams", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -33,11 +32,10 @@ module Github
     #  github = Github.new :oauth_token => '...'
     #  github.orgs.teams.get 'team-id'
     #
-    def get(team_id, params={})
-      assert_presence_of team_id
-      normalize! params
+    def get(*args)
+      arguments(args, :required => [:team_id])
 
-      get_request("/teams/#{team_id}", params)
+      get_request("/teams/#{team_id}", arguments.params)
     end
     alias :find :get
 
@@ -61,14 +59,14 @@ module Github
     #      "github/dotfiles"
     #     ]
     #
-    def create(org_name, params={})
-      assert_presence_of org_name
-      normalize! params
-      filter! VALID_TEAM_PARAM_NAMES, params
-      assert_valid_values(VALID_TEAM_PARAM_VALUES, params)
-      assert_required_keys(%w[ name ], params)
+    def create(*args)
+      arguments(args, :required => [:org_name]) do
+        sift VALID_TEAM_PARAM_NAMES
+        assert_values VALID_TEAM_PARAM_VALUES
+        assert_required %w[name]
+      end
 
-      post_request("/orgs/#{org_name}/teams", params)
+      post_request("/orgs/#{org_name}/teams", arguments.params)
     end
 
     # Edit a team
@@ -87,14 +85,14 @@ module Github
     #    "name" => "new team name",
     #    "permission" => "push"
     #
-    def edit(team_id, params={})
-      assert_presence_of team_id
-      normalize! params
-      filter! VALID_TEAM_PARAM_NAMES, params
-      assert_valid_values(VALID_TEAM_PARAM_VALUES, params)
-      assert_required_keys(%w[ name ], params)
+    def edit(*args)
+      arguments(args, :required => [:team_id]) do
+        sift VALID_TEAM_PARAM_NAMES
+        assert_values VALID_TEAM_PARAM_VALUES
+        assert_required %w[name]
+      end
 
-      patch_request("/teams/#{team_id}", params)
+      patch_request("/teams/#{team_id}", arguments.params)
     end
 
     # Delete a team
@@ -104,10 +102,10 @@ module Github
     #  github = Github.new :oauth_token => '...'
     #  github.orgs.teams.delete 'team-id'
     #
-    def delete(team_id, params={})
-      assert_presence_of team_id
-      normalize! params
-      delete_request("/teams/#{team_id}", params)
+    def delete(*args)
+      arguments(args, :required => [:team_id])
+
+      delete_request("/teams/#{team_id}", arguments.params)
     end
     alias :remove :delete
 
@@ -119,11 +117,10 @@ module Github
     #  github.orgs.teams.list_members 'team-id'
     #  github.orgs.teams.list_members 'team-id' { |member| ... }
     #
-    def list_members(team_id, params={})
-      assert_presence_of team_id
-      normalize! params
+    def list_members(*args)
+      arguments(args, :required => [:team_id])
 
-      response = get_request("/teams/#{team_id}/members", params)
+      response = get_request("/teams/#{team_id}/members", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -135,10 +132,10 @@ module Github
     #  github = Github.new :oauth_token => '...'
     #  github.orgs.teams.team_member? 'team-id', 'user-name'
     #
-    def team_member?(team_id, user_name, params={})
-      assert_presence_of team_id, user_name
-      normalize! params
-      response = get_request("/teams/#{team_id}/members/#{user_name}", params)
+    def team_member?(*args)
+      arguments(args, :required => [:team_id, :user])
+
+      response = get_request("/teams/#{team_id}/members/#{user}", arguments.params)
       response.status == 204
     rescue Github::Error::NotFound
       false
@@ -151,10 +148,10 @@ module Github
     #  github = Github.new :oauth_token => '...'
     #  github.orgs.teams.add_member 'team-id', 'user-name'
     #
-    def add_member(team_id, user_name, params={})
-      assert_presence_of team_id, user_name
-      normalize! params
-      put_request("/teams/#{team_id}/members/#{user_name}", params)
+    def add_member(*args)
+      arguments(args, :required => [:team_id, :user])
+
+      put_request("/teams/#{team_id}/members/#{user}", arguments.params)
     end
     alias :add_team_member :add_member
 
@@ -169,10 +166,10 @@ module Github
     #  github = Github.new :oauth_token => '...'
     #  github.orgs.teams.remove_member 'team-id', 'user-name'
     #
-    def remove_member(team_id, user_name, params={})
-      assert_presence_of team_id, user_name
-      normalize! params
-      delete_request("/teams/#{team_id}/members/#{user_name}", params)
+    def remove_member(*args)
+      arguments(args, :required => [:team_id, :user])
+
+      delete_request("/teams/#{team_id}/members/#{user}", arguments.params)
     end
     alias :remove_team_member :remove_member
 
@@ -182,11 +179,10 @@ module Github
     #  github = Github.new :oauth_token => '...'
     #  github.orgs.teams.list_repos 'team-id'
     #
-    def list_repos(team_id, params={})
-      assert_presence_of team_id
-      normalize! params
+    def list_repos(*args)
+      arguments(args, :required => [:team_id])
 
-      response = get_request("/teams/#{team_id}/repos", params)
+      response = get_request("/teams/#{team_id}/repos", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -198,10 +194,10 @@ module Github
     #  github = Github.new :oauth_token => '...'
     #  github.orgs.teams.team_repo? 'team-id', 'user-name', 'repo-name'
     #
-    def team_repo?(team_id, user_name, repo_name, params={})
-      assert_presence_of team_id, user_name, repo_name
-      normalize! params
-      response = get_request("/teams/#{team_id}/repos/#{user_name}/#{repo_name}", params)
+    def team_repo?(*args)
+      arguments(args, :required => [:team_id, :user, :repo])
+
+      response = get_request("/teams/#{team_id}/repos/#{user}/#{repo}", arguments.params)
       response.status == 204
     rescue Github::Error::NotFound
       false
@@ -219,10 +215,10 @@ module Github
     #  github = Github.new :oauth_token => '...'
     #  github.orgs.teams.add_repo 'team-id', 'user-name', 'repo-name'
     #
-    def add_repo(team_id, user_name, repo_name, params={})
-      assert_presence_of team_id, user_name, repo_name
-      normalize! params
-      put_request("/teams/#{team_id}/repos/#{user_name}/#{repo_name}", params)
+    def add_repo(*args)
+      arguments(args, :required => [:team_id, :user, :repo])
+
+      put_request("/teams/#{team_id}/repos/#{user}/#{repo}", arguments.params)
     end
     alias :add_repository :add_repo
 
@@ -236,10 +232,10 @@ module Github
     #  github = Github.new :oauth_token => '...'
     #  github.orgs.teams.remove_repo 'team-id', 'user-name', 'repo-name'
     #
-    def remove_repo(team_id, user_name, repo_name, params={})
-      assert_presence_of team_id, user_name, repo_name
-      normalize! params
-      delete_request("/teams/#{team_id}/repos/#{user_name}/#{repo_name}", params)
+    def remove_repo(*args)
+      arguments(args, :required => [:team_id, :user, :repo])
+
+      delete_request("/teams/#{team_id}/repos/#{user}/#{repo}", arguments.params)
     end
     alias :remove_repository :remove_repo
 
