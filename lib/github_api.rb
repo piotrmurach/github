@@ -80,6 +80,7 @@ module Github
     :Say             => 'say',
     :Scopes          => 'scopes',
     :Markdown        => 'markdown',
+    :Meta            => 'meta',
     :CoreExt         => 'core_ext',
     :MimeType        => 'mime_type',
     :Authorization   => 'authorization',

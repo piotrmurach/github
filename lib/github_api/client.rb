@@ -39,6 +39,10 @@ module Github
       @markdown ||= ApiFactory.new 'Markdown', options
     end
 
+    def meta(options = {})
+      @meta ||= ApiFactory.ew 'Meta', options
+    end
+
     # An API for users to manage their own tokens. You can only access your own
     # tokens, and only through Basic Authentication.
     def oauth(options = {})
