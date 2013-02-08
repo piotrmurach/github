@@ -430,12 +430,11 @@ A Rails controller that allows a user to authorize their GitHub account and then
 ```ruby
 class GithubController < ApplicationController
 
-  def github
-    Github.new client_id: '...', client_secret: '...'
-  end
+  attr_accessor :github
   private :github
 
   def authorize
+    github  = Github.new client_id: '...', client_secret: '...'
     address = github.authorize_url redirect_uri: 'http://...', scope: 'repo'
     redirect_to address
   end
