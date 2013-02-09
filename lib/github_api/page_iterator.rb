@@ -49,13 +49,9 @@ module Github
       return nil unless has_next?
 
       response = if next_page < 1
-        parsed_query = parse_query(next_page_uri.split(QUERY_STR_SEP).last)
-        params = {}
-        if parsed_query.keys.include?('last_sha')
-          params['sha'] = parsed_query['last_sha']
-        end
+        params = parse_query next_page_uri.split(QUERY_STR_SEP).last
+        params['sha'] = params['last_sha'] if params.keys.include?('last_sha')
         params['per_page'] = parse_per_page_number(next_page_uri)
-
         page_request next_page_uri.split(QUERY_STR_SEP).first, params
       else
         params = parse_query next_page_uri.split(QUERY_STR_SEP).last
