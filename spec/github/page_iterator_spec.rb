@@ -23,6 +23,8 @@ describe Github::PageIterator do
   let(:sha_links) { Github::PageLinks.new(sha_env)}
   let(:sha_first) { "https://api.github.com/repos/peter-murach/github/commits?per_page=30&sha=801d80dfd59bf1d2cb30a243799953ab683a3abd" }
   let(:sha_next) { "https://api.github.com/repos/peter-murach/github/commits?last_sha=d1e503c02fa770859895dd0d12aedefa28b95723&per_page=30&sha=801d80dfd59bf1d2cb30a243799953ab683a3abd&top=801d80dfd59bf1d2cb30a243799953ab683a3abd"}
+  let(:top_sha) { '801d80dfd59bf1d2cb30a243799953ab683a3abd' }
+  let(:sha) { '801d80dfd59bf1d2cb30a243799953ab683a3abd' }
 
   it { described_class::ATTRIBUTES.should_not be_nil }
 
@@ -161,7 +163,7 @@ describe Github::PageIterator do
         sha_instance.stub(:udpate_page_links)
         sha_instance.should_receive(:page_request).
           with("https://api.github.com/repos/peter-murach/github/commits",
-            'sha' => last_sha, 'per_page' => 30).and_return sha_link
+            'last_sha' => last_sha, 'sha' => last_sha, 'per_page' => 30, 'top' => top_sha).and_return sha_link
         sha_instance.next
       end
     end
