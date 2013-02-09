@@ -1,3 +1,8 @@
+0.8.11 (Feb 9, 2013)
+
+* Fix preserving query params in page iterator next action.
+* Add meta api.
+
 0.8.10 (Feb 4, 2013)
 
 * Fix reference validation in GitData::References.validate_reference
