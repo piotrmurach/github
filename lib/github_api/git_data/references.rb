@@ -130,8 +130,9 @@ module Github
 
   private
 
-    def validate_reference ref
-      refs = ref.start_with?('ref/') ? ref : "refs/#{ref}"
+    def validate_reference(ref)
+      refs = (ref =~ (/^(\/)?refs.*/) ? ref : "refs/#{ref}").gsub(/(\/)+/, '/')
+      refs.gsub!(/^\//, '')
       unless VALID_REF_PARAM_VALUES['ref'] =~ refs
         raise ArgumentError, "Provided 'reference' is invalid"
       end
