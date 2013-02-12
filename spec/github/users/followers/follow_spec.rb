@@ -28,6 +28,6 @@ describe Github::Users::Followers, '#follow' do
   end
 
   it "should return 204 with a message 'Not Found'" do
-    subject.follow(user).status.should be 204
+    subject.follow(user).header.status.should be 204
   end
 end # follow

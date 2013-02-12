@@ -24,7 +24,7 @@ Then /^the response should equal (.*)$/ do |expected_response|
 end
 
 Then /^the response status should be (.*)$/ do |expected_response|
-  @response.status.should eql expected_response.to_i
+  @response.header.status.should eql expected_response.to_i
 end
 
 Then /^the response should be (.*)$/ do |expected_response|
@@ -46,11 +46,11 @@ end
 Then /^the response type should be (.*)$/ do |type|
   case type.downcase
   when 'json'
-    @response.content_type.should =~ /application\/json/
+    @response.header.content_type.should =~ /application\/json/
   when 'html'
-    @response.content_type.should =~ /text\/html/
+    @response.header.content_type.should =~ /text\/html/
   when 'raw'
-    @response.content_type.should =~ /raw/
+    @response.header.content_type.should =~ /raw/
   end
 end
 

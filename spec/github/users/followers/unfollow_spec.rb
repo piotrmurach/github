@@ -28,6 +28,6 @@ describe Github::Users::Followers, '#unfollow' do
   end
 
   it "should return 204 with a message 'Not Found'" do
-    subject.unfollow(user).status.should be 204
+    subject.unfollow(user).header.status.should be 204
   end
 end # unfollow
