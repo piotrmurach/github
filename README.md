@@ -278,6 +278,9 @@ If your client fails to find CA certs you can pass other SSL options to specify 
   }
 ```
 
+For instance, download CA root certificates from Mozilla [cacert](http://curl.haxx.se/ca/cacert.pem) and point ca_file at your certificate bundle location.
+This will allow the client to verify the github.com ssl certificate as authentic.
+
 ## MIME Types
 
 Issues, PullRequests and few other API leverage custom mime types which are <tt>:json</tt>, <tt>:blob</tt>, <tt>:raw</tt>, <tt>:text</tt>, <tt>:html</tt>, <tt>:full</tt>. By default <tt>:raw</tt> is used.
