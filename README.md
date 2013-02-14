@@ -59,7 +59,7 @@ At this stage you can also supply various configuration parameters, such as `:us
 github = Github.new oauth_token: 'token'
 ```
 
-Alternatively, you can configure the Github settings by passing a block, for instance, with custom enteprise endpoint like
+Alternatively, you can configure the Github settings by passing a block, for instance, with custom enterprise endpoint like
 
 ```ruby
 github = Github.new do |config|

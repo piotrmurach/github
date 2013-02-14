@@ -54,9 +54,6 @@ module Github
 
     PARAM_START_PAGE = "start_page".freeze
 
-    # URI parsing
-    QUERY_STR_SEP = '?'.freeze
-
 
   end # Constants
 end # Github
