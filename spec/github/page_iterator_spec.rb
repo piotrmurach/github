@@ -84,7 +84,7 @@ describe Github::PageIterator do
       link.stub(:links).and_return link
       instance.stub(:update_page_links)
       instance.should_receive(:page_request).
-        with("https://api.github.com/users/#{user}/repos", 'per_page' => 20).
+        with("/users/#{user}/repos", 'per_page' => 20).
           and_return link
       instance.first
     end
@@ -108,7 +108,7 @@ describe Github::PageIterator do
         sha_link.stub(:links).and_return sha_links
         sha_instance.stub(:udpate_page_links)
         sha_instance.should_receive(:page_request).
-          with("https://api.github.com/repos/peter-murach/github/commits",
+          with("/repos/peter-murach/github/commits",
             'sha' => 'master', 'per_page' => 30).and_return sha_link
         sha_instance.first
       end
@@ -138,7 +138,7 @@ describe Github::PageIterator do
       link.stub(:links).and_return link
       instance.stub(:update_page_links)
       instance.should_receive(:page_request).
-        with("https://api.github.com/users/#{user}/repos",
+        with("/users/#{user}/repos",
           'page' => 4,'per_page' => 20).and_return link
       instance.next
     end
@@ -162,7 +162,7 @@ describe Github::PageIterator do
         sha_link.stub(:links).and_return sha_links
         sha_instance.stub(:udpate_page_links)
         sha_instance.should_receive(:page_request).
-          with("https://api.github.com/repos/peter-murach/github/commits",
+          with("/repos/peter-murach/github/commits",
             'last_sha' => last_sha, 'sha' => last_sha, 'per_page' => 30, 'top' => top_sha).and_return sha_link
         sha_instance.next
       end
@@ -192,7 +192,7 @@ describe Github::PageIterator do
       link.stub(:links).and_return link
       instance.stub(:update_page_links)
       instance.should_receive(:page_request).
-        with("https://api.github.com/users/#{user}/repos",
+        with("/users/#{user}/repos",
           'page' => 2,'per_page' => 20).and_return link
       instance.prev
     end
@@ -221,7 +221,7 @@ describe Github::PageIterator do
       link.stub(:links).and_return link
       instance.stub(:update_page_links)
       instance.should_receive(:page_request).
-        with("https://api.github.com/users/#{user}/repos",
+        with("/users/#{user}/repos",
           'page' => 6,'per_page' => 20).and_return link
       instance.last
     end
@@ -250,7 +250,7 @@ describe Github::PageIterator do
     it 'finds a single page' do
       instance.should_receive(:update_page_links)
       instance.should_receive(:page_request).
-        with("https://api.github.com/users/#{user}/repos",
+        with("/users/#{user}/repos",
           'page' => 2, 'per_page' => 20).and_return link
       link.stub(:links).and_return link
       instance.get_page(2)

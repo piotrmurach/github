@@ -36,7 +36,9 @@ module Github
       puts "EXECUTED: #{method} - #{path} with #{params} and #{options}" if ENV['DEBUG']
 
       conn = connection(options)
-      path = (conn.path_prefix + path).gsub(/\/\//,'/') if conn.path_prefix != '/'
+      if conn.path_prefix != '/' and (path =~ /#{Regexp.quote(conn.path_prefix)}/) != 0
+        path = (conn.path_prefix + path).gsub(/\/\//,'/')
+      end
 
       response = conn.send(method) do |request|
         case method.to_sym
