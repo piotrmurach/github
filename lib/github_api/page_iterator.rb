@@ -28,7 +28,7 @@ module Github
       return nil unless first_page_uri
 
       response = if next_page < 1
-        parsed_query = parse_query(first_page_uri.split(QUERY_STR_SEP).last)
+        parsed_query = parse_query(URI(first_page_uri).query)
         params = {}
         if parsed_query.keys.include?('sha')
           params['sha'] = 'master'
@@ -49,12 +49,12 @@ module Github
       return nil unless has_next?
 
       response = if next_page < 1
-        params = parse_query next_page_uri.split(QUERY_STR_SEP).last
+        params = parse_query URI(next_page_uri).query
         params['sha'] = params['last_sha'] if params.keys.include?('last_sha')
         params['per_page'] = parse_per_page_number(next_page_uri)
         page_request URI(next_page_uri).path, params
       else
-        params = parse_query next_page_uri.split(QUERY_STR_SEP).last
+        params = parse_query URI(next_page_uri).query
         params['page'] = parse_page_number(next_page_uri)
         params['per_page'] = parse_per_page_number(next_page_uri)
         page_request URI(next_page_uri).path, params
@@ -65,7 +65,7 @@ module Github
 
     def prev
       return nil unless prev_page_uri
-      params = parse_query prev_page_uri.split(QUERY_STR_SEP).last
+      params = parse_query URI(prev_page_uri).query
       params['page'] = parse_page_number(prev_page_uri)
       params['per_page'] = parse_per_page_number(prev_page_uri)
       response = page_request URI(prev_page_uri).path, params
@@ -76,7 +76,7 @@ module Github
 
     def last
       return nil unless last_page_uri
-      params = parse_query last_page_uri.split(QUERY_STR_SEP).last
+      params = parse_query URI(last_page_uri).query
       params['page'] = parse_page_number(last_page_uri)
       params['per_page'] = parse_per_page_number(last_page_uri)
       response = page_request URI(last_page_uri).path, params
@@ -91,7 +91,7 @@ module Github
       # last page URI then there is only one page.
       page_uri = first_page_uri || last_page_uri
       return nil unless page_uri
-      params = parse_query page_uri.split(QUERY_STR_SEP).last
+      params = parse_query URI(page_uri).query
       params['page'] = page_number
       params['per_page'] = parse_per_page_number(page_uri)
       response = page_request URI(page_uri).path, params
