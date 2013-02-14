@@ -139,7 +139,7 @@ module Github
       assert_presence_of team_id, user_name
       normalize! params
       response = get_request("/teams/#{team_id}/members/#{user_name}", params)
-      response.status == 204
+      response.header.status == 204
     rescue Github::Error::NotFound
       false
     end
@@ -202,7 +202,7 @@ module Github
       assert_presence_of team_id, user_name, repo_name
       normalize! params
       response = get_request("/teams/#{team_id}/repos/#{user_name}/#{repo_name}", params)
-      response.status == 204
+      response.header.status == 204
     rescue Github::Error::NotFound
       false
     end

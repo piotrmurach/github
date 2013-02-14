@@ -25,6 +25,6 @@ describe Github::Gists, '#unstar' do
   end
 
   it "should return 204 with a message 'Not Found'" do
-    subject.unstar(gist_id).status.should be 204
+    subject.unstar(gist_id).header.status.should be 204
   end
 end # unstar

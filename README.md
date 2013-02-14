@@ -254,7 +254,7 @@ To list the scopes that the particular Github API action checks for do:
 ```ruby
   repos = Github::Repos.new
   res = repos.list :user => 'peter-murach'
-  res.accepted_oauth_scopes    # => ['delete_repo', 'repo', 'public_repo', 'repo:status']
+  res.header.accepted_oauth_scopes    # => ['delete_repo', 'repo', 'public_repo', 'repo:status']
 ```
 
 To understand what each scope means refer to [documentation](http://developer.github.com/v3/oauth/#scopes)
@@ -277,6 +277,9 @@ If your client fails to find CA certs you can pass other SSL options to specify 
     ca_path:     "/etc/ssl/"
   }
 ```
+
+For instance, download CA root certificates from Mozilla [cacert](http://curl.haxx.se/ca/cacert.pem) and point ca_file at your certificate bundle location.
+This will allow the client to verify the github.com ssl certificate as authentic.
 
 ## MIME Types
 
@@ -385,10 +388,12 @@ Each response comes packaged with methods allowing for inspection of HTTP start 
 
 ```ruby
 res = Github::Repos.new.branches 'peter-murach', 'github'
-res.ratelimit_limit     # "5000"
-res.ratelimit_remainig  # "4999"
-res.status              # "200"
-res.content_type        # "application/json; charset=utf-8"
+res.header.ratelimit_limit     # "5000"
+res.header.ratelimit_remainig  # "4999"
+res.header.status              # "200"
+res.header.content_type        # "application/json; charset=utf-8"
+res.header.etag                # "\"2c5dfc54b3fe498779ef3a9ada9a0af9\""
+res.header.cache_control       # "public, max-age=60, s-maxage=60"
 ```
 
 ## Examples
