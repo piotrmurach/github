@@ -84,8 +84,7 @@ describe Github::PageIterator do
       link.stub(:links).and_return link
       instance.stub(:update_page_links)
       instance.should_receive(:page_request).
-        with("/users/#{user}/repos", 'per_page' => 20).
-          and_return link
+        with("/users/#{user}/repos", 'per_page' => 20, 'page' => 1).and_return link
       instance.first
     end
 

@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 require 'github_api/utils/url'
+require 'uri'
 
 module Github
   class PageIterator
@@ -24,78 +25,84 @@ module Github
       next_page == 0 || !next_page_uri.nil?
     end
 
+    # Perform http get request for the first resource
+    #
     def first
       return nil unless first_page_uri
-
-      response = if next_page < 1
-        parsed_query = parse_query(URI(first_page_uri).query)
-        params = {}
-        if parsed_query.keys.include?('sha')
-          params['sha'] = 'master'
-        end
+      page_uri = URI(first_page_uri)
+      params = parse_query(page_uri.query)
+      if next_page < 1
+        params['sha'] = 'master' if params.keys.include?('sha')
         params['per_page'] = parse_per_page_number(first_page_uri)
-
-        page_request URI(first_page_uri).path, params
       else
-        page_request URI(first_page_uri).path,
-                           'per_page' => parse_per_page_number(first_page_uri)
+        params['page']     = parse_page_number(first_page_uri)
+        params['per_page'] = parse_per_page_number(first_page_uri)
       end
 
+      response = page_request(page_uri.path, params)
       update_page_links response.links
       response
     end
 
+    # Perform http get request for the next resource
+    #
     def next
       return nil unless has_next?
-
-      response = if next_page < 1
-        params = parse_query URI(next_page_uri).query
+      page_uri = URI(next_page_uri)
+      params   = parse_query(page_uri.query)
+      if next_page < 1
         params['sha'] = params['last_sha'] if params.keys.include?('last_sha')
         params['per_page'] = parse_per_page_number(next_page_uri)
-        page_request URI(next_page_uri).path, params
       else
-        params = parse_query URI(next_page_uri).query
-        params['page'] = parse_page_number(next_page_uri)
+        params['page']     = parse_page_number(next_page_uri)
         params['per_page'] = parse_per_page_number(next_page_uri)
-        page_request URI(next_page_uri).path, params
       end
+
+      response = page_request(page_uri.path, params)
       update_page_links response.links
       response
     end
 
+    # Perform http get request for the previous resource
+    #
     def prev
       return nil unless prev_page_uri
-      params = parse_query URI(prev_page_uri).query
-      params['page'] = parse_page_number(prev_page_uri)
+      page_uri = URI(prev_page_uri)
+      params = parse_query(page_uri.query)
+      params['page']     = parse_page_number(prev_page_uri)
       params['per_page'] = parse_per_page_number(prev_page_uri)
-      response = page_request URI(prev_page_uri).path, params
 
+      response = page_request(page_uri.path, params)
       update_page_links response.links
       response
     end
 
+    # Perform http get request for the last resource
+    #
     def last
       return nil unless last_page_uri
-      params = parse_query URI(last_page_uri).query
-      params['page'] = parse_page_number(last_page_uri)
+      page_uri = URI(last_page_uri)
+      params = parse_query(page_uri.query)
+      params['page']     = parse_page_number(last_page_uri)
       params['per_page'] = parse_per_page_number(last_page_uri)
-      response = page_request URI(last_page_uri).path, params
 
+      response = page_request(page_uri.path, params)
       update_page_links response.links
       response
     end
 
     # Returns the result for a specific page.
+    #
     def get_page(page_number)
       # Find URI that we can work with, if we cannot get the first or the
       # last page URI then there is only one page.
       page_uri = first_page_uri || last_page_uri
       return nil unless page_uri
       params = parse_query URI(page_uri).query
-      params['page'] = page_number
+      params['page']     = page_number
       params['per_page'] = parse_per_page_number(page_uri)
-      response = page_request URI(page_uri).path, params
 
+      response = page_request URI(page_uri).path, params
       update_page_links response.links
       response
     end
