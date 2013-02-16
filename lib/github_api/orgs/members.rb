@@ -59,7 +59,7 @@ module Github
       else
         get_request("/orgs/#{org_name}/members/#{member_name}", params)
       end
-      response.header.status == 204
+      response.status == 204
     rescue Github::Error::NotFound
       false
     end
