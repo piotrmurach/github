@@ -357,11 +357,12 @@ end
 One can also navigate straight to specific page by:
 
 ```ruby
-res.page 5     # Requests given page if it exists, nil otherwise
-res.first_page
-res.prev_page
-res.next_page
-res.last_page
+res.count_pages  # Number of pages
+res.page 5       # Requests given page if it exists, nil otherwise
+res.first_page   # Get first page
+res.next_page    # Get next page
+res.prev_page    # Get previous page
+res.last_page    # Get last page
 ```
 
 ## Error Handling
@@ -388,12 +389,12 @@ Each response comes packaged with methods allowing for inspection of HTTP start 
 
 ```ruby
 res = Github::Repos.new.branches 'peter-murach', 'github'
-res.header.ratelimit_limit     # "5000"
-res.header.ratelimit_remainig  # "4999"
-res.header.status              # "200"
-res.header.content_type        # "application/json; charset=utf-8"
-res.header.etag                # "\"2c5dfc54b3fe498779ef3a9ada9a0af9\""
-res.header.cache_control       # "public, max-age=60, s-maxage=60"
+res.headers.ratelimit_limit     # "5000"
+res.headers.ratelimit_remainig  # "4999"
+res.headers.status              # "200"
+res.headers.content_type        # "application/json; charset=utf-8"
+res.headers.etag                # "\"2c5dfc54b3fe498779ef3a9ada9a0af9\""
+res.headers.cache_control       # "public, max-age=60, s-maxage=60"
 ```
 
 ## Examples
