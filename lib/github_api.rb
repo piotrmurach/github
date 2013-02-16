@@ -85,6 +85,7 @@ module Github
     :MimeType        => 'mime_type',
     :Authorization   => 'authorization',
     :Authorizations  => 'authorizations',
+    :Pagination      => 'pagination',
     :PageLinks       => 'page_links',
     :PageIterator    => 'page_iterator',
     :PagedRequest    => 'paged_request',
