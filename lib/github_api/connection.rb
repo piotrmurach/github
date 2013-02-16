@@ -52,7 +52,6 @@ module Github
         builder.use Github::Request::BasicAuth, authentication if basic_authed?
 
         builder.use Faraday::Response::Logger if ENV['DEBUG']
-        builder.use Github::Response::Helpers
         unless options[:raw]
           builder.use Github::Response::Mashify
           builder.use Github::Response::Jsonize
