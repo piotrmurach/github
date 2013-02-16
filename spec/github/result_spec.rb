@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Result do
+describe Github::ResponseWrapper do
   let(:github) { Github.new }
   let(:user)   { 'wycats' }
   let(:res)    { github.activity.events.public({ 'per_page' => 20 }) }
