@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 module Github
+
   # Defines HTTP verbs
   module Request
 
@@ -27,7 +28,7 @@ module Github
       request(:delete, path, params, options)
     end
 
-    def request(method, path, params, options)
+    def request(method, path, params, options) # :nodoc:
       if !METHODS.include?(method)
         raise ArgumentError, "unkown http method: #{method}"
       end
@@ -45,7 +46,7 @@ module Github
           request.body = extract_data_from_params(params) unless params.empty?
         end
       end
-      response.body
+      ResponseWrapper.new(response, self)
     end
 
     private
