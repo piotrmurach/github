@@ -24,33 +24,32 @@ Then /^the response should equal (.*)$/ do |expected_response|
 end
 
 Then /^the response status should be (.*)$/ do |expected_response|
-  @response.header.status.should eql expected_response.to_i
+  @response.status.should eql expected_response.to_i
 end
 
 Then /^the response should be (.*)$/ do |expected_response|
   expected_response = case expected_response
   when /false/
-    false
+    @response.should be_false
   when /true/
-    true
+    @response.should be_true
   when /\d+/
-    expected_response.to_i
+    @response.should eql expected_response.to_i
   when /empty/
-    []
+    @response.should be_empty
   else
-    expected_response
+    @response.should eql expected_response
   end
-  @response.should eql expected_response
 end
 
 Then /^the response type should be (.*)$/ do |type|
   case type.downcase
   when 'json'
-    @response.header.content_type.should =~ /application\/json/
+    @response.headers.content_type.should =~ /application\/json/
   when 'html'
-    @response.header.content_type.should =~ /text\/html/
+    @response.headers.content_type.should =~ /text\/html/
   when 'raw'
-    @response.header.content_type.should =~ /raw/
+    @response.headers.content_type.should =~ /raw/
   end
 end
 
