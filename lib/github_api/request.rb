@@ -36,7 +36,12 @@ module Github
 
       puts "EXECUTED: #{method} - #{path} with #{params} and #{options}" if ENV['DEBUG']
 
-      response = connection(options).send(method) do |request|
+      conn = connection(options)
+      if conn.path_prefix != '/' && path.index(conn.path_prefix) != 0
+        path = (conn.path_prefix + path).gsub(/\/(\/)*/, '/')
+      end
+
+      response = conn.send(method) do |request|
         case method.to_sym
         when *(METHODS - METHODS_WITH_BODIES)
           request.body = params.delete('data') if params.has_key?('data')
