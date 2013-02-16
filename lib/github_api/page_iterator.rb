@@ -16,13 +16,21 @@ module Github
       attr_accessor :"#{attr}_page_uri", :"#{attr}_page"
     end
 
-    def initialize(env)
-      @links = Github::PageLinks.new(env[:response_headers])
+    attr_reader :current_api
+
+    def initialize(links, current_api)
+      @links       = links
+      @current_api = current_api
       update_page_links @links
     end
 
     def has_next?
       next_page == 0 || !next_page_uri.nil?
+    end
+
+    def count
+      return nil unless last_page_uri
+      parse_query(URI(last_page_uri).query)['page']
     end
 
     # Perform http get request for the first resource
