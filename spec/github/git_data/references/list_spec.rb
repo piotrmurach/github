@@ -82,7 +82,7 @@ describe Github::GitData::References, '#list' do
 
     it "should return array of resources" do
       references = subject.list user, repo, :ref => ref
-      references.should be_an Array
+      references.should be_an Enumerable
       references.should have(3).items
     end
 

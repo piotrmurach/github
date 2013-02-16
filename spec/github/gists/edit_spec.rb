@@ -44,7 +44,7 @@ describe Github::Gists, '#edit' do
 
     it "should return the resource" do
       gist = subject.edit gist_id, inputs
-      gist.should be_a Hashie::Mash
+      gist.should be_a Github::ResponseWrapper
     end
 
     it "should get the gist information" do

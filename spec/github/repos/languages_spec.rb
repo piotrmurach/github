@@ -33,7 +33,7 @@ describe Github::Repos, '#languages' do
 
     it "should return hash of languages" do
       languages = subject.languages user, repo
-      languages.should be_an Hash
+      languages.should be_an Github::ResponseWrapper
       languages.should have(2).keys
     end
 

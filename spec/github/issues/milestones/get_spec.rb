@@ -38,7 +38,7 @@ describe Github::Issues::Milestones, '#get' do
 
     it "should return mash" do
       milestone = subject.get user, repo, milestone_id
-      milestone.should be_a Hashie::Mash
+      milestone.should be_a Github::ResponseWrapper
     end
   end
 

@@ -35,7 +35,7 @@ describe Github::PullRequests, '#update' do
 
     it "should return the resource" do
       pull_request = subject.update user, repo, number, inputs
-      pull_request.should be_a Hashie::Mash
+      pull_request.should be_a Github::ResponseWrapper
     end
 
     it "should get the pull_request information" do

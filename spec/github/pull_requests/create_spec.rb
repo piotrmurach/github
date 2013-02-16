@@ -36,7 +36,7 @@ describe Github::PullRequests, '#create' do
 
     it "should return the resource" do
       pull_request = subject.create user, repo, inputs
-      pull_request.should be_a Hashie::Mash
+      pull_request.should be_a Github::ResponseWrapper
     end
 
     it "should get the request information" do

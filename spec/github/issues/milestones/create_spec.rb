@@ -40,7 +40,7 @@ describe Github::Issues::Milestones, '#create' do
 
     it "should return the resource" do
       milestone = subject.create user, repo, inputs
-      milestone.should be_a Hashie::Mash
+      milestone.should be_a Github::ResponseWrapper
     end
 
     it "should get the milestone information" do

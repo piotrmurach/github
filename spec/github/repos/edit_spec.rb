@@ -44,7 +44,7 @@ describe Github::Repos, '#edit' do
 
     it "should return resource" do
       repository = subject.edit user, repo, inputs
-      repository.should be_a Hashie::Mash
+      repository.should be_a Github::ResponseWrapper
     end
 
     it "should be able to retrieve information" do

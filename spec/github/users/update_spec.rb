@@ -40,7 +40,7 @@ describe Github::Users, '#update' do
 
     it "should return the resource" do
       user_resource = subject.update inputs
-      user_resource.should be_a Hashie::Mash
+      user_resource.should be_a Github::ResponseWrapper
     end
 
     it "should get the resource information" do

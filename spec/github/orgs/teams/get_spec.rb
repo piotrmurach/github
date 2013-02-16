@@ -34,7 +34,7 @@ describe Github::Orgs::Teams, '#get' do
 
     it "should return mash" do
       team_res = subject.get team
-      team_res.should be_a Hashie::Mash
+      team_res.should be_a Github::ResponseWrapper
     end
   end
 

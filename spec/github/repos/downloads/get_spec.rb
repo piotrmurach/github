@@ -39,7 +39,7 @@ describe Github::Repos::Downloads, '#get' do
 
     it "should return mash" do
       download = subject.get user, repo, download_id
-      download.should be_a Hashie::Mash
+      download.should be_a Github::ResponseWrapper
     end
   end
 

@@ -27,7 +27,7 @@ describe Github::Repos::Forks, '#create' do
 
     it "should return the resource" do
       fork = subject.create user, repo, inputs
-      fork.should be_a Hashie::Mash
+      fork.should be_a Github::ResponseWrapper
     end
 
     it "should get the fork information" do

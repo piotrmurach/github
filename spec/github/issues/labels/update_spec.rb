@@ -45,7 +45,7 @@ describe Github::Issues::Labels, '#update' do
 
     it "should return the resource" do
       label = subject.update user, repo, label_id, inputs
-      label.should be_a Hashie::Mash
+      label.should be_a Github::ResponseWrapper
     end
 
     it "should get the label information" do

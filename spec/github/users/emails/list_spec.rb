@@ -29,7 +29,7 @@ describe Github::Users::Emails, '#list' do
 
     it "should return resource" do
       emails = subject.list
-      emails.should be_an Array
+      emails.should be_an Enumerable
       emails.should have(2).items
     end
 

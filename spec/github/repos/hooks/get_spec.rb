@@ -38,7 +38,7 @@ describe Github::Repos::Hooks, '#get' do
 
     it "should return mash" do
       hook = subject.get user, repo, hook_id
-      hook.should be_a Hashie::Mash
+      hook.should be_a Github::ResponseWrapper
     end
   end
 

@@ -40,7 +40,7 @@ describe Github::Activity::Watching, '#watched' do
 
     it "should return array of resources" do
       watched = subject.watched
-      watched.should be_an Array
+      watched.should be_an Enumerable
       watched.should have(1).items
     end
 

@@ -39,7 +39,7 @@ describe Github::Repos::Commits, '#get' do
 
     it "should return mash" do
       commit = subject.get user, repo, sha
-      commit.should be_a Hashie::Mash
+      commit.should be_a Github::ResponseWrapper
     end
   end
 

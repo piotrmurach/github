@@ -41,7 +41,7 @@ describe Github::Orgs::Teams, '#edit' do
 
     it "should return the resource" do
       edited_team = subject.edit team, inputs
-      edited_team.should be_a Hashie::Mash
+      edited_team.should be_a Github::ResponseWrapper
     end
 
     it "should get the team information" do

@@ -59,7 +59,7 @@ describe Github::GitData::Commits, '#get' do
 
     it "should return the resource" do
       commit = subject.create user, repo, inputs
-      commit.should be_a Hashie::Mash
+      commit.should be_a Github::ResponseWrapper
     end
 
     it "should get the commit information" do

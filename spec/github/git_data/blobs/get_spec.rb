@@ -38,7 +38,7 @@ describe Github::GitData::Blobs, '#get' do
 
     it "should return mash" do
       blob = subject.get user, repo, sha
-      blob.should be_a Hashie::Mash
+      blob.should be_a Github::ResponseWrapper
     end
   end
 

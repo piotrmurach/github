@@ -38,7 +38,7 @@ describe Github::Authorizations, '#get' do
 
     it "should return mash" do
       authorization = subject.get authorization_id
-      authorization.should be_a Hashie::Mash
+      authorization.should be_a Github::ResponseWrapper
     end
   end
 

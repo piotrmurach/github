@@ -36,7 +36,7 @@ describe Github::Gists, '#get' do
 
     it "should return mash" do
       gist = subject.get gist_id
-      gist.should be_a Hashie::Mash
+      gist.should be_a Github::ResponseWrapper
     end
   end
 

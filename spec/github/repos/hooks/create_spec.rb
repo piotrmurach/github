@@ -52,7 +52,7 @@ describe Github::Repos::Hooks, '#create' do
 
     it "should return the resource" do
       hook = subject.create user, repo, inputs
-      hook.should be_a Hashie::Mash
+      hook.should be_a Github::ResponseWrapper
     end
 
     it "should get the hook information" do

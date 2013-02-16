@@ -36,7 +36,7 @@ describe Github::Gists::Comments, '#create' do
 
     it "should return the resource" do
       comment = subject.edit gist_id, comment_id, inputs
-      comment.should be_a Hashie::Mash
+      comment.should be_a Github::ResponseWrapper
     end
 
     it "should get the comment information" do

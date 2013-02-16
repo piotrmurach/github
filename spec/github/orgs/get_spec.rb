@@ -33,7 +33,7 @@ describe Github::Orgs, '#get' do
 
     it "should return mash" do
       organisation = subject.get org
-      organisation.should be_a Hashie::Mash
+      organisation.should be_a Github::ResponseWrapper
     end
   end
 

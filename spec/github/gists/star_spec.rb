@@ -25,6 +25,6 @@ describe Github::Gists, '#star' do
   end
 
   it "should return 204 with a message 'Not Found'" do
-    subject.star(gist_id).header.status.should be 204
+    subject.star(gist_id).status.should be 204
   end
 end # star

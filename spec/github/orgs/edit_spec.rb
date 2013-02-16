@@ -38,7 +38,7 @@ describe Github::Orgs, '#edit' do
 
     it "should return resource" do
       organisation = subject.edit org
-      organisation.should be_a Hashie::Mash
+      organisation.should be_a Github::ResponseWrapper
     end
 
     it "should be able to retrieve information" do

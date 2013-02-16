@@ -33,7 +33,7 @@ describe Github::Authorizations, '#create' do
 
     it "should return the resource" do
       authorization = subject.create inputs
-      authorization.should be_a Hashie::Mash
+      authorization.should be_a Github::ResponseWrapper
     end
 
     it "should get the authorization information" do
