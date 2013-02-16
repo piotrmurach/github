@@ -45,39 +45,39 @@ describe Github::Result do
   end
 
   it "should read response content_type " do
-    res.header.content_type.should match 'application/json'
+    res.headers.content_type.should match 'application/json'
   end
 
   it "should read response content_length " do
-    res.header.content_length.should match '344'
+    res.headers.content_length.should match '344'
   end
 
   it "should read response ratelimit limit" do
-    res.header.ratelimit_limit.should == '5000'
+    res.headers.ratelimit_limit.should == '5000'
   end
 
   it "should read response ratelimit remaining" do
-    res.header.ratelimit_remaining.should == '4999'
+    res.headers.ratelimit_remaining.should == '4999'
   end
 
   it "should read response status" do
-    res.header.status.should be 200
+    res.headers.status.should be 200
   end
 
   it 'should read response etag' do
-    res.header.etag.should eql "\"d9a88f20567726e29d35c6fae87cef2f\""
+    res.headers.etag.should eql "\"d9a88f20567726e29d35c6fae87cef2f\""
   end
 
   it 'should read response date' do
-    res.header.date.should eql "Sun, 05 Feb 2012 15:02:34 GMT"
+    res.headers.date.should eql "Sun, 05 Feb 2012 15:02:34 GMT"
   end
 
   it 'should read response server' do
-    res.header.server.should eql "nginx/1.0.4"
+    res.headers.server.should eql "nginx/1.0.4"
   end
 
   it "should assess successful" do
-    res.header.success?.should be_true
+    res.success?.should be_true
   end
 
   it "should read response body" do
@@ -85,8 +85,9 @@ describe Github::Result do
   end
 
   context "pagination methods" do
-    let(:env) { {:response_headers => {}}}
-    let(:iterator) { Github::PageIterator.new(env) }
+    let(:links) { Github::PageLinks.new({}) }
+    let(:current_api) { stub(:api).as_null_object }
+    let(:iterator) { Github::PageIterator.new(links, current_api) }
 
     before do
       described_class.stub(:page_iterator).and_return iterator
@@ -98,8 +99,8 @@ describe Github::Result do
 
     %w[ next prev ].each do |link|
       context "#{link}_page" do
-        it "should return collection of resources" do
-          res.send(:"#{link}_page").should be_an Array
+        it "responds to #{link}_page request" do
+          res.send(:"#{link}_page").should be_nil
         end
 
         it 'should have no link information' do

@@ -66,6 +66,7 @@ module Github
     :Repos           => 'repos',
     :Request         => 'request',
     :Response        => 'response',
+    :ResponseWrapper => 'response_wrapper',
     :Result          => 'result',
     :Error           => 'error',
     :Issues          => 'issues',
