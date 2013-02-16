@@ -1,3 +1,13 @@
+0.9.0 (Feb .., 2013)
+
+* Add Pagination module to define interface for the response
+* Add Pagination#count_pages to return total number of pages
+* Add ResponeWrapper to define response returned by the client request
+* Add Response::Header to scope header information which fixes bug #89
+* Improvements to page_request method to work on api instance rather than global api configuration, allows for concurrent pagination requests
+* Improvements and fixes to PageIterator, mainly changed links path parsing
+* Fix pagination for the GitHub Enterprise
+
 0.8.11 (Feb 9, 2013)
 
 * Fix preserving query params in page iterator next action.
