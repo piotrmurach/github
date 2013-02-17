@@ -6,82 +6,82 @@ module Github
     # Serving up the ‘social’ in Social Coding™, the Activity APIs
     # provide access to notifications, subscriptions, and timelines.
     #
-    def activity(options = {})
-      @activity ||= ApiFactory.new 'Activity', options
+    def activity(options={}, &block)
+      @activity ||= ApiFactory.new('Activity', current_options.merge(options), &block)
     end
 
-    def emojis(options = {})
-      @emojis ||= ApiFactory.new 'Emojis', options
+    def emojis(options={}, &block)
+      @emojis ||= ApiFactory.new('Emojis', current_options.merge(options), &block)
     end
 
-    def gists(options = {})
-      @gists ||= ApiFactory.new 'Gists', options
+    def gists(options={}, &block)
+      @gists ||= ApiFactory.new('Gists', current_options.merge(options), &block)
     end
 
-    def gitignore(options = {})
-      @gitignore ||= ApiFactory.new 'Gitignore', options
+    def gitignore(options={}, &block)
+      @gitignore ||= ApiFactory.new('Gitignore', current_options.merge(options), &block)
     end
     alias :git_ignore :gitignore
 
     # The Git Database API gives you access to read and write raw Git objects
     # to your Git database on GitHub and to list and update your references
     # (branch heads and tags).
-    def git_data(options = {})
-      @git_data ||= ApiFactory.new 'GitData', options
+    def git_data(options={}, &block)
+      @git_data ||= ApiFactory.new('GitData', current_options.merge(options), &block)
     end
     alias :git :git_data
 
-    def issues(options = {})
-      @issues ||= ApiFactory.new 'Issues', options
+    def issues(options={}, &block)
+      @issues ||= ApiFactory.new('Issues', current_options.merge(options), &block)
     end
 
-    def markdown(options = {})
-      @markdown ||= ApiFactory.new 'Markdown', options
+    def markdown(options={}, &block)
+      @markdown ||= ApiFactory.new('Markdown', current_options.merge(options), &block)
     end
 
-    def meta(options = {})
-      @meta ||= ApiFactory.ew 'Meta', options
+    def meta(options={}, &block)
+      @meta ||= ApiFactory.new('Meta', current_options.merge(options), &block)
     end
 
     # An API for users to manage their own tokens. You can only access your own
     # tokens, and only through Basic Authentication.
-    def oauth(options = {})
-      @oauth ||= ApiFactory.new 'Authorizations', options
+    def oauth(options={}, &block)
+      @oauth ||= ApiFactory.new('Authorizations', current_options.merge(options), &block)
     end
     alias :authorizations :oauth
 
-    def orgs(options = {})
-      @orgs ||= ApiFactory.new 'Orgs', options
+    def orgs(options={}, &block)
+      @orgs ||= ApiFactory.new('Orgs', current_options.merge(options), &block)
     end
     alias :organizations :orgs
 
-    def pull_requests(options = {})
-      @pull_requests ||= ApiFactory.new 'PullRequests', options
+    def pull_requests(options={}, &block)
+      @pull_requests ||= ApiFactory.new('PullRequests', current_options.merge(options), &block)
     end
     alias :pulls :pull_requests
 
-    def repos(options = {})
-      @repos ||= ApiFactory.new 'Repos', options
+    def repos(options={}, &block)
+      @repos ||= ApiFactory.new('Repos', current_options.merge(options), &block)
     end
     alias :repositories :repos
 
-    def octocat(options = {})
-      @octocat ||= ApiFactory.new 'Say', options
+    def octocat(options={}, &block)
+      @octocat ||= ApiFactory.new('Say', current_options.merge(options), &block)
     end
 
-    def scopes(options = {})
-      @scopes ||= ApiFactory.new 'Scopes', options
+    def scopes(options={}, &block)
+      @scopes ||= ApiFactory.new('Scopes', current_options.merge(options), &block)
     end
 
-    def search(options = {})
-      @search ||= ApiFactory.new 'Search', options
+    def search(options={}, &block)
+      @search ||= ApiFactory.new('Search', current_options.merge(options), &block)
     end
 
-    # Many of the resources on the users API provide a shortcut for getting 
+    # Many of the resources on the users API provide a shortcut for getting
     # information about the currently authenticated user.
     #
-    def users(options = {})
-      @users ||= ApiFactory.new 'Users', options
+    def users(options={}, &block)
+      @users ||= ApiFactory.new('Users', current_options.merge(options), &block)
     end
 
   end # Client
