@@ -14,6 +14,8 @@ describe Github::Repos, 'integration' do
 
   its(:commits)       { should be_a Github::Repos::Commits }
 
+  its(:contents)      { should be_a Github::Repos::Contents }
+
   its(:downloads)     { should be_a Github::Repos::Downloads }
 
   its(:forks)         { should be_a Github::Repos::Forks }
