@@ -24,13 +24,13 @@ module Github
     }
 
     # Creates new Gists API
-    def initialize(options = {})
-      super(options)
+    def initialize(options={}, &block)
+      super(options, &block)
     end
 
     # Access to PullRequests::Comments API
-    def comments
-      @comments ||= ApiFactory.new 'PullRequests::Comments'
+    def comments(options={}, &block)
+      @comments ||= ApiFactory.new('PullRequests::Comments', current_options.merge(options), &block)
     end
 
     # List pull requests

@@ -7,8 +7,8 @@ module Github
   class Gitignore < API
 
     # Creates new Gitignore API
-    def initialize(options = {})
-      super(options)
+    def initialize(options={}, &block)
+      super(options, &block)
     end
 
     # List all templates available to pass as an option when creating a repository.

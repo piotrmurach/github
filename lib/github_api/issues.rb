@@ -37,33 +37,33 @@ module Github
     }
 
     # Creates new Issues API
-    def initialize(options = {})
-      super(options)
+    def initialize(options={}, &block)
+      super(options, &block)
     end
 
     # Access to Issues::Assignees API
-    def assignees
-      @assignees ||= ApiFactory.new 'Issues::Assignees'
+    def assignees(options={}, &block)
+      @assignees ||= ApiFactory.new('Issues::Assignees', current_options.merge(options), &block)
     end
 
     # Access to Issues::Comments API
-    def comments
-      @comments ||= ApiFactory.new 'Issues::Comments'
+    def comments(options={}, &block)
+      @comments ||= ApiFactory.new('Issues::Comments', current_options.merge(options), &block)
     end
 
     # Access to Issues::Events API
-    def events
-      @events ||= ApiFactory.new 'Issues::Events'
+    def events(options={}, &block)
+      @events ||= ApiFactory.new('Issues::Events', current_options.merge(options), &block)
     end
 
     # Access to Issues::Comments API
-    def labels
-      @labels ||= ApiFactory.new 'Issues::Labels'
+    def labels(options={}, &block)
+      @labels ||= ApiFactory.new('Issues::Labels', current_options.merge(options), &block)
     end
 
     # Access to Issues::Comments API
-    def milestones
-      @milestones ||= ApiFactory.new 'Issues::Milestones'
+    def milestones(options={}, &block)
+      @milestones ||= ApiFactory.new('Issues::Milestones', current_options.merge(options), &block)
     end
 
     # List your issues

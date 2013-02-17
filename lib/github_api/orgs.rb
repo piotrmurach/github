@@ -17,18 +17,18 @@ module Github
     ].freeze
 
     # Creates new Orgs API
-    def initialize(options = {})
-      super(options)
+    def initialize(options={}, &block)
+      super(options, &block)
     end
 
     # Access to Orgs::Members API
-    def members
-      @members ||= ApiFactory.new 'Orgs::Members'
+    def members(options={}, &block)
+      @members ||= ApiFactory.new('Orgs::Members', current_options.merge(options), &block)
     end
 
     # Access to Orgs::Teams API
-    def teams
-      @teams ||= ApiFactory.new 'Orgs::Teams'
+    def teams(options={}, &block)
+      @teams ||= ApiFactory.new('Orgs::Teams', current_options.merge(options), &block)
     end
 
     # List all public organizations for a user.

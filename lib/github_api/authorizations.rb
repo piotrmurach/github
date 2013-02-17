@@ -14,8 +14,8 @@ module Github
     ].freeze
 
     # Creates new OAuth Authorizations API
-    def initialize(options = {})
-      super(options)
+    def initialize(options={}, &block)
+      super(options, &block)
     end
 
     # List authorizations
