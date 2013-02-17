@@ -5,7 +5,7 @@ require 'spec_helper'
 describe Github do
 
   after do
-    subject.set_defaults
+    subject.reset!
     reset_authentication_for subject
   end
 
