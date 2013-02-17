@@ -7,6 +7,10 @@
 * Improvements to page_request method to work on api instance rather than global api configuration, allows for concurrent pagination requests
 * Improvements and fixes to PageIterator, mainly changed links path parsing
 * Fix pagination for the GitHub Enterprise
+* Change Configuration to call reset! method
+* Change Github::API to preserve current options accross instances
+* Remove api_client global helper to allow for thread safe behaviour accross many client instances
+* Change ApiFactory to be more efficient and accept blocks
 
 0.8.11 (Feb 9, 2013)
 
