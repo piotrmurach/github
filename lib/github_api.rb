@@ -13,14 +13,11 @@ module Github
 
   class << self
 
-    # Handle for the client instance
-    attr_accessor :api_client
-
     # Alias for Github::Client.new
     #
     # @return [Github::Client]
     def new(options = {}, &block)
-      @api_client = Github::Client.new(options, &block)
+      Github::Client.new(options, &block)
     end
 
     # Delegate to Github::Client
