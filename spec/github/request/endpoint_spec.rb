@@ -14,10 +14,6 @@ describe Github::API, 'endpoint' do
       to_return(:body => "[]", :status => 200, :headers =>{})
   }
 
-  after {
-    api.endpoint= 'https://api.github.com'
-  }
-
   its(:endpoint) { should == endpoint }
 
   it "doesn't truncate endpoint" do
