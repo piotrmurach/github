@@ -45,7 +45,6 @@ module Github
     def initialize(options={}, &block)
       super()
       setup options
-      set_api_client
       client if client_id? && client_secret?
 
       self.instance_eval(&block) if block_given?
@@ -68,11 +67,6 @@ module Github
         self.login    = auth[:login]
         self.password = auth[:password]
       end
-    end
-
-    # Assigns current api class
-    def set_api_client
-      Github.api_client = self
     end
 
     # Responds to attribute query or attribute clear
