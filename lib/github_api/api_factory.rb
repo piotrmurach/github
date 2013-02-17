@@ -7,16 +7,16 @@ module Github
 
     # Instantiates a new github api object
     #
-    def self.new(klass, options={})
-      return create_instance(klass, options) if klass
+    def self.new(klass, options={}, &block)
+      return create_instance(klass, options, &block) if klass
       raise ArgumentError, 'must provide API class to be instantiated'
     end
 
     # Passes configuration options to instantiated class
     #
-    def self.create_instance(klass, options)
+    def self.create_instance(klass, options, &block)
       options.symbolize_keys!
-      convert_to_constant(klass.to_s).new options
+      convert_to_constant(klass.to_s).new options, &block
     end
 
     # Convert name to constant
