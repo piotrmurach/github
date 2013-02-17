@@ -77,6 +77,12 @@ module Github
       base.reset!
     end
 
+    class << self
+      def keys
+        VALID_OPTIONS_KEYS
+      end
+    end
+
     def options
       options = {}
       VALID_OPTIONS_KEYS.each { |k| options[k] = send(k) }
