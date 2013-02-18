@@ -1,4 +1,4 @@
-0.9.0 (Feb .., 2013)
+0.9.0 (Feb 18, 2013)
 
 * Add Pagination module to define interface for the response
 * Add Pagination#count_pages to return total number of pages
@@ -11,6 +11,7 @@
 * Change Github::API to preserve current options accross instances
 * Remove api_client global helper to allow for thread safe behaviour accross many client instances
 * Change ApiFactory to be more efficient and accept blocks
+* Change all Api instances to accept options hash and block
 
 0.8.11 (Feb 9, 2013)
 
