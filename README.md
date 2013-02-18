@@ -18,12 +18,13 @@ Supports all the API methods(nearly 200). It's build in a modular way, that is, 
 * Modular design allows for working with parts of API.
 * Fully customizable including advanced middleware stack construction.
 * Its comprehensive, you can request all GitHub API resources.
-* Requests pagination.
-* Easy error handling.
+* Requests pagination with convenient DSL.
+* Easy error handling split for client and server type errors.
+* Supports multithreaded environment.
 * Custom mime types specification (Status: TODO)
 * Flexible arguments parsing (Status: In progress).
 * Request results caching (Status: TODO)
-* Fully tested with test coverage above 90% with over 1,300 specs and 700 features.
+* Fully tested with test coverage above 90% with over 1,400 specs and 700 features.
 
 ## Installation
 
