@@ -10,11 +10,6 @@ module Github
       :Starring      => 'starring',
       :Watching      => 'watching'
 
-    # Create new Activity API
-    def initialize(options={}, &block)
-      super(options, &block)
-    end
-
     # Access to Activity::Events API
     def events(options={}, &block)
       @events ||= ApiFactory.new('Activity::Events', current_options.merge(options), &block)

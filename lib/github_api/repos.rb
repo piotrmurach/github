@@ -41,11 +41,6 @@ module Github
 
     VALID_REPO_TYPES = %w[ all public private member ].freeze
 
-    # Creates new Repositories API
-    def initialize(options={}, &block)
-      super(options, &block)
-    end
-
     # Access to Repos::Collaborators API
     def collaborators(options={}, &block)
       @collaborators ||= ApiFactory.new('Repos::Collaborators', current_options.merge(options), &block)

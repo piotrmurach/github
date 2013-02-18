@@ -8,11 +8,6 @@ module Github
 
     VALID_BLOB_PARAM_NAMES = %w[ content encoding ].freeze
 
-    # Creates new GitData::Blobs API
-    def initialize(options = {})
-      super(options)
-    end
-
     # Get a blob
     #
     # = Examples

@@ -23,11 +23,6 @@ module Github
       'state' => %w[ open closed ]
     }
 
-    # Creates new Gists API
-    def initialize(options={}, &block)
-      super(options, &block)
-    end
-
     # Access to PullRequests::Comments API
     def comments(options={}, &block)
       @comments ||= ApiFactory.new('PullRequests::Comments', current_options.merge(options), &block)

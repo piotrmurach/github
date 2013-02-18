@@ -36,11 +36,6 @@ module Github
       'since'     => %r{\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z}
     }
 
-    # Creates new Issues API
-    def initialize(options={}, &block)
-      super(options, &block)
-    end
-
     # Access to Issues::Assignees API
     def assignees(options={}, &block)
       @assignees ||= ApiFactory.new('Issues::Assignees', current_options.merge(options), &block)

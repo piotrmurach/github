@@ -20,11 +20,6 @@ module Github
       bio
     ].freeze
 
-    # Creates new Repos API
-    def initialize(options={}, &block)
-      super(options, &block)
-    end
-
     # Access to Users::Emails API
     def emails(options={}, &block)
       @emails ||= ApiFactory.new('Users::Emails', current_options.merge(options), &block)

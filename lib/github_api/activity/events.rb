@@ -3,11 +3,6 @@
 module Github
   class Activity::Events < API
 
-    # Creates new Activity::Events API
-    def initialize(options = {})
-      super(options)
-    end
-
     # List all public events
     #
     # = Examples

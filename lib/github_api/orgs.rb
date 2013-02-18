@@ -16,11 +16,6 @@ module Github
       name
     ].freeze
 
-    # Creates new Orgs API
-    def initialize(options={}, &block)
-      super(options, &block)
-    end
-
     # Access to Orgs::Members API
     def members(options={}, &block)
       @members ||= ApiFactory.new('Orgs::Members', current_options.merge(options), &block)

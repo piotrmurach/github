@@ -11,11 +11,6 @@ module Github
       :Tags       => 'tags',
       :Trees      => 'trees'
 
-    # Creates new GitData API
-    def initialize(options={}, &block)
-      super(options, &block)
-    end
-
     # Access to GitData::Blobs API
     def blobs(options={}, &block)
       @blobs ||= ApiFactory.new('GitData::Blobs', current_options.merge(options), &block)

@@ -3,11 +3,6 @@
 module Github
   class Meta < API
 
-    # Creates new Search API
-    def initialize(options = {})
-      super(options)
-    end
-
     # Get meta information about GitHub.com, the service.
     #
     # = Examples

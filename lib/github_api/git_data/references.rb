@@ -9,11 +9,6 @@ module Github
       'ref' => %r{^refs\/\w+(\/\w+)*} # test fully qualified reference
     }
 
-    # Creates new GitData::References API
-    def initialize(options = {})
-      super(options)
-    end
-
     # Get all references
     #
     # This will return an array of all the references on the system,

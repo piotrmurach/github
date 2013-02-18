@@ -16,11 +16,6 @@ module Github
       due_on
     ].freeze # :nodoc:
 
-    # Creates new Issues::Milestones API
-    def initialize(options = {})
-      super(options)
-    end
-
     # List milestones for a repository
     #
     # = Parameters

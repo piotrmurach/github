@@ -4,11 +4,6 @@ module Github
   class Search < API
     include Github::Utils::Url
 
-    # Creates new Search API
-    def initialize(options = {})
-      super(options)
-    end
-
     # Search issues
     #
     # Find issues by state and keyword.
