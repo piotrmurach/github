@@ -5,7 +5,7 @@ require 'spec_helper'
 describe Github do
 
   after do
-    subject.set_defaults
+    subject.reset!
     reset_authentication_for subject
   end
 
@@ -93,11 +93,6 @@ describe Github do
 
     it "should have set mime type to json" do
       subject.mime_type.should == :json
-    end
-
-    it "should allow to set current api client" do
-      subject.should respond_to :api_client=
-      subject.should respond_to :api_client
     end
   end
 

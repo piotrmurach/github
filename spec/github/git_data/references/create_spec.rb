@@ -38,10 +38,10 @@ describe Github::GitData::References, '#create' do
       }.to raise_error(Github::Error::RequiredParams)
     end
 
-    it "should fail to create resource if 'ref' is wrong" do
+    it "should fail to create resource if 'ref' is correct" do
       expect {
         subject.create user, repo, :ref => '/heads/master', :sha => '13t2a1r3'
-      }.to raise_error(ArgumentError)
+      }.not_to raise_error(ArgumentError)
     end
 
     it "should create resource successfully" do

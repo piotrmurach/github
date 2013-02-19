@@ -46,7 +46,7 @@ describe Github::GitData::Trees, '#create' do
 
     it "should return the resource" do
       tree_sha = subject.create user, repo, inputs
-      tree_sha.should be_a Hashie::Mash
+      tree_sha.should be_a Github::ResponseWrapper
     end
 
     it "should get the tree information" do

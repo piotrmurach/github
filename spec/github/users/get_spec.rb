@@ -24,14 +24,9 @@ describe Github::Users, '#get' do
       a_get(request_path).should have_been_made
     end
 
-    it "should return resource" do
+    it "should be a response wrapper" do
       user_resource = subject.get :user => user
-      user_resource.should be_a Hash
-    end
-
-    it "should be a mash type" do
-      user_resource = subject.get :user => user
-      user_resource.should be_a Hashie::Mash
+      user_resource.should be_a Github::ResponseWrapper
     end
 
     it "should get org information" do

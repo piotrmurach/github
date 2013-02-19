@@ -3,11 +3,6 @@
 module Github
   class Activity::Notifications < API
 
-    # Creates new Activity::Notifications API
-    def initialize(options = {})
-      super(options)
-    end
-
     # List your notifications
     #
     # List all notifications for the current user, grouped by repository.

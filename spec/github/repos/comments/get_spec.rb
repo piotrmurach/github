@@ -41,7 +41,7 @@ describe Github::Repos::Comments, '#get' do
 
     it "should return mash" do
       commit_comment = subject.get user, repo, comment_id
-      commit_comment.should be_a Hashie::Mash
+      commit_comment.should be_a Github::ResponseWrapper
     end
   end
 

@@ -26,7 +26,7 @@ describe Github::Repos, '#branch' do
 
     it "should return repository mash" do
       repo_branch = subject.branch user, repo, branch
-      repo_branch.should be_a Hashie::Mash
+      repo_branch.should be_a Github::ResponseWrapper
     end
 
     it "should get repository branch information" do

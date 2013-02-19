@@ -61,7 +61,7 @@ describe Github::Repos::Hooks, '#list' do
 
     it "should return resource" do
       hook = subject.edit user, repo, hook_id, inputs
-      hook.should be_a Hashie::Mash
+      hook.should be_a Github::ResponseWrapper
     end
 
     it "should be able to retrieve information" do

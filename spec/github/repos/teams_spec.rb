@@ -33,7 +33,7 @@ describe Github::Repos, '#teams' do
 
     it "should return array of resources" do
       teams = subject.teams user, repo
-      teams.should be_an Array
+      teams.should be_an Enumerable
       teams.should have(1).items
     end
 

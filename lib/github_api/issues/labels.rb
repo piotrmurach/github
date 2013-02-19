@@ -5,11 +5,6 @@ module Github
 
     VALID_LABEL_INPUTS = %w[ name color ].freeze
 
-    # Creates new Issues::Labels API
-    def initialize(options = {})
-      super(options)
-    end
-
     # List all labels for a repository
     #
     # = Examples

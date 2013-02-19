@@ -18,12 +18,13 @@ Supports all the API methods(nearly 200). It's build in a modular way, that is, 
 * Modular design allows for working with parts of API.
 * Fully customizable including advanced middleware stack construction.
 * Its comprehensive, you can request all GitHub API resources.
-* Requests pagination.
-* Easy error handling.
+* Requests pagination with convenient DSL.
+* Easy error handling split for client and server type errors.
+* Supports multithreaded environment.
 * Custom mime types specification (Status: TODO)
 * Flexible arguments parsing (Status: In progress).
 * Request results caching (Status: TODO)
-* Fully tested with test coverage above 90% with over 1,300 specs and 700 features.
+* Fully tested with test coverage above 90% with over 1,400 specs and 700 features.
 
 ## Installation
 
@@ -59,7 +60,7 @@ At this stage you can also supply various configuration parameters, such as `:us
 github = Github.new oauth_token: 'token'
 ```
 
-Alternatively, you can configure the Github settings by passing a block, for instance, with custom enteprise endpoint like
+Alternatively, you can configure the Github settings by passing a block, for instance, with custom enterprise endpoint like
 
 ```ruby
 github = Github.new do |config|
@@ -300,7 +301,7 @@ To list the scopes that the particular Github API action checks for do:
 ```ruby
   repos = Github::Repos.new
   res = repos.list :user => 'peter-murach'
-  res.accepted_oauth_scopes    # => ['delete_repo', 'repo', 'public_repo', 'repo:status']
+  res.header.accepted_oauth_scopes    # => ['delete_repo', 'repo', 'public_repo', 'repo:status']
 ```
 
 To understand what each scope means refer to [documentation](http://developer.github.com/v3/oauth/#scopes)
@@ -323,6 +324,9 @@ If your client fails to find CA certs you can pass other SSL options to specify 
     ca_path:     "/etc/ssl/"
   }
 ```
+
+For instance, download CA root certificates from Mozilla [cacert](http://curl.haxx.se/ca/cacert.pem) and point ca_file at your certificate bundle location.
+This will allow the client to verify the github.com ssl certificate as authentic.
 
 ## MIME Types
 
@@ -400,11 +404,12 @@ end
 One can also navigate straight to specific page by:
 
 ```ruby
-res.page 5     # Requests given page if it exists, nil otherwise
-res.first_page
-res.prev_page
-res.next_page
-res.last_page
+res.count_pages  # Number of pages
+res.page 5       # Requests given page if it exists, nil otherwise
+res.first_page   # Get first page
+res.next_page    # Get next page
+res.prev_page    # Get previous page
+res.last_page    # Get last page
 ```
 
 ## Error Handling
@@ -431,10 +436,12 @@ Each response comes packaged with methods allowing for inspection of HTTP start 
 
 ```ruby
 res = Github::Repos.new.branches 'peter-murach', 'github'
-res.ratelimit_limit     # "5000"
-res.ratelimit_remainig  # "4999"
-res.status              # "200"
-res.content_type        # "application/json; charset=utf-8"
+res.headers.ratelimit_limit     # "5000"
+res.headers.ratelimit_remainig  # "4999"
+res.headers.status              # "200"
+res.headers.content_type        # "application/json; charset=utf-8"
+res.headers.etag                # "\"2c5dfc54b3fe498779ef3a9ada9a0af9\""
+res.headers.cache_control       # "public, max-age=60, s-maxage=60"
 ```
 
 ## Examples
@@ -476,16 +483,19 @@ A Rails controller that allows a user to authorize their GitHub account and then
 ```ruby
 class GithubController < ApplicationController
 
+  attr_accessor :github
+  private :github
+
   def authorize
-    github = Github.new :client_id => '...', :client_secret => '...'
-    address = github.authorize_url :redirect_uri => 'http://...', :scope => 'repo'
+    github  = Github.new client_id: '...', client_secret: '...'
+    address = github.authorize_url redirect_uri: 'http://...', scope: 'repo'
     redirect_to address
   end
 
   def callback
     authorization_code = params[:code]
-    token = github.get_token authorization_code
-    access_token = token.token
+    access_token = github.get_token authorization_code
+    access_token.token   # => returns token value
   end
 end
 ```

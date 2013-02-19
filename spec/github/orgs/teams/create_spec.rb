@@ -42,7 +42,7 @@ describe Github::Orgs::Teams, '#create' do
 
     it "should return the resource" do
       team = subject.create org, inputs
-      team.should be_a Hashie::Mash
+      team.should be_a Github::ResponseWrapper
     end
 
     it "should get the team information" do

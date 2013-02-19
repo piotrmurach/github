@@ -33,7 +33,7 @@ describe Github::Repos, '#tags' do
 
     it "should return array of resources" do
       tags = subject.tags user, repo
-      tags.should be_an Array
+      tags.should be_an Enumerable
       tags.should have(1).items
     end
 

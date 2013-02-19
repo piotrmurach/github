@@ -22,11 +22,6 @@ module Github
       'type' => %w[ blob tree commit ]
     }
 
-    # Creates new GitData::Tags API
-    def initialize(options = {})
-      super(options)
-    end
-
     # Get a tag
     #
     # = Examples

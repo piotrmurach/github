@@ -9,11 +9,6 @@ module Github
       mime_type
     ].freeze
 
-    # Creates new Issues::Comments API
-    def initialize(options = {})
-      super(options)
-    end
-
     # List comments on an issue
     #
     # = Examples

@@ -6,6 +6,8 @@ describe Github::Issues do
 
   after { reset_authentication_for subject }
 
+  it_should_behave_like 'api interface'
+
   its(:assignees)  { should be_a Github::Issues::Assignees }
 
   its(:comments)   { should be_a Github::Issues::Comments }

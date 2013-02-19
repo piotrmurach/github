@@ -10,29 +10,24 @@ module Github
       :Starring      => 'starring',
       :Watching      => 'watching'
 
-    # Create new Activity API
-    def initialize(options = {})
-      super(options)
-    end
-
     # Access to Activity::Events API
-    def events(options = {})
-      @events ||= ApiFactory.new 'Activity::Events', options
+    def events(options={}, &block)
+      @events ||= ApiFactory.new('Activity::Events', current_options.merge(options), &block)
     end
 
     # Access to Activity::Notifications API
-    def notifications
-      @notifications ||= ApiFactory.new 'Activity::Notifications'
+    def notifications(options={}, &block)
+      @notifications ||= ApiFactory.new('Activity::Notifications', current_options.merge(options), &block)
     end
 
     # Access to Activity::Starring API
-    def starring
-      @starring ||= ApiFactory.new 'Activity::Starring'
+    def starring(options={}, &block)
+      @starring ||= ApiFactory.new('Activity::Starring', current_options.merge(options), &block)
     end
 
     # Access to Activity::Watching API
-    def watching
-      @watching ||= ApiFactory.new 'Activity::Watching'
+    def watching(options={}, &block)
+      @watching ||= ApiFactory.new('Activity::Watching', current_options.merge(options), &block)
     end
 
   end # Activity

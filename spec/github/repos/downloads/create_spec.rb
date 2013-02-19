@@ -48,7 +48,7 @@ describe Github::Repos::Downloads, '#create' do
 
     it "should return the resource" do
       download = subject.create user, repo, inputs
-      download.should be_a Hashie::Mash
+      download.should be_a Github::ResponseWrapper
     end
 
     it "should get the download information" do

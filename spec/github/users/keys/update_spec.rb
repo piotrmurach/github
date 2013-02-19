@@ -40,7 +40,7 @@ describe Github::Users::Keys, '#update' do
 
     it "should return the resource" do
       key = subject.update key_id, inputs
-      key.should be_a Hashie::Mash
+      key.should be_a Github::ResponseWrapper
     end
 
     it "should get the key information" do

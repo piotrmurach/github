@@ -28,7 +28,7 @@ describe Github::GitData::References, '#get' do
     it "should fail to get resource with wrong ref" do
       expect {
         subject.get user, repo, '/branch'
-      }.to raise_error(ArgumentError)
+      }.not_to raise_error(ArgumentError)
     end
 
     it "should get the resource" do

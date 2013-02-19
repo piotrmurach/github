@@ -48,7 +48,7 @@ describe Github::GitData::Blobs, '#create' do
 
     it "should return the resource" do
       blob_sha = subject.create user, repo, inputs
-      blob_sha.should be_a Hashie::Mash
+      blob_sha.should be_a Github::ResponseWrapper
     end
 
     it "should get the blob information" do

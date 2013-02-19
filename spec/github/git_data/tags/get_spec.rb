@@ -37,7 +37,7 @@ describe Github::GitData::Tags, '#get' do
 
     it "should return mash" do
       tag = subject.get user, repo, sha
-      tag.should be_a Hashie::Mash
+      tag.should be_a Github::ResponseWrapper
     end
   end
 

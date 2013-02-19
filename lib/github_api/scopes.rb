@@ -11,7 +11,7 @@ module Github
     #
     def list(params={})
       response = get_request("/user", params)
-      response.oauth_scopes ? response.oauth_scopes.split(',') : response
+      response.headers.oauth_scopes ? response.headers.oauth_scopes.split(',') : response
     end
     alias :all :list
 

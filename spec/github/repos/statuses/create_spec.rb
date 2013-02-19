@@ -40,7 +40,7 @@ describe Github::Repos::Statuses, '#create' do
 
     it "should return the resource" do
       status = subject.create user, repo, sha, inputs
-      status.should be_a Hashie::Mash
+      status.should be_a Github::ResponseWrapper
     end
 
     it "should get the status information" do

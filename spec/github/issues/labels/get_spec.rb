@@ -37,7 +37,7 @@ describe Github::Issues::Labels, '#get' do
 
     it "should return mash" do
       label = subject.get user, repo, label_id
-      label.should be_a Hashie::Mash
+      label.should be_a Github::ResponseWrapper
     end
   end
 

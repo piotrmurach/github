@@ -35,7 +35,7 @@ describe Github::Users::Keys, '#create' do
 
     it "should return the resource" do
       key = subject.create inputs
-      key.should be_a Hashie::Mash
+      key.should be_a Github::ResponseWrapper
     end
 
     it "should get the key information" do

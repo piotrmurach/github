@@ -30,7 +30,7 @@ describe Github::Activity::Notifications, '#get' do
 
     it "should return repository mash" do
       threads = subject.get thread_id
-      threads.should be_an Array
+      threads.should be_an Enumerable
       threads.should have(1).items
     end
 

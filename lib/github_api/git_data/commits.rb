@@ -20,11 +20,6 @@ module Github
       parents
     ].freeze
 
-    # Creates new GitData::Commits API
-    def initialize(options = {})
-      super(options)
-    end
-
     # Get a commit
     #
     # = Examples

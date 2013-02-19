@@ -44,7 +44,7 @@ describe Github::Issues::Labels, '#create' do
 
     it "should return the resource" do
       label = subject.create user, repo, inputs
-      label.should be_a Hashie::Mash
+      label.should be_a Github::ResponseWrapper
     end
 
     it "should get the label information" do

@@ -48,7 +48,7 @@ describe Github::Gists, '#create' do
 
     it "should return the resource" do
       gist = subject.create inputs
-      gist.should be_a Hashie::Mash
+      gist.should be_a Github::ResponseWrapper
     end
 
     it "should get the gist information" do

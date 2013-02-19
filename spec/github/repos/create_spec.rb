@@ -48,7 +48,7 @@ describe Github::Repos, '#create' do
 
       it "should return mash type" do
         repository = subject.create inputs
-        repository.should be_a Hashie::Mash
+        repository.should be_a Github::ResponseWrapper
       end
     end
 

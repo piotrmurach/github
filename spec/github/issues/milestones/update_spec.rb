@@ -41,7 +41,7 @@ describe Github::Issues::Milestones, '#update' do
 
     it "should return the resource" do
       milestone = subject.update user, repo, milestone_id, inputs
-      milestone.should be_a Hashie::Mash
+      milestone.should be_a Github::ResponseWrapper
     end
 
     it "should get the milestone information" do

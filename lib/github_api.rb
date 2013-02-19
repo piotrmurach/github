@@ -13,14 +13,11 @@ module Github
 
   class << self
 
-    # Handle for the client instance
-    attr_accessor :api_client
-
     # Alias for Github::Client.new
     #
     # @return [Github::Client]
     def new(options = {}, &block)
-      @api_client = Github::Client.new(options, &block)
+      Github::Client.new(options, &block)
     end
 
     # Delegate to Github::Client
@@ -67,6 +64,7 @@ module Github
     :Repos           => 'repos',
     :Request         => 'request',
     :Response        => 'response',
+    :ResponseWrapper => 'response_wrapper',
     :Result          => 'result',
     :Error           => 'error',
     :Issues          => 'issues',
@@ -81,10 +79,12 @@ module Github
     :Say             => 'say',
     :Scopes          => 'scopes',
     :Markdown        => 'markdown',
+    :Meta            => 'meta',
     :CoreExt         => 'core_ext',
     :MimeType        => 'mime_type',
     :Authorization   => 'authorization',
     :Authorizations  => 'authorizations',
+    :Pagination      => 'pagination',
     :PageLinks       => 'page_links',
     :PageIterator    => 'page_iterator',
     :PagedRequest    => 'paged_request',

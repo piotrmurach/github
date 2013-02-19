@@ -3,11 +3,6 @@
 module Github
   class Issues::Events < API
 
-    # Creates new Issues::Events API
-    def initialize(options = {})
-      super(options)
-    end
-
     # List events for an issue
     #
     # = Examples

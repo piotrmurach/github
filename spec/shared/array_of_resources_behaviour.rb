@@ -4,7 +4,7 @@ shared_examples_for 'an array of resources' do
 
   it "should return array of resources" do
     objects = requestable
-    objects.should be_an Array
+    objects.should be_a Enumerable
     objects.should have(1).items
   end
 

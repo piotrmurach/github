@@ -40,7 +40,7 @@ describe Github::Activity::Starring, '#starred' do
 
     it "should return array of resources" do
       starred = subject.starred
-      starred.should be_an Array
+      starred.should be_an Enumerable
       starred.should have(1).items
     end
 

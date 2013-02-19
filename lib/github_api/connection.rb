@@ -4,8 +4,8 @@ require 'faraday'
 require 'github_api/response'
 require 'github_api/response/mashify'
 require 'github_api/response/jsonize'
-require 'github_api/response/helpers'
 require 'github_api/response/raise_error'
+require 'github_api/response/header'
 require 'github_api/request/oauth2'
 require 'github_api/request/basic_auth'
 require 'github_api/request/jsonize'
@@ -51,7 +51,6 @@ module Github
         builder.use Github::Request::BasicAuth, authentication if basic_authed?
 
         builder.use Faraday::Response::Logger if ENV['DEBUG']
-        builder.use Github::Response::Helpers
         unless options[:raw]
           builder.use Github::Response::Mashify
           builder.use Github::Response::Jsonize
@@ -88,7 +87,7 @@ module Github
 
     # Returns a Fraday::Connection object
     #
-    def connection(options = {})
+    def connection(options={})
       conn_options = default_options(options)
       clear_cache unless options.empty?
       puts "OPTIONS:#{conn_options.inspect}" if ENV['DEBUG']

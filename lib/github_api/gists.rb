@@ -14,14 +14,9 @@ module Github
       content
     ].freeze
 
-    # Creates new Gists API
-    def initialize(options = {})
-      super(options)
-    end
-
     # Access to Gists::Comments API
-    def comments
-      @comments ||= ApiFactory.new 'Gists::Comments'
+    def comments(options={}, &block)
+      @comments ||= ApiFactory.new('Gists::Comments', current_options.merge(options), &block)
     end
 
     # List a user's gists.

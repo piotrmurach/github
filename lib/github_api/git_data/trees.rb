@@ -19,11 +19,6 @@ module Github
       'type' => %w[ blob tree commit ]
     }
 
-    # Creates new GitData::Trees API
-    def initialize(options = {})
-      super(options)
-    end
-
     # Get a tree
     #
     # = Examples

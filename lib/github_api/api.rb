@@ -21,45 +21,55 @@ module Github
     include Connection
     include Request
     include RateLimit
+    # include Configuration
 
     # TODO consider these optional in a stack
     include Validations
     include ParameterFilter
     include Normalizer
 
-    attr_reader *Configuration::VALID_OPTIONS_KEYS
+    attr_reader *Configuration.keys
 
     attr_accessor *VALID_API_KEYS
 
-    # Callback to update global configuration options
-    class_eval do
-      Configuration::VALID_OPTIONS_KEYS.each do |key|
-        define_method "#{key}=" do |arg|
-          self.instance_variable_set("@#{key}", arg)
-          Github.send("#{key}=", arg)
-        end
-      end
-    end
+    attr_accessor :current_options
 
-    # Creates new API
+    # Callback to update current configuration options
+     class_eval do
+       Configuration.keys.each do |key|
+         define_method "#{key}=" do |arg|
+           self.instance_variable_set("@#{key}", arg)
+           self.current_options.merge!({:"#{key}" => arg})
+         end
+       end
+     end
+
+    # Create new API
+    #
     def initialize(options={}, &block)
-      super()
-      setup options
-      set_api_client
-      client if client_id? && client_secret?
-
-      self.instance_eval(&block) if block_given?
+      setup(options)
+      client(options) if client_id? && client_secret?
+      yield_or_eval(&block) if block_given?
     end
 
+    def yield_or_eval(&block)
+      return unless block
+      block.arity > 0 ? yield(self) : self.instance_eval(&block)
+    end
+
+    # Configure options and process basic authorization
+    #
     def setup(options={})
       options = Github.options.merge(options)
-      Configuration::VALID_OPTIONS_KEYS.each do |key|
+      self.current_options = options
+      Configuration.keys.each do |key|
         send("#{key}=", options[key])
       end
       process_basic_auth(options[:basic_auth])
     end
 
     # Extract login and password from basic_auth parameter
+    #
     def process_basic_auth(auth)
       case auth
       when String
@@ -70,12 +80,7 @@ module Github
       end
     end
 
-    # Assigns current api class
-    def set_api_client
-      Github.api_client = self
-    end
-
-    # Responds to attribute query or attribute clear.
+    # Responds to attribute query or attribute clear
     def method_missing(method, *args, &block) # :nodoc:
       case method.to_s
       when /^(.*)\?$/

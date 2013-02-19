@@ -35,9 +35,9 @@ describe Github::GitData::Trees, '#get' do
       tree.sha.should eql sha
     end
 
-    it "should return mash" do
+    it "should return response wrapper" do
       tree = subject.get user, repo, sha
-      tree.should be_a Hashie::Mash
+      tree.should be_a Github::ResponseWrapper
     end
   end
 
@@ -56,9 +56,9 @@ describe Github::GitData::Trees, '#get' do
       tree.sha.should eql sha
     end
 
-    it "should return mash" do
+    it "should return response wrapper" do
       tree = subject.get user, repo, sha, 'recursive' => true
-      tree.should be_a Hashie::Mash
+      tree.should be_a Github::ResponseWrapper
     end
   end
 

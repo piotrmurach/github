@@ -1,3 +1,23 @@
+0.9.0 (Feb 18, 2013)
+
+* Add Pagination module to define interface for the response
+* Add Pagination#count_pages to return total number of pages
+* Add ResponeWrapper to define response returned by the client request
+* Add Response::Header to scope header information which fixes bug #89
+* Improvements to page_request method to work on api instance rather than global api configuration, allows for concurrent pagination requests
+* Improvements and fixes to PageIterator, mainly changed links path parsing
+* Fix pagination for the GitHub Enterprise
+* Change Configuration to call reset! method
+* Change Github::API to preserve current options accross instances
+* Remove api_client global helper to allow for thread safe behaviour accross many client instances
+* Change ApiFactory to be more efficient and accept blocks
+* Change all Api instances to accept options hash and block
+
+0.8.11 (Feb 9, 2013)
+
+* Fix preserving query params in page iterator next action.
+* Add meta api.
+
 0.8.10 (Feb 4, 2013)
 
 * Fix reference validation in GitData::References.validate_reference

@@ -3,11 +3,6 @@
 module Github
   class Markdown < API
 
-    # Creates new Markdown API
-    def initialize(options = {})
-      super(options)
-    end
-
     # Render an arbritrary Markdown document
     #
     # = Parameters

@@ -39,7 +39,7 @@ describe Github::Users::Keys, '#get' do
 
     it "should return mash" do
       key = subject.get key_id
-      key.should be_a Hashie::Mash
+      key.should be_a Github::ResponseWrapper
     end
   end
 

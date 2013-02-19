@@ -11,11 +11,6 @@ module Github
       'ref' => %r{^refs\/\w+(\/\w+)*} # test fully qualified reference
     }
 
-    # Creates new GitData::References API
-    def initialize(options = {})
-      super(options)
-    end
-
     # Get all references
     #
     # This will return an array of all the references on the system,
@@ -126,8 +121,9 @@ module Github
 
   private
 
-    def validate_reference ref
-      refs = ref.start_with?('ref/') ? ref : "refs/#{ref}"
+    def validate_reference(ref)
+      refs = (ref =~ (/^(\/)?refs.*/) ? ref : "refs/#{ref}").gsub(/(\/)+/, '/')
+      refs.gsub!(/^\//, '')
       unless VALID_REF_PARAM_VALUES['ref'] =~ refs
         raise ArgumentError, "Provided 'reference' is invalid"
       end

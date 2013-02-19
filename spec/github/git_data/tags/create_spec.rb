@@ -47,7 +47,7 @@ describe Github::GitData::Tags, '#create' do
 
     it "should return the resource" do
       tag = subject.create user, repo, inputs
-      tag.should be_a Hashie::Mash
+      tag.should be_a Github::ResponseWrapper
     end
 
     it "should get the tag information" do

@@ -13,11 +13,6 @@ module Github
       client_secret
     ].freeze
 
-    # Creates new OAuth Authorizations API
-    def initialize(options = {})
-      super(options)
-    end
-
     # List authorizations
     #
     # = Examples

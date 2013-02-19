@@ -41,7 +41,7 @@ describe Github::PullRequests::Comments, '#get' do
 
     it "should return mash" do
       comment = subject.get user, repo, comment_id
-      comment.should be_a Hashie::Mash
+      comment.should be_a Github::ResponseWrapper
     end
   end
 

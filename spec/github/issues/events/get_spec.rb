@@ -39,7 +39,7 @@ describe Github::Issues::Events, '#list' do
 
     it "should return mash" do
       event = subject.get user, repo, event_id
-      event.should be_a Hashie::Mash
+      event.should be_a Github::ResponseWrapper
     end
   end
 

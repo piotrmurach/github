@@ -38,7 +38,7 @@ describe Github::PullRequests, '#get' do
 
     it "should return mash" do
       pull_request = subject.get user, repo, number
-      pull_request.should be_a Hashie::Mash
+      pull_request.should be_a Github::ResponseWrapper
     end
   end
 

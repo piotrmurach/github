@@ -35,7 +35,7 @@ describe Github::Repos, '#get' do
 
     it "should return repository mash" do
       repository = subject.get user, repo
-      repository.should be_a Hashie::Mash
+      repository.should be_a Github::ResponseWrapper
     end
 
     it "should get repository information" do

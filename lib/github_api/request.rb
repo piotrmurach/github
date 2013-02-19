@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 module Github
+
   # Defines HTTP verbs
   module Request
 
@@ -27,7 +28,7 @@ module Github
       request(:delete, path, params, options)
     end
 
-    def request(method, path, params, options)
+    def request(method, path, params, options) # :nodoc:
       if !METHODS.include?(method)
         raise ArgumentError, "unkown http method: #{method}"
       end
@@ -35,8 +36,10 @@ module Github
 
       puts "EXECUTED: #{method} - #{path} with #{params} and #{options}" if ENV['DEBUG']
 
-      conn = connection(options)
-      path = (conn.path_prefix + path).gsub(/\/\//,'/') if conn.path_prefix != '/'
+      conn = connection(options.merge(current_options))
+      if conn.path_prefix != '/' && path.index(conn.path_prefix) != 0
+        path = (conn.path_prefix + path).gsub(/\/(\/)*/, '/')
+      end
 
       response = conn.send(method) do |request|
         case method.to_sym
@@ -48,7 +51,7 @@ module Github
           request.body = extract_data_from_params(params) unless params.empty?
         end
       end
-      response.body
+      ResponseWrapper.new(response, self)
     end
 
     private

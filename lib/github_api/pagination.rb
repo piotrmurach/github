@@ -1,87 +1,25 @@
 # encoding: utf-8
 
 module Github
-  module Result
+
+  # A module that decorates response with pagination helpers
+  module Pagination
     include Github::Constants
-
-    # TODO Add result counts method to check total items looking at result links
-
-    # All request headers
-    def headers
-      loaded? ? @env[:response_headers] : nil
-    end
-
-    def oauth_scopes
-      loaded? ? @env[:response_headers][OAUTH_SCOPES] : nil
-    end
-
-    def accepted_oauth_scopes
-      loaded? ? @env[:response_headers][ACCEPTED_OAUTH_SCOPES] : nil
-    end
-
-    # Requests are limited to API v3 to 5000 per hour.
-    def ratelimit_limit
-      loaded? ? @env[:response_headers][RATELIMIT_LIMIT] : nil
-    end
-
-    def ratelimit_remaining
-      loaded? ? @env[:response_headers][RATELIMIT_REMAINING] : nil
-    end
-
-    def cache_control
-      loaded? ? @env[:response_headers][CACHE_CONTROL] : nil
-    end
-
-    def content_type
-      loaded? ? @env[:response_headers][CONTENT_TYPE] : nil
-    end
-
-    def content_length
-      loaded? ? @env[:response_headers][CONTENT_LENGTH] : nil
-    end
-
-    def etag
-      loaded? ? @env[:response_headers][ETAG] : nil
-    end
-
-    def date
-      loaded? ? @env[:response_headers][DATE] : nil
-    end
-
-    def location
-      loaded? ? @env[:response_headers][LOCATION] : nil
-    end
-
-    def server
-      loaded? ? @env[:response_headers][SERVER] : nil
-    end
-
-    def status
-      loaded? ? @env[:status] : nil
-    end
-
-    def success?
-      (200..299).include? status
-    end
-
-    # Returns raw body
-    def body
-      loaded? ? @env[:body] : nil
-    end
-
-    def loaded?
-      !!@env
-    end
 
     # Return page links
     def links
-      @@links = Github::PageLinks.new(@env[:response_headers])
+      @links = Github::PageLinks.new(env[:response_headers])
+    end
+
+    # Retrive number of total pages base on current :per_page parameter
+    def count_pages
+      page_iterator.count.to_i
     end
 
     # Iterator like each for response pages. If there are no pages to
-    # iterate over this method will return nothing.
+    # iterate over this method will return current page.
     def each_page
-      yield self.body
+      yield self
       while page_iterator.has_next?
         yield next_page
       end
@@ -93,7 +31,7 @@ module Github
     def first_page
       first_request = page_iterator.first
       self.instance_eval { @env = first_request.env } if first_request
-      self.body
+      first_request
     end
 
     # Retrives the result of the next page. Returns <tt>nil</tt> if there is
@@ -101,7 +39,7 @@ module Github
     def next_page
       next_request = page_iterator.next
       self.instance_eval { @env = next_request.env } if next_request
-      self.body
+      next_request
     end
 
     # Retrives the result of the previous page. Returns <tt>nil</tt> if there is
@@ -109,7 +47,7 @@ module Github
     def prev_page
       prev_request = page_iterator.prev
       self.instance_eval { @env = prev_request.env } if prev_request
-      self.body
+      prev_request
     end
     alias :previous_page :prev_page
 
@@ -119,7 +57,7 @@ module Github
     def last_page
       last_request = page_iterator.last
       self.instance_eval { @env = last_request.env } if last_request
-      self.body
+      last_request
     end
 
     # Retrives a specific result for a page given page number.
@@ -129,7 +67,7 @@ module Github
     def page(page_number)
       request = page_iterator.get_page(page_number)
       self.instance_eval { @env = request.env } if request
-      self.body
+      request
     end
 
     # Returns <tt>true</tt> if there is another page in the result set,
@@ -138,17 +76,12 @@ module Github
       page_iterator.has_next?
     end
 
-    # Repopulates objects for new values
-    def reset
-      nil
-    end
-
-  private
+    private
 
     # Internally used page iterator
     def page_iterator # :nodoc:
-      @@page_iterator = Github::PageIterator.new(@env)
+      @page_iterator = Github::PageIterator.new(links, current_api)
     end
 
-  end # Result
+  end # Pagination
 end # Github

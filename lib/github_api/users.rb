@@ -20,24 +20,19 @@ module Github
       bio
     ].freeze
 
-    # Creates new Repos API
-    def initialize(options = {})
-      super(options)
-    end
-
     # Access to Users::Emails API
-    def emails
-      @emails ||= ApiFactory.new 'Users::Emails'
+    def emails(options={}, &block)
+      @emails ||= ApiFactory.new('Users::Emails', current_options.merge(options), &block)
     end
 
     # Access to Users::Followers API
-    def followers
-      @followers ||= ApiFactory.new 'Users::Followers'
+    def followers(options={}, &block)
+      @followers ||= ApiFactory.new('Users::Followers', current_options.merge(options), &block)
     end
 
     # Access to Users::Keys API
-    def keys
-      @keys ||= ApiFactory.new 'Users::Keys'
+    def keys(options={}, &block)
+      @keys ||= ApiFactory.new('Users::Keys', current_options.merge(options), &block)
     end
 
     # List all users.

@@ -42,7 +42,7 @@ describe Github::Repos::Merging, '#merge' do
 
     it "should return the resource" do
       merge = subject.merge user, repo, inputs
-      merge.should be_a Hashie::Mash
+      merge.should be_a Github::ResponseWrapper
     end
 
     it "should get the commit comment information" do

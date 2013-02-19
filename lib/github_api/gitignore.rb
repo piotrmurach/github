@@ -6,11 +6,6 @@ module Github
   # .gitignore template to apply to the repository upon creation.
   class Gitignore < API
 
-    # Creates new Gitignore API
-    def initialize(options = {})
-      super(options)
-    end
-
     # List all templates available to pass as an option when creating a repository.
     #
     # = Examples

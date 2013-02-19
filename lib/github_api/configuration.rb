@@ -78,7 +78,13 @@ module Github
     end
 
     def self.extended(base)
-      base.set_defaults
+      base.reset!
+    end
+
+    class << self
+      def keys
+        VALID_OPTIONS_KEYS
+      end
     end
 
     def options
@@ -87,7 +93,9 @@ module Github
       options
     end
 
-    def set_defaults
+    # Reset configuration options to their defaults
+    #
+    def reset!
       self.adapter            = DEFAULT_ADAPTER
       self.client_id          = DEFAULT_CLIENT_ID
       self.client_secret      = DEFAULT_CLIENT_SECRET

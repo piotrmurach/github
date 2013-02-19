@@ -6,7 +6,7 @@ describe Github::GitData::References, '#list' do
   let(:user) { 'peter-murach' }
   let(:repo) { 'github' }
   let(:ref) { "heads/master" }
-  let(:request_path) { "/repos/#{user}/#{repo}/git/refs/#{ref}" }
+  let(:request_path) { "/repos/#{user}/#{repo}/git/refs/#{ref}".gsub(/(\/)+/, '/') }
 
   before {
     stub_get(request_path).to_return(:body => body, :status => status,
@@ -31,7 +31,7 @@ describe Github::GitData::References, '#list' do
       it "should fail to call" do
         expect {
           subject.list user, repo, :ref => ref
-        }.to raise_error(ArgumentError)
+        }.to_not raise_error(ArgumentError, /reference/)
       end
     end
 
@@ -41,7 +41,7 @@ describe Github::GitData::References, '#list' do
       it "should pass with valid reference" do
         expect {
           subject.list user, repo, :ref => ref
-        }.to_not raise_error(ArgumentError)
+        }.to_not raise_error(ArgumentError, /reference/)
       end
     end
 
@@ -51,7 +51,7 @@ describe Github::GitData::References, '#list' do
       it "should pass with valid reference" do
         expect {
           subject.list user, repo, :ref => ref
-        }.to_not raise_error(ArgumentError)
+        }.to_not raise_error(ArgumentError, /reference/)
       end
     end
 
@@ -61,7 +61,17 @@ describe Github::GitData::References, '#list' do
       it "should pass with valid reference" do
         expect {
           subject.list user, repo, :ref => ref
-        }.to_not raise_error(ArgumentError)
+        }.to_not raise_error(ArgumentError, /reference/)
+      end
+    end
+
+    context 'with valid renference and refs with leading slash' do
+      let(:ref) { '/refs/heads/lleger-refactor' }
+
+      it "should pass with valid reference" do
+        expect {
+          subject.list user, repo, :ref => ref
+        }.to_not raise_error(ArgumentError, /reference/)
       end
     end
 
@@ -72,7 +82,7 @@ describe Github::GitData::References, '#list' do
 
     it "should return array of resources" do
       references = subject.list user, repo, :ref => ref
-      references.should be_an Array
+      references.should be_an Enumerable
       references.should have(3).items
     end
 
