@@ -3,7 +3,7 @@ PATH
   specs:
     github_api (0.9.0)
       faraday (~> 0.8.1)
-      hashie (~> 1.2.0)
+      hashie (~> 2.0)
       multi_json (~> 1.4)
       nokogiri (~> 1.5.2)
       oauth2
@@ -35,7 +35,7 @@ GEM
       guard (>= 0.8.3)
     guard-rspec (0.5.7)
       guard (>= 0.8.4)
-    hashie (1.2.0)
+    hashie (2.0.0)
     httpauth (0.1)
     json (1.6.6)
     multi_json (1.4.0)
