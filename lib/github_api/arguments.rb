@@ -46,7 +46,7 @@ module Github
       options = args.extract_options!
       normalize! options
 
-      if args.any?
+      if !args.size.zero?
         parse_arguments *args
       else
         # Arguments are inside the parameters hash
@@ -104,8 +104,9 @@ module Github
     # validate their presence(if not nil or empty string).
     #
     def parse_options(options)
-      options.each { |key, val| remove_required options, key, val }
-      check_assignment!(options)
+      options.each { |key, val| remove_required(options, key, val) }
+      provided_args = check_assignment!(options)
+      check_requirement!(*provided_args.keys)
     end
 
     # Remove required argument from parameters
@@ -122,11 +123,12 @@ module Github
     # Check if required arguments have been set on instance.
     #
     def check_assignment!(options)
-      assert_presence_of required.inject({}) { |hash, arg|
-        api.set(:"#{arg}", '') unless api.respond_to? :"#{arg}"
-        hash[arg] = api.send(:"#{arg}")
+      result = required.inject({}) { |hash, arg|
+        hash[arg] = api.send(:"#{arg}") if api.respond_to? :"#{arg}"
         hash
       }
+      assert_presence_of result
+      result
     end
 
     # Check if required arguments are present.

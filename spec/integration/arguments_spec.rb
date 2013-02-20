@@ -24,12 +24,12 @@ describe 'Arguments' do
     it { subject.repo.should == repo }
 
     it 'performs request' do
-      subject.list nil, nil
+      subject.list
       a_get(request_path).should have_been_made
     end
 
     it "does not set argument to nil" do
-      subject.list nil, nil
+      subject.list
       subject.user.should == user
     end
   end
@@ -50,9 +50,27 @@ describe 'Arguments' do
       a_get(request_path).should have_been_made
     }
 
+    it 'reads user & repo settings' do
+      subject.get :milestone_id => milestone_id
+      a_get(request_path).should have_been_made
+    end
+
+    it 'reads user & repo and requires milestone_id' do
+      expect { subject.get milestone_id }.to raise_error(ArgumentError)
+    end
+
+    it 'requires extra parameter' do
+      expect { subject.get user, repo }.to raise_error(ArgumentError)
+    end
+
+    it 'requires milestone_id to be set' do
+      expect { subject.get }.to raise_error(ArgumentError)
+    end
+
     it 'creates setter' do
       subject.get user, repo, milestone_id
       subject.milestone_id.should == milestone_id
     end
+
   end
 end
