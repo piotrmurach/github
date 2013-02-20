@@ -18,6 +18,8 @@ describe Github::Gists, '#unstar' do
   context 'when gist is starred' do
     let(:status) { 204 }
 
+    it { expect { subject.starred? }.to raise_error(ArgumentError) }
+
     it 'should raise error if gist id not present' do
       expect { subject.starred? nil }.to raise_error(ArgumentError)
     end
