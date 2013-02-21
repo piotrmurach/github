@@ -24,7 +24,7 @@ Supports all the API methods(nearly 200). It's build in a modular way, that is, 
 * Custom mime types specification (Status: TODO)
 * Flexible arguments parsing (Status: In progress).
 * Request results caching (Status: TODO)
-* Fully tested with test coverage above 90% with over 1,400 specs and 700 features.
+* Fully tested with test coverage above 90% with over 1,500 specs and 700 features.
 
 ## Installation
 
@@ -110,25 +110,23 @@ repos.branches do |branch|
 end
 ```
 
-## Arguments & Parameters
+## Arguments & Parameters (Feature not released yet)
 
-The request arguments are thought of as required variables that form the request resource url. Wherease parameters are thought of as the additional variables passed in to configure the request.
-
-The gem allows for flexible arguments parsing. Therefore arguments can be passed during instance creation:
+The library allows for flexible arguments parsing. Therefore arguments can be passed during instance creation:
 
 ```ruby
   issues = Github::Issues.new user: 'peter-murach', repo: 'github'
   issues.milestones.list
 ```
 
-Further, arguments can be passed directly inside method called but then the order of parameters matters and hence please consult the method documentation. For instance:
+Further, arguments can be passed directly inside method called but then the order of parameters matters and hence please consult the method documentation or GitHub specification. For instance:
 
 ```ruby
   issues = Github::Issues.new
   issues.milestones.list 'peter-murach', 'github'
 ```
 
-Similarly, the argument for the request can be passed inside the current scope such as:
+Similarly, the arguments for the request can be passed inside the current scope such as:
 
 ```ruby
   issues = Github::Issues.new
