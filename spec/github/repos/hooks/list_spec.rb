@@ -20,7 +20,7 @@ describe Github::Repos::Hooks, '#list' do
 
     it { subject.should respond_to :all }
 
-    it { expect { subject.list }.to raise_error(ArgumentError) }
+    it { expect { subject.list }.to raise_error(Github::Error::Validations) }
 
     it "should fail to get resource without required arguments" do
       expect { subject.list user }.to raise_error(ArgumentError)

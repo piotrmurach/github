@@ -24,22 +24,20 @@ module Github
     # <tt>:direction</tt> - <tt>asc</tt>, <tt>desc</tt>, default: <tt>desc</tt>
     #
     # = Examples
-    #  github = Github.new :user => 'user-name', :repo => 'repo-name'
+    #  github = Github.new user: 'user-name', repo: 'repo-name'
     #  github.issues.milestones.list
     #
     #  or
     #
-    #  github.issues.milestones.list :state => 'open',
-    #     :sort => 'due_date',
-    #     :direction => 'asc'
+    #  github.issues.milestones.list state: 'open', sort: 'due_date',
+    #    direction: 'asc'
     #
-    def list(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-
-      normalize! params
-      filter! VALID_MILESTONE_OPTIONS.keys, params
-      assert_valid_values(VALID_MILESTONE_OPTIONS, params)
+    def list(*args)
+      arguments(args, :required => [:user, :repo]) do
+        sift VALID_MILESTONE_OPTIONS.keys
+        assert_values VALID_MILESTONE_OPTIONS
+      end
+      params = arguments.params
 
       response = get_request("/repos/#{user}/#{repo}/milestones", params)
       return response unless block_given?
@@ -53,10 +51,9 @@ module Github
     #  github = Github.new
     #  github.issues.milestones.get 'user-name', 'repo-name', 'milestone-id'
     #
-    def get(user_name, repo_name, milestone_id, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, milestone_id
-      normalize! params
+    def get(*args)
+      arguments(args, :required => [:user, :repo, :milestone_id])
+      params = arguments.params
 
       get_request("/repos/#{user}/#{repo}/milestones/#{milestone_id}", params)
     end
@@ -77,15 +74,13 @@ module Github
     #    :description => "String",
     #    :due_on => "Time"
     #
-    def create(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
+    def create(*args)
+      arguments(args, :required => [:user, :repo]) do
+        sift VALID_MILESTONE_INPUTS
+        assert_required %w[ title ]
+      end
 
-      normalize! params
-      filter! VALID_MILESTONE_INPUTS, params
-      assert_required_keys(%w[ title ], params)
-
-      post_request("/repos/#{user}/#{repo}/milestones", params)
+      post_request("/repos/#{user}/#{repo}/milestones", arguments.params)
     end
 
     # Update a milestone
@@ -104,12 +99,11 @@ module Github
     #    :description => "String",
     #    :due_on => "Time"
     #
-    def update(user_name, repo_name, milestone_id, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, milestone_id
-
-      normalize! params
-      filter! VALID_MILESTONE_INPUTS, params
+    def update(*args)
+      arguments(args, :required => [:user, :repo, :milestone_id]) do
+        sift VALID_MILESTONE_INPUTS
+      end
+      params = arguments.params
 
       patch_request("/repos/#{user}/#{repo}/milestones/#{milestone_id}", params)
     end
@@ -120,10 +114,9 @@ module Github
     #  github = Github.new
     #  github.issues.milestones.delete 'user-name', 'repo-name', 'milestone-id'
     #
-    def delete(user_name, repo_name, milestone_id, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, milestone_id
-      normalize! params
+    def delete(*args)
+      arguments(args, :required => [:user, :repo, :milestone_id])
+      params = arguments.params
 
       delete_request("/repos/#{user}/#{repo}/milestones/#{milestone_id}", params)
     end

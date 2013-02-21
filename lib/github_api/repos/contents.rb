@@ -1,8 +1,10 @@
 # encoding: utf-8
 
 module Github
+
+  # These API methods let you retrieve the contents of files within a repository
+  # as Base64 encoded content.
   class Repos::Contents < API
-    # These API methods let you retrieve the contents of files within a repository as Base64 encoded content
 
     # Get the README
     #
@@ -12,11 +14,14 @@ module Github
     #  github = Github.new
     #  github.repos.contents.readme 'user-name', 'repo-name'
     #
-    def readme(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      normalize! params
+    #  content = Github::Repos;:Contents.new user: 'user-name', 'repo-name'
+    #  content.readme
+    #
+    def readme(*args)
+      arguments(args, :required => [:user, :repo])
+      params = arguments.params
 
-      get_request("/repos/#{user_name}/#{repo_name}/readme", params)
+      get_request("/repos/#{user}/#{repo}/readme", params)
     end
 
     # Get contents
@@ -30,11 +35,14 @@ module Github
     #  github = Github.new
     #  github.repos.contents.get 'user-name', 'repo-name', 'path'
     #
-    def get(user_name, repo_name, path, params={})
-      set :user => user_name, :repo => repo_name
-      normalize! params
+    #  github = Github.new user: 'user-name', repo: 'repo-name'
+    #  github.repos.contents.get path: 'README.md'
+    #
+    def get(*args)
+      arguments(args, :required => [:user, :repo, :path])
+      params = arguments.params
 
-      get_request("/repos/#{user_name}/#{repo_name}/contents/#{path}", params)
+      get_request("/repos/#{user}/#{repo}/contents/#{path}", params)
     end
     alias :find :get
 
@@ -57,13 +65,13 @@ module Github
     #    "archive_format" =>  "tarball",
     #    "ref" => "master"
     #
-    def archive(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      normalize! params
+    def archive(*args)
+      arguments(args, :required => [:user, :repo])
+      params         = arguments.params
       archive_format = params.delete('archive_format') || 'zipball'
-      ref = params.delete('ref') || 'master'
+      ref            = params.delete('ref') || 'master'
 
-      get_request("/repos/#{user_name}/#{repo_name}/#{archive_format}/#{ref}", params)
+      get_request("/repos/#{user}/#{repo}/#{archive_format}/#{ref}", params)
     end
 
   end # Repos::Contents

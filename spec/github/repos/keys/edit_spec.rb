@@ -21,6 +21,8 @@ describe Github::Repos::Keys, '#edit' do
     let(:body) { fixture("repos/key.json") }
     let(:status) { 200 }
 
+    it { expect {subject.edit user, repo }.to raise_error(ArgumentError) }
+
     it "should edit the resource" do
       subject.edit user, repo, key_id, inputs
       a_patch(request_path).should have_been_made

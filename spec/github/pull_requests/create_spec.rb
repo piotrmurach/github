@@ -29,6 +29,10 @@ describe Github::PullRequests, '#create' do
     let(:body) { fixture('pull_requests/pull_request.json') }
     let(:status) { 201 }
 
+    it { expect { subject.create }.to raise_error(Github::Error::Validations) }
+
+    it { expect { subject.create user }.to raise_error(ArgumentError) }
+
     it "should create resource successfully" do
       subject.create user, repo, inputs
       a_post(request_path).with(inputs).should have_been_made

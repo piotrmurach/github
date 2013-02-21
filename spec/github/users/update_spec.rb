@@ -24,7 +24,7 @@ describe Github::Users, '#update' do
       "company" => "GitHub",
       "location" => "San Francisco",
       "hireable" => true,
-      "bio" => "There once...",
+      "bio" => "There once..."
     }
   }
 

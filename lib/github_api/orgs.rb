@@ -38,8 +38,7 @@ module Github
     #  github.orgs.list
     #
     def list(*args)
-      params = args.extract_options!
-      normalize! params
+      params = arguments(args).params
 
       response = if (user_name = params.delete("user"))
         get_request("/users/#{user_name}/orgs", params)
@@ -58,10 +57,10 @@ module Github
     #  github = Github.new
     #  github.orgs.get 'github'
     #
-    def get(org_name, params={})
-      assert_presence_of org_name
-      normalize! params
-      get_request("/orgs/#{org_name}", params)
+    def get(*args)
+      arguments(args, :required => [:org_name])
+
+      get_request("/orgs/#{org_name}", arguments.params)
     end
     alias :find :get
 
@@ -84,12 +83,12 @@ module Github
     #    "location": "San Francisco",
     #    "name": "github"
     #
-    def edit(org_name, params={})
-      assert_presence_of org_name
-      normalize! params
-      filter! VALID_ORG_PARAM_NAMES, params
+    def edit(*args)
+      arguments(args, :required => [:org_name]) do
+        sift VALID_ORG_PARAM_NAMES
+      end
 
-      patch_request("/orgs/#{org_name}", params)
+      patch_request("/orgs/#{org_name}", arguments.params)
     end
 
   end # Orgs

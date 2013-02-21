@@ -28,9 +28,9 @@ module Github
     #  github.activity.notifications.list user: 'user-name', repo: 'repo-name'
     #
     def list(*args)
-      params = args.extract_options!
-      normalize! params
-      filter! %w[ all participating since user repo], params
+      params = arguments(args) do
+        sift %w[ all participating since user repo]
+      end.params
 
       response = if ( (user_name = params.delete("user")) &&
                       (repo_name = params.delete("repo")) )
@@ -50,10 +50,10 @@ module Github
     #  github.activity.notifications.get 'thread_id'
     #  github.activity.notifications.get 'thread_id' { |thread| ... }
     #
-    def get(thread_id, params={})
-      assert_presence_of thread_id
-      normalize! params
-      response = get_request("/notifications/threads/#{thread_id}", params)
+    def get(*args)
+      arguments(args, :required => [:thread_id])
+
+      response = get_request("/notifications/threads/#{thread_id}", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -89,9 +89,9 @@ module Github
     #  github.activity.notifications.mark thread_id: 'id', read: true
     #
     def mark(*args)
-      params = args.extract_options!
-      normalize! params
-      filter! %w[ unread read last_read_at user repo thread_id], params
+      params = arguments(args) do
+        sift %w[ unread read last_read_at user repo thread_id]
+      end.params
 
       if ( (user_name = params.delete("user")) &&
            (repo_name = params.delete("repo")) )
@@ -110,10 +110,10 @@ module Github
     #  github = Github.new oauth_token: 'token'
     #  github.activity.notifications.subscribed? 'thread-id'
     #
-    def subscribed?(thread_id, params={})
-      assert_presence_of thread_id
-      normalize! params
-      get_request("/notifications/threads/#{thread_id}/subscription", params)
+    def subscribed?(*args)
+      arguments(args, :required => [:thread_id])
+
+      get_request("/notifications/threads/#{thread_id}/subscription", arguments.params)
     end
 
     # Create a thread subscription
@@ -134,10 +134,10 @@ module Github
     #    'subscribed': true
     #    'ignored': false
     #
-    def create(thread_id, params={})
-      assert_presence_of thread_id
-      normalize! params
-      put_request("/notifications/threads/#{thread_id}/subscription", params)
+    def create(*args)
+      arguments(args, :required => [:thread_id])
+
+      put_request("/notifications/threads/#{thread_id}/subscription", arguments.params)
     end
 
     # Delete a thread subscription
@@ -146,10 +146,10 @@ module Github
     #  github = Github.new oauth_token: 'token'
     #  github.activity.notifications.delete 'thread_id'
     #
-    def delete(thread_id, params={})
-      assert_presence_of thread_id
-      normalize! params
-      delete_request("/notifications/threads/#{thread_id}/subscription", params)
+    def delete(*args)
+      arguments(args, :required => [:thread_id])
+
+      delete_request("/notifications/threads/#{thread_id}/subscription", arguments.params)
     end
     alias :remove :delete
 

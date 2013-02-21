@@ -21,8 +21,10 @@ describe Github::Repos::Downloads, '#list' do
 
     it { should respond_to :all }
 
+    it { expect { subject.list }.to raise_error(Github::Error::Validations) }
+
     it "should fail to get resource without username" do
-      expect { subject.list }.to raise_error(ArgumentError)
+      expect { subject.list user }.to raise_error(ArgumentError)
     end
 
     it "should get the resources" do

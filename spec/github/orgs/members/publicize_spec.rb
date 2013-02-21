@@ -19,8 +19,10 @@ describe Github::Orgs::Members, '#publicize' do
     let(:status) { 204 }
 
     it "should fail to get resource without org name" do
-      expect { subject.publicize }.to raise_error(ArgumentError)
+      expect { subject.publicize }.to raise_error(Github::Error::Validations)
     end
+
+    it { expect { subject.publicize org }.to raise_error(ArgumentError) }
 
     it "should get the resources" do
       subject.publicize org, member

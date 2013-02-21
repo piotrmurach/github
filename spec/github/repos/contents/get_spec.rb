@@ -5,6 +5,7 @@ require 'spec_helper'
 describe Github::Repos::Contents, '#get' do
   let(:user) { 'peter-murach' }
   let(:repo) { 'github' }
+  let(:path) { 'README.md' }
   let(:request_path) { "/repos/#{user}/#{repo}/contents/#{path}" }
 
   before {
@@ -17,6 +18,10 @@ describe Github::Repos::Contents, '#get' do
   let(:path) { 'README.md' }
   let(:body) { fixture('repos/content.json') }
   let(:status) { 200 }
+
+  it { expect { subject.get user, repo }.to raise_error(ArgumentError) }
+
+  it { expect { subject.get }.to raise_error(Github::Error::Validations)}
 
   it "should get the resources" do
     subject.get user, repo, path

@@ -24,9 +24,8 @@ module Github
     #  github.orgs.members.list 'org-name', :public => true
     #  github.orgs.members.list 'org-name', :public => true { |memb| ... }
     #
-    def list(org_name, params={})
-      assert_presence_of org_name
-      normalize! params
+    def list(*args)
+      params = arguments(args, :required => [:org_name]).params
 
       response = if params.delete('public')
         get_request("/orgs/#{org_name}/public_members", params)
@@ -50,14 +49,13 @@ module Github
     #  github = Github.new
     #  github.orgs.members.member? 'org-name', 'member-name', :public => true
     #
-    def member?(org_name, member_name, params={})
-      assert_presence_of org_name, member_name
-      normalize! params
+    def member?(*args)
+      params = arguments(args, :required => [:org_name, :user]).params
 
       response = if params.delete('public')
-        get_request("/orgs/#{org_name}/public_members/#{member_name}", params)
+        get_request("/orgs/#{org_name}/public_members/#{user}", params)
       else
-        get_request("/orgs/#{org_name}/members/#{member_name}", params)
+        get_request("/orgs/#{org_name}/members/#{user}", params)
       end
       response.status == 204
     rescue Github::Error::NotFound
@@ -72,10 +70,10 @@ module Github
     #  github = Github.new
     #  github.orgs.members.remove 'org-name', 'member-name'
     #
-    def delete(org_name, member_name, params={})
-      assert_presence_of org_name, member_name
-      normalize! params
-      delete_request("/orgs/#{org_name}/members/#{member_name}", params)
+    def delete(*args)
+      arguments(args, :required => [:org_name, :user])
+
+      delete_request("/orgs/#{org_name}/members/#{user}", arguments.params)
     end
     alias :remove :delete
 
@@ -85,10 +83,10 @@ module Github
     #  github = Github.new :oauth_token => '...'
     #  github.orgs.members.publicize 'org-name', 'member-name'
     #
-    def publicize(org_name, member_name, params={})
-      assert_presence_of org_name, member_name
-      normalize! params
-      put_request("/orgs/#{org_name}/public_members/#{member_name}", params)
+    def publicize(*args)
+      arguments(args, :required => [:org_name, :user])
+
+      put_request("/orgs/#{org_name}/public_members/#{user}", arguments.params)
     end
     alias :make_public :publicize
     alias :publicize_membership :publicize
@@ -99,10 +97,10 @@ module Github
     #  github = Github.new :oauth_token => '...'
     #  github.orgs.members.conceal 'org-name', 'member-name'
     #
-    def conceal(org_name, member_name, params={})
-      assert_presence_of org_name, member_name
-      normalize! params
-      delete_request("/orgs/#{org_name}/public_members/#{member_name}", params)
+    def conceal(*args)
+      arguments(args, :required => [:org_name, :user])
+
+      delete_request("/orgs/#{org_name}/public_members/#{user}", arguments.params)
     end
     alias :conceal_membership :conceal
 

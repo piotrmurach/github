@@ -20,7 +20,7 @@ describe Github::Activity::Notifications, '#subscribed?' do
     let(:status) { 200 }
 
     it 'asserts thread id presence' do
-      expect { subject.subscribed? nil }.to raise_error(ArgumentError)
+      expect { subject.subscribed? }.to raise_error(Github::Error::Validations)
     end
 
     it 'gets the resource' do

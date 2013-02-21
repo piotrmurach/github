@@ -23,11 +23,11 @@ module Github
     #  github.repos.commits.list 'user-name', 'repo-name', :sha => '...'
     #  github.repos.commits.list 'user-name', 'repo-name', :sha => '...' { |commit| ... }
     #
-    def list(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-      normalize! params
-      filter! VALID_COMMITS_OPTIONS, params
+    def list(*args)
+      arguments(args, :required => [:user, :repo]) do
+        sift VALID_COMMITS_OPTIONS
+      end
+      params = arguments.params
 
       response = get_request("/repos/#{user}/#{repo}/commits", params)
       return response unless block_given?
@@ -41,10 +41,9 @@ module Github
     #  github = Github.new
     #  github.repos.commits.get 'user-name', 'repo-name', '6dcb09b5b57875f334f61aebed6')
     #
-    def get(user_name, repo_name, sha, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, sha
-      normalize! params
+    def get(*args)
+      arguments(args, :required => [:user, :repo, :sha])
+      params = arguments.params
 
       get_request("/repos/#{user}/#{repo}/commits/#{sha}", params)
     end
@@ -60,12 +59,11 @@ module Github
     #    'v0.4.8',
     #    'master'
     #
-    def compare(user_name, repo_name, base, head, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of base, head
-      normalize! params
+    def compare(*args)
+      arguments(args, :required => [:user, :repo, :base, :head])
+      params = arguments.params
 
-      get_request("/repos/#{user_name}/#{repo_name}/compare/#{base}...#{head}", params)
+      get_request("/repos/#{user}/#{repo}/compare/#{base}...#{head}", params)
     end
 
   end # Repos::Commits

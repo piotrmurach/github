@@ -134,8 +134,7 @@ module Github
     #    :direction => 'asc'
     #
     def list(*args)
-      params = args.extract_options!
-      normalize! params
+      params = arguments(args).params
       # filter! VALID_ISSUE_PARAM_NAMES, params
       # _merge_mime_type(:issue, params)
       # assert_valid_values(VALID_ISSUE_PARAM_VALUES, params)
@@ -159,11 +158,12 @@ module Github
 
     # List issues for a repository
     #
-    def list_repo(user_name, repo_name, params)
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-
-      filter! VALID_ISSUE_PARAM_NAMES, params
+    # def list_repo(user_name, repo_name, params)
+    def list_repo(*args)
+      arguments(args, :required => [:user, :repo]) do
+        sift VALID_ISSUE_PARAM_NAMES
+      end
+      params = arguments.params
       assert_valid_values(VALID_ISSUE_PARAM_VALUES, params)
 
       get_request("/repos/#{user}/#{repo}/issues", params)
@@ -176,14 +176,10 @@ module Github
     #  github = Github.new
     #  github.issues.get 'user-name', 'repo-name', 'issue-id'
     #
-    def get(user_name, repo_name, issue_id, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, issue_id
+    def get(*args)
+      arguments(args, :required => [:user, :repo, :issue_id])
 
-      normalize! params
-      # _merge_mime_type(:issue, params)
-
-      get_request("/repos/#{user}/#{repo}/issues/#{issue_id}", params)
+      get_request("/repos/#{user}/#{repo}/issues/#{issue_id}", arguments.params)
     end
     alias :find :get
 
@@ -207,16 +203,13 @@ module Github
     #      "Label2"
     #    ]
     #
-    def create(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
+    def create(*args)
+      arguments(args, :required => [:user, :repo]) do
+        sift VALID_ISSUE_PARAM_NAMES
+        assert_required %w[ title ]
+      end
 
-      normalize! params
-      # _merge_mime_type(:issue, params)
-      filter! VALID_ISSUE_PARAM_NAMES, params
-      assert_required_keys(%w[ title ], params)
-
-      post_request("/repos/#{user}/#{repo}/issues", params)
+      post_request("/repos/#{user}/#{repo}/issues", arguments.params)
     end
 
     # Edit an issue
@@ -241,13 +234,11 @@ module Github
     #      "Label2"
     #    ]
     #
-    def edit(user_name, repo_name, issue_id, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, issue_id
-
-      normalize! params
-      # _merge_mime_type(:issue, params)
-      filter! VALID_ISSUE_PARAM_NAMES, params
+    def edit(*args)
+      arguments(args, :required => [:user, :repo, :issue_id]) do
+        sift VALID_ISSUE_PARAM_NAMES
+      end
+      params = arguments.params
 
       patch_request("/repos/#{user}/#{repo}/issues/#{issue_id}", params)
     end

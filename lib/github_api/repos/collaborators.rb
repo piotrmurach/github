@@ -3,6 +3,23 @@
 module Github
   class Repos::Collaborators < API
 
+    # List collaborators
+    #
+    # Examples:
+    #  github = Github.new
+    #  github.repos.collaborators.list 'user-name', 'repo-name'
+    #  github.repos.collaborators.list 'user-name', 'repo-name' { |cbr| .. }
+    #
+    def list(*args)
+      arguments(args, :required => [:user, :repo])
+      params = arguments.params
+
+      response = get_request("/repos/#{user}/#{repo}/collaborators", params)
+      return response unless block_given?
+      response.each { |el| yield el }
+    end
+    alias :all :list
+
     # Add collaborator
     #
     # Examples:
@@ -12,10 +29,9 @@ module Github
     #  collaborators = Github::Repos::Collaborators.new
     #  collaborators.add 'user', 'repo', 'collaborator'
     #
-    def add(user_name, repo_name, collaborator, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, collaborator
-      normalize! params
+    def add(*args)
+      arguments(args, :required => [:user, :repo, :collaborator])
+      params = arguments.params
 
       put_request("/repos/#{user}/#{repo}/collaborators/#{collaborator}", params)
     end
@@ -27,10 +43,12 @@ module Github
     #  github = Github.new
     #  github.repos.collaborators.collaborator?('user', 'repo', 'collaborator')
     #
-    def collaborator?(user_name, repo_name, collaborator, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, collaborator
-      normalize! params
+    #  github = Github.new user: 'user-name', repo: 'repo-name'
+    #  github.collaborators.collaborator? collaborator: 'collaborator'
+    #
+    def collaborator?(*args)
+      arguments(args, :required => [:user, :repo, :collaborator])
+      params = arguments.params
 
       get_request("/repos/#{user}/#{repo}/collaborators/#{collaborator}", params)
       true
@@ -38,34 +56,15 @@ module Github
       false
     end
 
-    # List collaborators
-    #
-    # Examples:
-    #  github = Github.new
-    #  github.repos.collaborators.list 'user-name', 'repo-name'
-    #  github.repos.collaborators.list 'user-name', 'repo-name' { |cbr| .. }
-    #
-    def list(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-      normalize! params
-
-      response = get_request("/repos/#{user}/#{repo}/collaborators", params)
-      return response unless block_given?
-      response.each { |el| yield el }
-    end
-    alias :all :list
-
     # Removes collaborator
     #
     # Examples:
     #  github = Github.new
     #  github.repos.collaborators.remove 'user', 'repo', 'collaborator'
     #
-    def remove(user_name, repo_name, collaborator, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of collaborator
-      normalize! params
+    def remove(*args)
+      arguments(args, :required => [:user, :repo, :collaborator])
+      params = arguments.params
 
       delete_request("/repos/#{user}/#{repo}/collaborators/#{collaborator}", params)
     end

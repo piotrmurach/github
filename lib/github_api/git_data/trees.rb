@@ -34,10 +34,9 @@ module Github
     #  github = Github.new
     #  github.git_data.trees.get 'user-name', 'repo-name', 'sha', 'recursive' => true
     #
-    def get(user_name, repo_name, sha, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, sha
-      normalize! params
+    def get(*args)
+      arguments(args, :required => [:user, :repo, :sha])
+      params = arguments.params
 
       response = if params['recursive']
         params['recursive'] = 1
@@ -79,16 +78,14 @@ module Github
     #      ...
     #    ]
     #
-    def create(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-      normalize! params
-      assert_required_keys(%w[ tree ], params)
+    def create(*args)
+      arguments(args, :required => [:user, :repo]) do
+        assert_required %w[ tree ]
+        sift VALID_TREE_PARAM_NAMES, 'tree'
+        assert_values VALID_TREE_PARAM_VALUES, 'tree'
+      end
 
-      filter! VALID_TREE_PARAM_NAMES, params['tree']
-      assert_valid_values(VALID_TREE_PARAM_VALUES, params['tree'])
-
-      post_request("/repos/#{user}/#{repo}/git/trees", params)
+      post_request("/repos/#{user}/#{repo}/git/trees", arguments.params)
     end
 
   end # GitData::Trees

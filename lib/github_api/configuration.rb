@@ -16,6 +16,7 @@ module Github
       :connection_options,
       :repo,
       :user,
+      :org,
       :login,
       :password,
       :basic_auth
@@ -66,6 +67,9 @@ module Github
     # By default, don't set repository name
     DEFAULT_REPO = nil
 
+    # By default, don't set organization name
+    DEFAULT_ORG = nil
+
     attr_accessor *VALID_OPTIONS_KEYS
 
     # Convenience method to allow for global setting of configuration options
@@ -104,6 +108,7 @@ module Github
       self.mime_type          = DEFAULT_MIME_TYPE
       self.user               = DEFAULT_USER
       self.repo               = DEFAULT_REPO
+      self.org                = DEFAULT_ORG
       self.login              = DEFAULT_LOGIN
       self.password           = DEFAULT_PASSWORD
       self.basic_auth         = DEFAULT_BASIC_AUTH

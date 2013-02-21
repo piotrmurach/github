@@ -10,10 +10,24 @@ describe Github::API, '#set' do
     expect { subject.set :option }.to raise_error(ArgumentError)
   end
 
-  it 'accepts more than one option' do
-    subject.set :user => 'user-name', :repo => 'repo-name'
-    subject.user.should == 'user-name'
-    subject.repo.should == 'repo-name'
+  context 'accpets more than one option' do
+    before { subject.set :user => 'user-name', :repo => 'repo-name' }
+
+    it 'sets user' do
+      subject.user.should == 'user-name'
+    end
+
+    it 'sets repo' do
+      subject.repo.should == 'repo-name'
+    end
+  end
+
+  context 'defines accessors' do
+    before { subject.set :branch, 'arguments' }
+
+    it { should respond_to :branch }
+
+    it { should respond_to 'branch=' }
   end
 
 end

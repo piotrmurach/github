@@ -4,8 +4,8 @@ require 'spec_helper'
 
 describe Github::Orgs::Members, '#conceal' do
   let(:org)    { 'github' }
-  let(:member) { 'peter-murach' }
-  let(:request_path) { "/orgs/#{org}/public_members/#{member}" }
+  let(:user) { 'peter-murach' }
+  let(:request_path) { "/orgs/#{org}/public_members/#{user}" }
 
   before {
     stub_delete(request_path).to_return(:body => body, :status => status,
@@ -19,17 +19,19 @@ describe Github::Orgs::Members, '#conceal' do
     let(:status) { 204 }
 
     it "should fail to get resource without org name" do
-      expect { subject.conceal }.to raise_error(ArgumentError)
+      expect { subject.conceal }.to raise_error(Github::Error::Validations)
     end
 
+    it { expect { subject.conceal org }.to raise_error(ArgumentError) }
+
     it "should get the resources" do
-      subject.conceal org, member
+      subject.conceal org, user
       a_delete(request_path).should have_been_made
     end
   end
 
   it_should_behave_like 'request failure' do
-    let(:requestable) { subject.conceal org, member }
+    let(:requestable) { subject.conceal org, user }
   end
 
 end # conceal

@@ -13,13 +13,14 @@ module Github
     # List the authenticated user's followers
     #
     # = Examples
-    #  github = Github.new :oauth_token => '...'
+    #  github = Github.new oauth_token: '...'
     #  github.users.followers
     #  github.users.followers { |user| ... }
     #
-    def list(user_name=nil, params={})
-      normalize! params
-      response = if user_name
+    def list(*args)
+      params = arguments(args).params
+
+      response = if user_name = arguments.remaining.first
         get_request("/users/#{user_name}/followers", params)
       else
         get_request("/user/followers", params)
@@ -40,12 +41,13 @@ module Github
     #
     # = Examples
     #
-    #  github = Github.new :oauth_token => '...'
+    #  github = Github.new oauth_token: '...'
     #  github.users.followers.following
     #
-    def following(user_name=nil, params={})
-      normalize! params
-      response = if user_name
+    def following(*args)
+      params = arguments(args).params
+
+      response = if user_name = arguments.remaining.first
         get_request("/users/#{user_name}/following", params)
       else
         get_request("/user/following", params)
@@ -57,13 +59,13 @@ module Github
     # Check if you are following a user
     #
     # = Examples
-    #  github = Github.new :oauth_token => '...'
+    #  github = Github.new oauth_token: '...'
     #  github.users.followers.following? 'user-name'
+    #  github.users.followers.following? user: 'user-name'
     #
-    def following?(user_name, params={})
-      assert_presence_of user_name
-      normalize! params
-      get_request("/user/following/#{user_name}", params)
+    def following?(*args)
+      arguments(args, :required => [:user])
+      get_request("/user/following/#{user}", arguments.params)
       true
     rescue Github::Error::NotFound
       false
@@ -72,25 +74,25 @@ module Github
     # Follow a user
     #
     # = Examples
-    #  github = Github.new :oauth_token => '...'
+    #  github = Github.new oauth_token: '...'
     #  github.users.followers.follow 'user-name'
+    #  github.users.followers.follow user: 'user-name'
     #
-    def follow(user_name, params={})
-      assert_presence_of user_name
-      normalize! params
-      put_request("/user/following/#{user_name}", params)
+    def follow(*args)
+      arguments(args, :required => [:user])
+      put_request("/user/following/#{user}", arguments.params)
     end
 
     # Unfollow a user
     #
     # = Examples
-    #  github = Github.new :oauth_token => '...'
+    #  github = Github.new oauth_token: '...'
     #  github.users.followers.unfollow 'user-name'
+    #  github.users.followers.unfollow user: 'user-name'
     #
-    def unfollow(user_name, params={})
-      assert_presence_of user_name
-      normalize! params
-      delete_request("/user/following/#{user_name}", params)
+    def unfollow(*args)
+      arguments(args, :required => [:user])
+      delete_request("/user/following/#{user}", arguments.params)
     end
 
   end # Users::Followers

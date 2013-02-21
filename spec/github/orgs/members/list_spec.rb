@@ -20,7 +20,7 @@ describe Github::Orgs::Members, '#list' do
     it { should respond_to :all }
 
     it "should fail to get resource without org name" do
-      expect { subject.list nil }.to raise_error(ArgumentError)
+      expect { subject.list }.to raise_error(Github::Error::Validations)
     end
 
     it "should get the resources" do
@@ -52,7 +52,7 @@ describe Github::Orgs::Members, '#list' do
     let(:request_path) { "/orgs/#{org}/public_members" }
 
     it "should fail to get resource without org name" do
-      expect { subject.list }.to raise_error(ArgumentError)
+      expect { subject.list }.to raise_error(Github::Error::Validations)
     end
 
     it "should get the resources" do

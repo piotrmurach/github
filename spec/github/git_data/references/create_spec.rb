@@ -29,7 +29,7 @@ describe Github::GitData::References, '#create' do
     it "should fail to create resource if 'ref' input is missing" do
       expect {
         subject.create user, repo, inputs.except('ref')
-      }.to raise_error(ArgumentError)
+      }.to raise_error(Github::Error::RequiredParams )
     end
 
     it "should fail to create resource if 'sha' input is missing" do

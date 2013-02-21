@@ -20,7 +20,7 @@ describe Github::Repos::Hooks, '#list' do
     let(:status) { 204 }
 
     it "should fail to delete without 'user/repo' parameters" do
-      expect { subject.delete }.to raise_error(ArgumentError)
+      expect { subject.delete }.to raise_error(Github::Error::Validations)
     end
 
     it "should fail to delete resource without 'hook_id'" do

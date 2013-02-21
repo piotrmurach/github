@@ -12,10 +12,12 @@ module Github
     #  github.repos.keys.list 'user-name', 'repo-name'
     #  github.repos.keys.list 'user-name', 'repo-name' { |key| ... }
     #
-    def list(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-      normalize! params
+    #  keys = Github::Repos::Keys.new user: 'user-name', repo: 'repo-name'
+    #  keys.list
+    #
+    def list(*args)
+      arguments(args, :required => [:user, :repo])
+      params = arguments.params
 
       response = get_request("/repos/#{user}/#{repo}/keys", params)
       return response unless block_given?
@@ -29,10 +31,9 @@ module Github
     #  github = Github.new
     #  github.repos.keys.get 'user-name', 'repo-name', 'key-id'
     #
-    def get(user_name, repo_name, key_id, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, key_id
-      normalize! params
+    def get(*args)
+      arguments(args, :required => [:user, :repo, :key_id])
+      params = arguments.params
 
       get_request("/repos/#{user}/#{repo}/keys/#{key_id}", params)
     end
@@ -50,14 +51,13 @@ module Github
     #    "title" => "octocat@octomac",
     #    "key" =>  "ssh-rsa AAA..."
     #
-    def create(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-      normalize! params
-      filter! VALID_KEY_OPTIONS, params
-      assert_required_keys(VALID_KEY_OPTIONS, params)
+    def create(*args)
+      arguments(args, :required => [:user, :repo]) do
+        sift VALID_KEY_OPTIONS
+        assert_required VALID_KEY_OPTIONS
+      end
 
-      post_request("/repos/#{user}/#{repo}/keys", params)
+      post_request("/repos/#{user}/#{repo}/keys", arguments.params)
     end
 
     # Edit a key
@@ -72,12 +72,11 @@ module Github
     #    "title" => "octocat@octomac",
     #    "key" =>  "ssh-rsa AAA..."
     #
-    def edit(user_name, repo_name, key_id, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, key_id
-
-      normalize! params
-      filter! VALID_KEY_OPTIONS, params
+    def edit(*args)
+      arguments(args, :required => [:user, :repo, :key_id]) do
+        sift VALID_KEY_OPTIONS
+      end
+      params = arguments.params
 
       patch_request("/repos/#{user}/#{repo}/keys/#{key_id}", params)
     end
@@ -85,13 +84,12 @@ module Github
     # Delete key
     #
     # = Examples
-    #  @github = Github.new
-    #  @github.repos.keys.delete 'user-name', 'repo-name', 'key-id'
+    #  github = Github.new
+    #  github.repos.keys.delete 'user-name', 'repo-name', 'key-id'
     #
-    def delete(user_name, repo_name, key_id, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, key_id
-      normalize! params
+    def delete(*args)
+      arguments(args, :required => [:user, :repo, :key_id])
+      params = arguments.params
 
       delete_request("/repos/#{user}/#{repo}/keys/#{key_id}", params)
     end

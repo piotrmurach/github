@@ -21,9 +21,9 @@ describe Github::PullRequests, '#get' do
 
     it { should respond_to :find }
 
-    it "should fail to get resource without pull_request id" do
-      expect { subject.get nil }.to raise_error(ArgumentError)
-    end
+    it { expect { subject.get }.to raise_error(Github::Error::Validations) }
+
+    it { expect { subject.get user }.to raise_error(ArgumentError) }
 
     it "should get the resource" do
       subject.get user, repo, number

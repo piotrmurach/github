@@ -35,12 +35,12 @@ describe Github::Repos::Hooks, '#list' do
     let(:status) { 200 }
 
     it "should fail to edit without 'user/repo' parameters" do
-      expect { subject.edit }.to raise_error(ArgumentError)
+      expect { subject.edit }.to raise_error(Github::Error::Validations)
     end
 
     it "should fail to edit resource without 'name' parameter" do
       expect{
-        subject.edit user, repo, inputs.except(:name)
+        subject.edit user, repo, hook_id, inputs.except(:name)
       }.to raise_error(Github::Error::RequiredParams)
     end
 

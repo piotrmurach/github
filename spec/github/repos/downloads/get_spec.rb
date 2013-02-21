@@ -22,8 +22,10 @@ describe Github::Repos::Downloads, '#get' do
 
     it { should respond_to :find }
 
+    it { expect { subject.get }.to raise_error(Github::Error::Validations) }
+
     it "should fail to get resource without download id" do
-      expect { subject.get user, repo, nil }.to raise_error(ArgumentError)
+      expect { subject.get user, repo }.to raise_error(ArgumentError)
     end
 
     it "should get the resource" do

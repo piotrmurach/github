@@ -35,10 +35,9 @@ module Github
     #  github.pull_requests.comments.list 'user-name', 'repo-name'
     #  github.pull_requests.comments.list 'user-name', 'repo-name' { |comm| ... }
     #
-    def list(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-      normalize! params
+    def list(*args)
+      arguments(args, :required => [:user, :repo])
+      params = arguments.params
 
       response = if (request_id = params.delete('request_id'))
         get_request("/repos/#{user}/#{repo}/pulls/#{request_id}/comments", params)
@@ -55,12 +54,10 @@ module Github
     #  github = Github.new
     #  github.pull_requests.comments.get 'user-name', 'repo-name', 'comment-id'
     #
-    def get(user_name, repo_name, comment_id, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, comment_id
-      normalize! params
+    def get(*args)
+      arguments(args, :required => [:user, :repo, :comment_id])
 
-      get_request("/repos/#{user}/#{repo}/pulls/comments/#{comment_id}", params)
+      get_request("/repos/#{user}/#{repo}/pulls/comments/#{comment_id}", arguments.params)
     end
     alias :find :get
 
@@ -92,14 +89,13 @@ module Github
     #    "body" => "Nice change",
     #    "in_reply_to" => 4
     #
-    def create(user_name, repo_name, request_id, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, request_id
-      normalize! params
-      filter! VALID_REQUEST_COM_PARAM_NAMES, params
+    def create(*args)
+      arguments(args, :required => [:user, :repo, :request_id]) do
+        sift VALID_REQUEST_COM_PARAM_NAMES
+      end
       # _validate_reply_to(params)
 
-      post_request("/repos/#{user}/#{repo}/pulls/#{request_id}/comments", params)
+      post_request("/repos/#{user}/#{repo}/pulls/#{request_id}/comments", arguments.params)
     end
 
     # Edit a pull request comment
@@ -112,13 +108,12 @@ module Github
     #  github.pull_requests.comments.edit 'user-name', 'repo-name','comment-id',
     #    "body" => "Nice change"
     #
-    def edit(user_name, repo_name, comment_id, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, comment_id
-      normalize! params
-      filter! VALID_REQUEST_COM_PARAM_NAMES, params
+    def edit(*args)
+      arguments(args, :required => [:user, :repo, :comment_id]) do
+        sift VALID_REQUEST_COM_PARAM_NAMES
+      end
 
-      patch_request("/repos/#{user}/#{repo}/pulls/comments/#{comment_id}", params)
+      patch_request("/repos/#{user}/#{repo}/pulls/comments/#{comment_id}", arguments.params)
     end
 
     # Delete a pull request comment
@@ -127,12 +122,10 @@ module Github
     #  github = Github.new
     #  github.pull_requests.comments.delete 'user-name', 'repo-name','comment-id'
     #
-    def delete(user_name, repo_name, comment_id, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, comment_id
-      normalize! params
+    def delete(*args)
+      arguments(args, :required => [:user, :repo, :comment_id])
 
-      delete_request("/repos/#{user}/#{repo}/pulls/comments/#{comment_id}", params)
+      delete_request("/repos/#{user}/#{repo}/pulls/comments/#{comment_id}", arguments.params)
     end
 
   private

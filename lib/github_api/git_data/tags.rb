@@ -28,10 +28,9 @@ module Github
     #  github = Github.new
     #  github.git_data.tags.get 'user-name', 'repo-name', 'sha'
     #
-    def get(user_name, repo_name, sha, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, sha
-      normalize! params
+    def get(*args)
+      arguments(args, :required => [:user, :repo, :sha])
+      params = arguments.params
 
       get_request("/repos/#{user}/#{repo}/git/tags/#{sha}", params)
     end
@@ -65,13 +64,12 @@ module Github
     #      "date" => "2011-06-17T14:53:3"
     #    }
     #
-    def create(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-      normalize! params
-
-      filter! VALID_TAG_PARAM_NAMES, params
-      assert_valid_values(VALID_TAG_PARAM_VALUES, params)
+    def create(*args)
+      arguments(args, :required => [:user, :repo]) do
+        sift VALID_TAG_PARAM_NAMES
+        assert_values VALID_TAG_PARAM_VALUES
+      end
+      params = arguments.params
 
       post_request("/repos/#{user}/#{repo}/git/tags", params)
     end

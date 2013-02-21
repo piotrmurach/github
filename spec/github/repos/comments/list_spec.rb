@@ -23,7 +23,7 @@ describe Github::Repos::Comments, '#list' do
       it { should respond_to(:all) }
 
       it "should fail to get resource without username" do
-        expect { subject.list }.to raise_error(ArgumentError)
+        expect { subject.list }.to raise_error(Github::Error::Validations)
       end
 
       it "should get the resources" do

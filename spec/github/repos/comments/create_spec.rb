@@ -27,6 +27,10 @@ describe Github::Repos::Comments, '#create' do
     let(:body)   { fixture('repos/commit_comment.json') }
     let(:status) { 201 }
 
+    it { expect { subject.create user }.to raise_error(ArgumentError) }
+
+    it { expect { subject.create }.to raise_error(Github::Error::Validations) }
+
     it "should fail to create resource if 'body' input is missing" do
       expect {
         subject.create user, repo, sha, inputs.except('body')

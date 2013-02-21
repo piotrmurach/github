@@ -20,7 +20,7 @@ describe Github::PullRequests::Comments, '#delete' do
 
   context 'resource removed' do
     it 'should raise error if comment_id not present' do
-      expect { subject.delete user, repo, nil }.to raise_error(ArgumentError)
+      expect { subject.delete user, repo }.to raise_error(ArgumentError)
     end
 
     it "should remove resource successfully" do

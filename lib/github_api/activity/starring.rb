@@ -12,12 +12,10 @@ module Github
     #  github.activity.starring.list
     #  github.activity.starring.list { |star| ... }
     #
-    def list(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-      normalize! params
+    def list(*args)
+      arguments(args, :required => [:user, :repo])
 
-      response = get_request("/repos/#{user}/#{repo}/stargazers", params)
+      response = get_request("/repos/#{user}/#{repo}/stargazers", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -36,8 +34,7 @@ module Github
     #  github.activity.starring.starred
     #
     def starred(*args)
-      params = args.extract_options!
-      normalize! params
+      params = arguments(args).params
 
       response = if (user_name = params.delete('user'))
         get_request("/users/#{user_name}/starred", params)
@@ -56,10 +53,10 @@ module Github
     #  github = Github.new
     #  github.activity.starring.starring? 'user-name', 'repo-name'
     #
-    def starring?(user_name, repo_name, params={})
-      assert_presence_of user_name, repo_name
-      normalize! params
-      get_request("/user/starred/#{user_name}/#{repo_name}", params)
+    def starring?(*args)
+      arguments(args, :required => [:user, :repo])
+
+      get_request("/user/starred/#{user}/#{repo}", arguments.params)
       true
     rescue Github::Error::NotFound
       false
@@ -73,11 +70,10 @@ module Github
     #  github = Github.new
     #  github.activity.starring.star 'user-name', 'repo-name'
     #
-    def star(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user_name, repo_name
-      normalize! params
-      put_request("/user/starred/#{user_name}/#{repo_name}", params)
+    def star(*args)
+      arguments(args, :required => [:user, :repo])
+
+      put_request("/user/starred/#{user}/#{repo}", arguments.params)
     end
 
     # Unstar a repository
@@ -88,11 +84,10 @@ module Github
     #  github = Github.new
     #  github.activity.starring.unstar 'user-name', 'repo-name'
     #
-    def unstar(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user_name, repo_name
-      normalize! params
-      delete_request("/user/starred/#{user_name}/#{repo_name}", params)
+    def unstar(*args)
+      arguments(args, :required => [:user, :repo])
+
+      delete_request("/user/starred/#{user}/#{repo}", arguments.params)
     end
 
   end # Activity::Starring

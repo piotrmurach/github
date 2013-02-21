@@ -35,19 +35,16 @@ module Github
     #  github.pull_requests.list
     #  github.pull_requests.list { |req| ... }
     #
-    #  pull_reqs = Github::PullRequests.new
-    #  pull_reqs.pull_requests.list 'user-name', 'repo-name'
+    #  pulls = Github::PullRequests.new
+    #  pulls.pull_requests.list 'user-name', 'repo-name'
     #
-    def list(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
+    def list(*args)
+      arguments(args, :required => [:user, :repo]) do
+        sift VALID_REQUEST_PARAM_NAMES
+        assert_values VALID_REQUEST_PARAM_VALUES
+      end
 
-      normalize! params
-      filter! VALID_REQUEST_PARAM_NAMES, params
-      # _merge_mime_type(:pull_request, params)
-      assert_valid_values(VALID_REQUEST_PARAM_VALUES, params)
-
-      response = get_request("/repos/#{user}/#{repo}/pulls", params)
+      response = get_request("/repos/#{user}/#{repo}/pulls", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -59,15 +56,13 @@ module Github
     #  github = Github.new
     #  github.pull_requests.get 'user-name', 'repo-name', 'number'
     #
-    #  pull_reqs = Github::PullRequests.new
-    #  pull_reqs.get 'user-name', 'repo-name', 'number'
+    #  pulls = Github::PullRequests.new
+    #  pulls.get 'user-name', 'repo-name', 'number'
     #
-    def get(user_name, repo_name, number, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, number
-      normalize! params
+    def get(*args)
+      arguments(args, :required => [:user, :repo, :number])
 
-      get_request("/repos/#{user}/#{repo}/pulls/#{number}", params)
+      get_request("/repos/#{user}/#{repo}/pulls/#{number}", arguments.params)
     end
     alias :find :get
 
@@ -100,14 +95,12 @@ module Github
     #    "head" => "octocat:new-feature",
     #    "base" => "master"
     #
-    def create(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
+    def create(*args)
+      arguments(args, :required => [:user, :repo]) do
+        sift VALID_REQUEST_PARAM_NAMES
+      end
 
-      normalize! params
-      filter! VALID_REQUEST_PARAM_NAMES, params
-
-      post_request("/repos/#{user}/#{repo}/pulls", params)
+      post_request("/repos/#{user}/#{repo}/pulls", arguments.params)
     end
 
     # Update a pull request
@@ -124,14 +117,13 @@ module Github
     #    "body" => "Update body",
     #    "state" => "open",
     #
-    def update(user_name, repo_name, number, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, number
-      normalize! params
-      filter! VALID_REQUEST_PARAM_NAMES, params
-      assert_valid_values(VALID_REQUEST_PARAM_VALUES, params)
+    def update(*args)
+      arguments(args, :required => [:user, :repo, :number]) do
+        sift VALID_REQUEST_PARAM_NAMES
+        assert_values VALID_REQUEST_PARAM_VALUES
+      end
 
-      patch_request("/repos/#{user}/#{repo}/pulls/#{number}", params)
+      patch_request("/repos/#{user}/#{repo}/pulls/#{number}", arguments.params)
     end
 
     # List commits on a pull request
@@ -140,12 +132,11 @@ module Github
     #  github = Github.new
     #  github.pull_requests.commits 'user-name', 'repo-name', 'number'
     #
-    def commits(user_name, repo_name, number, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, number
-      normalize! params
+    def commits(*args)
+      arguments(args, :required => [:user, :repo, :number])
 
-      response = get_request("/repos/#{user}/#{repo}/pulls/#{number}/commits", params)
+      response = get_request("/repos/#{user}/#{repo}/pulls/#{number}/commits",
+        arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -156,12 +147,11 @@ module Github
     #  github = Github.new
     #  github.pull_requests.files 'user-name', 'repo-name', 'number'
     #
-    def files(user_name, repo_name, number, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, number
-      normalize! params
+    def files(*args)
+      arguments(args, :required => [:user, :repo, :number])
 
-      response = get_request("/repos/#{user}/#{repo}/pulls/#{number}/files", params)
+      response = get_request("/repos/#{user}/#{repo}/pulls/#{number}/files",
+        arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -172,12 +162,10 @@ module Github
     #  github = Github.new
     #  github.pull_requests.merged? 'user-name', 'repo-name', 'number'
     #
-    def merged?(user_name, repo_name, number, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, number
-      normalize! params
+    def merged?(*args)
+      arguments(args, :required => [:user, :repo, :number])
 
-      get_request("/repos/#{user}/#{repo}/pulls/#{number}/merge", params)
+      get_request("/repos/#{user}/#{repo}/pulls/#{number}/merge", arguments.params)
       true
     rescue Github::Error::NotFound
       false
@@ -193,14 +181,12 @@ module Github
     #  github = Github.new
     #  github.pull_requests.merge 'user-name', 'repo-name', 'number'
     #
-    def merge(user_name, repo_name, number, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, number
+    def merge(*args)
+      arguments(args, :required => [:user, :repo, :number]) do
+        sift VALID_REQUEST_PARAM_NAMES
+      end
 
-      normalize! params
-      filter! VALID_REQUEST_PARAM_NAMES, params
-
-      put_request("/repos/#{user}/#{repo}/pulls/#{number}/merge", params)
+      put_request("/repos/#{user}/#{repo}/pulls/#{number}/merge", arguments.params)
     end
 
   end # PullRequests

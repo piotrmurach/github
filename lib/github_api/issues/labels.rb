@@ -21,13 +21,12 @@ module Github
     # List labels on an issue
     #
     # = Examples
-    #  @github = Github.new
-    #  @github.issues.labels.list 'user-name', 'repo-name', issue_id: 'issue-id'
+    #  github = Github.new
+    #  github.issues.labels.list 'user-name', 'repo-name', issue_id: 'issue-id'
     #
-    def list(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-      normalize! params
+    def list(*args)
+      arguments(args, :required => [:user, :repo])
+      params = arguments.params
 
       response = if (milestone_id = params.delete('milestone_id'))
         get_request("/repos/#{user}/#{repo}/milestones/#{milestone_id}/labels", params)
@@ -47,10 +46,12 @@ module Github
     #  github = Github.new
     #  github.issues.labels.find 'user-name', 'repo-name', 'label-name'
     #
-    def get(user_name, repo_name, label_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, label_name
-      normalize! params
+    #  github = Github.new user: 'user-name', repo: 'repo-name'
+    #  github.issues.labels.get label_name: 'bug'
+    #
+    def get(*args)
+      arguments(args, :required => [:user, :repo, :label_name])
+      params = arguments.params
 
       get_request("/repos/#{user}/#{repo}/labels/#{label_name}", params)
     end
@@ -66,15 +67,13 @@ module Github
     #  github = Github.new user: 'user-name', repo: 'repo-name'
     #  github.issues.labels.create name: 'API', color: 'FFFFFF'
     #
-    def create(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
+    def create(*args)
+      arguments(args, :required => [:user, :repo]) do
+        sift VALID_LABEL_INPUTS
+        assert_required VALID_LABEL_INPUTS
+      end
 
-      normalize! params
-      filter! VALID_LABEL_INPUTS, params
-      assert_required_keys(VALID_LABEL_INPUTS, params)
-
-      post_request("/repos/#{user}/#{repo}/labels", params)
+      post_request("/repos/#{user}/#{repo}/labels", arguments.params)
     end
 
     # Update a label
@@ -84,19 +83,17 @@ module Github
     #  <tt>:color</tt> - Required string-6 character hex code, without leading #
     #
     # = Examples
-    #  @github = Github.new
-    #  @github.issues.labels.update 'user-name', 'repo-name', 'label-name',
+    #  github = Github.new
+    #  github.issues.labels.update 'user-name', 'repo-name', 'label-name',
     #    name: 'API', color: "FFFFFF"
     #
-    def update(user_name, repo_name, label_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, label_name
+    def update(*args)
+      arguments(args, :required => [:user, :repo, :label_name]) do
+        sift VALID_LABEL_INPUTS
+        assert_required VALID_LABEL_INPUTS
+      end
 
-      normalize! params
-      filter! VALID_LABEL_INPUTS, params
-      assert_required_keys(VALID_LABEL_INPUTS, params)
-
-      patch_request("/repos/#{user}/#{repo}/labels/#{label_name}", params)
+      patch_request("/repos/#{user}/#{repo}/labels/#{label_name}", arguments.params)
     end
     alias :edit :update
 
@@ -106,14 +103,10 @@ module Github
     #  github = Github.new
     #  github.issues.labels.delete 'user-name', 'repo-name', 'label-name'
     #
-    def delete(user_name, repo_name, label_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
+    def delete(*args)
+      arguments(args, :required => [:user, :repo, :label_name])
 
-      assert_presence_of label_name
-      normalize! params
-
-      delete_request("/repos/#{user}/#{repo}/labels/#{label_name}", params)
+      delete_request("/repos/#{user}/#{repo}/labels/#{label_name}", arguments.params)
     end
 
     # Add labels to an issue
@@ -122,13 +115,10 @@ module Github
     #  github = Github.new
     #  github.issues.labels.add 'user-name', 'repo-name', 'issue-id', 'label1', 'label2', ...
     #
-    def add(user_name, repo_name, issue_id, *args)
-      params = args.extract_options!
-      params['data'] = args unless args.empty?
-
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, issue_id
-      normalize! params
+    def add(*args)
+      arguments(args, :required => [:user, :repo, :issue_id])
+      params = arguments.params
+      params['data'] = arguments.remaining unless arguments.remaining.empty?
 
       post_request("/repos/#{user}/#{repo}/issues/#{issue_id}/labels", params)
     end
@@ -146,10 +136,9 @@ module Github
     #  github = Github.new
     #  github.issues.labels.remove 'user-name', 'repo-name', 'issue-id'
     #
-    def remove(user_name, repo_name, issue_id, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, issue_id
-      normalize! params
+    def remove(*args)
+      arguments(args, :required => [:user, :repo, :issue_id])
+      params = arguments.params
 
       if (label_name = params.delete('label_name'))
         delete_request("/repos/#{user}/#{repo}/issues/#{issue_id}/labels/#{label_name}", params)
@@ -166,13 +155,10 @@ module Github
     #  github = Github.new
     #  github.issues.labels.replace 'user-name', 'repo-name', 'issue-id', 'label1', 'label2', ...
     #
-    def replace(user_name, repo_name, issue_id, *args)
-      params = args.extract_options!
-      params['data'] = args unless args.empty?
-
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, issue_id
-      normalize! params
+    def replace(*args)
+      arguments(args, :required => [:user, :repo, :issue_id])
+      params = arguments.params
+      params['data'] = arguments.remaining unless arguments.remaining.empty?
 
       put_request("/repos/#{user}/#{repo}/issues/#{issue_id}/labels", params)
     end

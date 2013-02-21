@@ -19,8 +19,10 @@ describe Github::Activity::Events, '#user_org' do
   context "resource found" do
     it { should respond_to :user_organization }
 
+    it { expect { subject.user_org }.to raise_error(Github::Error::Validations) }
+
     it "should fail to get resource without orgname" do
-      expect { subject.user_org user, nil }.to raise_error(ArgumentError)
+      expect { subject.user_org user }.to raise_error(ArgumentError)
     end
 
     it "should get the resources" do
@@ -45,7 +47,7 @@ describe Github::Activity::Events, '#user_org' do
   end
 
   it_should_behave_like 'request failure' do
-    let(:requestable) { subject.user_org user, org }
+    let(:requestable) { subject.user_org(user, org) }
   end
 
 end # user_org

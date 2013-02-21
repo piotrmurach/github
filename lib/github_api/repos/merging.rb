@@ -28,13 +28,14 @@ module Github
     #    "head": "cool_feature",
     #    "commit_message": "Shipped cool_feature!"
     #
-    def merge(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      normalize! params
-      filter! VALID_MERGE_PARAM_NAMES, params
-      assert_required_keys REQUIRED_MERGE_PARAMS, params
+    def merge(*args)
+      arguments(args, :required => [:user, :repo]) do
+        sift VALID_MERGE_PARAM_NAMES
+        assert_required REQUIRED_MERGE_PARAMS
+      end
+      params = arguments.params
 
-      post_request("/repos/#{user_name}/#{repo_name}/merges", params)
+      post_request("/repos/#{user}/#{repo}/merges", params)
     end
 
   end # Repos::Merging

@@ -19,9 +19,9 @@ describe Github::PullRequests, '#commits' do
     let(:body) { fixture('pull_requests/commits.json') }
     let(:status) { 200 }
 
-    it "throws error if pull_request_id not provided" do
-      expect { subject.commits user, repo, nil }.to raise_error(ArgumentError)
-    end
+    it { expect { subject.commits user, repo }.to raise_error(ArgumentError) }
+
+    it { expect { subject.commits }.to raise_error(Github::Error::Validations) }
 
     it "should get the resources" do
       subject.commits user, repo, number

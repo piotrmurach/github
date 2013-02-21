@@ -92,9 +92,36 @@ module Github
       end
     end
 
+    # Acts as setter and getter for api requests arguments parsing.
+    #
+    # Returns Arguments instance.
+    #
+    def arguments(args=(not_set = true), options={}, &block)
+      if not_set
+        @arguments
+      else
+        @arguments = Arguments.new(self, options).parse(*args, &block)
+      end
+    end
+
+    # Scope for passing request required arguments.
+    #
+    def with(args)
+      case args
+      when Hash
+        set args
+      when /.*\/.*/i
+        user, repo = args.split('/')
+        set :user => user, :repo => repo
+      else
+        ::Kernel.raise ArgumentError, 'This api does not support passed in arguments'
+      end
+    end
+
     # Set an option to a given value
     def set(option, value=(not_set = true), &block)
       raise ArgumentError, 'value not set' if block and !not_set
+      return self if !not_set and value.nil?
 
       if not_set
         set_options option
@@ -105,17 +132,40 @@ module Github
         return __send__("#{option}=", value)
       end
 
+      define_accessors option, value
       self
     end
 
     private
 
     # Set multiple options
+    #
     def set_options(options)
       unless options.respond_to?(:each)
         raise ArgumentError, 'cannot iterate over value'
       end
       options.each { |key, value| set(key, value) }
+    end
+
+    def define_accessors(option, value)
+      setter = proc { |val| set option, value }
+      getter = proc { value }
+
+      define_singleton_method("#{option}=", setter) if setter
+      define_singleton_method(option, getter) if getter
+    end
+
+    # Dynamically define a method for setting request option
+    #
+    def define_singleton_method(name, content=Proc.new)
+      (class << self; self; end).class_eval do
+        undef_method(name) if method_defined? name
+        if String === content
+          class_eval("def #{name}() #{content}; end")
+        else
+          define_method(name, &content)
+        end
+      end
     end
 
     def _merge_mime_type(resource, params) # :nodoc:

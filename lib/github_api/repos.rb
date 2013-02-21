@@ -26,6 +26,8 @@ module Github
       "has_downloads" => true
     }.freeze
 
+    REQUIRED_REPO_OPTIONS = %w[ name ]
+
     VALID_REPO_OPTIONS = %w[
       name
       description
@@ -86,7 +88,7 @@ module Github
       @mergin ||= ApiFactory.new('Repos::Merging', current_options.merge(options), &block)
     end
 
-    # Access to Repos::Watchin API
+    # Access to Repos::PubSubHubbub API
     def pubsubhubbub(options={}, &block)
       @pubsubhubbub ||= ApiFactory.new('Repos::PubSubHubbub', current_options.merge(options), &block)
     end
@@ -95,192 +97,6 @@ module Github
     def statuses(options={}, &block)
       @statuses ||= ApiFactory.new('Repos::Statuses', current_options.merge(options), &block)
     end
-
-    # List branches
-    #
-    # = Examples
-    #
-    #   github = Github.new
-    #   github.repos.branches 'user-name', 'repo-name'
-    #
-    #   repos = Github::Repos.new
-    #   repos.branches 'user-name', 'repo-name'
-    #
-    def branches(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-      normalize! params
-
-      response = get_request("/repos/#{user}/#{repo}/branches", params)
-      return response unless block_given?
-      response.each { |el| yield el }
-    end
-    alias :list_branches :branches
-
-    # Get branch
-    #
-    # = Examples
-    #
-    #   github = Github.new
-    #   github.repos.branch 'user-name', 'repo-name', 'branch-name'
-    #
-    def branch(user_name, repo_name, branch, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user_name, repo_name, branch
-      normalize! params
-
-      get_request("/repos/#{user_name}/#{repo_name}/branches/#{branch}", params)
-    end
-
-    # Create a new repository for the autheticated user.
-    #
-    # = Parameters
-    #  <tt>:name</tt> - Required string
-    #  <tt>:description</tt> - Optional string
-    #  <tt>:homepage</tt> - Optional string
-    #  <tt>:private</tt> - Optional boolean - <tt>true</tt> to create a private repository, <tt>false</tt> to create a public one.
-    #  <tt>:has_issues</tt> - Optional boolean - <tt>true</tt> to enable issues for this repository, <tt>false</tt> to disable them
-    #  <tt>:has_wiki</tt> - Optional boolean - <tt>true</tt> to enable the wiki for this repository, <tt>false</tt> to disable it. Default is <tt>true</tt>
-    #  <tt>:has_downloads</tt> Optional boolean - <tt>true</tt> to enable downloads for this repository
-    #  <tt>:org</tt> Optional string - The organisation in which this repository will be created
-    #  <tt>:team_id</tt> Optional number - The id of the team that will be granted access to this repository. This is only valid when creating a repo in an organization
-    #
-    # = Examples
-    #  github = Github.new
-    #  github.repos.create "name": 'repo-name'
-    #    "description": "This is your first repo",
-    #    "homepage": "https://github.com",
-    #    "private": false,
-    #    "has_issues": true,
-    #    "has_wiki": true,
-    #    "has_downloads": true
-    #
-    # Create a new repository in this organisation. The authenticated user
-    # must be a member of this organisation
-    #
-    # Examples:
-    #   github = Github.new :oauth_token => '...'
-    #   github.repos.create :name => 'repo-name', :org => 'organisation-name'
-    #
-    def create(*args)
-      params = args.extract_options!
-      normalize! params
-      filter! VALID_REPO_OPTIONS + %w[ org ], params
-      assert_required_keys(%w[ name ], params)
-
-      # Requires authenticated user
-      if (org = params.delete("org"))
-        post_request("/orgs/#{org}/repos", DEFAULT_REPO_OPTIONS.merge(params))
-      else
-        post_request("/user/repos", DEFAULT_REPO_OPTIONS.merge(params))
-      end
-    end
-
-    # Delete a repository
-    #
-    # Deleting a repository requires admin access.
-    # If OAuth is used, the delete_repo scope is required.
-    #
-    # = Examples
-    #  github = Github.new :oauth_token => '...'
-    #  github.repos.delete 'user-name', 'repo-name'
-    #
-    def delete(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-      normalize! params
-
-      delete_request("/repos/#{user}/#{repo}", params)
-    end
-    alias :remove :delete
-
-    # List contributors
-    #
-    # = Parameters
-    #  <tt>:anon</tt> - Optional flag. Set to 1 or true to include anonymous contributors.
-    #
-    # = Examples
-    #
-    #  github = Github.new
-    #  github.repos.contributors 'user-name','repo-name'
-    #  github.repos.contributors 'user-name','repo-name' { |cont| ... }
-    #
-    def contributors(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-      normalize! params
-      filter! ['anon'], params
-
-      response = get_request("/repos/#{user}/#{repo}/contributors", params)
-      return response unless block_given?
-      response.each { |el| yield el }
-    end
-    alias :list_contributors :contributors
-    alias :contribs :contributors
-
-    # Edit a repository
-    #
-    # = Parameters
-    # * <tt>:name</tt> Required string
-    # * <tt>:description</tt>   Optional string
-    # * <tt>:homepage</tt>      Optional string
-    #  <tt>:private</tt> - Optional boolean - <tt>false</tt> to create public reps, <tt>false</tt> to create a private one
-    # * <tt>:has_issues</tt>    Optional boolean - <tt>true</tt> to enable issues for this repository, <tt>false</tt> to disable them
-    # * <tt>:has_wiki</tt>      Optional boolean - <tt>true</tt> to enable the wiki for this repository, <tt>false</tt> to disable it. Default is <tt>true</tt>
-    # * <tt>:has_downloads</tt> Optional boolean - <tt>true</tt> to enable downloads for this repository
-    #
-    # = Examples
-    #
-    #  github = Github.new
-    #  github.repos.edit 'user-name', 'repo-name',
-    #    :name => 'hello-world',
-    #    :description => 'This is your first repo',
-    #    :homepage => "https://github.com",
-    #    :public => true, :has_issues => true
-    #
-    def edit(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-
-      normalize! params
-      filter! VALID_REPO_OPTIONS, params
-      assert_required_keys(%w[ name ], params)
-
-      patch_request("/repos/#{user}/#{repo}", DEFAULT_REPO_OPTIONS.merge(params))
-    end
-
-    # Get a repository
-    #
-    # = Examples
-    #  github = Github.new
-    #  github.repos.get 'user-name', 'repo-name'
-    #
-    def get(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-      normalize! params
-
-      get_request("/repos/#{user}/#{repo}", params)
-    end
-    alias :find :get
-
-    # List languages
-    #
-    # = Examples
-    #  github = Github.new
-    #  github.repos.languages 'user-name', 'repo-name'
-    #  github.repos.languages 'user-name', 'repo-name' { |lang| ... }
-    #
-    def languages(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-      normalize! params
-
-      response = get_request("/repos/#{user}/#{repo}/languages", params)
-      return response unless block_given?
-      response.each { |el| yield el }
-    end
-    alias :list_languages :languages
 
     # List repositories for the authenticated user
     #
@@ -315,13 +131,14 @@ module Github
     #  github.repos.list :org => 'org-name', { |repo| ... }
     #
     def list(*args)
-      params = args.extract_options!
-      normalize! params
-      filter! %w[ user org type sort direction ], params
+      arguments(args) do
+        sift %w[ user org type sort direction ]
+      end
+      params = arguments.params
 
-      response = if (user_name = params.delete("user"))
+      response = if (user_name = (params.delete("user")))
         get_request("/users/#{user_name}/repos", params)
-      elsif (org_name = params.delete("org"))
+      elsif (org_name = (params.delete("org")))
         get_request("/orgs/#{org_name}/repos", params)
       elsif authenticated?
         # For authenticated user
@@ -334,6 +151,234 @@ module Github
     end
     alias :all :list
 
+    # Get a repository
+    #
+    # = Examples
+    #  github = Github.new
+    #  github.repos.get 'user-name', 'repo-name'
+    #  github.repos.get user: 'user-name', repo: 'repo-name'
+    #  github.repos(user: 'user-name', repo: 'repo-name').get
+    #
+    def get(*args)
+      arguments(args, :required => [:user, :repo])
+      params = arguments.params
+
+      get_request("/repos/#{user}/#{repo}", params)
+    end
+    alias :find :get
+
+    # Create a new repository for the autheticated user.
+    #
+    # = Parameters
+    #  <tt>:name</tt> - Required string
+    #  <tt>:description</tt> - Optional string
+    #  <tt>:homepage</tt> - Optional string
+    #  <tt>:private</tt> - Optional boolean - <tt>true</tt> to create a private repository, <tt>false</tt> to create a public one.
+    #  <tt>:has_issues</tt> - Optional boolean - <tt>true</tt> to enable issues for this repository, <tt>false</tt> to disable them
+    #  <tt>:has_wiki</tt> - Optional boolean - <tt>true</tt> to enable the wiki for this repository, <tt>false</tt> to disable it. Default is <tt>true</tt>
+    #  <tt>:has_downloads</tt> Optional boolean - <tt>true</tt> to enable downloads for this repository
+    #  <tt>:org</tt> Optional string - The organisation in which this repository will be created
+    #  <tt>:team_id</tt> Optional number - The id of the team that will be granted access to this repository. This is only valid when creating a repo in an organization
+    #
+    # = Examples
+    #  github = Github.new
+    #  github.repos.create "name": 'repo-name'
+    #    "description": "This is your first repo",
+    #    "homepage": "https://github.com",
+    #    "private": false,
+    #    "has_issues": true,
+    #    "has_wiki": true,
+    #    "has_downloads": true
+    #
+    # Create a new repository in this organisation. The authenticated user
+    # must be a member of this organisation
+    #
+    # Examples:
+    #   github = Github.new :oauth_token => '...'
+    #   github.repos.create :name => 'repo-name', :org => 'organisation-name'
+    #
+    def create(*args)
+      arguments(args) do
+        sift VALID_REPO_OPTIONS + %w[ org ]
+        assert_required %w[ name ]
+      end
+      params = arguments.params
+
+      # Requires authenticated user
+      if (org = params.delete("org"))
+        post_request("/orgs/#{org}/repos", DEFAULT_REPO_OPTIONS.merge(params))
+      else
+        post_request("/user/repos", DEFAULT_REPO_OPTIONS.merge(params))
+      end
+    end
+
+    # Delete a repository
+    #
+    # Deleting a repository requires admin access.
+    # If OAuth is used, the delete_repo scope is required.
+    #
+    # = Examples
+    #  github = Github.new :oauth_token => '...'
+    #  github.repos.delete 'user-name', 'repo-name'
+    #
+    def delete(*args)
+      arguments(args, :required => [:user, :repo])
+      params = arguments.params
+
+      delete_request("/repos/#{user}/#{repo}", params)
+    end
+    alias :remove :delete
+
+    # List contributors
+    #
+    # = Parameters
+    #  <tt>:anon</tt> - Optional flag. Set to 1 or true to include anonymous contributors.
+    #
+    # = Examples
+    #
+    #  github = Github.new
+    #  github.repos.contributors 'user-name','repo-name'
+    #  github.repos.contributors 'user-name','repo-name' { |cont| ... }
+    #
+    def contributors(*args)
+      arguments(args, :required => [:user, :repo]) do
+        sift %w[ anon ]
+      end
+      params = arguments.params
+
+      response = get_request("/repos/#{user}/#{repo}/contributors", params)
+      return response unless block_given?
+      response.each { |el| yield el }
+    end
+    alias :list_contributors :contributors
+    alias :contribs :contributors
+
+    # Edit a repository
+    #
+    # = Parameters
+    # * <tt>:name</tt> Required string
+    # * <tt>:description</tt>   Optional string
+    # * <tt>:homepage</tt>      Optional string
+    #  <tt>:private</tt> - Optional boolean - <tt>false</tt> to create public reps, <tt>false</tt> to create a private one
+    # * <tt>:has_issues</tt>    Optional boolean - <tt>true</tt> to enable issues for this repository, <tt>false</tt> to disable them
+    # * <tt>:has_wiki</tt>      Optional boolean - <tt>true</tt> to enable the wiki for this repository, <tt>false</tt> to disable it. Default is <tt>true</tt>
+    # * <tt>:has_downloads</tt> Optional boolean - <tt>true</tt> to enable downloads for this repository
+    #
+    # = Examples
+    #
+    #  github = Github.new
+    #  github.repos.edit 'user-name', 'repo-name',
+    #    :name => 'hello-world',
+    #    :description => 'This is your first repo',
+    #    :homepage => "https://github.com",
+    #    :public => true, :has_issues => true
+    #
+    def edit(*args)
+      arguments(args, :required => [:user, :repo]) do
+        sift VALID_REPO_OPTIONS
+        assert_required %w[ name ]
+      end
+      params = arguments.params
+
+      patch_request("/repos/#{user}/#{repo}", DEFAULT_REPO_OPTIONS.merge(params))
+    end
+
+    # Delete a repository
+    #
+    # Deleting a repository requires admin access.
+    # If OAuth is used, the delete_repo scope is required.
+    #
+    # = Examples
+    #  github = Github.new :oauth_token => '...'
+    #  github.repos.delete 'user-name', 'repo-name'
+    #
+    def delete(*args)
+      arguments(args, :required => [:user, :repo])
+      params = arguments.params
+
+      delete_request("/repos/#{user}/#{repo}", params)
+    end
+    alias :remove :delete
+
+    # List branches
+    #
+    # = Examples
+    #
+    #   github = Github.new
+    #   github.repos.branches 'user-name', 'repo-name'
+    #   github.repos(user: 'user-name', repo: 'repo-name').branches
+    #
+    #   repos = Github::Repos.new
+    #   repos.branches 'user-name', 'repo-name'
+    #
+    # def branches(user_name, repo_name, params={})
+    def branches(*args)
+      arguments(args, :required => [:user, :repo])
+      params = arguments.params
+
+      response = get_request("/repos/#{user}/#{repo}/branches", arguments.params)
+      return response unless block_given?
+      response.each { |el| yield el }
+    end
+    alias :list_branches :branches
+
+    # Get branch
+    #
+    # = Examples
+    #
+    #   github = Github.new
+    #   github.repos.branch 'user-name', 'repo-name', 'branch-name'
+    #   github.repos.branch user: 'user-name', repo: 'repo-name', branch: 'branch-name'
+    #   github.repos(user: 'user-name', repo: 'repo-name', branch: 'branch-name').branch
+    #
+    def branch(*args)
+      arguments(args, :required => [:user, :repo, :branch])
+      params = arguments.params
+
+      get_request("/repos/#{user}/#{repo}/branches/#{branch}", params)
+    end
+
+    # List contributors
+    #
+    # = Parameters
+    #  <tt>:anon</tt> - Optional flag. Set to 1 or true to include anonymous contributors.
+    #
+    # = Examples
+    #
+    #  github = Github.new
+    #  github.repos.contributors 'user-name','repo-name'
+    #  github.repos.contributors 'user-name','repo-name' { |cont| ... }
+    #
+    def contributors(*args)
+      arguments(args, :required => [:user, :repo]) do
+        sift ['anon']
+      end
+      params = arguments.params
+
+      response = get_request("/repos/#{user}/#{repo}/contributors", params)
+      return response unless block_given?
+      response.each { |el| yield el }
+    end
+    alias :list_contributors :contributors
+    alias :contribs :contributors
+
+    # List languages
+    #
+    # = Examples
+    #  github = Github.new
+    #  github.repos.languages 'user-name', 'repo-name'
+    #  github.repos.languages 'user-name', 'repo-name' { |lang| ... }
+    #
+    def languages(*args)
+      arguments(args, :required => [:user, :repo])
+      params = arguments.params
+
+      response = get_request("/repos/#{user}/#{repo}/languages", params)
+      return response unless block_given?
+      response.each { |el| yield el }
+    end
+    alias :list_languages :languages
+
     # List tags
     #
     # = Examples
@@ -341,10 +386,9 @@ module Github
     #   github.repos.tags 'user-name', 'repo-name'
     #   github.repos.tags 'user-name', 'repo-name' { |tag| ... }
     #
-    def tags(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-      normalize! params
+    def tags(*args)
+      arguments(args, :required => [:user, :repo])
+      params = arguments.params
 
       response = get_request("/repos/#{user}/#{repo}/tags", params)
       return response unless block_given?
@@ -361,10 +405,11 @@ module Github
     #   github.repos.teams 'user-name', 'repo-name'
     #   github.repos.teams 'user-name', 'repo-name' { |team| ... }
     #
-    def teams(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-      normalize! params
+    #   github.repos(user: 'user-name, repo: 'repo-name').teams
+    #
+    def teams(*args)
+      arguments(args, :required => [:user, :repo])
+      params = arguments.params
 
       response = get_request("/repos/#{user}/#{repo}/teams", params)
       return response unless block_given?

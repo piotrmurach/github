@@ -18,7 +18,7 @@ describe Github::Users::Followers, '#following?' do
   after { reset_authentication_for(subject) }
 
   it 'should raise error if username not present' do
-    expect { subject.following? nil }.to raise_error(ArgumentError)
+    expect { subject.following? }.to raise_error(Github::Error::Validations)
   end
 
   it 'should perform request' do

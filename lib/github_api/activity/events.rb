@@ -10,10 +10,10 @@ module Github
     #  github.activity.events.public
     #  github.activity.events.public { |event| ... }
     #
-    def public(params={})
-      normalize! params
+    def public(*args)
+      arguments(args)
 
-      response = get_request("/events", params)
+      response = get_request("/events", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -28,12 +28,13 @@ module Github
     #  github.activity.events.repository 'user-name', 'repo-name'
     #  github.activity.events.repository 'user-name', 'repo-name' { |event| ... }
     #
-    def repository(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-      normalize! params
+    #  github.events.repository user: 'user-name', repo: 'repo-name'
+    #  github.events.repository user: 'user-name', repo: 'repo-name' {|event| ... }
+    #
+    def repository(*args)
+      arguments(args, :required => [:user, :repo])
 
-      response = get_request("/repos/#{user}/#{repo}/events", params)
+      response = get_request("/repos/#{user}/#{repo}/events", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -49,10 +50,12 @@ module Github
     #  github.activity.events.issue 'user-name', 'repo-name'
     #  github.activity.events.issue 'user-name', 'repo-name' { |event| ... }
     #
-    def issue(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-      normalize! params
+    #  github.events.issue user: 'user-name', repo: 'repo-name'
+    #  github.events.issue user: 'user-name', repo: 'repo-name' { |event| ... }
+    #
+    def issue(*args)
+      arguments(args, :required => [:user, :repo])
+      params = arguments.params
 
       response = get_request("/repos/#{user}/#{repo}/issues/events", params)
       return response unless block_given?
@@ -69,12 +72,13 @@ module Github
     #  github.activity.events.network 'user-name', 'repo-name'
     #  github.activity.events.network 'user-name', 'repo-name' { |event| ... }
     #
-    def network(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-      normalize! params
+    #  github.events.network user: 'user-name', repo: 'repo-name'
+    #  github.events.network user: 'user-name', repo: 'repo-name' { |event| ... }
+    #
+    def network(*args)
+      arguments(args, :required => [:user, :repo])
 
-      response = get_request("/networks/#{user}/#{repo}/events", params)
+      response = get_request("/networks/#{user}/#{repo}/events", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -90,11 +94,13 @@ module Github
     #  github.activity.events.org 'org-name'
     #  github.activity.events.org 'org-name' { |event| ... }
     #
-    def org(org_name, params={})
-      assert_presence_of org_name
-      normalize! params
+    #  github.events.org org: 'org-name'
+    #  github.events.org org: 'org-name' { |event| ... }
+    #
+    def org(*args)
+      arguments(args, :required => [:org_name])
 
-      response = get_request("/orgs/#{org_name}/events", params)
+      response = get_request("/orgs/#{org_name}/events", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -121,16 +127,16 @@ module Github
     #  github.activity.events.received 'user-name', :public => true
     #  github.activity.events.received 'user-name', :public => true { |event| ... }
     #
-    def received(user_name, params={})
-      assert_presence_of user_name
-      normalize! params
+    def received(*args)
+      arguments(args, :required => [:user])
+      params = arguments.params
 
       public_events = if params['public']
         params.delete('public')
         '/public'
       end
 
-      response = get_request("/users/#{user_name}/received_events#{public_events}", params)
+      response = get_request("/users/#{user}/received_events#{public_events}", params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -154,16 +160,16 @@ module Github
     #  github.activity.events.performed 'user-name', :public => true
     #  github.activity.events.performed 'user-name', :public => true { |event| ... }
     #
-    def performed(user_name, params={})
-      assert_presence_of user_name
-      normalize! params
+    def performed(*args)
+      arguments(args, :required => [:user])
+      params = arguments.params
 
       public_events = if params['public']
         params.delete('public')
         '/public'
       end
 
-      response = get_request("/users/#{user_name}/events#{public_events}", params)
+      response = get_request("/users/#{user}/events#{public_events}", params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -180,11 +186,14 @@ module Github
     #  github.activity.events.user_org 'user-name', 'org-name'
     #  github.activity.events.user_org 'user-name', 'org-name' { |event| ... }
     #
-    def user_org(user_name, org_name, params={})
-      assert_presence_of user_name, org_name
-      normalize! params
+    #  github.events.user_org user: 'user-name', org_name: 'org-name'
+    #  github.events.user_org user: 'user-name', org_name: 'org-name' {|event| ...}
+    #
+    def user_org(*args)
+      arguments(args, :required => [:user, :org_name])
+      params = arguments.params
 
-      response = get_request("/users/#{user_name}/events/orgs/#{org_name}", params)
+      response = get_request("/users/#{user}/events/orgs/#{org_name}", params)
       return response unless block_given?
       response.each { |el| yield el }
     end

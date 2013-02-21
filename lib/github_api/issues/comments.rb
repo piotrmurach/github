@@ -30,10 +30,9 @@ module Github
     #  github.issues.comments.all 'user-name', 'repo-name'
     #  github.issues.comments.all 'user-name', 'repo-name' {|com| .. }
     #
-    def list(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-      normalize! params
+    def list(*args)
+      arguments(args, :required => [:user, :repo])
+      params = arguments.params
 
       response = if (issue_id = params.delete('issue_id'))
         get_request("/repos/#{user}/#{repo}/issues/#{issue_id}/comments", params)
@@ -51,10 +50,9 @@ module Github
     #  github = Github.new
     #  github.issues.comments.find 'user-name', 'repo-name', 'comment-id'
     #
-    def get(user_name, repo_name, comment_id, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, comment_id
-      normalize! params
+    def get(*args)
+      arguments(args, :required => [:user, :repo, :comment_id])
+      params = arguments.params
 
       get_request("/repos/#{user}/#{repo}/issues/comments/#{comment_id}", params)
     end
@@ -70,13 +68,12 @@ module Github
     #  github.issues.comments.create 'user-name', 'repo-name', 'issue-id',
     #     'body': 'a new comment'
     #
-    def create(user_name, repo_name, issue_id, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, issue_id
-
-      normalize! params
-      filter! VALID_ISSUE_COMMENT_PARAM_NAME, params
-      assert_required_keys(%w[ body ], params)
+    def create(*args)
+      arguments(args, :required => [:user, :repo, :issue_id]) do
+        sift VALID_ISSUE_COMMENT_PARAM_NAME
+        assert_required %w[ body ]
+      end
+      params = arguments.params
 
       post_request("/repos/#{user}/#{repo}/issues/#{issue_id}/comments", params)
     end
@@ -91,13 +88,12 @@ module Github
     #  github.issues.comments.edit 'user-name', 'repo-name', 'comment-id',
     #     'body': 'a new comment'
     #
-    def edit(user_name, repo_name, comment_id, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, comment_id
-
-      normalize! params
-      filter! VALID_ISSUE_COMMENT_PARAM_NAME, params
-      assert_required_keys(%w[ body ], params)
+    def edit(*args)
+      arguments(args, :required => [:user, :repo, :comment_id]) do
+        sift VALID_ISSUE_COMMENT_PARAM_NAME
+        assert_required %w[ body ]
+      end
+      params = arguments.params
 
       patch_request("/repos/#{user}/#{repo}/issues/comments/#{comment_id}", params)
     end
@@ -108,10 +104,9 @@ module Github
     #  github = Github.new
     #  github.issues.comments.delete 'user-name', 'repo-name', 'comment-id'
     #
-    def delete(user_name, repo_name, comment_id, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, comment_id
-      normalize! params
+    def delete(*args)
+      arguments(args, :required => [:user, :repo, :comment_id])
+      params = arguments.params
 
       delete_request("/repos/#{user}/#{repo}/issues/comments/#{comment_id}", params)
     end

@@ -18,8 +18,10 @@ describe Github::Orgs::Teams, '#team_member?' do
   context 'when user is a member' do
     let(:status) { 204 }
 
+    it { expect { subject.team_member?(team_id, nil)}.to raise_error(ArgumentError)}
+
     it "should fail validation " do
-      expect { subject.team_member?(nil, nil) }.to raise_error(ArgumentError)
+      expect { subject.team_member? }.to raise_error(Github::Error::Validations)
     end
 
     it "should return true if resoure found" do

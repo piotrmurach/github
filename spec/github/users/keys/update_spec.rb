@@ -29,7 +29,7 @@ describe Github::Users::Keys, '#update' do
     let(:status) { 201 }
 
     it "should fail to get resource without key id" do
-      expect { subject.update nil }.to raise_error(ArgumentError)
+      expect { subject.update }.to raise_error(Github::Error::Validations)
     end
 
     it "should create resource successfully" do

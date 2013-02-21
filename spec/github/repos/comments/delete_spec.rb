@@ -20,13 +20,13 @@ describe Github::Repos::Comments, '#delete' do
     let(:body) { '' }
     let(:status) { 204 }
 
-    it "should fail to delete without 'user/repo' parameters" do
-      expect { subject.delete }.to raise_error(ArgumentError)
+    it "should fail to delete without required arguments" do
+      expect { subject.delete }.to raise_error(Github::Error::Validations)
     end
 
     it "should fail to delete resource without 'comment_id'" do
       expect {
-        subject.delete user, repo, nil
+        subject.delete user, repo
       }.to raise_error(ArgumentError)
     end
 

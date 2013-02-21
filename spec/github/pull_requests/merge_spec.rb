@@ -19,6 +19,8 @@ describe Github::PullRequests, '#merge' do
     let(:body) { fixture('pull_requests/merge_success.json') }
     let(:status) { 200 }
 
+    it { expect { subject.merge }.to raise_error(Github::Error::Validations) }
+
     it 'performs request' do
       subject.merge user, repo, number
       a_put(request_path).should have_been_made

@@ -33,9 +33,7 @@ describe Github::Activity::Watching, '#list' do
 
   context "without username and reponame passed" do
     it "should fail validation " do
-      expect {
-        subject.watching?(nil, nil)
-      }.to raise_error(ArgumentError)
+      expect { subject.watching? user, nil }.to raise_error(ArgumentError)
     end
   end
 end # watching?

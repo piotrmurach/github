@@ -26,7 +26,7 @@ describe Github::Orgs::Teams, '#create' do
     let(:status) { 201 }
 
     it "should fail to create resource if 'org_name' param is missing" do
-      expect { subject.create nil, inputs }.to raise_error(ArgumentError)
+      expect { subject.create }.to raise_error(Github::Error::Validations)
     end
 
     it "should failt to create resource if 'name' input is missing" do

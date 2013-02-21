@@ -26,10 +26,12 @@ module Github
     #  github = Github.new
     #  github.git_data.commits.get 'user-name', 'repo-name', 'sha'
     #
-    def get(user_name, repo_name, sha, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo, sha
-      normalize! params
+    #  commits = Github::Commits.new user: 'user-name', repo: 'repo-name'
+    #  commits.get sha: '...'
+    #
+    def get(*args)
+      arguments(args, :required => [:user, :repo, :sha])
+      params = arguments.params
 
       get_request("/repos/#{user}/#{repo}/git/commits/#{sha}", params)
     end
@@ -67,12 +69,12 @@ module Github
     #    ],
     #    "tree": "827efc6d56897b048c772eb4087f854f46256132"]
     #
-    def create(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-      normalize! params
-      filter! VALID_COMMIT_PARAM_NAMES, params
-      assert_required_keys(REQUIRED_COMMIT_PARAMS, params)
+    def create(*args)
+      arguments(args, :required => [:user, :repo]) do
+        sift VALID_COMMIT_PARAM_NAMES
+        assert_required REQUIRED_COMMIT_PARAMS
+      end
+      params = arguments.params
 
       post_request("/repos/#{user}/#{repo}/git/commits", params)
     end

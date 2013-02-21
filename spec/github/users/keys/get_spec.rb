@@ -22,7 +22,7 @@ describe Github::Users::Keys, '#get' do
     it { should respond_to :find }
 
     it "should fail to get resource without key id" do
-      expect { subject.get nil }.to raise_error(ArgumentError)
+      expect { subject.get }.to raise_error(Github::Error::Validations)
     end
 
     it "should get the resource" do

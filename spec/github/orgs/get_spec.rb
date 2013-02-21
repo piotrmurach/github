@@ -17,7 +17,7 @@ describe Github::Orgs, '#get' do
 
   context "resource found" do
     it "should fail to get resource without org name" do
-      expect { subject.get }.to raise_error(ArgumentError)
+      expect { subject.get }.to raise_error(Github::Error::Validations)
     end
 
     it "should get the resource" do

@@ -13,12 +13,10 @@ module Github
     #  github.repos.forks.list 'user-name', 'repo-name'
     #  github.repos.forks.list 'user-name', 'repo-name' { |fork| ... }
     #
-    def list(user_name, repo_name, params = {})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-      normalize! params
+    def list(*args)
+      arguments(args, :required => [:user, :repo])
 
-      response = get_request("/repos/#{user}/#{repo}/forks", params)
+      response = get_request("/repos/#{user}/#{repo}/forks", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -34,13 +32,10 @@ module Github
     #  github.repos.forks.create 'user-name', 'repo-name',
     #    "org" =>  "github"
     #
-    def create(user_name, repo_name, params={})
-      set :user => user_name, :repo => repo_name
-      assert_presence_of user, repo
-      normalize! params
-      filter! %w[ org ], params
+    def create(*args)
+      arguments(args, :required => [:user, :repo])
 
-      post_request("/repos/#{user}/#{repo}/forks", params)
+      post_request("/repos/#{user}/#{repo}/forks", arguments.params)
     end
 
   end # Repos::Forks

@@ -11,11 +11,11 @@ module Github
     #  Github.issues.assignees.list 'user', 'repo'
     #  Github.issues.assignees.list 'user', 'repo' { |assignee| ... }
     #
-    def list(user_name, repo_name, params={})
-      assert_presence_of user_name, repo_name
-      normalize! params
+    def list(*args)
+      arguments(args, :required => [:user, :repo])
+      params = arguments.params
 
-      response = get_request("/repos/#{user_name}/#{repo_name}/assignees", params)
+      response = get_request("/repos/#{user}/#{repo}/assignees", params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -27,11 +27,14 @@ module Github
     #
     #  Github.issues.assignees.check 'user', 'repo', 'assignee'
     #
-    def check(user_name, repo_name, assignee, params={})
-      assert_presence_of user_name, repo_name, assignee
-      normalize! params
+    #  github = Github.new user: 'user-name', repo: 'repo-name'
+    #  github.issues.assignees.check 'assignee'
+    #
+    def check(*args)
+      arguments(args, :required => [:user, :repo, :assignee])
+      params = arguments.params
 
-      get_request("/repos/#{user_name}/#{repo_name}/assignees/#{assignee}",params)
+      get_request("/repos/#{user}/#{repo}/assignees/#{assignee}",params)
       true
     rescue Github::Error::NotFound
       false

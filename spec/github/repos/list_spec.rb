@@ -88,13 +88,18 @@ describe Github::Repos, '#list' do
     end
   end
 
-  context "resource found for organization" do
+  context "resource found for a user" do
     let(:request_path) { "/users/#{user}/repos" }
 
     before {
       stub_get(request_path).to_return(:body => body, :status => status,
         :headers => {:content_type => "application/json; charset=utf-8"} )
     }
+
+    it "should filter the parameters" do
+      subject.list 'user' => user, :unkown => true
+      a_get(request_path).with({}).should have_been_made
+    end
 
     it "should get the resources" do
       subject.list :user => user
