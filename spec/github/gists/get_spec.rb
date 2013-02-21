@@ -20,7 +20,7 @@ describe Github::Gists, '#get' do
     it { should respond_to :find }
 
     it "should fail to get resource without gist id" do
-      expect { subject.get }.to raise_error(Github::Error::Validations)
+      expect { subject.get }.to raise_error(ArgumentError)
     end
 
     it "should get the resource" do

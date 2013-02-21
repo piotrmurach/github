@@ -26,7 +26,7 @@ describe Github::Activity::Notifications, '#create' do
     let(:status) { 200 }
 
     it 'asserts thread id presence' do
-      expect { subject.create }.to raise_error(Github::Error::Validations)
+      expect { subject.create }.to raise_error(ArgumentError)
     end
 
     it 'should create resource' do

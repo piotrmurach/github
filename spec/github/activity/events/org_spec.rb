@@ -19,9 +19,7 @@ describe Github::Activity::Events, '#organization' do
     it { should respond_to :organization }
 
     it "should fail to get resource without orgname" do
-      expect {
-        subject.organization nil
-      }.to raise_error(Github::Error::Validations)
+      expect { subject.organization }.to raise_error(ArgumentError)
     end
 
     it "should get the resources" do

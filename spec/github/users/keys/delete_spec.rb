@@ -20,7 +20,7 @@ describe Github::Users::Keys, '#delete' do
     let(:status) { 204 }
 
     it "should fail to get resource without key id" do
-      expect { subject.delete }.to raise_error(Github::Error::Validations)
+      expect { subject.delete }.to raise_error(ArgumentError)
     end
 
     it "should create resource successfully" do

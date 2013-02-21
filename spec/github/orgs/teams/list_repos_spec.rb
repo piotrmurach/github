@@ -18,7 +18,7 @@ describe Github::Orgs::Teams, '#list_repos' do
     let(:status) { 200 }
 
     it "should fail to get resource without team name" do
-      expect { subject.list_repos }.to raise_error(Github::Error::Validations)
+      expect { subject.list_repos }.to raise_error(ArgumentError)
     end
 
     it "should get the resources" do

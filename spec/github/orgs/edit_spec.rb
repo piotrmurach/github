@@ -28,7 +28,7 @@ describe Github::Orgs, '#edit' do
   context "resource edited successfully" do
 
     it "should fail to edit without 'user/repo' parameters" do
-      expect { subject.edit }.to raise_error(Github::Error::Validations)
+      expect { subject.edit }.to raise_error(ArgumentError)
     end
 
     it "should edit the resource" do

@@ -26,7 +26,7 @@ describe Github::Activity::Notifications, '#delete' do
   end
 
   it "should fail to delete resource without 'user' parameter" do
-    expect { subject.delete }.to raise_error(Github::Error::Validations)
+    expect { subject.delete }.to raise_error(ArgumentError)
   end
 
   context 'failed to delete' do

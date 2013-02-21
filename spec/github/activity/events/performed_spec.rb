@@ -18,7 +18,7 @@ describe Github::Activity::Events, '#performed' do
   context "resource found" do
 
     it "should fail to get resource without username" do
-      expect { subject.performed nil }.to raise_error(Github::Error::Validations)
+      expect { subject.performed }.to raise_error(Github::Error::Validations)
     end
 
     it "should get the resources" do

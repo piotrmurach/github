@@ -16,7 +16,7 @@ describe Github::Gists, '#delete' do
   after { reset_authentication_for(subject) }
 
   it 'should raise error if gist id not present' do
-    expect { subject.delete }.to raise_error(Github::Error::Validations)
+    expect { subject.delete }.to raise_error(ArgumentError)
   end
 
   it "should remove resource successfully" do

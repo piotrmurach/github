@@ -16,7 +16,7 @@ describe Github::Gists, '#star' do
   after { reset_authentication_for(subject) }
 
   it "should fail to fork gist without gist id" do
-    expect { subject.fork }.to raise_error(Github::Error::Validations)
+    expect { subject.fork }.to raise_error(ArgumentError)
   end
 
   it "should fork resource successfully" do
