@@ -19,11 +19,10 @@ module Github
     #  github = Github.new
     #  github.gists.comments.list 'gist-id'
     #
-    def list(gist_id, params={})
-      normalize! params
-      assert_presence_of gist_id
+    def list(*args)
+      arguments(args, :required => [:gist_id])
 
-      response = get_request("/gists/#{gist_id}/comments", params)
+      response = get_request("/gists/#{gist_id}/comments", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -35,11 +34,10 @@ module Github
     #  github = Github.new
     #  github.gists.comments.get 'gist-id', 'comment-id'
     #
-    def get(gist_id, comment_id, params={})
-      normalize! params
-      assert_presence_of comment_id
+    def get(*args)
+      arguments(args, :required => [:gist_id, :comment_id])
 
-      get_request("/gists/#{gist_id}/comments/#{comment_id}", params)
+      get_request("/gists/#{gist_id}/comments/#{comment_id}", arguments.params)
     end
     alias :find :get
 
@@ -49,12 +47,13 @@ module Github
     #  github = Github.new
     #  github.gists.comments.create 'gist-id'
     #
-    def create(gist_id, params={})
-      normalize! params
-      filter! VALID_GIST_COMMENT_OPTIONS, params
-      assert_required_keys(REQUIRED_GIST_COMMENT_OPTIONS, params)
+    def create(*args)
+      arguments(args, :required => [:gist_id]) do
+        sift VALID_GIST_COMMENT_OPTIONS
+        assert_required REQUIRED_GIST_COMMENT_OPTIONS
+      end
 
-      post_request("/gists/#{gist_id}/comments", params)
+      post_request("/gists/#{gist_id}/comments", arguments.params)
     end
 
     # Edit a comment
@@ -63,13 +62,13 @@ module Github
     #  github = Github.new
     #  github.gists.comments.edit 'gist-id', 'comment-id'
     #
-    def edit(gist_id, comment_id, params={})
-      normalize! params
-      assert_presence_of comment_id
-      filter! VALID_GIST_COMMENT_OPTIONS, params
-      assert_required_keys(REQUIRED_GIST_COMMENT_OPTIONS, params)
+    def edit(*args)
+      arguments(args, :required => [:gist_id, :comment_id]) do
+        sift VALID_GIST_COMMENT_OPTIONS
+        assert_required REQUIRED_GIST_COMMENT_OPTIONS
+      end
 
-      patch_request("/gists/#{gist_id}/comments/#{comment_id}", params)
+      patch_request("/gists/#{gist_id}/comments/#{comment_id}", arguments.params)
     end
 
     # Delete a comment
@@ -78,11 +77,10 @@ module Github
     #  github = Github.new
     #  github.gists.comments.delete 'gist-id', 'comment-id'
     #
-    def delete(gist_id, comment_id, params={})
-      normalize! params
-      assert_presence_of comment_id
+    def delete(*args)
+      arguments(args, :required => [:gist_id, :comment_id])
 
-      delete_request("/gists/#{gist_id}/comments/#{comment_id}", params)
+      delete_request("/gists/#{gist_id}/comments/#{comment_id}", arguments.params)
     end
 
   end # Gists::Comments

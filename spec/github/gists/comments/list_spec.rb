@@ -20,7 +20,7 @@ describe Github::Gists::Comments, '#list' do
     it { should respond_to :all }
 
     it "throws error if gist id not provided" do
-      expect { subject.list nil}.to raise_error(ArgumentError)
+      expect { subject.list }.to raise_error(ArgumentError)
     end
 
     it "should get the resources" do
