@@ -14,21 +14,14 @@ module Github
     #
     # = Examples
     #  github = Github.new
+    #  github.search.issues 'owner', 'repo-name', 'open','api'
     #  github.search.issues owner: 'owner', repo: 'repo-name', state: 'open', keyword: 'api'
     #
     def issues(*args)
-      params = args.extract_options!
-      normalize! params
-
       required = ['owner', 'repo', 'state', 'keyword']
-      assert_required_keys required, params
+      arguments(args, :required => required)
 
-      options = required.inject({}) do |hash, key|
-        hash[key] = params.delete(key)
-        hash
-      end
-
-      get_request("/legacy/issues/search/#{options['owner']}/#{options['repo']}/#{options['state']}/#{escape(options['keyword'])}", params)
+      get_request("/legacy/issues/search/#{owner}/#{repo}/#{state}/#{escape(keyword)}", arguments.params)
     end
 
     # Search repositories
@@ -40,14 +33,13 @@ module Github
     #
     # = Examples
     #  github = Github.new
+    #  github.search.repos 'api'
     #  github.search.repos keyword: 'api'
     #
     def repos(*args)
-      params = args.extract_options!
-      normalize! params
-      assert_required_keys %w[ keyword ], params
+      arguments(args, :required => [:keyword])
 
-      get_request("/legacy/repos/search/#{escape(params.delete('keyword'))}", params)
+      get_request("/legacy/repos/search/#{escape(keyword)}", arguments.params)
     end
     alias :repositories :repos
 
@@ -63,11 +55,9 @@ module Github
     #  github.search.users keyword: 'wycats'
     #
     def users(*args)
-      params = args.extract_options!
-      normalize! params
-      assert_required_keys %w[ keyword ], params
+      arguments(args, :required => [:keyword])
 
-      get_request("/legacy/user/search/#{escape(params.delete('keyword'))}", params)
+      get_request("/legacy/user/search/#{escape(keyword)}", arguments.params)
     end
 
     # Search email
@@ -83,9 +73,10 @@ module Github
     #  github.search.email email: 'wycats'
     #
     def email(*args)
-      params = args.extract_options!
-      normalize! params
-      assert_required_keys %w[ email ], params
+      arguments(args) do
+        assert_required %w[ email ]
+      end
+      params = arguments.params
 
       get_request("/legacy/user/email/#{params.delete('email')}", params)
     end
