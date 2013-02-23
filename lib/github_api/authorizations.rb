@@ -20,11 +20,11 @@ module Github
     #  github.oauth.list
     #  github.oauth.list { |auth| ... }
     #
-    def list(params={})
+    def list(*args)
       _check_if_authenticated
-      normalize! params
+      arguments(args)
 
-      response = get_request("/authorizations", params)
+      response = get_request("/authorizations", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -36,12 +36,11 @@ module Github
     #  github = Github.new :basic_auth => 'login:password'
     #  github.oauth.get 'authorization-id'
     #
-    def get(authorization_id, params={})
-      assert_presence_of(authorization_id)
+    def get(*args)
       _check_if_authenticated
-      normalize! params
+      arguments(args, :required => [:authorization_id])
 
-      get_request("/authorizations/#{authorization_id}", params)
+      get_request("/authorizations/#{authorization_id}", arguments.params)
     end
     alias :find :get
 
@@ -57,12 +56,13 @@ module Github
     #  github.oauth.create
     #    "scopes" => ["public_repo"]
     #
-    def create(params={})
+    def create(*args)
       _check_if_authenticated
-      normalize! params
-      filter! VALID_AUTH_PARAM_NAMES, params
+      arguments(args) do
+        sift VALID_AUTH_PARAM_NAMES
+      end
 
-      post_request("/authorizations", params)
+      post_request("/authorizations", arguments.params)
     end
 
     # Update an existing authorization
@@ -78,13 +78,13 @@ module Github
     #  github = Github.new :basic_auth => 'login:password'
     #  github.oauth.update "authorization-id", "add_scopes" => ["repo"],
     #
-    def update(authorization_id, params={})
+    def update(*args)
       _check_if_authenticated
-      assert_presence_of authorization_id
-      normalize! params
-      filter! VALID_AUTH_PARAM_NAMES, params
+      arguments(args, :required => [:authorization_id]) do
+        sift VALID_AUTH_PARAM_NAMES
+      end
 
-      patch_request("/authorizations/#{authorization_id}", params)
+      patch_request("/authorizations/#{authorization_id}", arguments.params)
     end
     alias :edit :update
 
@@ -93,12 +93,11 @@ module Github
     # = Examples
     #  github.oauth.delete 'authorization-id'
     #
-    def delete(authorization_id, params={})
+    def delete(*args)
       _check_if_authenticated
-      assert_presence_of authorization_id
-      normalize! params
+      arguments(args, :required => [:authorization_id])
 
-      delete_request("/authorizations/#{authorization_id}", params)
+      delete_request("/authorizations/#{authorization_id}", arguments.params)
     end
     alias :remove :delete
 

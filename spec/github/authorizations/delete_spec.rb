@@ -23,7 +23,7 @@ describe Github::Authorizations, '#delete' do
 
     it "should fail to get resource without basic authentication" do
       reset_authentication_for subject
-      expect { subject.delete nil }.to raise_error(ArgumentError)
+      expect { subject.delete }.to raise_error(ArgumentError)
     end
 
     it "should delete resource successfully" do
