@@ -14,10 +14,9 @@ module Github
     #  github.gitignore.list { |template| ... }
     #
     def list(*args)
-      params = args.extract_options!
-      normalize! params
+      arguments(args)
 
-      response = get_request("/gitignore/templates", params)
+      response = get_request("/gitignore/templates", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -35,9 +34,8 @@ module Github
     #  github = Github.new
     #  github.gitignore.get "template-name", mime: 'applicatin/vnd.github.raw'
     #
-    def get(name, params={})
-      normalize! params
-      assert_presence_of name
+    def get(*args)
+      params = arguments(args, :required => [:name]).params
 
       if (mime_type = params.delete('mime'))
         options = { :raw => true, :headers => {'Accept' => mime_type} }
