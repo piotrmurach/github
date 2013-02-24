@@ -22,9 +22,8 @@ module Github
     #    :verify => 'sync',
     #    :secret => '...'
     #
-    def subscribe(topic, callback, params={})
-      assert_presence_of topic, callback
-      normalize! params
+    def subscribe(*args)
+      params = arguments(args, :required => [:topic, :callback]).params
       _merge_action!("subscribe", topic, callback, params)
 
       post_request("/hub", params, OPTIONS)
@@ -44,9 +43,8 @@ module Github
     #    :verify => 'sync',
     #    :secret => '...'
     #
-    def unsubscribe(topic, callback, params={})
-      assert_presence_of topic, callback
-      normalize! params
+    def unsubscribe(*args)
+      params = arguments(args, :required => [:topic, :callback]).params
       _merge_action!("unsubscribe", topic, callback, params)
 
       post_request("/hub", params, OPTIONS)
@@ -67,12 +65,11 @@ module Github
     #    :token => 'abc123',
     #    :event => 'watch'
     #
-    def subscribe_service(user_name, repo_name, service_name, params={})
-      assert_presence_of user_name, repo_name, service_name
-      normalize! params
-      event = params.delete('event') || 'push'
-      topic = "https://github.com/#{user_name}/#{repo_name}/events/#{event}"
-      callback = "github://#{service_name}?#{params.serialize}"
+    def subscribe_service(*args)
+      params   = arguments(args, :required => [:user, :repo, :service]).params
+      event    = params.delete('event') || 'push'
+      topic    = "#{site}/#{user}/#{repo}/events/#{event}"
+      callback = "github://#{service}?#{params.serialize}"
 
       subscribe(topic, callback)
     end
@@ -90,12 +87,11 @@ module Github
     #  github = Github.new :oauth_token => '...'
     #  github.repos.pubsubhubbub.unsubscribe_service 'user-name', 'repo-name', 'campfire'
     #
-    def unsubscribe_service(user_name, repo_name, service_name, params={})
-      assert_presence_of user_name, repo_name, service_name
-      normalize! params
-      event = params.delete('event') || 'push'
-      topic = "https://github.com/#{user_name}/#{repo_name}/events/#{event}"
-      callback = "github://#{service_name}"
+    def unsubscribe_service(*args)
+      params   = arguments(args, :required => [:user, :repo, :service]).params
+      event    = params.delete('event') || 'push'
+      topic    = "#{site}/#{user}/#{repo}/events/#{event}"
+      callback = "github://#{service}"
 
       unsubscribe(topic, callback)
     end
