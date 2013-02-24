@@ -2,7 +2,6 @@
 
 require 'github_api/configuration'
 require 'github_api/connection'
-require 'github_api/validations'
 require 'github_api/request'
 require 'github_api/mime_type'
 require 'github_api/rate_limit'
@@ -21,16 +20,10 @@ module Github
     include Connection
     include Request
     include RateLimit
-    # include Configuration
-
-    # TODO consider these optional in a stack
-    include Validations
-    include ParameterFilter
-    include Normalizer
 
     attr_reader *Configuration.keys
 
-    attr_accessor *VALID_API_KEYS
+    attr_accessor *Validations::VALID_API_KEYS
 
     attr_accessor :current_options
 
