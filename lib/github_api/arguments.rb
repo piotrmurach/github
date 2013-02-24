@@ -124,7 +124,9 @@ module Github
     #
     def check_assignment!(options)
       result = required.inject({}) { |hash, arg|
-        hash[arg] = api.send(:"#{arg}") if api.respond_to? :"#{arg}"
+        if api.respond_to?(:"#{arg}") && (value = api.send(:"#{arg}"))
+          hash[arg] = value
+        end
         hash
       }
       assert_presence_of result
