@@ -25,11 +25,11 @@ module Github
     #    "context": "github/gollum"
     #
     def render(*args)
-      params = args.extract_options!
-      normalize! params
+      arguments(args) do
+        assert_required ['text']
+      end
 
-      assert_required_keys ['text'], params
-      post_request("markdown", params, :raw => true)
+      post_request("markdown", arguments.params, :raw => true)
     end
 
 
@@ -47,8 +47,7 @@ module Github
     #    "mime": "text/plain",
     #
     def render_raw(*args)
-      params = args.extract_options!
-      normalize! params
+      params = arguments(args).params
       mime_type, params['data'] = params['mime'], args.shift
 
       post_request("markdown/raw", params, :raw => true,
