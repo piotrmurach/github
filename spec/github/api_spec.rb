@@ -1,8 +1,7 @@
 require 'spec_helper'
 
 describe Github::API do
-  let(:api) { Github::API.new }
-  let(:repos) { Github::Repos }
+  subject { described_class.new(options) }
 
   it { described_class.included_modules.should include Github::Authorization }
   it { described_class.included_modules.should include Github::MimeType }
@@ -10,7 +9,10 @@ describe Github::API do
   it { described_class.included_modules.should include Github::Request }
 
   context 'actions' do
-    it { described_class.new.should respond_to :api_methods_in }
+    let(:options) { { } }
+    let(:repos) { Github::Repos }
+
+    it { should respond_to :api_methods_in }
 
     it 'dynamically adds actions inspection to classes inheriting from api' do
       repos.should respond_to :actions
@@ -21,44 +23,20 @@ describe Github::API do
       methods = [ 'method_a', 'method_b']
       repos.stub(:instance_methods).and_return methods
       output = capture(:stdout) { 
-        api.api_methods_in(repos)
+        subject.api_methods_in(repos)
       }
       output.should =~ /.*method_a.*/
       output.should =~ /.*method_b.*/
     end
   end
 
-  context '_process_basic_auth' do
-    let(:github) { Github.new :basic_auth => 'login:password' }
+  context 'process_basic_auth' do
+    let(:options) { { :basic_auth => 'login:password' } }
 
-    after { reset_authentication_for github }
+    its(:login) { should eq 'login' }
 
-    it 'should parse authentication params' do
-      github.login.should eq 'login'
-      github.password.should eq 'password'
-    end
+    its(:password) { should eq 'password' }
+
+    its(:basic_auth) { should eq 'login:password' }
   end
-
-  context 'normalize!' do
-    before do
-      @params = { 'a' => { :b => { 'c' => 1 }, 'd' => [ 'a', { :e => 2 }] } }
-    end
-
-    it "should stringify all the keys inside nested hash" do
-      actual = api.normalize! @params
-      expected = { 'a' => { 'b'=> { 'c' => 1 }, 'd' => [ 'a', { 'e'=> 2 }] } }
-      actual.should be_eql expected
-    end
-  end
-
-  context 'filter!' do
-    it "should remove non valid param keys" do
-      valid = ['a', 'b', 'e']
-      hash = {'a' => 1, 'b' => 3, 'c' => 2, 'd'=> 4, 'e' => 5 }
-      actual = api.filter! valid, hash
-      expected = {'a' => 1, 'b' => 3, 'e' => 5 }
-      actual.should be_eql expected
-    end
-  end
-
 end # Github::API
