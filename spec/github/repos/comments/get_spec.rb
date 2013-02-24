@@ -22,7 +22,7 @@ describe Github::Repos::Comments, '#get' do
     it { should respond_to(:find) }
 
     it 'failse to get resource without required arguments' do
-      expect { subject.get }.to raise_error(Github::Error::Validations)
+      expect { subject.get }.to raise_error(ArgumentError)
     end
 
     it 'fails to get resource without all required arguments' do

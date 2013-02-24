@@ -18,7 +18,7 @@ describe Github::Repos::Commits, '#compare' do
 
   after { reset_authentication_for(subject) }
 
-  it { expect { subject.compare }.to raise_error(Github::Error::Validations) }
+  it { expect { subject.compare }.to raise_error(ArgumentError) }
 
   it "should fail to get resource without base" do
     expect { subject.compare user, repo, nil, head }.to raise_error(ArgumentError)

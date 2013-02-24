@@ -20,7 +20,7 @@ describe Github::Orgs::Members, '#member?' do
     context "this repo is being watched by the user" do
       let(:status) { 404 }
 
-      it { expect { subject.member? }.to raise_error(Github::Error::Validations) }
+      it { expect { subject.member? }.to raise_error(ArgumentError) }
 
       it "should fail validation " do
         expect { subject.member? org  }.to raise_error(ArgumentError)

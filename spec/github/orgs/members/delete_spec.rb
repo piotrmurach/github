@@ -17,7 +17,7 @@ describe Github::Orgs::Members, '#delete' do
     let(:status) { 204 }
 
     it "should fail to delete without org and member parameters" do
-      expect { subject.delete }.to raise_error(Github::Error::Validations)
+      expect { subject.delete }.to raise_error(ArgumentError)
     end
 
     it { expect { subject.delete org }.to raise_error(ArgumentError) }

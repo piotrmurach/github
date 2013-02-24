@@ -19,7 +19,7 @@ describe Github::PullRequests, '#files' do
     let(:body) { fixture('pull_requests/files.json') }
     let(:status) { 200 }
 
-    it { expect { subject.files }.to raise_error(Github::Error::Validations) }
+    it { expect { subject.files }.to raise_error(ArgumentError) }
 
     it { expect { subject.files user }.to raise_error(ArgumentError) }
 

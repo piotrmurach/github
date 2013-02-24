@@ -21,7 +21,7 @@ describe Github::Repos::Comments, '#delete' do
     let(:status) { 204 }
 
     it "should fail to delete without required arguments" do
-      expect { subject.delete }.to raise_error(Github::Error::Validations)
+      expect { subject.delete }.to raise_error(ArgumentError)
     end
 
     it "should fail to delete resource without 'comment_id'" do

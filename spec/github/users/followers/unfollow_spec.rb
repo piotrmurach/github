@@ -18,7 +18,7 @@ describe Github::Users::Followers, '#unfollow' do
   after { reset_authentication_for(subject) }
 
   it "should raise error if gist id not present" do
-    expect { subject.unfollow }.to raise_error(Github::Error::Validations)
+    expect { subject.unfollow }.to raise_error(ArgumentError)
   end
 
   it 'successfully unfollows a user' do

@@ -20,7 +20,7 @@ describe Github::Repos::Collaborators, '#list' do
     let(:status) { 200 }
 
     it "should fail to get resource without arguments" do
-      expect { subject.list }.to raise_error(Github::Error::Validations)
+      expect { subject.list }.to raise_error(ArgumentError)
     end
 
     it "failse to get resource with missing arguments" do

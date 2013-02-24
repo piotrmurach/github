@@ -20,7 +20,7 @@ describe Github::Repos::Collaborators, '#remove' do
     let(:body) { '' }
     let(:status) { 204 }
 
-    it { expect { subject.remove }.to raise_error(Github::Error::Validations) }
+    it { expect { subject.remove }.to raise_error(ArgumentError) }
 
     it "should fail to add resource if 'collaborator' input is missing" do
       expect { subject.remove user, repo }.to raise_error(ArgumentError)

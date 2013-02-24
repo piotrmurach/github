@@ -30,7 +30,7 @@ describe Github::PullRequests::Comments, '#create' do
     let(:body) { fixture('pull_requests/comment.json') }
     let(:status) { 201 }
 
-    it { expect { subject.create }.to raise_error(Github::Error::Validations) }
+    it { expect { subject.create }.to raise_error(ArgumentError) }
 
     it 'raises error when pull_request_id is missing' do
       expect { subject.create user, repo }.to raise_error(ArgumentError)

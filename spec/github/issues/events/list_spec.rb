@@ -24,7 +24,7 @@ describe Github::Issues::Events, '#list' do
 
       it { subject.should respond_to :all }
 
-      it { expect { subject.list }.to raise_error(Github::Error::Validations) }
+      it { expect { subject.list }.to raise_error(ArgumentError) }
 
       it "should fail to get resource without username" do
         expect { subject.list user }.to raise_error(ArgumentError)

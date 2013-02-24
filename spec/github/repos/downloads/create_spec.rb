@@ -25,7 +25,7 @@ describe Github::Repos::Downloads, '#create' do
     let(:body)   { fixture('repos/download_s3.json') }
     let(:status) { 201}
 
-    it { expect { subject.create }.to raise_error(Github::Error::Validations) }
+    it { expect { subject.create }.to raise_error(ArgumentError) }
 
     it { expect { subject.create user }.to raise_error(ArgumentError) }
 

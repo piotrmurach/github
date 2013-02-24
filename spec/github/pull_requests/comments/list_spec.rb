@@ -21,7 +21,7 @@ describe Github::PullRequests::Comments, '#list' do
 
     it { should respond_to :all }
 
-    it { expect { subject.list }.to raise_error(Github::Error::Validations) }
+    it { expect { subject.list }.to raise_error(ArgumentError) }
 
     it "throws error if comment id not provided" do
       expect { subject.list user }.to raise_error(ArgumentError)

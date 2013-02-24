@@ -20,7 +20,7 @@ describe Github::Repos::Keys, '#delete' do
     let(:status) { 204 }
 
     it "should fail to delete without 'user/repo' parameters" do
-      expect { subject.delete }.to raise_error(Github::Error::Validations)
+      expect { subject.delete }.to raise_error(ArgumentError)
     end
 
     it "should fail to delete resource without key id" do

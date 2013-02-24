@@ -19,7 +19,7 @@ describe Github::Orgs::Members, '#conceal' do
     let(:status) { 204 }
 
     it "should fail to get resource without org name" do
-      expect { subject.conceal }.to raise_error(Github::Error::Validations)
+      expect { subject.conceal }.to raise_error(ArgumentError)
     end
 
     it { expect { subject.conceal org }.to raise_error(ArgumentError) }

@@ -28,7 +28,7 @@ describe Github::PullRequests, '#update' do
     let(:body)   { fixture('pull_requests/pull_request.json') }
     let(:status) { 201 }
 
-    it { expect { subject.update }.to raise_error(Github::Error::Validations) }
+    it { expect { subject.update }.to raise_error(ArgumentError) }
 
     it { expect { subject.update user }.to raise_error(ArgumentError) }
 

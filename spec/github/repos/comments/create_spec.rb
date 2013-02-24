@@ -29,7 +29,7 @@ describe Github::Repos::Comments, '#create' do
 
     it { expect { subject.create user }.to raise_error(ArgumentError) }
 
-    it { expect { subject.create }.to raise_error(Github::Error::Validations) }
+    it { expect { subject.create }.to raise_error(ArgumentError) }
 
     it "should fail to create resource if 'body' input is missing" do
       expect {

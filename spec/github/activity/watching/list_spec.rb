@@ -19,7 +19,7 @@ describe Github::Activity::Watching, '#list' do
   it { expect { subject.list user }.to raise_error(ArgumentError) }
 
   it "should fail to get resource without username" do
-    expect { subject.list }.to raise_error(Github::Error::Validations)
+    expect { subject.list }.to raise_error(ArgumentError)
   end
 
   it "should yield iterator if block given" do

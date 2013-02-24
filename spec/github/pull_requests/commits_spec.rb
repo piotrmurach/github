@@ -21,7 +21,7 @@ describe Github::PullRequests, '#commits' do
 
     it { expect { subject.commits user, repo }.to raise_error(ArgumentError) }
 
-    it { expect { subject.commits }.to raise_error(Github::Error::Validations) }
+    it { expect { subject.commits }.to raise_error(ArgumentError) }
 
     it "should get the resources" do
       subject.commits user, repo, number

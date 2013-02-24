@@ -21,7 +21,7 @@ describe Github::PullRequests, '#get' do
 
     it { should respond_to :find }
 
-    it { expect { subject.get }.to raise_error(Github::Error::Validations) }
+    it { expect { subject.get }.to raise_error(ArgumentError) }
 
     it { expect { subject.get user }.to raise_error(ArgumentError) }
 

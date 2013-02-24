@@ -21,7 +21,7 @@ describe Github::Orgs::Teams, '#team_member?' do
     it { expect { subject.team_member?(team_id, nil)}.to raise_error(ArgumentError)}
 
     it "should fail validation " do
-      expect { subject.team_member? }.to raise_error(Github::Error::Validations)
+      expect { subject.team_member? }.to raise_error(ArgumentError)
     end
 
     it "should return true if resoure found" do

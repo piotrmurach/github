@@ -23,7 +23,7 @@ describe Github::Repos::Downloads, '#delete' do
 
     it { should respond_to :remove }
 
-    it { expect { subject.delete }.to raise_error(Github::Error::Validations) }
+    it { expect { subject.delete }.to raise_error(ArgumentError) }
 
     it "should fail to delete without 'user/repo' parameters" do
       expect { subject.delete user }.to raise_error(ArgumentError)

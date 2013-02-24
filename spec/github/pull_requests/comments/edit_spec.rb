@@ -26,7 +26,7 @@ describe Github::PullRequests::Comments, '#edit' do
     let(:body) { fixture('pull_requests/comment.json') }
     let(:status) { 200 }
 
-    it { expect { subject.edit }.to raise_error(Github::Error::Validations) }
+    it { expect { subject.edit }.to raise_error(ArgumentError) }
 
     it "should edit resource successfully" do
       subject.edit user, repo, comment_id, inputs

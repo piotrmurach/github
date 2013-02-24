@@ -18,7 +18,7 @@ describe Github::Orgs::Teams, '#add_member' do
     let(:body) { '' }
     let(:status) { 204 }
 
-    it { expect { subject.add_member }.to raise_error(Github::Error::Validations)}
+    it { expect { subject.add_member }.to raise_error(ArgumentError)}
 
     it "should fail to add resource if 'team_id' input is nil" do
       expect { subject.add_member nil, user }.to raise_error(ArgumentError)

@@ -20,7 +20,7 @@ describe Github::Repos, '#contributors' do
     let(:status) { 200 }
 
     it "should raise error when no user/repo parameters" do
-      expect { subject.contributors }.to raise_error(Github::Error::Validations)
+      expect { subject.contributors }.to raise_error(ArgumentError)
     end
 
     it "should raise error when no repository" do

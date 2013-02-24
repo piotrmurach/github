@@ -19,7 +19,7 @@ describe Github::Activity::Events, '#user_org' do
   context "resource found" do
     it { should respond_to :user_organization }
 
-    it { expect { subject.user_org }.to raise_error(Github::Error::Validations) }
+    it { expect { subject.user_org }.to raise_error(ArgumentError) }
 
     it "should fail to get resource without orgname" do
       expect { subject.user_org user }.to raise_error(ArgumentError)

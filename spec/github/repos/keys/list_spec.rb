@@ -20,7 +20,7 @@ describe Github::Repos::Keys, '#list' do
 
     it { should respond_to :all }
 
-    it { expect { subject.list }.to raise_error(Github::Error::Validations) }
+    it { expect { subject.list }.to raise_error(ArgumentError) }
 
     it "should fail to get resource without repository" do
       expect { subject.list user }.to raise_error(ArgumentError)

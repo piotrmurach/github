@@ -21,7 +21,7 @@ describe Github::Repos::Contents, '#get' do
 
   it { expect { subject.get user, repo }.to raise_error(ArgumentError) }
 
-  it { expect { subject.get }.to raise_error(Github::Error::Validations)}
+  it { expect { subject.get }.to raise_error(ArgumentError)}
 
   it "should get the resources" do
     subject.get user, repo, path

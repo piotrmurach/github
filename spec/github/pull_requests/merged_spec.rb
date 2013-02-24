@@ -18,7 +18,7 @@ describe Github::PullRequests, '#merged?' do
         :headers => {:user_agent => subject.user_agent})
     }
 
-    it { expect { subject.merged? }.to raise_error(Github::Error::Validations) }
+    it { expect { subject.merged? }.to raise_error(ArgumentError) }
 
     it "should fail validation " do
       expect { subject.merged?(user, repo) }.to raise_error(ArgumentError)
