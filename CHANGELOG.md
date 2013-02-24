@@ -1,3 +1,15 @@
+0.9.1 (Feb 24, 2013)
+
+* Add request arguments parser to allow for flexibility when specifying
+  required and optional parameters
+* Add dynamic setters and getters to the main Api class
+* Add arguments call to Api class for parsing parameters
+* Add with scope to API to allow for custom parameter setting
+* Change all client api methods to accept arbitrary number of arguments
+* Change pub_sub_hubbub service hooks methods to use enteprise site endpoint
+* Remove parameters transformation helpers from main API
+* Update hashie, faraday dependencies
+
 0.9.0 (Feb 18, 2013)
 
 * Add Pagination module to define interface for the response
