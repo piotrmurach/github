@@ -134,7 +134,9 @@ module Github
     #    :direction => 'asc'
     #
     def list(*args)
-      params = arguments(args).params
+      params = arguments(args) do
+        assert_values VALID_ISSUE_PARAM_VALUES
+      end.params
       # filter! VALID_ISSUE_PARAM_NAMES, params
       # _merge_mime_type(:issue, params)
       # assert_valid_values(VALID_ISSUE_PARAM_VALUES, params)
@@ -162,11 +164,10 @@ module Github
     def list_repo(*args)
       arguments(args, :required => [:user, :repo]) do
         sift VALID_ISSUE_PARAM_NAMES
+        assert_values VALID_ISSUE_PARAM_VALUES
       end
-      params = arguments.params
-      assert_valid_values(VALID_ISSUE_PARAM_VALUES, params)
 
-      get_request("/repos/#{user}/#{repo}/issues", params)
+      get_request("/repos/#{user}/#{repo}/issues", arguments.params)
     end
     private :list_repo
 
