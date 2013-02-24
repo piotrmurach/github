@@ -18,11 +18,11 @@ Supports all the API methods(nearly 200). It's build in a modular way, that is, 
 * Modular design allows for working with parts of API.
 * Fully customizable including advanced middleware stack construction.
 * Its comprehensive, you can request all GitHub API resources.
+* Flexible arguments parsing, you can write expressive and natural queries.
 * Requests pagination with convenient DSL.
 * Easy error handling split for client and server type errors.
 * Supports multithreaded environment.
-* Custom mime types specification (Status: TODO)
-* Flexible arguments parsing (Status: In progress).
+* Custom mime types specification (Status: In Progess)
 * Request results caching (Status: TODO)
 * Fully tested with test coverage above 90% with over 1,500 specs and 700 features.
 
@@ -60,11 +60,12 @@ At this stage you can also supply various configuration parameters, such as `:us
 github = Github.new oauth_token: 'token'
 ```
 
-Alternatively, you can configure the Github settings by passing a block, for instance, with custom enterprise endpoint like
+Alternatively, you can configure the Github settings by passing a block, for instance, with custom enterprise endpoint and website like
 
 ```ruby
 github = Github.new do |config|
   config.endpoint    = 'https://github.company.com/api/v3'
+  config.site        = 'https://github.company.com'
   config.oauth_token = 'token'
   config.adapter     = :net_http
   config.ssl         = {:verify => false}
@@ -110,20 +111,20 @@ repos.branches do |branch|
 end
 ```
 
-## Arguments & Parameters (Feature not released yet)
+## Arguments & Parameters
 
 The library allows for flexible arguments parsing. Therefore arguments can be passed during instance creation:
 
 ```ruby
   issues = Github::Issues.new user: 'peter-murach', repo: 'github'
-  issues.milestones.list
+  issues.milestones.list state: 'open'
 ```
 
 Further, arguments can be passed directly inside method called but then the order of parameters matters and hence please consult the method documentation or GitHub specification. For instance:
 
 ```ruby
   issues = Github::Issues.new
-  issues.milestones.list 'peter-murach', 'github'
+  issues.milestones.list 'peter-murach', 'github', state: 'open'
 ```
 
 Similarly, the arguments for the request can be passed inside the current scope such as:
