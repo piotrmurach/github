@@ -10,10 +10,10 @@ module Github
     #
     #  Github.emojis.list
     #
-    def list(params={})
-      normalize! params
+    def list(*args)
+      arguments(args)
 
-      get_request("/emojis", params)
+      get_request("/emojis", arguments.params)
     end
 
   end # Emojis

@@ -12,9 +12,7 @@ module Github
     #  github.octocat.say "My custom string..."
     #
     def say(*args)
-      params = args.extract_options!
-      normalize! params
-
+      params = arguments(*args).params
       params[:s] = args.shift unless args.empty?
 
       get_request('/octocat', params, :raw => true)

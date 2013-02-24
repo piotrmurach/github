@@ -9,10 +9,10 @@ module Github
     #
     #   Github.meta.get
     #
-    def get(params={})
-      normalize! params
+    def get(*args)
+      arguments(*args)
 
-      get_request("/meta", params)
+      get_request("/meta", arguments.params)
     end
 
   end # Meta
