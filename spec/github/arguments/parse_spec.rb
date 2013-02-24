@@ -29,7 +29,7 @@ describe Github::Arguments, '#parse' do
       let(:arguments) { nil }
 
       it 'asserts lack of presence of hash parameters' do
-        expect { subject }.to raise_error(Github::Error::Validations)
+        expect { subject }.to raise_error(ArgumentError)
       end
     end
 
