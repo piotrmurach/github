@@ -99,8 +99,8 @@ module Github
     #
     #  github.repos.downloads.upload resource, '/users/octokit/image.jpg'
     #
-    def upload(resource, filename)
-      assert_presence_of resource, filename
+    def upload(*args)
+      arguments(args, :required => [:resource, :filename])
 
       response = Github::S3Uploader.new(resource, filename).send
       response.body
