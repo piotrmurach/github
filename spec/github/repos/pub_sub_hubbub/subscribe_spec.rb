@@ -38,10 +38,6 @@ describe Github::Repos::PubSubHubbub, '#subscribe' do
       subject.subscribe topic, callback
       a_post("/hub?access_token=#{OAUTH_TOKEN}").with(hub_inputs).should have_been_made
     end
-
-    it "" do
-      subject.subscribe(topic, callback)
-    end
   end
 
   it_should_behave_like 'request failure' do
