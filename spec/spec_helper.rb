@@ -10,6 +10,10 @@ require 'github_api'
 
 if RUBY_VERSION > '1.9' and ENV['COVERAGE']
   require 'coverage_adapter'
+  SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
+    SimpleCov::Formatter::HTMLFormatter,
+    Coveralls::SimpleCov::Formatter
+  ]
   SimpleCov.start 'github_api'
   SimpleCov.coverage_dir 'coverage/rspec'
 end
