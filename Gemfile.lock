@@ -14,7 +14,7 @@ GEM
     addressable (2.2.7)
     builder (3.0.0)
     colorize (0.5.8)
-    coveralls (0.5.7)
+    coveralls (0.5.8)
       colorize
       json
       rest-client
@@ -99,7 +99,7 @@ PLATFORMS
 
 DEPENDENCIES
   bundler
-  coveralls (~> 0.5)
+  coveralls (~> 0.5.8)
   cucumber
   github_api!
   growl
