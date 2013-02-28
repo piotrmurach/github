@@ -8,7 +8,7 @@ require 'json'
 require 'webmock/rspec'
 require 'github_api'
 
-if RUBY_VERSION > '1.9' and ENV['COVERAGE']
+if RUBY_VERSION > '1.9' and (ENV['COVERAGE'] || ENV['TRAVIS'])
   require 'coverage_adapter'
   SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
     SimpleCov::Formatter::HTMLFormatter,
