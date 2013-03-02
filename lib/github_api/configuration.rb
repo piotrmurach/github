@@ -19,7 +19,8 @@ module Github
       :org,
       :login,
       :password,
-      :basic_auth
+      :basic_auth,
+      :auto_pagination
     ].freeze
 
     # Other adapters are :typhoeus, :patron, :em_synchrony, :excon, :test
@@ -70,6 +71,9 @@ module Github
     # By default, don't set organization name
     DEFAULT_ORG = nil
 
+    # By default, don't traverse the page links
+    DEFAULT_AUTO_PAGINATION = false
+
     attr_accessor *VALID_OPTIONS_KEYS
 
     # Convenience method to allow for global setting of configuration options
@@ -112,6 +116,7 @@ module Github
       self.login              = DEFAULT_LOGIN
       self.password           = DEFAULT_PASSWORD
       self.basic_auth         = DEFAULT_BASIC_AUTH
+      self.auto_pagination    = DEFAULT_AUTO_PAGINATION
       self
     end
 
