@@ -106,7 +106,9 @@ module Github
     # Fine auto_pagination parameter in options hash
     #
     def extract_pagination(options)
-      api.auto_pagination = options.delete(AUTO_PAGINATION)
+      if (value = options.delete(AUTO_PAGINATION))
+        api.auto_pagination = value
+      end
     end
 
     # Remove required arguments from parameters and
