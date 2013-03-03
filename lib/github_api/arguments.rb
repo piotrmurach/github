@@ -8,6 +8,8 @@ module Github
     include ParameterFilter
     include Validations
 
+    AUTO_PAGINATION = 'auto_pagination'.freeze
+
     # Parameters passed to request
     attr_reader :params
 
@@ -54,6 +56,7 @@ module Github
       end
       @params = options
       @remaining = extract_remaining(args)
+      extract_pagination(options)
       yield_or_eval(&block)
       self
     end
@@ -98,6 +101,12 @@ module Github
     #
     def extract_remaining(args)
       args[required.size..-1]
+    end
+
+    # Fine auto_pagination parameter in options hash
+    #
+    def extract_pagination(options)
+      api.auto_pagination = options.delete(AUTO_PAGINATION)
     end
 
     # Remove required arguments from parameters and
