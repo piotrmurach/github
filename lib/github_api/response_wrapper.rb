@@ -49,6 +49,18 @@ module Github
       response.success?
     end
 
+    def redirect?
+      status.to_i >= 300 && status.to_i < 400
+    end
+
+    def client_error?
+      status.to_i >= 400 && status.to_i < 500
+    end
+
+    def server_error?
+      status.to_i >= 500 && status.to_i < 600
+    end
+
     # Return response headers
     #
     def headers
