@@ -16,6 +16,21 @@ module Github
       page_iterator.count.to_i
     end
 
+    # Iterate over results set pages by automatically calling `next_page`
+    # until all pages are exhausted. Caution needs to be exercised when
+    # using this feature - 100 pages iteration will perform 100 API calls.
+    # By default this is off. You can set it on the client, individual API
+    # instances or just per given request.
+    #
+    def auto_paginate(auto=false)
+      if current_api.auto_pagination? || auto
+        resources_bodies = []
+        each_page { |resource| resources_bodies += resource.body }
+        self.body = resources_bodies
+      end
+      self
+    end
+
     # Iterator like each for response pages. If there are no pages to
     # iterate over this method will return current page.
     def each_page
