@@ -72,5 +72,9 @@ describe 'Arguments' do
       subject.milestone_id.should == milestone_id
     end
 
+    it "passes through extra parameters" do
+      subject.get user, repo, milestone_id, :auto_pagination => true
+    end
+
   end
 end
