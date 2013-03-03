@@ -1,3 +1,12 @@
+0.9.2 (Mar 3, 2013)
+
+* Add auto_pagination feature to allow for retrieval of all pages for a given
+  resource - #91 feature request
+* Change ResponseWrapper to allow custom body assignment
+* Fix ResponseWrapper to allow array like lookup of multiple bodies
+* Fix ResponseWrapper has_key? checks nonempty hash like bodies
+* Update hashie dependency to remove warnings
+
 0.9.1 (Feb 24, 2013)
 
 * Add request arguments parser to allow for flexibility when specifying
