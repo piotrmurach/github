@@ -55,11 +55,15 @@ module Github
       Github::Response::Header.new(env)
     end
 
-    # Lookup an attribute from the body.
+    # Lookup an attribute from the body if hash, otherwise behave like array index.
     # Convert any key to string before calling.
     #
     def [](key)
-      self.body.send(:"#{key}")
+      if self.body.is_a?(Array)
+        self.body[key]
+      else
+        self.body.send(:"#{key}")
+      end
     end
 
     # Return response body as string
@@ -91,7 +95,7 @@ module Github
     # Check if body has an attribute
     #
     def has_key?(key)
-      !self.body.is_a?(Array) && self.body.has_key?(key)
+      self.body.is_a?(Hash) && self.body.has_key?(key)
     end
 
     # Coerce any method calls for body attributes
