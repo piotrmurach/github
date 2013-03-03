@@ -28,10 +28,15 @@ module Github
       response.env[:url].to_s
     end
 
+    def body=(value)
+      @body = value
+      @env[:body] = value
+    end
+
     # Response raw body
     #
     def body
-      response.body
+      @body ? @body : response.body
     end
 
     # Response status
