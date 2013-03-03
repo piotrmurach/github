@@ -77,7 +77,7 @@ module Github
     def method_missing(method, *args, &block) # :nodoc:
       case method.to_s
       when /^(.*)\?$/
-        return !self.send($1.to_s).nil?
+        return !!self.send($1.to_s)
       when /^clear_(.*)$/
         self.send("#{$1.to_s}=", nil)
       else
