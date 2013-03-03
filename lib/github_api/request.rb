@@ -32,7 +32,6 @@ module Github
       if !METHODS.include?(method)
         raise ArgumentError, "unkown http method: #{method}"
       end
-      # _extract_mime_type(params, options)
 
       puts "EXECUTED: #{method} - #{path} with #{params} and #{options}" if ENV['DEBUG']
 
@@ -51,7 +50,7 @@ module Github
           request.body = extract_data_from_params(params) unless params.empty?
         end
       end
-      ResponseWrapper.new(response, self)
+      ResponseWrapper.new(response, self).auto_paginate
     end
 
     private
