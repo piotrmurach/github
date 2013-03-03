@@ -55,7 +55,24 @@ or create a new client instance
 github = Github.new
 ```
 
-At this stage you can also supply various configuration parameters, such as `:user`,`:repo`, `:org`, `:oauth_token`, `:basic_auth`, `:endpoint`, `:ssl` which are used throughout the API. These can be passed directly as hash options:
+At this stage you can also supply various configuration parameters, such as
+```
+  adapter          # http client used for performing requests
+  auto_pagination  # by default false, set to true traverses requests page links
+  oauth_token      # oauth authorization token
+  basic_auth       # login:password string
+  client_id        # oauth client id
+  client_secret    # oauth client secret
+  user             # global user used in requets if none provided
+  repo             # global repository used in requests in none provided
+  org              # global organization used in request if none provided
+  endpoint         # enterprise api endpoint
+  site             # enterprise api web endpoint
+  ssl              # ssl settings
+  per_page         # number of items per page, max 100
+  user_agent       # custom user agent name, by default 'Github API'
+```
+which are used throughout the API. These can be passed directly as hash options:
 
 ```ruby
 github = Github.new oauth_token: 'token'
@@ -399,6 +416,20 @@ while res.has_next_page?
   ... process response ...
   res.next_page
 end
+```
+
+Alternatively, you can retrieve all pages in one invocation by passing `auto_pagination` option like so:
+
+```ruby
+  github = Github.new auto_pagination: true
+```
+
+Depending at what stage you pass the `auto_pagination` it will affect all or only single request:
+
+```ruby
+  Github::Repos.new auto_pagination: true         # affects Repos part of API
+
+  Github::Repos.new.list user: '...', auto_pagination: true  # affects single request
 ```
 
 One can also navigate straight to specific page by:
