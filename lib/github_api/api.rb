@@ -112,7 +112,7 @@ module Github
     end
 
     # Set an option to a given value
-    def set(option, value=(not_set = true), &block)
+    def set(option, value=(not_set=true), ignore_setter=false, &block)
       raise ArgumentError, 'value not set' if block and !not_set
       return self if !not_set and value.nil?
 
@@ -121,7 +121,7 @@ module Github
         return self
       end
 
-      if respond_to?("#{option}=")
+      if respond_to?("#{option}=") and not ignore_setter
         return __send__("#{option}=", value)
       end
 
@@ -141,7 +141,7 @@ module Github
     end
 
     def define_accessors(option, value)
-      setter = proc { |val| set option, value }
+      setter = proc { |val|  set option, val, true }
       getter = proc { value }
 
       define_singleton_method("#{option}=", setter) if setter
