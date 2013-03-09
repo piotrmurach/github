@@ -150,13 +150,13 @@ module Github
 
     # Dynamically define a method for setting request option
     #
-    def define_singleton_method(name, content=Proc.new)
+    def define_singleton_method(method_name, content=Proc.new)
       (class << self; self; end).class_eval do
-        undef_method(name) if method_defined? name
+        undef_method(method_name) if method_defined?(method_name)
         if String === content
-          class_eval("def #{name}() #{content}; end")
+          class_eval("def #{method_name}() #{content}; end")
         else
-          define_method(name, &content)
+          define_method(method_name, &content)
         end
       end
     end
