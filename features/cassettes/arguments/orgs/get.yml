@@ -1,0 +1,69 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://<BASIC_AUTH>@api.github.com/orgs/thoughtbot?access_token=<TOKEN>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3.full+json,application/vnd.github.beta.full+json;q=0.7,application/vnd.github+json;q=0.5,application/json;q=0.1
+      Accept-Charset:
+      - utf-8
+      User-Agent:
+      - Github Ruby Gem 0.9.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Sat, 09 Mar 2013 15:31:09 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4998'
+      Vary:
+      - Accept, Authorization, Cookie
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Last-Modified:
+      - Sat, 09 Mar 2013 14:37:58 GMT
+      Etag:
+      - ! '"ee447f8914b401051d8b55170da404a9"'
+      X-Github-Media-Type:
+      - github.v3; param=full; format=json
+      X-Content-Type-Options:
+      - nosniff
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAA52SP0/DMBDFvwqyxJY4zp+2iSWExMDK0omlujjGtXDsyHZA
+        pep359q0kLIVKcNF53c+v/fbE+OUtoSTuHWj2sbWRZIQ3RG+zOsyIaM32NzG
+        OASeZTBoqnTcji0Vrs+cVyG7Eno5uLC5RZSdJHin/JA23qidNCjuZd9Kf6P6
+        LNpnU3HAOcPYGi02/xp3rZ1PhQ+I4P/YEqQYvaTKT92ToVOZQbMAVnVvRQdy
+        ycpmJcpaNG3HqqopxKJ87B5+EimqmkoK79CDplbGDEKQMcxiui+edQ9KBiwu
+        t83rFGNMq4LRwSq0wEIvr3hI7rQVFDu44QB2R7gdjUlIi+ic2UA0vEN0Av2l
+        4fggFBknIGp3ROzJhYgFRo27IlbTmLNtEwZ8ufwJQekQA+GrepGQN2eM+8SE
+        Cc8vfxrX5SxBOHvzx9sZo1d4Ci8hym4DEdcpGKtTVqU5W+c1Z4wX7BWXG4du
+        fiYvU4Zfs84rXq74oj6eibvh6NGLV2D11/S+wzcEdtvNTAMAAA==
+    http_version: !!null 
+  recorded_at: Sat, 09 Mar 2013 15:31:10 GMT
+recorded_with: VCR 2.4.0
