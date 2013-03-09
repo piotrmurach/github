@@ -34,7 +34,7 @@ When /^I want(?: to|) (.*) (?:resource|resources)$/ do |method|
   @method = method
 end
 
-When /^I want(?: to|) (.*) (?:resource|resources) with the following params:$/ do |method, table|
+When /^I want(?: to|) (.*) (?:resource|resources) with the following (?:params|arguments):$/ do |method, table|
   table.hashes.each do |attributes|
     @method = method.to_sym
     @attributes = attributes
