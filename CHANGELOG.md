@@ -1,3 +1,7 @@
+0.9.3 (Mar 9, 2013)
+
+* Fix stack overflow issue #95 and add feature tests
+
 0.9.2 (Mar 3, 2013)
 
 * Add auto_pagination feature to allow for retrieval of all pages for a given
