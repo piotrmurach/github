@@ -28,8 +28,8 @@ module Github
     #  github.activity.events.repository 'user-name', 'repo-name'
     #  github.activity.events.repository 'user-name', 'repo-name' { |event| ... }
     #
-    #  github.events.repository user: 'user-name', repo: 'repo-name'
-    #  github.events.repository user: 'user-name', repo: 'repo-name' {|event| ... }
+    #  github.activity.events.repository user: 'user-name', repo: 'repo-name'
+    #  github.activity.events.repository user: 'user-name', repo: 'repo-name' {|event| ... }
     #
     def repository(*args)
       arguments(args, :required => [:user, :repo])
@@ -50,8 +50,8 @@ module Github
     #  github.activity.events.issue 'user-name', 'repo-name'
     #  github.activity.events.issue 'user-name', 'repo-name' { |event| ... }
     #
-    #  github.events.issue user: 'user-name', repo: 'repo-name'
-    #  github.events.issue user: 'user-name', repo: 'repo-name' { |event| ... }
+    #  github.activity.events.issue user: 'user-name', repo: 'repo-name'
+    #  github.activity.events.issue user: 'user-name', repo: 'repo-name' { |event| ... }
     #
     def issue(*args)
       arguments(args, :required => [:user, :repo])
@@ -72,8 +72,8 @@ module Github
     #  github.activity.events.network 'user-name', 'repo-name'
     #  github.activity.events.network 'user-name', 'repo-name' { |event| ... }
     #
-    #  github.events.network user: 'user-name', repo: 'repo-name'
-    #  github.events.network user: 'user-name', repo: 'repo-name' { |event| ... }
+    #  github.activity.events.network user: 'user-name', repo: 'repo-name'
+    #  github.activity.events.network user: 'user-name', repo: 'repo-name' { |event| ... }
     #
     def network(*args)
       arguments(args, :required => [:user, :repo])
@@ -94,8 +94,8 @@ module Github
     #  github.activity.events.org 'org-name'
     #  github.activity.events.org 'org-name' { |event| ... }
     #
-    #  github.events.org org: 'org-name'
-    #  github.events.org org: 'org-name' { |event| ... }
+    #  github.activity.events.org org: 'org-name'
+    #  github.activity.events.org org: 'org-name' { |event| ... }
     #
     def org(*args)
       arguments(args, :required => [:org_name])
@@ -186,8 +186,8 @@ module Github
     #  github.activity.events.user_org 'user-name', 'org-name'
     #  github.activity.events.user_org 'user-name', 'org-name' { |event| ... }
     #
-    #  github.events.user_org user: 'user-name', org_name: 'org-name'
-    #  github.events.user_org user: 'user-name', org_name: 'org-name' {|event| ...}
+    #  github.activity.events.user_org user: 'user-name', org_name: 'org-name'
+    #  github.activity.events.user_org user: 'user-name', org_name: 'org-name' {|event| ...}
     #
     def user_org(*args)
       arguments(args, :required => [:user, :org_name])
