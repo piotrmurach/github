@@ -145,6 +145,12 @@ describe Github::ResponseWrapper do
     it 'returns false when passed any value that does not respond to `env`' do
       res.send(:==, {}).should be_false
     end
+
+    it 'returns false for a value that responds to env but not body' do
+      klass = Struct.new(:env)
+      other = klass.new
+      res.send(:==, other).should be_false
+    end
   end
 
 end # Github::ResponseWrapper

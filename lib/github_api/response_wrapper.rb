@@ -139,7 +139,10 @@ module Github
     # Compare the wrapper with other wrapper for equality
     #
     def ==(other)
-      return false unless other.respond_to?(:env)
+      if !other.respond_to?(:env) || !other.respond_to?(:body)
+        return false
+      end
+
       self.env == other.env &&
       self.body == other.body
     end
