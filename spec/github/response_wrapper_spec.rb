@@ -133,4 +133,18 @@ describe Github::ResponseWrapper do
 
   end # pagination
 
-end # Github::Result
+  context "#==" do
+    it 'returns false when passed a nil value' do
+      res.send(:==, nil).should be_false
+    end
+
+    it 'returns false when passed a false value' do
+      res.send(:==, false).should be_false
+    end
+
+    it 'returns false when passed any value that does not respond to `env`' do
+      res.send(:==, {}).should be_false
+    end
+  end
+
+end # Github::ResponseWrapper
