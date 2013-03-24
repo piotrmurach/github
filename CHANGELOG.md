@@ -1,3 +1,8 @@
+0.9.4 (Mar 24, 2013)
+
+* Relax hashie dependency and update other dependencies.
+* Fix bug #96 with response wrapper equality
+
 0.9.3 (Mar 9, 2013)
 
 * Fix stack overflow issue #95 and add feature tests
