@@ -139,9 +139,11 @@ module Github
     # Compare the wrapper with other wrapper for equality
     #
     def ==(other)
-      self.env == other.env &&
-      self.body == other.body
+      return false unless other.is_a?(self.class)
+      return false unless (other.respond_to?(:env) && other.respond_to?(:body))
+      self.env == other.env && self.body == other.body
     end
+    alias eql? ==
 
   end # ResponseWrapper
 end # Github
