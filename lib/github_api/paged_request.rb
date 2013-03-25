@@ -23,7 +23,7 @@ module Github
       current_api.page ? current_api.page : FIRST_PAGE
     end
 
-    # Perform http get request with paginatoin parameters
+    # Perform http get request with pagination parameters
     #
     def page_request(path, params={})
       if params[PARAM_PER_PAGE] == NOT_FOUND
