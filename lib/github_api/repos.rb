@@ -39,6 +39,7 @@ module Github
       team_id
       auto_init
       gitignore_template
+      default_branch
     ].freeze
 
     VALID_REPO_TYPES = %w[ all public private member ].freeze
@@ -179,6 +180,8 @@ module Github
     #  <tt>:has_downloads</tt> Optional boolean - <tt>true</tt> to enable downloads for this repository
     #  <tt>:org</tt> Optional string - The organisation in which this repository will be created
     #  <tt>:team_id</tt> Optional number - The id of the team that will be granted access to this repository. This is only valid when creating a repo in an organization
+    #  <tt>:auto_init</tt> Optional boolean - true to create an initial commit with empty README. Default is false.
+    #  <tt>:gitignore_template</tt> Optional string - Desired language or platform .gitignore template to apply. Use the name of the template without the extension. For example, “Haskell” Ignored if auto_init parameter is not provided.
     #
     # = Examples
     #  github = Github.new
@@ -263,6 +266,7 @@ module Github
     # * <tt>:has_issues</tt>    Optional boolean - <tt>true</tt> to enable issues for this repository, <tt>false</tt> to disable them
     # * <tt>:has_wiki</tt>      Optional boolean - <tt>true</tt> to enable the wiki for this repository, <tt>false</tt> to disable it. Default is <tt>true</tt>
     # * <tt>:has_downloads</tt> Optional boolean - <tt>true</tt> to enable downloads for this repository
+    # * <tt>:default_branch</tt> Optional string - Update the default branch for this repository.
     #
     # = Examples
     #
