@@ -17,13 +17,3 @@ else
   # If the environment file has not yet been created, use the RVM CLI to select.
   rvm --create  "$environment_id"
 fi
-
-# Ensure that Bundler is installed. Install it if it is not.
-if ! command -v bundle >/dev/null; then
-   printf "The rubygem 'bundler' is not installed. Installing it now.\n"
-   gem install bundler
-fi
-
-# Bundle while reducing excess noise.
-printf "Bundling your gems. This may take a few minutes on a fresh clone.\n"
-bundle | grep -v '^Using ' | grep -v ' is complete' | sed '/^$/d'
