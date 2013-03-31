@@ -41,7 +41,6 @@ module Github
     #
     def initialize(options={}, &block)
       setup(options)
-      client(options) if client_id? && client_secret?
       yield_or_eval(&block) if block_given?
     end
 

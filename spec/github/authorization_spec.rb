@@ -6,7 +6,8 @@ describe Github::Authorization do
   let(:client_id) { '234jl23j4l23j4l' }
   let(:client_secret) { 'asasd79sdf9a7asfd7sfd97s' }
   let(:code) { 'c9798sdf97df98ds'}
-  let(:options) { {} }
+  let(:site) { 'http://github-ent.example.com/' }
+  let(:options) { {:site => site} }
 
   subject(:github) { Github.new options }
 
@@ -22,15 +23,15 @@ describe Github::Authorization do
     end
 
     it "should assign site from the options hash" do
-      github.client.site.should == 'https://github.com'
+      github.client.site.should == site
     end
 
     it "should assign 'authorize_url" do
-      github.client.authorize_url.should == 'https://github.com/login/oauth/authorize'
+      github.client.authorize_url.should == "#{site}login/oauth/authorize"
     end
 
     it "should assign 'token_url" do
-      github.client.token_url.should == 'https://github.com/login/oauth/access_token'
+      github.client.token_url.should == "#{site}login/oauth/access_token"
     end
   end
 
