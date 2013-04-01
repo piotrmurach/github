@@ -12,20 +12,21 @@ module Github
       :Milestones => 'milestones'
 
     VALID_ISSUE_PARAM_NAMES = %w[
-      filter
-      state
-      labels
-      sort
-      direction
-      since
-      milestone
       assignee
-      mentioned
-      title
       body
-      resource
+      creator
+      direction
+      filter
+      labels
+      milestone
+      mentioned
       mime_type
       org
+      resource
+      since
+      sort
+      state
+      title
     ].freeze
 
     VALID_ISSUE_PARAM_VALUES = {
@@ -108,6 +109,7 @@ module Github
     #  * String User login
     #  * <tt>none</tt> for Issues with no assigned User.
     #  * <tt>*</tt>    for Issues with any assigned User.
+    # <tt>:creator</tt> String User login
     # <tt>:mentioned</tt> String User login
     # <tt>:sort</tt> - <tt>created</tt>, <tt>updated</tt>, <tt>comments</tt>,
     #                  default: <tt>created</tt>
