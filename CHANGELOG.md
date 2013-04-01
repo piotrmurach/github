@@ -1,3 +1,11 @@
+0.9.5 (April 1, 2013)
+
+* Add default_branch to repo valid parameters
+* Remove bundle command from rvm script
+* Document pull request parameters
+* Change issue api issue_id parameter to number
+* Fix issue #100 with oauth client site parameter
+
 0.9.4 (Mar 24, 2013)
 
 * Relax hashie dependency and update other dependencies.
