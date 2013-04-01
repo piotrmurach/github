@@ -6,10 +6,10 @@ module Github
     attr_accessor :scopes
 
     # Setup OAuth2 instance
-    def client(options={})
+    def client
       @client ||= ::OAuth2::Client.new(client_id, client_secret,
         {
-          :site          => options.fetch(:site) { Github.site },
+          :site          => current_options.fetch(:site) { Github.site },
           :authorize_url => 'login/oauth/authorize',
           :token_url     => 'login/oauth/access_token',
           :ssl           => { :verify => false }
