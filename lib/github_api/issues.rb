@@ -175,12 +175,12 @@ module Github
     #
     # = Examples
     #  github = Github.new
-    #  github.issues.get 'user-name', 'repo-name', 'issue-id'
+    #  github.issues.get 'user-name', 'repo-name', 'number'
     #
     def get(*args)
-      arguments(args, :required => [:user, :repo, :issue_id])
+      arguments(args, :required => [:user, :repo, :number])
 
-      get_request("/repos/#{user}/#{repo}/issues/#{issue_id}", arguments.params)
+      get_request("/repos/#{user}/#{repo}/issues/#{number}", arguments.params)
     end
     alias :find :get
 
@@ -190,8 +190,14 @@ module Github
     #  <tt>:title</tt> - Required string
     #  <tt>:body</tt> - Optional string
     #  <tt>:assignee</tt> - Optional string - Login for the user that this issue should be assigned to.
-    #  <tt>:milestone</tt> - Optional number - Milestone to associate this issue with
+    #                       Only users with push access can set the assignee for new issues.
+    #                       The assignee is silently dropped otherwise.
+    #  <tt>:milestone</tt> - Optional number - Milestone to associate this issue with.
+    #                        Only users with push access can set the milestone for new issues.
+    #                        The milestone is silently dropped otherwise.
     #  <tt>:labels</tt> - Optional array of strings - Labels to associate with this issue
+    #                     Only users with push access can set labels for new issues.
+    #                     Labels are silently dropped otherwise.
     # = Examples
     #  github = Github.new :user => 'user-name', :repo => 'repo-name'
     #  github.issues.create
@@ -225,7 +231,7 @@ module Github
     #
     # = Examples
     #  github = Github.new
-    #  github.issues.edit 'user-name', 'repo-name', 'issue-id'
+    #  github.issues.edit 'user-name', 'repo-name', 'number'
     #    "title" => "Found a bug",
     #    "body" => "I'm having a problem with this.",
     #    "assignee" => "octocat",
@@ -236,12 +242,12 @@ module Github
     #    ]
     #
     def edit(*args)
-      arguments(args, :required => [:user, :repo, :issue_id]) do
+      arguments(args, :required => [:user, :repo, :number]) do
         sift VALID_ISSUE_PARAM_NAMES
       end
       params = arguments.params
 
-      patch_request("/repos/#{user}/#{repo}/issues/#{issue_id}", params)
+      patch_request("/repos/#{user}/#{repo}/issues/#{number}", params)
     end
 
   end # Issues
