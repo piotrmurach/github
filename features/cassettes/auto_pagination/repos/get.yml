@@ -1,0 +1,86 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://<BASIC_AUTH>@api.github.com/repos/wycats/thor?access_token=<TOKEN>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3.full+json,application/vnd.github.beta.full+json;q=0.7,application/vnd.github+json;q=0.5,application/json;q=0.1
+      Accept-Charset:
+      - utf-8
+      User-Agent:
+      - Github Ruby Gem 0.9.5
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Sat, 06 Apr 2013 19:45:34 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4995'
+      Vary:
+      - Accept, Authorization, Cookie
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Last-Modified:
+      - Sat, 06 Apr 2013 17:25:26 GMT
+      Etag:
+      - ! '"19532db9c9ae7284243986dd05c79ea6"'
+      X-Github-Media-Type:
+      - github.v3; param=full; format=json
+      X-Content-Type-Options:
+      - nosniff
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAA51Yy46rOBD9lQhpVpPEhM6jG2l0ZzbzAaOezWwiBxywGgyy
+        TUdp1P8+pwwEOrnqXGeT8KhzfFwuu6poA5kG8WoTbXbzQPFSBHFg80oH8+DY
+        FMW+f3Q6J9wa1r+pTkroIG6DosqkAqJ7DQyRrecBf+eW632jC7zMra1NzJgR
+        SaPFMtPd22VSlay7ZOvoebXd8SeR7KLoaXPgL7vVahu9ROv1S7QNX36kfwws
+        PFo/L8WSv/GSy6USlnFjhDXLTNq8ORDrb9HfsuSZMLgYRpteLxoj9GIdhcta
+        ZRA92OxJfXBPCwBf58VrORmcEblhF4/ktiyuHDEqHc2OVVFUJyCvbL8hZxcM
+        LZbDS5V544EhH0hjfcZ29i2jP7jtEwwGK65F6jF+j2iZi6fPlmlRV46qOZhE
+        y9rKSvmI+oIDT6UzruQH9+UBzgBOcnyGd/bAiXehvJzZAVpWa/nOkzO5QItE
+        yHe405vsCgkue65pW/+LwAw+54EbxeLJkRdGzLE/70fosPNTcVkYMP416+9U
+        NjtqHB6nSr/NbM7tDL4oeCLMTPM3MeMqnRlcQMwRJpehv91Izp39DhnGJ/Sd
+        JbmBYZ8AhKHfxNkbS5iW4beP8gT7jB8qzW11b6/eCvkCbtn0ltbcCl56C3Qg
+        gPOq8veMAwEsjWnEL4Xa7aQc1rAhhlVTHrCZf3Eb3NJ1PIDjWJeZEsLbIxdg
+        685iknLQXCW5P9WAa1l35VaJZ96SCNMy/DoxRXXwZkDOYA7YMpNzosGT/SNa
+        iKnTMyHS4viQJMJdFFn9wGo5OQS80CAtWCyct54Bx9p+YgVXWUN1wPc56TYG
+        L0C4mZJUxj/uZuZblhEJmqRSVstD89ixMWJJUZcdscu8JzaBjkQuzfq6aJpq
+        3fTKUt7Lebcu6mFfYvpBKoqjazq6v5+Kfy6LcC0bT7PuiOwZfb3Vn5GDHtaO
+        vBQYj2nscKz9veY2pxMB9DXXwldcD2PtgRvxuVwu21xwV9KVQj+wezoU4Fwn
+        OWoYXz3tgEPeLrl1deGR5KSoE4uKp95hfwGCpFsKX00dahoPNbojbyEONGUp
+        ZSGMrZT/GTUip3yqsvIo0avdr5xvw/4LuP1hpErEnBfFHFFlZSIRZ2gWaCVQ
+        Agn/2XcoyEWl6OJVC9Sh6Z5b1JJRGD4vws0i3L1GYRzu4qfVf7Bp6nRqs3pa
+        hOtFuH1d7eJoE0dbsqkbk480vcnmdbWJ12AKyYSSZVds4gq96E0L5gpMauNg
+        bEw+Gv85msaTLrg3TQqs3VUwfc/9fn3U/twcMvKqFDXSV99CQ/XpdFqeRd6k
+        6H7tB7W6pFZ+wGS9iebBiVtUOUgLSdUoOHW1XYe0WF0aBM8/zeFMzNzsu4gO
+        Yqsb6gHwZNwlk4cn+SYHo6747rmjEH1+KbWu+j5fIbbRctVC9dyDih00dCV4
+        7EATkyCml4PsQXAqjrwp7L6ruSC75Maid8FKC11COAU3fX7gaUmfH/o+hsJg
+        clPg2wNNDh0PvhJQZzIIgorP/wHunZF3+BAAAA==
+    http_version: !!null 
+  recorded_at: Sat, 06 Apr 2013 19:45:34 GMT
+recorded_with: VCR 2.4.0
