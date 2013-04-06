@@ -9,7 +9,7 @@ module Github
     METHODS_WITH_BODIES = [ :post, :put, :patch ]
 
     def get_request(path, params={}, options={})
-      request(:get, path, params, options)
+      request(:get, path, params, options).auto_paginate
     end
 
     def patch_request(path, params={}, options={})
@@ -50,7 +50,7 @@ module Github
           request.body = extract_data_from_params(params) unless params.empty?
         end
       end
-      ResponseWrapper.new(response, self).auto_paginate
+      ResponseWrapper.new(response, self)
     end
 
     private
