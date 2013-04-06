@@ -1,3 +1,8 @@
+0.9.6 (April 6, 2013)
+
+* Convert hook_id to id in repo hooks api
+* Fix #101 broken auto_pagination, ensure only get request is paginated that has enumerable body
+
 0.9.5 (April 1, 2013)
 
 * Add default_branch to repo valid parameters
