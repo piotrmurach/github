@@ -56,7 +56,7 @@ module Github
     #
     # = Examples
     #  github = Github.new
-    #  github.repos.hooks.get 'user-name', 'repo-name'
+    #  github.repos.hooks.get 'user-name', 'repo-name', 'hook-id'
     #
     def get(*args)
       arguments(args, :required => [:user, :repo, :hook_id])
@@ -134,20 +134,20 @@ module Github
       arguments(args, :required => [:user, :repo, :hook_id])
       params = arguments.params
 
-      post_request("/repos/#{user}/#{repo}/hooks/#{hook_id}/test", params)
+      post_request("/repos/#{user}/#{repo}/hooks/#{id}/test", params)
     end
 
     # Delete a hook
     #
     # = Examples
     #  github = Github.new
-    #  github.repos.hooks.delete 'user-name', 'repo-name', 'hook-id'
+    #  github.repos.hooks.delete 'user-name', 'repo-name', 'id'
     #
     def delete(*args)
-      arguments(args, :required => [:user, :repo, :hook_id])
+      arguments(args, :required => [:user, :repo, :id])
       params = arguments.params
 
-      delete_request("/repos/#{user}/#{repo}/hooks/#{hook_id}", params)
+      delete_request("/repos/#{user}/#{repo}/hooks/#{id}", params)
     end
 
   end # Repos::Hooks
