@@ -25,12 +25,12 @@ module Github
     # Create a fork for the authenticated user
     #
     # = Inputs
-    # * <tt>:org</tt> - Optional string - the name of the service that is being called.
+    # * <tt>:organization</tt> - Optional string - the name of the service that is being called.
     #
     # = Examples
     #  github = Github.new
     #  github.repos.forks.create 'user-name', 'repo-name',
-    #    "org" =>  "github"
+    #    "organization" => "github"
     #
     def create(*args)
       arguments(args, :required => [:user, :repo])
