@@ -80,6 +80,10 @@ Then /^the response (.*) link should contain:$/ do |type, table|
   end
 end
 
+Then /^the response body (.*) should be (.*)$/ do |attr, result|
+  expect(@response.body[attr]).to eql result
+end
+
 Then /^the response (.*) item (.*) should be (.*)$/ do |action, field, result|
   if action == 'first'
     @response.first.send(field).should eql result
