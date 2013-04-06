@@ -23,7 +23,7 @@ module Github
     # instances or just per given request.
     #
     def auto_paginate(auto=false)
-      if current_api.auto_pagination? || auto
+      if (current_api.auto_pagination? || auto) && self.body.is_a?(Array)
         resources_bodies = []
         each_page { |resource| resources_bodies += resource.body }
         self.body = resources_bodies
