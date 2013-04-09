@@ -18,6 +18,7 @@ module Github
       return response unless block_given?
       response.each { |el| yield el }
     end
+
     alias :all :list
 
     # Get a single pulic key for the authenticated user
@@ -30,7 +31,23 @@ module Github
       arguments(args, :required => [:key_id])
       get_request("/user/keys/#{key_id}", arguments.params)
     end
+
     alias :find :get
+
+
+    # Get all keys for a specified user
+    #
+    # = Examples
+    #  github = Github.new
+    #  github.users.keys.list_for_user user: 'user-name'
+    #
+    def list_for_user(*args)
+      arguments(args, :required => [:user])
+      response = get_request("/users/#{user}/keys", arguments.params)
+      return response unless block_given?
+      response.each { |el| yield el }
+    end
+
 
     # Create a public key for the authenticated user
     #
