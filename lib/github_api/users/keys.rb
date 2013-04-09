@@ -13,8 +13,12 @@ module Github
     #  github.users.keys.list { |key| ... }
     #
     def list(*args)
-      arguments(args)
-      response = get_request("/user/keys", arguments.params)
+      params = arguments(args).params
+      response = if (user = params.delete('user'))
+        get_request("/user/#{user}/keys", params)
+      else
+        get_request("/user/keys", params)
+      end
       return response unless block_given?
       response.each { |el| yield el }
     end
