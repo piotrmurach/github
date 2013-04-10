@@ -5,14 +5,18 @@ module Github
 
     VALID_KEY_PARAM_NAMES = %w[ title key ].freeze
 
-    # List public keys for the authenticated user, or a given user
+    # List public keys for the authenticated user
     #
     # = Examples
     #  github = Github.new oauth_token: '...'
     #  github.users.keys.list
     #  github.users.keys.list { |key| ... }
     #
-    #  github.users.keys.list :user 'foo'
+    # List public keys for the specified user
+    #
+    # = Examples
+    #  github.users.keys.list user: 'user-name'
+    #  github.users.keys.list user: 'user-name' { |key| ... }
     #
     def list(*args)
       params = arguments(args).params
