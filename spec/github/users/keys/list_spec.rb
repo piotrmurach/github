@@ -51,7 +51,7 @@ describe Github::Users::Keys, '#list' do
     let(:user) { 'peter-murach' }
     let(:body) { fixture('users/keys.json') }
     let(:status) { 200 }
-    let(:request_path) { "/user/#{user}/keys" }
+    let(:request_path) { "/users/#{user}/keys" }
 
     it "should get the resources" do
       subject.list :user => user
