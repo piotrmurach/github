@@ -5,17 +5,19 @@ module Github
 
     VALID_KEY_PARAM_NAMES = %w[ title key ].freeze
 
-    # List public keys for the authenticated user
+    # List public keys for the authenticated user, or a given user
     #
     # = Examples
     #  github = Github.new oauth_token: '...'
     #  github.users.keys.list
     #  github.users.keys.list { |key| ... }
     #
+    #  github.users.keys.list :user 'foo'
+    #
     def list(*args)
       params = arguments(args).params
       response = if (user = params.delete('user'))
-        get_request("/user/#{user}/keys", params)
+        get_request("/users/#{user}/keys", params)
       else
         get_request("/user/keys", params)
       end
