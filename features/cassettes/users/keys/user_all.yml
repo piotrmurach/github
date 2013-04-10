@@ -1,0 +1,91 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://<BASIC_AUTH>@api.github.com/users/wycats/keys?access_token=<TOKEN>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3.full+json,application/vnd.github.beta.full+json;q=0.7,application/vnd.github+json;q=0.5,application/json;q=0.1
+      Accept-Charset:
+      - utf-8
+      User-Agent:
+      - Github Ruby Gem 0.9.6
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Wed, 10 Apr 2013 21:30:59 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4999'
+      Vary:
+      - Accept, Authorization, Cookie
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Last-Modified:
+      - Wed, 10 Apr 2013 21:28:41 GMT
+      Etag:
+      - ! '"f2cb84edaf3717927473ca494e9fa1ec"'
+      X-Github-Media-Type:
+      - github.v3; param=full; format=json
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
+      Access-Control-Allow-Origin:
+      - ! '*'
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAA4ySya6jVhRFfyXy1BXRYyipBvRg+sZcICMMvjZwAZseovx7
+        XhIpybD24EhbOpOttX77/VSVp+8EcyFY/Nupeeyn76dxfP06jPkvwldEyjly
+        idgLUvm7GuvX9RXhEh3qnu5lT3AmqxtiRXZXWyR64pjijF8tOsI2uVSOrFi2
+        qekID9ZUgyK+DLRRRp+a5yV2XByKuQK8aXSM9x57bakeKWJ8WlR2nzRwFPcl
+        TMRlennmWiEBzcXQUvm8NKlQ41vFWkWIW30ZAooQ4+bpluL5LWNdYVj17DRa
+        OCYPaA18wxu3xORwz+gZnxn4WMwifYHLcb4jHsUX4MdI5G/yTAF6I+WzapeD
+        6xt64IWLRIuQHMzwM5tX151izMwdk7pPM/O5A4Qleaq5kXnDu0Lsq6kTDPZD
+        1J+Int49f1gGJE27Nbt+CFRC0txrhMV9Uc/ZI0DLvJpU6w+f+YMBrTIeA1h/
+        /Dj98e0fJBzL0zj700gMRXgz9CXpcGDCcuTiCbVa6ErHh2+JIKtrZhJEmgPk
+        cURX6jLlKuvUX98UXjyJ2KfohuBriwgLvIpWvZ/fRGRjIO3SfMO8NtbBK14V
+        ez0LM7y6h9NvV6Puet6doDLGN4qlJNhmVacBnBRVw5mW7UmqBl/C3utlkXlG
+        zgg13fIs9KrD8b+ZPMNQNPETM2XBF8S/DBR86SwJyHnYY6HFcZkmzfLSUGUk
+        Q92cw6ZMIsq1dZh0KCMUObIBg1zMv28g2EmdasYLOw+F12RBhwAGkCQpZnT3
+        NFIAKq9cg7FwwUZIhh2lb+/JjiQ3TN1aHBxJcalrK63K6FIuGXCoxmuZ8Afz
+        8EJUBHlKkox+wJsGXn01P3Zrarh3AjnOrznMxix0yY5HYJoqfN54UhZaiLh0
+        h+uR3nCHC9cSY0c9mfsEdhA5btc+oSjKdecY76yfAsGpaTLzAxD3y9Pt8o9n
+        Z8ey3fA0JYc9+7BcfPWPxvabEelkLosGBYa2sy9pUsUhc952ORrtI6T5ea7c
+        j7TNGRm0ShSILms1c/CvecSFYn5Ovf8xkX3A1vHZdyVlSFi1cAn/3lnmfd+i
+        hMJbbJkYzFO3Te/j9zjG86AC+4UxJaELxnYnlaVmtk1kWmnHk7ONczf0Z0Pz
+        st0QEAAA9F+6taDEY5YSqom3MCLndFFvmQcNZsQ5/ff2/sAVCu/W5HkY0avS
+        LQ2ypKFWzWNk3CkRaCO2I8PUeShr5WSOG2umpNl8eAHycMyxl097LBVgpiBt
+        ycB8nOjQMTXbPL5GFU77pPC2E7439N+cAT80rNZ5PfZnbwgQ/RT02euKn0y5
+        EDACXcR0aG+af0nrpA9aCydY3ApsbCjcjzmvSjliEQbPMLdUltaLBM2oC66l
+        jtaayFkpZyiw+FS51onEh9I2Fjjz90BbQxcq2pAYrvv072hvINuBminEgPiD
+        u/vb79cfKh9lsKIFAAA=
+    http_version: !!null 
+  recorded_at: Wed, 10 Apr 2013 21:30:59 GMT
+recorded_with: VCR 2.4.0
