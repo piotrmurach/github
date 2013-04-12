@@ -318,7 +318,7 @@ To list the scopes that the particular Github API action checks for do:
 ```ruby
   repos = Github::Repos.new
   res = repos.list :user => 'peter-murach'
-  res.header.accepted_oauth_scopes    # => ['delete_repo', 'repo', 'public_repo', 'repo:status']
+  res.headers.accepted_oauth_scopes    # => ['delete_repo', 'repo', 'public_repo', 'repo:status']
 ```
 
 To understand what each scope means refer to [documentation](http://developer.github.com/v3/oauth/#scopes)
