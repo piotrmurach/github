@@ -90,6 +90,7 @@ module Github
     :PagedRequest    => 'paged_request',
     :Validations     => 'validations',
     :ParameterFilter => 'parameter_filter',
+    :ParamsHash      => 'params_hash',
     :Normalizer      => 'normalizer'
 
 end # Github
