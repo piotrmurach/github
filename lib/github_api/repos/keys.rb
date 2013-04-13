@@ -17,9 +17,8 @@ module Github
     #
     def list(*args)
       arguments(args, :required => [:user, :repo])
-      params = arguments.params
 
-      response = get_request("/repos/#{user}/#{repo}/keys", params)
+      response = get_request("/repos/#{user}/#{repo}/keys", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -33,9 +32,8 @@ module Github
     #
     def get(*args)
       arguments(args, :required => [:user, :repo, :key_id])
-      params = arguments.params
 
-      get_request("/repos/#{user}/#{repo}/keys/#{key_id}", params)
+      get_request("/repos/#{user}/#{repo}/keys/#{key_id}", arguments.params)
     end
     alias :find :get
 
