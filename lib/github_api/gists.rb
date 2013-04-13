@@ -32,15 +32,20 @@ module Github
     #  github = Github.new :oauth_token => '...'
     #  github.gists.list
     #
+    # List all public gists
+    #
+    #  github = Github.new
+    #  github.gists.list :public
+    #
     def list(*args)
       params = arguments(args).params
 
       response = if (user = params.delete('user'))
         get_request("/users/#{user}/gists", params)
-      elsif oauth_token
-        get_request("/gists", params)
-      else
+      elsif args.map(&:to_s).include?('public')
         get_request("/gists/public", params)
+      else
+        get_request("/gists", params)
       end
       return response unless block_given?
       response.each { |el| yield el }

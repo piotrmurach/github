@@ -50,12 +50,12 @@ describe Github::Gists, '#list' do
     let(:request_path) { "/gists/public" }
 
     it "should get the resources" do
-      subject.list
+      subject.list :public
       a_get(request_path).should have_been_made
     end
 
     it_should_behave_like 'an array of resources' do
-      let(:requestable) { subject.list }
+      let(:requestable) { subject.list :public }
     end
   end
 
