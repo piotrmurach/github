@@ -16,7 +16,9 @@ Feature: Gists API
 
   Scenario: List public gists
 
-    Given I want to list resources
+    Given I want to list resources with the following params:
+      | public |
+      | public |
     When I make request within a cassette named "gists/gists/public_all"
     Then the response status should be 200
       And the response type should be JSON
