@@ -1,3 +1,9 @@
+0.9.7 (April 13, 2013)
+
+* Add listing of user keys
+* Change gists listing to include :public option
+* Change repos listing to include :every option and fix issue #102
+
 0.9.6 (April 6, 2013)
 
 * Convert hook_id to id in repo hooks api
