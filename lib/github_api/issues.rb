@@ -139,9 +139,6 @@ module Github
       params = arguments(args) do
         assert_values VALID_ISSUE_PARAM_VALUES
       end.params
-      # filter! VALID_ISSUE_PARAM_NAMES, params
-      # _merge_mime_type(:issue, params)
-      # assert_valid_values(VALID_ISSUE_PARAM_VALUES, params)
 
       response = if (org = params.delete('org'))
         get_request("/orgs/#{org}/issues", params)
