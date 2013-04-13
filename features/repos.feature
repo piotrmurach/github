@@ -46,7 +46,9 @@ Feature: Repositories API
 
   Scenario: All repositories
 
-    Given I want to list resources
+    Given I want to list resources with the following params:
+      | every |
+      | every |
     When I make request within a cassette named "repos/list_repos"
     Then the response status should be 200
       And the response type should be JSON
