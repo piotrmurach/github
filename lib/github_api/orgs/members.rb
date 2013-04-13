@@ -21,8 +21,8 @@ module Github
     # Members of an organization can choose to have their membership publicized or not.
     # = Examples
     #  github = Github.new
-    #  github.orgs.members.list 'org-name', :public => true
-    #  github.orgs.members.list 'org-name', :public => true { |memb| ... }
+    #  github.orgs.members.list 'org-name', public: true
+    #  github.orgs.members.list 'org-name', public: true { |memb| ... }
     #
     def list(*args)
       params = arguments(args, :required => [:org_name]).params
