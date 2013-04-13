@@ -114,26 +114,26 @@ module Github
     #
     # = Examples
     #   github = Github.new
-    #   github.repos.list
-    #   github.repos.list { |repo| ... }
+    #   github.repos.list every: true
+    #   github.repos.list every: true { |repo| ... }
     #
     # List public repositories for the specified user.
     #
     # = Examples
     #   github = Github.new
-    #   github.repos.list :user => 'user-name'
-    #   github.repos.list :user => 'user-name', { |repo| ... }
+    #   github.repos.list user: 'user-name'
+    #   github.repos.list user: 'user-name', { |repo| ... }
     #
     # List repositories for the specified organisation.
     #
     # = Examples
     #  github = Github.new
-    #  github.repos.list :org => 'org-name'
-    #  github.repos.list :org => 'org-name', { |repo| ... }
+    #  github.repos.list org: 'org-name'
+    #  github.repos.list org: 'org-name', { |repo| ... }
     #
     def list(*args)
       arguments(args) do
-        sift %w[ user org type sort direction ]
+        sift %w[ user org type sort direction since ]
       end
       params = arguments.params
 
@@ -141,11 +141,11 @@ module Github
         get_request("/users/#{user_name}/repos", params)
       elsif (org_name = (params.delete("org")))
         get_request("/orgs/#{org_name}/repos", params)
-      elsif authenticated?
+      elsif args.map(&:to_s).include?("every")
+        get_request("/repositories", params)
+      else
         # For authenticated user
         get_request("/user/repos", params)
-      else
-        get_request("/repositories", params)
       end
       return response unless block_given?
       response.each { |el| yield el }

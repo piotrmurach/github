@@ -26,10 +26,10 @@ describe Github::Repos, '#list' do
 
     it "falls back to all if user is unauthenticated" do
       subject.oauth_token = nil
-      stub_get("/repositories").to_return(:body => '[]', :status => 200,
+      stub_get("/user/repos").to_return(:body => '[]', :status => 200,
         :headers => {:content_type => "application/json; charset=utf-8"} )
       subject.list
-      a_get('/repositories').should have_been_made
+      a_get('/user/repos').should have_been_made
     end
 
     it "should get the resources" do
@@ -67,10 +67,9 @@ describe Github::Repos, '#list' do
     }
 
     it "should get the resources" do
-      subject.list
+      subject.list :every
       a_get(request_path).should have_been_made
     end
-
   end
 
   context "resource found for organization" do
