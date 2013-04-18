@@ -81,7 +81,7 @@ module Github
     def create(*args)
       arguments(args, :required => [:user, :repo]) do
         assert_required %w[ tree ]
-        sift VALID_TREE_PARAM_NAMES, 'tree'
+        sift VALID_TREE_PARAM_NAMES, 'tree', { recursive: true }
         assert_values VALID_TREE_PARAM_VALUES, 'tree'
       end
 

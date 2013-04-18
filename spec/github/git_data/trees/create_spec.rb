@@ -49,6 +49,12 @@ describe Github::GitData::Trees, '#create' do
       tree_sha.should be_a Github::ResponseWrapper
     end
 
+    it "should not erase the tree data while evaluating params" do
+      original_tree = inputs['tree'].dup
+      tree_sha = subject.create user, repo, inputs
+      inputs['tree'].should == original_tree
+    end
+
     it "should get the tree information" do
       tree_sha = subject.create user, repo, inputs
       tree_sha.sha.should == sha
