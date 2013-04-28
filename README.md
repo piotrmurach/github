@@ -293,6 +293,8 @@ token = github.get_token( authorization_code )
 
 Once you have your access token, configure your github instance following instructions under Configuration.
 
+**Note**: If you are working locally (i.e. your app URL and callback URL are localhost), do not specify a ```:redirect_uri``` otherwise you will get a ```redirect_uri_mismatch``` error.
+
 ### Authorizations API
 
 Alternatively you can use OAuth Authorizations API. For instance, to create access token through GitHub API you required to pass your basic credentials as in the following:

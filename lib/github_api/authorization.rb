@@ -25,7 +25,7 @@ module Github
 
     # Sends authorization request to GitHub.
     # = Parameters
-    # * <tt>:redirect_uri</tt> - Required string.
+    # * <tt>:redirect_uri</tt> - Optional string.
     # * <tt>:scope</tt> - Optional string. Comma separated list of scopes.
     #   Available scopes:
     #   * (no scope) - public read-only access (includes public user profile info, public repo info, and gists).
