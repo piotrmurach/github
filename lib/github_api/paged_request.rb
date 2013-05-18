@@ -33,7 +33,7 @@ module Github
         params[PARAM_PAGE] = default_page
       end
 
-      current_api.get_request(path, params)
+      current_api.get_request(path, ParamsHash.new(params))
     end
 
   end # PagedRequest
