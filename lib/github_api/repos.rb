@@ -215,9 +215,9 @@ module Github
 
       # Requires authenticated user
       if (org = params.delete("org"))
-        post_request("/orgs/#{org}/repos", DEFAULT_REPO_OPTIONS.merge(params))
+        post_request("/orgs/#{org}/repos", params.merge_default(DEFAULT_REPO_OPTIONS))
       else
-        post_request("/user/repos", DEFAULT_REPO_OPTIONS.merge(params))
+        post_request("/user/repos", params.merge_default(DEFAULT_REPO_OPTIONS))
       end
     end
 
@@ -290,7 +290,7 @@ module Github
       end
       params = arguments.params
 
-      patch_request("/repos/#{user}/#{repo}", DEFAULT_REPO_OPTIONS.merge(params))
+      patch_request("/repos/#{user}/#{repo}", params.merge_default(DEFAULT_REPO_OPTIONS))
     end
 
     # Delete a repository
