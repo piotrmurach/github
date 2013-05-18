@@ -36,6 +36,17 @@ Feature: Search API
       And the response type should be JSON
       And the response should not be empty
 
+  Scenario: Users with complex keyword
+
+    Given I want users resource
+      And I pass the following request options:
+        | keyword                     |
+        | location:Sheffield repos:20 |
+    When I make request within a cassette named "search/users_keyword"
+    Then the response status should be 200
+      And the response type should be JSON
+      And the response should not be empty
+
   Scenario: Email
 
     Given I want email resource

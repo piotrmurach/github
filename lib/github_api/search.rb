@@ -21,7 +21,7 @@ module Github
       required = ['owner', 'repo', 'state', 'keyword']
       arguments(args, :required => required)
 
-      get_request("/legacy/issues/search/#{owner}/#{repo}/#{state}/#{escape(keyword)}", arguments.params)
+      get_request("/legacy/issues/search/#{owner}/#{repo}/#{state}/#{escape_uri(keyword)}", arguments.params)
     end
 
     # Search repositories
@@ -39,7 +39,7 @@ module Github
     def repos(*args)
       arguments(args, :required => [:keyword])
 
-      get_request("/legacy/repos/search/#{escape(keyword)}", arguments.params)
+      get_request("/legacy/repos/search/#{escape_uri(keyword)}", arguments.params)
     end
     alias :repositories :repos
 
@@ -57,7 +57,7 @@ module Github
     def users(*args)
       arguments(args, :required => [:keyword])
 
-      get_request("/legacy/user/search/#{escape(keyword)}", arguments.params)
+      get_request("/legacy/user/search/#{escape_uri(keyword)}", arguments.params)
     end
 
     # Search email
