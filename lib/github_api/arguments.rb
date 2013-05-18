@@ -45,7 +45,7 @@ module Github
     # Arguments can be part of parameters hash or be simple string arguments.
     #
     def parse(*args, &block)
-      options = args.extract_options!
+      options = ParamsHash.new(args.extract_options!)
       normalize! options
 
       if !args.size.zero?
