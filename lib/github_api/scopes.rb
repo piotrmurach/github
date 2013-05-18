@@ -9,8 +9,9 @@ module Github
     #  github = Github.new :oauth_token => 'token'
     #  github.scopes.all
     #
-    def list(params={})
-      response = get_request("/user", params)
+    def list(*args)
+      arguments(args)
+      response = get_request("/user", arguments.params)
       response.headers.oauth_scopes ? response.headers.oauth_scopes.split(',') : response
     end
     alias :all :list
