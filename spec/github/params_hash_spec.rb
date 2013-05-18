@@ -12,9 +12,11 @@ describe Github::ParamsHash do
   context 'converts key to string' do
     let(:hash) { {:foo => 123 }}
 
+    it { expect(subject).to be_a(Github::ParamsHash)}
+
     it { expect(subject['foo']).to eql(123) }
 
-    it { expect(subject.data).to eql(hash) }
+    it { expect(subject.data).to eql({"foo" => 123}) }
   end
 
   context 'extract data' do
@@ -22,4 +24,20 @@ describe Github::ParamsHash do
 
     it { expect(subject.data).to eql('foobar') }
   end
+
+  context 'merges defaults' do
+    let(:hash) { { :homepage => "https://tty.github.io" }}
+    let(:defaults) {
+      { "homepage"   => "https://github.com",
+      "private"    => false}
+    }
+
+    it 'correctly updates values' do
+      subject.merge_default(defaults)
+      expect(subject['homepage']).to eql("https://tty.github.io")
+      expect(subject['private']).to be_false
+    end
+
+  end
+
 end
