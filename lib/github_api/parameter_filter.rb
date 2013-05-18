@@ -10,7 +10,7 @@ module Github
     #
     def filter!(keys, params, options={:recursive => true})  # :nodoc:
       case params
-      when Hash
+      when Hash, ParamsHash
         params.keys.each do |k, v|
           unless (keys.include?(k) or Github::Validations::VALID_API_KEYS.include?(k))
             params.delete(k)
