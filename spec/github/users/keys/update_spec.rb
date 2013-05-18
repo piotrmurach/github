@@ -34,7 +34,7 @@ describe Github::Users::Keys, '#update' do
 
     it "should create resource successfully" do
       subject.update key_id, inputs
-      a_patch(request_path).with(:body => inputs,
+      a_patch(request_path).with(:body => inputs.except(:unrelated),
         :query => {:access_token => OAUTH_TOKEN}).should have_been_made
     end
 

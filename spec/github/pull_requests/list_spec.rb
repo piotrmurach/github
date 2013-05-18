@@ -28,7 +28,7 @@ describe Github::PullRequests, '#list' do
 
     it "should get the resources" do
       subject.list user, repo, inputs
-      a_get(request_path).with(:query => inputs).should have_been_made
+      a_get(request_path).with(:query => inputs.except('unrelated')).should have_been_made
     end
 
     it_should_behave_like 'an array of resources' do

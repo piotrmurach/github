@@ -17,7 +17,7 @@ describe Github::Arguments, '#parse' do
 
     it { should == object }
 
-    its(:params) { should == params }
+    its(:params) { should == {"page" => 23} }
 
     context 'sets parameters' do
       it { subject.api.user.should == 'peter-murach' }
@@ -63,6 +63,6 @@ describe Github::Arguments, '#parse' do
     let(:required) { [] }
     let(:arguments) { [params] }
 
-    its(:params) { should == params }
+    its(:params) { should == {"page" => 23} }
   end
 end
