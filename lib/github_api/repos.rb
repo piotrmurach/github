@@ -16,6 +16,7 @@ module Github
       :Keys          => 'keys',
       :Merging       => 'merging',
       :PubSubHubbub  => 'pub_sub_hubbub',
+      :Statistics    => 'statistics',
       :Statuses      => 'statuses'
 
     DEFAULT_REPO_OPTIONS = {
@@ -92,6 +93,11 @@ module Github
     # Access to Repos::PubSubHubbub API
     def pubsubhubbub(options={}, &block)
       @pubsubhubbub ||= ApiFactory.new('Repos::PubSubHubbub', current_options.merge(options), &block)
+    end
+
+    # Access to Repos::Statistics API
+    def stats(options={}, &block)
+      @stats ||= ApiFactory.new('Repos::Statistics', current_options.merge(options), &block)
     end
 
     # Access to Repos::Statuses API
