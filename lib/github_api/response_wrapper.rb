@@ -22,6 +22,14 @@ module Github
       @env         = response.env
     end
 
+    # Overwrite methods to hash keys
+    #
+    ['id', 'type', 'fork'].each do |method_name|
+      define_method(method_name) do
+        self.body.fetch(method_name.to_s)
+      end
+    end
+
     # Request url
     #
     def url
