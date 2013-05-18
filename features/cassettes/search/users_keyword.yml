@@ -1,0 +1,70 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://<BASIC_AUTH>@api.github.com/legacy/user/search/location:Sheffield%20repos:20?access_token=<TOKEN>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3.full+json,application/vnd.github.beta.full+json;q=0.7,application/vnd.github+json;q=0.5,application/json;q=0.1
+      Accept-Charset:
+      - utf-8
+      User-Agent:
+      - Github Ruby Gem 0.9.7
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Sat, 18 May 2013 13:33:41 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4999'
+      X-Github-Media-Type:
+      - github.v3; param=full; format=json
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
+      Access-Control-Allow-Origin:
+      - ! '*'
+      Etag:
+      - ! '"719c73d7273332047f0d1eacf695cedd"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Vary:
+      - Accept-Encoding
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAA3WQ3WrDMAyFXyX4uh124qRJXmEMxn5uNkZQ/JMaHDs49kYp
+        fffJoYXBNvCFj/Tp6KAzSasKK+nfz8RI0m9yzzmvWEl2ZArwCRHCsPX0WPJO
+        1nXDgepW1EDHplNUHpis2453OJDHHcwK6UVFtJpTAHHEjvWTcb/LV/jR+BiK
+        hxusk7V/d6wXEI3PTs9HpbVRVu6KV2eiksW9cZP0c94Gbkow5RxPaTxhJZ6W
+        rHJAVEsarRFDUIsfhE8ukr6kO5I1HiN/tbfWf223qZof8obn4ip8QFN2h7wI
+        CjDDAGhFSsroPr/2hR36ivWUvuHWK/MfcPm4fAP71GbikAEAAA==
+    http_version: !!null 
+  recorded_at: Sat, 18 May 2013 13:33:41 GMT
+recorded_with: VCR 2.4.0
