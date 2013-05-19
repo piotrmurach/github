@@ -7,6 +7,7 @@ require 'github_api/utils/url'
 require 'github_api/connection'
 require 'github_api/deprecation'
 require 'github_api/core_ext/ordered_hash'
+require 'github_api/core_ext/deep_merge'
 
 module Github
   extend Configuration
