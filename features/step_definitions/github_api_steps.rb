@@ -71,6 +71,10 @@ When /^I iterate through collection pages$/ do
   end
 end
 
+Then /^the request header (.*) should be$/ do |header, value|
+  expect(@response.headers.env[:request_headers][header]).to eql(value)
+end
+
 Then /^the response collection of resources is different for "([^"]*)" attribute$/ do |attr|
   @next_response.first.send(:"#{attr}").should_not eql @response.first.send(:"#{attr}")
 end
