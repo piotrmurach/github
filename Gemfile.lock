@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    github_api (0.9.7)
+    github_api (0.10.0)
       addressable
       faraday (~> 0.8.1)
       hashie (>= 1.2)
