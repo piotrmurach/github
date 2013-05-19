@@ -32,16 +32,17 @@ module Github
     #
     # = Examples
     #  github = Github.new
-    #  github.gitignore.get "template-name", mime: 'applicatin/vnd.github.raw'
+    #  github.gitignore.get "template-name", accept: 'applicatin/vnd.github.raw'
     #
     def get(*args)
       params = arguments(args, :required => [:name]).params
 
-      if (mime_type = params.delete('mime'))
-        options = { :raw => true, :headers => {'Accept' => mime_type} }
+      if (media = params.delete('accept'))
+        params['accept'] = media
+        params['raw'] = true
       end
 
-      get_request("/gitignore/templates/#{name}", params, options || {})
+      get_request("/gitignore/templates/#{name}", params)
     end
     alias :find :get
 

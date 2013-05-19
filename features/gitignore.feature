@@ -29,7 +29,7 @@ Feature: Markdown API
       | template_name |
       | Ruby          |
     And I pass the following request options:
-      | mime                       |
+      | accept                     |
       | application/vnd.github.raw |
     When I make request within a cassette named "gitignore/get_raw"
     Then the response status should be 200

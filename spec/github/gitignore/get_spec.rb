@@ -42,7 +42,7 @@ describe Github::Gitignore, '#get' do
     let(:accept) { 'application/vnd.github.raw' }
 
     it "should get the resource" do
-      subject.get template, 'mime' => 'application/vnd.github.raw'
+      subject.get template, 'accept' => 'application/vnd.github.raw'
       a_get(request_path).should have_been_made
     end
   end
