@@ -33,9 +33,10 @@ module Github
         raise ArgumentError, "unkown http method: #{method}"
       end
 
-      puts "EXECUTED: #{method} - #{path} with #{params} and #{params.options}" if ENV['DEBUG']
+      puts "EXECUTED: #{method} - #{path} with PARAMS: #{params}" if ENV['DEBUG']
 
-      conn = connection(params.options.merge(current_options))
+      conn_options = params.options.merge(current_options)
+      conn = connection(conn_options)
       if conn.path_prefix != '/' && path.index(conn.path_prefix) != 0
         path = (conn.path_prefix + path).gsub(/\/(\/)*/, '/')
       end
