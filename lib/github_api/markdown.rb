@@ -28,10 +28,11 @@ module Github
       arguments(args) do
         assert_required ['text']
       end
+      params = arguments.params
+      params['raw'] = true
 
-      post_request("markdown", arguments.params, :raw => true)
+      post_request("markdown", arguments.params)
     end
-
 
     # Render a Markdown document in raw mode
     #
@@ -44,14 +45,15 @@ module Github
     # = Examples
     #  github = Github.new
     #  github.markdown.render_raw "Hello github/linguist#1 **cool**, and #1!",
-    #    "mime": "text/plain",
+    #    "accept": "text/plain",
     #
     def render_raw(*args)
       params = arguments(args).params
       mime_type, params['data'] = params['mime'], args.shift
+      params['raw'] = true
+      params['accept'] = params.fetch('accept') { 'text/plain' }
 
-      post_request("markdown/raw", params, :raw => true,
-                      :headers => {'Content-Type' => mime_type || 'text/plain'})
+      post_request("markdown/raw", params)
     end
 
   end # Markdown

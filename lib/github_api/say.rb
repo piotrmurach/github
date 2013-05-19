@@ -14,8 +14,9 @@ module Github
     def say(*args)
       params = arguments(*args).params
       params[:s] = args.shift unless args.empty?
+      params['raw'] = true
 
-      get_request('/octocat', params, :raw => true)
+      get_request('/octocat', params)
     end
 
   end # Say
