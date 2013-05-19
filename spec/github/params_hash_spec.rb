@@ -3,8 +3,6 @@
 require 'spec_helper'
 
 describe Github::ParamsHash do
-
-  let(:hash) { }
   let(:object) { described_class }
 
   subject { object.new(hash) }
@@ -17,6 +15,30 @@ describe Github::ParamsHash do
     it { expect(subject['foo']).to eql(123) }
 
     it { expect(subject.data).to eql({"foo" => 123}) }
+  end
+
+  context 'media' do
+    let(:hash) { {:media => "raw"} }
+
+    it 'parses media key' do
+      expect(subject.media).to eql('application/vnd.github.v3.raw+json')
+    end
+  end
+
+  context 'with accept' do
+    let(:hash) { {:accept => "application/json"} }
+
+    it 'overwrites media key' do
+      expect(subject.accept).to eql('application/json')
+    end
+  end
+
+  context 'without accept' do
+    let(:hash) { {} }
+
+    it 'overwrites media key' do
+      expect(subject.accept).to be_nil
+    end
   end
 
   context 'extract data' do
@@ -37,7 +59,6 @@ describe Github::ParamsHash do
       expect(subject['homepage']).to eql("https://tty.github.io")
       expect(subject['private']).to be_false
     end
-
   end
 
 end
