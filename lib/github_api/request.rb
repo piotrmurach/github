@@ -8,34 +8,34 @@ module Github
     METHODS = [:get, :post, :put, :delete, :patch]
     METHODS_WITH_BODIES = [ :post, :put, :patch ]
 
-    def get_request(path, params={}, options={})
-      request(:get, path, params, options).auto_paginate
+    def get_request(path, params={})
+      request(:get, path, params).auto_paginate
     end
 
-    def patch_request(path, params={}, options={})
-      request(:patch, path, params, options)
+    def patch_request(path, params={})
+      request(:patch, path, params)
     end
 
-    def post_request(path, params={}, options={})
-      request(:post, path, params, options)
+    def post_request(path, params={})
+      request(:post, path, params)
     end
 
-    def put_request(path, params={}, options={})
-      request(:put, path, params, options)
+    def put_request(path, params={})
+      request(:put, path, params)
     end
 
-    def delete_request(path, params={}, options={})
-      request(:delete, path, params, options)
+    def delete_request(path, params={})
+      request(:delete, path, params)
     end
 
-    def request(method, path, params, options) # :nodoc:
+    def request(method, path, params) # :nodoc:
       if !METHODS.include?(method)
         raise ArgumentError, "unkown http method: #{method}"
       end
 
-      puts "EXECUTED: #{method} - #{path} with #{params} and #{options}" if ENV['DEBUG']
+      puts "EXECUTED: #{method} - #{path} with #{params} and #{params.options}" if ENV['DEBUG']
 
-      conn = connection(options.merge(current_options))
+      conn = connection(params.options.merge(current_options))
       if conn.path_prefix != '/' && path.index(conn.path_prefix) != 0
         path = (conn.path_prefix + path).gsub(/\/(\/)*/, '/')
       end
@@ -51,13 +51,6 @@ module Github
         end
       end
       ResponseWrapper.new(response, self)
-    end
-
-    private
-
-    def _extract_mime_type(params, options) # :nodoc:
-      options['resource']  = params['resource'] ? params.delete('resource') : ''
-      options['mime_type'] = params['resource'] ? params.delete('mime_type') : ''
     end
 
   end # Request
