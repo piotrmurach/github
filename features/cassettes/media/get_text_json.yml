@@ -1,0 +1,80 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://<BASIC_AUTH>@api.github.com/repos/peter-murach/github/issues/108?access_token=<TOKEN>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3.text+json
+      User-Agent:
+      - Faraday v0.8.7
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Sun, 19 May 2013 18:13:30 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4994'
+      Vary:
+      - Accept, Authorization, Cookie
+      - Accept-Encoding
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Last-Modified:
+      - Sun, 19 May 2013 09:24:08 GMT
+      Etag:
+      - ! '"781e26d455f5d40201a39b5d9b902e8e"'
+      X-Github-Media-Type:
+      - github.v3; param=text; format=json
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
+      Access-Control-Allow-Origin:
+      - ! '*'
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAA61VYWvbMBD9K4dh9Eti2Y5bp2ZbGawrhbEPI2WwdQTZvtii
+        tmQkOV0a+t93spssy0azdv0mS7qnd+/untdep2sv9SprW5Myxlvhl8JWXebn
+        qmEaW2VYixb1uOk0zys2nDJhTIeGhcHUG3k1z7A28/+GYgPQmkne4D0BE4cG
+        pX0J6A0UoeLyhTAHIEKsbFPvpb+j4kH9ROGl4WRyHIdJMvJk12SoaSeYjjwr
+        bI1UoMujBkq0VsgSLvoCpem51kqn6Sdl3+U5tpZnNaagJPRlowJK6xL1KY44
+        dsaBrr1alUISYrPElTUNl3TmCEziJApGHl9yy/VeMgbzTqNf6uG0741hyeIp
+        EZ+eJIuE80kQB0EYYpDw0+I0KJIMo7Pizba5onjqo89veMOFL9Eybgw6gtuO
+        exV9EA0v0dBi89rueuyyGMdR4LeyJOKbO3OXgXeIi1PhsXZ34IbtCvN4YXdv
+        LlRdq1uKf3wM9p5g2zDiNqypws+BoLA1U7ZCqh2l4aanFObQ6OzT6UPWNOTG
+        kqQOxFA3aCyeRukhiAjdSuKy7o2kR+syk2vRWqHkE5X6LZSglC65FHf8GVAU
+        agihH5OnJdaHUOi/WMi+tkPMmrVaLHm+cnJozFEsSd3n4O0FE5xdtc4rrtyk
+        329s2Uu/fe/LaN2ZatENPA2eKCXSjuzqeuQ1okZjldxubO0ynZANa6ToYs4t
+        IURBOBkH8TiczsLjNIzSSfCVELu2+PNOlMyiMI3j9PjU3clrZR5ghmczVazm
+        Fn843C8VSrgEq1dgFXByNGOA+hk2PgZqARwWxBRuyTD+4nIjiiezAy4BnTce
+        cMqL8xm8vvr88W0KcXACs0oYAjWq0zlCodCAVBZM17ZK257K0YLUOoIGC8HB
+        qQ0t1/Svov+jfy2vZQ/hmp/Ugoq3JLYzbOu2G6XdR3/vvShgMD3ISNsbMIpA
+        Kne3T829NXg6VMgL1G5nBdxZzNkvIbPVUL/7n09sVLzHBwAA
+    http_version: !!null 
+  recorded_at: Sun, 19 May 2013 18:13:31 GMT
+recorded_with: VCR 2.4.0
