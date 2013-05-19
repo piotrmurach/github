@@ -15,17 +15,18 @@ Supports all the API methods(nearly 200). It's build in a modular way, that is, 
 
 ## Features
 
-* Intuitive GitHub API interface navigation.
-* Modular design allows for working with parts of API.
-* Fully customizable including advanced middleware stack construction.
+* Intuitive GitHub API interface navigation. [usage](#usage)
+* Modular design allows for working with parts of API. [api](#api)
+* Fully customizable including advanced middleware stack construction. [config](#advanced-configuration)
 * Its comprehensive, you can request all GitHub API resources.
-* Flexible arguments parsing, you can write expressive and natural queries.
-* Requests pagination with convenient DSL and automatic option.
-* Easy error handling split for client and server type errors.
+* Support OAuth2 authorization. [oauth](#oauth)
+* Flexible arguments parsing, you can write expressive and natural queries. [params]()
+* Requests pagination with convenient DSL and automatic option. [pagination](#pagination)
+* Easy error handling split for client and server type errors. [error](#error-handling)
 * Supports multithreaded environment.
-* Custom mime types specification (Status: In Progess)
+* Custom media types specification through 'media' parameter. [media](#media-types)
 * Request results caching (Status: TODO)
-* Fully tested with test coverage above 90% with over 1,500 specs and 800 features.
+* Fully tested with test coverage above 90% with over 1,500 specs and 800 features. [testing](#testing)
 
 ## Installation
 
@@ -347,18 +348,25 @@ If your client fails to find CA certs you can pass other SSL options to specify 
 For instance, download CA root certificates from Mozilla [cacert](http://curl.haxx.se/ca/cacert.pem) and point ca_file at your certificate bundle location.
 This will allow the client to verify the github.com ssl certificate as authentic.
 
-## MIME Types
+## Media Types
 
-Issues, PullRequests and few other API leverage custom mime types which are <tt>:json</tt>, <tt>:blob</tt>, <tt>:raw</tt>, <tt>:text</tt>, <tt>:html</tt>, <tt>:full</tt>. By default <tt>:raw</tt> is used.
-
-In order to pass a mime type with your request do
+You can specify custom media types to choose the format of the data you wish to receive. To make things easier you can specify the following shortcuts
+`json`, `blob`, `raw`, `text`, `html`, `full`. For instance:
 
 ```ruby
 github = Github.new
-github.pull_requests.list 'peter-murach', 'github', :mime_type => :full
+github.issues.get 'peter-murach', 'github', 108, media: 'text'
 ```
 
-  Your header will contain 'Accept: "application/vnd.github-pull.full+json"' which in turn returns raw, text and html representations in response body.
+This will be expanded into `application/vnd.github.v3.text+json`
+
+If you wish to specify the version pass `media: 'beta.text'` which will be converted to `application/vnd/github.beta.text+json`.
+
+Finally, you can always pass the whole accept header like so
+
+```ruby
+github.issues.get 'peter-murach', 'github', 108, accept: 'application/vnd.github.raw'
+```
 
 ## Configuration
 
