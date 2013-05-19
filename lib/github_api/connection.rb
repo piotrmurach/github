@@ -32,9 +32,9 @@ module Github
           ACCEPT_CHARSET   => "utf-8",
           USER_AGENT       => user_agent
         },
-        :ssl => options.fetch(:ssl) { ssl },
+        :ssl => ssl,
         :url => options.fetch(:endpoint) { Github.endpoint }
-      }.merge(options)
+      }.deep_merge(options)
     end
 
     # Default middleware stack that uses default adapter as specified at
