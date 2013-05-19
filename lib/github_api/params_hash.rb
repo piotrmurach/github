@@ -45,7 +45,10 @@ module Github
     #
     def options
       hash = has_key?('options') ? self.delete('options') : {}
-      hash['Accept'] = accept if accept
+      if value = accept
+        hash[:headers] = {} unless hash.has_key?(:headers)
+        hash[:headers]['Accept'] = value
+      end
       hash[:raw] = has_key?('raw') ? self.delete('raw') : false
       hash
     end
