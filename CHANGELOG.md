@@ -1,3 +1,16 @@
+0.10.0 (May 19, 2013)
+
+* Add addressable dependency
+* Fix Tree api create method #109
+* Fix keyword escaping in Search API #113
+* Add ParamsHash class for parameter options abstraction
+* Add repository Statistics api
+* Add media type parser
+* Add media type & accept header support
+* Change default accept header
+* Add deep_merge core extension
+* Change connection options to overwrite deep keys
+
 0.9.7 (April 13, 2013)
 
 * Add listing of user keys
