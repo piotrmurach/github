@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require 'delegate'
+
 module Github
 
   # Class responsible for holding request parameters
