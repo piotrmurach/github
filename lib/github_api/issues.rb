@@ -137,7 +137,7 @@ module Github
       elsif (user_name = params.delete('user')) &&
             (repo_name = params.delete('repo'))
 
-        list_repo user_name, repo_name, params
+        list_repo user_name, repo_name
       elsif args.include? :user
         get_request("/user/issues", params)
       else
@@ -151,7 +151,7 @@ module Github
     # List issues for a repository
     #
     # def list_repo(user_name, repo_name, params)
-    def list_repo(user, repo, params)
+    def list_repo(user, repo)
       get_request("/repos/#{user}/#{repo}/issues", arguments.params)
     end
     private :list_repo
