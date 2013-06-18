@@ -63,6 +63,11 @@ describe Github::Issues, '#list' do
     let(:repo)   { 'github' }
     let(:request_path) { "/repos/#{user}/#{repo}/issues" }
 
+    before {
+      stub_request(:get, "https://api.github.com/repos/peter-murach/github/issues?param1=foo&param2=bar").
+         to_return(:headers => {:content_type => "application/json; charset=utf-8"})
+    }
+    
     it "should get the resources" do
       subject.list :user => user, :repo => repo
       a_get(request_path).should have_been_made
@@ -81,6 +86,11 @@ describe Github::Issues, '#list' do
       yielded = []
       result = subject.list(:user => user, :repo => repo) { |obj| yielded << obj }
       yielded.should == result
+    end
+
+    it "should pass parameters" do 
+      subject.list :user => user, :repo => repo, :param1 => "foo", :param2 => "bar"
+      a_get(request_path + "?param1=foo&param2=bar").should have_been_made
     end
   end
 

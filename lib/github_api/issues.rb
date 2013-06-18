@@ -126,15 +126,6 @@ module Github
     #    :sort   => 'comments',
     #    :direction => 'asc'
     #
-    #  github = Github.new :user => 'user-name', :repo => 'repo-name'
-    #  github.issues.list_repo :milestone => 1,
-    #    :state  => 'open',
-    #    :assignee => '*',
-    #    :mentioned => 'octocat',
-    #    :labels => "bug,ui,bla",
-    #    :sort   => 'comments',
-    #    :direction => 'asc'
-    #
     def list(*args)
       params = arguments(args) do
         assert_values VALID_ISSUE_PARAM_VALUES
@@ -160,12 +151,7 @@ module Github
     # List issues for a repository
     #
     # def list_repo(user_name, repo_name, params)
-    def list_repo(*args)
-      arguments(args, :required => [:user, :repo]) do
-        sift VALID_ISSUE_PARAM_NAMES
-        assert_values VALID_ISSUE_PARAM_VALUES
-      end
-
+    def list_repo(user, repo, params)
       get_request("/repos/#{user}/#{repo}/issues", arguments.params)
     end
     private :list_repo
