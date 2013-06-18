@@ -83,12 +83,12 @@ Feature: Github API pagination
   Scenario: Navigating resource links with query parameters
 
     Given I have "Github::Issues" instance
-      And I want to list_repo resources with the following params:
+      And I want to list resources with the following params:
         | user   | repo |
         | wycats | thor |
       And I pass the following request options:
-        | state  | per_page |
-        | closed | 50       |
+        | state  | per_page | user   | repo |
+        | closed | 50       | wycats | thor |
     When I make request within a cassette named "pagination/issues/list/first"
     Then the response status should be 200
       And the response next link should contain:
@@ -100,12 +100,12 @@ Feature: Github API pagination
 
   Scenario: Navigate to Next page
     Given I have "Github::Issues" instance
-      And I want to list_repo resources with the following params:
+      And I want to list resources with the following params:
         | user   | repo |
         | wycats | thor |
       And I pass the following request options:
-        | state  | per_page |
-        | closed | 50       |
+        | state  | per_page | user   | repo |
+        | closed | 50       | wycats | thor |
     When I make request within a cassette named "pagination/issues/list/first"
       And I request next page within a cassette named "pagination/issues/list/next"
     Then the response status should be 200
@@ -125,12 +125,12 @@ Feature: Github API pagination
   Scenario: Navigate to Last page
 
     Given I have "Github::Issues" instance
-      And I want to list_repo resources with the following params:
+      And I want to list resources with the following params:
         | user   | repo |
         | wycats | thor |
       And I pass the following request options:
-        | state  | per_page |
-        | closed | 50       |
+        | state  | per_page | user   | repo |
+        | closed | 50       | wycats | thor |
     When I make request within a cassette named "pagination/issues/list/first"
       And I request last page within a cassette named "pagination/issues/list/last"
     Then the response status should be 200
@@ -144,12 +144,12 @@ Feature: Github API pagination
   Scenario: Navigate to Previous page
 
     Given I have "Github::Issues" instance
-      And I want to list_repo resources with the following params:
+      And I want to list resources with the following params:
         | user   | repo |
         | wycats | thor |
       And I pass the following request options:
-        | state  | per_page | page |
-        | closed | 50       | 4    |
+        | state  | per_page | page | user   | repo |
+        | closed | 50       | 4    | wycats | thor |
     When I make request within a cassette named "pagination/issues/list/last"
       And I request prev page within a cassette named "pagination/issues/list/prev"
     Then the response status should be 200

@@ -15,12 +15,12 @@ Feature: Issues API
 
   Scenario: List on repository
 
-    Given I want to list_repo resources with the following params:
+    Given I want to list resources with the following params:
       | user          | repo   |
       | peter-murach  | github |
     And I pass the following request options:
-      | state  | assignee | sort    | direction |
-      | closed | none     | created | asc       |
+      | state  | assignee | sort    | direction | user         | repo   |
+      | closed | none     | created | asc       | peter-murach | github |
     When I make request within a cassette named "issues/list/repo"
     Then the response status should be 200
       And the response type should be JSON
