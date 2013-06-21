@@ -120,8 +120,8 @@ module Github
     #
     # = Examples
     #   github = Github.new
-    #   github.repos.list every: true
-    #   github.repos.list every: true { |repo| ... }
+    #   github.repos.list :every
+    #   github.repos.list :every { |repo| ... }
     #
     # List public repositories for the specified user.
     #
