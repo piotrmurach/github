@@ -6,6 +6,8 @@ module Github
   # as Base64 encoded content.
   class Repos::Contents < API
 
+    REQUIRED_CONTENT_OPTIONS = %w[ path message content ]
+
     # Get the README
     #
     # This method returns the preferred README for a repository.
@@ -45,6 +47,37 @@ module Github
       get_request("/repos/#{user}/#{repo}/contents/#{path}", params)
     end
     alias :find :get
+
+    # Create a file
+    #
+    # This method creates a new file in a repository
+    #
+    # = Parameters
+    # * <tt>:path</tt>    - Requried string - The content path
+    # * <tt>:message</tt> - Requried string - The commit message
+    # * <tt>:content</tt> - Requried string - The new file content, Base64 encoded
+    # * <tt>:branch</tt>  - Optional string - The branch name. If not provided,
+    #                       uses the repository’s default branch (usually master)
+    # = Optional Parameters
+    #
+    # * <tt>:path</tt>    - Requried string - The content path
+    #
+    # = Examples
+    #  github = Github.new
+    #  github.repos.contents.create 'user-name', 'repo-name', 'path',
+    #    path: 'hello.rb',
+    #    content: "puts 'hello ruby'",
+    #    message: "my commit message"
+    #
+    def create(*args)
+      arguments(args, :required => [:user, :repo, :path]) do
+        assert_required REQUIRED_CONTENT_OPTIONS
+      end
+      params = arguments.params
+      params.strict_encode64('content')
+
+      put_request("/repos/#{user}/#{repo}/contents/#{path}", params)
+    end
 
     # Get archive link
     #

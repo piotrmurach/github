@@ -23,6 +23,19 @@ Feature: Contents API
       And the response type should be JSON
       And the response should not be empty
 
+  Scenario: Create a file
+
+    Given I want create resource with the following params:
+      | user  | repo            | path     |
+      | murek | github_api_test | hello.rb |
+      And I pass the following request options:
+        | path      | content     | message        |
+        | hello.txt | puts 'ruby' | Initial commit |
+    When I make request within a cassette named "repos/contents/create"
+    Then the response status should be 201
+      And the response type should be JSON
+      And the response should not be empty
+
   Scenario: Archive
 
     Given I want archive resource with the following params:
