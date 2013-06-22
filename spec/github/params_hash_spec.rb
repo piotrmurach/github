@@ -61,4 +61,9 @@ describe Github::ParamsHash do
     end
   end
 
+  context 'strict encode' do
+    let(:hash) { { :content => "puts 'hello ruby'"} }
+
+    it { expect(subject.strict_encode64('content')).to eql('cHV0cyAnaGVsbG8gcnVieSc=')  }
+  end
 end

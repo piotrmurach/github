@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 require 'delegate'
+require 'base64'
 
 module Github
 
@@ -64,6 +65,18 @@ module Github
         end
       end
       self
+    end
+
+    # Base64 encode string removing newline characters
+    #
+    def strict_encode64(key)
+      value = self[key]
+      encoded = if Base64.respond_to?(:strict_encode64)
+        Base64.strict_encode64(value)
+      else
+        [value].pack("m0")
+      end
+      self[key] = encoded.delete("\n\r")
     end
 
   end # ParamsHash
