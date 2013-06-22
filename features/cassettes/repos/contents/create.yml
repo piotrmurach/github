@@ -24,7 +24,7 @@ http_interactions:
       Server:
       - GitHub.com
       Date:
-      - Sat, 22 Jun 2013 11:15:41 GMT
+      - Sat, 22 Jun 2013 18:52:28 GMT
       Content-Type:
       - application/json; charset=utf-8
       Connection:
@@ -34,7 +34,7 @@ http_interactions:
       X-Ratelimit-Limit:
       - '5000'
       X-Ratelimit-Remaining:
-      - '4999'
+      - '4996'
       X-Github-Media-Type:
       - github.v3; format=json
       X-Content-Type-Options:
@@ -48,13 +48,13 @@ http_interactions:
       Access-Control-Allow-Origin:
       - ! '*'
       Etag:
-      - ! '"867d258ec0228e8557a765f52afcafe2"'
+      - ! '"c2799bffff066a8a0426028d643e6ec3"'
       Cache-Control:
       - max-age=0, private, must-revalidate
     body:
       encoding: US-ASCII
-      string: ! '{"content":{"name":"hello.rb","path":"hello.rb","sha":"25b0bef9e404bd2e3233de26b7ef8cbd86d0e913","size":11,"url":"https://api.github.com/repos/<USER>/github_api_test/contents/hello.rb?ref=master","html_url":"https://github.com/<USER>/github_api_test/blob/master/hello.rb","git_url":"https://api.github.com/repos/<USER>/github_api_test/git/blobs/25b0bef9e404bd2e3233de26b7ef8cbd86d0e913","type":"file","_links":{"self":"https://api.github.com/repos/<USER>/github_api_test/contents/hello.rb?ref=master","git":"https://api.github.com/repos/<USER>/github_api_test/git/blobs/25b0bef9e404bd2e3233de26b7ef8cbd86d0e913","html":"https://github.com/<USER>/github_api_test/blob/master/hello.rb"}},"commit":{"sha":"4b3bda29b07b79de87042ab410c3a5794abbed7c","url":"https://api.github.com/repos/<USER>/github_api_test/git/commits/4b3bda29b07b79de87042ab410c3a5794abbed7c","html_url":"https://github.com/<USER>/github_api_test/commits/4b3bda29b07b79de87042ab410c3a5794abbed7c","author":{"name":"<USER>","email":"<EMAIL>","date":"2013-06-22T11:15:41Z"},"committer":{"name":"<USER>","email":"<EMAIL>","date":"2013-06-22T11:15:41Z"},"tree":{"sha":"68416c56385741b05dc93ffd00618b32a45b69e2","url":"https://api.github.com/repos/<USER>/github_api_test/git/trees/68416c56385741b05dc93ffd00618b32a45b69e2"},"message":"Initial
-        commit","parents":[{"sha":"0106b45311ab15bf837c2830391b01cd17b33b61","url":"https://api.github.com/repos/<USER>/github_api_test/git/commits/0106b45311ab15bf837c2830391b01cd17b33b61","html_url":"https://github.com/<USER>/github_api_test/commits/0106b45311ab15bf837c2830391b01cd17b33b61"}]}}'
+      string: ! '{"content":{"name":"hello.rb","path":"hello.rb","sha":"25b0bef9e404bd2e3233de26b7ef8cbd86d0e913","size":11,"url":"https://api.github.com/repos/<USER>/github_api_test/contents/hello.rb?ref=master","html_url":"https://github.com/<USER>/github_api_test/blob/master/hello.rb","git_url":"https://api.github.com/repos/<USER>/github_api_test/git/blobs/25b0bef9e404bd2e3233de26b7ef8cbd86d0e913","type":"file","_links":{"self":"https://api.github.com/repos/<USER>/github_api_test/contents/hello.rb?ref=master","git":"https://api.github.com/repos/<USER>/github_api_test/git/blobs/25b0bef9e404bd2e3233de26b7ef8cbd86d0e913","html":"https://github.com/<USER>/github_api_test/blob/master/hello.rb"}},"commit":{"sha":"17944da9b9b1a143d141507480facd17263cf6d8","url":"https://api.github.com/repos/<USER>/github_api_test/git/commits/17944da9b9b1a143d141507480facd17263cf6d8","html_url":"https://github.com/<USER>/github_api_test/commits/17944da9b9b1a143d141507480facd17263cf6d8","author":{"name":"<USER>","email":"<EMAIL>","date":"2013-06-22T18:52:27Z"},"committer":{"name":"<USER>","email":"<EMAIL>","date":"2013-06-22T18:52:27Z"},"tree":{"sha":"68416c56385741b05dc93ffd00618b32a45b69e2","url":"https://api.github.com/repos/<USER>/github_api_test/git/trees/68416c56385741b05dc93ffd00618b32a45b69e2"},"message":"Initial
+        commit","parents":[{"sha":"8b1c1a560db750f0725f7a7778abfceda1c64103","url":"https://api.github.com/repos/<USER>/github_api_test/git/commits/8b1c1a560db750f0725f7a7778abfceda1c64103","html_url":"https://github.com/<USER>/github_api_test/commits/8b1c1a560db750f0725f7a7778abfceda1c64103"}]}}'
     http_version: !!null 
-  recorded_at: Sat, 22 Jun 2013 11:15:42 GMT
+  recorded_at: Sat, 22 Jun 2013 18:52:28 GMT
 recorded_with: VCR 2.4.0

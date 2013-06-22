@@ -3,13 +3,12 @@
 require 'spec_helper'
 
 describe Github::Repos::Downloads, '#delete' do
-  let(:github) { Github.new }
   let(:user) { 'peter-murach' }
   let(:repo) { 'github' }
   let(:download_id) { 1 }
   let(:request_path) { "/repos/#{user}/#{repo}/downloads/#{download_id}" }
 
-  after { reset_authentication_for(github) }
+  after { reset_authentication_for(subject) }
 
   before do
     stub_delete(request_path).
@@ -34,7 +33,7 @@ describe Github::Repos::Downloads, '#delete' do
     end
 
     it "should delete the resource" do
-      github.repos.downloads.delete user, repo, download_id
+      subject.delete user, repo, download_id
       a_delete(request_path).should have_been_made
     end
   end

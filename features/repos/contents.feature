@@ -30,9 +30,35 @@ Feature: Contents API
       | murek | github_api_test | hello.rb |
       And I pass the following request options:
         | path      | content     | message        |
-        | hello.txt | puts 'ruby' | Initial commit |
+        | hello.rb | puts 'ruby' | Initial commit |
     When I make request within a cassette named "repos/contents/create"
     Then the response status should be 201
+      And the response type should be JSON
+      And the response should not be empty
+
+  Scenario: Update a file
+
+    Given I want create resource with the following params:
+      | user  | repo            | path     |
+      | murek | github_api_test | hello.rb |
+      And I pass the following request options:
+        | path     | content           | message       | sha                                      |
+        | hello.rb | puts 'hello ruby' | Update commit | 25b0bef9e404bd2e3233de26b7ef8cbd86d0e913 |
+    When I make request within a cassette named "repos/contents/update"
+    Then the response status should be 200
+      And the response type should be JSON
+      And the response should not be empty
+
+  Scenario: Delete a file
+
+    Given I want delete resource with the following params:
+      | user  | repo            | path     |
+      | murek | github_api_test | hello.rb |
+      And I pass the following request options:
+        | path      | message              | sha                                      |
+        | hello.txt | Delete hello.rb file | 25b0bef9e404bd2e3233de26b7ef8cbd86d0e913 |
+    When I make request within a cassette named "repos/contents/delete"
+    Then the response status should be 200
       And the response type should be JSON
       And the response should not be empty
 

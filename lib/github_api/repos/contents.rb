@@ -55,12 +55,24 @@ module Github
     # = Parameters
     # * <tt>:path</tt>    - Requried string - The content path
     # * <tt>:message</tt> - Requried string - The commit message
-    # * <tt>:content</tt> - Requried string - The new file content, Base64 encoded
+    # * <tt>:content</tt> - Requried string - The new file content,
+    #                       which will be Base64 encoded
     # * <tt>:branch</tt>  - Optional string - The branch name. If not provided,
     #                       uses the repository’s default branch (usually master)
     # = Optional Parameters
     #
-    # * <tt>:path</tt>    - Requried string - The content path
+    # The <tt>author</tt> section is optional and is filled in with the
+    # <tt>committer</tt> information if omitted. If the <tt>committer</tt>
+    # information is omitted, the authenticated user’s information is used.
+    #
+    # You must provide values for both <tt>name</tt> and <tt>email</tt>, whether
+    # you choose to use <tt>author</tt> or <tt>committer</tt>. Otherwise, you’ll
+    # receive a <tt>500</tt> status code.
+    #
+    # * <tt>author.name</tt>  - string - The name of the author of the commit
+    # * <tt>author.email</tt> - string - The email of the author of the commit
+    # * <tt>committer.name</tt> - string - The name of the committer of the commit
+    # * <tt>committer.email</tt> - string - The email of the committer of the commit
     #
     # = Examples
     #  github = Github.new
@@ -77,6 +89,71 @@ module Github
       params.strict_encode64('content')
 
       put_request("/repos/#{user}/#{repo}/contents/#{path}", params)
+    end
+
+    # Update a file
+    #
+    # This method updates a file in a repository
+    #
+    # = Parameters
+    # * <tt>:path</tt>    - Requried string - The content path
+    # * <tt>:message</tt> - Requried string - The commit message
+    # * <tt>:content</tt> - Requried string - The new file content,
+    #                       which will be Base64 encoded
+    # * <tt>:sha</tt>     - Requried string -  The blob SHA of the file being replaced.
+    # * <tt>:branch</tt>  - Optional string - The branch name. If not provided,
+    #                       uses the repository’s default branch (usually master)
+    #
+    # = Examples
+    #  github = Github.new
+    #  github.repos.contents.update 'user-name', 'repo-name', 'path',
+    #    path: 'hello.rb',
+    #    content: "puts 'hello ruby again'",
+    #    message: "my commit message",
+    #    sha: "25b0bef9e404bd2e3233de26b7ef8cbd86d0e913"
+    #
+    def update(*args)
+      create(*args)
+    end
+
+    # Delete a file
+    #
+    # This method deletes a file in a repository
+    #
+    # = Parameters
+    # * <tt>:path</tt>    - Requried string - The content path
+    # * <tt>:message</tt> - Requried string - The commit message
+    # * <tt>:sha</tt>     - Requried string - The blob SHA of the file being removed.
+    # * <tt>:branch</tt>  - Optional string - The branch name. If not provided,
+    #                       uses the repository’s default branch (usually master)
+    # = Optional Parameters
+    #
+    # The <tt>author</tt> section is optional and is filled in with the
+    # <tt>committer</tt> information if omitted. If the <tt>committer</tt>
+    # information is omitted, the authenticated user’s information is used.
+    #
+    # You must provide values for both <tt>name</tt> and <tt>email</tt>, whether
+    # you choose to use <tt>author</tt> or <tt>committer</tt>. Otherwise, you’ll
+    # receive a <tt>500</tt> status code.
+    #
+    # * <tt>author.name</tt>  - string - The name of the author of the commit
+    # * <tt>author.email</tt> - string - The email of the author of the commit
+    # * <tt>committer.name</tt> - string - The name of the committer of the commit
+    # * <tt>committer.email</tt> - string - The email of the committer of the commit
+    #
+    # = Examples
+    #  github = Github.new
+    #  github.repos.contents.delete 'user-name', 'repo-name', 'path',
+    #    path: 'hello.rb',
+    #    message: "delete hello.rb file",
+    #    sha: "329688480d39049927147c162b9d2deaf885005f"
+    #
+    def delete(*args)
+      arguments(args, :required => [:user, :repo, :path]) do
+        assert_required %w[ path message sha ]
+      end
+
+      delete_request("/repos/#{user}/#{repo}/contents/#{path}", arguments.params)
     end
 
     # Get archive link

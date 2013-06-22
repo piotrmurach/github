@@ -1,0 +1,62 @@
+---
+http_interactions:
+- request:
+    method: put
+    uri: https://<BASIC_AUTH>@api.github.com/repos/<USER>/github_api_test/contents/hello.rb?access_token=<TOKEN>
+    body:
+      encoding: UTF-8
+      string: ! '{"path":"hello.rb","content":"cHV0cyAnaGVsbG8gcnVieSc=","message":"Update
+        commit","sha":"25b0bef9e404bd2e3233de26b7ef8cbd86d0e913"}'
+    headers:
+      Accept:
+      - application/vnd.github.v3+json,application/vnd.github.beta+json;q=0.5,application/json;q=0.1
+      Accept-Charset:
+      - utf-8
+      User-Agent:
+      - Github Ruby Gem 0.10.1
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Sat, 22 Jun 2013 19:02:17 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4995'
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Content-Type-Options:
+      - nosniff
+      Content-Length:
+      - '1590'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
+      Access-Control-Allow-Origin:
+      - ! '*'
+      Etag:
+      - ! '"e50acd6b435b2ea531988ed19aedc1b2"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Vary:
+      - Accept-Encoding
+    body:
+      encoding: US-ASCII
+      string: ! '{"content":{"name":"hello.rb","path":"hello.rb","sha":"9ed559bc7c227577c734a1d71e84646058c28ab7","size":17,"url":"https://api.github.com/repos/<USER>/github_api_test/contents/hello.rb?ref=master","html_url":"https://github.com/<USER>/github_api_test/blob/master/hello.rb","git_url":"https://api.github.com/repos/<USER>/github_api_test/git/blobs/9ed559bc7c227577c734a1d71e84646058c28ab7","type":"file","_links":{"self":"https://api.github.com/repos/<USER>/github_api_test/contents/hello.rb?ref=master","git":"https://api.github.com/repos/<USER>/github_api_test/git/blobs/9ed559bc7c227577c734a1d71e84646058c28ab7","html":"https://github.com/<USER>/github_api_test/blob/master/hello.rb"}},"commit":{"sha":"a204cd99a174edb4ff8b7c561b7356959421f81c","url":"https://api.github.com/repos/<USER>/github_api_test/git/commits/a204cd99a174edb4ff8b7c561b7356959421f81c","html_url":"https://github.com/<USER>/github_api_test/commits/a204cd99a174edb4ff8b7c561b7356959421f81c","author":{"name":"<USER>","email":"<EMAIL>","date":"2013-06-22T19:02:17Z"},"committer":{"name":"<USER>","email":"<EMAIL>","date":"2013-06-22T19:02:17Z"},"tree":{"sha":"1c6d09bb0aaa44e285234d5e6572b54232079a58","url":"https://api.github.com/repos/<USER>/github_api_test/git/trees/1c6d09bb0aaa44e285234d5e6572b54232079a58"},"message":"Update
+        commit","parents":[{"sha":"17944da9b9b1a143d141507480facd17263cf6d8","url":"https://api.github.com/repos/<USER>/github_api_test/git/commits/17944da9b9b1a143d141507480facd17263cf6d8","html_url":"https://github.com/<USER>/github_api_test/commits/17944da9b9b1a143d141507480facd17263cf6d8"}]}}'
+    http_version: !!null 
+  recorded_at: Sat, 22 Jun 2013 19:02:17 GMT
+recorded_with: VCR 2.4.0

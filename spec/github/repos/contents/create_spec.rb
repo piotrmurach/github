@@ -29,12 +29,12 @@ describe Github::Repos::Contents, '#create' do
 
   it { expect { subject.create user, repo, path }.to raise_error(Github::Error::RequiredParams) }
 
-  it "should get the resources" do
+  it "creates the resource" do
     subject.create user, repo, path, params
     a_put(request_path).should have_been_made
   end
 
-  it "should get repository information" do
+  it "gets repository contents information" do
     content = subject.create user, repo, path, params
     content.content.name.should == 'hello.txt'
   end
