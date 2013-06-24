@@ -7,6 +7,7 @@ module Github
     extend self
 
     def decode(*args)
+      return unless args.first
       if MultiJson.respond_to?(:load)
         MultiJson.load *args
       else
