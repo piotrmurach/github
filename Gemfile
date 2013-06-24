@@ -10,5 +10,5 @@ end
 
 group :metrics do
   gem 'reek',  '~> 1.2.12'
-  gem 'roodi', '~> 2.1.0'
+  gem 'roodi', '~> 2.2.0'
 end
