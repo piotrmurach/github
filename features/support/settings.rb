@@ -4,7 +4,7 @@ def settings_file
   Pathname.new(File.expand_path("../../settings.yml", __FILE__))
 end
 
-def live_credetials?
+def live_credentials?
   true
 end
 
