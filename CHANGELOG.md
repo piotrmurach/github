@@ -1,3 +1,15 @@
+0.10.2 (June 26, 2013)
+
+* Fix issue with listing repository [#118]
+* Fix issue with ratelimit [#119]
+* Add ability to encode params hash vlaues strings to base 64
+* Add repo content create/update/delete api calls
+* Updated dependencies
+
+0.10.1 (May 21, 2013)
+
+* Fix issue with loading params hash
+
 0.10.0 (May 19, 2013)
 
 * Add addressable dependency
