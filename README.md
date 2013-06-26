@@ -26,7 +26,7 @@ Supports all the API methods(nearly 200). It's build in a modular way, that is, 
 * Supports multithreaded environment.
 * Custom media types specification through 'media' parameter. [media](#media-types)
 * Request results caching (Status: TODO)
-* Fully tested with test coverage above 90% with over 1,500 specs and 800 features. [testing](#testing)
+* Fully tested with test coverage above 90% with over 1,600 specs and 900 features. [testing](#testing)
 
 ## Installation
 
