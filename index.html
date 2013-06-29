@@ -9,7 +9,7 @@
     
       
     
-    <link rel="stylesheet" type="text/css" href="assets/./app-c11b914b7b99608c56c63bb4c3c43cc4.css" />
+    <link rel="stylesheet" type="text/css" href="assets/./app-07bbfa14082c63b9f9e127c00804f649.css" />
     <!-- google analytics -->
 
 <script>
@@ -37,12 +37,15 @@
   <li><a href="#api">API</a></li>
   <li><a href="#config">Config</a></li>
   <li><a href="#auth">Auth</a></li>
-  <li ><a href="#cli">CLI</a></li>
+  <li class="last"><a href="#cli">CLI</a></li>
 </ul>
 
   </nav>
-    <h2 class="blurb"><a href="" class="unicorn-icon"><img src="assets/./unicorn_logo_small-308866df5bf309aacfe8a74caa566766.png" alt="unicorn logo small" /></a>
-Discover Open Source via Github API ruby gem.</h2>
+  <h1 class="top-logo"><a href="" class="unicorn-icon"><img src="assets/./unicorn_logo_small-308866df5bf309aacfe8a74caa566766.png" alt="unicorn logo small" /></a>
+  </h1>
+  <div class="clear"></div>
+  <h2 class="blurb"><span class="primary">Github API ruby gem</span><span class="secondary">Discover Open Source.</span></h2>
+  <a href="https://github.com/peter-murach/github" class="button">View source on GitHub</a>
 </header>
 
 
@@ -57,7 +60,7 @@ Discover Open Source via Github API ruby gem.</h2>
   <h2 class='headline'>Features</h2>
 
   <p>
-    Supports all the API methods. It's build in a modular way, that is, you can either instantiate the whole api wrapper Github.new or use parts of it e.i. Github::Repos.new if working solely with repositories is your main concern.'
+    Supports all the API methods. It's build in a modular way, that is, you can either instantiate the whole api wrapper <span class="keyword">Github.new</span> or use parts of it e.i. <span class="keyword">Github::Repos.new</span> if working solely with repositories is your main concern.'
   </p>
 
   <div class='features-wrapper'>
@@ -142,6 +145,22 @@ Discover Open Source via Github API ruby gem.</h2>
   <span class="n">user_agent</span>       <span class="c1"># custom user agent name, by default &#39;Github API&#39;</span>
 </code></pre></div>
 
+<p>which are used throughout the API. These can be passed directly as hash options:</p>
+
+<div class="highlight"><pre><code class="ruby"><span class="n">github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span> <span class="n">oauth_token</span><span class="p">:</span> <span class="s1">&#39;token&#39;</span>
+</code></pre></div>
+
+<p>Alternatively, you can configure the Github settings by passing a block, for instance, with custom enterprise endpoint and website like</p>
+
+<div class="highlight"><pre><code class="ruby"><span class="n">github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">endpoint</span>    <span class="o">=</span> <span class="s1">&#39;https://github.company.com/api/v3&#39;</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">site</span>        <span class="o">=</span> <span class="s1">&#39;https://github.company.com&#39;</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">oauth_token</span> <span class="o">=</span> <span class="s1">&#39;token&#39;</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">adapter</span>     <span class="o">=</span> <span class="ss">:net_http</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">ssl</span>         <span class="o">=</span> <span class="p">{</span><span class="ss">:verify</span> <span class="o">=&gt;</span> <span class="kp">false</span><span class="p">}</span>
+<span class="k">end</span>
+</code></pre></div>
+
   </article>
 </section>
 
@@ -156,6 +175,8 @@ Discover Open Source via Github API ruby gem.</h2>
 <span class="n">github</span><span class="o">.</span><span class="n">oauth</span><span class="o">.</span><span class="n">create</span> <span class="s1">&#39;scopes&#39;</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="s1">&#39;repo&#39;</span><span class="o">]</span>
 </code></pre></div>
 
+<p>You can add more than one scope from the <span class="keyword">user</span>, <span class="keyword">public_repo</span>, <span class="keyword">repo</span>, <span class="keyword">gist</span> or leave the scopes parameter out, in which case, the default read-only access will be assumed(includes public user profile info, public repo info, and gists).</p>
+
   </article>
 </section>
 
@@ -163,30 +184,102 @@ Discover Open Source via Github API ruby gem.</h2>
   <article class="content">
     <h2 class='headline'>Command Line Interface</h2>
 
-<div class="highlight"><pre><code class="ruby">
+    <p>If your preference is to have CLI-based access to GitHub API v3, you can use a ruby gem called <span class="keyword">github_cli</span>.</p>
+
+    <p>To install it do</p>
+
+<div class="highlight"><pre><code class="ruby"><span class="err">$</span> <span class="n">gem</span> <span class="n">install</span> <span class="n">github_cli</span>
 </code></pre></div>
+
+    <p>To run it execute command</p>
+
+<div class="highlight"><pre><code class="ruby"><span class="err">$</span> <span class="n">gcli</span>
+</code></pre></div>
+
+  <p>The first step is to create a configuration file, either global in home directory or local inside the project:</p>
+
+<div class="highlight"><pre><code class="ruby"><span class="err">$</span> <span class="n">gcli</span> <span class="n">init</span> <span class="o">[--</span><span class="n">local</span><span class="o">]</span> <span class="o">[</span><span class="n">filename</span><span class="o">]</span>
+</code></pre></div>
+
+  <p>Without any options this command will setup a <span class="keyword">.githubrc</span> configuration file in your home/project directory with all the global settings. By passing <span class="keyword">--local</span> option the config file will be created locally in the execution directory. Further, by default <span class="keyword">.githubrc</span> name is used which can be changed by passing the <span class="keyword">filename</span>.</p>
+
+  <p>Main configuration options are:</p>
+
+<div class="highlight"><pre><code class="ruby"><span class="n">user</span><span class="o">.</span><span class="n">token</span>            <span class="c1"># Authentication token</span>
+<span class="n">user</span><span class="o">.</span><span class="n">login</span>            <span class="c1"># User login</span>
+<span class="n">user</span><span class="o">.</span><span class="n">password</span>         <span class="c1"># User password</span>
+<span class="n">user</span><span class="o">.</span><span class="n">name</span>             <span class="c1"># Default user name</span>
+<span class="n">user</span><span class="o">.</span><span class="n">repo</span>             <span class="c1"># Default repo name</span>
+<span class="n">user</span><span class="o">.</span><span class="n">org</span>              <span class="c1"># Default organization name</span>
+<span class="n">core</span><span class="o">.</span><span class="n">editor</span>           <span class="c1"># Editor to be opened</span>
+<span class="n">core</span><span class="o">.</span><span class="n">endpoint</span>         <span class="c1"># The api endpoint, by deafult https://api.github.com</span>
+<span class="n">core</span><span class="o">.</span><span class="n">site</span>             <span class="c1"># The web endpoint, by default https://github.com</span>
+<span class="n">core</span><span class="o">.</span><span class="n">pager</span>            <span class="c1"># Pager to be used, by default less</span>
+<span class="n">core</span><span class="o">.</span><span class="n">format</span>           <span class="c1"># Output formating</span>
+<span class="n">core</span><span class="o">.</span><span class="n">quiet</span>            <span class="c1"># Surpass output to show only response status</span>
+<span class="n">core</span><span class="o">.</span><span class="n">ssl</span>              <span class="c1"># SSL settings</span>
+<span class="n">core</span><span class="o">.</span><span class="n">auto_pagination</span>  <span class="c1"># Switch on default results pagination, default false</span>
+</code></pre></div>
+
+<p>Moreover, <span class="keyword">gcli config</span> command allows you to set/get any configuration option such as output format, editor or oauth token.</p>
+
+<p>For instance, to check value for your authentication token do</p>
+
+<div class="highlight"><pre><code class="ruby"><span class="err">$</span> <span class="n">gcli</span> <span class="n">config</span> <span class="o">[--</span><span class="n">local</span><span class="o">]</span> <span class="n">user</span><span class="o">.</span><span class="n">token</span>
+</code></pre></div>
+
+<p>and to set the value do</p>
+
+<div class="highlight"><pre><code class="ruby"><span class="err">$</span> <span class="n">gcli</span> <span class="n">config</span> <span class="o">[--</span><span class="n">local</span><span class="o">]</span> <span class="n">user</span><span class="o">.</span><span class="n">token</span> <span class="n">lh23l4kj234</span><span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">.</span>
+</code></pre></div>
+
+    <aside class="more">
+      <a class="learn" href="https://github.com/peter-murach/github_cli">Learn more</a>
+    </aside>
 
   </article>
 </section>
 
 <section id="social" class="social section">
   <article class="content">
-    <h2 class='headline'>Connect</h2>
+    <h3 class='headline'>Connect socially</h2>
 
+    <ul class="social-icons">
+      <li>
+        <a href="https://twitter.com/piotr_murach" class="box">
+          <span class="icon twitter"></span>
+          <span class="text">Follow on twitter</span>
+        </a>
+      </li>
+      <li>
+        <a href="https://github.com/peter-murach/github" class="box">
+          <span class="icon github"></span>
+          <span class="text">Watch on github</span>
+        </a>
+      </li>
+      <li>
+        <a href="https://github.com/peter-murach/github" class="box">
+          <span class="icon email"></span>
+          <span class="text">Send an email</span>
+        </a>
+      </li>
+    </ul>
   </article>
 </section>
+
+<a id="arrow" class="nav-arrow" href="#top"><span class="arrow"></span></a>
 
 
     <footer class="footer" role="contentinfo">
   <div class="contact">
     <p>
-      Brought to you by Piotr Murach
+      Brought to you by Piotr Murach &copy; 2013
     </p>
   </div>
 </footer>
 
   </div> <!-- /container -->
 
-<script type="text/javascript" src="assets/./app-567aa6394d22ae9e8c21a86ad10fdd8d.js"></script>
+<script type="text/javascript" src="assets/./app-b67846fa8950f6a7455080849ffa5872.js"></script>
 </body>
 </html>
