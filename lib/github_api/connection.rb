@@ -91,7 +91,7 @@ module Github
       puts "OPTIONS:#{conn_options.inspect}" if ENV['DEBUG']
 
       @connection ||= Faraday.new(conn_options.merge(:builder => stack(options))).tap do |conn|
-        [:client_id, :client_secret, :oauth_token].each do |auth_param|
+        [:client_id, :client_secret].each do |auth_param|
           conn.params[auth_param] = conn_options[auth_param] if conn_options[auth_param]
         end
       end
