@@ -52,7 +52,7 @@ module Github
 
     # Access to Repos::Comments API
     def comments(options={}, &block)
-      @commits ||= ApiFactory.new('Repos::Comments', current_options.merge(options), &block)
+      @comments ||= ApiFactory.new('Repos::Comments', current_options.merge(options), &block)
     end
 
     # Access to Repos::Commits API
