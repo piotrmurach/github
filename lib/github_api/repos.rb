@@ -87,7 +87,7 @@ module Github
 
     # Access to Repos::Merging API
     def merging(options={}, &block)
-      @mergin ||= ApiFactory.new('Repos::Merging', current_options.merge(options), &block)
+      @merging ||= ApiFactory.new('Repos::Merging', current_options.merge(options), &block)
     end
 
     # Access to Repos::PubSubHubbub API
