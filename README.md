@@ -121,7 +121,7 @@ blobs = Github::GitData::Blobs.new
 blobs.create 'peter-murach', 'github', content: 'Blob content'
 ```
 
-The response is of type [Hashie::Mash] and allows to traverse all the json response attributes like method calls e.i.
+The response is of type [Github::ResponseWrapper] and allows to traverse all the json response attributes like method calls e.i.
 
 ```ruby
 repos = Github::Repos.new :user => 'peter-murach', :repo => 'github'
