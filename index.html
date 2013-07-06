@@ -9,7 +9,7 @@
     
       
     
-    <link rel="stylesheet" type="text/css" href="assets/./app-07bbfa14082c63b9f9e127c00804f649.css" />
+    <link rel="stylesheet" type="text/css" href="assets/./app-a95816ffd9a3eb0794dd793f850a3974.css" />
     <!-- google analytics -->
 
 <script>
@@ -44,8 +44,8 @@
   <h1 class="top-logo"><a href="" class="unicorn-icon"><img src="assets/./unicorn_logo_small-308866df5bf309aacfe8a74caa566766.png" alt="unicorn logo small" /></a>
   </h1>
   <div class="clear"></div>
-  <h2 class="blurb"><span class="primary">Github API ruby gem</span><span class="secondary">Discover Open Source.</span></h2>
-  <a href="https://github.com/peter-murach/github" class="button">View source on GitHub</a>
+  <h2 class="blurb"><span class="primary">Github API ruby gem.</span><span class="secondary">Discover Open Source.</span></h2>
+  <a href="https://github.com/peter-murach/github" class="button"><span class="github-icon"></span><span class="text">View source on GitHub</span></a>
 </header>
 
 
@@ -60,7 +60,7 @@
   <h2 class='headline'>Features</h2>
 
   <p>
-    Supports all the API methods. It's build in a modular way, that is, you can either instantiate the whole api wrapper <span class="keyword">Github.new</span> or use parts of it e.i. <span class="keyword">Github::Repos.new</span> if working solely with repositories is your main concern.'
+    Supports all the API methods. It's build in a modular way, that is, you can either instantiate the whole api wrapper <span class="keyword">Github.new</span> or use parts of it e.i. <span class="keyword">Github::Repos.new</span> if working solely with repositories is your main concern.
   </p>
 
   <div class='features-wrapper'>
@@ -76,9 +76,9 @@
       <li><span>Flexible arguments parsing, you can write expressive and natural queries.</span></li>
       <li><span>Easy error handling split for client and server type errors.</span></li>
       <li><span>Supports multithreaded environment.</span></li>
-      <li><span>Custom media types specification through 'media' parameter.</span></li>
+      <li><span>Custom media types specification through &lsquo;media&rsquo; parameter.</span></li>
       <li><span>Request results caching.</span></li>
-      <li><span>Fully tested with test coverage above 90% with over 1,500 specs and 800 features.</span></li>
+      <li><span>Fully tested with test coverage above 90% with over 1,600 specs and 900 features.</span></li>
     </ul>
   </div>
   </article>
@@ -111,17 +111,47 @@
   </article>
 </section>
 
-
 <section id="api" class="api section">
   <article class="content">
-    <h2 class='headline'>API</h2>
+    <h2 class='headline'>Application Interface</h2>
+
+    <p>This library closely mirrors the GitHub Api hierarchy. For example to interact with GitHub Repositories API, issue the following calls that correspond directly to the GitHub API hierarchy</p>
+
+<div class="highlight"><pre><code class="ruby"><span class="n">github</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">commits</span><span class="o">.</span><span class="n">all</span>  <span class="s1">&#39;user-name&#39;</span><span class="p">,</span> <span class="s1">&#39;repo-name&#39;</span>
+<span class="n">github</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">hooks</span><span class="o">.</span><span class="n">create</span> <span class="s1">&#39;user-name&#39;</span><span class="p">,</span> <span class="s1">&#39;repo-name&#39;</span><span class="p">,</span> <span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;web&quot;</span><span class="p">,</span> <span class="ss">active</span><span class="p">:</span> <span class="kp">true</span>
+<span class="n">github</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">keys</span><span class="o">.</span><span class="n">get</span>     <span class="s1">&#39;user-name&#39;</span><span class="p">,</span> <span class="s1">&#39;repo-name&#39;</span>
+</code></pre></div>
+
+    <p>The code base is modular and allows for you to work specifically with a given part of GitHub API e.g. blobs</p>
+
+<div class="highlight"><pre><code class="ruby"><span class="n">blobs</span> <span class="o">=</span> <span class="ss">Github</span><span class="p">:</span><span class="ss">:GitData</span><span class="o">::</span><span class="no">Blobs</span><span class="o">.</span><span class="n">new</span>
+<span class="n">blobs</span><span class="o">.</span><span class="n">create</span> <span class="s1">&#39;peter-murach&#39;</span><span class="p">,</span> <span class="s1">&#39;github&#39;</span><span class="p">,</span> <span class="ss">content</span><span class="p">:</span> <span class="s1">&#39;Blob content&#39;</span>
+</code></pre></div>
+
+    <p>The response is of type <span class="keyword">Github::ResponseWrapper</span> and allows to traverse all the json response attributes like method calls e.i.</p>
+
+<div class="highlight"><pre><code class="ruby"><span class="n">repos</span> <span class="o">=</span> <span class="ss">Github</span><span class="p">:</span><span class="ss">:Repos</span><span class="o">.</span><span class="n">new</span> <span class="ss">:user</span> <span class="o">=&gt;</span> <span class="s1">&#39;peter-murach&#39;</span><span class="p">,</span> <span class="ss">:repo</span> <span class="o">=&gt;</span> <span class="s1">&#39;github&#39;</span>
+<span class="n">repos</span><span class="o">.</span><span class="n">branches</span> <span class="k">do</span> <span class="o">|</span><span class="n">branch</span><span class="o">|</span>
+  <span class="nb">puts</span> <span class="n">branch</span><span class="o">.</span><span class="n">name</span>
+<span class="k">end</span>
+</code></pre></div>
 
     <p>All method calls form ruby like sentences and allow for intuitive api navigation, for instance</p>
 
 <div class="highlight"><pre><code class="ruby"><span class="n">github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span> <span class="ss">:oauth_token</span> <span class="o">=&gt;</span> <span class="s1">&#39;...&#39;</span>
 <span class="n">github</span><span class="o">.</span><span class="n">users</span><span class="o">.</span><span class="n">followers</span><span class="o">.</span><span class="n">following</span> <span class="s1">&#39;wycats&#39;</span>  <span class="c1"># =&gt; returns users that &#39;wycats&#39; is following</span>
-<span class="n">github</span><span class="o">.</span><span class="n">users</span><span class="o">.</span><span class="n">followers</span><span class="o">.</span><span class="n">following</span> <span class="s1">&#39;wycats&#39;</span> <span class="c1"># =&gt; returns true if following, otherwise false</span>
+<span class="n">github</span><span class="o">.</span><span class="n">users</span><span class="o">.</span><span class="n">followers</span><span class="o">.</span><span class="n">following?</span> <span class="s1">&#39;wycats&#39;</span> <span class="c1"># =&gt; returns true if following, otherwise false</span>
 </code></pre></div>
+
+    <p>The library allows for flexible arguments parsing. Therefore arguments can be passed during instance creation</p>
+
+<div class="highlight"><pre><code class="ruby"><span class="n">issues</span> <span class="o">=</span> <span class="ss">Github</span><span class="p">:</span><span class="ss">:Issues</span><span class="o">.</span><span class="n">new</span> <span class="ss">user</span><span class="p">:</span> <span class="s1">&#39;peter-murach&#39;</span><span class="p">,</span> <span class="ss">repo</span><span class="p">:</span> <span class="s1">&#39;github&#39;</span>
+<span class="n">issues</span><span class="o">.</span><span class="n">milestones</span><span class="o">.</span><span class="n">list</span> <span class="ss">state</span><span class="p">:</span> <span class="s1">&#39;open&#39;</span>
+</code></pre></div>
+
+    <aside class="more">
+      <a class="learn" href="https://github.com/peter-murach/github#arguments--parameters">Learn more</a>
+    </aside>
   </article>
 </section>
 
@@ -145,7 +175,7 @@
   <span class="n">user_agent</span>       <span class="c1"># custom user agent name, by default &#39;Github API&#39;</span>
 </code></pre></div>
 
-<p>which are used throughout the API. These can be passed directly as hash options:</p>
+    <p>which are used throughout the API. These can be passed directly as hash options:</p>
 
 <div class="highlight"><pre><code class="ruby"><span class="n">github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span> <span class="n">oauth_token</span><span class="p">:</span> <span class="s1">&#39;token&#39;</span>
 </code></pre></div>
@@ -161,6 +191,13 @@
 <span class="k">end</span>
 </code></pre></div>
 
+<p>The <span class="keyword">github_api</span> gem will use the default middleware stack which is exposed by calling <span class="keyword">stack</span> on client instance. However, this stack can be freely modified with methods such as <span class="keyword">insert</span>, <span class="keyword">insert_after</span>, <span class="keyword">delete</span> and <span class="keyword">swap</span>. For instance to add your <span class="keyword">CustomMiddleware</span> do</p>
+
+<div class="highlight"><pre><code class="ruby"><span class="n">github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">stack</span><span class="o">.</span><span class="n">insert_after</span> <span class="ss">Github</span><span class="p">:</span><span class="ss">:Response</span><span class="o">::</span><span class="no">Helpers</span><span class="p">,</span> <span class="no">CustomMiddleware</span>
+<span class="k">end</span>
+</code></pre></div>
+
   </article>
 </section>
 
@@ -168,6 +205,16 @@
 <section id="auth" class="auth section">
   <article class="content">
     <h2 class='headline'>Authorization</h2>
+
+    <p>You can authenticate either using <span class="keyword">OAuth</span> authentication convenience methods(see section OAuth) or through basic authentication by passing your login and password credentials<p>
+
+<div class="highlight"><pre><code class="ruby"><span class="n">github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span> <span class="ss">login</span><span class="p">:</span><span class="s1">&#39;peter-murach&#39;</span><span class="p">,</span> <span class="ss">password</span><span class="p">:</span><span class="s1">&#39;...&#39;</span>
+</code></pre></div>
+
+  <p>or use convenience method</p>
+
+<div class="highlight"><pre><code class="ruby"><span class="n">github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span> <span class="n">basic_auth</span><span class="p">:</span> <span class="s1">&#39;login:password&#39;</span>
+</code></pre></div>
 
     <p>Alternatively you can use OAuth Authorizations API. For instance, to create access token through GitHub API you required to pass your basic credentials as in the following:</p>
 
@@ -242,7 +289,7 @@
 
 <section id="social" class="social section">
   <article class="content">
-    <h3 class='headline'>Connect socially</h2>
+    <h3 class='headline'>Connect socially</h3>
 
     <ul class="social-icons">
       <li>
@@ -258,7 +305,7 @@
         </a>
       </li>
       <li>
-        <a href="https://github.com/peter-murach/github" class="box">
+        <a href="mailto:me@piotrmurach.com" class="box">
           <span class="icon email"></span>
           <span class="text">Send an email</span>
         </a>
