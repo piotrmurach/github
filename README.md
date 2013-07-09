@@ -20,7 +20,7 @@ Supports all the API methods(nearly 200). It's build in a modular way, that is, 
 * Fully customizable including advanced middleware stack construction. [config](#advanced-configuration)
 * Its comprehensive, you can request all GitHub API resources.
 * Support OAuth2 authorization. [oauth](#oauth)
-* Flexible arguments parsing, you can write expressive and natural queries. [params]()
+* Flexible arguments parsing, you can write expressive and natural queries. [params](#arguments--parameters)
 * Requests pagination with convenient DSL and automatic option. [pagination](#pagination)
 * Easy error handling split for client and server type errors. [error](#error-handling)
 * Supports multithreaded environment.
@@ -161,7 +161,7 @@ But why limit ourselves? You can mix and match arguments, for example:
   issues.milestones(repo: 'tty').list
 ```
 
-Finally, you can use a bit of syntactic sugar common among ruby libraries whereby "username/repository" can be passed as well:
+You can also use a bit of syntactic sugar common among ruby libraries whereby "username/repository" can be passed as well:
 
 ```ruby
   issues = Github::Issues.new
@@ -244,7 +244,7 @@ All method calls form ruby like sentences and allow for intuitive api navigation
 ```ruby
 github = Github.new :oauth_token => '...'
 github.users.followers.following 'wycats'  # => returns users that 'wycats' is following
-github.users.followers.following 'wycats' # => returns true if following, otherwise false
+github.users.followers.following? 'wycats' # => returns true if following, otherwise false
 ```
 
 For specification on all available methods go to http://developer.github.com/v3/ or
