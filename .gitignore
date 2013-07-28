@@ -10,3 +10,4 @@ log
 *.sqlite3
 features/settings.yml
 test.log
+tmp
