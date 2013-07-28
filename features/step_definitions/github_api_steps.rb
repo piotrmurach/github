@@ -12,6 +12,14 @@ Given /^I have "([^"]*)" instance$/ do |api_classes|
   )
 end
 
+Given /^I set the following (?:attribute|attributes) of instance:$/ do |table|
+  table.hashes.each do |element|
+    element.each do |attr, val|
+      @instance.send(:"#{attr}=", val)
+    end
+  end
+end
+
 When /^I am not authorized$/ do
   [:basic_auth, :login, :password, :oauth_token].each do |attr|
     @instance.send("#{attr}=", nil)
