@@ -22,16 +22,14 @@ describe Github::GitData::References, '#list' do
     it { should respond_to :all }
 
     it "should fail to get resource without username" do
-      expect { subject.list nil, repo }.to raise_error(ArgumentError)
+      expect { subject.list(nil, repo) }.to raise_error(ArgumentError)
     end
 
     context 'with invalid reference' do
       let(:ref) { '/branch/featureA' }
 
       it "should fail to call" do
-        expect {
-          subject.list user, repo, :ref => ref
-        }.to_not raise_error(ArgumentError, /reference/)
+        expect { subject.list(user, repo, :ref => ref) }.to_not raise_error()
       end
     end
 
@@ -39,9 +37,7 @@ describe Github::GitData::References, '#list' do
       let(:ref) { 'heads/lleger-refactor' }
 
       it "should pass with valid reference" do
-        expect {
-          subject.list user, repo, :ref => ref
-        }.to_not raise_error(ArgumentError, /reference/)
+        expect { subject.list(user, repo, :ref => ref) }.to_not raise_error()
       end
     end
 
@@ -49,9 +45,7 @@ describe Github::GitData::References, '#list' do
       let(:ref) { 'refactors/lleger-refactor' }
 
       it "should pass with valid reference" do
-        expect {
-          subject.list user, repo, :ref => ref
-        }.to_not raise_error(ArgumentError, /reference/)
+        expect { subject.list(user, repo, :ref => ref) }.to_not raise_error()
       end
     end
 
@@ -59,9 +53,7 @@ describe Github::GitData::References, '#list' do
       let(:ref) { 'refs/heads/lleger-refactor' }
 
       it "should pass with valid reference" do
-        expect {
-          subject.list user, repo, :ref => ref
-        }.to_not raise_error(ArgumentError, /reference/)
+        expect { subject.list(user, repo, :ref => ref) }.to_not raise_error()
       end
     end
 
@@ -69,9 +61,7 @@ describe Github::GitData::References, '#list' do
       let(:ref) { '/refs/heads/lleger-refactor' }
 
       it "should pass with valid reference" do
-        expect {
-          subject.list user, repo, :ref => ref
-        }.to_not raise_error(ArgumentError, /reference/)
+        expect { subject.list(user, repo, :ref => ref) }.to_not raise_error()
       end
     end
 

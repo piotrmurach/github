@@ -15,8 +15,8 @@ describe Github::PageIterator, 'when sha' do
   let(:last_sha) { "d1e503c02fa770859895dd0d12aedefa28b95723"}
 
   let(:current_api) { Github::Repos.new }
-  let(:user)   { 'wycats' }
-  let(:response) { stub(:response).as_null_object }
+  let(:user)     { 'wycats' }
+  let(:response) { double(:response).as_null_object }
 
   subject(:instance) { described_class.new(links, current_api) }
 

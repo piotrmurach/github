@@ -17,8 +17,6 @@ describe Github::API, 'endpoint' do
   its(:endpoint) { should == endpoint }
 
   it "doesn't truncate endpoint" do
-    expect {
-      api.get_request(path)
-    }.not_to raise_error(WebMock::NetConnectNotAllowedError)
+    expect { api.get_request(path) }.not_to raise_error()
   end
 end

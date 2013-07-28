@@ -25,10 +25,12 @@ describe Github::GitData::References, '#get' do
       expect { subject.get user, repo, nil }.to raise_error(ArgumentError)
     end
 
-    it "should fail to get resource with wrong ref" do
-      expect {
-        subject.get user, repo, '/branch'
-      }.not_to raise_error(ArgumentError)
+    context 'when wrong ref' do
+      let(:ref) { 'branch' }
+
+      it "should fail to get resource with wrong ref" do
+        expect { subject.get user, repo, '/branch' }.not_to raise_error()
+      end
     end
 
     it "should get the resource" do

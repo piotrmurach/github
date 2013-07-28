@@ -53,9 +53,9 @@ describe Github::ResponseWrapper do
   end
 
   context "pagination methods" do
-    let(:links) { Github::PageLinks.new({}) }
-    let(:current_api) { stub(:api).as_null_object }
-    let(:iterator) { Github::PageIterator.new(links, current_api) }
+    let(:links)       { Github::PageLinks.new({}) }
+    let(:current_api) { double(:api).as_null_object }
+    let(:iterator)    { Github::PageIterator.new(links, current_api) }
 
     before do
       described_class.stub(:page_iterator).and_return iterator

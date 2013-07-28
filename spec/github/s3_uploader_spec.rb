@@ -4,9 +4,8 @@ require 'spec_helper'
 require 'github_api/s3_uploader'
 
 describe Github::S3Uploader do
-
   let(:result) {
-    stub(:resource,
+    double(:resource,
       'path' => 'downloads/octokit/github/droid',
       'acl'  => 'public-read',
       'name' => 'droid',
@@ -31,7 +30,7 @@ describe Github::S3Uploader do
   end
 
   it 'checks for missing parameters' do
-    resource = stub(:resource)
+    resource = double(:resource)
     uploader = Github::S3Uploader.new resource, filename
     expect {
       uploader.send

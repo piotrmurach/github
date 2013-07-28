@@ -9,10 +9,10 @@ describe Github::Repos::Downloads do
 
   after { reset_authentication_for(subject) }
 
-  let(:resource) { stub(:resource) }
+  let(:resource) { double(:resource) }
   let(:filename) { 'filename' }
-  let(:res)      { stub(:response, :body => 'success') }
-  let(:uploader) { stub(:uploader, :send => res) }
+  let(:res)      { double(:response, :body => 'success') }
+  let(:uploader) { double(:uploader, :send => res) }
 
   before { Github::S3Uploader.stub(:new) { uploader } }
 
@@ -23,8 +23,8 @@ describe Github::Repos::Downloads do
   end
 
   it "should upload resource successfully" do
-    res = stub(:response, :body => 'success')
-    uploader = stub(:uploader, :send => res)
+    res = double(:response, :body => 'success')
+    uploader = double(:uploader, :send => res)
     Github::S3Uploader.should_receive(:new).with(resource, filename) { uploader }
     subject.upload(resource, filename).should == 'success'
   end
