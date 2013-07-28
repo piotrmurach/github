@@ -44,6 +44,28 @@ Feature: Repositories API
       And the response type should be JSON
       And the response should not be empty
 
+  Scenario: All repositories for an organization
+
+    Given I want to list resources
+      And I pass the following request options:
+        | org   |
+        | rspec |
+    When I make request within a cassette named "repos/list_org"
+    Then the response status should be 200
+      And the response type should be JSON
+      And the response should have 11 items
+
+  Scenario: All repositories for an organization set on instance
+
+    Given I set the following attributes of instance:
+      | org   |
+      | rails |
+    Given I want to list resources
+    When I make request within a cassette named "repos/list_org_instance"
+    Then the response status should be 200
+      And the response type should be JSON
+      And the response should have 30 items
+
   Scenario: All repositories
 
     Given I want to list resources with the following params:

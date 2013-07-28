@@ -35,6 +35,8 @@ describe Github::Configuration do
 
   its(:user) { should be_nil }
 
+  its(:org)  { should be_nil }
+
   its(:connection_options) { should be_a Hash }
 
   its(:connection_options) { should be_empty }

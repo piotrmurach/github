@@ -143,15 +143,15 @@ module Github
       end
       params = arguments.params
 
-      response = if (user_name = (params.delete("user")))
+      response = if (user_name = params.delete('user') || user)
         get_request("/users/#{user_name}/repos", params)
-      elsif (org_name = (params.delete("org")))
+      elsif (org_name = params.delete('org') || org)
         get_request("/orgs/#{org_name}/repos", params)
-      elsif args.map(&:to_s).include?("every")
-        get_request("/repositories", params)
+      elsif args.map(&:to_s).include?('every')
+        get_request('/repositories', params)
       else
         # For authenticated user
-        get_request("/user/repos", params)
+        get_request('/user/repos', params)
       end
       return response unless block_given?
       response.each { |el| yield el }
@@ -180,11 +180,17 @@ module Github
     #  <tt>:name</tt> - Required string
     #  <tt>:description</tt> - Optional string
     #  <tt>:homepage</tt> - Optional string
-    #  <tt>:private</tt> - Optional boolean - <tt>true</tt> to create a private repository, <tt>false</tt> to create a public one.
-    #  <tt>:has_issues</tt> - Optional boolean - <tt>true</tt> to enable issues for this repository, <tt>false</tt> to disable them
-    #  <tt>:has_wiki</tt> - Optional boolean - <tt>true</tt> to enable the wiki for this repository, <tt>false</tt> to disable it. Default is <tt>true</tt>
-    #  <tt>:has_downloads</tt> Optional boolean - <tt>true</tt> to enable downloads for this repository
-    #  <tt>:org</tt> Optional string - The organisation in which this repository will be created
+    #  <tt>:private</tt> - Optional boolean - <tt>true</tt> to create a private
+    #                      repository, <tt>false</tt> to create a public one.
+    #  <tt>:has_issues</tt> - Optional boolean - <tt>true</tt> to enable issues
+    #                         for this repository, <tt>false</tt> to disable them
+    #  <tt>:has_wiki</tt> - Optional boolean - <tt>true</tt> to enable the wiki
+    #                       for this repository, <tt>false</tt> to disable it.
+    #                       Default is <tt>true</tt>
+    #  <tt>:has_downloads</tt> - Optional boolean - <tt>true</tt> to enable
+    #                            downloads for this repository
+    #  <tt>:org</tt> Optional string - The organisation in which this repository
+    #                                  will be created
     #  <tt>:team_id</tt> Optional number - The id of the team that will be granted access to this repository. This is only valid when creating a repo in an organization
     #  <tt>:auto_init</tt> Optional boolean - true to create an initial commit with empty README. Default is false.
     #  <tt>:gitignore_template</tt> Optional string - Desired language or platform .gitignore template to apply. Use the name of the template without the extension. For example, “Haskell” Ignored if auto_init parameter is not provided.
@@ -214,10 +220,10 @@ module Github
       params = arguments.params
 
       # Requires authenticated user
-      if (org = params.delete("org"))
+      if (org = params.delete('org') || org)
         post_request("/orgs/#{org}/repos", params.merge_default(DEFAULT_REPO_OPTIONS))
       else
-        post_request("/user/repos", params.merge_default(DEFAULT_REPO_OPTIONS))
+        post_request('/user/repos', params.merge_default(DEFAULT_REPO_OPTIONS))
       end
     end
 
@@ -324,7 +330,6 @@ module Github
     # def branches(user_name, repo_name, params={})
     def branches(*args)
       arguments(args, :required => [:user, :repo])
-      params = arguments.params
 
       response = get_request("/repos/#{user}/#{repo}/branches", arguments.params)
       return response unless block_given?
