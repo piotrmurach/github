@@ -6,30 +6,31 @@ module Github
   module Request
 
     METHODS = [:get, :post, :put, :delete, :patch]
-    METHODS_WITH_BODIES = [ :post, :put, :patch ]
 
-    def get_request(path, params={})
+    METHODS_WITH_BODIES = [:post, :put, :patch]
+
+    def get_request(path, params = ParamsHash.empty)
       request(:get, path, params).auto_paginate
     end
 
-    def patch_request(path, params={})
+    def patch_request(path, params = ParamsHash.empty)
       request(:patch, path, params)
     end
 
-    def post_request(path, params={})
+    def post_request(path, params = ParamshHash.empty)
       request(:post, path, params)
     end
 
-    def put_request(path, params={})
+    def put_request(path, params = ParamsHash.empty)
       request(:put, path, params)
     end
 
-    def delete_request(path, params={})
+    def delete_request(path, params = ParamsHash.empty)
       request(:delete, path, params)
     end
 
     def request(method, path, params) # :nodoc:
-      if !METHODS.include?(method)
+      unless METHODS.include?(method)
         raise ArgumentError, "unkown http method: #{method}"
       end
 

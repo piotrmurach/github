@@ -3,9 +3,9 @@
 require 'spec_helper'
 
 describe Github::Request do
-  let(:github) { Github::API.new  }
-  let(:path) { 'github.api/repos/users' }
-  let(:params) { {} }
+  let(:github)   { Github::API.new  }
+  let(:path)     { 'github.api/repos/users' }
+  let(:params)   { {} }
   let(:response) { double('response').as_null_object }
 
   it "knows how to make get request" do
