@@ -1,6 +1,6 @@
 language: ruby
 before_install: gem install bundler
-bundler_args: --without development
+bundler_args: --without guard metrics
 rvm:
   - 1.9.2
   - 1.9.3
