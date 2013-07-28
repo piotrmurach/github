@@ -1,9 +1,6 @@
-matrix:
-  allow_failures:
-        - rvm: ruby-head
-        - rvm: 2.0.0
-        - rvm: jruby-19mode
-        - rvm: rbx-19mode
+language: ruby
+before_install: gem install bundler
+bundler_args: --without development
 rvm:
   - 1.9.2
   - 1.9.3
@@ -11,6 +8,12 @@ rvm:
   - ruby-head
   - rbx-19mode
   - jruby-19mode
+matrix:
+  allow_failures:
+    - rvm: ruby-head
+    - rvm: 2.0.0
+    - rvm: jruby-19mode
+    - rvm: rbx-19mode
 branches:
   only: master
 notifications:
