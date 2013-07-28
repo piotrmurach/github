@@ -14,6 +14,12 @@ module Github
       super(normalize!(Hash[hash]))
     end
 
+    # Create empty hash
+    #
+    def self.empty
+      new({})
+    end
+
     # Extract and parse media type param
     #
     #  [.version].param[+json]
