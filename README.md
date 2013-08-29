@@ -16,7 +16,7 @@
 
 A Ruby wrapper for the GitHub REST API v3.
 
-Supports all the API methods(nearly 200). It's built in a modular way, that is, you can either instantiate the whole api wrapper Github.new or use parts of it e.i. Github::Repos.new if working solely with repositories is your main concern.
+Supports all the API methods (nearly 200). It's built in a modular way. You can either instantiate the whole API wrapper Github.new or use parts of it i.e. Github::Repos.new if working solely with repositories is your main concern.
 
 ## Features
 
@@ -24,18 +24,18 @@ Supports all the API methods(nearly 200). It's built in a modular way, that is, 
 * Modular design allows for working with parts of API. [api](#api)
 * Fully customizable including advanced middleware stack construction. [config](#advanced-configuration)
 * It's comprehensive. You can request all GitHub API resources.
-* Support OAuth2 authorization. [oauth](#oauth)
-* Flexible arguments parsing, you can write expressive and natural queries. [params](#arguments--parameters)
-* Requests pagination with convenient DSL and automatic option. [pagination](#pagination)
+* Supports OAuth2 authorization. [oauth](#oauth)
+* Flexible argument parsing. You can write expressive and natural queries. [params](#arguments--parameters)
+* Requests pagination with convenient DSL and automatic options. [pagination](#pagination)
 * Easy error handling split for client and server type errors. [error](#error-handling)
 * Supports multithreaded environment.
-* Custom media types specification through 'media' parameter. [media](#media-types)
+* Custom media type specification through the 'media' parameter. [media](#media-types)
 * Request results caching (Status: TODO)
 * Fully tested with test coverage above 90% with over 1,600 specs and 900 features. [testing](#testing)
 
 ## Installation
 
-Install the gem by issuing
+Install the gem by running
 
 ```ruby
 gem install github_api
@@ -61,7 +61,7 @@ or create a new client instance
 github = Github.new
 ```
 
-At this stage you can also supply various configuration parameters, such as
+At this stage, you can also supply various configuration parameters, such as
 ```
   adapter          # http client used for performing requests
   auto_pagination  # false by default, set to true to traverse requests page links
@@ -71,12 +71,12 @@ At this stage you can also supply various configuration parameters, such as
   client_secret    # oauth client secret
   user             # global user used in requests if none provided
   repo             # global repository used in requests in none provided
-  org              # global organization used in request if none provided
-  endpoint         # enterprise api endpoint
-  site             # enterprise api web endpoint
-  ssl              # ssl settings
-  per_page         # number of items per page, max 100
-  user_agent       # custom user agent name, by default 'Github API'
+  org              # global organization used in requests if none provided
+  endpoint         # enterprise API endpoint
+  site             # enterprise API web endpoint
+  ssl              # SSL settings
+  per_page         # number of items per page- max of 100
+  user_agent       # custom user agent name, 'Github API' by default
 ```
 which are used throughout the API. These can be passed directly as hash options:
 
@@ -84,7 +84,7 @@ which are used throughout the API. These can be passed directly as hash options:
 github = Github.new oauth_token: 'token'
 ```
 
-Alternatively, you can configure the Github settings by passing a block, for instance, with a custom enterprise endpoint and website like
+Alternatively, you can configure the GitHub settings by passing a block, for instance, for a custom enterprise endpoint and website like
 
 ```ruby
 github = Github.new do |config|
@@ -108,8 +108,8 @@ or using a convenience method:
 github = Github.new basic_auth: 'login:password'
 ```
 
-This gem closely mirrors the GitHub API hierarchy e.i. if you want to create a download resource,
-lookup the github API spec and issue the request as in `github.repos.downloads.create`
+This gem closely mirrors the GitHub API hierarchy i.e. if you want to create a download resource,
+look up the GitHub API spec and issue the request as in `github.repos.downloads.create`
 
 For example to interact with GitHub Repositories API, issue the following calls that correspond directly to the GitHub API hierarchy
 
@@ -126,7 +126,7 @@ blobs = Github::GitData::Blobs.new
 blobs.create 'peter-murach', 'github', content: 'Blob content'
 ```
 
-The response is of type [Github::ResponseWrapper] which allows traversing all the json response attributes like method calls e.i.
+The response is of type [Github::ResponseWrapper] which allows traversing all the json response attributes like method calls i.e.
 
 ```ruby
 repos = Github::Repos.new :user => 'peter-murach', :repo => 'github'
@@ -144,7 +144,7 @@ The library allows for flexible argument parsing. Therefore, arguments can be pa
   issues.milestones.list state: 'open'
 ```
 
-Further, arguments can be passed directly inside method called but then the order of parameters matters and hence please consult the method documentation or GitHub specification. For instance:
+Further, arguments can be passed directly inside the method called, but then the order of parameters matters and hence please consult the method documentation or GitHub specification. For instance:
 
 ```ruby
   issues = Github::Issues.new
@@ -166,7 +166,7 @@ But why limit ourselves? You can mix and match arguments, for example:
   issues.milestones(repo: 'tty').list
 ```
 
-You can also use a bit of syntactic sugar common among ruby libraries whereby "username/repository" can be passed as well:
+You can also use a bit of syntactic sugar common among Ruby libraries whereby "username/repository" can be passed as well:
 
 ```ruby
   issues = Github::Issues.new
@@ -204,7 +204,7 @@ end
 
 ## Advanced Configuration
 
-The `github_api` gem will use the default middleware stack which is exposed by calling `stack` on client instance. However, this stack can be freely modified with methods such as `insert`, `insert_after`, `delete` and `swap`. For instance to add your `CustomMiddleware` do
+The `github_api` gem will use the default middleware stack which is exposed by calling `stack` on a client instance. However, this stack can be freely modified with methods such as `insert`, `insert_after`, `delete` and `swap`. For instance, to add your `CustomMiddleware` do
 
 ```ruby
 github = Github.new do |config|
@@ -244,7 +244,7 @@ Github::Users::Emails
 Github::Users::Keys
 ```
 
-All method calls form ruby like sentences and allow for intuitive api navigation, for instance
+All method calls form Ruby like sentences and allow for intuitive API navigation, for instance
 
 ```ruby
 github = Github.new :oauth_token => '...'
@@ -252,10 +252,10 @@ github.users.followers.following 'wycats'  # => returns users that 'wycats' is f
 github.users.followers.following? 'wycats' # => returns true if following, otherwise false
 ```
 
-For specification on all available methods go to http://developer.github.com/v3/ or
-read the rdoc, all methods are documented there with examples of usage.
+For specifications on all available methods, go to http://developer.github.com/v3/ or
+read the rdoc. All methods are documented there with examples of usage.
 
-Alternatively, you can find out supported methods by calling `actions` on a class instance in your `irb`:
+Alternatively, you can find out which methods are supported by calling `actions` on a class instance in your `irb`:
 
 ```ruby
 >> Github::Repos.actions                    >> github.issues.actions
@@ -303,14 +303,14 @@ Once you have your access token, configure your github instance following instru
 
 ### Authorizations API
 
-Alternatively you can use OAuth Authorizations API. For instance, to create access token through GitHub API you required to pass your basic credentials as in the following:
+Alternatively, you can use the OAuth Authorizations API. For instance, to create an access token through the GitHub API, you are required to pass your basic credentials as in the following:
 
 ```ruby
 github = Github.new basic_auth: 'login:password'
 github.oauth.create 'scopes' => ['repo']
 ```
 
-You can add more than one scope from the `user`, `public_repo`, `repo`, `gist` or leave the scopes parameter out, in which case, the default read-only access will be assumed(includes public user profile info, public repo info, and gists).
+You can add more than one scope from the `user`, `public_repo`, `repo`, `gist` or leave the scopes parameter out, in which case, the default read-only access will be assumed (includes public user profile info, public repo info, and gists).
 
 ### Scopes
 
@@ -321,7 +321,7 @@ You can check OAuth scopes you have by:
   github.scopes.list    # => ['repo']
 ```
 
-To list the scopes that the particular Github API action checks for do:
+To list the scopes that the particular GitHub API action checks for do:
 
 ```ruby
   repos = Github::Repos.new
@@ -339,7 +339,7 @@ By default requests over SSL are set to OpenSSL::SSL::VERIFY_PEER. However, you 
   Github.new ssl: { verify: false }
 ```
 
-If your client fails to find CA certs you can pass other SSL options to specify exactly how the information is sourced
+If your client fails to find CA certs, you can pass other SSL options to specify exactly how the information is sourced
 
 ```ruby
   ssl: {
@@ -365,7 +365,7 @@ github.issues.get 'peter-murach', 'github', 108, media: 'text'
 
 This will be expanded into `application/vnd.github.v3.text+json`
 
-If you wish to specify the version pass `media: 'beta.text'` which will be converted to `application/vnd/github.beta.text+json`.
+If you wish to specify the version, pass `media: 'beta.text'` which will be converted to `application/vnd/github.beta.text+json`.
 
 Finally, you can always pass the whole accept header like so
 
@@ -391,10 +391,10 @@ Github.new(:oauth_token => YOUR_OAUTH_TOKEN)
 Github.new(:basic_auth => 'login:password')
 ```
 
-All parameters can be overwirtten as per method call. By passing a parameters hash...
+All parameters can be overwritten each method call by passing a parameters hash.
 
 
-By default no caching will be performed. In order to set the cache do... If no cache type is provided, a default memoization is done.
+By default, no caching will be performed. In order to set the cache do... If no cache type is provided, a default memoization is done.
 
 ## Pagination
 
@@ -405,7 +405,7 @@ repos = Github::Repos.new
 repos.list user: 'wycats', per_page: 10, page: 5
 ```
 
-Then you can query pagination information included in the link header by:
+Then you can query the pagination information included in the link header by:
 
 ```ruby
 res.links.first  # Shows the URL of the first page of results.
@@ -433,21 +433,21 @@ while res.has_next_page?
 end
 ```
 
-Alternatively, you can retrieve all pages in one invocation by passing `auto_pagination` option like so:
+Alternatively, you can retrieve all pages in one invocation by passing the `auto_pagination` option like so:
 
 ```ruby
   github = Github.new auto_pagination: true
 ```
 
-Depending at what stage you pass the `auto_pagination` it will affect all or only single request:
+Depending at what stage you pass the `auto_pagination` it will affect all or only a single request:
 
 ```ruby
   Github::Repos.new auto_pagination: true         # affects Repos part of API
 
-  Github::Repos.new.list user: '...', auto_pagination: true  # affects single request
+  Github::Repos.new.list user: '...', auto_pagination: true  # affects a single request
 ```
 
-One can also navigate straight to specific page by:
+One can also navigate straight to the specific page by:
 
 ```ruby
 res.count_pages  # Number of pages
@@ -460,7 +460,7 @@ res.last_page    # Get last page
 
 ## Error Handling
 
-The generic error class `Github::Error::GithubError` will handle both the client(`Github::Error::ClientError`) and service(`Github::Error::ServiceError`) side errors. For instance in your code you can catch erros like
+The generic error class `Github::Error::GithubError` will handle both the client (`Github::Error::ClientError`) and service (`Github::Error::ServiceError`) side errors. For instance in your code you can catch errors like
 
 ```ruby
 begin
@@ -478,7 +478,7 @@ end
 
 ## Response Message
 
-Each response comes packaged with methods allowing for inspection of HTTP start line and headers. For example to check for rate limits and status code issue
+Each response comes packaged with methods allowing for inspection of HTTP start line and headers. For example, to check for rate limits and status codes, call
 
 ```ruby
 res = Github::Repos.new.branches 'peter-murach', 'github'
@@ -492,7 +492,7 @@ res.headers.cache_control       # "public, max-age=60, s-maxage=60"
 
 ## Examples
 
-Some api methods require input parameters. These are simply added as a hash of properties, for instance
+Some API methods require input parameters. These are simply added as a hash of properties, for instance
 
 ```ruby
 issues = Github::Issues.new user:'peter-murach', repo: 'github-api'
@@ -515,7 +515,7 @@ events.public do |event|
 end
 ```
 
-Query requests instead of http responses return boolean values
+Query requests return boolean values instead of HTTP responses
 
 ```ruby
 github = Github.new
@@ -524,7 +524,7 @@ github.orgs.members.public_member? 'github', 'technoweenie' # => true
 
 ## Rails Example
 
-A Rails controller that allows a user to authorize their GitHub account and then perform request.
+A Rails controller that allows a user to authorize their GitHub account and then performs a request.
 
 ```ruby
 class GithubController < ApplicationController
@@ -548,7 +548,7 @@ end
 
 ## Testing
 
-The test suite is split into two groups `live` and `mock`.
+The test suite is split into two groups, `live` and `mock`.
 
 The `live` tests are the ones in `features` folder and they simply exercise the GitHub API by making live requests and then being cached with VCR in directory named `features\cassettes`. For details on how to get set up, please navigate to the `features` folder.
 
