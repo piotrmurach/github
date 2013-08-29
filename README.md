@@ -16,14 +16,14 @@
 
 A Ruby wrapper for the GitHub REST API v3.
 
-Supports all the API methods(nearly 200). It's build in a modular way, that is, you can either instantiate the whole api wrapper Github.new or use parts of it e.i. Github::Repos.new if working solely with repositories is your main concern.
+Supports all the API methods(nearly 200). It's built in a modular way, that is, you can either instantiate the whole api wrapper Github.new or use parts of it e.i. Github::Repos.new if working solely with repositories is your main concern.
 
 ## Features
 
 * Intuitive GitHub API interface navigation. [usage](#usage)
 * Modular design allows for working with parts of API. [api](#api)
 * Fully customizable including advanced middleware stack construction. [config](#advanced-configuration)
-* Its comprehensive, you can request all GitHub API resources.
+* It's comprehensive. You can request all GitHub API resources.
 * Support OAuth2 authorization. [oauth](#oauth)
 * Flexible arguments parsing, you can write expressive and natural queries. [params](#arguments--parameters)
 * Requests pagination with convenient DSL and automatic option. [pagination](#pagination)
@@ -49,7 +49,7 @@ gem "github_api"
 
 ## Usage
 
-To start using the gem you can either perform direct call on the `Github`
+To start using the gem, you can either perform direct calls on `Github`
 
 ```ruby
 Github.repos.list user: 'wycats'
@@ -64,12 +64,12 @@ github = Github.new
 At this stage you can also supply various configuration parameters, such as
 ```
   adapter          # http client used for performing requests
-  auto_pagination  # by default false, set to true traverses requests page links
+  auto_pagination  # false by default, set to true to traverse requests page links
   oauth_token      # oauth authorization token
   basic_auth       # login:password string
   client_id        # oauth client id
   client_secret    # oauth client secret
-  user             # global user used in requets if none provided
+  user             # global user used in requests if none provided
   repo             # global repository used in requests in none provided
   org              # global organization used in request if none provided
   endpoint         # enterprise api endpoint
@@ -84,7 +84,7 @@ which are used throughout the API. These can be passed directly as hash options:
 github = Github.new oauth_token: 'token'
 ```
 
-Alternatively, you can configure the Github settings by passing a block, for instance, with custom enterprise endpoint and website like
+Alternatively, you can configure the Github settings by passing a block, for instance, with a custom enterprise endpoint and website like
 
 ```ruby
 github = Github.new do |config|
@@ -96,20 +96,20 @@ github = Github.new do |config|
 end
 ```
 
-You can authenticate either using OAuth authentication convenience methods(see section OAuth) or through basic authentication by passing your login and password credentials
+You can authenticate either using OAuth authentication convenience methods (see OAuth section) or through basic authentication by passing your login and password credentials
 
 ```ruby
 github = Github.new login:'peter-murach', password:'...'
 ```
 
-or use convenience method:
+or using a convenience method:
 
 ```ruby
 github = Github.new basic_auth: 'login:password'
 ```
 
-This gem closely mirros the GitHub Api hierarchy e.i. if you want to create a download resource,
-lookup the github api spec and issue the request as in `github.repos.downloads.create`
+This gem closely mirrors the GitHub API hierarchy e.i. if you want to create a download resource,
+lookup the github API spec and issue the request as in `github.repos.downloads.create`
 
 For example to interact with GitHub Repositories API, issue the following calls that correspond directly to the GitHub API hierarchy
 
@@ -126,7 +126,7 @@ blobs = Github::GitData::Blobs.new
 blobs.create 'peter-murach', 'github', content: 'Blob content'
 ```
 
-The response is of type [Github::ResponseWrapper] and allows to traverse all the json response attributes like method calls e.i.
+The response is of type [Github::ResponseWrapper] which allows traversing all the json response attributes like method calls e.i.
 
 ```ruby
 repos = Github::Repos.new :user => 'peter-murach', :repo => 'github'
@@ -137,7 +137,7 @@ end
 
 ## Arguments & Parameters
 
-The library allows for flexible arguments parsing. Therefore arguments can be passed during instance creation:
+The library allows for flexible argument parsing. Therefore, arguments can be passed during instance creation:
 
 ```ruby
   issues = Github::Issues.new user: 'peter-murach', repo: 'github'
@@ -174,7 +174,7 @@ You can also use a bit of syntactic sugar common among ruby libraries whereby "u
   issues.milestones.list 'peter-murach/github'
 ```
 
-Finally, use `with` scope to clearly denote your requests
+Finally, use the `with` scope to clearly denote your requests
 
 ```ruby
   issues = Github::Issues.new
@@ -237,7 +237,7 @@ Github::Orgs            Github::Issues     Github::Authorizations
 Github::PullRequests    Github::Users      Github::Activity
 ```
 
-Some parts of GitHub API v3 require you to be autheticated, for instance the following are examples of APIs only for the authenticated user
+Some parts of GitHub API v3 require you to be authenticated, for instance the following are examples of APIs only for the authenticated user
 
 ```ruby
 Github::Users::Emails
@@ -391,10 +391,10 @@ Github.new(:oauth_token => YOUR_OAUTH_TOKEN)
 Github.new(:basic_auth => 'login:password')
 ```
 
-All parameters can be overwirtten as per method call. By passing parameters hash...
+All parameters can be overwirtten as per method call. By passing a parameters hash...
 
 
-By default no caching will be performed. In order to set the cache do... If no cache type is provided a default memoization is done.
+By default no caching will be performed. In order to set the cache do... If no cache type is provided, a default memoization is done.
 
 ## Pagination
 
@@ -492,7 +492,7 @@ res.headers.cache_control       # "public, max-age=60, s-maxage=60"
 
 ## Examples
 
-Some api methods require input parameters, these are added simply as a hash properties, for instance
+Some api methods require input parameters. These are simply added as a hash of properties, for instance
 
 ```ruby
 issues = Github::Issues.new user:'peter-murach', repo: 'github-api'
@@ -506,7 +506,7 @@ users = Github::Users.new oauth_token: 'token'
 users.emails.add 'email1', 'email2', ..., 'emailn' # => Adds emails to the authenticated user
 ```
 
-If a method returns a collection, you can iterator over it by supplying a block parameter,
+If a method returns a collection, you can iterate over it by supplying a block parameter,
 
 ```ruby
 events = Github::Activity::Events.new
@@ -550,9 +550,9 @@ end
 
 The test suite is split into two groups `live` and `mock`.
 
-The `live` tests are the ones in `features` folder and they simply exercise the GitHub API by making live requests and then being cached with VCR in directory named `features\cassettes`. For details on how to get setup please navigate to `features` folder.
+The `live` tests are the ones in `features` folder and they simply exercise the GitHub API by making live requests and then being cached with VCR in directory named `features\cassettes`. For details on how to get set up, please navigate to the `features` folder.
 
-The `mock` tests are in `spec` directory and their primary concern is to test the gem internals without the hindrance of external calls.
+The `mock` tests are in the `spec` directory and their primary concern is to test the gem internals without the hindrance of external calls.
 
 ## Development
 
