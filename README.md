@@ -519,7 +519,7 @@ Query requests return boolean values instead of HTTP responses
 
 ```ruby
 github = Github.new
-github.orgs.members.public_member? 'github', 'technoweenie' # => true
+github.orgs.members.member? 'github', 'technoweenie', public: true # => true
 ```
 
 ## Rails Example
