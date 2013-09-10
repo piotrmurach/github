@@ -78,7 +78,7 @@ At this stage, you can also supply various configuration parameters, such as
   per_page         # number of items per page- max of 100
   user_agent       # custom user agent name, 'Github API' by default
 ```
-which are used throughout the API. These can be passed directly as hash options:me
+which are used throughout the API. These can be passed directly as hash options:
 
 ```ruby
 github = Github.new oauth_token: 'token'
