@@ -2,7 +2,7 @@
 http_interactions: 
 - request: 
     method: get
-    uri: https://<BASIC_AUTH>@api.github.com/search/users?access_token=<TOKEN>&q=location:Sheffield%2520repos:20
+    uri: https://<BASIC_AUTH>@api.github.com/search/code?access_token=<TOKEN>&q=tty%2520repo:peter-murach/tty&sort=indexed
     body: 
       encoding: US-ASCII
       string: ""
@@ -23,7 +23,7 @@ http_interactions:
       Server: 
       - GitHub.com
       Date: 
-      - Mon, 23 Sep 2013 06:14:16 GMT
+      - Mon, 23 Sep 2013 20:22:30 GMT
       Content-Type: 
       - application/json; charset=utf-8
       Transfer-Encoding: 
@@ -33,9 +33,9 @@ http_interactions:
       X-Ratelimit-Limit: 
       - "20"
       X-Ratelimit-Remaining: 
-      - "18"
+      - "19"
       X-Ratelimit-Reset: 
-      - "1379916888"
+      - "1379967810"
       Cache-Control: 
       - no-cache
       X-Github-Media-Type: 
@@ -49,7 +49,7 @@ http_interactions:
       Access-Control-Allow-Origin: 
       - "*"
       X-Github-Request-Id: 
-      - 568653B5:46FF:E24F03:523FDC37
+      - 568653B5:1E47:1D88577:5240A304
       Vary: 
       - Accept-Encoding
       Content-Encoding: 
@@ -61,5 +61,5 @@ http_interactions:
         AAAA
 
     http_version: 
-  recorded_at: Mon, 23 Sep 2013 06:14:16 GMT
+  recorded_at: Mon, 23 Sep 2013 20:22:31 GMT
 recorded_with: VCR 2.5.0

@@ -7,8 +7,8 @@ Feature: Search API
 
     Given I want issues resource
       And I pass the following request options:
-        | owner        | repo   | state  | keyword |
-        | peter-murach | github | closed | api     |
+        | q   | sort    |
+        | tty | created |
     When I make request within a cassette named "search/issues"
     Then the response status should be 200
       And the response type should be JSON
@@ -18,8 +18,8 @@ Feature: Search API
 
     Given I want repositories resource
       And I pass the following request options:
-        | keyword |
-        | rails   |
+        | q     | sort    |
+        | rails | created |
     When I make request within a cassette named "search/repos"
     Then the response status should be 200
       And the response type should be JSON
@@ -29,31 +29,42 @@ Feature: Search API
 
     Given I want users resource
       And I pass the following request options:
-        | keyword |
-        | wycats  |
+        | q      |
+        | wycats |
     When I make request within a cassette named "search/users"
     Then the response status should be 200
       And the response type should be JSON
       And the response should not be empty
 
-  Scenario: Users with complex keyword
+  Scenario: Users with search parameters
 
     Given I want users resource
       And I pass the following request options:
-        | keyword                     |
+        | q                           |
         | location:Sheffield repos:20 |
     When I make request within a cassette named "search/users_keyword"
     Then the response status should be 200
       And the response type should be JSON
       And the response should not be empty
 
-  Scenario: Email
+  Scenario: Code
 
-    Given I want email resource
+    Given I want code resource
       And I pass the following request options:
-        | email            |
-        | wycats@gmail.com |
-    When I make request within a cassette named "search/email"
+        | q   | sort    |
+        | tty | indexed |
+    When I make request within a cassette named "search/code"
+    Then the response status should be 200
+      And the response type should be JSON
+      And the response should not be empty
+
+  Scenario: Code with search paramters
+
+    Given I want code resource
+      And I pass the following request options:
+        | q                         | sort    |
+        | tty repo:peter-murach/tty | indexed |
+    When I make request within a cassette named "search/code_query"
     Then the response status should be 200
       And the response type should be JSON
       And the response should not be empty

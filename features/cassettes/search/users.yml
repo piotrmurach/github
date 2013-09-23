@@ -2,53 +2,71 @@
 http_interactions: 
 - request: 
     method: get
-    uri: https://<BASIC_AUTH>@api.github.com/legacy/user/search/wycats?access_token=<TOKEN>
+    uri: https://<BASIC_AUTH>@api.github.com/search/users?access_token=<TOKEN>&q=wycats
     body: 
       encoding: US-ASCII
       string: ""
     headers: 
+      Accept: 
+      - application/vnd.github.preview
+      Accept-Charset: 
+      - utf-8
+      User-Agent: 
+      - Github Ruby Gem 0.10.2
       Accept-Encoding: 
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept: 
-      - "*/*"
-      User-Agent: 
-      - Ruby
   response: 
     status: 
       code: 200
       message: OK
     headers: 
       Server: 
-      - nginx/1.0.13
+      - GitHub.com
       Date: 
-      - Sat, 09 Jun 2012 17:10:15 GMT
+      - Mon, 23 Sep 2013 06:13:48 GMT
       Content-Type: 
       - application/json; charset=utf-8
       Transfer-Encoding: 
       - chunked
-      Connection: 
-      - keep-alive
       Status: 
       - 200 OK
       X-Ratelimit-Limit: 
-      - "5000"
-      Etag: 
-      - "\"a934f063ddc0a5ee9ac2a1e367e74385\""
+      - "20"
       X-Ratelimit-Remaining: 
-      - "4997"
+      - "19"
+      X-Ratelimit-Reset: 
+      - "1379916888"
+      Cache-Control: 
+      - no-cache
+      X-Github-Media-Type: 
+      - github.preview
+      X-Content-Type-Options: 
+      - nosniff
+      Access-Control-Allow-Credentials: 
+      - "true"
+      Access-Control-Expose-Headers: 
+      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
+      Access-Control-Allow-Origin: 
+      - "*"
+      X-Github-Request-Id: 
+      - 568653B5:4E85:E52DC5:523FDC1C
+      Vary: 
+      - Accept-Encoding
       Content-Encoding: 
       - gzip
     body: 
       encoding: ASCII-8BIT
       string: !binary |
-        H4sIAAAAAAAAA21Qy07DMBD8lcrnprI3b38AF27QCyAUbRw3jWTsyImpQtV/
-        Z51CTj16ZjyPvbIwaT8x+XFlvcdvnNE3Q8cky6ASRYmpViVAmrdYl0IUUEOW
-        1VDwmu2ZxS9Nyjd9Dh3unnH+IVB5jbPuGpyJAs6rhItEwJHnMq1kmr6TxjiF
-        8+AsKV7R7p48WjVMyhE1htYMqvF6dI1ywZKLANizkzPGXdaqUOYRCMY8LGDQ
-        9gH72OwltAt5xol/0stCyRNh68ZIJBm9Yhw5r0nzMsa/kSNmy/1vc08fw3TW
-        0QK4gIQXCS+PXEhRSoBDmlX3lf0QJ26ZtNCTdX4QNQdRxFhCyMXSlu1yq+mD
-        s90+b783LEDtrgEAAA==
+        H4sIAAAAAAAAA5WSUWuDMBDHv0ugb8U00RoVxtjLvsGexigxRg3YRJJo6aTf
+        fRfd2q4PG4Jg9O73v3/ubkLeeN4dhBm0RwXZIuXl0aHifUKdaZRGBTqdBfcO
+        QahCRbJFfOSe28NgOwi23veuwHgXNXYJRMIc8XLECc1IyngsBaM03pc8Z4Sk
+        NKdJktN0lz9XT7PAJn7Z0Fd4VCW1V8JoFzXKt0MZ1OA/z1hdpyzntI4lI1VO
+        MsJTVrJ9QgmlIup1Aw5/PByCVfRfdQB+X4L36q4sHpy0Dl+v3/pj93Drm8db
+        Wm26zpyAfMj9QxxfGbC0nJVuVvPATNj4VsJwwPolNEQ5v8bInD/h8IIeBgUH
+        s7ayWmHmmwArJw0uJmxlb2apoXTCqt4rmO8awXsOdIxtuFaffK0OcGGNg501
+        5ed84OQIu7kGXIAJ91aNXJxDC6wUUo3QztViDyRo+XMvYcvfYNShucJY+KRZ
+        EpGMpfTycfkC8Qf+Et0DAAA=
 
     http_version: 
-  recorded_at: Sat, 09 Jun 2012 17:10:15 GMT
-recorded_with: VCR 2.2.0
+  recorded_at: Mon, 23 Sep 2013 06:13:48 GMT
+recorded_with: VCR 2.5.0
