@@ -11,45 +11,60 @@ module Github
 
     # Access to Search::Legacy API
     def legacy(options = {}, &block)
-      @legacy ||= ApiFactory.new('Search::Legacy', current_options.merge(options), &block)
+      @legacy ||= ApiFactory.new('Search::Legacy',
+                                 current_options.merge(options), &block)
     end
 
     # Search issues
     #
     # Find issues by state and keyword.
+    # (This method returns up to 100 results per page.)
     #
     # = Parameters
-    #  <tt>:state</tt> - open or closed.
-    #  <tt>:keyword</tt> - search term
+    #  <tt>:q</tt> - The search terms. This can be any combination of the
+    #                supported issue search parameters.
+    #  <tt>:sort</tt> - Optional sort field. One of comments, created, or updated.
+    #                   If not provided, results are sorted by best match.
+    #  <tt>:order</tt> - Optional Sort order if sort parameter is provided.
+    #                    One of asc or desc; the default is desc.
     #
     # = Examples
     #  github = Github.new
-    #  github.search.issues 'owner', 'repo-name', 'open','api'
-    #  github.search.issues owner: 'owner', repo: 'repo-name', state: 'open', keyword: 'api'
+    #  github.search.legacy.issues 'query'
+    #  github.search.legacy.issues q: 'query'
     #
     def issues(*args)
-      required = ['owner', 'repo', 'state', 'keyword']
-      arguments(args, :required => required)
+      params = arguments(args, :required => [:q]).params
+      params.merge!('q' => escape_uri(q),
+                    'accept' => params.fetch('accept') { PREVIEW_MEDIA })
 
-      get_request("/legacy/issues/search/#{owner}/#{repo}/#{state}/#{escape_uri(keyword)}", arguments.params)
+      get_request('/search/issues' , params)
     end
 
     # Search repositories
     #
-    # Find repositories by keyword.
+    # Find repositories via various criteria.
+    # (This method returns up to 100 results per page.)
     #
     # = Parameters
-    #  <tt>:keyword</tt> - search term
+    #  <tt>:q</tt> - The search terms. This can be any combination of the
+    #                supported issue search parameters.
+    #  <tt>:sort</tt> - Optional sort field. One of stars, forks, or updated.
+    #                   If not provided, results are sorted by best match.
+    #  <tt>:order</tt> - Optional Sort order if sort parameter is provided.
+    #                    One of asc or desc; the default is desc.
     #
     # = Examples
     #  github = Github.new
-    #  github.search.repos 'api'
-    #  github.search.repos keyword: 'api'
+    #  github.search.repos 'query'
+    #  github.search.repos q: 'query'
     #
     def repos(*args)
-      arguments(args, :required => [:keyword])
+      params = arguments(args, :required => [:q]).params
+      params.merge!('q' => escape_uri(q),
+                    'accept' => params.fetch('accept') { PREVIEW_MEDIA })
 
-      get_request("/legacy/repos/search/#{escape_uri(keyword)}", arguments.params)
+      get_request('/search/repositories', arguments.params)
     end
     alias :repositories :repos
 
@@ -58,37 +73,48 @@ module Github
     # Find users by keyword.
     #
     # = Parameters
-    #  <tt>:keyword</tt> - search term
+    #  <tt>:q</tt> - The search terms. This can be any combination of the
+    #                supported issue search parameters.
+    #  <tt>:sort</tt> - Optional sort field. One of followers, repositories, or
+    #                   If not provided, results are sorted by best match.
+    #  <tt>:order</tt> - Optional Sort order if sort parameter is provided.
+    #                    One of asc or desc; the default is desc.
     #
     # = Examples
     #  github = Github.new
     #  github.search.users keyword: 'wycats'
     #
     def users(*args)
-      arguments(args, :required => [:keyword])
+      params = arguments(args, :required => [:q]).params
+      params.merge!('q' => escape_uri(q),
+                    'accept' => params.fetch('accept') { PREVIEW_MEDIA })
 
-      get_request("/legacy/user/search/#{escape_uri(keyword)}", arguments.params)
+      get_request('/search/users', arguments.params)
     end
 
-    # Search email
-    #
-    # This API call is added for compatibility reasons only. There’s no
-    # guarantee that full email searches will always be available.
+    # Find file contents via various criteria.
+    # (This method returns up to 100 results per page.)
     #
     # = Parameters
-    #  <tt>:keyword</tt> - search term
+    #  <tt>:q</tt> - The search terms. This can be any combination of the
+    #                supported issue search parameters.
+    #  <tt>:sort</tt> - Optional sort field. Can only be indexed, which
+    #                   indicates how recently a file has been indexed
+    #                   by the GitHub search infrastructure. If not provided,
+    #                   results are sorted by best match.
+    #  <tt>:order</tt> - Optional Sort order if sort parameter is provided.
+    #                    One of asc or desc; the default is desc.
     #
     # = Examples
     #  github = Github.new
     #  github.search.email email: 'wycats'
     #
-    def email(*args)
-      arguments(args) do
-        assert_required %w[ email ]
-      end
-      params = arguments.params
+    def code(*args)
+      params = arguments(args, :required => [:q]).params
+      params.merge!('q' => escape_uri(q),
+                    'accept' => params.fetch('accept') { PREVIEW_MEDIA })
 
-      get_request("/legacy/user/email/#{params.delete('email')}", params)
+      get_request('/search/code', params)
     end
 
   end # Search
