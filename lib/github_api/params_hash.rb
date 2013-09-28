@@ -40,7 +40,7 @@ module Github
       end
     end
 
-    # Extract request data from paramters
+    # Extract request data from parameters
     #
     def data
       if has_key?('data') && !self['data'].nil?
