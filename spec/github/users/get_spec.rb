@@ -14,7 +14,7 @@ describe Github::Users, '#get' do
   after { reset_authentication_for(subject) }
 
   context "resource found for a user" do
-    let(:body) { fixture('users/user.json') }
+    let(:body)   { fixture('users/user.json') }
     let(:status) { 200 }
 
     it { should respond_to :find }
