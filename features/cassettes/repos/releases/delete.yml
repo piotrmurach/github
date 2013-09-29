@@ -1,0 +1,52 @@
+--- 
+http_interactions: 
+- request: 
+    method: delete
+    uri: https://<BASIC_AUTH>@api.github.com/repos/<USER>/github_api_test/releases/54956?access_token=<TOKEN>
+    body: 
+      encoding: US-ASCII
+      string: ""
+    headers: 
+      Accept: 
+      - application/vnd.github.manifold-preview
+      Accept-Charset: 
+      - utf-8
+      User-Agent: 
+      - Github Ruby Gem 0.10.2
+  response: 
+    status: 
+      code: 204
+      message: No Content
+    headers: 
+      Server: 
+      - GitHub.com
+      Date: 
+      - Sun, 29 Sep 2013 17:41:06 GMT
+      Status: 
+      - 204 No Content
+      X-Ratelimit-Limit: 
+      - "5000"
+      X-Ratelimit-Remaining: 
+      - "4996"
+      X-Ratelimit-Reset: 
+      - "1380478488"
+      X-Github-Media-Type: 
+      - github.manifold-preview
+      X-Content-Type-Options: 
+      - nosniff
+      Access-Control-Allow-Credentials: 
+      - "true"
+      Access-Control-Expose-Headers: 
+      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
+      Access-Control-Allow-Origin: 
+      - "*"
+      X-Github-Request-Id: 
+      - 4D649864:56EA:25DD5ED:52486632
+      Vary: 
+      - Accept-Encoding
+    body: 
+      encoding: US-ASCII
+      string: ""
+    http_version: 
+  recorded_at: Sun, 29 Sep 2013 17:41:06 GMT
+recorded_with: VCR 2.5.0

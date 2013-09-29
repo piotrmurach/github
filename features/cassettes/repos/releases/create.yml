@@ -1,0 +1,64 @@
+--- 
+http_interactions: 
+- request: 
+    method: post
+    uri: https://<BASIC_AUTH>@api.github.com/repos/<USER>/github_api_test/releases?access_token=<TOKEN>
+    body: 
+      encoding: UTF-8
+      string: "{\"name\":\"v1.0.0\",\"body\":\"Main release\",\"draft\":\"false\",\"target_commitish\":\"master\",\"tag_name\":\"v1.0.0\"}"
+    headers: 
+      Accept: 
+      - application/vnd.github.manifold-preview
+      Accept-Charset: 
+      - utf-8
+      User-Agent: 
+      - Github Ruby Gem 0.10.2
+      Content-Type: 
+      - application/json
+  response: 
+    status: 
+      code: 201
+      message: Created
+    headers: 
+      Server: 
+      - GitHub.com
+      Date: 
+      - Sun, 29 Sep 2013 15:48:34 GMT
+      Content-Type: 
+      - application/json; charset=utf-8
+      Status: 
+      - 201 Created
+      X-Ratelimit-Limit: 
+      - "5000"
+      X-Ratelimit-Remaining: 
+      - "4998"
+      X-Ratelimit-Reset: 
+      - "1380473266"
+      Cache-Control: 
+      - private, max-age=60, s-maxage=60
+      Etag: 
+      - "\"86960846c2b2150a5accd7929a5406d1\""
+      Location: 
+      - https://api.github.com/repos/<USER>/github_api_test/releases/54956
+      Vary: 
+      - Accept, Authorization, Cookie
+      X-Github-Media-Type: 
+      - github.manifold-preview
+      X-Content-Type-Options: 
+      - nosniff
+      Content-Length: 
+      - "548"
+      Access-Control-Allow-Credentials: 
+      - "true"
+      Access-Control-Expose-Headers: 
+      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
+      Access-Control-Allow-Origin: 
+      - "*"
+      X-Github-Request-Id: 
+      - 4D649864:56EA:241D6CE:52484BD1
+    body: 
+      encoding: US-ASCII
+      string: "{\"url\":\"https://api.github.com/repos/<USER>/github_api_test/releases/54956\",\"assets_url\":\"https://api.github.com/repos/<USER>/github_api_test/releases/54956/assets\",\"upload_url\":\"https://uploads.github.com/repos/<USER>/github_api_test/releases/54956/assets{?name}\",\"html_url\":\"https://github.com/<USER>/github_api_test/releases/v1.0.0\",\"id\":54956,\"tag_name\":\"v1.0.0\",\"target_commitish\":\"master\",\"name\":\"v1.0.0\",\"body\":\"Main release\",\"draft\":false,\"prerelease\":false,\"created_at\":\"2013-06-22T19:02:17Z\",\"published_at\":\"2013-09-29T15:48:34Z\",\"assets\":[]}"
+    http_version: 
+  recorded_at: Sun, 29 Sep 2013 15:48:34 GMT
+recorded_with: VCR 2.5.0

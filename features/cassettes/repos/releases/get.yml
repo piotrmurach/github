@@ -1,0 +1,78 @@
+--- 
+http_interactions: 
+- request: 
+    method: get
+    uri: https://<BASIC_AUTH>@api.github.com/repos/ase-lab/CocoaLumberjackFramework/releases/16963?access_token=<TOKEN>
+    body: 
+      encoding: US-ASCII
+      string: ""
+    headers: 
+      Accept: 
+      - application/vnd.github.manifold-preview
+      Accept-Charset: 
+      - utf-8
+      User-Agent: 
+      - Github Ruby Gem 0.10.2
+      Accept-Encoding: 
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response: 
+    status: 
+      code: 200
+      message: OK
+    headers: 
+      Server: 
+      - GitHub.com
+      Date: 
+      - Sat, 28 Sep 2013 21:54:10 GMT
+      Content-Type: 
+      - application/json; charset=utf-8
+      Transfer-Encoding: 
+      - chunked
+      Status: 
+      - 200 OK
+      X-Ratelimit-Limit: 
+      - "5000"
+      X-Ratelimit-Remaining: 
+      - "4989"
+      X-Ratelimit-Reset: 
+      - "1380407279"
+      Cache-Control: 
+      - private, max-age=60, s-maxage=60
+      Last-Modified: 
+      - Sun, 28 Jul 2013 12:23:47 GMT
+      Etag: 
+      - "\"b5f71126e03bd8b9624ea7b786bd5882\""
+      Vary: 
+      - Accept, Authorization, Cookie
+      - Accept-Encoding
+      X-Github-Media-Type: 
+      - github.manifold-preview
+      X-Content-Type-Options: 
+      - nosniff
+      Access-Control-Allow-Credentials: 
+      - "true"
+      Access-Control-Expose-Headers: 
+      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
+      Access-Control-Allow-Origin: 
+      - "*"
+      X-Github-Request-Id: 
+      - 4D649864:56EA:1431846:52475001
+      Content-Encoding: 
+      - gzip
+    body: 
+      encoding: ASCII-8BIT
+      string: !binary |
+        H4sIAAAAAAAAA7WSy07DMBBFfwV5nXdo0mbDAokVEgtYIBCKJolJDUls2ZOW
+        tuq/M+4jgkoFRGFnja/vjM/cFet1wzI2RVQm831QwqsFTvvCK2Xra66k8cFw
+        t4HCv5SlhOu+Lbh+gfL1SkPL51K/kqzhJDJ+mEySmDkMjOFo8r/3plmsM7Xo
+        VSOhOmixLZqTv7Brs7ro6Itr6jbFtjno9QHTzwHNIi/0RmQoKpZtaDkMoc5t
+        H1rDcI2ga4457aAVKMyU7lowyDU93WkH/Gczro2Q3dneu5DVgh6QtNLwjCx7
+        hsZwhynNd5saSqXmgLzKgVQsCsLYDVI3Gt+FURZFNOADmai+aGiEI6o4O0+t
+        areY7HH1t5Ha+vrpebDHZo8DhYNMuuLm1iN4Xr2kmSi03Kb7S1EpO+Qd5rhQ
+        dgWgVCNKQALqv7n1UigyMkiU6HKbL17ZklhSZZQEozQk0HLebfJYyr4jloHD
+        vkIbZ1FgofWqOop/C3bt/BvPhAawMSSeyVGeN7f33/P8JDqJ5zhKRpNf4Iw3
+        GfwBzqf1O0LqNujzBAAA
+
+    http_version: 
+  recorded_at: Sat, 28 Sep 2013 21:54:10 GMT
+recorded_with: VCR 2.5.0
