@@ -14,17 +14,17 @@ Gem::Specification.new do |gem|
   gem.files = Dir['Rakefile', '{features,lib,spec}/**/*', 'README*', 'LICENSE*']
   gem.require_paths = %w[ lib ]
 
-  gem.add_dependency 'addressable'
-  gem.add_dependency 'hashie',     '>= 1.2'
-  gem.add_dependency 'faraday',    '~> 0.8.7'
-  gem.add_dependency 'multi_json', '~> 1.4'
+  gem.add_dependency 'addressable', '~> 2.3'
+  gem.add_dependency 'hashie',      '>= 1.2'
+  gem.add_dependency 'faraday',     '~> 0.8', '< 0.10'
+  gem.add_dependency 'multi_json',  '>= 1.7.5', '< 2.0'
   gem.add_dependency 'oauth2'
-  gem.add_dependency 'nokogiri',   '~> 1.6.0'
+  gem.add_dependency 'nokogiri',    '~> 1.6.0'
 
   gem.add_development_dependency 'rspec',          '~> 2.14'
   gem.add_development_dependency 'cucumber',       '~> 1.3'
-  gem.add_development_dependency 'webmock',        '~> 1.11.0'
-  gem.add_development_dependency 'vcr',            '~> 2.5'
+  gem.add_development_dependency 'webmock',        '~> 1.13'
+  gem.add_development_dependency 'vcr',            '~> 2.6'
   gem.add_development_dependency 'simplecov',      '~> 0.7.1'
   gem.add_development_dependency 'coveralls',      '~> 0.6.7'
   gem.add_development_dependency 'guard',          '~> 1.8.1'
