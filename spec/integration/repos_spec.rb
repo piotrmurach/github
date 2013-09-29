@@ -28,6 +28,10 @@ describe Github::Repos, 'integration' do
 
   its(:statuses)      { should be_a Github::Repos::Statuses }
 
+  its(:releases)      { should be_a Github::Repos::Releases }
+
+  its(:stats)         { should be_a Github::Repos::Statistics }
+
   its(:pubsubhubbub)  { should be_a Github::Repos::PubSubHubbub }
 
 end # Github::Repos

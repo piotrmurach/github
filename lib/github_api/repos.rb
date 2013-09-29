@@ -16,6 +16,7 @@ module Github
       :Keys          => 'keys',
       :Merging       => 'merging',
       :PubSubHubbub  => 'pub_sub_hubbub',
+      :Releases      => 'releases',
       :Statistics    => 'statistics',
       :Statuses      => 'statuses'
 
@@ -93,6 +94,11 @@ module Github
     # Access to Repos::PubSubHubbub API
     def pubsubhubbub(options={}, &block)
       @pubsubhubbub ||= ApiFactory.new('Repos::PubSubHubbub', current_options.merge(options), &block)
+    end
+
+    # Access to Repos::Releases API
+    def releases(options={}, &block)
+      @releases ||= ApiFactory.new('Repos::Releases', current_options.merge(options), &block)
     end
 
     # Access to Repos::Statistics API
