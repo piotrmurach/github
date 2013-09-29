@@ -1,13 +1,17 @@
 # encoding: utf-8
 
 module Github
+
+  # The Search API is optimized to help you find the specific item
+  # you're looking for (e.g., a specific user, a specific file
+  # in a repository, etc.).
   class Search < API
     extend AutoloadHelper
     include Github::Utils::Url
 
-    PREVIEW_MEDIA = 'application/vnd.github.preview'
+    PREVIEW_MEDIA = 'application/vnd.github.preview'.freeze # :nodoc:
 
-    autoload_all 'github_api/search', :Legacy => 'legacy'
+    autoload_all 'github_api/search', Legacy: 'legacy'
 
     # Access to Search::Legacy API
     def legacy(options = {}, &block)
@@ -23,8 +27,9 @@ module Github
     # = Parameters
     #  <tt>:q</tt> - The search terms. This can be any combination of the
     #                supported issue search parameters.
-    #  <tt>:sort</tt> - Optional sort field. One of comments, created, or updated.
-    #                   If not provided, results are sorted by best match.
+    #  <tt>:sort</tt> - Optional sort field. One of comments, created, or
+    #                   updated. If not provided, results are sorted by
+    #                   best match.
     #  <tt>:order</tt> - Optional Sort order if sort parameter is provided.
     #                    One of asc or desc; the default is desc.
     #
@@ -34,9 +39,9 @@ module Github
     #  github.search.legacy.issues q: 'query'
     #
     def issues(*args)
-      params = arguments(args, :required => [:q]).params
-      params.merge!('q' => escape_uri(q),
-                    'accept' => params.fetch('accept') { PREVIEW_MEDIA })
+      params = arguments(args, required: [:q]).params
+      params['q']      ||= escape_uri(q)
+      params['accept'] ||= PREVIEW_MEDIA
 
       get_request('/search/issues' , params)
     end
@@ -60,9 +65,9 @@ module Github
     #  github.search.repos q: 'query'
     #
     def repos(*args)
-      params = arguments(args, :required => [:q]).params
-      params.merge!('q' => escape_uri(q),
-                    'accept' => params.fetch('accept') { PREVIEW_MEDIA })
+      params = arguments(args, required: [:q]).params
+      params['q']      ||= escape_uri(q)
+      params['accept'] ||= PREVIEW_MEDIA
 
       get_request('/search/repositories', arguments.params)
     end
@@ -85,9 +90,9 @@ module Github
     #  github.search.users keyword: 'wycats'
     #
     def users(*args)
-      params = arguments(args, :required => [:q]).params
-      params.merge!('q' => escape_uri(q),
-                    'accept' => params.fetch('accept') { PREVIEW_MEDIA })
+      params = arguments(args, required: [:q]).params
+      params['q']      ||= escape_uri(q)
+      params['accept'] ||= PREVIEW_MEDIA
 
       get_request('/search/users', arguments.params)
     end
@@ -110,9 +115,9 @@ module Github
     #  github.search.email email: 'wycats'
     #
     def code(*args)
-      params = arguments(args, :required => [:q]).params
-      params.merge!('q' => escape_uri(q),
-                    'accept' => params.fetch('accept') { PREVIEW_MEDIA })
+      params = arguments(args, required: [:q]).params
+      params['q']      ||= escape_uri(q)
+      params['accept'] ||= PREVIEW_MEDIA
 
       get_request('/search/code', params)
     end
