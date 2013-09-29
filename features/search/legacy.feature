@@ -53,7 +53,7 @@ Feature: Legacy Search API
       And I pass the following request options:
         | email            |
         | wycats@gmail.com |
-    When I make request within a cassette named "search/email"
+    When I make request within a cassette named "search/legacy/email"
     Then the response status should be 200
       And the response type should be JSON
       And the response should not be empty
