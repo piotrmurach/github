@@ -12,7 +12,7 @@
 [codeclimate]: https://codeclimate.com/github/peter-murach/github
 [coveralls]: https://coveralls.io/r/peter-murach/github
 
-[Wiki](https://github.com/peter-murach/github/wiki) | [RDocs](http://rubydoc.info/github/peter-murach/github/master/frames)
+[Website](http://peter-murach.github.io/github/) | [Wiki](https://github.com/peter-murach/github/wiki) | [RDocs](http://rubydoc.info/github/peter-murach/github/master/frames)
 
 A Ruby wrapper for the GitHub REST API v3.
 
