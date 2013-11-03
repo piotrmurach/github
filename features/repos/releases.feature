@@ -53,6 +53,6 @@ Feature: Releases API
 
     Given I want to delete resource with the following params:
       | owner | repo | id |
-      | murek | github_api_test | 54956 |
+      | murek | github_api_test | 83539 |
     When I make request within a cassette named "repos/releases/delete"
     Then the response status should be 204

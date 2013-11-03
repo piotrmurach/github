@@ -8,7 +8,7 @@ http_interactions:
       string: "{\"name\":\"v1.0.0\",\"body\":\"Main release\",\"draft\":\"false\",\"target_commitish\":\"master\",\"tag_name\":\"v1.0.0\"}"
     headers: 
       Accept: 
-      - application/vnd.github.manifold-preview
+      - application/vnd.github.v3+json,application/vnd.github.beta+json;q=0.5,application/json;q=0.1
       Accept-Charset: 
       - utf-8
       User-Agent: 
@@ -23,7 +23,7 @@ http_interactions:
       Server: 
       - GitHub.com
       Date: 
-      - Sun, 29 Sep 2013 15:48:34 GMT
+      - Sun, 03 Nov 2013 19:58:13 GMT
       Content-Type: 
       - application/json; charset=utf-8
       Status: 
@@ -31,23 +31,23 @@ http_interactions:
       X-Ratelimit-Limit: 
       - "5000"
       X-Ratelimit-Remaining: 
-      - "4998"
+      - "4996"
       X-Ratelimit-Reset: 
-      - "1380473266"
+      - "1383511887"
       Cache-Control: 
       - private, max-age=60, s-maxage=60
       Etag: 
-      - "\"86960846c2b2150a5accd7929a5406d1\""
+      - "\"e3af5497d932e745c8edd7dae71f0555\""
       Location: 
-      - https://api.github.com/repos/<USER>/github_api_test/releases/54956
+      - https://api.github.com/repos/<USER>/github_api_test/releases/83539
       Vary: 
       - Accept, Authorization, Cookie
       X-Github-Media-Type: 
-      - github.manifold-preview
+      - github.v3; format=json
       X-Content-Type-Options: 
       - nosniff
       Content-Length: 
-      - "548"
+      - "712"
       Access-Control-Allow-Credentials: 
       - "true"
       Access-Control-Expose-Headers: 
@@ -55,10 +55,10 @@ http_interactions:
       Access-Control-Allow-Origin: 
       - "*"
       X-Github-Request-Id: 
-      - 4D649864:56EA:241D6CE:52484BD1
+      - 4D649864:69B0:44C34B3:5276AAD5
     body: 
       encoding: US-ASCII
-      string: "{\"url\":\"https://api.github.com/repos/<USER>/github_api_test/releases/54956\",\"assets_url\":\"https://api.github.com/repos/<USER>/github_api_test/releases/54956/assets\",\"upload_url\":\"https://uploads.github.com/repos/<USER>/github_api_test/releases/54956/assets{?name}\",\"html_url\":\"https://github.com/<USER>/github_api_test/releases/v1.0.0\",\"id\":54956,\"tag_name\":\"v1.0.0\",\"target_commitish\":\"master\",\"name\":\"v1.0.0\",\"body\":\"Main release\",\"draft\":false,\"prerelease\":false,\"created_at\":\"2013-06-22T19:02:17Z\",\"published_at\":\"2013-09-29T15:48:34Z\",\"assets\":[]}"
+      string: "{\"url\":\"https://api.github.com/repos/<USER>/github_api_test/releases/83539\",\"assets_url\":\"https://api.github.com/repos/<USER>/github_api_test/releases/83539/assets\",\"upload_url\":\"https://uploads.github.com/repos/<USER>/github_api_test/releases/83539/assets{?name}\",\"html_url\":\"https://github.com/<USER>/github_api_test/releases/v1.0.0\",\"id\":83539,\"tag_name\":\"v1.0.0\",\"target_commitish\":\"master\",\"name\":\"v1.0.0\",\"body\":\"Main release\",\"draft\":false,\"prerelease\":false,\"created_at\":\"2013-06-22T19:02:17Z\",\"published_at\":\"2013-11-03T19:58:13Z\",\"assets\":[],\"tarball_url\":\"https://api.github.com/repos/<USER>/github_api_test/tarball/v1.0.0\",\"zipball_url\":\"https://api.github.com/repos/<USER>/github_api_test/zipball/v1.0.0\"}"
     http_version: 
-  recorded_at: Sun, 29 Sep 2013 15:48:34 GMT
-recorded_with: VCR 2.5.0
+  recorded_at: Sun, 03 Nov 2013 19:58:13 GMT
+recorded_with: VCR 2.6.0

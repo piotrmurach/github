@@ -2,13 +2,13 @@
 http_interactions: 
 - request: 
     method: delete
-    uri: https://<BASIC_AUTH>@api.github.com/repos/<USER>/github_api_test/releases/54956?access_token=<TOKEN>
+    uri: https://<BASIC_AUTH>@api.github.com/repos/<USER>/github_api_test/releases/83539?access_token=<TOKEN>
     body: 
       encoding: US-ASCII
       string: ""
     headers: 
       Accept: 
-      - application/vnd.github.manifold-preview
+      - application/vnd.github.v3+json,application/vnd.github.beta+json;q=0.5,application/json;q=0.1
       Accept-Charset: 
       - utf-8
       User-Agent: 
@@ -21,17 +21,17 @@ http_interactions:
       Server: 
       - GitHub.com
       Date: 
-      - Sun, 29 Sep 2013 17:41:06 GMT
+      - Sun, 03 Nov 2013 20:08:22 GMT
       Status: 
       - 204 No Content
       X-Ratelimit-Limit: 
       - "5000"
       X-Ratelimit-Remaining: 
-      - "4996"
+      - "4993"
       X-Ratelimit-Reset: 
-      - "1380478488"
+      - "1383511887"
       X-Github-Media-Type: 
-      - github.manifold-preview
+      - github.v3; format=json
       X-Content-Type-Options: 
       - nosniff
       Access-Control-Allow-Credentials: 
@@ -41,12 +41,12 @@ http_interactions:
       Access-Control-Allow-Origin: 
       - "*"
       X-Github-Request-Id: 
-      - 4D649864:56EA:25DD5ED:52486632
+      - 4D649864:3F18:1D129C6:5276AD35
       Vary: 
       - Accept-Encoding
     body: 
       encoding: US-ASCII
       string: ""
     http_version: 
-  recorded_at: Sun, 29 Sep 2013 17:41:06 GMT
-recorded_with: VCR 2.5.0
+  recorded_at: Sun, 03 Nov 2013 20:08:22 GMT
+recorded_with: VCR 2.6.0

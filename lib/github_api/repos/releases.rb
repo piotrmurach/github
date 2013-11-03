@@ -5,8 +5,6 @@ module Github
   # The Releases API
   class Repos::Releases < API
 
-    PREVIEW_MEDIA = 'application/vnd.github.manifold-preview'.freeze # :nodoc:
-
     VALID_RELEASE_PARAM_NAMES = %w[
       tag_name
       target_commitish
@@ -29,8 +27,6 @@ module Github
     #
     def list(*args)
       params = arguments(args, required: [:owner, :repo]).params
-      params['accept'] ||= PREVIEW_MEDIA
-
       response = get_request("/repos/#{owner}/#{repo}/releases", params)
       return response unless block_given?
       response.each { |el| yield el }
@@ -45,8 +41,6 @@ module Github
     #
     def get(*args)
       params = arguments(args, required: [:owner, :repo, :id]).params
-      params['accept'] ||= PREVIEW_MEDIA
-
       get_request("/repos/#{owner}/#{repo}/releases/#{id}" , params)
     end
     alias :find :get
@@ -83,7 +77,6 @@ module Github
         sift VALID_RELEASE_PARAM_NAMES
       end
       params = arguments.params
-      params['accept'] ||= PREVIEW_MEDIA
       params['tag_name'] = tag_name
 
       post_request("/repos/#{owner}/#{repo}/releases", params)
@@ -121,7 +114,6 @@ module Github
         sift VALID_RELEASE_PARAM_NAMES
       end
       params = arguments.params
-      params['accept'] ||= PREVIEW_MEDIA
 
       patch_request("/repos/#{owner}/#{repo}/releases/#{id}", params)
     end
@@ -137,7 +129,6 @@ module Github
     #
     def delete(*args)
       params = arguments(args, required: [:owner, :repo, :id]).params
-      params['accept'] ||= PREVIEW_MEDIA
 
       delete_request("/repos/#{owner}/#{repo}/releases/#{id}", params)
     end

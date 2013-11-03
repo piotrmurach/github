@@ -8,7 +8,7 @@ http_interactions:
       string: ""
     headers: 
       Accept: 
-      - application/vnd.github.manifold-preview
+      - application/vnd.github.v3+json,application/vnd.github.beta+json;q=0.5,application/json;q=0.1
       Accept-Charset: 
       - utf-8
       User-Agent: 
@@ -23,7 +23,7 @@ http_interactions:
       Server: 
       - GitHub.com
       Date: 
-      - Sat, 28 Sep 2013 21:36:35 GMT
+      - Sun, 03 Nov 2013 19:51:41 GMT
       Content-Type: 
       - application/json; charset=utf-8
       Transfer-Encoding: 
@@ -33,20 +33,18 @@ http_interactions:
       X-Ratelimit-Limit: 
       - "5000"
       X-Ratelimit-Remaining: 
-      - "4994"
+      - "4998"
       X-Ratelimit-Reset: 
-      - "1380407279"
+      - "1383511887"
       Cache-Control: 
       - private, max-age=60, s-maxage=60
-      Last-Modified: 
-      - Sun, 28 Jul 2013 12:28:41 GMT
       Etag: 
-      - "\"1e0751bb6944ea0408764c715fd49a32\""
+      - "\"5e31a6d37d89664d4e7b32a325789a84\""
       Vary: 
       - Accept, Authorization, Cookie
       - Accept-Encoding
       X-Github-Media-Type: 
-      - github.manifold-preview
+      - github.v3; format=json
       X-Content-Type-Options: 
       - nosniff
       Access-Control-Allow-Credentials: 
@@ -56,23 +54,28 @@ http_interactions:
       Access-Control-Allow-Origin: 
       - "*"
       X-Github-Request-Id: 
-      - 4D649864:56EA:13F1E67:52474BE2
+      - 4D649864:3F18:1CE5DD1:5276A94D
       Content-Encoding: 
       - gzip
     body: 
       encoding: ASCII-8BIT
       string: !binary |
-        H4sIAAAAAAAAA7WSy07DMBBFf6XyOu+0Kc2GBRIrJBZlgaiqaJKYxJDElj3h
-        0ar/zrgvQaUWBGVnja/vjM/c2ZL1umEpqxGVSX0flPAqgXWfe4Vsfc2VND4Y
-        7jaQ+1eykHDTtznXT1A8X2to+avUzyRrOImMHyaTJGYOA2M4muz83jSLdaYW
-        vWoklActNkXz5y9s2ywvO/riirrV2DYHvT5h+jmgl8gLvREZipKla1oOQ6gy
-        24fWsL9G0BXHjHbQChSmprsWDHJNT7faPf7BC9dGyG6w885l+U4PSFpqeESW
-        PkJjuMOU5ttN7UuF5oC8zIBULArC2A3GbnRxF0ZpFNGAD2Si+ryhEY6o4nQ4
-        tqrtYtLZmSO18fXHw2CHzR73FA4y6YrbqUfwvGpBM1FouU33SVEhO+QdZviu
-        7ApAqUYUgATUf3OrhVBkZJAo0eUmX7y0JbGgyigJRuOQQMvXbp3HQvYdsQwc
-        dgptnEaBhdar8ij+DdiV8288ExrAxpB4Jkd53k7vv+f5RfQnnhdRMpr8Ame8
-        zuAPcM5X8w8qJWq39QQAAA==
+        H4sIAAAAAAAAA72VXW+bMBSG/wriOnyZz3AzTZMmTZrWaenFtKqKDDjgFTCy
+        TbOkyn/f4SM0TUcXpSR3xj68B55zzuu7J7XmuRqqmZSVCA0DV1RPqczqSI9Z
+        YXBSMWFgQbQcR8YnFjP8tS4iwn/j+OEzxwVZM/4AYTmBIGEEtuNY6kzFQhAp
+        ltNrw7c0ypCirnKGk6MU3aZ49y/0aZ4+lPCLO8iWySI/ynWA6XRASEe6A3o0
+        UcMW1kyVOF02aaAK+1OJeUrkEipQUElFBkcFFpJweLMP/dEhV/avRCzZQNg3
+        pnz8/kWJM1ymROjKghZVvumeaZkqghVEKXCJU1KQUipC1quVgstEyWgyBKwx
+        L+FB6JAv4Xgl1XCFc0FmasVJX+xhK+YES5IsMUSpyLRszbI00761vND2Q9v6
+        BSJVHeXwHyNRQegGTVRf2/Bu4q7sdA3bdh2vZ9+uB5hHja3Rm4UONdDTLYRD
+        55NmRN4MilkpgedSbqqmkLiqchpjSVlp/NHSLa1ASEjgBIddk5Kk2aJb2Jkj
+        E80dQM3WZdvUMatLoGnO1LfgBiFqsdVVMlqADu1udjmi/gFRf5TozeLn/4m+
+        CHoX0QD53jlAbftEoPfN3PII58eucJ6B9lrGfpqhYSbT7rV67clbwfLmnj0M
+        77SW32pf3vIP00xv+Y9It3S3n5I21QvPH45PMP3hxlUeCRdgLmD/nXZv/5Dl
+        DL82fQ0FtxYKEQotb8yvn6Ps0PGv4Ne+Y+6xNctRb7myW7ue6fpwb5/k1ofQ
+        kPlvczkGO/mI9vcfQNxff81ylOfVvdpz52fgtNsefH35vcJ5Ia8eBvcSZt2L
+        7+7/AgStNwGiCwAA
 
     http_version: 
-  recorded_at: Sat, 28 Sep 2013 21:36:35 GMT
-recorded_with: VCR 2.5.0
+  recorded_at: Sun, 03 Nov 2013 19:51:41 GMT
+recorded_with: VCR 2.6.0
