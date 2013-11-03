@@ -4,6 +4,10 @@ module Github
 
   # The Releases API
   class Repos::Releases < API
+    extend AutoloadHelper
+
+    autoload_all 'github_api/repos/releases',
+      :Assets => 'assets'
 
     VALID_RELEASE_PARAM_NAMES = %w[
       tag_name
@@ -13,6 +17,11 @@ module Github
       draft
       prerelease
     ].freeze # :nodoc:
+
+    # Access to Repos::Releases::Assets API
+    def assets(options = {}, &block)
+      @assets ||= ApiFactory.new('Repos::Releases::Assets', current_options.merge(options), &block)
+    end
 
     # List releases for a repository
     #
