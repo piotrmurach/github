@@ -36,7 +36,7 @@ module Github
 
       puts "EXECUTED: #{method} - #{path} with PARAMS: #{params}" if ENV['DEBUG']
 
-      conn_options = params.options.merge(current_options)
+      conn_options = current_options.merge(params.options)
       conn = connection(conn_options)
       if conn.path_prefix != '/' && path.index(conn.path_prefix) != 0
         path = (conn.path_prefix + path).gsub(/\/(\/)*/, '/')
