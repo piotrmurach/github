@@ -28,21 +28,10 @@ module Github
   end # Error
 end # Github
 
-%w[
-  service_error
-  bad_request
-  unauthorized
-  forbidden
-  not_found
-  not_acceptable
-  unprocessable_entity
-  internal_server_error
-  service_unavailable
-  client_error
-  invalid_options
-  required_params
-  unknown_value
-  validations
-].each do |error|
-  require "github_api/error/#{error}"
+require 'github_api/error/service_error'
+require 'github_api/error/client_error'
+Dir[File.dirname(__FILE__) + '/error/*.rb'].sort.each do |path|
+  filename = File.basename(path)
+  next if ['service_error.rb', 'client_error.rb'].include?(filename)
+  require "github_api/error/#{filename}"
 end
