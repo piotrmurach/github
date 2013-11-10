@@ -47,6 +47,12 @@ describe Github::ParamsHash do
     it { expect(subject.data).to eql('foobar') }
   end
 
+  context 'extracts options headers' do
+    let(:hash) { {:content_type => 'application/octet-stream'} }
+
+    it { expect(subject.options[:headers]).to eql(hash) }
+  end
+
   context 'merges defaults' do
     let(:hash) { { :homepage => "https://tty.github.io" }}
     let(:defaults) {

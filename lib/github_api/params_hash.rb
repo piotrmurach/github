@@ -25,14 +25,14 @@ module Github
     #  [.version].param[+json]
     #
     def media
-      parse(self.delete('media'))
+      parse(delete('media'))
     end
 
     # Return accept header if present
     #
     def accept
       if has_key?('accept')
-        self.delete('accept')
+        delete('accept')
       elsif has_key?('media')
         media
       else
@@ -44,22 +44,26 @@ module Github
     #
     def data
       if has_key?('data') && !self['data'].nil?
-        return self.delete('data')
+        return delete('data')
       else
-        return self.to_hash
+        return to_hash
       end
     end
 
     # Any client configuration options
     #
     def options
-      hash = has_key?('options') ? self.delete('options') : {}
+      opts = has_key?('options') ? delete('options') : {}
+      headers = opts.fetch(:headers) { {} }
       if value = accept
-        hash[:headers] = {} unless hash.has_key?(:headers)
-        hash[:headers]['Accept'] = value
+        headers[:accept] = value
       end
-      hash[:raw] = has_key?('raw') ? self.delete('raw') : false
-      hash
+      if value = delete('content_type')
+        headers[:content_type] = value
+      end
+      opts[:raw] = has_key?('raw') ? delete('raw') : false
+      opts[:headers] = headers unless headers.empty?
+      opts
     end
 
     # Update hash with default parameters for non existing keys
