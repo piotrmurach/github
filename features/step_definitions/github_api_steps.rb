@@ -12,6 +12,10 @@ Given /^I have "([^"]*)" instance$/ do |api_classes|
   )
 end
 
+Given /^I do not verify ssl$/ do
+  @instance.ssl = {:verify => false}
+end
+
 Given /^I set the following (?:attribute|attributes) of instance:$/ do |table|
   table.hashes.each do |element|
     element.each do |attr, val|
