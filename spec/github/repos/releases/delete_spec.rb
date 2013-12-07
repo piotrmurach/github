@@ -2,11 +2,11 @@
 
 require 'spec_helper'
 
-describe Github::Repos::Keys, '#delete' do
+describe Github::Repos::Releases, '#delete' do
   let(:user) { 'peter-murach' }
   let(:repo) { 'github' }
-  let(:path) { "/repos/#{user}/#{repo}/keys/#{id}" }
   let(:id)   { 1 }
+  let(:path) { "/repos/#{user}/#{repo}/releases/#{id}" }
 
   before {
     stub_delete(path).to_return(body: body, status: status,
