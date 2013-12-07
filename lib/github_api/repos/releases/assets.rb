@@ -8,6 +8,7 @@ module Github
     VALID_ASSET_PARAM_NAMES = %w[
       name
       label
+      content_type
     ].freeze # :nodoc:
 
     # List assets for a release
@@ -89,9 +90,9 @@ module Github
     # Edit a release asset
     #
     # = Inputs
-    # * <tt>:name</tt> - Required string - the filename of the asset
-    # * <tt>:body</tt> - Optional string - An alternate short description of
-    #                    the asset. Used in place of the filename.
+    # * <tt>:name</tt>  - Required string - the filename of the asset
+    # * <tt>:label</tt> - Optional string - An alternate short description of
+    #                     the asset. Used in place of the filename.
     #
     # = Examples
     #  github = Github.new
