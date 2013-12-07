@@ -1,3 +1,16 @@
+0.11.0 (December 7, 2013)
+
+* Fix caching issues within the repository API object.
+* Change request module to accept params hash as default
+* Rewrite specs to properly test error conditions
+* Fix default org option to be respected when repository listing
+* Change dev tools to update to latest
+* Add Legacy namespace for old Search Api
+* Add new Search Api
+* Add new Releases & Assets Api including file uploads
+* Add new UnkownMedia client error type
+* Add root certs
+
 0.10.2 (June 26, 2013)
 
 * Fix issue with listing repository [#118]
