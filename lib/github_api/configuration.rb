@@ -51,7 +51,9 @@ module Github
     DEFAULT_SITE = 'https://github.com'.freeze
 
     # The default SSL configuration
-    DEFAULT_SSL = {}
+    DEFAULT_SSL = {
+      :ca_file => File.expand_path('../ssl_certs/cacerts.pem', __FILE__)
+    }
 
     # The value sent in the http header for 'User-Agent' if none is set
     DEFAULT_USER_AGENT = "Github Ruby Gem #{Github::VERSION::STRING}".freeze
