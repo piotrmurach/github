@@ -2,7 +2,7 @@
 http_interactions: 
 - request: 
     method: patch
-    uri: https://<BASIC_AUTH>@api.github.com/repos/murek/github_api_test/releases/assets/46084?access_<TOKEN>=<TOKEN>
+    uri: https://<BASIC_AUTH>@api.github.com/repos/murek/github_api_test/releases/assets/46084?access_token=<TOKEN>
     body: 
       encoding: UTF-8
       string: "{\"name\":\"Rake\",\"label\":\"Ruby code\"}"

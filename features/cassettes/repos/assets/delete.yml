@@ -2,7 +2,7 @@
 http_interactions: 
 - request: 
     method: delete
-    uri: https://<BASIC_AUTH>@api.github.com/repos/<USER>/github_api_test/releases/assets/46073?access_<TOKEN>=<TOKEN>
+    uri: https://<BASIC_AUTH>@api.github.com/repos/<USER>/github_api_test/releases/assets/46073?access_token=<TOKEN>
     body: 
       encoding: US-ASCII
       string: ""

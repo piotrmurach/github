@@ -2,7 +2,7 @@
 http_interactions: 
 - request: 
     method: post
-    uri: https://<BASIC_AUTH>@uploads.github.com/repos/murek/github_api_test/releases/54999/assets?access_<TOKEN>=<TOKEN>&name=Rakefile
+    uri: https://<BASIC_AUTH>@uploads.github.com/repos/murek/github_api_test/releases/54999/assets?access_token=<TOKEN>&name=Rakefile
     body: 
       encoding: UTF-8
       string: |
