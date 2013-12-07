@@ -48,7 +48,11 @@ module Github
           request.body = params.data if params.has_key?('data')
           request.url(path, params.to_hash)
         when *METHODS_WITH_BODIES
-          request.path = path
+          if !(conn_options[:query] || {}).empty?
+            request.url(path, conn_options[:query])
+          else
+            request.path = path
+          end
           request.body = params.data unless params.empty?
         end
       end
