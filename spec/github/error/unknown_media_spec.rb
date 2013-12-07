@@ -7,7 +7,7 @@ describe Github::Error::UnknownMedia do
     let(:error) { described_class.new('README.md') }
 
     it 'contains the problem in the message' do
-      error.message.should include "Unkown content type for: 'README.md' provided for this request."
+      error.message.should include "Unknown content type for: 'README.md' provided for this request."
     end
 
     it 'contains the summary in the message' do
