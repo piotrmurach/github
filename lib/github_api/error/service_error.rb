@@ -8,7 +8,7 @@ module Github
     class ServiceError < GithubError
       include ::Github::Jsonable
 
-      attr_reader :http_headers
+      attr_reader :http_headers, :body, :status
 
       def initialize(response)
         @http_headers = response[:response_headers]
@@ -17,8 +17,9 @@ module Github
       end
 
       def parse_response(response)
-        body = parse_body(response[:body])
-        "#{response[:method].to_s.upcase} #{response[:url].to_s}: #{response[:status]} #{body}"
+        @body = parse_body(response[:body])
+        @status = response[:status]
+        "#{response[:method].to_s.upcase} #{response[:url].to_s}: #{@status} #{@body}"
       end
 
       def decode_body(body)
