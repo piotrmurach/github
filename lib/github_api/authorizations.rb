@@ -1,6 +1,8 @@
 # encoding: utf-8
 
 module Github
+
+  # OAuth Authorizations API
   class Authorizations < API
 
     VALID_AUTH_PARAM_NAMES = %w[
@@ -24,7 +26,7 @@ module Github
       _check_if_authenticated
       arguments(args)
 
-      response = get_request("/authorizations", arguments.params)
+      response = get_request('/authorizations', arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -38,7 +40,7 @@ module Github
     #
     def get(*args)
       _check_if_authenticated
-      arguments(args, :required => [:authorization_id])
+      arguments(args, required: [:authorization_id])
 
       get_request("/authorizations/#{authorization_id}", arguments.params)
     end
@@ -62,7 +64,7 @@ module Github
         sift VALID_AUTH_PARAM_NAMES
       end
 
-      post_request("/authorizations", arguments.params)
+      post_request('/authorizations', arguments.params)
     end
 
     # Update an existing authorization
@@ -80,7 +82,7 @@ module Github
     #
     def update(*args)
       _check_if_authenticated
-      arguments(args, :required => [:authorization_id]) do
+      arguments(args, required: [:authorization_id]) do
         sift VALID_AUTH_PARAM_NAMES
       end
 
@@ -95,7 +97,7 @@ module Github
     #
     def delete(*args)
       _check_if_authenticated
-      arguments(args, :required => [:authorization_id])
+      arguments(args, required: [:authorization_id])
 
       delete_request("/authorizations/#{authorization_id}", arguments.params)
     end
@@ -104,7 +106,9 @@ module Github
     private
 
     def _check_if_authenticated
-      raise ArgumentError, 'You can only access authentication tokens through Basic Authentication' unless authenticated?
+      unless authenticated?
+        raise ArgumentError, 'You can only access your own tokens via Basic Authentication'
+      end
     end
 
   end # Authorizations
