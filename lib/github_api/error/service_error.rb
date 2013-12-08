@@ -10,21 +10,23 @@ module Github
 
       attr_reader :http_headers, :body, :status
 
+      MIN_BODY_LENGTH = 2
+
       def initialize(response)
         @http_headers = response[:response_headers]
-        message = parse_response(response)
+        message       = parse_response(response)
         super(message)
       end
 
       def parse_response(response)
-        @body = parse_body(response[:body])
+        @body   = parse_body(response[:body])
         @status = response[:status]
         "#{response[:method].to_s.upcase} #{response[:url].to_s}: #{@status} #{@body}"
       end
 
       def decode_body(body)
-        if body.respond_to?(:to_str) && body.length >= 2
-           decode body, :symbolize_keys => true
+        if body.respond_to?(:to_str) && body.length >= MIN_BODY_LENGTH
+           decode body, symbolize_keys: true
         else
           body
         end
