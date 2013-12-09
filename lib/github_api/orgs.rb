@@ -6,7 +6,8 @@ module Github
 
     autoload_all 'github_api/orgs',
       :Members => 'members',
-      :Teams   => 'teams'
+      :Teams   => 'teams',
+      :Repos   => 'repos'
 
     VALID_ORG_PARAM_NAMES = %w[
       billing_email
@@ -24,6 +25,11 @@ module Github
     # Access to Orgs::Teams API
     def teams(options={}, &block)
       @teams ||= ApiFactory.new('Orgs::Teams', current_options.merge(options), &block)
+    end
+
+    # Access to Orgs::Teams API
+    def repos(options={}, &block)
+      @repos ||= ApiFactory.new('Orgs::Repos', current_options.merge(options), &block)
     end
 
     # List all public organizations for a user.
