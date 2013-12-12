@@ -17,7 +17,7 @@ module Github
       request(:patch, path, params)
     end
 
-    def post_request(path, params = ParamshHash.empty)
+    def post_request(path, params = ParamsHash.empty)
       request(:post, path, params)
     end
 
