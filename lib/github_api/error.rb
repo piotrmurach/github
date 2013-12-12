@@ -1,11 +1,11 @@
 # encoding: utf-8
 
-require 'github_api/descendants'
+require 'descendants_tracker'
 
 module Github
   module Error
     class GithubError < StandardError
-      extend Descendants
+      extend DescendantsTracker
 
       attr_reader :response_message, :response_headers
 
