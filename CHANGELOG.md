@@ -1,3 +1,10 @@
+0.11.1 (December 16, 2013)
+
+* Add status, body readers to service error.
+* Add descendants tracker.
+* Add encoder to faraday.
+* Change search api to stop escaping query components.
+
 0.11.0 (December 7, 2013)
 
 * Fix caching issues within the repository API object.
