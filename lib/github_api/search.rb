@@ -40,7 +40,7 @@ module Github
     #
     def issues(*args)
       params = arguments(args, required: [:q]).params
-      params['q']      ||= escape_uri(q)
+      params['q']      ||= q
       params['accept'] ||= PREVIEW_MEDIA
 
       get_request('/search/issues' , params)
@@ -66,7 +66,7 @@ module Github
     #
     def repos(*args)
       params = arguments(args, required: [:q]).params
-      params['q']      ||= escape_uri(q)
+      params['q']      ||= q
       params['accept'] ||= PREVIEW_MEDIA
 
       get_request('/search/repositories', arguments.params)
@@ -91,7 +91,7 @@ module Github
     #
     def users(*args)
       params = arguments(args, required: [:q]).params
-      params['q']      ||= escape_uri(q)
+      params['q']      ||= q
       params['accept'] ||= PREVIEW_MEDIA
 
       get_request('/search/users', arguments.params)
@@ -112,11 +112,11 @@ module Github
     #
     # = Examples
     #  github = Github.new
-    #  github.search.email email: 'wycats'
+    #  github.search.code email: 'wycats'
     #
     def code(*args)
       params = arguments(args, required: [:q]).params
-      params['q']      ||= escape_uri(q)
+      params['q']      ||= q
       params['accept'] ||= PREVIEW_MEDIA
 
       get_request('/search/code', params)
