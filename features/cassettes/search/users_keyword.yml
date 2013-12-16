@@ -2,7 +2,7 @@
 http_interactions: 
 - request: 
     method: get
-    uri: https://<BASIC_AUTH>@api.github.com/search/users?access_token=<TOKEN>&q=location:Sheffield%2520repos:20
+    uri: https://<BASIC_AUTH>@api.github.com/search/users?access_<TOKEN>=<TOKEN>&q=location:Sheffield%20repos:20
     body: 
       encoding: US-ASCII
       string: ""
@@ -12,7 +12,7 @@ http_interactions:
       Accept-Charset: 
       - utf-8
       User-Agent: 
-      - Github Ruby Gem 0.10.2
+      - Github Ruby Gem 0.11.0
       Accept-Encoding: 
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
   response: 
@@ -23,7 +23,7 @@ http_interactions:
       Server: 
       - GitHub.com
       Date: 
-      - Mon, 23 Sep 2013 06:14:16 GMT
+      - Mon, 16 Dec 2013 21:18:47 GMT
       Content-Type: 
       - application/json; charset=utf-8
       Transfer-Encoding: 
@@ -33,23 +33,23 @@ http_interactions:
       X-Ratelimit-Limit: 
       - "20"
       X-Ratelimit-Remaining: 
-      - "18"
+      - "19"
       X-Ratelimit-Reset: 
-      - "1379916888"
+      - "1387228787"
       Cache-Control: 
       - no-cache
       X-Github-Media-Type: 
-      - github.preview
+      - github.beta; param=preview
       X-Content-Type-Options: 
       - nosniff
       Access-Control-Allow-Credentials: 
       - "true"
       Access-Control-Expose-Headers: 
-      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
+      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
       Access-Control-Allow-Origin: 
       - "*"
       X-Github-Request-Id: 
-      - 568653B5:46FF:E24F03:523FDC37
+      - 4D649864:218E:7741118:52AF6E37
       Vary: 
       - Accept-Encoding
       Content-Encoding: 
@@ -61,5 +61,5 @@ http_interactions:
         AAAA
 
     http_version: 
-  recorded_at: Mon, 23 Sep 2013 06:14:16 GMT
-recorded_with: VCR 2.5.0
+  recorded_at: Mon, 16 Dec 2013 21:18:47 GMT
+recorded_with: VCR 2.6.0

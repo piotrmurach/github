@@ -1,0 +1,93 @@
+--- 
+http_interactions: 
+- request: 
+    method: get
+    uri: https://<BASIC_AUTH>@api.github.com/search/code?access_<TOKEN>=<TOKEN>&q=Gemfile%20in:path%20repo:peter-murach/github&sort=indexed
+    body: 
+      encoding: US-ASCII
+      string: ""
+    headers: 
+      Accept: 
+      - application/vnd.github.preview
+      Accept-Charset: 
+      - utf-8
+      User-Agent: 
+      - Github Ruby Gem 0.11.0
+      Accept-Encoding: 
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response: 
+    status: 
+      code: 200
+      message: OK
+    headers: 
+      Server: 
+      - GitHub.com
+      Date: 
+      - Sun, 15 Dec 2013 23:18:42 GMT
+      Content-Type: 
+      - application/json; charset=utf-8
+      Transfer-Encoding: 
+      - chunked
+      Status: 
+      - 200 OK
+      X-Ratelimit-Limit: 
+      - "20"
+      X-Ratelimit-Remaining: 
+      - "19"
+      X-Ratelimit-Reset: 
+      - "1387149582"
+      Cache-Control: 
+      - no-cache
+      X-Github-Media-Type: 
+      - github.beta; param=preview
+      X-Content-Type-Options: 
+      - nosniff
+      Access-Control-Allow-Credentials: 
+      - "true"
+      Access-Control-Expose-Headers: 
+      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin: 
+      - "*"
+      X-Github-Request-Id: 
+      - 4D649864:043A:53AB314:52AE38D2
+      Vary: 
+      - Accept-Encoding
+      Content-Encoding: 
+      - gzip
+    body: 
+      encoding: ASCII-8BIT
+      string: !binary |
+        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
+        ep5MRB0kAAA=
+
+    http_version: 
+  recorded_at: Sun, 15 Dec 2013 23:18:42 GMT
+recorded_with: VCR 2.6.0

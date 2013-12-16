@@ -62,9 +62,21 @@ Feature: Search API
 
     Given I want code resource
       And I pass the following request options:
-        | q                         | sort    |
-        | tty repo:peter-murach/tty | indexed |
+        | q                                               | sort    |
+        | TTY in:file language:ruby repo:peter-murach/tty | indexed |
     When I make request within a cassette named "search/code_query"
     Then the response status should be 200
       And the response type should be JSON
       And the response should not be empty
+
+  Scenario: Code with unicode characters
+
+    Given I want code resource
+      And I pass the following request options:
+        | q                                        | sort    |
+        | Gemfile in:path repo:peter-murach/github | indexed |
+    When I make request within a cassette named "search/code_unicode"
+    Then the response status should be 200
+      And the response type should be JSON
+      And the response should not be empty
+
