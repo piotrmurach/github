@@ -8,6 +8,7 @@ require 'github_api/connection'
 require 'github_api/deprecation'
 require 'github_api/core_ext/ordered_hash'
 require 'github_api/core_ext/deep_merge'
+require 'github_api/ext/faraday'
 
 module Github
   extend Configuration
