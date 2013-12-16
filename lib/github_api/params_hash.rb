@@ -50,6 +50,14 @@ module Github
       end
     end
 
+    def encoder
+      if has_key?('encoder') && self['encoder']
+        return delete('encoder')
+      else
+        return {}
+      end
+    end
+
     # Any client configuration options
     #
     def options
