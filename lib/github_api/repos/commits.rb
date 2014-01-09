@@ -17,7 +17,7 @@ module Github
     # * <tt>:sha</tt>     Optional string. Sha or branch to start listing commits from.
     # * <tt>:path</tt>    Optional string. Only commits containing this file path will be returned.
     # * <tt>:author</tt>  GitHub login, name, or email by which to filter by commit author.
-    #
+    # TODO: Add extra params for documentation
     # = Examples
     #  github = Github.new
     #  github.repos.commits.list 'user-name', 'repo-name', :sha => '...'
