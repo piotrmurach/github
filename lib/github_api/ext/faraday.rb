@@ -12,8 +12,10 @@ module Faraday
         end
       end
 
-      def to_query
-        Utils.build_nested_query(self, nil, params_encoder)
+      def to_query(faraday_encoder=nil)
+        encoder_to_use = params_encoder
+        encoder_to_use = faraday_encoder unless faraday_encoder.nil?
+        Utils.build_nested_query(self, nil, encoder_to_use)
       end
     end
 
