@@ -2,13 +2,12 @@
 
 module Github
   module Validations
-    extend AutoloadHelper
 
-    autoload_all 'github_api/validations',
-      :Presence => 'presence',
-      :Token    => 'token',
-      :Format   => 'format',
-      :Required => 'required'
+    Github::require_all 'github_api/validations',
+      'presence',
+      'token',
+      'format',
+      'required'
 
     include Presence
     include Format

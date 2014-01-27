@@ -6,12 +6,11 @@ module Github
   # you're looking for (e.g., a specific user, a specific file
   # in a repository, etc.).
   class Search < API
-    extend AutoloadHelper
     include Github::Utils::Url
 
     PREVIEW_MEDIA = 'application/vnd.github.preview'.freeze # :nodoc:
 
-    autoload_all 'github_api/search', Legacy: 'legacy'
+    Github::require_all 'github_api/search', 'legacy'
 
     # Access to Search::Legacy API
     def legacy(options = {}, &block)

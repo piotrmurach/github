@@ -2,23 +2,22 @@
 
 module Github
   class Repos < API
-    extend AutoloadHelper
 
     # Load all the modules after initializing Repos to avoid superclass mismatch
-    autoload_all 'github_api/repos',
-      :Collaborators => 'collaborators',
-      :Comments      => 'comments',
-      :Commits       => 'commits',
-      :Contents      => 'contents',
-      :Downloads     => 'downloads',
-      :Forks         => 'forks',
-      :Hooks         => 'hooks',
-      :Keys          => 'keys',
-      :Merging       => 'merging',
-      :PubSubHubbub  => 'pub_sub_hubbub',
-      :Releases      => 'releases',
-      :Statistics    => 'statistics',
-      :Statuses      => 'statuses'
+    Github::require_all 'github_api/repos',
+      'collaborators',
+      'comments',
+      'commits',
+      'contents',
+      'downloads',
+      'forks',
+      'hooks',
+      'keys',
+      'merging',
+      'pub_sub_hubbub',
+      'releases',
+      'statistics',
+      'statuses'
 
     DEFAULT_REPO_OPTIONS = {
       "homepage"   => "https://github.com",

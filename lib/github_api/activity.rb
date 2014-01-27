@@ -2,13 +2,12 @@
 
 module Github
   class Activity < API
-    extend AutoloadHelper
 
-    autoload_all 'github_api/activity',
-      :Events        => 'events',
-      :Notifications => 'notifications',
-      :Starring      => 'starring',
-      :Watching      => 'watching'
+    Github::require_all 'github_api/activity',
+      'events',
+      'notifications',
+      'starring',
+      'watching'
 
     # Access to Activity::Events API
     def events(options={}, &block)

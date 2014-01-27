@@ -2,14 +2,13 @@
 
 module Github
   class GitData < API
-    extend AutoloadHelper
 
-    autoload_all 'github_api/git_data',
-      :Blobs      => 'blobs',
-      :Commits    => 'commits',
-      :References => 'references',
-      :Tags       => 'tags',
-      :Trees      => 'trees'
+    Github::require_all 'github_api/git_data',
+      'blobs',
+      'commits',
+      'references',
+      'tags',
+      'trees'
 
     # Access to GitData::Blobs API
     def blobs(options={}, &block)

@@ -2,11 +2,10 @@
 
 module Github
   class Orgs < API
-    extend AutoloadHelper
 
-    autoload_all 'github_api/orgs',
-      :Members => 'members',
-      :Teams   => 'teams'
+    Github::require_all 'github_api/orgs',
+      'members',
+      'teams'
 
     VALID_ORG_PARAM_NAMES = %w[
       billing_email

@@ -2,14 +2,13 @@
 
 module Github
   class Issues < API
-    extend AutoloadHelper
 
-    autoload_all 'github_api/issues',
-      :Assignees  => 'assignees',
-      :Comments   => 'comments',
-      :Events     => 'events',
-      :Labels     => 'labels',
-      :Milestones => 'milestones'
+    Github::require_all 'github_api/issues',
+      'assignees',
+      'comments',
+      'events',
+      'labels',
+      'milestones'
 
     VALID_ISSUE_PARAM_NAMES = %w[
       assignee

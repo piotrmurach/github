@@ -2,10 +2,8 @@
 
 module Github
   class Gists < API
-    extend AutoloadHelper
 
-    autoload_all 'github_api/gists',
-      :Comments => 'comments'
+    Github::require_all 'github_api/gists', 'comments'
 
     REQUIRED_GIST_INPUTS = %w[
       description

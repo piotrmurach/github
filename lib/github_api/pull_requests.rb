@@ -2,10 +2,9 @@
 
 module Github
   class PullRequests < API
-    extend AutoloadHelper
 
-    autoload_all 'github_api/pull_requests',
-      :Comments => 'comments'
+    Github::require_all 'github_api/pull_requests',
+      'comments'
 
     VALID_REQUEST_PARAM_NAMES = %w[
       title

@@ -4,10 +4,8 @@ module Github
 
   # The Releases API
   class Repos::Releases < API
-    extend AutoloadHelper
 
-    autoload_all 'github_api/repos/releases',
-      :Assets => 'assets'
+    Github::require_all 'github_api/repos/releases', 'assets'
 
     VALID_RELEASE_PARAM_NAMES = %w[
       tag_name

@@ -2,13 +2,12 @@
 
 module Github
   class Users < API
-    extend AutoloadHelper
 
     # Load all the modules after initializing Repos to avoid superclass mismatch
-    autoload_all 'github_api/users',
-      :Emails    => 'emails',
-      :Followers => 'followers',
-      :Keys      => 'keys'
+    Github::require_all 'github_api/users',
+      'emails',
+      'followers',
+      'keys'
 
     VALID_USER_PARAMS_NAMES = %w[
       name
