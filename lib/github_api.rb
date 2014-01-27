@@ -13,6 +13,10 @@ require 'github_api/ext/faraday'
 module Github
   extend Configuration
 
+  LIBNAME = 'github_api'
+
+  LIBDIR = File.expand_path("../#{LIBNAME}", __FILE__)
+
   class << self
 
     # Alias for Github::Client.new
@@ -33,66 +37,55 @@ module Github
       new.respond_to?(method, include_private) || super(method, include_private)
     end
 
-  end
-
-  module AutoloadHelper
-
-    def autoload_all(prefix, options)
-      options.each do |const_name, path|
-        autoload const_name, File.join(prefix, path)
+    # Requires internal github_api libraries
+    #
+    # @param [String] prefix
+    #   the relative path prefix
+    # @param [Array[String]] libs
+    #   the array of libraries to require
+    #
+    # @return [self]
+    def require_all(prefix, *libs)
+      libs.each do |lib|
+        require "#{File.join(prefix, lib)}"
       end
     end
-
-    def register_constant(options)
-      options.each do |const_name, value|
-        const_set const_name.upcase.to_s, value
-      end
-    end
-
-    def lookup_constant(const_name)
-      const_get const_name.upcase.to_s
-    end
-
   end
 
-  extend AutoloadHelper
-
-  autoload_all 'github_api',
-    :API             => 'api',
-    :Arguments       => 'arguments',
-    :Activity        => 'activity',
-    :ApiFactory      => 'api_factory',
-    :Client          => 'client',
-    :Repos           => 'repos',
-    :Request         => 'request',
-    :Response        => 'response',
-    :ResponseWrapper => 'response_wrapper',
-    :Result          => 'result',
-    :Error           => 'error',
-    :Issues          => 'issues',
-    :Gists           => 'gists',
-    :GitData         => 'git_data',
-    :Gitignore       => 'gitignore',
-    :Orgs            => 'orgs',
-    :PullRequests    => 'pull_requests',
-    :Users           => 'users',
-    :Emojis          => 'emojis',
-    :Search          => 'search',
-    :Say             => 'say',
-    :Scopes          => 'scopes',
-    :Markdown        => 'markdown',
-    :Meta            => 'meta',
-    :CoreExt         => 'core_ext',
-    :MimeType        => 'mime_type',
-    :Authorization   => 'authorization',
-    :Authorizations  => 'authorizations',
-    :Pagination      => 'pagination',
-    :PageLinks       => 'page_links',
-    :PageIterator    => 'page_iterator',
-    :PagedRequest    => 'paged_request',
-    :Validations     => 'validations',
-    :ParameterFilter => 'parameter_filter',
-    :ParamsHash      => 'params_hash',
-    :Normalizer      => 'normalizer'
+  require_all LIBDIR,
+    'authorization',
+    'validations',
+    'normalizer',
+    'parameter_filter',
+    'api',
+    'arguments',
+    'activity',
+    'api_factory',
+    'client',
+    'repos',
+    'pagination',
+    'request',
+    'response',
+    'response_wrapper',
+    'error',
+    'issues',
+    'gists',
+    'git_data',
+    'gitignore',
+    'orgs',
+    'pull_requests',
+    'users',
+    'emojis',
+    'search',
+    'say',
+    'scopes',
+    'markdown',
+    'meta',
+    'mime_type',
+    'authorizations',
+    'page_links',
+    'paged_request',
+    'page_iterator',
+    'params_hash'
 
 end # Github
