@@ -17,7 +17,8 @@ module Github
     # * <tt>:sha</tt>     Optional string. Sha or branch to start listing commits from.
     # * <tt>:path</tt>    Optional string. Only commits containing this file path will be returned.
     # * <tt>:author</tt>  GitHub login, name, or email by which to filter by commit author.
-    #
+    # * <tt>:since</tt>   Optional string. Only commits after this date will be returned. This is a timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
+    # * <tt>:until</tt>   Optional string. Only commits before this date will be returned. This is a timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
     # = Examples
     #  github = Github.new
     #  github.repos.commits.list 'user-name', 'repo-name', :sha => '...'
