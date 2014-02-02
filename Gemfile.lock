@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    github_api (0.11.1)
+    github_api (0.11.2)
       addressable (~> 2.3)
       descendants_tracker (~> 0.0.1)
       faraday (~> 0.8, < 0.10)
