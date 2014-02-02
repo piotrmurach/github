@@ -11,6 +11,8 @@ require 'github_api/request/basic_auth'
 require 'github_api/request/jsonize'
 
 module Github
+
+  # Specifies Http connection options
   module Connection
     extend self
     include Github::Constants
@@ -23,25 +25,26 @@ module Github
       :ssl
     ].freeze
 
-    def default_options(options={})
+    def default_options(options = {})
+      accept = options[:headers] && options[:headers][:accept]
       {
-        :headers => {
-          ACCEPT           => "application/vnd.github.v3+json," \
-                              "application/vnd.github.beta+json;q=0.5," \
-                              "application/json;q=0.1",
-          ACCEPT_CHARSET   => "utf-8",
-          USER_AGENT       => user_agent
+        headers: {
+          ACCEPT         =>  accept || 'application/vnd.github.v3+json,' \
+                            'application/vnd.github.beta+json;q=0.5,' \
+                            'application/json;q=0.1',
+          ACCEPT_CHARSET => 'utf-8',
+          USER_AGENT     => user_agent
         },
-        :ssl => ssl,
-        :url => options.fetch(:endpoint) { Github.endpoint }
-      }.deep_merge(options)
+        ssl: ssl,
+        url: options.fetch(:endpoint) { Github.endpoint }
+      }
     end
 
     # Default middleware stack that uses default adapter as specified at
     # configuration stage.
     #
-    def default_middleware(options={})
-      Proc.new do |builder|
+    def default_middleware(options = {})
+      proc do |builder|
         builder.use Github::Request::Jsonize
         builder.use Faraday::Request::Multipart
         builder.use Faraday::Request::UrlEncoded
@@ -73,7 +76,7 @@ module Github
     # Exposes middleware builder to facilitate custom stacks and easy
     # addition of new extensions such as cache adapter.
     #
-    def stack(options={}, &block)
+    def stack(options = {}, &block)
       @stack ||= begin
         if block_given?
           Faraday::Builder.new(&block)
@@ -83,14 +86,18 @@ module Github
       end
     end
 
-    # Returns a Fraday::Connection object
+    # Creates http connection
     #
-    def connection(options={})
-      conn_options = default_options(options)
+    # Returns a Fraday::Connection object
+    def connection(options = {})
+      connection_options = default_options(options)
       clear_cache unless options.empty?
-      puts "OPTIONS:#{conn_options.inspect}" if ENV['DEBUG']
-
-      @connection ||= Faraday.new(conn_options.merge(:builder => stack(options)))
+      connection_options.merge!(builder: stack(options))
+      if ENV['DEBUG']
+        p "Connection options : \n"
+        pp connection_options
+      end
+      @connection ||= Faraday.new(connection_options)
     end
 
   end # Connection
