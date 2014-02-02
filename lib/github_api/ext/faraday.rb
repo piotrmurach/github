@@ -12,7 +12,7 @@ module Faraday
         end
       end
 
-      def to_query
+      def to_query(encoder = nil)
         Utils.build_nested_query(self, nil, params_encoder)
       end
     end
