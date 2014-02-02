@@ -2,7 +2,7 @@
 http_interactions: 
 - request: 
     method: get
-    uri: https://<BASIC_AUTH>@api.github.com/search/users?access_<TOKEN>=<TOKEN>&q=location:Sheffield%20repos:20
+    uri: https://<BASIC_AUTH>@api.github.com/search/users?access_token=<TOKEN>&q=location:Sheffield%20repos:20
     body: 
       encoding: US-ASCII
       string: ""

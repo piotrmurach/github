@@ -2,7 +2,7 @@
 http_interactions: 
 - request: 
     method: get
-    uri: https://<BASIC_AUTH>@api.github.com/search/code?access_<TOKEN>=<TOKEN>&q=TTY%20in:file%20language:ruby%20repo:peter-murach/tty&sort=indexed
+    uri: https://<BASIC_AUTH>@api.github.com/search/code?access_token=<TOKEN>&q=TTY%20in:file%20language:ruby%20repo:peter-murach/tty&sort=indexed
     body: 
       encoding: US-ASCII
       string: ""

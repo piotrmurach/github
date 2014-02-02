@@ -2,7 +2,7 @@
 http_interactions: 
 - request: 
     method: get
-    uri: https://<BASIC_AUTH>@api.github.com/search/code?access_<TOKEN>=<TOKEN>&q=Gemfile%20in:path%20repo:peter-murach/github&sort=indexed
+    uri: https://<BASIC_AUTH>@api.github.com/search/code?access_token=<TOKEN>&q=Gemfile%20in:path%20repo:peter-murach/github&sort=indexed
     body: 
       encoding: US-ASCII
       string: ""

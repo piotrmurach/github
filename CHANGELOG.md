@@ -1,3 +1,9 @@
+0.11.2 (Feb 2, 2014)
+
+* Change autoload to require libs
+* Change Connection module to work with newest Faraday 0.9 release
+* Simplify and document Request module
+
 0.11.1 (December 16, 2013)
 
 * Add status, body readers to service error.
