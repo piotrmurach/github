@@ -13,3 +13,12 @@ Cucumber::Rake::Task.new(:features)
 FileList['tasks/**/*.rake'].each { |task| import task }
 
 task :default => [:spec, :features]
+
+desc 'Load gem inside irb console'
+task :console do
+  require 'irb'
+  require 'irb/completion'
+  require File.join(__FILE__, '../lib/github_api')
+  ARGV.clear
+  IRB.start
+end
