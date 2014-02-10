@@ -16,19 +16,19 @@ describe Github::ParameterFilter, '#filter!' do
 
   it 'removes unwanted keys from hash' do
     instance.filter!([:a], hash)
-    hash.all_keys.should     include :a
-    hash.all_keys.should_not include :b
-    hash.all_keys.should_not include :c
+    expect(hash.deep_key?(:a)).to be_true
+    expect(hash.deep_key?(:b)).to be_false
+    expect(hash.deep_key?(:c)).to be_false
   end
 
   it 'recursively filters inputs tree' do
     instance.filter!([:a, :b], hash)
-    hash.all_keys.should_not include :c
+    expect(hash.deep_key?(:c)).to be_false
   end
 
   it 'filters inputs tree only on top level' do
     instance.filter!([:a, :b], hash, :recursive => false)
-    hash.all_keys.should include :c
+    expect(hash.deep_key?(:c)).to be_true
   end
 
 end # Github::ParameterFilter

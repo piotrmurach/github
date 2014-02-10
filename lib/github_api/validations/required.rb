@@ -11,7 +11,7 @@ module Github
       #
       def assert_required_keys(required, provided)
         result = required.all? do |key|
-          provided.has_deep_key? key
+          provided.deep_key? key
         end
         if !result
           raise Github::Error::RequiredParams.new(provided, required)

@@ -54,19 +54,19 @@ describe Hash do
     end
   end
 
-  context '#all_keys' do
+  context '#deep_keys' do
     it "should respond to all_keys" do
-      @nested_hash.should respond_to :all_keys
+      @nested_hash.should respond_to :deep_keys
     end
 
     it "should return all keys for nested hash" do
-      @nested_hash.all_keys.should eq ['a', 'b', 'c']
+      @nested_hash.deep_keys.should eq ['a', 'b', 'c']
     end
   end
 
-  context '#has_deep_key?' do
+  context '#deep_key?' do
     it 'should find key inside nested hash' do
-      @nested_hash.has_deep_key?('c').should be_true
+      @nested_hash.deep_key?('c').should be_true
     end
   end
 
