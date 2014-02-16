@@ -1,0 +1,63 @@
+--- 
+http_interactions: 
+- request: 
+    method: get
+    uri: https://<BASIC_AUTH>@api.github.com/repos/<USER>/github_api_test/pages/builds?access_token=<TOKEN>
+    body: 
+      encoding: US-ASCII
+      string: ""
+    headers: 
+      Accept: 
+      - application/vnd.github.v3+json,application/vnd.github.beta+json;q=0.5,application/json;q=0.1
+      Accept-Charset: 
+      - utf-8
+      User-Agent: 
+      - Github Ruby Gem 0.11.2
+      Accept-Encoding: 
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response: 
+    status: 
+      code: 200
+      message: OK
+    headers: 
+      Server: 
+      - GitHub.com
+      Date: 
+      - Sun, 16 Feb 2014 19:13:30 GMT
+      Content-Type: 
+      - application/json; charset=utf-8
+      Status: 
+      - 200 OK
+      X-Ratelimit-Limit: 
+      - "5000"
+      X-Ratelimit-Remaining: 
+      - "4987"
+      X-Ratelimit-Reset: 
+      - "1392579836"
+      Cache-Control: 
+      - private, max-age=60, s-maxage=60
+      Etag: 
+      - "\"be2b47a6aa91c255a63bbfbd08983b13\""
+      Vary: 
+      - Accept, Authorization, Cookie, X-GitHub-OTP
+      - Accept-Encoding
+      X-Github-Media-Type: 
+      - github.v3; format=json
+      X-Content-Type-Options: 
+      - nosniff
+      Content-Length: 
+      - "2"
+      Access-Control-Allow-Credentials: 
+      - "true"
+      Access-Control-Expose-Headers: 
+      - ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin: 
+      - "*"
+      X-Github-Request-Id: 
+      - 4D649864:435B:232290A:53010DDA
+    body: 
+      encoding: US-ASCII
+      string: "[]"
+    http_version: 
+  recorded_at: Sun, 16 Feb 2014 19:13:30 GMT
+recorded_with: VCR 2.6.0
