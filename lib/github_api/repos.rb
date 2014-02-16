@@ -14,6 +14,7 @@ module Github
       'hooks',
       'keys',
       'merging',
+      'pages',
       'pub_sub_hubbub',
       'releases',
       'statistics',
@@ -88,6 +89,11 @@ module Github
     # Access to Repos::Merging API
     def merging(options={}, &block)
       @merging ||= ApiFactory.new('Repos::Merging', current_options.merge(options), &block)
+    end
+
+    # Access to Repos::Pages API
+    def pages(options={}, &block)
+      @pages ||= ApiFactory.new('Repos::Pages', current_options.merge(options), &block)
     end
 
     # Access to Repos::PubSubHubbub API
