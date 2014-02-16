@@ -1,7 +1,6 @@
 language: ruby
-before_install: gem install bundler
 bundler_args: --without guard metrics
-script: "bundle exec rake"
+script: "bundle exec rake ci"
 rvm:
   - 1.9.2
   - 1.9.3
@@ -16,14 +15,12 @@ matrix:
     - rvm: jruby-21mode
     - rvm: jruby-head
   allow_failures:
-    - rvm: jruby-19mode
-    - rvm: jruby-20mode
-    - rvm: jruby-21mode
     - rvm: jruby-head
     - rvm: ruby-head
     - rvm: 2.0.0
     - rvm: 2.1.0
     - rvm: rbx
+  fast_finish: true
 branches:
   only: master
 notifications:
