@@ -31,7 +31,7 @@ Supports all the API methods (nearly 200). It's built in a modular way. You can 
 * Supports multithreaded environment.
 * Custom media type specification through the 'media' parameter. [media](#media-types)
 * Request results caching (Status: TODO)
-* Fully tested with test coverage above 90% with over 1,600 specs and 1000 features. [testing](#testing)
+* Fully tested with test coverage above 90% with over 1,700 specs and 1000 features. [testing](#testing)
 
 ## Installation
 
@@ -47,7 +47,7 @@ or put it in your Gemfile and run `bundle install`
 gem "github_api"
 ```
 
-## Usage
+## 1 Usage
 
 To start using the gem, you can either perform direct calls on `Github`
 
@@ -135,9 +135,9 @@ repos.branches do |branch|
 end
 ```
 
-## Arguments & Parameters
+## 2 Arguments & Parameters
 
-The library allows for flexible argument parsing. Therefore, arguments can be passed during instance creation:
+The **GithubAPI** library allows for flexible argument parsing. Therefore, arguments can be passed during instance creation:
 
 ```ruby
   issues = Github::Issues.new user: 'peter-murach', repo: 'github'
@@ -202,7 +202,7 @@ github.git_data.trees.get 'peter-murach', 'github', 'c18647b75d72f19c1e0cc8af031
 end
 ```
 
-## Advanced Configuration
+## 3 Advanced Configuration
 
 The `github_api` gem will use the default middleware stack which is exposed by calling `stack` on a client instance. However, this stack can be freely modified with methods such as `insert`, `insert_after`, `delete` and `swap`. For instance, to add your `CustomMiddleware` do
 
@@ -225,7 +225,121 @@ github = Github.new do |config|
 end
 ```
 
-## API
+## 4 Authentication
+
+### 4.1 Basic
+
+To start making requests as authenticated user you can use your GitHub username and password like so
+
+```ruby
+Github.new basic_auth: 'login:password'
+```
+
+Though this method is convenient you should strongly consider using `OAuth` for improved security reasons.
+
+### 4.2 Application OAuth access
+
+In order to authenticate your app through OAuth2 on GitHub you need to
+
+* Visit https://github.com/settings/applications/new and register your app.
+  You will need to be logged in to initially register the application.
+
+* Authorize your credentials https://github.com/login/oauth/authorize
+
+You can use convenience methods to help you achieve this using **GithubAPI** gem:
+
+```ruby
+github = Github.new client_id: '...', client_secret: '...'
+github.authorize_url redirect_uri: 'http://localhost', scope: 'repo'
+# => "https://github.com/login/oauth/authorize?scope=repo&response_type=code&client_id='...'&redirect_uri=http%3A%2F%2Flocalhost"
+```
+After you get your authorization code, call to receive your access_token
+
+```ruby
+token = github.get_token( authorization_code )
+```
+
+Once you have your access token, configure your github instance following instructions under Configuration.
+
+**Note**: If you are working locally (i.e. your app URL and callback URL are localhost), do not specify a ```:redirect_uri``` otherwise you will get a ```redirect_uri_mismatch``` error.
+
+### 4.3 Authorizations API
+
+#### 4.3.1 For an User
+
+To create an access token through the GitHub Authrizations API, you are required to pass your basic credentials and scopes you wish to have for the authentication token.
+
+```ruby
+github = Github.new basic_auth: 'login:password'
+github.oauth.create scopes: ['repo']
+```
+
+You can add more than one scope from the `user`, `public_repo`, `repo`, `gist` or leave the scopes parameter out, in which case, the default read-only access will be assumed (includes public user profile info, public repo info, and gists).
+
+#### 4.3.2 For an App
+
+Furthermore, to create auth token for an application you need to pass `:app` argument together with `:client_id` and `:client_secret` parameters.
+
+```ruby
+github = Github.new basic_auth: 'login:password'
+github.oauth.app.create 'clinet-id', scopes: ['repo']
+```
+
+In order to revoke auth token(s) for an application you must use basic authentication with `client_id` as login and `client_secret` as password.
+
+```ruby
+github = Github.new basic_auth: "client_id:client_secret"
+github.oauth.app.delete 'client-id'
+```
+
+Revoke a specific app token.
+
+```ruby
+github.oauth.app.delete 'client-id', 'access-token'
+```
+
+### 4.4 Scopes
+
+You can check OAuth scopes you have by:
+
+```ruby
+  github = Github.new :oauth_token => 'token'
+  github.scopes.list    # => ['repo']
+```
+
+To list the scopes that the particular GitHub API action checks for do:
+
+```ruby
+  repos = Github::Repos.new
+  res = repos.list :user => 'peter-murach'
+  res.headers.accepted_oauth_scopes    # => ['delete_repo', 'repo', 'public_repo', 'repo:status']
+```
+
+To understand what each scope means refer to [documentation](http://developer.github.com/v3/oauth/#scopes)
+
+## 5 SSL
+
+By default requests over SSL are set to OpenSSL::SSL::VERIFY_PEER. However, you can turn off peer verification by
+
+```ruby
+  Github.new ssl: { verify: false }
+```
+
+If your client fails to find CA certs, you can pass other SSL options to specify exactly how the information is sourced
+
+```ruby
+  ssl: {
+    client_cert: "/usr/local/www.example.com/client_cert.pem"
+    client_key:  "/user/local/www.example.com/client_key.pem"
+    ca_file:     "example.com.cert"
+    ca_path:     "/etc/ssl/"
+  }
+```
+
+For instance, download CA root certificates from Mozilla [cacert](http://curl.haxx.se/ca/cacert.pem) and point ca_file at your certificate bundle location.
+This will allow the client to verify the github.com ssl certificate as authentic.
+
+## 6 API
 
 Main API methods are grouped into the following classes that can be instantiated on their own
 
@@ -276,84 +390,7 @@ Alternatively, you can find out which methods are supported by calling `actions`
 ...
 ```
 
-## OAuth
-
-In order to authenticate the user through OAuth2 on GitHub you need to
-
-* visit https://github.com/settings/applications/new and register your app
-  You will need to be logged in to initially register the application.
-
-* authorize your credentials https://github.com/login/oauth/authorize
-  You can use convenience methods to help you achieve this that come with this gem:
-
-```ruby
-github = Github.new :client_id => '...', :client_secret => '...'
-github.authorize_url :redirect_uri => 'http://localhost', :scope => 'repo'
-# => "https://github.com/login/oauth/authorize?scope=repo&response_type=code&client_id='...'&redirect_uri=http%3A%2F%2Flocalhost"
-```
-After you get your authorization code, call to receive your access_token
-
-```ruby
-token = github.get_token( authorization_code )
-```
-
-Once you have your access token, configure your github instance following instructions under Configuration.
-
-**Note**: If you are working locally (i.e. your app URL and callback URL are localhost), do not specify a ```:redirect_uri``` otherwise you will get a ```redirect_uri_mismatch``` error.
-
-### Authorizations API
-
-Alternatively, you can use the OAuth Authorizations API. For instance, to create an access token through the GitHub API, you are required to pass your basic credentials as in the following:
-
-```ruby
-github = Github.new basic_auth: 'login:password'
-github.oauth.create 'scopes' => ['repo']
-```
-
-You can add more than one scope from the `user`, `public_repo`, `repo`, `gist` or leave the scopes parameter out, in which case, the default read-only access will be assumed (includes public user profile info, public repo info, and gists).
-
-### Scopes
-
-You can check OAuth scopes you have by:
-
-```ruby
-  github = Github.new :oauth_token => 'token'
-  github.scopes.list    # => ['repo']
-```
-
-To list the scopes that the particular GitHub API action checks for do:
-
-```ruby
-  repos = Github::Repos.new
-  res = repos.list :user => 'peter-murach'
-  res.headers.accepted_oauth_scopes    # => ['delete_repo', 'repo', 'public_repo', 'repo:status']
-```
-
-To understand what each scope means refer to [documentation](http://developer.github.com/v3/oauth/#scopes)
-
-## SSL
-
-By default requests over SSL are set to OpenSSL::SSL::VERIFY_PEER. However, you can turn off peer verification by
-
-```ruby
-  Github.new ssl: { verify: false }
-```
-
-If your client fails to find CA certs, you can pass other SSL options to specify exactly how the information is sourced
-
-```ruby
-  ssl: {
-    client_cert: "/usr/local/www.example.com/client_cert.pem"
-    client_key:  "/user/local/www.example.com/client_key.pem"
-    ca_file:     "example.com.cert"
-    ca_path:     "/etc/ssl/"
-  }
-```
-
-For instance, download CA root certificates from Mozilla [cacert](http://curl.haxx.se/ca/cacert.pem) and point ca_file at your certificate bundle location.
-This will allow the client to verify the github.com ssl certificate as authentic.
-
-## Media Types
+## 7 Media Types
 
 You can specify custom media types to choose the format of the data you wish to receive. To make things easier you can specify the following shortcuts
 `json`, `blob`, `raw`, `text`, `html`, `full`. For instance:
@@ -373,7 +410,11 @@ Finally, you can always pass the whole accept header like so
 github.issues.get 'peter-murach', 'github', 108, accept: 'application/vnd.github.raw'
 ```
 
-## Configuration
+## 8 Hypermedia
+
+TODO
+
+## 9 Configuration
 
 Certain methods require authentication. To get your GitHub OAuth v2 credentials,
 register an app at https://github.com/settings/applications/
@@ -396,7 +437,7 @@ All parameters can be overwritten each method call by passing a parameters hash.
 
 By default, no caching will be performed. In order to set the cache do... If no cache type is provided, a default memoization is done.
 
-## Pagination
+## 10 Pagination
 
 Any request that returns multiple items will be paginated to 30 items by default. You can specify custom `page` and `per_page` query parameters to alter default behavior. For instance:
 
@@ -458,7 +499,15 @@ res.prev_page    # Get previous page
 res.last_page    # Get last page
 ```
 
-## Error Handling
+## 11 Caching
+
+TODO: explaing how to add faraday-cache midlleware
+
+## 12 Debugging
+
+run with ENV['DEBUG'] flag  or include middleware by passing `debug` flag
+
+## 13 Error Handling
 
 The generic error class `Github::Error::GithubError` will handle both the client (`Github::Error::ClientError`) and service (`Github::Error::ServiceError`) side errors. For instance in your code you can catch errors like
 
@@ -476,7 +525,7 @@ rescue Github::Error::GithubError => e
 end
 ```
 
-## Response Message
+## 14 Response Message
 
 Each response comes packaged with methods allowing for inspection of HTTP start line and headers. For example, to check for rate limits and status codes, call
 
@@ -490,7 +539,7 @@ res.headers.etag                # "\"2c5dfc54b3fe498779ef3a9ada9a0af9\""
 res.headers.cache_control       # "public, max-age=60, s-maxage=60"
 ```
 
-## Examples
+## 15 Examples
 
 Some API methods require input parameters. These are simply added as a hash of properties, for instance
 
@@ -522,7 +571,7 @@ github = Github.new
 github.orgs.members.member? 'github', 'technoweenie', public: true # => true
 ```
 
-## Rails Example
+### 15.1 Rails Example
 
 A Rails controller that allows a user to authorize their GitHub account and then performs a request.
 
@@ -546,7 +595,7 @@ class GithubController < ApplicationController
 end
 ```
 
-## Testing
+## 16 Testing
 
 The test suite is split into two groups, `live` and `mock`.
 
