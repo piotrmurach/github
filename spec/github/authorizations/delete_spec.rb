@@ -17,7 +17,7 @@ describe Github::Authorizations, '#delete' do
 
   after { reset_authentication_for(subject) }
 
-  context "resouce deleted" do
+  context "when user" do
     let(:body) { '' }
     let(:status) { 204 }
 
@@ -30,10 +30,11 @@ describe Github::Authorizations, '#delete' do
       subject.delete authorization_id
       a_delete(request_path, host).should have_been_made
     end
+
+    it_should_behave_like 'request failure' do
+      let(:requestable) { subject.delete authorization_id }
+    end
   end
 
-  it_should_behave_like 'request failure' do
-    let(:requestable) { subject.delete authorization_id }
-  end
 
 end # delete
