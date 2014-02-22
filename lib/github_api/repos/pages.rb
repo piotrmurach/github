@@ -22,9 +22,9 @@ module Github
       params = arguments.params
 
       response = if args.map(&:to_s).include?('latest')
-        get_request("/repos/#{owner}/#{repo}/pages/builds/latest")
+        get_request("/repos/#{owner}/#{repo}/pages/builds/latest", params)
       else
-        get_request("/repos/#{owner}/#{repo}/pages/builds")
+        get_request("/repos/#{owner}/#{repo}/pages/builds", params)
       end
       return response unless block_given?
       response.each { |el| yield el }
