@@ -24,7 +24,7 @@ Gem::Specification.new do |gem|
 
   gem.add_development_dependency 'rspec',          '~> 2.14'
   gem.add_development_dependency 'cucumber',       '~> 1.3'
-  gem.add_development_dependency 'webmock',        '~> 1.13'
+  gem.add_development_dependency 'webmock',        '~> 1.17'
   gem.add_development_dependency 'vcr',            '~> 2.6'
   gem.add_development_dependency 'simplecov',      '~> 0.7.1'
   gem.add_development_dependency 'coveralls',      '~> 0.6.7'
