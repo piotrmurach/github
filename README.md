@@ -16,7 +16,7 @@
 
 A Ruby wrapper for the GitHub REST API v3.
 
-Supports all the API methods (nearly 200). It's built in a modular way. You can either instantiate the whole API wrapper Github.new or use parts of it i.e. Github::Repos.new if working solely with repositories is your main concern.
+Supports all the API methods. It's built in a modular way. You can either instantiate the whole API wrapper Github.new or use parts of it i.e. Github::Repos.new if working solely with repositories is your main concern.
 
 ## Features
 
@@ -47,6 +47,25 @@ or put it in your Gemfile and run `bundle install`
 gem "github_api"
 ```
 
+## Contents
+
+* [1. Usage](#1-usage)
+* [2. Arguments & Parameters](#2-arguments--parameters)
+* [3. Advanced Configuration](#3-advanced-configuration)
+* [4. Authentication](#4-authentication)
+* [5. SSL](#5-ssl)
+* [6. API](#6-api)
+* [7. Media Types](#7-media-types)
+* [8. Hypermeida](#8-hypermedia)
+* [9. Configuration](#9-configurations)
+* [10. Pagination](#10-pagination)
+* [11. Caching](#11-caching)
+* [12. Debugging](#12-debugging)
+* [13. Error Handling](#13-error-handling)
+* [14. Response Message](#14-response-message)
+* [15. Examples](#15-examples)
+* [16. Testing](#16-testing)
+
 ## 1 Usage
 
 To start using the gem, you can either perform direct calls on `Github`
@@ -60,6 +79,8 @@ or create a new client instance
 ```ruby
 github = Github.new
 ```
+
+### 1.1 Options
 
 At this stage, you can also supply various configuration parameters, such as
 ```
@@ -108,6 +129,8 @@ or using a convenience method:
 github = Github.new basic_auth: 'login:password'
 ```
 
+### 1.2 API navigation
+
 This gem closely mirrors the GitHub API hierarchy i.e. if you want to create a download resource,
 look up the GitHub API spec and issue the request as in `github.repos.downloads.create`
 
@@ -119,6 +142,8 @@ github.repos.hooks.create 'user-name', 'repo-name', name: "web", active: true
 github.repos.keys.get     'user-name', 'repo-name'
 ```
 
+### 1.3 Modularity
+
 The code base is modular and allows for you to work specifically with a given part of GitHub API e.g. blobs
 
 ```ruby
@@ -126,10 +151,11 @@ blobs = Github::GitData::Blobs.new
 blobs.create 'peter-murach', 'github', content: 'Blob content'
 ```
 
+### 1.4 Response querying
 The response is of type [Github::ResponseWrapper] which allows traversing all the json response attributes like method calls i.e.
 
 ```ruby
-repos = Github::Repos.new :user => 'peter-murach', :repo => 'github'
+repos = Github::Repos.new user: 'peter-murach', repo: 'github'
 repos.branches do |branch|
   puts branch.name
 end
@@ -178,7 +204,7 @@ Finally, use the `with` scope to clearly denote your requests
 
 ```ruby
   issues = Github::Issues.new
-  issues.milestones.with(user:'peter-murach', repo: 'github').list
+  issues.milestones.with(user: 'peter-murach', repo: 'github').list
 ```
 
 Some API methods apart from required parameters such as username, repository name
