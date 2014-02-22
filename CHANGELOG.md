@@ -1,3 +1,9 @@
+0.11.3 (Feb 22, 2014)
+
+* Fix core extensions to not override other libraries
+* Add Pages Api
+* Add Application authorization Api
+
 0.11.2 (Feb 2, 2014)
 
 * Change autoload to require libs
