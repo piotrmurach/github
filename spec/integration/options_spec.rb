@@ -105,10 +105,11 @@ describe Github, 'options' do
       expect(client.repos.current_options[:endpoint]).to eql endpoint
       expect(client.repos.endpoint).to eql endpoint
 
-      client.repos.endpoint = default_endpoint
+      repos = client.repos
+      repos.endpoint = default_endpoint
 
-      expect(client.repos.endpoint).to eql default_endpoint
-      expect(client.repos.current_options[:endpoint]).to eql default_endpoint
+      expect(repos.endpoint).to eql default_endpoint
+      expect(repos.current_options[:endpoint]).to eql default_endpoint
     end
   end
 
