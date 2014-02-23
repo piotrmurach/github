@@ -129,6 +129,26 @@ module Github
       self
     end
 
+    # Defines a namespace
+    #
+    # @param [Symbol] name
+    #   the name for the scope
+    #
+    # @return [self]
+    #
+    # @api public
+    def self.namespace(name)
+      name = name.to_sym
+      return if public_method_defined?(name)
+      class_name = self.name.split('::').last
+      class_name += "::#{name.capitalize}"
+      define_method(name) do |*args, &block|
+        options = args.last.is_a?(Hash) ? args.pop : {}
+        ApiFactory.new(class_name, current_options.merge(options), &block)
+      end
+      self
+    end
+
     private
 
     # Set multiple options
