@@ -13,6 +13,7 @@ require 'github_api/api_factory'
 require 'github_api/null_encoder'
 
 module Github
+
   # Core class for api interface operations
   class API
     include Constants
@@ -40,6 +41,7 @@ module Github
 
     # Create new API
     #
+    # @api public
     def initialize(options={}, &block)
       setup(options)
       yield_or_eval(&block) if block_given?
@@ -52,6 +54,7 @@ module Github
 
     # Configure options and process basic authorization
     #
+    # @api private
     def setup(options={})
       options = Github.options.merge(options)
       self.current_options = options
@@ -112,6 +115,14 @@ module Github
     end
 
     # Set an option to a given value
+    #
+    # @param [String] option
+    # @param [Object] value
+    # @param [Boolean] ignore_setter
+    #
+    # @return [self]
+    #
+    # @api public
     def set(option, value=(not_set=true), ignore_setter=false, &block)
       raise ArgumentError, 'value not set' if block and !not_set
       return self if !not_set and value.nil?
@@ -153,6 +164,7 @@ module Github
 
     # Set multiple options
     #
+    # @api private
     def set_options(options)
       unless options.respond_to?(:each)
         raise ArgumentError, 'cannot iterate over value'
@@ -160,6 +172,9 @@ module Github
       options.each { |key, value| set(key, value) }
     end
 
+    # Define setters and getters
+    #
+    # @api private
     def define_accessors(option, value)
       setter = proc { |val|  set option, val, true }
       getter = proc { value }
@@ -170,6 +185,7 @@ module Github
 
     # Dynamically define a method for setting request option
     #
+    # @api private
     def define_singleton_method(method_name, content=Proc.new)
       (class << self; self; end).class_eval do
         undef_method(method_name) if method_defined?(method_name)
@@ -179,11 +195,6 @@ module Github
           define_method(method_name, &content)
         end
       end
-    end
-
-    def _merge_mime_type(resource, params) # :nodoc:
-#       params['resource'] = resource
-#       params['mime_type'] = params['mime_type'] || :raw
     end
 
   end # API

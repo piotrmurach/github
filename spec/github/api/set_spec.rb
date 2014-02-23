@@ -14,11 +14,11 @@ describe Github::API, '#set' do
     before { subject.set :user => 'user-name', :repo => 'repo-name' }
 
     it 'sets user' do
-      subject.user.should == 'user-name'
+      expect(subject.user).to eql('user-name')
     end
 
     it 'sets repo' do
-      subject.repo.should == 'repo-name'
+      expect(subject.repo).to eql('repo-name')
     end
   end
 
@@ -29,5 +29,4 @@ describe Github::API, '#set' do
 
     it { should respond_to 'branch=' }
   end
-
 end
