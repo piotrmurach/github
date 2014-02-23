@@ -142,17 +142,24 @@ module Github
 
     # Defines a namespace
     #
-    # @param [Symbol] name
+    # @param [Array[Symbol]] names
     #   the name for the scope
     #
     # @return [self]
     #
     # @api public
-    def self.namespace(name)
-      name = name.to_sym
+    def self.namespace(*names)
+      options = names.last.is_a?(Hash) ? names.pop : {}
+      names   = names.map(&:to_sym)
+      name    = names.pop
       return if public_method_defined?(name)
-      class_name = self.name.split('::').last
-      class_name += "::#{name.capitalize}"
+
+      converted  = options.fetch(:full_name, name).to_s
+      converted  = converted.split('_').map(&:capitalize).join
+      class_name = ''
+      class_name = "#{self.name.split('::').last}::" unless options.fetch(:root, false)
+      class_name += converted
+
       define_method(name) do |*args, &block|
         options = args.last.is_a?(Hash) ? args.pop : {}
         ApiFactory.new(class_name, current_options.merge(options), &block)
