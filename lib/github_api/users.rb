@@ -4,7 +4,7 @@ module Github
   class Users < API
 
     # Load all the modules after initializing Repos to avoid superclass mismatch
-    Github::require_all 'github_api/users',
+    require_all 'github_api/users',
       'emails',
       'followers',
       'keys'
@@ -20,19 +20,13 @@ module Github
     ].freeze
 
     # Access to Users::Emails API
-    def emails(options={}, &block)
-      @emails ||= ApiFactory.new('Users::Emails', current_options.merge(options), &block)
-    end
+    namespace :emails
 
     # Access to Users::Followers API
-    def followers(options={}, &block)
-      @followers ||= ApiFactory.new('Users::Followers', current_options.merge(options), &block)
-    end
+    namespace :followers
 
     # Access to Users::Keys API
-    def keys(options={}, &block)
-      @keys ||= ApiFactory.new('Users::Keys', current_options.merge(options), &block)
-    end
+    namespace :keys
 
     # List all users.
     #

@@ -3,7 +3,7 @@
 module Github
   class Issues < API
 
-    Github::require_all 'github_api/issues',
+    require_all 'github_api/issues',
       'assignees',
       'comments',
       'events',
@@ -37,29 +37,19 @@ module Github
     }
 
     # Access to Issues::Assignees API
-    def assignees(options={}, &block)
-      @assignees ||= ApiFactory.new('Issues::Assignees', current_options.merge(options), &block)
-    end
+    namespace :assignees
 
     # Access to Issues::Comments API
-    def comments(options={}, &block)
-      @comments ||= ApiFactory.new('Issues::Comments', current_options.merge(options), &block)
-    end
+    namespace :comments
 
     # Access to Issues::Events API
-    def events(options={}, &block)
-      @events ||= ApiFactory.new('Issues::Events', current_options.merge(options), &block)
-    end
+    namespace :events
 
     # Access to Issues::Comments API
-    def labels(options={}, &block)
-      @labels ||= ApiFactory.new('Issues::Labels', current_options.merge(options), &block)
-    end
+    namespace :labels
 
     # Access to Issues::Comments API
-    def milestones(options={}, &block)
-      @milestones ||= ApiFactory.new('Issues::Milestones', current_options.merge(options), &block)
-    end
+    namespace :milestones
 
     # List your issues
     #

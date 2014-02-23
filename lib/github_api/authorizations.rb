@@ -5,7 +5,7 @@ module Github
   # OAuth Authorizations API
   class Authorizations < API
 
-    Github::require_all 'github_api/authorizations', 'app'
+    require_all 'github_api/authorizations', 'app'
 
     VALID_AUTH_PARAM_NAMES = %w[
       scopes
@@ -18,9 +18,7 @@ module Github
     ].freeze
 
     # Access to Authorizations::App API
-    def app(options={}, &block)
-      @app ||= ApiFactory.new('Authorizations::App', current_options.merge(options), &block)
-    end
+    namespace :app
 
     # List authorizations
     #

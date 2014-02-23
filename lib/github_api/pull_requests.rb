@@ -3,7 +3,7 @@
 module Github
   class PullRequests < API
 
-    Github::require_all 'github_api/pull_requests',
+    require_all 'github_api/pull_requests',
       'comments'
 
     VALID_REQUEST_PARAM_NAMES = %w[
@@ -23,9 +23,7 @@ module Github
     }
 
     # Access to PullRequests::Comments API
-    def comments(options={}, &block)
-      @comments ||= ApiFactory.new('PullRequests::Comments', current_options.merge(options), &block)
-    end
+    namespace :comments
 
     # List pull requests
     #

@@ -3,7 +3,7 @@
 module Github
   class Gists < API
 
-    Github::require_all 'github_api/gists', 'comments'
+    require_all 'github_api/gists', 'comments'
 
     REQUIRED_GIST_INPUTS = %w[
       description
@@ -13,9 +13,7 @@ module Github
     ].freeze
 
     # Access to Gists::Comments API
-    def comments(options={}, &block)
-      @comments ||= ApiFactory.new('Gists::Comments', current_options.merge(options), &block)
-    end
+    namespace :comments
 
     # List a user's gists.
     #

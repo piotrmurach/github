@@ -3,7 +3,7 @@
 module Github
   class Orgs < API
 
-    Github::require_all 'github_api/orgs',
+    require_all 'github_api/orgs',
       'members',
       'teams'
 
@@ -16,14 +16,10 @@ module Github
     ].freeze
 
     # Access to Orgs::Members API
-    def members(options={}, &block)
-      @members ||= ApiFactory.new('Orgs::Members', current_options.merge(options), &block)
-    end
+    namespace :members
 
     # Access to Orgs::Teams API
-    def teams(options={}, &block)
-      @teams ||= ApiFactory.new('Orgs::Teams', current_options.merge(options), &block)
-    end
+    namespace :teams
 
     # List all public organizations for a user.
     #

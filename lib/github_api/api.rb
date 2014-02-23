@@ -16,6 +16,7 @@ module Github
 
   # Core class for api interface operations
   class API
+    extend Github::ClassMethods
     include Constants
     include Authorization
     include MimeType

@@ -4,7 +4,7 @@ module Github
   class Repos < API
 
     # Load all the modules after initializing Repos to avoid superclass mismatch
-    Github::require_all 'github_api/repos',
+    require_all 'github_api/repos',
       'collaborators',
       'comments',
       'commits',
@@ -47,74 +47,46 @@ module Github
     VALID_REPO_TYPES = %w[ all public private member ].freeze
 
     # Access to Repos::Collaborators API
-    def collaborators(options={}, &block)
-      @collaborators ||= ApiFactory.new('Repos::Collaborators', current_options.merge(options), &block)
-    end
+    namespace :collaborators
 
     # Access to Repos::Comments API
-    def comments(options={}, &block)
-      @comments ||= ApiFactory.new('Repos::Comments', current_options.merge(options), &block)
-    end
+    namespace :comments
 
     # Access to Repos::Commits API
-    def commits(options={}, &block)
-      @commits ||= ApiFactory.new('Repos::Commits', current_options.merge(options), &block)
-    end
+    namespace :commits
 
     # Access to Repos::Contents API
-    def contents(options={}, &block)
-      @contents ||= ApiFactory.new('Repos::Contents', current_options.merge(options), &block)
-    end
+    namespace :contents
 
     # Access to Repos::Downloads API
-    def downloads(options={}, &block)
-      @downloads ||= ApiFactory.new('Repos::Downloads', current_options.merge(options), &block)
-    end
+    namespace :downloads
 
     # Access to Repos::Forks API
-    def forks(options={}, &block)
-      @forks ||= ApiFactory.new('Repos::Forks', current_options.merge(options), &block)
-    end
+    namespace :forks
 
     # Access to Repos::Hooks API
-    def hooks(options={}, &block)
-      @hooks ||= ApiFactory.new('Repos::Hooks', current_options.merge(options), &block)
-    end
+    namespace :hooks
 
     # Access to Repos::Keys API
-    def keys(options={}, &block)
-      @keys ||= ApiFactory.new('Repos::Keys', current_options.merge(options), &block)
-    end
+    namespace :keys
 
     # Access to Repos::Merging API
-    def merging(options={}, &block)
-      @merging ||= ApiFactory.new('Repos::Merging', current_options.merge(options), &block)
-    end
+    namespace :merging
 
     # Access to Repos::Pages API
-    def pages(options={}, &block)
-      @pages ||= ApiFactory.new('Repos::Pages', current_options.merge(options), &block)
-    end
+    namespace :pages
 
     # Access to Repos::PubSubHubbub API
-    def pubsubhubbub(options={}, &block)
-      @pubsubhubbub ||= ApiFactory.new('Repos::PubSubHubbub', current_options.merge(options), &block)
-    end
+    namespace :pubsubhubbub, full_name: :pub_sub_hubbub
 
     # Access to Repos::Releases API
-    def releases(options={}, &block)
-      @releases ||= ApiFactory.new('Repos::Releases', current_options.merge(options), &block)
-    end
+    namespace :releases
 
     # Access to Repos::Statistics API
-    def stats(options={}, &block)
-      @stats ||= ApiFactory.new('Repos::Statistics', current_options.merge(options), &block)
-    end
+    namespace :stats, full_name: :statistics
 
     # Access to Repos::Statuses API
-    def statuses(options={}, &block)
-      @statuses ||= ApiFactory.new('Repos::Statuses', current_options.merge(options), &block)
-    end
+    namespace :statuses
 
     # List repositories for the authenticated user
     #

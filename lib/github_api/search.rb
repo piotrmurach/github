@@ -10,13 +10,10 @@ module Github
 
     PREVIEW_MEDIA = 'application/vnd.github.preview'.freeze # :nodoc:
 
-    Github::require_all 'github_api/search', 'legacy'
+    require_all 'github_api/search', 'legacy'
 
     # Access to Search::Legacy API
-    def legacy(options = {}, &block)
-      @legacy ||= ApiFactory.new('Search::Legacy',
-                                 current_options.merge(options), &block)
-    end
+    namespace :legacy
 
     # Search issues
     #

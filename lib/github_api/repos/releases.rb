@@ -5,7 +5,7 @@ module Github
   # The Releases API
   class Repos::Releases < API
 
-    Github::require_all 'github_api/repos/releases', 'assets'
+    require_all 'github_api/repos/releases', 'assets'
 
     VALID_RELEASE_PARAM_NAMES = %w[
       tag_name
@@ -17,9 +17,7 @@ module Github
     ].freeze # :nodoc:
 
     # Access to Repos::Releases::Assets API
-    def assets(options = {}, &block)
-      @assets ||= ApiFactory.new('Repos::Releases::Assets', current_options.merge(options), &block)
-    end
+    namespace :assets
 
     # List releases for a repository
     #
