@@ -17,6 +17,9 @@ module Github
   LIBDIR = File.expand_path("../#{LIBNAME}", __FILE__)
 
   class << self
+    def included(base)
+      base.extend ClassMethods
+    end
 
     # Alias for Github::Client.new
     #
@@ -35,7 +38,9 @@ module Github
     def respond_to?(method, include_private = false)
       new.respond_to?(method, include_private) || super(method, include_private)
     end
+  end
 
+  module ClassMethods
     # Requires internal github_api libraries
     #
     # @param [String] prefix
@@ -50,6 +55,8 @@ module Github
       end
     end
   end
+
+  extend ClassMethods
 
   require_all LIBDIR,
     'authorization',
