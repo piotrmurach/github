@@ -78,10 +78,12 @@ module Github
     #
     def stack(options = {}, &block)
       @stack ||= begin
+        builder_class = defined?(Faraday::RackBuilder) ? Faraday::RackBuilder : Faraday::Builder
+
         if block_given?
-          Faraday::Builder.new(&block)
+          builder_class.new(&block)
         else
-          Faraday::Builder.new(&default_middleware(options))
+          builder_class.new(&default_middleware(options))
         end
       end
     end
