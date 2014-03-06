@@ -96,7 +96,7 @@ describe Github::Repos, '#list' do
     }
 
     it "should filter the parameters" do
-      subject.list 'user' => user, :unkown => true
+      subject.list 'user' => user, :unknown => true
       a_get(request_path).with({}).should have_been_made
     end
 
