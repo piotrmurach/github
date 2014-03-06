@@ -39,7 +39,7 @@ module Github
     #
     def request(method, path, params) # :nodoc:
       unless METHODS.include?(method)
-        raise ArgumentError, "unkown http method: #{method}"
+        raise ArgumentError, "unknown http method: #{method}"
       end
 
       puts "EXECUTED: #{method} - #{path} with PARAMS: #{params}" if ENV['DEBUG']

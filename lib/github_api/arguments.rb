@@ -61,7 +61,7 @@ module Github
       self
     end
 
-    # Remove unkown keys from parameters hash.
+    # Remove unknown keys from parameters hash.
     #
     # = Parameters
     #  :recursive - boolean that toggles whether nested filtering should be applied
