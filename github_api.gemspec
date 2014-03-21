@@ -22,15 +22,5 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'nokogiri',    '~> 1.6.0'
   gem.add_dependency 'descendants_tracker', '~> 0.0.1'
 
-  gem.add_development_dependency 'rspec',          '~> 2.14'
-  gem.add_development_dependency 'cucumber',       '~> 1.3'
-  gem.add_development_dependency 'webmock',        '~> 1.17'
-  gem.add_development_dependency 'vcr',            '~> 2.6'
-  gem.add_development_dependency 'simplecov',      '~> 0.7.1'
-  gem.add_development_dependency 'coveralls',      '~> 0.6.7'
-  gem.add_development_dependency 'guard',          '~> 1.8.1'
-  gem.add_development_dependency 'guard-rspec',    '~> 3.0.2'
-  gem.add_development_dependency 'guard-cucumber', '~> 1.4'
-  gem.add_development_dependency 'rake',           '~> 10.1'
-  gem.add_development_dependency 'bundler',        '~> 1.3'
+  gem.add_development_dependency 'bundler', '~> 1.3'
 end
