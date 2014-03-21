@@ -10,12 +10,12 @@ end
 
 Cucumber::Rake::Task.new(:features)
 
-FileList['tasks/**/*.rake'].each { |task| import task }
+FileList['tasks/**/*.rake'].each(&method(:import))
 
 task default: [:spec, :features]
 
-desc 'Run all specs'
-task ci: %w[ spec features ]
+desc 'Run all specs on CI'
+task ci: [:spec, :features, 'coveralls:push']
 
 desc 'Load gem inside irb console'
 task :console do
