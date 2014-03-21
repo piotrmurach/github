@@ -5,7 +5,7 @@ module Github
   # Defines HTTP verbs
   module Request
 
-    METHODS = [:get, :post, :put, :delete, :patch]
+    HTTP_METHODS = [:get, :head, :post, :put, :delete, :patch]
 
     METHODS_WITH_BODIES = [:post, :put, :patch]
 
@@ -31,14 +31,15 @@ module Github
 
     # Performs a request
     #
-    # method - The Symbol the HTTP verb
-    # path   - String relative URL to access
-    # params - ParamsHash to configure the request API
+    # @param [Symbol] method - The Symbol the HTTP verb
+    # @param [String] path   - String relative URL to access
+    # @param [ParamsHash] params - ParamsHash to configure the request API
     #
-    # Returns a Github::ResponseWrapper
+    # @return [Github::ResponseWrapper]
     #
+    # @api private
     def request(method, path, params) # :nodoc:
-      unless METHODS.include?(method)
+      unless HTTP_METHODS.include?(method)
         raise ArgumentError, "unknown http method: #{method}"
       end
 
@@ -54,7 +55,7 @@ module Github
 
       response = conn.send(method) do |request|
         case method.to_sym
-        when *(METHODS - METHODS_WITH_BODIES)
+        when *(HTTP_METHODS - METHODS_WITH_BODIES)
           request.body = params.data if params.has_key?('data')
           if params.has_key?('encoder')
             request.params.params_encoder(params.encoder)
