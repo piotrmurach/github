@@ -1,22 +1,18 @@
-require 'rubygems'
-
-$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
-$LOAD_PATH.unshift(File.dirname(__FILE__))
-
-require 'rspec'
-require 'json'
-require 'webmock/rspec'
-require 'github_api'
+# encoding: utf-8
 
 if RUBY_VERSION > '1.9' and (ENV['COVERAGE'] || ENV['TRAVIS'])
-  require 'coverage_adapter'
+  require 'simplecov'
+  require 'coveralls'
   SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
     SimpleCov::Formatter::HTMLFormatter,
-    Coveralls::SimpleCov::Formatter
   ]
-  SimpleCov.start 'github_api'
-  SimpleCov.coverage_dir 'coverage/rspec'
+  SimpleCov.start do
+    command_name 'ci'
+  end
 end
+
+require 'webmock/rspec'
+require 'github_api'
 
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories.
