@@ -8,9 +8,10 @@ require 'github_api/rate_limit'
 require 'github_api/core_ext/hash'
 require 'github_api/core_ext/array'
 require 'github_api/compatibility'
-require 'github_api/api/actions'
-require 'github_api/api_factory'
 require 'github_api/null_encoder'
+
+require 'github_api/api/actions'
+require 'github_api/api/factory'
 
 module Github
 
@@ -24,7 +25,7 @@ module Github
     include Request
     include RateLimit
 
-    attr_reader *Configuration.keys
+    attr_reader *Github.configuration.property_names
 
     attr_accessor *Validations::VALID_API_KEYS
 
@@ -32,7 +33,7 @@ module Github
 
     # Callback to update current configuration options
      class_eval do
-       Configuration.keys.each do |key|
+       Github.configuration.property_names.each do |key|
          define_method "#{key}=" do |arg|
            self.instance_variable_set("@#{key}", arg)
            self.current_options.merge!({:"#{key}" => arg})
@@ -57,10 +58,10 @@ module Github
     #
     # @api private
     def setup(options={})
-      options = Github.options.merge(options)
+      options = Github.configuration.fetch.merge(options)
       self.current_options = options
-      Configuration.keys.each do |key|
-        send("#{key}=", options[key])
+      Github.configuration.property_names.each do |key|
+        instance_variable_set("@#{key}", options[key])
       end
       process_basic_auth(options[:basic_auth])
     end
@@ -158,7 +159,7 @@ module Github
       class_name = extract_class_name(name, options)
       define_method(name) do |*args, &block|
         options = args.last.is_a?(Hash) ? args.pop : {}
-        ApiFactory.new(class_name, current_options.merge(options), &block)
+        API::Factory.new(class_name, current_options.merge(options), &block)
       end
       self
     end
