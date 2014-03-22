@@ -3,33 +3,26 @@
 require 'spec_helper'
 
 describe Github::Configuration do
-  let(:klass) {
-    ::Class.new do
-      extend Github::Configuration
-    end
-  }
 
-  subject { klass }
+  let(:instance) { described_class.new }
 
-  its(:adapter) { should == described_class::DEFAULT_ADAPTER }
+  subject { instance }
 
-  its(:endpoint) { should == described_class::DEFAULT_ENDPOINT }
+  its(:adapter) { should == :net_http }
 
-  its(:site) { should == described_class::DEFAULT_SITE }
+  its(:endpoint) { should == 'https://api.github.com' }
 
-  its(:user_agent) { should == described_class::DEFAULT_USER_AGENT }
+  its(:site) { should == 'https://github.com' }
+
+  its(:user_agent) { should =~ /Github Ruby Gem/ }
 
   its(:oauth_token) { should be_nil }
 
-  its(:auto_pagination) { should == described_class::DEFAULT_AUTO_PAGINATION }
-
   its(:auto_pagination) { should be_false }
 
-  its(:ssl) { should == described_class::DEFAULT_SSL }
+  its(:ssl) { should_not be_empty }
 
   its(:ssl) { should be_a Hash }
-
-  its(:user_agent) { should == described_class::DEFAULT_USER_AGENT }
 
   its(:repo) { should be_nil }
 
@@ -41,21 +34,19 @@ describe Github::Configuration do
 
   its(:connection_options) { should be_empty }
 
-  its(:login) { should == described_class::DEFAULT_LOGIN }
+  its(:login) { should be_nil }
 
-  its(:password) { should == described_class::DEFAULT_PASSWORD }
+  its(:password) { should be_nil }
 
-  describe ".configure" do
-    it { should respond_to :configure }
+  its(:basic_auth) { should be_nil }
 
-    described_class.keys.each do |key|
-      it "should set the #{key}" do
-        subject.configure do |config|
-          config.send("#{key}=", key)
-          subject.send(key).should == key
-        end
-      end
+  describe ".call" do
+    it { should respond_to :call }
+
+    it "evaluates block" do
+      block = Proc.new { |config| config.adapter= :http }
+      subject.call(&block)
+      expect(subject.adapter).to eql(:http)
     end
   end
-
 end
