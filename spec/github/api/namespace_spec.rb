@@ -35,7 +35,7 @@ describe Github::API, '#namespace' do
   end
 
   it "doesn't redifine already existing scope" do
-    expect(Github::ApiFactory).to_not receive(:new)
+    expect(Github::API::Factory).to_not receive(:new)
     klass.namespace :test
   end
 end
