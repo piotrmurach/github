@@ -155,17 +155,25 @@ module Github
       name    = names.pop
       return if public_method_defined?(name)
 
-      converted  = options.fetch(:full_name, name).to_s
-      converted  = converted.split('_').map(&:capitalize).join
-      class_name = ''
-      class_name = "#{self.name.split('::').last}::" unless options.fetch(:root, false)
-      class_name += converted
-
+      class_name = extract_class_name(name, options)
       define_method(name) do |*args, &block|
         options = args.last.is_a?(Hash) ? args.pop : {}
         ApiFactory.new(class_name, current_options.merge(options), &block)
       end
       self
+    end
+
+    # Extracts class name from options
+    #
+    # @return [String]
+    #
+    # @api private
+    def self.extract_class_name(name, options)
+      converted  = options.fetch(:full_name, name).to_s
+      converted  = converted.split('_').map(&:capitalize).join
+      class_name = options.fetch(:root, false) ? '': "#{self.name}::"
+      class_name += converted
+      class_name
     end
 
     private
