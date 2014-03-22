@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::ApiFactory do
+describe Github::API::Factory do
 
   subject(:factory) { described_class }
 
