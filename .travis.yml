@@ -1,5 +1,5 @@
 language: ruby
-bundler_args: --without guard metrics
+bundler_args: --without guard
 script: "bundle exec rake ci"
 rvm:
   - 1.9.2
