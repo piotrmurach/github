@@ -10,8 +10,6 @@ require 'github_api/core_ext/ordered_hash'
 require 'github_api/ext/faraday'
 
 module Github
-  extend Configuration
-
   LIBNAME = 'github_api'
 
   LIBDIR = File.expand_path("../#{LIBNAME}", __FILE__)
@@ -23,20 +21,33 @@ module Github
 
     # Alias for Github::Client.new
     #
+    # @param [Hash] options
+    #   the configuration options
+    #
     # @return [Github::Client]
+    #
+    # @api public
     def new(options = {}, &block)
       Github::Client.new(options, &block)
     end
 
     # Delegate to Github::Client
     #
-    def method_missing(method, *args, &block)
-      return super unless new.respond_to?(method)
-      new.send(method, *args, &block)
+    # @api private
+    def method_missing(method_name, *args, &block)
+      if new.respond_to?(method_name)
+        new.send(method_name, *args, &block)
+      elsif configuration.respond_to?(method_name)
+        Github.configuration.send(method_name, *args, &block)
+      else
+        super
+      end
     end
 
-    def respond_to?(method, include_private = false)
-      new.respond_to?(method, include_private) || super(method, include_private)
+    def respond_to?(method_name, include_private = false)
+      new.respond_to?(method_name, include_private) ||
+      configuration.respond_to?(method_name) ||
+      super(method_name, include_private)
     end
   end
 
@@ -54,6 +65,11 @@ module Github
         require "#{File.join(prefix, lib)}"
       end
     end
+
+    # Main client global configuration
+    def configuration
+      @configuration ||= Github::Configuration.new
+    end
   end
 
   extend ClassMethods
@@ -65,7 +81,6 @@ module Github
     'parameter_filter',
     'api',
     'arguments',
-    'api_factory',
     'client',
     'repos',
     'pagination',
