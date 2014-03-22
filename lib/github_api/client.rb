@@ -3,6 +3,23 @@
 module Github
   class Client < API
 
+    require_all 'github_api',
+      'activity',
+      'authorizations',
+      'emojis',
+      'gists',
+      'gitignore',
+      'git_data',
+      'issues',
+      'markdown',
+      'meta',
+      'orgs',
+      'pull_requests',
+      'say',
+      'scopes',
+      'search',
+      'users'
+
     # Serving up the ‘social’ in Social Coding™, the Activity APIs
     # provide access to notifications, subscriptions, and timelines.
     #
