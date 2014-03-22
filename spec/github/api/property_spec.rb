@@ -4,28 +4,30 @@ require 'spec_helper'
 
 describe Github::API::Config, '#property' do
 
-  let(:klass) {
-    Class.new(Github::API::Config) {
+  before(:all) {
+    class Test < Github::API::Config
       property :test
-      property :attr, default: :bar
-    }
+      property :foo, default: :bar
+      property :bar
+    end
   }
+  after(:all) { Object.send(:remove_const, :Test) }
 
-  subject { klass.new }
+  let(:example) { Test.new }
 
-  it { should respond_to(:test) }
-  it { should respond_to(:test=) }
+  it { expect(example).to respond_to(:test) }
+  it { expect(example).to respond_to(:test=) }
 
   it 'defaults to nil' do
-    expect(subject.test).to eql nil
+    expect(example.test).to eql nil
   end
 
   it 'defaults to :bar' do
-    expect(subject.attr).to eql :bar
+    expect(example.foo).to eql :bar
   end
 
   it 'allows to write and read property' do
-    subject.test = :foo
-    expect(subject.test).to eql :foo
+    subject.bar = :a
+    expect(example.bar).to eql :a
   end
 end
