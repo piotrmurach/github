@@ -61,7 +61,7 @@ module Github
       options = Github.configuration.fetch.merge(options)
       self.current_options = options
       Github.configuration.property_names.each do |key|
-        instance_variable_set("@#{key}", options[key])
+        send("#{key}=", options[key])
       end
       process_basic_auth(options[:basic_auth])
     end
@@ -79,12 +79,12 @@ module Github
     end
 
     # Responds to attribute query or attribute clear
-    def method_missing(method, *args, &block) # :nodoc:
-      case method.to_s
+    def method_missing(method_name, *args, &block) # :nodoc:
+      case method_name.to_s
       when /^(.*)\?$/
-        return !!self.send($1.to_s)
+        return !!send($1.to_s)
       when /^clear_(.*)$/
-        self.send("#{$1.to_s}=", nil)
+        send("#{$1.to_s}=", nil)
       else
         super
       end
