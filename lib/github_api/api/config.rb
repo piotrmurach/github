@@ -27,8 +27,15 @@ module Github
       #
       # @api public
       def self.property(name, options = {})
-        property_set << Property.new(name, options)
+        self.property_set << Property.new(name, options)
+        update_subclasses(name, options)
         self
+      end
+
+      def self.update_subclasses(name, options)
+        if defined?(@subclasses) && @subclasses
+          @subclasses.each { |klass| klass.property(name, options) }
+        end
       end
 
       # Check if property is defined
@@ -39,7 +46,7 @@ module Github
       # @return [Boolean]
       #
       # @api public
-      def self.defined?(name)
+      def self.property?(name)
         property_set.include?(name)
       end
 
@@ -50,16 +57,22 @@ module Github
       instance_variable_set("@property_set", PropertySet.new(self))
 
       def self.inherited(descendant)
-        descendant.instance_variable_set('@property_set', self.property_set.dup)
+        super
+        (@subclasses ||= Set.new) << descendant
+        descendant.instance_variable_set('@property_set',
+          PropertySet.new(descendant, self.property_set.properties.dup))
       end
 
       def initialize(&block)
         super(&block)
-        set_defaults
       end
 
       def property_names
         self.class.property_set.properties.map(&:name)
+      end
+
+      def self.property_names
+        property_set.properties.map(&:name)
       end
 
       # Fetach all the properties and their values
@@ -71,19 +84,6 @@ module Github
         self.class.property_set.properties.each_with_object({}) do |property, properties|
           name = property.name
           properties[name] = send(name)
-        end
-      end
-
-      # Set defaults
-      #
-      # @return [self]
-      #
-      # @api private
-      def set_defaults
-        self.class.property_set.properties.each do |property|
-          if !!property.default
-            send("#{property.name}=", property.default)
-          end
         end
       end
 
