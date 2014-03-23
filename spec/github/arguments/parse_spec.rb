@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Arguments, '#parse' do
+describe Github::API::Arguments, '#parse' do
   let(:api)    { Github::Repos.new }
   let(:object) { described_class.new api, 'required' => required }
   let(:arguments) { ['peter-murach', 'github', params] }

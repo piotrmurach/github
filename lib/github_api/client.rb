@@ -15,6 +15,7 @@ module Github
       'meta',
       'orgs',
       'pull_requests',
+      'repos',
       'say',
       'scopes',
       'search',

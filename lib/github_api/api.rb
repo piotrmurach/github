@@ -11,6 +11,7 @@ require 'github_api/null_encoder'
 
 require 'github_api/api/actions'
 require 'github_api/api/factory'
+require 'github_api/api/arguments'
 
 module Github
 
