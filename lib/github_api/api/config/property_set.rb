@@ -24,7 +24,6 @@ module Github
           @parent = parent
           @properties = properties
           @map = {}
-          reset
         end
 
         # Iterate over properties
@@ -76,9 +75,22 @@ module Github
           @map[name.to_sym] = @map[name.to_s.freeze] = property
         end
 
+        # Fetch all properties and their values
+        #
+        # @api public
+        def fetch
+          @map
+        end
+
+        # Check if properties exist
+        #
+        # @api public
+        def empty?
+          @map.empty?
+        end
+
         # @api private
         def define_reader_method(property, method_name, visibility)
-          return if parent.instance_methods.map(&:to_s).include?("#{property.name}")
           property_set = self
           parent.send(:define_method, method_name) { property_set[property.name] }
           parent.send(visibility, method_name)
@@ -86,17 +98,12 @@ module Github
 
         # @api private
         def define_writer_method(property, method_name, visibility)
-          return if parent.instance_methods.map(&:to_s).include?("#{property.name}=")
           property_set = self
           parent.send(:define_method, method_name) do |value|
             property_set[property.name]= value
           end
           parent.send(visibility, method_name)
         end
-
-        def reset
-        end
-
       end # PropertySet
     end # Config
   end # Api
