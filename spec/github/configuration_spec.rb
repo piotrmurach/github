@@ -41,6 +41,10 @@ describe Github::Configuration do
   its(:basic_auth) { should be_nil }
 
   describe ".call" do
+    before { subject.adapter = :net_http }
+
+    after { subject.adapter = :net_http }
+
     it { should respond_to :call }
 
     it "evaluates block" do
