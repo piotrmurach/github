@@ -3,7 +3,7 @@
 module Github
   # Watching a Repository registers the user to receive notificactions on new
   # discussions, as well as events in the user’s activity feed.
-  class Activity::Watching < API
+  class Client::Activity::Watching < API
 
     # List repo watchers
     #

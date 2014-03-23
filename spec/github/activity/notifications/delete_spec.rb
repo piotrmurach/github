@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Activity::Notifications, '#delete' do
+describe Github::Client::Activity::Notifications, '#delete' do
   let(:thread_id) { 1 }
   let(:request_path) { "/notifications/threads/#{thread_id}/subscription" }
   let(:body) { '' }

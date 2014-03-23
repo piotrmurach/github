@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Activity::Events, '#public' do
+describe Github::Client::Activity::Events, '#public' do
   let(:request_path) { "/events" }
   let(:body) { fixture('events/events.json') }
   let(:status) { 200 }

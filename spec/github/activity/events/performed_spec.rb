@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Activity::Events, '#performed' do
+describe Github::Client::Activity::Events, '#performed' do
   let(:user)   { 'peter-murach' }
   let(:request_path) { "/users/#{user}/events" }
   let(:body) { fixture('events/events.json') }

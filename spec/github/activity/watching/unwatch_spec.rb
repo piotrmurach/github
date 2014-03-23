@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Activity::Watching, '#unwatch' do
+describe Github::Client::Activity::Watching, '#unwatch' do
   let(:user) { 'peter-murach' }
   let(:repo) { 'github' }
   let(:request_path) { "/user/subscriptions/#{user}/#{repo}" }

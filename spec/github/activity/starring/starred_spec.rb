@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Activity::Starring, '#starred' do
+describe Github::Client::Activity::Starring, '#starred' do
   let(:user) { 'peter-murach' }
   let(:repo) { 'github' }
 

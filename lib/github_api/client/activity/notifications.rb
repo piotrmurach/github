@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 module Github
-  class Activity::Notifications < API
+  class Client::Activity::Notifications < API
 
     # List your notifications
     #

@@ -3,7 +3,7 @@
 module Github
   # Repository Starring is a feature that lets users bookmark repositories.
   # Stars are shown next to repositories to show an approximate level of interest.  # Stars have no effect on notifications or the activity feed.
-  class Activity::Starring < API
+  class Client::Activity::Starring < API
 
     # List stargazers
     #

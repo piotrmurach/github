@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Activity::Events, '#network' do
+describe Github::Client::Activity::Events, '#network' do
   let(:user)   { 'peter-murach' }
   let(:repo)   { 'github' }
   let(:request_path) { "/networks/#{user}/#{repo}/events" }

@@ -3,8 +3,10 @@
 module Github
   class Client < API
 
+    require_all 'github_api/client',
+      'activity'
+
     require_all 'github_api',
-      'activity',
       'authorizations',
       'emojis',
       'gists',
@@ -24,7 +26,7 @@ module Github
     # Serving up the ‘social’ in Social Coding™, the Activity APIs
     # provide access to notifications, subscriptions, and timelines.
     #
-    namespace :activity, root: true
+    namespace :activity
 
     namespace :emojis, root: true
 

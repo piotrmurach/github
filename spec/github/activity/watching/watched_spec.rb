@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Activity::Watching, '#watched' do
+describe Github::Client::Activity::Watching, '#watched' do
   let(:user) { 'peter-murach' }
 
   after { reset_authentication_for subject }

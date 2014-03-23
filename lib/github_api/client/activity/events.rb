@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 module Github
-  class Activity::Events < API
+  class Client::Activity::Events < API
 
     # List all public events
     #

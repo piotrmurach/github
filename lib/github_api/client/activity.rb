@@ -1,9 +1,9 @@
 # encoding: utf-8
 
 module Github
-  class Activity < API
+  class Client::Activity < API
 
-    require_all 'github_api/activity',
+    require_all 'github_api/client/activity',
       'events',
       'notifications',
       'starring',

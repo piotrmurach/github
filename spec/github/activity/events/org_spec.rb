@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Activity::Events, '#organization' do
+describe Github::Client::Activity::Events, '#organization' do
   let(:org) { 'github' }
   let(:request_path) { "/orgs/#{org}/events" }
   let(:body) { fixture('events/events.json') }
