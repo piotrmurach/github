@@ -52,7 +52,7 @@ Feature: Github API components
   Scenario: Accessing activity API
     Given I have github instance
     When  I fetch "activity"
-    Then  I will have access to "Github::Activity" API
+    Then  I will have access to "Github::Client::Activity" API
 
   Scenario: Accessing authorizations API
     Given I have github instance

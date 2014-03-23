@@ -1,7 +1,7 @@
 Feature: Events API
 
   Background:
-    Given I have "Github::Activity::Events" instance
+    Given I have "Github::Client::Activity::Events" instance
 
   Scenario: Public
 

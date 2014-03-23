@@ -1,7 +1,7 @@
 Feature: Notifications API
 
   Background:
-    Given I have "Github::Activity::Notifications" instance
+    Given I have "Github::Client::Activity::Notifications" instance
 
   Scenario: List
 

@@ -1,7 +1,7 @@
 Feature: Starring API
 
   Background:
-    Given I have "Github::Activity::Starring" instance
+    Given I have "Github::Client::Activity::Starring" instance
 
   Scenario: List
 

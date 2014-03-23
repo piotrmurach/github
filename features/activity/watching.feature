@@ -1,7 +1,7 @@
 Feature: Watching API
 
   Background:
-    Given I have "Github::Activity::Watching" instance
+    Given I have "Github::Client::Activity::Watching" instance
 
   Scenario: List
 
