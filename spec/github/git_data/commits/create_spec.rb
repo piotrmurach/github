@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::GitData::Commits, '#get' do
+describe Github::Client::GitData::Commits, '#get' do
   let(:user) { 'peter-murach' }
   let(:repo) { 'github' }
   let(:request_path) { "/repos/#{user}/#{repo}/git/commits" }

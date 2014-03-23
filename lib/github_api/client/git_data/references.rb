@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 module Github
-  class GitData::References < API
+  class Client::GitData::References < API
 
     VALID_REF_PARAM_NAMES = %w[ ref sha force ].freeze
 

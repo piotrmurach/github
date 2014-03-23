@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 module Github
-  class GitData::Commits < API
+  class Client::GitData::Commits < API
 
     VALID_COMMIT_PARAM_NAMES = %w[
       message

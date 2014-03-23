@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::GitData::Tags, '#get' do
+describe Github::Client::GitData::Tags, '#get' do
   let(:user) { 'peter-murach' }
   let(:repo) { 'github' }
   let(:sha) { "940bd336248efae0f9ee5bc7b2d5c985887b16ac" }

@@ -5,7 +5,7 @@ module Github
   # Since blobs can be any arbitrary binary data, the input and responses for
   # the blob api takes an encoding parameter that can be either utf-8 or base64.
   # If your data cannot be losslessly sent as a UTF-8 string, you can base64 encode it.
-  class GitData::Blobs < API
+  class Client::GitData::Blobs < API
 
     VALID_BLOB_PARAM_NAMES = %w[ content encoding ].freeze
 

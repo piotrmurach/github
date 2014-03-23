@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::GitData::Trees, '#create' do
+describe Github::Client::GitData::Trees, '#create' do
   let(:user) { 'peter-murach' }
   let(:repo) { 'github' }
   let(:sha) { "9fb037999f264ba9a7fc6274d15fa3ae2ab98312" }

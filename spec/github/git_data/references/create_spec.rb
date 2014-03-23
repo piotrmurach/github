@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::GitData::References, '#create' do
+describe Github::Client::GitData::References, '#create' do
   let(:user) { 'peter-murach' }
   let(:repo) { 'github' }
   let(:request_path) { "/repos/#{user}/#{repo}/git/refs" }

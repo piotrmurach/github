@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::GitData::References, '#get' do
+describe Github::Client::GitData::References, '#get' do
   let(:user) { 'peter-murach' }
   let(:repo) { 'github' }
   let(:ref) { "heads/master" }

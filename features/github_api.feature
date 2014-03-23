@@ -42,7 +42,7 @@ Feature: Github API components
   Scenario: Accessing git data API
     Given I have github instance
     When  I fetch "git_data"
-    Then  I will have access to "Github::GitData" API
+    Then  I will have access to "Github::Client::GitData" API
 
   Scenario: Accessing users API
     Given I have github instance

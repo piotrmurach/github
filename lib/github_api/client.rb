@@ -5,13 +5,13 @@ module Github
 
     require_all 'github_api/client',
       'activity',
-      'gists'
+      'gists',
+      'git_data'
 
     require_all 'github_api',
       'authorizations',
       'emojis',
       'gitignore',
-      'git_data',
       'issues',
       'markdown',
       'meta',
@@ -38,7 +38,7 @@ module Github
     # The Git Database API gives you access to read and write raw Git objects
     # to your Git database on GitHub and to list and update your references
     # (branch heads and tags).
-    namespace :git_data, root: true
+    namespace :git_data
     alias :git :git_data
 
     namespace :issues, root: true

@@ -5,7 +5,7 @@ Feature: Accessing GitData References API
   Should return the expected results depending on passed parameters
 
   Background:
-    Given I have "Github::GitData::References" instance
+    Given I have "Github::Client::GitData::References" instance
 
   Scenario: Lists all references on a repository
     Given I want to list resources with the following params:

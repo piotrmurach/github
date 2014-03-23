@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::GitData::Tags do
+describe Github::Client::GitData::Tags do
 
   it { described_class::VALID_TAG_PARAM_NAMES.should_not be_nil }
 

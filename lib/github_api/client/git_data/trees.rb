@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 module Github
-  class GitData::Trees < API
+  class Client::GitData::Trees < API
 
     VALID_TREE_PARAM_NAMES = %w[
       base_tree

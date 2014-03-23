@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::GitData::References, '#delete' do
+describe Github::Client::GitData::References, '#delete' do
   let(:user) { 'peter-murach' }
   let(:repo) { 'github' }
   let(:ref) { "heads/master" }

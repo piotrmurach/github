@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::GitData::Trees do
+describe Github::Client::GitData::Trees do
 
   it { described_class::VALID_TREE_PARAM_NAMES.should_not be_nil }
 

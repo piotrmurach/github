@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 module Github
-  class GitData::Tags < API
+  class Client::GitData::Tags < API
     # This tags api only deals with tag objects -
     # so only annotated tags, not lightweight tags.
 

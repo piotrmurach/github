@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::GitData::References do
+describe Github::Client::GitData::References do
 
   it { described_class::VALID_REF_PARAM_NAMES.should_not be_nil }
 

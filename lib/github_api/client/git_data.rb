@@ -1,9 +1,9 @@
 # encoding: utf-8
 
 module Github
-  class GitData < API
+  class Client::GitData < API
 
-    require_all 'github_api/git_data',
+    require_all 'github_api/client/git_data',
       'blobs',
       'commits',
       'references',
