@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Gists, '#starred' do
+describe Github::Client::Gists, '#starred' do
   let(:request_path) { "/gists/starred" }
 
   before {

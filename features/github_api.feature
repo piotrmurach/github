@@ -27,7 +27,7 @@ Feature: Github API components
   Scenario: Accessing gists API
     Given I have github instance
     When  I fetch "gists"
-    Then  I will have access to "Github::Gists" API
+    Then  I will have access to "Github::Client::Gists" API
 
   Scenario: Accessing issues API
     Given I have github instance

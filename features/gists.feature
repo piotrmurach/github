@@ -1,7 +1,7 @@
 Feature: Gists API
 
   Background:
-    Given I have "Github::Gists" instance
+    Given I have "Github::Client::Gists" instance
 
   Scenario: List all user's gists
 

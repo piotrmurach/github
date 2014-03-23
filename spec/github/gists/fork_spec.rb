@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Gists, '#star' do
+describe Github::Client::Gists, '#star' do
   let(:gist_id) { 1 }
   let(:request_path) { "/gists/#{gist_id}/fork" }
   let(:body) { fixture('gists/gist.json') }

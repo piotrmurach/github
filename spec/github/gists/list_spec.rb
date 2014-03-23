@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Gists, '#list' do
+describe Github::Client::Gists, '#list' do
   let(:user) { 'peter-murach' }
   let(:body) { fixture('gists/gists.json') }
   let(:status) { 200 }

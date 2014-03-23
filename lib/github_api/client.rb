@@ -4,12 +4,12 @@ module Github
   class Client < API
 
     require_all 'github_api/client',
-      'activity'
+      'activity',
+      'gists'
 
     require_all 'github_api',
       'authorizations',
       'emojis',
-      'gists',
       'gitignore',
       'git_data',
       'issues',
@@ -30,7 +30,7 @@ module Github
 
     namespace :emojis, root: true
 
-    namespace :gists, root: true
+    namespace :gists
 
     namespace :gitignore, root: true
     alias :git_ignore :gitignore

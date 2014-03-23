@@ -4,7 +4,7 @@ Feature: Accessing Gists Comments API
   Should return the expected results depending on passed parameters
 
   Background:
-    Given I have "Github::Gists::Comments" instance
+    Given I have "Github::Client::Gists::Comments" instance
 
   Scenario: Lists comments on a gist
     When I want to list resources with the following params:

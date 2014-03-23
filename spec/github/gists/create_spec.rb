@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Gists, '#create' do
+describe Github::Client::Gists, '#create' do
   let(:request_path) { "/gists" }
 
   let(:inputs) {

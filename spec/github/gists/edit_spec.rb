@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Gists, '#edit' do
+describe Github::Client::Gists, '#edit' do
   let(:gist_id) { 1 }
   let(:request_path) { "/gists/#{gist_id}" }
 

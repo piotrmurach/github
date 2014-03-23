@@ -1,9 +1,9 @@
 # encoding: utf-8
 
 module Github
-  class Gists < API
+  class Client::Gists < API
 
-    require_all 'github_api/gists', 'comments'
+    require_all 'github_api/client/gists', 'comments'
 
     REQUIRED_GIST_INPUTS = %w[
       description

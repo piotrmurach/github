@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Gists::Comments, '#get' do
+describe Github::Client::Gists::Comments, '#get' do
   let(:gist_id) { 1 }
   let(:comment_id) { 1 }
   let(:request_path) { "/gists/#{gist_id}/comments/#{comment_id}" }

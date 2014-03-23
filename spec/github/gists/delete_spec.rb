@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Gists, '#delete' do
+describe Github::Client::Gists, '#delete' do
   let(:gist_id)   { 1 }
   let(:request_path) { "/gists/#{gist_id}" }
   let(:body) { fixture('gists/gist.json') }

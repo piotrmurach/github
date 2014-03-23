@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 module Github
-  class Gists::Comments < API
+  class Client::Gists::Comments < API
 
     REQUIRED_GIST_COMMENT_OPTIONS = %w[
       body
