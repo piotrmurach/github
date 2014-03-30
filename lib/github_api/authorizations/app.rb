@@ -1,6 +1,5 @@
 # encoding: utf-8
 
-require 'pry'
 module Github
 
   class Authorizations::App < Authorizations
@@ -73,7 +72,7 @@ module Github
     # @example
     #   github - Github.new basic_auth: "client_id:client_secret"
     #   github.oauth.app.check 'client_id', 'access-token'
-    #     
+    # @api public
 
     def check(*args)
       raise_authentication_error unless authenticated?
@@ -89,8 +88,6 @@ module Github
         raise raise_app_authentication_error
       end
     end
-
-
 
     protected
 
