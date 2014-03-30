@@ -58,9 +58,7 @@ describe Github::Authorizations::App, '#check' do
     let(:status)    { 404 }
     
     it "does not raise error for expected 404" do
-      expect {
-        subject.check client_id, access_token
-      }.to_not raise_error
+      expect { subject.check client_id, access_token }.to_not raise_error
     end
 
     it "returns nil" do
