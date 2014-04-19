@@ -2,12 +2,12 @@
 
 require 'spec_helper'
 
-describe Github::PullRequests, 'integration' do
+describe Github::Client::PullRequests, 'integration' do
 
   after { reset_authentication_for subject }
 
   it_should_behave_like 'api interface'
 
-  its(:comments) { should be_a Github::PullRequests::Comments }
+  its(:comments) { should be_a Github::Client::PullRequests::Comments }
 
 end # Github::PullRequests

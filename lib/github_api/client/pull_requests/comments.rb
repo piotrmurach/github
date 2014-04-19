@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 module Github
-  class PullRequests::Comments < API
+  class Client::PullRequests::Comments < API
 
     VALID_REQUEST_COM_PARAM_NAMES = %w[
       body
@@ -139,6 +139,5 @@ module Github
         raise ArgumentError, "Required params are: #{VALID_REQUEST_COM_PARAM_NAMES.join(', ')}"
       end
     end
-
   end # PullRequests::Comments
 end # Github

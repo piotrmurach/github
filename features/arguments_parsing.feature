@@ -26,7 +26,7 @@ Feature: Github API arguments parsing
 
   Scenario: Invoking multiple calls for fetching pull request
 
-    Given I have "Github::PullRequests" instance
+    Given I have "Github::Client::PullRequests" instance
     When I want to get resource with the following arguments:
       | user     | repo     | number |
       | rubinius | rubinius | 2193   |

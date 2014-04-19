@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::PullRequests, '#merge' do
+describe Github::Client::PullRequests, '#merge' do
   let(:user)   { 'peter-murach' }
   let(:repo)   { 'github' }
   let(:number) { 1347 }

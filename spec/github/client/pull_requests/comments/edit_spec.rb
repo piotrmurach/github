@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::PullRequests::Comments, '#edit' do
+describe Github::Client::PullRequests::Comments, '#edit' do
   let(:user)   { 'peter-murach' }
   let(:repo)   { 'github' }
   let(:request_path) { "/repos/#{user}/#{repo}/pulls/comments/#{comment_id}" }
@@ -47,5 +47,4 @@ describe Github::PullRequests::Comments, '#edit' do
   it_should_behave_like 'request failure' do
     let(:requestable) { subject.edit user, repo, comment_id, inputs }
   end
-
 end # edit

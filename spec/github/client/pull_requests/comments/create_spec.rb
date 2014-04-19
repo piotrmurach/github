@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::PullRequests::Comments, '#create' do
+describe Github::Client::PullRequests::Comments, '#create' do
   let(:user)   { 'peter-murach' }
   let(:repo)   { 'github' }
   let(:request_path) { "/repos/#{user}/#{repo}/pulls/#{pull_request_id}/comments" }
@@ -55,5 +55,4 @@ describe Github::PullRequests::Comments, '#create' do
   it_should_behave_like 'request failure' do
     let(:requestable) { subject.create user, repo, pull_request_id, inputs }
   end
-
 end # create

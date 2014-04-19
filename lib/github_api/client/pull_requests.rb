@@ -1,9 +1,9 @@
 # encoding: utf-8
 
 module Github
-  class PullRequests < API
+  class Client::PullRequests < API
 
-    require_all 'github_api/pull_requests',
+    require_all 'github_api/client/pull_requests',
       'comments'
 
     VALID_REQUEST_PARAM_NAMES = %w[

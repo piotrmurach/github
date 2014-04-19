@@ -2,10 +2,10 @@
 
 require 'spec_helper'
 
-describe Github::PullRequests::Comments do
+describe Github::Client::PullRequests::Comments do
 
   after { reset_authentication_for subject }
 
   it_should_behave_like 'api interface'
 
-end # Github::PullRequests::Comments
+end # Github::Client::PullRequests::Comments

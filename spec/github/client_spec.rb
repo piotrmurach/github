@@ -25,7 +25,7 @@ describe Github::Client do
 
   it { expect(client.orgs).to be_a Github::Client::Orgs }
 
-  it { expect(client.pull_requests).to be_a Github::PullRequests }
+  it { expect(client.pull_requests).to be_a Github::Client::PullRequests }
 
   it { expect(client.repos).to be_a Github::Repos }
 

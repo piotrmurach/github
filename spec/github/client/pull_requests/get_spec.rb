@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::PullRequests, '#get' do
+describe Github::Client::PullRequests, '#get' do
   let(:user)   { 'peter-murach' }
   let(:repo) { 'github' }
   let(:number) { 1 }
@@ -45,5 +45,4 @@ describe Github::PullRequests, '#get' do
   it_should_behave_like 'request failure' do
     let(:requestable) { subject.get user, repo, number }
   end
-
 end # get

@@ -1,9 +1,8 @@
-
 # encoding: utf-8
 
 require 'spec_helper'
 
-describe Github::PullRequests, '#merged?' do
+describe Github::Client::PullRequests, '#merged?' do
   let(:user)   { 'peter-murach' }
   let(:repo)   { 'github' }
   let(:number) { 1347 }

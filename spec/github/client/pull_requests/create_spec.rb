@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::PullRequests, '#create' do
+describe Github::Client::PullRequests, '#create' do
   let(:user)   { 'peter-murach' }
   let(:repo)   { 'github' }
   let(:request_path) { "/repos/#{user}/#{repo}/pulls" }
@@ -52,5 +52,4 @@ describe Github::PullRequests, '#create' do
   it_should_behave_like 'request failure' do
     let(:requestable) { subject.create user, repo, inputs }
   end
-
 end # create

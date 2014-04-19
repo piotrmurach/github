@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::PullRequests::Comments, '#get' do
+describe Github::Client::PullRequests::Comments, '#get' do
   let(:user)   { 'peter-murach' }
   let(:repo) { 'github' }
   let(:pull_request_id) { 1 }
@@ -48,5 +48,4 @@ describe Github::PullRequests::Comments, '#get' do
   it_should_behave_like 'request failure' do
     let(:requestable) { subject.get user, repo, comment_id }
   end
-
 end # get

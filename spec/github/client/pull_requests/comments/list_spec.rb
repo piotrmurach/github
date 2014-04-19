@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::PullRequests::Comments, '#list' do
+describe Github::Client::PullRequests::Comments, '#list' do
   let(:repo) { 'github' }
   let(:user) { 'peter-murach' }
   let(:number) { 1 }

@@ -1,7 +1,7 @@
 Feature: Pull Requests Comments API
 
   Background:
-    Given I have "Github::PullRequests::Comments" instance
+    Given I have "Github::Client::PullRequests::Comments" instance
 
   Scenario: List in a repository
 

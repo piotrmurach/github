@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::PullRequests::Comments, '#delete' do
+describe Github::Client::PullRequests::Comments, '#delete' do
   let(:user)   { 'peter-murach' }
   let(:repo)   { 'github' }
   let(:comment_id) { 1 }

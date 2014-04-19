@@ -14,10 +14,10 @@ module Github
       'markdown',
       'meta',
       'orgs',
+      'pull_requests',
       'users'
 
     require_all 'github_api',
-      'pull_requests',
       'repos',
       'say',
       'scopes',
@@ -54,7 +54,7 @@ module Github
     namespace :orgs
     alias :organizations :orgs
 
-    namespace :pull_requests, root: true
+    namespace :pull_requests
     alias :pulls :pull_requests
 
     namespace :repos, root: true

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::PullRequests, '#update' do
+describe Github::Client::PullRequests, '#update' do
   let(:user)   { 'peter-murach' }
   let(:repo)   { 'github' }
   let(:number) { 1347 }

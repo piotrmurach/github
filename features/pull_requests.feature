@@ -1,7 +1,7 @@
 Feature: Pull Requests API
 
   Background:
-    Given I have "Github::PullRequests" instance
+    Given I have "Github::Client::PullRequests" instance
 
   Scenario: List
 

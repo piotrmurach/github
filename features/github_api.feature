@@ -37,7 +37,7 @@ Feature: Github API components
   Scenario: Accessing pull requests API
     Given I have github instance
     When  I fetch "pull_requests"
-    Then  I will have access to "Github::PullRequests" API
+    Then  I will have access to "Github::Client::PullRequests" API
 
   Scenario: Accessing git data API
     Given I have github instance

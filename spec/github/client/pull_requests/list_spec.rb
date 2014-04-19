@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::PullRequests, '#list' do
+describe Github::Client::PullRequests, '#list' do
   let(:repo) { 'github' }
   let(:user) { 'peter-murach' }
   let(:inputs) { { 'state'=> 'closed', 'unrelated' => true } }
@@ -50,5 +50,4 @@ describe Github::PullRequests, '#list' do
   it_should_behave_like 'request failure' do
     let(:requestable) { subject.list user, repo, inputs }
   end
-
 end # list
