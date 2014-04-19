@@ -5,12 +5,12 @@ module Github
 
     require_all 'github_api/client',
       'activity',
+      'emojis',
       'gists',
       'git_data'
 
     require_all 'github_api',
       'authorizations',
-      'emojis',
       'gitignore',
       'issues',
       'markdown',
@@ -28,7 +28,7 @@ module Github
     #
     namespace :activity
 
-    namespace :emojis, root: true
+    namespace :emojis
 
     namespace :gists
 

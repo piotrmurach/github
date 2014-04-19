@@ -3,7 +3,6 @@
 module Github
   class Emojis < API
 
-
     # lists all the emojis.
     #
     # = Examples
@@ -15,6 +14,5 @@ module Github
 
       get_request("/emojis", arguments.params)
     end
-
   end # Emojis
 end # Github
