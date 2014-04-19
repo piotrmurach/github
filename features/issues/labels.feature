@@ -1,7 +1,7 @@
 Feature: Labels API
 
   Background:
-    Given I have "Github::Issues::Labels" instance
+    Given I have "Github::Client::Issues::Labels" instance
 
   Scenario: List in a repository
 

@@ -1,7 +1,7 @@
 Feature: Markdown API
 
   Background:
-    Given I have "Github::Markdown" instance
+    Given I have "Github::Client::Markdown" instance
 
   Scenario: Render arbitrary document
 

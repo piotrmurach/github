@@ -1,7 +1,7 @@
 Feature: Issues API
 
   Background:
-    Given I have "Github::Issues" instance
+    Given I have "Github::Client::Issues" instance
 
   Scenario: List
 

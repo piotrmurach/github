@@ -1,7 +1,7 @@
 Feature: Issues Comments API
 
   Background:
-    Given I have "Github::Issues::Comments" instance
+    Given I have "Github::Client::Issues::Comments" instance
 
   Scenario: List in a repository
 

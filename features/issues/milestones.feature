@@ -1,7 +1,7 @@
 Feature: Milestones API
 
   Background:
-    Given I have "Github::Issues::Milestones" instance
+    Given I have "Github::Client::Issues::Milestones" instance
 
   Scenario: List
 

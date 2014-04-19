@@ -82,7 +82,7 @@ Feature: Github API pagination
 
   Scenario: Navigating resource links with query parameters
 
-    Given I have "Github::Issues" instance
+    Given I have "Github::Client::Issues" instance
       And I want to list resources with the following params:
         | user   | repo |
         | wycats | thor |
@@ -99,7 +99,7 @@ Feature: Github API pagination
         | 4    | 50       | closed |
 
   Scenario: Navigate to Next page
-    Given I have "Github::Issues" instance
+    Given I have "Github::Client::Issues" instance
       And I want to list resources with the following params:
         | user   | repo |
         | wycats | thor |
@@ -124,7 +124,7 @@ Feature: Github API pagination
 
   Scenario: Navigate to Last page
 
-    Given I have "Github::Issues" instance
+    Given I have "Github::Client::Issues" instance
       And I want to list resources with the following params:
         | user   | repo |
         | wycats | thor |
@@ -143,7 +143,7 @@ Feature: Github API pagination
 
   Scenario: Navigate to Previous page
 
-    Given I have "Github::Issues" instance
+    Given I have "Github::Client::Issues" instance
       And I want to list resources with the following params:
         | user   | repo |
         | wycats | thor |

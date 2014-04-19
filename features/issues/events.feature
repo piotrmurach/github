@@ -1,7 +1,7 @@
 Feature: Events API
 
   Background:
-    Given I have "Github::Issues::Events" instance
+    Given I have "Github::Client::Issues::Events" instance
 
   Scenario: List for a repository
 

@@ -1,7 +1,7 @@
 Feature: Media Type
 
   Background:
-    Given I have "Github::Issues" instance
+    Given I have "Github::Client::Issues" instance
 
   Scenario: Default media
 

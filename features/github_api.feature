@@ -32,7 +32,7 @@ Feature: Github API components
   Scenario: Accessing issues API
     Given I have github instance
     When  I fetch "issues"
-    Then  I will have access to "Github::Issues" API
+    Then  I will have access to "Github::Client::Issues" API
 
   Scenario: Accessing pull requests API
     Given I have github instance
