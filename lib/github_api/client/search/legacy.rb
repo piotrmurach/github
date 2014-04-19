@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 module Github
-  class Search::Legacy < API
+  class Client::Search::Legacy < API
     include Github::Utils::Url
 
     # Search issues

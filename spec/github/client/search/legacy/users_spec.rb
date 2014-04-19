@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Search::Legacy, '#users' do
+describe Github::Client::Search::Legacy, '#users' do
   let(:keyword)      { 'api' }
   let(:request_path) { "/legacy/user/search/#{keyword}" }
 

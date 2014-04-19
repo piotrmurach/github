@@ -1,7 +1,7 @@
 Feature: Legacy Search API
 
   Background:
-    Given I have "Github::Search::Legacy" instance
+    Given I have "Github::Client::Search::Legacy" instance
 
   Scenario: Issues
 

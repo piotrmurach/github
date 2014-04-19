@@ -2,9 +2,9 @@
 
 require 'spec_helper'
 
-describe Github::Search::Legacy, '#repos' do
+describe Github::Client::Search::Legacy, '#email' do
   let(:keyword)      { 'api' }
-  let(:request_path) { "/legacy/repos/search/#{keyword}" }
+  let(:request_path) { "/legacy/user/email/#{keyword}" }
 
   before do
     stub_get(request_path).
@@ -13,24 +13,22 @@ describe Github::Search::Legacy, '#repos' do
   end
 
   context "resource found" do
-    let(:body)   { fixture('search/repos_legacy.json') }
+    let(:body)   { fixture('search/email.json') }
     let(:status) { 200 }
 
-    it { expect { subject.repos }.to raise_error(ArgumentError) }
-
     it "should get the resources" do
-      subject.repos keyword
+      subject.email keyword
       a_get(request_path).should have_been_made
     end
 
     it "should get the resource through params hash" do
-      subject.repos keyword: keyword
+      subject.email email: keyword
       a_get(request_path).should have_been_made
     end
 
-    it "should get repository information" do
-      repos = subject.repos keyword: keyword
-      repos.repositories.first.username.should == 'mathiasbynens'
+    it "should get user information" do
+      user = subject.email email: keyword
+      user.user.username.should == 'techno'
     end
   end
 end

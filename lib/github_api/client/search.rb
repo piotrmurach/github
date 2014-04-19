@@ -1,16 +1,15 @@
 # encoding: utf-8
 
 module Github
-
   # The Search API is optimized to help you find the specific item
   # you're looking for (e.g., a specific user, a specific file
   # in a repository, etc.).
-  class Search < API
+  class Client::Search < API
     include Github::Utils::Url
 
     PREVIEW_MEDIA = 'application/vnd.github.preview'.freeze # :nodoc:
 
-    require_all 'github_api/search', 'legacy'
+    require_all 'github_api/client/search', 'legacy'
 
     # Access to Search::Legacy API
     namespace :legacy

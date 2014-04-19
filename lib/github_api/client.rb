@@ -15,13 +15,13 @@ module Github
       'meta',
       'orgs',
       'pull_requests',
+      'search',
       'users'
 
     require_all 'github_api',
       'repos',
       'say',
-      'scopes',
-      'search'
+      'scopes'
 
     # Serving up the ‘social’ in Social Coding™, the Activity APIs
     # provide access to notifications, subscriptions, and timelines.
@@ -64,7 +64,7 @@ module Github
 
     namespace :scopes, root: true
 
-    namespace :search, root: true
+    namespace :search
 
     # Many of the resources on the users API provide a shortcut for getting
     # information about the currently authenticated user.

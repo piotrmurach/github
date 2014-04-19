@@ -1,7 +1,7 @@
 Feature: Search API
 
   Background:
-    Given I have "Github::Search" instance
+    Given I have "Github::Client::Search" instance
 
   Scenario: Issues
 

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Search, '#code' do
+describe Github::Client::Search, '#code' do
   let(:query)        { 'tty' }
   let(:request_path) { '/search/code' }
 

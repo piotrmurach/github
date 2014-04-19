@@ -2,11 +2,11 @@
 
 require 'spec_helper'
 
-describe Github::Search, 'integration' do
+describe Github::Client::Search, 'integration' do
 
   after { reset_authentication_for subject }
 
   it_should_behave_like 'api interface'
 
-  its(:legacy) { should be_a Github::Search::Legacy }
+  its(:legacy) { should be_a Github::Client::Search::Legacy }
 end

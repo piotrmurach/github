@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Search::Legacy, '#issues' do
+describe Github::Client::Search::Legacy, '#issues' do
   let(:keyword)      { 'api' }
   let(:request_path) {"/legacy/issues/search/#{owner}/#{repo}/#{state}/#{keyword}"}
   let(:owner)        { 'peter-murach' }
