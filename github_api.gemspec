@@ -22,5 +22,5 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'nokogiri',    '~> 1.6.0'
   gem.add_dependency 'descendants_tracker', '~> 0.0.1'
 
-  gem.add_development_dependency 'bundler', '~> 1.3'
+  gem.add_development_dependency 'bundler', '~> 1.5'
 end
