@@ -5,7 +5,7 @@ Feature: Accessing Users Emails API
   Should return the expected results depending on passed parameters
 
   Background:
-    Given I have "Github::Users::Emails" instance
+    Given I have "Github::Client::Users::Emails" instance
 
   Scenario: Lists all emails for the authenticated user
 

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Users::Keys, '#create' do
+describe Github::Client::Users::Keys, '#create' do
   let(:request_path) { "/user/keys" }
 
   before {

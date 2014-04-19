@@ -1,10 +1,9 @@
 # encoding: utf-8
 
 module Github
-  class Users < API
-
+  class Client::Users < API
     # Load all the modules after initializing Repos to avoid superclass mismatch
-    require_all 'github_api/users',
+    require_all 'github_api/client/users',
       'emails',
       'followers',
       'keys'

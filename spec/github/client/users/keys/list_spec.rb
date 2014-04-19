@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Users::Keys, '#list' do
+describe Github::Client::Users::Keys, '#list' do
   let(:key_id) { 1 }
 
   before {
@@ -74,5 +74,4 @@ describe Github::Users::Keys, '#list' do
       yielded.should == result
     end
   end
-
 end # list

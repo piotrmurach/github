@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Users, '#get' do
+describe Github::Client::Users, '#get' do
   let(:user) { 'peter-murach' }
   let(:request_path) { "/users/#{user}" }
 

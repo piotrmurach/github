@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Users::Followers, '#unfollow' do
+describe Github::Client::Users::Followers, '#unfollow' do
   let(:request_path) { "/user/following/#{user}" }
   let(:user)   { 'peter-murach' }
   let(:body) { '[]' }

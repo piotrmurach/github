@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 module Github
-  class Users::Keys < API
+  class Client::Users::Keys < API
 
     VALID_KEY_PARAM_NAMES = %w[ title key ].freeze
 

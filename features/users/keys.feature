@@ -5,7 +5,7 @@ Feature: Accessing Users Keys API
   Should return the expected results depending on passed parameters
 
   Background:
-    Given I have "Github::Users::Keys" instance
+    Given I have "Github::Client::Users::Keys" instance
 
   Scenario: Lists all public keys for a user
 

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Users, '#list' do
+describe Github::Client::Users, '#list' do
   let(:request_path) { "/users" }
 
   before {

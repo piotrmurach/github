@@ -47,7 +47,7 @@ Feature: Github API components
   Scenario: Accessing users API
     Given I have github instance
     When  I fetch "users"
-    Then  I will have access to "Github::Users" API
+    Then  I will have access to "Github::Client::Users" API
 
   Scenario: Accessing activity API
     Given I have github instance

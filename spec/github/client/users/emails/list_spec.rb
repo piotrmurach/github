@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Users::Emails, '#list' do
+describe Github::Client::Users::Emails, '#list' do
   let(:email) { "octocat@github.com" }
   let(:request_path) { "/user/emails" }
 

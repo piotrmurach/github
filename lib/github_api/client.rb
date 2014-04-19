@@ -13,15 +13,15 @@ module Github
       'issues',
       'markdown',
       'meta',
-      'orgs'
+      'orgs',
+      'users'
 
     require_all 'github_api',
       'pull_requests',
       'repos',
       'say',
       'scopes',
-      'search',
-      'users'
+      'search'
 
     # Serving up the ‘social’ in Social Coding™, the Activity APIs
     # provide access to notifications, subscriptions, and timelines.
@@ -68,8 +68,6 @@ module Github
 
     # Many of the resources on the users API provide a shortcut for getting
     # information about the currently authenticated user.
-    #
-    namespace :users, root: true
-
+    namespace :users
   end # Client
 end # Github

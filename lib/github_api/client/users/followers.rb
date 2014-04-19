@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 module Github
-  class Users::Followers < API
+  class Client::Users::Followers < API
 
     # List a user's followers
     #

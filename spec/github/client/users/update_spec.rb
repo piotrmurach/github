@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Users, '#update' do
+describe Github::Client::Users, '#update' do
   let(:key_id) { 1 }
   let(:request_path) { "/user" }
 

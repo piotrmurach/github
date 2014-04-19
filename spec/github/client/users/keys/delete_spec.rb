@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Users::Keys, '#delete' do
+describe Github::Client::Users::Keys, '#delete' do
   let(:key_id) { 1 }
   let(:request_path) { "/user/keys/#{key_id}" }
 

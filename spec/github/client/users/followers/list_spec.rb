@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Users::Followers, '#list' do
+describe Github::Client::Users::Followers, '#list' do
   let(:user)   { 'peter-murach' }
   let(:request_path) { "/users/#{user}/followers" }
 

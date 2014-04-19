@@ -2,7 +2,7 @@
 require 'cgi'
 
 module Github
-  class Users::Emails < API
+  class Client::Users::Emails < API
 
     # List email addresses for the authenticated user
     #

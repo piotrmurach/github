@@ -29,5 +29,5 @@ describe Github::Client do
 
   it { expect(client.repos).to be_a Github::Repos }
 
-  it { expect(client.users).to be_a Github::Users }
+  it { expect(client.users).to be_a Github::Client::Users }
 end
