@@ -18,13 +18,13 @@ describe Github::API::Factory do
 
   context '#create_instance' do
     it 'creates class instance' do
-      expect(factory.create_instance('Issues::Labels', {})).to be_kind_of(Github::Issues::Labels)
+      expect(factory.create_instance('Client::Issues::Labels', {})).to be_kind_of(Github::Client::Issues::Labels)
     end
   end
 
   context '#convert_to_constant' do
     it 'knows how to convert nested classes' do
-      expect(factory.convert_to_constant('Issues::Labels')).to eql Github::Issues::Labels
+      expect(factory.convert_to_constant('Client::Issues::Labels')).to eql(Github::Client::Issues::Labels)
     end
   end
 end # Github::ApiFactory

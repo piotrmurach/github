@@ -7,12 +7,12 @@ module Github
       'activity',
       'emojis',
       'gists',
-      'git_data'
+      'git_data',
+      'issues'
 
     require_all 'github_api',
       'authorizations',
       'gitignore',
-      'issues',
       'markdown',
       'meta',
       'orgs',
@@ -41,7 +41,7 @@ module Github
     namespace :git_data
     alias :git :git_data
 
-    namespace :issues, root: true
+    namespace :issues
 
     namespace :markdown, root: true
 

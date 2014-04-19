@@ -5,7 +5,7 @@ require 'spec_helper'
 describe 'Arguments' do
   let(:user) { 'peter-murach' }
   let(:repo) { 'github-api' }
-  let(:api)  { Github::Issues.new :user => user, :repo => repo }
+  let(:api)  { Github::Client::Issues.new :user => user, :repo => repo }
   let(:body) { '[]' }
   let(:status) { 200 }
 
@@ -75,6 +75,5 @@ describe 'Arguments' do
     it "passes through extra parameters" do
       subject.get user, repo, milestone_id, :auto_pagination => true
     end
-
   end
 end
