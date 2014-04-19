@@ -1,8 +1,7 @@
 # encoding: utf-8
 
 module Github
-  class Meta < API
-
+  class Client::Meta < API
     # Get meta information about GitHub.com, the service.
     #
     # = Examples
@@ -14,6 +13,5 @@ module Github
 
       get_request("/meta", arguments.params)
     end
-
   end # Meta
 end # Github

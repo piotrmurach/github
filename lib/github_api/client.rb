@@ -10,11 +10,11 @@ module Github
       'gitignore',
       'git_data',
       'issues',
-      'markdown'
+      'markdown',
+      'meta'
 
     require_all 'github_api',
       'authorizations',
-      'meta',
       'orgs',
       'pull_requests',
       'repos',
@@ -25,7 +25,6 @@ module Github
 
     # Serving up the ‘social’ in Social Coding™, the Activity APIs
     # provide access to notifications, subscriptions, and timelines.
-    #
     namespace :activity
 
     namespace :emojis
@@ -45,7 +44,7 @@ module Github
 
     namespace :markdown
 
-    namespace :meta, root: true
+    namespace :meta
 
     # An API for users to manage their own tokens. You can only access your own
     # tokens, and only through Basic Authentication.
