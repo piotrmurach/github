@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Gitignore, '#list' do
+describe Github::Client::Gitignore, '#list' do
   let(:request_path) { "/gitignore/templates" }
 
   before {
@@ -38,5 +38,4 @@ describe Github::Gitignore, '#list' do
   it_should_behave_like 'request failure' do
     let(:requestable) { subject.list }
   end
-
 end # list

@@ -2,10 +2,9 @@
 
 require 'spec_helper'
 
-describe Github::Gitignore, '#get' do
+describe Github::Client::Gitignore, '#get' do
   let(:template) { 'Ruby' }
   let(:request_path) { "/gitignore/templates/#{template}" }
-
 
   before {
     stub_get(request_path).to_return(:body => body, :status => status,

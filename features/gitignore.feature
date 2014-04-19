@@ -1,7 +1,7 @@
 Feature: Markdown API
 
   Background:
-    Given I have "Github::Gitignore" instance
+    Given I have "Github::Client::Gitignore" instance
 
   Scenario: List available templates
 

@@ -7,13 +7,13 @@ module Github
       'activity',
       'emojis',
       'gists',
+      'gitignore',
       'git_data',
       'issues',
       'markdown'
 
     require_all 'github_api',
       'authorizations',
-      'gitignore',
       'meta',
       'orgs',
       'pull_requests',
@@ -32,7 +32,7 @@ module Github
 
     namespace :gists
 
-    namespace :gitignore, root: true
+    namespace :gitignore
     alias :git_ignore :gitignore
 
     # The Git Database API gives you access to read and write raw Git objects

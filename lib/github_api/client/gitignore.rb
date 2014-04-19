@@ -1,10 +1,9 @@
 # encoding: utf-8
 
 module Github
-
   # When you create a new GitHub repository via the API, you can specify a
   # .gitignore template to apply to the repository upon creation.
-  class Gitignore < API
+  class Client::Gitignore < API
 
     # List all templates available to pass as an option when creating a repository.
     #
@@ -45,6 +44,5 @@ module Github
       get_request("/gitignore/templates/#{name}", params)
     end
     alias :find :get
-
   end # Gitignore
 end # Github
