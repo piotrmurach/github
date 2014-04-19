@@ -1,11 +1,10 @@
 # encoding: utf-8
 
 module Github
-
   # OAuth Authorizations API
-  class Authorizations < API
+  class Client::Authorizations < API
 
-    require_all 'github_api/authorizations', 'app'
+    require_all 'github_api/client/authorizations', 'app'
 
     VALID_AUTH_PARAM_NAMES = %w[
       scopes
@@ -134,5 +133,5 @@ module Github
         ' via Basic Authentication'
     end
 
-  end # Authorizations
+  end # Client::Authorizations
 end # Github

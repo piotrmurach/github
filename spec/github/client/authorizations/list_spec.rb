@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Authorizations, '#list' do
+describe Github::Client::Authorizations, '#list' do
   let(:basic_auth) { 'login:password' }
   let(:request_path) { "/authorizations" }
   let(:host) { "https://#{basic_auth}@api.github.com" }
@@ -51,5 +51,4 @@ describe Github::Authorizations, '#list' do
   it_should_behave_like 'request failure' do
     let(:requestable) { subject.list }
   end
-
 end # authorizations

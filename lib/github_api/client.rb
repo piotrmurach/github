@@ -5,6 +5,7 @@ module Github
 
     require_all 'github_api/client',
       'activity',
+      'authorizations',
       'emojis',
       'gists',
       'gitignore',
@@ -14,7 +15,6 @@ module Github
       'meta'
 
     require_all 'github_api',
-      'authorizations',
       'orgs',
       'pull_requests',
       'repos',
@@ -48,7 +48,7 @@ module Github
 
     # An API for users to manage their own tokens. You can only access your own
     # tokens, and only through Basic Authentication.
-    namespace :oauth, root: true, full_name: :authorizations
+    namespace :oauth, full_name: :authorizations
     alias :authorizations :oauth
 
     namespace :orgs, root: true

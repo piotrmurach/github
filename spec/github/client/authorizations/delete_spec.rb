@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Authorizations, '#delete' do
+describe Github::Client::Authorizations, '#delete' do
   let(:basic_auth) { 'login:password' }
   let(:host)       { "https://#{basic_auth}@api.github.com" }
 

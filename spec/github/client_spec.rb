@@ -11,6 +11,8 @@ describe Github::Client do
 
   it { expect(client.activity).to be_a Github::Client::Activity }
 
+  it { expect(client.oauth).to be_a Github::Client::Authorizations }
+
   it { expect(client.gists).to be_a Github::Client::Gists }
 
   it { expect(client.git_data).to be_a Github::Client::GitData }
@@ -28,6 +30,4 @@ describe Github::Client do
   it { expect(client.repos).to be_a Github::Repos }
 
   it { expect(client.users).to be_a Github::Users }
-
-  it { expect(client.oauth).to be_a Github::Authorizations }
 end

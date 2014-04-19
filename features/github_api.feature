@@ -57,5 +57,5 @@ Feature: Github API components
   Scenario: Accessing authorizations API
     Given I have github instance
     When  I fetch "oauth"
-    Then  I will have access to "Github::Authorizations" API
+    Then  I will have access to "Github::Client::Authorizations" API
 

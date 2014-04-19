@@ -1,9 +1,7 @@
 # encoding: utf-8
 
 module Github
-
-  class Authorizations::App < Authorizations
-
+  class Client::Authorizations::App < Client::Authorizations
     # Get-or-create an authorization for a specific app
     #
     # @param [Hash] params
@@ -25,7 +23,7 @@ module Github
     def create(*args)
       raise_authentication_error unless authenticated?
       arguments(args, required: [:client_id]) do
-        sift Authorizations::VALID_AUTH_PARAM_NAMES
+        sift VALID_AUTH_PARAM_NAMES
       end
 
       if client_id
@@ -73,5 +71,5 @@ module Github
       raise ArgumentError, 'To create authorization for the app, ' +
         'you need to provide client_id argument and client_secret parameter'
     end
-  end
-end
+  end # Client::Authorizations::App
+end # Github
