@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Orgs, '#edit' do
+describe Github::Client::Orgs, '#edit' do
   let(:org)   { 'github' }
   let(:request_path) { "/orgs/#{org}" }
   let(:body) { fixture("orgs/org.json") }
@@ -50,5 +50,4 @@ describe Github::Orgs, '#edit' do
   it_should_behave_like 'request failure' do
     let(:requestable) { subject.edit org }
   end
-
 end # edit

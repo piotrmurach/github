@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Orgs::Teams, '#remove_repo' do
+describe Github::Client::Orgs::Teams, '#remove_repo' do
   let(:team_id)   { 1 }
   let(:user) { 'peter-murach' }
   let(:repo) { 'github' }
@@ -36,5 +36,4 @@ describe Github::Orgs::Teams, '#remove_repo' do
   it_should_behave_like 'request failure' do
     let(:requestable) { subject.remove_repo team_id, user, repo }
   end
-
 end # remove_repo

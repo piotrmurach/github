@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Orgs::Members, '#conceal' do
+describe Github::Client::Orgs::Members, '#conceal' do
   let(:org)    { 'github' }
   let(:user) { 'peter-murach' }
   let(:request_path) { "/orgs/#{org}/public_members/#{user}" }

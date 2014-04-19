@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Orgs::Members, '#delete' do
+describe Github::Client::Orgs::Members, '#delete' do
   let(:org)    { 'github' }
   let(:member) { 'peter-murach' }
   let(:request_path) { "/orgs/#{org}/members/#{member}" }

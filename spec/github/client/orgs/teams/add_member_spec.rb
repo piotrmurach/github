@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Orgs::Teams, '#add_member' do
+describe Github::Client::Orgs::Teams, '#add_member' do
   let(:team_id) { 1 }
   let(:user) { 'peter-murach' }
   let(:request_path) { "/teams/#{team_id}/members/#{user}" }

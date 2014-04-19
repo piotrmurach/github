@@ -1,9 +1,9 @@
 # encoding: utf-8
 
 module Github
-  class Orgs < API
+  class Client::Orgs < API
 
-    require_all 'github_api/orgs',
+    require_all 'github_api/client/orgs',
       'members',
       'teams'
 
@@ -15,10 +15,10 @@ module Github
       name
     ].freeze
 
-    # Access to Orgs::Members API
+    # Access to Client::Orgs::Members API
     namespace :members
 
-    # Access to Orgs::Teams API
+    # Access to Client::Orgs::Teams API
     namespace :teams
 
     # List all public organizations for a user.

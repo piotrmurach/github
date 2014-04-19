@@ -6,7 +6,7 @@ Feature: Github API arguments parsing
 
   Scenario: Invoking multiple calls for organization information
 
-    Given I have "Github::Orgs" instance
+    Given I have "Github::Client::Orgs" instance
     When I want to get resource with the following arguments:
       | org        |
       | thoughtbot |

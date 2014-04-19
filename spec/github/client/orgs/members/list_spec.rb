@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Orgs::Members, '#list' do
+describe Github::Client::Orgs::Members, '#list' do
   let(:org) { 'github' }
   let(:body) { fixture('orgs/members.json') }
   let(:status) { 200 }

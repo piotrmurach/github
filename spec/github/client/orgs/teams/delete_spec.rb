@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Orgs::Teams, '#delete' do
+describe Github::Client::Orgs::Teams, '#delete' do
   let(:team_id)   { 1 }
   let(:request_path) { "/teams/#{team_id}" }
 

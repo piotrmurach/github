@@ -12,10 +12,10 @@ module Github
       'git_data',
       'issues',
       'markdown',
-      'meta'
+      'meta',
+      'orgs'
 
     require_all 'github_api',
-      'orgs',
       'pull_requests',
       'repos',
       'say',
@@ -51,7 +51,7 @@ module Github
     namespace :oauth, full_name: :authorizations
     alias :authorizations :oauth
 
-    namespace :orgs, root: true
+    namespace :orgs
     alias :organizations :orgs
 
     namespace :pull_requests, root: true

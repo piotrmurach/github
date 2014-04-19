@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Orgs::Members, '#member?' do
+describe Github::Client::Orgs::Members, '#member?' do
   let(:org)    { 'github' }
   let(:member) { 'peter-murach' }
   let(:body) { "" }

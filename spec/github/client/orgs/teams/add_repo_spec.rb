@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Orgs::Teams, '#add_repo' do
+describe Github::Client::Orgs::Teams, '#add_repo' do
   let(:team_id) { 1 }
   let(:repo) { 'github' }
   let(:user) { 'peter-murach' }

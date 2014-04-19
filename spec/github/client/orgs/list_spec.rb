@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Orgs, '#list' do
+describe Github::Client::Orgs, '#list' do
   let(:user) { 'peter-murach' }
   let(:body) { fixture('orgs/orgs.json') }
   let(:status) { 200 }
@@ -59,5 +59,4 @@ describe Github::Orgs, '#list' do
         should have_been_made
     end
   end
-
 end # list

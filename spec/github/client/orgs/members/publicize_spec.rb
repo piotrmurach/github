@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Orgs::Members, '#publicize' do
+describe Github::Client::Orgs::Members, '#publicize' do
   let(:org)    { 'github' }
   let(:member) { 'peter-murach' }
   let(:request_path) { "/orgs/#{org}/public_members/#{member}" }

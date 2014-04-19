@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 module Github
-  class Orgs::Members < API
+  class Client::Orgs::Members < API
 
     # List members
     #
@@ -103,6 +103,5 @@ module Github
       delete_request("/orgs/#{org_name}/public_members/#{user}", arguments.params)
     end
     alias :conceal_membership :conceal
-
-  end # Orgs::Members
+  end # Client::Orgs::Members
 end # Github

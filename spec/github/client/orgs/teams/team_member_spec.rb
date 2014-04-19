@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Orgs::Teams, '#team_member?' do
+describe Github::Client::Orgs::Teams, '#team_member?' do
   let(:team_id) { 1 }
   let(:user) { 'peter-murach' }
   let(:request_path) { "/teams/#{team_id}/members/#{user}" }
@@ -38,5 +38,4 @@ describe Github::Orgs::Teams, '#team_member?' do
       team_membership.should be_false
     end
   end
-
 end # team_member?

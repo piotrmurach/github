@@ -1,7 +1,7 @@
 Feature: Organizations API
 
   Background:
-    Given I have "Github::Orgs" instance
+    Given I have "Github::Client::Orgs" instance
 
   Scenario: List for the user
 

@@ -12,17 +12,17 @@ Feature: Github API components
   Scenario: Accessing organizations API
     Given I have github instance
     When  I fetch "orgs"
-    Then  I will have access to "Github::Orgs" API
+    Then  I will have access to "Github::Client::Orgs" API
 
   Scenario: Accessing members API
-    Given I have "Github::Orgs" instance
+    Given I have "Github::Client::Orgs" instance
     When  I call members
-    Then  I will have access to "Github::Orgs::Members" API
+    Then  I will have access to "Github::Client::Orgs::Members" API
 
   Scenario: Accessing teams API
-    Given I have "Github::Orgs" instance
+    Given I have "Github::Client::Orgs" instance
     When  I call teams
-    Then  I will have access to "Github::Orgs::Teams" API
+    Then  I will have access to "Github::Client::Orgs::Teams" API
 
   Scenario: Accessing gists API
     Given I have github instance

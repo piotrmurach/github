@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 module Github
-  class Orgs::Teams < API
+  class Client::Orgs::Teams < API
     # All actions against teams require at a minimum an authenticated user
     # who is a member of the owner’s team in the :org being managed.
     # Api calls that require explicit permissions are noted.
@@ -238,6 +238,5 @@ module Github
       delete_request("/teams/#{team_id}/repos/#{user}/#{repo}", arguments.params)
     end
     alias :remove_repository :remove_repo
-
-  end # Orgs::Teams
+  end # Client::Orgs::Teams
 end # Github

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Orgs::Teams, '#team_repo?' do
+describe Github::Client::Orgs::Teams, '#team_repo?' do
   let(:team_id) { 1 }
   let(:user) { 'peter-murach' }
   let(:repo) { 'github' }
@@ -39,5 +39,4 @@ describe Github::Orgs::Teams, '#team_repo?' do
       team_managed.should be_false
     end
   end
-
 end # team_repo?

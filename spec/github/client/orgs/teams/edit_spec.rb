@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Orgs::Teams, '#edit' do
+describe Github::Client::Orgs::Teams, '#edit' do
   let(:team)   { 'github' }
   let(:request_path) { "/teams/#{team}" }
 

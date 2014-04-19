@@ -1,7 +1,7 @@
 Feature: Members API
 
   Background:
-    Given I have "Github::Orgs::Members" instance
+    Given I have "Github::Client::Orgs::Members" instance
 
   Scenario: List
 
