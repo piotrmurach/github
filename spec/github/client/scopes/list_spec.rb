@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Scopes, '#list' do
+describe Github::Client::Scopes, '#list' do
   let(:request_path) { "/user" }
   let(:body) { '[]' }
   let(:status) { 200 }

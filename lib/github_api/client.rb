@@ -15,13 +15,13 @@ module Github
       'meta',
       'orgs',
       'pull_requests',
+      'scopes',
       'search',
       'users'
 
     require_all 'github_api',
       'repos',
-      'say',
-      'scopes'
+      'say'
 
     # Serving up the ‘social’ in Social Coding™, the Activity APIs
     # provide access to notifications, subscriptions, and timelines.
@@ -62,7 +62,7 @@ module Github
 
     namespace :octocat, root: true, full_name: 'say'
 
-    namespace :scopes, root: true
+    namespace :scopes
 
     namespace :search
 

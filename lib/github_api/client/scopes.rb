@@ -1,8 +1,7 @@
 # encoding: utf-8
 
 module Github
-  class Scopes < API
-
+  class Client::Scopes < API
     # Check what OAuth scopes you have.
     #
     # = Examples
@@ -15,6 +14,5 @@ module Github
       response.headers.oauth_scopes ? response.headers.oauth_scopes.split(',') : response
     end
     alias :all :list
-
   end
 end # Github
