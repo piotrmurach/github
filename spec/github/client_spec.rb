@@ -17,7 +17,7 @@ describe Github::Client do
 
   it { expect(client.issues).to be_a Github::Client::Issues }
 
-  it { expect(client.markdown).to be_a Github::Markdown }
+  it { expect(client.markdown).to be_a Github::Client::Markdown }
 
   it { expect(client.meta).to be_a Github::Meta }
 

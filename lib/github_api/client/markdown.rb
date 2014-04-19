@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 module Github
-  class Markdown < API
+  class Client::Markdown < API
 
     # Render an arbritrary Markdown document
     #

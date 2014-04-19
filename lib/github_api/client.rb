@@ -8,12 +8,12 @@ module Github
       'emojis',
       'gists',
       'git_data',
-      'issues'
+      'issues',
+      'markdown'
 
     require_all 'github_api',
       'authorizations',
       'gitignore',
-      'markdown',
       'meta',
       'orgs',
       'pull_requests',
@@ -43,7 +43,7 @@ module Github
 
     namespace :issues
 
-    namespace :markdown, root: true
+    namespace :markdown
 
     namespace :meta, root: true
 
