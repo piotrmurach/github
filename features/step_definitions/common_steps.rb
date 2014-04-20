@@ -27,6 +27,11 @@ Then /^the response status should be (.*)$/ do |expected_response|
   @response.status.should eql expected_response.to_i
 end
 
+Then /^I should get a date object with the value "(.*)"$/ do |value|
+  @response.class.should eql DateTime
+  @response.to_s.should eql value
+end
+
 Then /^the response should be (.*)$/ do |expected_response|
   expected_response = case expected_response
   when /false/
