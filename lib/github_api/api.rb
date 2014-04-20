@@ -78,7 +78,138 @@ module Github
       end
     end
 
+    # List of before callbacks
+    #
+    # @api public
+    def self.before_callbacks
+      @before_callbacks ||= []
+    end
+
+    # List of after callbacks
+    #
+    # @api public
+    def self.after_callbacks
+      @after_callbacks ||= []
+    end
+
+    # Before request filter
+    #
+    # @api public
+    def self.before_request(callback, params = {})
+      before_callbacks << params.merge(callback: callback)
+    end
+
+    # After request filter
+    #
+    # @api public
+    def self.after_request(callback, params = {})
+      after_callbacks << params.merge(callback: callback)
+    end
+
+    def self.inherited(child_class)
+      before_callbacks.reverse_each { |callback|
+        child_class.before_callbacks.unshift(callback)
+      }
+      after_callbacks.reverse_each { |callback|
+        child_class.after_callbacks.unshift(callback)
+      }
+    end
+
+    class << self
+      attr_reader :root
+      alias_method :root?, :root
+    end
+
+    def self.root!
+      @root = true
+    end
+
+    root!
+
+    def self.internal_methods
+      api = self
+      api = api.superclass until api.root?
+      api.public_instance_methods(true)
+    end
+
+    # Find all the api methods that are requests
+    #
+    # @api private
+    def self.request_methods
+      @request_methods ||= begin
+        methods = (public_instance_methods(true) -
+                   internal_methods +
+                   public_instance_methods(false)).uniq.map(&:to_s)
+        Set.new(methods)
+      end
+    end
+
+    def self.method_added(method_name)
+      # Only subclasses matter
+      return if self.root?
+      # Only public methods are of interest
+      return unless request_methods.include?(method_name.to_s)
+      # Do not redefine
+      return if (@__methods_added ||= []).include?(method_name.to_s)
+
+      with_method = "#{method_name}_with_callback"
+      without_method = "#{method_name}_without_callback"
+
+      return if public_method_defined?(with_method)
+
+      [method_name.to_s, with_method, without_method].each do |met|
+        @__methods_added << met
+      end
+
+      return if public_method_defined?(with_method)
+
+      define_method(with_method) do |*args, &block|
+        send(:execute, without_method, *args, &block)
+      end
+      alias_method without_method, method_name
+      alias_method method_name, with_method
+    end
+
+    # Filter callbacks based on kind
+    #
+    # @param [Symbol] kind
+    #   one of :before or :after
+    #
+    # @return [Array[Hash]]
+    #
+    # @api private
+    def filter_callbacks(kind, action_name)
+      matched_callbacks = self.class.send("#{kind}_callbacks").select do |callback|
+        callback[:only].nil? || callback[:only].include?(action_name)
+      end
+    end
+
+    # Run all callbacks associated with this action
+    #
+    # @apram [Symbol] action_name
+    #
+    # @api private
+    def run_callbacks(action_name, &block)
+      filter_callbacks(:before, action_name).each { |hook| send hook[:callback] }
+      yield if block_given?
+      filter_callbacks(:after, action_name).each { |hook| send hook[:callback] }
+    end
+
+    # Execute action
+    #
+    # @param [Symbol] action
+    #
+    # @api private
+    def execute(action, *args, &block)
+      action_name = action.to_s.gsub(/_with(out)?_callback$/, '')
+      run_callbacks(action_name) do
+        send(action, *args, &block)
+      end
+    end
+
     # Responds to attribute query or attribute clear
+    #
+    # @api private
     def method_missing(method_name, *args, &block) # :nodoc:
       case method_name.to_s
       when /^(.*)\?$/
