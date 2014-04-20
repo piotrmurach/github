@@ -16,12 +16,10 @@ module Github
       'orgs',
       'pull_requests',
       'repos',
+      'say',
       'scopes',
       'search',
       'users'
-
-    require_all 'github_api',
-      'say'
 
     # Serving up the ‘social’ in Social Coding™, the Activity APIs
     # provide access to notifications, subscriptions, and timelines.
@@ -48,8 +46,8 @@ module Github
 
     # An API for users to manage their own tokens. You can only access your own
     # tokens, and only through Basic Authentication.
-    namespace :oauth, full_name: :authorizations
-    alias :authorizations :oauth
+    namespace :authorizations
+    alias :oauth :authorizations
 
     namespace :orgs
     alias :organizations :orgs
@@ -60,7 +58,8 @@ module Github
     namespace :repos
     alias :repositories :repos
 
-    namespace :octocat, root: true, full_name: 'say'
+    namespace :say
+    alias :octocat :say
 
     namespace :scopes
 

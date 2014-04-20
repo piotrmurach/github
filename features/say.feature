@@ -1,7 +1,7 @@
 Feature: Octocat ASCII API
 
   Background:
-    Given I have "Github::Say" instance
+    Given I have "Github::Client::Say" instance
 
   Scenario: ASCII octocat with random text
 

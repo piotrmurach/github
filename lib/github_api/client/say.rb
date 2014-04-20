@@ -1,13 +1,14 @@
 # encoding: utf-8
 
 module Github
-  class Say < API
+  class Client::Say < API
 
     # Generate ASCII octocat with speech bubble.
     #
-    # = Examples
-    #  Github::Say.new.say "My custom string..."
+    # @example
+    #  Github::Client::Say.new.say "My custom string..."
     #
+    # @example
     #  github = Github.new
     #  github.octocat.say "My custom string..."
     #
@@ -18,6 +19,5 @@ module Github
 
       get_request('/octocat', params)
     end
-
   end # Say
 end # Github
