@@ -12,7 +12,7 @@ describe Github::PageIterator, 'when number' do
   let(:prev_link) { "https://api.github.com/users/wycats/repos?page=2&per_page=20" }
   let(:last_link) { "https://api.github.com/users/wycats/repos?page=6&per_page=20" }
 
-  let(:current_api) { Github::Repos.new }
+  let(:current_api) { Github::Client::Repos.new }
   let(:user)     { 'wycats' }
   let(:response) { double(:response).as_null_object }
 

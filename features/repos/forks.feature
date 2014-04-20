@@ -1,7 +1,7 @@
 Feature: Forks API
 
   Background:
-    Given I have "Github::Repos::Forks" instance
+    Given I have "Github::Client::Repos::Forks" instance
 
   Scenario: List
 

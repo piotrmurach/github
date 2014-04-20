@@ -1,7 +1,7 @@
 Feature: Release Assets API
 
   Background:
-    Given I have "Github::Repos::Releases::Assets" instance
+    Given I have "Github::Client::Repos::Releases::Assets" instance
     And I do not verify ssl
 
   Scenario: List

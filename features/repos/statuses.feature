@@ -1,7 +1,7 @@
 Feature: Statuses API
 
   Background:
-    Given I have "Github::Repos::Statuses" instance
+    Given I have "Github::Client::Repos::Statuses" instance
 
   Scenario: List
 

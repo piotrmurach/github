@@ -1,7 +1,7 @@
 Feature: Releases API
 
   Background:
-    Given I have "Github::Repos::Releases" instance
+    Given I have "Github::Client::Repos::Releases" instance
 
   Scenario: List
 

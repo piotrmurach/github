@@ -1,7 +1,7 @@
 Feature: Repositories API
 
   Background:
-    Given I have "Github::Repos" instance
+    Given I have "Github::Client::Repos" instance
 
   Scenario: Branches
 

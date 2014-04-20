@@ -1,7 +1,7 @@
 Feature: Pages API
 
   Background:
-    Given I have "Github::Repos::Pages" instance
+    Given I have "Github::Client::Repos::Pages" instance
 
   Scenario: List builds
 

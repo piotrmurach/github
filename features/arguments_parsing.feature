@@ -16,7 +16,7 @@ Feature: Github API arguments parsing
 
   Scenario: Invoking multiple calls for repository commits
 
-    Given I have "Github::Repos::Commits" instance
+    Given I have "Github::Client::Repos::Commits" instance
     When I want to get resource with the following arguments:
       | user     | repo     | sha                                      |
       | rubinius | rubinius | 7ac2bd74e8b6f16362fb3b7e6f3d139c48bb1c12 |

@@ -1,7 +1,7 @@
 Feature: Statistics API
 
   Background:
-    Given I have "Github::Repos::Statistics" instance
+    Given I have "Github::Client::Repos::Statistics" instance
 
   Scenario: Contributors
 

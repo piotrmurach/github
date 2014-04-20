@@ -45,5 +45,4 @@ describe Github::Client::Issues::Comments, '#get' do
   it_should_behave_like 'request failure' do
     let(:requestable) { subject.get user, repo, comment_id }
   end
-
 end # get

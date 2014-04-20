@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe Github::PagedRequest, '#page_request' do
-  let(:current_api) { Github::Repos.new }
+  let(:current_api) { Github::Client::Repos.new }
   let(:path) { "/repositories/"}
   let(:klass) {
     klass = Class.new do

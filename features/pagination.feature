@@ -4,7 +4,7 @@ Feature: Github API pagination
 
   Scenario: Passing per_page param
 
-    Given I have "Github::Repos" instance
+    Given I have "Github::Client::Repos" instance
     When I want to list resources
       And I pass the following request options:
         | user   | per_page |
@@ -20,7 +20,7 @@ Feature: Github API pagination
 
   Scenario: Returned paginated resources are different
 
-    Given I have "Github::Repos" instance
+    Given I have "Github::Client::Repos" instance
     When I want to list resources
       And I pass the following request options:
         | user   |
@@ -35,9 +35,9 @@ Feature: Github API pagination
       And the response should have 30 items
       And the response collection of resources is different for "name" attribute
 
-  Scenario: Calling 'commits' for Github::Repos with per_page param
+  Scenario: Calling 'commits' for Github::Client::Repos with per_page param
 
-    Given I have "Github::Repos::Commits" instance
+    Given I have "Github::Client::Repos::Commits" instance
     When I am looking for "list" with the following params:
       | user          | repo   |
       | peter-murach  | github |
@@ -53,9 +53,9 @@ Feature: Github API pagination
     Then the response status should be 200
       And the response should have 45 items
 
-  Scenario: Calling 'list' for Github::Repos::Commits returns different collections
+  Scenario: Calling 'list' for Github::Client::Repos::Commits returns different collections
 
-    Given I have "Github::Repos::Commits" instance
+    Given I have "Github::Client::Repos::Commits" instance
     When I am looking for "list" with the following params:
       | user          | repo   |
       | peter-murach  | github |
@@ -70,7 +70,7 @@ Feature: Github API pagination
 
   Scenario: Requesting resources with per_page helper
 
-    Given I have "Github::Repos" instance
+    Given I have "Github::Client::Repos" instance
       And I want to list resources
       And I pass the following request options:
         | user   |

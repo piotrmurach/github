@@ -12,7 +12,7 @@ describe Github::API::Factory do
     end
 
     it 'instantiates a new object' do
-      expect(factory.new('Repos')).to be_a Github::Repos
+      expect(factory.new('Client::Repos')).to be_a Github::Client::Repos
     end
   end
 

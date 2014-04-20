@@ -1,7 +1,7 @@
 Feature: Contents API
 
   Background:
-    Given I have "Github::Repos::Contents" instance
+    Given I have "Github::Client::Repos::Contents" instance
 
   Scenario: Readme
 

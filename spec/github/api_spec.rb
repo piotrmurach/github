@@ -12,7 +12,7 @@ describe Github::API do
 
   context 'actions' do
     let(:options) { { } }
-    let(:repos) { Github::Repos }
+    let(:repos) { Github::Client::Repos }
 
     it { should respond_to :api_methods_in }
 

@@ -7,7 +7,7 @@ Feature: Github API components
   Scenario: Accessing repositories API
     Given I have github instance
     When  I fetch "repos"
-    Then  I will have access to "Github::Repos" API
+    Then  I will have access to "Github::Client::Repos" API
 
   Scenario: Accessing organizations API
     Given I have github instance

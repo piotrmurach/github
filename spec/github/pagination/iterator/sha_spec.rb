@@ -14,7 +14,7 @@ describe Github::PageIterator, 'when sha' do
   let(:sha)      { '801d80dfd59bf1d2cb30a243799953ab683a3abd' }
   let(:last_sha) { "d1e503c02fa770859895dd0d12aedefa28b95723"}
 
-  let(:current_api) { Github::Repos.new }
+  let(:current_api) { Github::Client::Repos.new }
   let(:user)     { 'wycats' }
   let(:response) { double(:response).as_null_object }
 

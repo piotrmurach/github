@@ -15,12 +15,12 @@ module Github
       'meta',
       'orgs',
       'pull_requests',
+      'repos',
       'scopes',
       'search',
       'users'
 
     require_all 'github_api',
-      'repos',
       'say'
 
     # Serving up the ‘social’ in Social Coding™, the Activity APIs
@@ -57,7 +57,7 @@ module Github
     namespace :pull_requests
     alias :pulls :pull_requests
 
-    namespace :repos, root: true
+    namespace :repos
     alias :repositories :repos
 
     namespace :octocat, root: true, full_name: 'say'

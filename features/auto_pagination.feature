@@ -4,7 +4,7 @@ Feature: Github API auto pagination
 
   Scenario: Passing auto_pagionation param to request
 
-    Given I have "Github::Repos" instance
+    Given I have "Github::Client::Repos" instance
     When I want to list resources
       And I pass the following request options:
         | user   | per_page | auto_pagination |
@@ -16,7 +16,7 @@ Feature: Github API auto pagination
 
   Scenario: Passing auto_pagionation param to instances
 
-    Given I have "Github::Repos" instance
+    Given I have "Github::Client::Repos" instance
       And I pass the following request options:
         | user   | per_page | auto_pagination |
         | wycats | 100       | true            |
@@ -28,7 +28,7 @@ Feature: Github API auto pagination
 
   Scenario: Paginating single resource
 
-    Given I have "Github::Repos" instance
+    Given I have "Github::Client::Repos" instance
       And I pass the following request options:
         | user   | repo |  auto_pagination |
         | wycats | thor | true            |
