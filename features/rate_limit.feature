@@ -13,4 +13,4 @@ Feature: Ratelimit API
 
     Given I want to ratelimit_remaining resource
     When I make request within a cassette named "ratelimit/get_remaining"
-    Then the response should be 5000
+    Then the response should be 4886

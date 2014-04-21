@@ -84,11 +84,11 @@ Feature: Github API pagination
 
     Given I have "Github::Client::Issues" instance
       And I want to list resources with the following params:
-        | user   | repo |
-        | wycats | thor |
+        | user         | repo   |
+        | peter-murach | github |
       And I pass the following request options:
-        | state  | per_page | user   | repo |
-        | closed | 50       | wycats | thor |
+        | state  | per_page | user         | repo   |
+        | closed | 50       | peter-murach | github |
     When I make request within a cassette named "pagination/issues/list/first"
     Then the response status should be 200
       And the response next link should contain:
@@ -96,16 +96,16 @@ Feature: Github API pagination
         | 2    | 50       | closed |
       And the response last link should contain:
         | page | per_page | state  |
-        | 4    | 50       | closed |
+        | 3    | 50       | closed |
 
   Scenario: Navigate to Next page
     Given I have "Github::Client::Issues" instance
       And I want to list resources with the following params:
-        | user   | repo |
-        | wycats | thor |
+        | user         | repo   |
+        | peter-murach | github |
       And I pass the following request options:
-        | state  | per_page | user   | repo |
-        | closed | 50       | wycats | thor |
+        | state  | per_page | user         | repo   |
+        | closed | 50       | peter-murach | github |
     When I make request within a cassette named "pagination/issues/list/first"
       And I request next page within a cassette named "pagination/issues/list/next"
     Then the response status should be 200
@@ -120,23 +120,23 @@ Feature: Github API pagination
         | 1    | 50       | closed |
       And the response last link should contain:
         | page | per_page | state  |
-        | 4    | 50       | closed |
+        | 3    | 50       | closed |
 
   Scenario: Navigate to Last page
 
     Given I have "Github::Client::Issues" instance
       And I want to list resources with the following params:
-        | user   | repo |
-        | wycats | thor |
+        | user         | repo   |
+        | peter-murach | github |
       And I pass the following request options:
-        | state  | per_page | user   | repo |
-        | closed | 50       | wycats | thor |
+        | state  | per_page | user         | repo   |
+        | closed | 50       | peter-murach | github |
     When I make request within a cassette named "pagination/issues/list/first"
       And I request last page within a cassette named "pagination/issues/list/last"
     Then the response status should be 200
       And the response prev link should contain:
         | page | per_page | state  |
-        | 3    | 50       | closed |
+        | 2    | 50       | closed |
       And the response first link should contain:
         | page | per_page | state  |
         | 1    | 50       | closed |
@@ -145,23 +145,23 @@ Feature: Github API pagination
 
     Given I have "Github::Client::Issues" instance
       And I want to list resources with the following params:
-        | user   | repo |
-        | wycats | thor |
+        | user         | repo   |
+        | peter-murach | github |
       And I pass the following request options:
-        | state  | per_page | page | user   | repo |
-        | closed | 50       | 4    | wycats | thor |
-    When I make request within a cassette named "pagination/issues/list/last"
+        | state  | per_page | page | user         | repo   |
+        | closed | 50       | 3    | peter-murach | github |
+    When I make request within a cassette named "pagination/issues/list/lastest"
       And I request prev page within a cassette named "pagination/issues/list/prev"
     Then the response status should be 200
       And the response prev link should contain:
         | page | per_page | state  |
-        | 2    | 50       | closed |
+        | 1    | 50       | closed |
       And the response next link should contain:
         | page | per_page | state  |
-        | 4    | 50       | closed |
+        | 3    | 50       | closed |
       And the response first link should contain:
         | page | per_page | state  |
         | 1    | 50       | closed |
       And the response last link should contain:
         | page | per_page | state  |
-        | 4    | 50       | closed |
+        | 3    | 50       | closed |

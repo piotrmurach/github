@@ -51,8 +51,8 @@ Feature: Search API
 
     Given I want code resource
       And I pass the following request options:
-        | q   | sort    |
-        | tty | indexed |
+        | q                     | sort    |
+        | user:peter-murach tty | indexed |
     When I make request within a cassette named "search/code"
     Then the response status should be 200
       And the response type should be JSON

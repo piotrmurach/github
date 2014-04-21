@@ -59,7 +59,7 @@ http_interactions:
       Content-Encoding:
       - gzip
     body:
-      encoding: ASCII-8BIT
+      encoding: US-ASCII
       string: !binary |-
         H4sIAAAAAAAAA4ySya6jVhRFfyXy1BXRYyipBvRg+sZcICMMvjZwAZseovx7
         XhIpybD24EhbOpOttX77/VSVp+8EcyFY/Nupeeyn76dxfP06jPkvwldEyjly

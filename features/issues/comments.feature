@@ -53,7 +53,7 @@ Feature: Issues Comments API
 
     Given I want to edit resource with the following params:
       | user  | repo            | comment_id |
-      | murek | github_api_test | 11675857   |
+      | murek | github_api_test | 40952592   |
     And I pass the following request options:
       | body                                 |
       | No worries this should be fixed now. |
@@ -66,7 +66,7 @@ Feature: Issues Comments API
 
     Given I want to delete resource with the following params:
       | user  | repo            | comment_id |
-      | murek | github_api_test | 11675857   |
+      | murek | github_api_test |  40952592  |
     When I make request within a cassette named "issues/comments/delete" and match on method
     Then the response status should be 204
 

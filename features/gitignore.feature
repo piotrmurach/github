@@ -9,7 +9,7 @@ Feature: Markdown API
     When I make request within a cassette named "gitignore/list"
     Then the response status should be 200
       And the response type should be JSON
-      And the response should have 76 items
+      And the response should have 102 items
       And the response should contain Ruby
       And the response should contain Rails
 

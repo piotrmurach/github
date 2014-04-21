@@ -54,6 +54,6 @@ Feature: Release Assets API
 
     Given I want to delete resource with the following params:
       | owner | repo            | id    |
-      | murek | github_api_test | 46073 |
+      | murek | github_api_test | 118934|
     When I make request within a cassette named "repos/assets/delete"
     Then the response status should be 204

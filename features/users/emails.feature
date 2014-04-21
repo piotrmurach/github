@@ -23,9 +23,9 @@ Feature: Accessing Users Emails API
     When I make request within a cassette named "users/emails/add"
     Then the response status should be 201
       And the response type should be JSON
-      And the response should have 3 items
-      And the response should contain octocat@example.com
-      And the response should contain terry@example.com
+      And the response should have 4 items
+      And the response should in email contain octocat@example.com
+      And the response should in email contain terry@example.com
 
   Scenario: Remove email addresses for the authenticated user
 

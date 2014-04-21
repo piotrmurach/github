@@ -27,10 +27,10 @@ Feature: Contents API
 
     Given I want create resource with the following params:
       | user  | repo            | path     |
-      | murek | github_api_test | hello.rb |
+      | murek | github_api_test | hello_world.rb |
       And I pass the following request options:
         | path      | content     | message        |
-        | hello.rb | puts 'ruby' | Initial commit |
+        | hello_world.rb | puts 'ruby' | Initial commit |
     When I make request within a cassette named "repos/contents/create"
     Then the response status should be 201
       And the response type should be JSON
@@ -39,11 +39,11 @@ Feature: Contents API
   Scenario: Update a file
 
     Given I want create resource with the following params:
-      | user  | repo            | path     |
-      | murek | github_api_test | hello.rb |
+      | user  | repo            | path           |
+      | murek | github_api_test | hello_world.rb |
       And I pass the following request options:
-        | path     | content           | message       | sha                                      |
-        | hello.rb | puts 'hello ruby' | Update commit | 25b0bef9e404bd2e3233de26b7ef8cbd86d0e913 |
+        | path           | content           | message       | sha                                      |
+        | hello_world.rb | puts 'hello ruby' | Update commit | 25b0bef9e404bd2e3233de26b7ef8cbd86d0e913 |
     When I make request within a cassette named "repos/contents/update"
     Then the response status should be 200
       And the response type should be JSON
@@ -52,11 +52,11 @@ Feature: Contents API
   Scenario: Delete a file
 
     Given I want delete resource with the following params:
-      | user  | repo            | path     |
-      | murek | github_api_test | hello.rb |
+      | user  | repo            | path           |
+      | murek | github_api_test | hello_world.rb |
       And I pass the following request options:
-        | path      | message              | sha                                      |
-        | hello.txt | Delete hello.rb file | 25b0bef9e404bd2e3233de26b7ef8cbd86d0e913 |
+        | path           | message                    | sha                                      |
+        | hello_world.rb | Delete hello_world.rb file | 9ed559bc7c227577c734a1d71e84646058c28ab7 |
     When I make request within a cassette named "repos/contents/delete"
     Then the response status should be 200
       And the response type should be JSON

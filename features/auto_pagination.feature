@@ -12,7 +12,7 @@ Feature: Github API auto pagination
       And I make request within a cassette named "auto_pagination/repos/list"
     Then the response status should be 200
       And the response type should be JSON
-      And the response should have 134 items
+      And the response should have 150 items
 
   Scenario: Passing auto_pagionation param to instances
 
@@ -24,16 +24,16 @@ Feature: Github API auto pagination
       And I make request within a cassette named "auto_pagination/repos/global_list"
     Then the response status should be 200
       And the response type should be JSON
-      And the response should have 134 items
+      And the response should have 150 items
 
   Scenario: Paginating single resource
 
     Given I have "Github::Client::Repos" instance
       And I pass the following request options:
         | user   | repo |  auto_pagination |
-        | wycats | thor | true            |
+        | peter-murach | tty | true            |
     When I want to get resource
       And I make request within a cassette named "auto_pagination/repos/get"
     Then the response status should be 200
       And the response type should be JSON
-      And the response body name should be thor
+      And the response body name should be tty
