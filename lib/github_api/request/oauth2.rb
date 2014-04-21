@@ -3,7 +3,7 @@
 require 'faraday'
 
 module Github
-  module Request
+  class Request
     class OAuth2 < Faraday::Middleware
       include Github::Utils::Url
 

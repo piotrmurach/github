@@ -4,7 +4,7 @@ require 'faraday'
 require 'base64'
 
 module Github
-  module Request
+  class Request
     class BasicAuth < Faraday::Middleware
       dependency 'base64'
 
