@@ -1,9 +1,8 @@
-# -*- encoding: utf-8 -*-
+# encoding: utf-8
 
 module Github
   # Deals with normalazing client supplied parameter keys.
   module Normalizer
-
     # Turns any keys from nested hashes including nested arrays into strings
     #
     def normalize!(params)
@@ -22,6 +21,5 @@ module Github
       end
       return params
     end
-
   end # Normalizer
 end # Github
