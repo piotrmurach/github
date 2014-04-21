@@ -7,8 +7,7 @@ describe Github::API do
 
   it { described_class.included_modules.should include Github::Authorization }
   it { described_class.included_modules.should include Github::MimeType }
-  it { described_class.included_modules.should include Github::Connection }
-  it { described_class.included_modules.should include Github::Request }
+  it { described_class.included_modules.should include Github::Request::Verbs }
 
   context 'actions' do
     let(:options) { { } }

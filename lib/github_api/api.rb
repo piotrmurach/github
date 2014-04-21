@@ -1,13 +1,13 @@
 # encoding: utf-8
 
 require 'github_api/configuration'
-require 'github_api/connection'
-require 'github_api/request'
 require 'github_api/mime_type'
 require 'github_api/rate_limit'
 require 'github_api/core_ext/hash'
 require 'github_api/core_ext/array'
 require 'github_api/null_encoder'
+
+require 'github_api/request/verbs'
 
 require 'github_api/api/actions'
 require 'github_api/api/factory'
@@ -20,8 +20,7 @@ module Github
     include Constants
     include Authorization
     include MimeType
-    include Connection
-    include Request
+    include Request::Verbs
     include RateLimit
 
     attr_reader *Github.configuration.property_names
@@ -364,6 +363,5 @@ module Github
         end
       end
     end
-
   end # API
 end # Github
