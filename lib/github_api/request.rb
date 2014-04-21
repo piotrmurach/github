@@ -1,32 +1,40 @@
 # encoding: utf-8
 
-module Github
+require 'github_api/connection'
 
-  # Defines HTTP verbs
-  module Request
+module Github
+  # A class responsible for dispatching http requests
+  class Request
+    include Connection
 
     HTTP_METHODS = [:get, :head, :post, :put, :delete, :patch]
 
     METHODS_WITH_BODIES = [:post, :put, :patch]
 
-    def get_request(path, params = ParamsHash.empty)
-      request(:get, path, params).auto_paginate
-    end
+    # Return http verb
+    #
+    # @return [Symbol]
+    attr_reader :action
 
-    def patch_request(path, params = ParamsHash.empty)
-      request(:patch, path, params)
-    end
+    # Return url
+    #
+    # @return [String]
+    attr_accessor :path
 
-    def post_request(path, params = ParamsHash.empty)
-      request(:post, path, params)
-    end
+    # Return api this request is associated with
+    #
+    # @return [Github::API]
+    attr_reader :api
 
-    def put_request(path, params = ParamsHash.empty)
-      request(:put, path, params)
-    end
-
-    def delete_request(path, params = ParamsHash.empty)
-      request(:delete, path, params)
+    # Create a new Request
+    #
+    # @return [Github::Request]
+    #
+    # @api public
+    def initialize(action, path, api)
+      @action = action
+      @path   = path
+      @api    = api
     end
 
     # Performs a request
@@ -38,36 +46,35 @@ module Github
     # @return [Github::ResponseWrapper]
     #
     # @api private
-    def request(method, path, params) # :nodoc:
-      unless HTTP_METHODS.include?(method)
+    def call(current_options, params)
+      unless HTTP_METHODS.include?(action)
         raise ArgumentError, "unknown http method: #{method}"
       end
 
-      puts "EXECUTED: #{method} - #{path} with PARAMS: #{params}" if ENV['DEBUG']
+      puts "EXECUTED: #{action} - #{path} with PARAMS: #{params}" if ENV['DEBUG']
 
       request_options    = params.options
       connection_options = current_options.merge(request_options)
-      conn               = connection(connection_options)
+      conn               = connection(api, connection_options)
 
-      if conn.path_prefix != '/' && path.index(conn.path_prefix) != 0
-        path = (conn.path_prefix + path).gsub(/\/(\/)*/, '/')
+      if conn.path_prefix != '/' && self.path.index(conn.path_prefix) != 0
+        self.path = (conn.path_prefix + self.path).gsub(/\/(\/)*/, '/')
       end
 
-      response = conn.send(method) do |request|
-        case method.to_sym
+      response = conn.send(action) do |request|
+        case action.to_sym
         when *(HTTP_METHODS - METHODS_WITH_BODIES)
           request.body = params.data if params.has_key?('data')
           if params.has_key?('encoder')
             request.params.params_encoder(params.encoder)
           end
-          request.url(path, params.to_hash)
+          request.url(self.path, params.to_hash)
         when *METHODS_WITH_BODIES
-          request.url(path, connection_options[:query] || {})
+          request.url(self.path, connection_options[:query] || {})
           request.body = params.data unless params.empty?
         end
       end
-      ResponseWrapper.new(response, self)
+      ResponseWrapper.new(response, api)
     end
-
   end # Request
 end # Github

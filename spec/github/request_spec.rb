@@ -6,30 +6,36 @@ describe Github::Request do
   let(:github)   { Github::API.new  }
   let(:path)     { 'github.api/repos/users' }
   let(:params)   { {} }
+  let(:request)  { double('request') }
   let(:response) { double('response').as_null_object }
 
   it "knows how to make get request" do
-    github.should_receive(:request).with(:get, path, params) { response }
+    expect(Github::Request).to receive(:new).with(:get, path, github) { request }
+    expect(request).to receive(:call).with(github.current_options, params) { double(auto_paginate: true) }
     github.get_request path, params
   end
 
   it "knows how to make patch request" do
-    github.should_receive(:request).with(:patch, path, params)
+    expect(Github::Request).to receive(:new).with(:patch, path, github) { request }
+    expect(request).to receive(:call).with(github.current_options, params)
     github.patch_request path, params
   end
 
   it "knows how to make post request" do
-    github.should_receive(:request).with(:post, path, params)
+    expect(Github::Request).to receive(:new).with(:post, path, github) { request }
+    expect(request).to receive(:call).with(github.current_options, params)
     github.post_request path, params
   end
 
   it "knows how to make put request" do
-    github.should_receive(:request).with(:put, path, params)
+    expect(Github::Request).to receive(:new).with(:put, path, github) { request }
+    expect(request).to receive(:call).with(github.current_options, params)
     github.put_request path, params
   end
 
   it "knows how to make delete request" do
-    github.should_receive(:request).with(:delete, path, params)
+    expect(Github::Request).to receive(:new).with(:delete, path, github) { request }
+    expect(request).to receive(:call).with(github.current_options, params)
     github.delete_request path, params
   end
 end # Github::Request
