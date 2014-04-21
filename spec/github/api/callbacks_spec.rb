@@ -28,14 +28,14 @@ end
 
 describe Github::API, '#callbacks' do
   it "retrieves only public api methods" do
-    expect(ApiTest.request_methods.to_a).to eq([
+    expect(ApiTest.request_methods.to_a - [
       'list',
       'list_with_callback_apitest',
       'list_without_callback_apitest',
       'get',
       'get_with_callback_apitest',
       'get_without_callback_apitest'
-    ])
+    ]).to be_empty
   end
 
   it "execute before callback" do
