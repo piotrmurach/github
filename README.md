@@ -527,7 +527,23 @@ res.last_page    # Get last page
 
 ## 11 Caching
 
-TODO: explaing how to add faraday-cache midlleware
+Caching is supported through the [`faraday-http-cache` gem](https://github.com/plataformatec/faraday-http-cache).
+
+Add the gem to your Gemfile:
+
+    gem 'faraday-http-cache'
+
+You can now configure cache parameters as follows
+
+```ruby
+Github.configure do |config|
+  config.stack do |builder|
+    builder.use Faraday::HttpCache, store: Rails.cache
+  end
+end
+```
+
+More details on the available options can be found in the gem's own documentation: https://github.com/plataformatec/faraday-http-cache#faraday-http-cache
 
 ## 12 Debugging
 
