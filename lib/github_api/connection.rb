@@ -33,10 +33,10 @@ module Github
                             'application/vnd.github.beta+json;q=0.5,' \
                             'application/json;q=0.1',
           ACCEPT_CHARSET => 'utf-8',
-          USER_AGENT     => user_agent
+          USER_AGENT     => options[:user_agent]
         },
-        ssl: ssl,
-        url: options.fetch(:endpoint) { Github.endpoint }
+        ssl: options[:ssl],
+        url: options[:endpoint]
       }
     end
 
@@ -44,12 +44,13 @@ module Github
     # configuration stage.
     #
     def default_middleware(options = {})
+      api = options[:api]
       proc do |builder|
         builder.use Github::Request::Jsonize
         builder.use Faraday::Request::Multipart
         builder.use Faraday::Request::UrlEncoded
-        builder.use Github::Request::OAuth2, oauth_token if oauth_token?
-        builder.use Github::Request::BasicAuth, authentication if basic_authed?
+        builder.use Github::Request::OAuth2, api.oauth_token if api.oauth_token?
+        builder.use Github::Request::BasicAuth, api.authentication if api.basic_authed?
 
         builder.use Faraday::Response::Logger if ENV['DEBUG']
         unless options[:raw]
@@ -57,7 +58,7 @@ module Github
           builder.use Github::Response::Jsonize
         end
         builder.use Github::Response::RaiseError
-        builder.adapter adapter
+        builder.adapter options[:adapter]
       end
     end
 
@@ -91,10 +92,10 @@ module Github
     # Creates http connection
     #
     # Returns a Fraday::Connection object
-    def connection(options = {})
+    def connection(api, options = {})
       connection_options = default_options(options)
       clear_cache unless options.empty?
-      connection_options.merge!(builder: stack(options))
+      connection_options.merge!(builder: stack(options.merge!(api: api)))
       if ENV['DEBUG']
         p "Connection options : \n"
         pp connection_options
