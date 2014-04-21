@@ -1,19 +1,18 @@
 # encoding: utf-8
 
 module Github
+  # Core class responsible for api interface operations
   class API
-
     # Returns all API public methods for a given class.
-    def self.inherited(klass)
-      klass.class_eval <<-RUBY_EVAL, __FILE__, __LINE__ + 1
+    def self.extend_with_actions(child_class)
+      child_class.class_eval <<-RUBY_EVAL, __FILE__, __LINE__ + 1
         def self.actions
-          self.new.api_methods_in(#{klass})
+          self.new.api_methods_in(#{child_class})
         end
         def actions
-          api_methods_in(#{klass})
+          api_methods_in(#{child_class})
         end
       RUBY_EVAL
-      super
     end
 
     def api_methods_in(klass)
@@ -45,6 +44,5 @@ module Github
       end
       args
     end
-
   end # API
 end # Github
