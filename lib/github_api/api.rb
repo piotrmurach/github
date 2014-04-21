@@ -14,8 +14,7 @@ require 'github_api/api/factory'
 require 'github_api/api/arguments'
 
 module Github
-
-  # Core class for api interface operations
+  # Core class responsible for api interface operations
   class API
     extend Github::ClassMethods
     include Constants
@@ -106,15 +105,6 @@ module Github
       after_callbacks << params.merge(callback: callback)
     end
 
-    def self.inherited(child_class)
-      before_callbacks.reverse_each { |callback|
-        child_class.before_callbacks.unshift(callback)
-      }
-      after_callbacks.reverse_each { |callback|
-        child_class.after_callbacks.unshift(callback)
-      }
-    end
-
     class << self
       attr_reader :root
       alias_method :root?, :root
@@ -122,6 +112,20 @@ module Github
 
     def self.root!
       @root = true
+    end
+
+    def self.inherited(child_class)
+      before_callbacks.reverse_each { |callback|
+        child_class.before_callbacks.unshift(callback)
+      }
+      after_callbacks.reverse_each { |callback|
+        child_class.after_callbacks.unshift(callback)
+      }
+      extend_with_actions(child_class)
+      unless child_class.instance_variable_defined?(:@root)
+        child_class.instance_variable_set(:@root, false)
+      end
+      super
     end
 
     root!
@@ -132,7 +136,14 @@ module Github
       api.public_instance_methods(true)
     end
 
-    # Find all the api methods that are requests
+    def self.extra_methods
+      ['actions']
+    end
+
+    # Find all the api methods that should be considred by
+    # request callbacks.
+    #
+    # @return [Set]
     #
     # @api private
     def self.request_methods
@@ -140,27 +151,33 @@ module Github
         methods = (public_instance_methods(true) -
                    internal_methods +
                    public_instance_methods(false)).uniq.map(&:to_s)
-        Set.new(methods)
+        Set.new(methods - extra_methods)
       end
     end
 
+    def self.clear_request_methods!
+      @request_methods = nil
+    end
+
     def self.method_added(method_name)
+      method_name = method_name.to_s.gsub(/_with(out)?_callback_.*$/, '')
       # Only subclasses matter
       return if self.root?
+      return if extra_methods.include?(method_name)
       # Only public methods are of interest
-      return unless request_methods.include?(method_name.to_s)
+      return unless request_methods.include?(method_name)
       # Do not redefine
-      return if (@__methods_added ||= []).include?(method_name.to_s)
+      return if (@__methods_added ||= []).include?(method_name)
 
-      with_method = "#{method_name}_with_callback"
-      without_method = "#{method_name}_without_callback"
+      class_name     = self.name.to_s.split('::').last.downcase
+      with_method    = "#{method_name}_with_callback_#{class_name}"
+      without_method = "#{method_name}_without_callback_#{class_name}"
 
       return if public_method_defined?(with_method)
 
-      [method_name.to_s, with_method, without_method].each do |met|
+      [method_name, with_method, without_method].each do |met|
         @__methods_added << met
       end
-
       return if public_method_defined?(with_method)
 
       define_method(with_method) do |*args, &block|
@@ -168,6 +185,7 @@ module Github
       end
       alias_method without_method, method_name
       alias_method method_name, with_method
+      clear_request_methods!
     end
 
     # Filter callbacks based on kind
@@ -201,10 +219,12 @@ module Github
     #
     # @api private
     def execute(action, *args, &block)
-      action_name = action.to_s.gsub(/_with(out)?_callback$/, '')
+      action_name = action.to_s.gsub(/_with(out)?_callback_.*$/, '')
+      result = nil
       run_callbacks(action_name) do
-        send(action, *args, &block)
+        result = send(action, *args, &block)
       end
+      result
     end
 
     # Responds to attribute query or attribute clear

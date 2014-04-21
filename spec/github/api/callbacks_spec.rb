@@ -27,13 +27,32 @@ class ApiTest < Github::API
 end
 
 describe Github::API, '#callbacks' do
+  it "retrieves only public api methods" do
+    expect(ApiTest.request_methods.to_a).to eq([
+      'list',
+      'list_with_callback_apitest',
+      'list_without_callback_apitest',
+      'get',
+      'get_with_callback_apitest',
+      'get_without_callback_apitest'
+    ])
+  end
+
   it "execute before callback" do
     api_test = ApiTest.new
     api_test.list(:foo, :bar)
-
     expect(api_test.instance_variable_get("@called")).to eq([
       'authorize',
       'list_foo_bar',
+      'stats'
+    ])
+  end
+
+  it "skips request" do
+    api_test = ApiTest.new
+    api_test.get(:foo, :bar)
+    expect(api_test.instance_variable_get("@called")).to eq([
+      'get_foo_bar',
       'stats'
     ])
   end
