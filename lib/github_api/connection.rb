@@ -6,12 +6,8 @@ require 'github_api/response/mashify'
 require 'github_api/response/jsonize'
 require 'github_api/response/raise_error'
 require 'github_api/response/header'
-require 'github_api/request/oauth2'
-require 'github_api/request/basic_auth'
-require 'github_api/request/jsonize'
 
 module Github
-
   # Specifies Http connection options
   module Connection
     extend self
@@ -102,6 +98,5 @@ module Github
       end
       @connection ||= Faraday.new(connection_options)
     end
-
   end # Connection
 end # Github

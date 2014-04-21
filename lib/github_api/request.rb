@@ -1,5 +1,9 @@
 # encoding: utf-8
 
+require 'github_api/request/oauth2'
+require 'github_api/request/basic_auth'
+require 'github_api/request/jsonize'
+
 require 'github_api/connection'
 
 module Github
