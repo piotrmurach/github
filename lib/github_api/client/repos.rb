@@ -8,6 +8,7 @@ module Github
       'comments',
       'commits',
       'contents',
+      'deployments',
       'downloads',
       'forks',
       'hooks',
@@ -56,6 +57,9 @@ module Github
 
     # Access to Repos::Contents API
     namespace :contents
+
+    # Access to Repos::Deployments API
+    namespace :deployments
 
     # Access to Repos::Downloads API
     namespace :downloads
