@@ -32,7 +32,7 @@ module Github
     end
     alias :all :list
 
-    # List commits on a repository
+    # Create a deployment
     #
     # = Parameters
     # * <tt>:ref</tt>         Required string. Sha or branch to start listing commits from.
@@ -60,6 +60,49 @@ module Github
       params['accept'] ||= PREVIEW_MEDIA
 
       post_request("repos/#{user}/#{repo}/deployments", params)
+    end
+
+    # List the statuses of a deployment.
+    #
+    # = Parameters
+    # * <tt>:id</tt> Required string. Id of the deployment being queried.
+    # = Examples
+    #  github = Github.new
+    #  github.repos.deployments.statuses 'user-name', 'repo-name', DEPLOYMENT_ID
+    #  github.repos.deployments.statuses 'user-name', 'repo-name', DEPLOYMENT_ID { |status| ... }
+    #
+    def statuses(*args)
+      arguments(args, :required => [:user, :repo, :id])
+
+      params = arguments.params
+      params['accept'] ||= PREVIEW_MEDIA
+
+      statuses = get_request("repos/#{user}/#{repo}/deployments/#{id}/statuses", params)
+      return statuses unless block_given?
+
+      statuses.each { |status| yield status }
+    end
+
+    # Create a deployment status
+    #
+    # = Parameters
+    # * <tt>:id</tt>          Required string. Id of the deployment being referenced.
+    # * <tt>:state</tt>       Required string. State of the deployment. Can be one of: pending, success, error, or failure.
+    # * <tt>:target_url</tt>  Optional string. The URL associated with the status.
+    # * <tt>:description</tt> Optional string. A short description of the status.
+    # = Examples
+    #  github = Github.new
+    #  github.repos.deployments.create_status 'user-name', 'repo-name', DEPLOYMENT_ID, :state => '...'
+    #
+    def create_status(*args)
+      arguments(args, :required => [:user, :repo, :id]) do
+        assert_required %w[ state ]
+      end
+
+      params = arguments.params
+      params['accept'] ||= PREVIEW_MEDIA
+
+      post_request("repos/#{user}/#{repo}/deployments/#{id}/statuses", params)
     end
 
   end # Client::Repos::Deployments
