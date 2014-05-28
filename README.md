@@ -308,7 +308,7 @@ Furthermore, to create auth token for an application you need to pass `:app` arg
 
 ```ruby
 github = Github.new basic_auth: 'login:password'
-github.oauth.app.create 'clinet-id', scopes: ['repo']
+github.oauth.app.create 'client-id', scopes: ['repo']
 ```
 
 In order to revoke auth token(s) for an application you must use basic authentication with `client_id` as login and `client_secret` as password.
