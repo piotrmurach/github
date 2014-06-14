@@ -20,18 +20,18 @@ Supports all the API methods. It's built in a modular way. You can either instan
 
 ## Features
 
-* Intuitive GitHub API interface navigation. [usage](#usage)
-* Modular design allows for working with parts of API. [api](#api)
-* Fully customizable including advanced middleware stack construction. [config](#advanced-configuration)
+* Intuitive GitHub API interface navigation. [usage](#1-usage)
+* Modular design allows for working with parts of API. [api](#12-api-navigation)
+* Fully customizable including advanced middleware stack construction. [config](#3-advanced-configuration)
 * It's comprehensive. You can request all GitHub API resources.
-* Supports OAuth2 authorization. [oauth](#oauth)
-* Flexible argument parsing. You can write expressive and natural queries. [params](#arguments--parameters)
-* Requests pagination with convenient DSL and automatic options. [pagination](#pagination)
-* Easy error handling split for client and server type errors. [error](#error-handling)
+* Supports OAuth2 authorization. [oauth](#42-application-oauth-access)
+* Flexible argument parsing. You can write expressive and natural queries. [params](#2-arguments--parameters)
+* Requests pagination with convenient DSL and automatic options. [pagination](#10-pagination)
+* Easy error handling split for client and server type errors. [error](#13-error-handling)
 * Supports multithreaded environment.
-* Custom media type specification through the 'media' parameter. [media](#media-types)
+* Custom media type specification through the 'media' parameter. [media](#7-media-types)
 * Request results caching (Status: TODO)
-* Fully tested with test coverage above 90% with over 1,700 specs and 1000 features. [testing](#testing)
+* Fully tested with test coverage above 90% with over 1,700 specs and 1000 features. [testing](#16-testing)
 
 ## Installation
 
