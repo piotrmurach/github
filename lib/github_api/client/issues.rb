@@ -30,7 +30,7 @@ module Github
 
     VALID_ISSUE_PARAM_VALUES = {
       'filter'    => %w[ assigned created mentioned subscribed all ],
-      'state'     => %w[ open closed ],
+      'state'     => %w[ open closed all ],
       'sort'      => %w[ created updated comments ],
       'direction' => %w[ desc asc ],
       'since'     => %r{\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z}
