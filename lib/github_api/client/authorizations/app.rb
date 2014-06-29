@@ -65,6 +65,28 @@ module Github
     alias :remove :delete
     alias :revoke :delete
 
+    # Check if an access token is a valid authorization for an application
+    # 
+    # @example
+    #   github - Github.new basic_auth: "client_id:client_secret"
+    #   github.oauth.app.check 'client_id', 'access-token'
+    # @api public
+
+    def check(*args)
+      raise_authentication_error unless authenticated?
+      params = arguments(args, required: [:client_id, :access_token]).params
+      
+      if client_id
+        begin
+          get_request("/applications/#{client_id}/tokens/#{access_token}", params)
+        rescue Github::Error::NotFound => e
+          nil
+        end
+      else
+        raise raise_app_authentication_error
+      end
+    end
+
     protected
 
     def raise_app_authentication_error
