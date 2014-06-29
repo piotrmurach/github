@@ -15,13 +15,14 @@ module Github
 
     # List deployments on a repository
     #
-    # = Examples
+    # @xample
     #  github = Github.new
     #  github.repos.deployments.list 'user-name', 'repo-name'
     #  github.repos.deployments.list 'user-name', 'repo-name' { |deployment| ... }
     #
+    # @api public
     def list(*args)
-      arguments(args, :required => [:user, :repo])
+      arguments(args, required: [:user, :repo])
       params = arguments.params
       params['accept'] ||= PREVIEW_MEDIA
 
@@ -34,15 +35,22 @@ module Github
 
     # Create a deployment
     #
-    # = Parameters
-    # * <tt>:ref</tt>         Required string. Sha or branch to start listing commits from.
-    # * <tt>:force</tt>       Optional boolean. Ignore commit status checks.
-    # * <tt>:payload</tt>     Optional string. Optional json payload with information about the deployment.
-    # * <tt>:auto_merge</tt>  Optional boolean. Merge the default branch into the requested deployment branch if necessary.
-    # * <tt>:description</tt> Optional string. Optional short description.
-    # = Examples
+    # @param [Hash] params
+    # @option params [String] :ref
+    #   Required string. Sha or branch to start listing commits from.
+    # @option params [Boolean] :force
+    #   Optional boolean. Ignore commit status checks.
+    # @option params [String] :payload
+    #   Optional json payload with information about the deployment.
+    # @option params [Boolean] :auto_merge
+    #   Optional boolean. Merge the default branch into the requested
+    #   deployment branch if necessary.
+    # @option params [String] :description
+    #   Optional string. Optional short description.
+    #
+    # @example
     #  github = Github.new
-    #  github.repos.deployments.create 'user-name', 'repo-name', :ref => '...'
+    #  github.repos.deployments.create 'user-name', 'repo-name', ref: '...'
     #  github.repos.deployments.create
     #     'user-name',
     #     'repo-name',
@@ -50,8 +58,9 @@ module Github
     #     description: 'New deploy',
     #     force: true
     #
+    # @api public
     def create(*args)
-      arguments(args, :required => [:user, :repo]) do
+      arguments(args, required: [:user, :repo]) do
         sift VALID_DEPLOYMENTS_OPTIONS
         assert_required %w[ ref ]
       end
@@ -64,38 +73,47 @@ module Github
 
     # List the statuses of a deployment.
     #
-    # = Parameters
-    # * <tt>:id</tt> Required string. Id of the deployment being queried.
-    # = Examples
+    # @param [Hash] params
+    # @option params [String] :id
+    #   Required string. Id of the deployment being queried.
+    #
+    # @example
     #  github = Github.new
     #  github.repos.deployments.statuses 'user-name', 'repo-name', DEPLOYMENT_ID
     #  github.repos.deployments.statuses 'user-name', 'repo-name', DEPLOYMENT_ID { |status| ... }
     #
+    # @api public
     def statuses(*args)
-      arguments(args, :required => [:user, :repo, :id])
+      arguments(args, required: [:user, :repo, :id])
 
       params = arguments.params
       params['accept'] ||= PREVIEW_MEDIA
 
       statuses = get_request("repos/#{user}/#{repo}/deployments/#{id}/statuses", params)
       return statuses unless block_given?
-
       statuses.each { |status| yield status }
     end
 
     # Create a deployment status
     #
-    # = Parameters
-    # * <tt>:id</tt>          Required string. Id of the deployment being referenced.
-    # * <tt>:state</tt>       Required string. State of the deployment. Can be one of: pending, success, error, or failure.
-    # * <tt>:target_url</tt>  Optional string. The URL associated with the status.
-    # * <tt>:description</tt> Optional string. A short description of the status.
-    # = Examples
-    #  github = Github.new
-    #  github.repos.deployments.create_status 'user-name', 'repo-name', DEPLOYMENT_ID, :state => '...'
+    # @param [Hash] params
+    # @option params [String] :id
+    #   Required string. Id of the deployment being referenced.
+    # @option params [String] :state
+    #   Required string. State of the deployment. Can be one of:
+    #   pending, success, error, or failure.
+    # @option params [String] :target_url
+    #   Optional string. The URL associated with the status.
+    # @option params [String] :description
+    #   Optional string. A short description of the status.
     #
+    # @example
+    #  github = Github.new
+    #  github.repos.deployments.create_status 'user-name', 'repo-name', DEPLOYMENT_ID, state: '...'
+    #
+    # @api public
     def create_status(*args)
-      arguments(args, :required => [:user, :repo, :id]) do
+      arguments(args, required: [:user, :repo, :id]) do
         assert_required %w[ state ]
       end
 
@@ -104,6 +122,5 @@ module Github
 
       post_request("repos/#{user}/#{repo}/deployments/#{id}/statuses", params)
     end
-
   end # Client::Repos::Deployments
-end
+end # Github
