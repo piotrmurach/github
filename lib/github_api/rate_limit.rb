@@ -15,5 +15,11 @@ module Github
       get_request("/rate_limit", arguments.params).rate.remaining
     end
 
+    def ratelimit_reset(*args)
+      arguments(args)
+
+      get_request("/rate_limit", arguments.params).rate.reset
+    end
+
   end # RateLimit
 end # Github
