@@ -26,9 +26,8 @@ module Github
       params = arguments.params
       params['accept'] ||= PREVIEW_MEDIA
 
-      response = get_request("repos/#{user}/#{repo}/deployments", params)
+      response = get_request("repos/#{arguments.user}/#{arguments.repo}/deployments", params)
       return response unless block_given?
-
       response.each { |el| yield el }
     end
     alias :all :list
@@ -61,14 +60,13 @@ module Github
     # @api public
     def create(*args)
       arguments(args, required: [:user, :repo]) do
-        sift VALID_DEPLOYMENTS_OPTIONS
+        permit VALID_DEPLOYMENTS_OPTIONS
         assert_required %w[ ref ]
       end
-
       params = arguments.params
       params['accept'] ||= PREVIEW_MEDIA
 
-      post_request("repos/#{user}/#{repo}/deployments", params)
+      post_request("repos/#{arguments.user}/#{arguments.repo}/deployments", arguments.params)
     end
 
     # List the statuses of a deployment.
@@ -85,11 +83,10 @@ module Github
     # @api public
     def statuses(*args)
       arguments(args, required: [:user, :repo, :id])
-
       params = arguments.params
       params['accept'] ||= PREVIEW_MEDIA
 
-      statuses = get_request("repos/#{user}/#{repo}/deployments/#{id}/statuses", params)
+      statuses = get_request("repos/#{arguments.user}/#{arguments.repo}/deployments/#{arguments.id}/statuses", params)
       return statuses unless block_given?
       statuses.each { |status| yield status }
     end
@@ -116,11 +113,10 @@ module Github
       arguments(args, required: [:user, :repo, :id]) do
         assert_required %w[ state ]
       end
-
       params = arguments.params
       params['accept'] ||= PREVIEW_MEDIA
 
-      post_request("repos/#{user}/#{repo}/deployments/#{id}/statuses", params)
+      post_request("repos/#{arguments.user}/#{arguments.repo}/deployments/#{arguments.id}/statuses", params)
     end
   end # Client::Repos::Deployments
 end # Github
