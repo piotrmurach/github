@@ -248,7 +248,7 @@ module Github
       if not_set
         @arguments
       else
-        @arguments = Arguments.new(self, options).parse(*args, &block)
+        @arguments = Arguments.new(options.merge!(api: self)).parse(*args, &block)
       end
     end
 
@@ -266,7 +266,7 @@ module Github
       end
     end
 
-    # Set an option to a given value
+    # Set a configuration option for a given namespace
     #
     # @param [String] option
     # @param [Object] value
@@ -315,6 +315,12 @@ module Github
     end
 
     # Extracts class name from options
+    #
+    # @param [Hash] options
+    # @option options [String] :full_name
+    #   the full name for the class
+    # @option options [Boolean] :root
+    #   if the class is at the root or not
     #
     # @return [String]
     #
