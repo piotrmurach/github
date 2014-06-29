@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Authorizations::App, '#check' do
+describe Github::Client::Authorizations::App, '#check' do
   let(:basic_auth) { 'login:password' }
   let(:host)       { "https://#{basic_auth}@api.github.com" }
   let(:request_path) { "/applications/#{client_id}/tokens/#{access_token}" }
@@ -19,8 +19,8 @@ describe Github::Authorizations::App, '#check' do
   after { reset_authentication_for(subject) }
 
   context 'when app makes a request' do
-    let(:body)      { "" }
-    let(:status)    { 200 }
+    let(:body)   { "" }
+    let(:status) { 200 }
 
     it "checks resource successfully" do
       subject.check client_id, access_token
@@ -34,12 +34,11 @@ describe Github::Authorizations::App, '#check' do
     it "fails without access_token" do
       expect {subject.check(client_id)}.to raise_error(ArgumentError)
     end
-
   end
 
   context 'when app checks a token that is valid' do
-    let(:body)      { fixture('auths/check.json') }
-    let(:status)    { 200 }
+    let(:body)   { fixture('auths/check.json') }
+    let(:status) { 200 }
 
 
     it "returns the resource" do
@@ -56,7 +55,7 @@ describe Github::Authorizations::App, '#check' do
   context 'when app checks a token that is not valid' do
     let(:body)      { '' }
     let(:status)    { 404 }
-    
+
     it "does not raise error for expected 404" do
       expect { subject.check client_id, access_token }.to_not raise_error
     end
@@ -65,6 +64,5 @@ describe Github::Authorizations::App, '#check' do
       authorization = subject.check client_id, access_token
       authorization.should be_nil
     end
-
   end
 end # check
