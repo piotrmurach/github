@@ -23,11 +23,11 @@ module Github
     def create(*args)
       raise_authentication_error unless authenticated?
       arguments(args, required: [:client_id]) do
-        sift VALID_AUTH_PARAM_NAMES
+        permit VALID_AUTH_PARAM_NAMES
       end
 
-      if client_id
-        put_request("/authorizations/clients/#{client_id}", arguments.params)
+      if arguments.client_id
+        put_request("/authorizations/clients/#{arguments.client_id}", arguments.params)
       else
         raise raise_app_authentication_error
       end
@@ -44,9 +44,9 @@ module Github
       raise_authentication_error unless authenticated?
       params = arguments(args, required: [:client_id, :access_token]).params
 
-      if client_id
+      if arguments.client_id
         begin
-          get_request("/applications/#{client_id}/tokens/#{access_token}", params)
+          get_request("/applications/#{arguments.client_id}/tokens/#{arguments.access_token}", params)
         rescue Github::Error::NotFound => e
           nil
         end
@@ -72,12 +72,12 @@ module Github
       raise_authentication_error unless authenticated?
       params = arguments(args, required: [:client_id]).params
 
-      if client_id
+      if arguments.client_id
         if access_token = (params.delete('access_token') || args[1])
-          delete_request("/applications/#{client_id}/tokens/#{access_token}", params)
+          delete_request("/applications/#{arguments.client_id}/tokens/#{access_token}", params)
         else
           # Revokes all tokens
-          delete_request("/applications/#{client_id}/tokens", params)
+          delete_request("/applications/#{arguments.client_id}/tokens", params)
         end
       else
         raise raise_app_authentication_error

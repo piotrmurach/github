@@ -18,12 +18,11 @@ module Github
     # @api public
     def list(*args)
       arguments(args, required: [:owner, :repo])
-      params = arguments.params
 
       response = if args.map(&:to_s).include?('latest')
-        get_request("/repos/#{owner}/#{repo}/pages/builds/latest", params)
+        get_request("/repos/#{arguments.owner}/#{arguments.repo}/pages/builds/latest", arguments.params)
       else
-        get_request("/repos/#{owner}/#{repo}/pages/builds", params)
+        get_request("/repos/#{arguments.owner}/#{arguments.repo}/pages/builds", arguments.params)
       end
       return response unless block_given?
       response.each { |el| yield el }
@@ -40,7 +39,7 @@ module Github
     def get(*args)
       arguments(args, required: [:owner, :repo])
 
-      get_request("/repos/#{owner}/#{repo}/pages", arguments.params)
+      get_request("/repos/#{arguments.owner}/#{arguments.repo}/pages", arguments.params)
     end
     alias :find :get
   end # Client::Repos::Pages
