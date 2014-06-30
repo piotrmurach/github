@@ -27,21 +27,23 @@ module Github
 
     # List pull requests
     #
-    # = Examples
-    #  github = Github.new :user => 'user-name', :repo => 'repo-name'
+    # @example
+    #  github = Github.new user: 'user-name', repo: 'repo-name'
     #  github.pull_requests.list
     #  github.pull_requests.list { |req| ... }
     #
+    # @example
     #  pulls = Github::PullRequests.new
     #  pulls.pull_requests.list 'user-name', 'repo-name'
     #
+    # @api public
     def list(*args)
-      arguments(args, :required => [:user, :repo]) do
-        sift VALID_REQUEST_PARAM_NAMES
+      arguments(args, required: [:user, :repo]) do
+        permit VALID_REQUEST_PARAM_NAMES
         assert_values VALID_REQUEST_PARAM_VALUES
       end
 
-      response = get_request("/repos/#{user}/#{repo}/pulls", arguments.params)
+      response = get_request("/repos/#{arguments.user}/#{arguments.repo}/pulls", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -57,112 +59,125 @@ module Github
     #  pulls.get 'user-name', 'repo-name', 'number'
     #
     def get(*args)
-      arguments(args, :required => [:user, :repo, :number])
+      arguments(args, required: [:user, :repo, :number])
 
-      get_request("/repos/#{user}/#{repo}/pulls/#{number}", arguments.params)
+      get_request("/repos/#{arguments.user}/#{arguments.repo}/pulls/#{arguments.number}", arguments.params)
     end
     alias :find :get
 
     # Create a pull request
     #
-    # = Inputs
-    # * <tt>:title</tt> - Required string
-    # * <tt>:body</tt> - Optional string
-    # * <tt>:base</tt> - Required string - The branch you want your changes pulled into.
-    # * <tt>:head</tt> - Required string - The branch where your changes are implemented.
-    # note: head and base can be either a sha or a branch name.
+    # @param [Hash] params
+    # @option params [String] :title 
+    #   Required string
+    # @option params [String] :body
+    #   Optional string
+    # @option params [String] :base
+    #   Required string - The branch you want your changes pulled into.
+    # @option params [String] :head
+    #   Required string - The branch where your changes are implemented.
+    #
+    # @note: head and base can be either a sha or a branch name.
     # Typically you would namespace head with a user like this: username:branch.
-    # = Alternative Input
+    #
+    # Alternative Input
     # You can also create a Pull Request from an existing Issue by passing
     # an Issue number instead of <tt>title</tt> and <tt>body</tt>.
-    # * <tt>issue</tt> - Required number - Issue number in this repository to turn into a Pull Request.
+    # @option params [Numeric] :issue
+    #   Required number - Issue number in this repository to turn into a Pull Request.
     #
-    # = Examples
-    #  github = Github.new :oauth_token => '...'
+    # @example
+    #  github = Github.new oauth_token: '...'
     #  github.pull_requests.create 'user-name', 'repo-name',
-    #    "title" => "Amazing new feature",
-    #    "body" => "Please pull this in!",
-    #    "head" => "octocat:new-feature",
-    #    "base" => "master"
+    #    title: "Amazing new feature",
+    #    body: "Please pull this in!",
+    #    head: "octocat:new-feature",
+    #    base: "master"
     #
-    # alternatively
-    #
+    # @example
     #  github.pull_requests.create 'user-name', 'repo-name',
-    #    "issue" => "5",
-    #    "head" => "octocat:new-feature",
-    #    "base" => "master"
+    #    issue: "5",
+    #    head: "octocat:new-feature",
+    #    base: "master"
     #
+    # @api public
     def create(*args)
-      arguments(args, :required => [:user, :repo]) do
-        sift VALID_REQUEST_PARAM_NAMES
+      arguments(args, required: [:user, :repo]) do
+        permit VALID_REQUEST_PARAM_NAMES
       end
 
-      post_request("/repos/#{user}/#{repo}/pulls", arguments.params)
+      post_request("/repos/#{arguments.user}/#{argumentsrepo}/pulls", arguments.params)
     end
 
     # Update a pull request
     #
-    # = Inputs
-    # * <tt>:title</tt> - Optional string
-    # * <tt>:body</tt> - Optional string
-    # * <tt>:state</tt> - Optional string - State of this Pull Request. Valid values are <tt>open</tt> and <tt>closed</tt>.
+    # @param [Hash] params
+    # @option params [String] :title
+    #   Optional string
+    # @optoin params [String] :body
+    #   Optional string
+    # @option params [String] :state
+    #   Optional string - State of this Pull Request.
+    #   Valid values are open and closed.
     #
-    # = Examples
-    #  github = Github.new :oauth_token => '...'
+    # @example
+    #  github = Github.new oauth_token: '...'
     #  github.pull_requests.update 'user-name', 'repo-name', 'number'
-    #    "title" => "Amazing new title",
-    #    "body" => "Update body",
-    #    "state" => "open",
+    #    title: "Amazing new title",
+    #    body: "Update body",
+    #    state: "open"
     #
+    # @api public
     def update(*args)
-      arguments(args, :required => [:user, :repo, :number]) do
-        sift VALID_REQUEST_PARAM_NAMES
+      arguments(args, required: [:user, :repo, :number]) do
+        permit VALID_REQUEST_PARAM_NAMES
         assert_values VALID_REQUEST_PARAM_VALUES
       end
 
-      patch_request("/repos/#{user}/#{repo}/pulls/#{number}", arguments.params)
+      patch_request("/repos/#{arguments.user}/#{arguments.repo}/pulls/#{arguments.number}", arguments.params)
     end
 
     # List commits on a pull request
     #
-    # = Examples
+    # @example
     #  github = Github.new
     #  github.pull_requests.commits 'user-name', 'repo-name', 'number'
     #
+    # @api public
     def commits(*args)
-      arguments(args, :required => [:user, :repo, :number])
+      arguments(args, required: [:user, :repo, :number])
 
-      response = get_request("/repos/#{user}/#{repo}/pulls/#{number}/commits",
-        arguments.params)
+      response = get_request("/repos/#{arguments.user}/#{arguments.repo}/pulls/#{arguments.number}/commits", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
 
     # List pull requests files
     #
-    # = Examples
+    # @example
     #  github = Github.new
     #  github.pull_requests.files 'user-name', 'repo-name', 'number'
     #
+    # @api public
     def files(*args)
-      arguments(args, :required => [:user, :repo, :number])
+      arguments(args, required: [:user, :repo, :number])
 
-      response = get_request("/repos/#{user}/#{repo}/pulls/#{number}/files",
-        arguments.params)
+      response = get_request("/repos/#{arguments.user}/#{arguments.repo}/pulls/#{arguments.number}/files", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
 
     # Check if pull request has been merged
     #
-    # = Examples
+    # @example
     #  github = Github.new
     #  github.pull_requests.merged? 'user-name', 'repo-name', 'number'
     #
+    # @api public
     def merged?(*args)
-      arguments(args, :required => [:user, :repo, :number])
+      arguments(args, required: [:user, :repo, :number])
 
-      get_request("/repos/#{user}/#{repo}/pulls/#{number}/merge", arguments.params)
+      get_request("/repos/#{arguments.user}/#{arguments.repo}/pulls/#{arguments.number}/merge", arguments.params)
       true
     rescue Github::Error::NotFound
       false
@@ -170,21 +185,21 @@ module Github
 
     # Merge a pull request(Merge Button)
     #
-    # = Inputs
-    #  <tt>:commit_message</tt> - Optional string -
-    #                           The message that will be used for the merge commit
+    # @param [Hash] params
+    # @option params [String] :commit_message
+    #   Optional string - The message that will be used for the merge commit
     #
-    # = Examples
+    # @example
     #  github = Github.new
     #  github.pull_requests.merge 'user-name', 'repo-name', 'number'
     #
+    # @api public
     def merge(*args)
-      arguments(args, :required => [:user, :repo, :number]) do
-        sift VALID_REQUEST_PARAM_NAMES
+      arguments(args, required: [:user, :repo, :number]) do
+        permit VALID_REQUEST_PARAM_NAMES
       end
 
-      put_request("/repos/#{user}/#{repo}/pulls/#{number}/merge", arguments.params)
+      put_request("/repos/#{arguments.user}/#{arguments.repo}/pulls/#{arguments.number}/merge", arguments.params)
     end
-
   end # PullRequests
 end # Github
