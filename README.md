@@ -574,7 +574,7 @@ Each response comes packaged with methods allowing for inspection of HTTP start 
 ```ruby
 res = Github::Repos.new.branches 'peter-murach', 'github'
 res.headers.ratelimit_limit     # "5000"
-res.headers.ratelimit_remainig  # "4999"
+res.headers.ratelimit_remaining # "4999"
 res.headers.status              # "200"
 res.headers.content_type        # "application/json; charset=utf-8"
 res.headers.etag                # "\"2c5dfc54b3fe498779ef3a9ada9a0af9\""
