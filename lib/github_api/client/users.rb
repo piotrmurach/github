@@ -32,13 +32,15 @@ module Github
     # This provides a dump of every user, in the order that they signed up
     # for GitHub.
     #
-    # = Parameters
-    # * <tt>:since</tt> - The integer ID of the last User that you’ve seen.
+    # @param [Hash] params
+    # @option [Integer] :since
+    #   The integer ID of the last User that you’ve seen.
     #
-    # = Examples
+    # @example
     #  users = Github::Users.new
     #  users.list
     #
+    # @api public
     def list(*args)
       arguments(args)
 
@@ -50,16 +52,17 @@ module Github
 
     # Get a single unauthenticated user
     #
-    # = Examples
+    # @example
     #  github = Github.new
     #  github.users.get user: 'user-name'
     #
     # Get the authenticated user
     #
-    # = Examples
+    # @example
     #  github = Github.new oauth_token: '...'
     #  github.users.get
     #
+    # @api public
     def get(*args)
       params = arguments(args).params
 
@@ -73,26 +76,34 @@ module Github
 
     # Update the authenticated user
     #
-    # = Inputs
-    # * <tt>:name</tt> - Optional string
-    # * <tt>:email</tt> - Optional string - publically visible email address
-    # * <tt>:blog</tt> - Optional string
-    # * <tt>:company</tt> - Optional string
-    # * <tt>:location</tt> - Optional string
-    # * <tt>:hireable</tt> - Optional boolean
-    # * <tt>:bio</tt> - Optional string
+    # @param [Hash] params
+    # @option params [String] :name
+    #   Optional string
+    # @option params [String] :email
+    #   Optional string - publically visible email address
+    # @option params [String] :blog
+    #   Optional string
+    # @option params [String] :company
+    #   Optional string
+    # @option params [String] :location
+    #   Optional string
+    # @option params [String] :hireable
+    #   Optional boolean
+    # @option params [String] :bio
+    #   Optional string
     #
-    # = Examples
-    #  github = Github.new :oauth_token => '..'
+    # @example
+    #  github = Github.new oauth_token: '..'
     #  github.users.update
-    #    "name" => "monalisa octocat",
-    #    "email" => "octocat@github.com",
-    #    "blog" => "https://github.com/blog",
-    #    "company" => "GitHub",
-    #    "location" => "San Francisco",
-    #    "hireable" => true,
-    #    "bio" => "There once..."
+    #    name: "monalisa octocat",
+    #    email: "octocat@github.com",
+    #    blog: "https://github.com/blog",
+    #    company: "GitHub",
+    #    location: "San Francisco",
+    #    hireable: true,
+    #    bio: "There once..."
     #
+    # @api public
     def update(*args)
       arguments(args) do
         sift VALID_USER_PARAMS_NAMES
@@ -100,6 +111,5 @@ module Github
 
       patch_request("/user", arguments.params)
     end
-
   end # Users
 end # Github
