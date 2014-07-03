@@ -57,64 +57,69 @@ module Github
     # including owned repositories, member repositories,
     # and organization repositories.
     #
-    # = Example
-    #  github = Github.new :oauth_token => '...'
+    # @example
+    #  github = Github.new oauth_token: '...'
     #  github.issues.list
     #
     # List all issues across owned and member repositories for the
     # authenticated user.
     #
-    # = Example
-    #  github = Github.new :oauth_token => '...'
+    # @example
+    #  github = Github.new oauth_token: '...'
     #  github.issues.list :user
     #
     # List all issues for a given organization for the authenticated user.
     #
-    # = Example
-    #  github = Github.new :oauth_token => '...'
-    #  github.issues.list :org => 'org-name'
+    # @example
+    #  github = Github.new oauth_token: '...'
+    #  github.issues.list org: 'org-name'
     #
     # List issues for a repository
     #
-    # = Example
+    # @example
     #  github = Github.new
-    #  github.issues.list :user => 'user-name', :repo => 'repo-name'
+    #  github.issues.list user: 'user-name', repo: 'repo-name'
     #
-    # = Parameters
-    # <tt>:filter</tt>
-    #  * <tt>assigned</tt>   Issues assigned to you (default)
-    #  * <tt>created</tt>    Issues created by you 
-    #  * <tt>mentioned</tt>  Issues mentioning you 
-    #  * <tt>subscribed</tt> Issues you've subscribed to updates for 
-    #  * <tt>all</tt>        All issues the user can see 
-    # <tt>:milestone</tt>
+    # @param [Hash] params
+    # @option params [String] :filter
+    #  * assigned   Issues assigned to you (default)
+    #  * created    Issues created by you
+    #  * mentioned  Issues mentioning you
+    #  * subscribed Issues you've subscribed to updates for
+    #  * all        All issues the user can see
+    # @option params [String] :milestone
     #  * Integer Milestone number
-    #  * <tt>none</tt> for Issues with no Milestone.
-    #  * <tt>*</tt>    for Issues with any Milestone
-    # <tt>:state</tt>  - <tt>open</tt>, <tt>closed</tt>, default: <tt>open</tt>
-    # <tt>:labels</tt> - String list of comma separated Label names.
-    #                   Example: bug,ui,@high
-    # <tt>:assignee</tt>
+    #  * none for Issues with no Milestone.
+    #  * *    for Issues with any Milestone
+    # @option params [String] :state
+    #   open, closed, default: open
+    # @option params [String] :labels
+    #   String list of comma separated Label names. Example: bug,ui,@high
+    # @option params [String] :assignee
     #  * String User login
     #  * <tt>none</tt> for Issues with no assigned User.
     #  * <tt>*</tt>    for Issues with any assigned User.
-    # <tt>:creator</tt> String User login
-    # <tt>:mentioned</tt> String User login
-    # <tt>:sort</tt> - <tt>created</tt>, <tt>updated</tt>, <tt>comments</tt>,
-    #                  default: <tt>created</tt>
-    # <tt>:direction</tt> - <tt>asc</tt>, <tt>desc</tt>, default: <tt>desc</tt>
-    # <tt>:since</tt>     - Optional string of a timestamp in ISO 8601
-    #                       format: YYYY-MM-DDTHH:MM:SSZ
+    # @option params [String] :creator
+    #   String User login
+    # @option params [String] :mentioned
+    #   String User login
+    # @option params [String] :sort
+    #   created, updated, comments, default: <tt>created</tt>
+    # @option params [String] :direction
+    #   asc, desc, default: desc
+    # @option params [String] :since
+    #   Optional string of a timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
     #
-    # = Examples
-    #  github = Github.new :oauth_token => '...'
-    #  github.issues.list :since => '2011-04-12T12:12:12Z',
-    #    :filter => 'created',
-    #    :state  => 'open',
-    #    :labels => "bug,ui,bla",
-    #    :sort   => 'comments',
-    #    :direction => 'asc'
+    # @example
+    #  github = Github.new oauth_token: '...'
+    #  github.issues.list since: '2011-04-12T12:12:12Z',
+    #    filter: 'created',
+    #    state: 'open',
+    #    labels: "bug,ui,bla",
+    #    sort: 'comments',
+    #    direction: 'asc'
     #
+    # @api public
     def list(*args)
       params = arguments(args) do
         assert_values VALID_ISSUE_PARAM_VALUES
@@ -147,82 +152,95 @@ module Github
 
     # Get a single issue
     #
-    # = Examples
+    # @example
     #  github = Github.new
     #  github.issues.get 'user-name', 'repo-name', 'number'
     #
     def get(*args)
-      arguments(args, :required => [:user, :repo, :number])
+      arguments(args, required: [:user, :repo, :number])
 
-      get_request("/repos/#{user}/#{repo}/issues/#{number}", arguments.params)
+      get_request("/repos/#{arguments.user}/#{arguments.repo}/issues/#{arguments.number}", arguments.params)
     end
     alias :find :get
 
     # Create an issue
     #
-    # = Inputs
-    #  <tt>:title</tt> - Required string
-    #  <tt>:body</tt> - Optional string
-    #  <tt>:assignee</tt> - Optional string - Login for the user that this issue should be assigned to.
-    #                       Only users with push access can set the assignee for new issues.
-    #                       The assignee is silently dropped otherwise.
-    #  <tt>:milestone</tt> - Optional number - Milestone to associate this issue with.
-    #                        Only users with push access can set the milestone for new issues.
-    #                        The milestone is silently dropped otherwise.
-    #  <tt>:labels</tt> - Optional array of strings - Labels to associate with this issue
-    #                     Only users with push access can set labels for new issues.
-    #                     Labels are silently dropped otherwise.
-    # = Examples
-    #  github = Github.new :user => 'user-name', :repo => 'repo-name'
+    # @param [Hash] params
+    # @option params [String] :title
+    #   Required string
+    # @option params [String] :body
+    #   Optional string
+    # @option params [String] :assignee
+    #   Optional string - Login for the user that this issue should be
+    #   assigned to. Only users with push access can set the assignee for
+    #   new issues. The assignee is silently dropped otherwise.
+    # @option params [Number] :milestone
+    #   Optional number - Milestone to associate this issue with.
+    #   Only users with push access can set the milestone for new issues.
+    #   The milestone is silently dropped otherwise.
+    # @option params [Array[String]] :labels
+    #   Optional array of strings - Labels to associate with this issue
+    #   Only users with push access can set labels for new issues.
+    #   Labels are silently dropped otherwise.
+    #
+    # @example
+    #  github = Github.new user: 'user-name', repo: 'repo-name'
     #  github.issues.create
-    #    "title" => "Found a bug",
-    #    "body" => "I'm having a problem with this.",
-    #    "assignee" => "octocat",
-    #    "milestone" => 1,
-    #    "labels" => [
+    #    title: "Found a bug",
+    #    body: "I'm having a problem with this.",
+    #    assignee: "octocat",
+    #    milestone: 1,
+    #    labels: [
     #      "Label1",
     #      "Label2"
     #    ]
     #
     def create(*args)
-      arguments(args, :required => [:user, :repo]) do
-        sift VALID_ISSUE_PARAM_NAMES
+      arguments(args, required: [:user, :repo]) do
+        permit VALID_ISSUE_PARAM_NAMES
         assert_required %w[ title ]
       end
 
-      post_request("/repos/#{user}/#{repo}/issues", arguments.params)
+      post_request("/repos/#{arguments.user}/#{arguments.repo}/issues", arguments.params)
     end
 
     # Edit an issue
     #
-    # = Inputs
-    #  <tt>:title</tt> - Optional string
-    #  <tt>:body</tt> - Optional string
-    #  <tt>:assignee</tt> - Optional string - Login for the user that this issue should be assigned to.
-    #  <tt>:state</tt> - Optional string - State of the issue:<tt>open</tt> or <tt>closed</tt>
-    #  <tt>:milestone</tt> - Optional number - Milestone to associate this issue with
-    #  <tt>:labels</tt> - Optional array of strings - Labels to associate with this issue. Pass one or more Labels to replace the set of Labels on this Issue. Send an empty array ([]) to clear all Labels from the Issue.
+    # @param [Hash] params
+    # @option params [String] :title
+    #   Optional string
+    # @option params [String] :body
+    #   Optional string
+    # @option params [String] :assignee
+    #   Optional string - Login for the user that this issue should be assigned to.
+    # @option params [String] :state
+    #   Optional string - State of the issue: open or closed
+    # @option params [Number] :milestone
+    #   Optional number - Milestone to associate this issue with
+    # @option params [Array[String]] :labels
+    #   Optional array of strings - Labels to associate with this issue.
+    #   Pass one or more Labels to replace the set of Labels on this Issue.
+    #   Send an empty array ([]) to clear all Labels from the Issue.
     #
-    # = Examples
+    # @example
     #  github = Github.new
     #  github.issues.edit 'user-name', 'repo-name', 'number'
-    #    "title" => "Found a bug",
-    #    "body" => "I'm having a problem with this.",
-    #    "assignee" => "octocat",
-    #    "milestone" => 1,
-    #    "labels" => [
+    #    title: "Found a bug",
+    #    body: "I'm having a problem with this.",
+    #    assignee: "octocat",
+    #    milestone: 1,
+    #    labels": [
     #      "Label1",
     #      "Label2"
     #    ]
     #
+    # @api public
     def edit(*args)
-      arguments(args, :required => [:user, :repo, :number]) do
-        sift VALID_ISSUE_PARAM_NAMES
+      arguments(args, required: [:user, :repo, :number]) do
+        permit VALID_ISSUE_PARAM_NAMES
       end
-      params = arguments.params
 
-      patch_request("/repos/#{user}/#{repo}/issues/#{number}", params)
+      patch_request("/repos/#{arguments.user}/#{arguments.repo}/issues/#{arguments.number}", arguments.params)
     end
-
   end # Issues
 end # Github
