@@ -86,8 +86,8 @@ Feature: Labels API
   Scenario: Add
 
     Given I want to add resource with the following params:
-      | user  | repo            | issue_id | label1 |
-      | murek | github_api_test | 1        | bug    |
+      | user  | repo            | number | label1 |
+      | murek | github_api_test | 1      | bug    |
     When I make request within a cassette named "issues/labels/add" and match on method
     Then the response status should be 200
       And the response type should be JSON
@@ -106,8 +106,8 @@ Feature: Labels API
   Scenario: Remove a single label
 
     Given I want to remove resource with the following params:
-      | user  | repo            | issue_id |
-      | murek | github_api_test | 1        |
+      | user  | repo            | number |
+      | murek | github_api_test | 1      |
     And I pass the following request options:
       | lable_name |
       | duplicate  |
@@ -117,7 +117,7 @@ Feature: Labels API
   Scenario: Remove all labels
 
     Given I want to remove resource with the following params:
-      | user  | repo            | issue_id |
-      | murek | github_api_test | 1        |
+      | user  | repo            | number |
+      | murek | github_api_test | 1      |
     When I make request within a cassette named "issues/labels/remove_all" and match on method
     Then the response status should be 204
