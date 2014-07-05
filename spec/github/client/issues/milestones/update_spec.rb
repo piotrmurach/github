@@ -5,8 +5,8 @@ require 'spec_helper'
 describe Github::Client::Issues::Milestones, '#update' do
   let(:user)   { 'peter-murach' }
   let(:repo)   { 'github' }
-  let(:milestone_id) { 1 }
-  let(:request_path) { "/repos/#{user}/#{repo}/milestones/#{milestone_id}" }
+  let(:number) { 1 }
+  let(:request_path) { "/repos/#{user}/#{repo}/milestones/#{number}" }
   let(:inputs) {
     {
       "title" => "String",
@@ -35,22 +35,22 @@ describe Github::Client::Issues::Milestones, '#update' do
     end
 
     it "should update resource successfully" do
-      subject.update user, repo, milestone_id, inputs
+      subject.update user, repo, number, inputs
       a_patch(request_path).with(inputs).should have_been_made
     end
 
     it "should return the resource" do
-      milestone = subject.update user, repo, milestone_id, inputs
+      milestone = subject.update user, repo, number, inputs
       milestone.should be_a Github::ResponseWrapper
     end
 
     it "should get the milestone information" do
-      milestone = subject.update user, repo, milestone_id, inputs
+      milestone = subject.update user, repo, number, inputs
       milestone.title.should == 'v1.0'
     end
   end
 
   it_should_behave_like 'request failure' do
-    let(:requestable) { subject.update user, repo, milestone_id, inputs }
+    let(:requestable) { subject.update user, repo, number, inputs }
   end
 end # update

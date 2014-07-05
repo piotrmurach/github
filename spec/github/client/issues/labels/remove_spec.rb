@@ -5,9 +5,9 @@ require 'spec_helper'
 describe Github::Client::Issues::Labels, '#remove' do
   let(:user)   { 'peter-murach' }
   let(:repo)   { 'github' }
-  let(:issue_id) { 1 }
-  let(:label_id) { 1 }
-  let(:request_path) { "/repos/#{user}/#{repo}/issues/#{issue_id}/labels/#{label_id}" }
+  let(:number) { 1 }
+  let(:label_name) { 1 }
+  let(:request_path) { "/repos/#{user}/#{repo}/issues/#{number}/labels/#{label_name}" }
 
   before {
     stub_delete(request_path).to_return(:body => body, :status => status,
@@ -25,33 +25,33 @@ describe Github::Client::Issues::Labels, '#remove' do
     end
 
     it "should remove label successfully" do
-      subject.remove user, repo, issue_id, :label_name => label_id
+      subject.remove user, repo, number, :label_name => label_name
       a_delete(request_path).should have_been_made
     end
 
     it "should return the resource" do
-      labels = subject.remove user, repo, issue_id, :label_name => label_id
+      labels = subject.remove user, repo, number, :label_name => label_name
       labels.first.should be_a Hashie::Mash
     end
 
     it "should get the label information" do
-      labels = subject.remove user, repo, issue_id, :label_name => label_id
+      labels = subject.remove user, repo, number, :label_name => label_name
       labels.first.name.should == 'bug'
     end
   end
 
   context "remove all labels from an issue" do
-    let(:request_path) { "/repos/#{user}/#{repo}/issues/#{issue_id}/labels" }
+    let(:request_path) { "/repos/#{user}/#{repo}/issues/#{number}/labels" }
     let(:body) { '[]' }
     let(:status) { 204 }
 
     it "should remove labels successfully" do
-      subject.remove user, repo, issue_id
+      subject.remove user, repo, number
       a_delete(request_path).should have_been_made
     end
   end
 
   it_should_behave_like 'request failure' do
-    let(:requestable) { subject.remove user, repo, issue_id, :label_name => label_id }
+    let(:requestable) { subject.remove user, repo, number, :label_name => label_name }
   end
 end # remove

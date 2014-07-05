@@ -77,10 +77,10 @@ module Github
     #     body: 'a new comment'
     #
     # @example
-    #   github.issues.comments.edit
+    #   github.issues.comments.create
     #     user: 'owner-name',
     #     repo: 'repo-name',
-    #     id: 'comment-id',
+    #     number: 'comment-number',
     #     body: 'a new comment body'
     #
     # @api public
@@ -119,7 +119,7 @@ module Github
         assert_required %w[ body ]
       end
 
-      patch_request("/repos/#{arguments.user}/#{arguments.repo}/issues/comments/#{}", arguments.params)
+      patch_request("/repos/#{arguments.user}/#{arguments.repo}/issues/comments/#{arguments.id}", arguments.params)
     end
 
     # Delete a comment

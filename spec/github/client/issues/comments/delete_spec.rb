@@ -32,5 +32,4 @@ describe Github::Client::Issues::Comments, '#delete' do
   it_should_behave_like 'request failure' do
     let(:requestable) { subject.delete user, repo, comment_id }
   end
-
 end # delete

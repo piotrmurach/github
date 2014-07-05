@@ -5,7 +5,7 @@ require 'spec_helper'
 describe Github::Client::Issues::Comments, '#list' do
   let(:user)   { 'peter-murach' }
   let(:repo)   { 'github' }
-  let!(:issue_id) { 1 }
+  let!(:number) { 1 }
 
   before {
     stub_get(request_path).to_return(:body => body, :status => status,
@@ -15,7 +15,7 @@ describe Github::Client::Issues::Comments, '#list' do
   after { reset_authentication_for(subject) }
 
   context "on an issue" do
-    let(:request_path) { "/repos/#{user}/#{repo}/issues/#{issue_id}/comments" }
+    let(:request_path) { "/repos/#{user}/#{repo}/issues/#{number}/comments" }
     let(:body) { fixture('issues/comments.json') }
     let(:status) { 200 }
 
@@ -26,27 +26,27 @@ describe Github::Client::Issues::Comments, '#list' do
     end
 
     it "should get the resources" do
-      subject.list user, repo, :issue_id => issue_id
+      subject.list user, repo, :number => number
       a_get(request_path).should have_been_made
     end
 
     it_should_behave_like 'an array of resources' do
-      let(:requestable) { subject.list user, repo, :issue_id => issue_id }
+      let(:requestable) { subject.list user, repo, :number => number }
     end
 
     it "should get issue comment information" do
-      comments = subject.list user, repo, :issue_id => issue_id
+      comments = subject.list user, repo, :number => number
       comments.first.user.login.should == 'octocat'
     end
 
     it "should yield to a block" do
       yielded = []
-      result = subject.list(user, repo, :issue_id => issue_id) { |obj| yielded << obj }
+      result = subject.list(user, repo, :number => number) { |obj| yielded << obj }
       yielded.should == result
     end
 
     it_should_behave_like 'request failure' do
-      let(:requestable) { subject.list user, repo, :issue_id => issue_id }
+      let(:requestable) { subject.list user, repo, :number => number }
     end
   end
 

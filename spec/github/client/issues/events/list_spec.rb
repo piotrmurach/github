@@ -5,7 +5,7 @@ require 'spec_helper'
 describe Github::Client::Issues::Events, '#list' do
   let(:user) { 'peter-murach' }
   let(:repo) { 'github' }
-  let(:issue_id) { 1 }
+  let(:issue_number) { 1 }
   let(:request_path) { "/repos/#{user}/#{repo}/issues/events" }
 
   before {
@@ -15,7 +15,7 @@ describe Github::Client::Issues::Events, '#list' do
 
   after { reset_authentication_for(subject) }
 
-  context 'without issue_id' do
+  context 'without issue_number' do
     let(:body) { fixture('issues/events.json') }
     let(:status) { 200 }
 
@@ -53,33 +53,33 @@ describe Github::Client::Issues::Events, '#list' do
     it_should_behave_like 'request failure' do
       let(:requestable) { subject.list user, repo }
     end
-  end # without issue_id
+  end # without issue_number
 
-  context 'with issue_id' do
-    let(:request_path) { "/repos/#{user}/#{repo}/issues/#{issue_id}/events" }
+  context 'with issue_number' do
+    let(:request_path) { "/repos/#{user}/#{repo}/issues/#{issue_number}/events" }
     let(:body) { fixture('issues/events.json') }
     let(:status) { 200 }
 
     context "resource found" do
       it "should get the resources" do
-        subject.list user, repo, :issue_id => issue_id
+        subject.list user, repo, :issue_number => issue_number
         a_get(request_path).should have_been_made
       end
 
       it_should_behave_like 'an array of resources' do
-        let(:requestable) { subject.list user, repo, :issue_id => issue_id }
+        let(:requestable) { subject.list user, repo, :issue_number => issue_number }
       end
 
       it "should get issue information" do
-        events = subject.list user, repo, :issue_id => issue_id
+        events = subject.list user, repo, :issue_number => issue_number
         events.first.actor.login.should == 'octocat'
       end
 
       it "should yield to a block" do
         yielded = []
-        result = subject.list(user, repo, :issue_id => issue_id) { |obj| yielded << obj }
+        result = subject.list(user, repo, :issue_number => issue_number) { |obj| yielded << obj }
         yielded.should == result
       end
     end
-  end # with issue_id
+  end # with issue_number
 end # list

@@ -8,7 +8,6 @@ describe Github::API::Arguments, '#parse' do
 
   let(:api)    { Github::Client::Repos.new }
 
-
   subject(:arguments) { object.new(api: api, required: required).parse(*args) }
 
   after { api.user =nil; api.repo = nil }
