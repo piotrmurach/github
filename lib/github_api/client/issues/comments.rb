@@ -11,33 +11,37 @@ module Github
 
     # List comments on an issue
     #
-    # = Examples
+    # @example
     #  github = Github.new
-    #  github.issues.comments.all 'user-name', 'repo-name', issue_id: 'id'
-    #  github.issues.comments.all 'user-name', 'repo-name', issue_id: 'id' {|com| .. }
+    #  github.issues.comments.all 'owner-name', 'repo-name', number: 'id'
+    #  github.issues.comments.all 'owner-name', 'repo-name', number: 'id' {|com| .. }
+    # @example
+    #  github.issues.comments.all owner: 'username', repo: 'repo-name', number: 'id'
     #
     # List comments in a repository
     #
-    # = Parameters
-    # * <tt>:sort</tt>      - Optional string, <tt>created</tt> or <tt>updated</tt>
-    # * <tt>:direction</tt> - Optional string, <tt>asc</tt> or <tt>desc</tt>.
-    #                         Ignored with sort parameter.
-    # * <tt>:since</tt>     - Optional string of a timestamp in ISO 8601
-    #                         format: YYYY-MM-DDTHH:MM:SSZ
+    # @param [Hash] params
+    # @option params [String] :sort
+    #   Optional string, created or updated
+    # @option params [String] :direction
+    #   Optional string, asc or desc. Ignored with sort parameter.
+    # @option params [String] :since
+    #   Optional string of a timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
     #
-    # = Examples
-    #  github = Github.new
-    #  github.issues.comments.all 'user-name', 'repo-name'
-    #  github.issues.comments.all 'user-name', 'repo-name' {|com| .. }
+    # @example
+    #   github = Github.new
+    #   github.issues.comments.all 'user-name', 'repo-name'
+    #   github.issues.comments.all 'user-name', 'repo-name' {|com| .. }
     #
+    # @api public
     def list(*args)
-      arguments(args, :required => [:user, :repo])
+      arguments(args, required: [:owner, :repo])
       params = arguments.params
 
-      response = if (issue_id = params.delete('issue_id'))
-        get_request("/repos/#{user}/#{repo}/issues/#{issue_id}/comments", params)
+      response = if (number = params.delete('number'))
+        get_request("/repos/#{arguments.owner}/#{arguments.repo}/issues/#{number}/comments", params)
       else
-        get_request("/repos/#{user}/#{repo}/issues/comments", params)
+        get_request("/repos/#{arguments.owner}/#{arguments.repo}/issues/comments", params)
       end
       return response unless block_given?
       response.each { |el| yield el }
@@ -46,70 +50,95 @@ module Github
 
     # Get a single comment
     #
-    # = Examples
+    # @example
     #  github = Github.new
-    #  github.issues.comments.find 'user-name', 'repo-name', 'comment-id'
+    #  github.issues.comments.find 'user-name', 'repo-name', 'id'
+    #
+    # @example
+    #  github.issues.comments.find owner: 'user-name', repo: 'repo-name', id: 'id'
     #
     def get(*args)
-      arguments(args, :required => [:user, :repo, :comment_id])
+      arguments(args, required: [:owner, :repo, :id])
       params = arguments.params
 
-      get_request("/repos/#{user}/#{repo}/issues/comments/#{comment_id}", params)
+      get_request("/repos/#{arguments.owner}/#{arguments.repo}/issues/comments/#{arguments.id}", params)
     end
     alias :find :get
 
     # Create a comment
     #
-    # = Inputs
-    #  <tt>:body</tt> Required string
+    # @param [Hash] params
+    # @option [String] :body
+    #   Required string
     #
-    # = Examples
+    # @example
     #  github = Github.new
-    #  github.issues.comments.create 'user-name', 'repo-name', 'issue-id',
-    #     'body': 'a new comment'
+    #  github.issues.comments.create 'owner-name', 'repo-name', 'number',
+    #     body: 'a new comment'
     #
+    # @example
+    #   github.issues.comments.edit
+    #     owner: 'owner-name',
+    #     repo: 'repo-name',
+    #     id: 'comment-id',
+    #     body: 'a new comment body'
+    #
+    # @api public
     def create(*args)
-      arguments(args, :required => [:user, :repo, :issue_id]) do
-        sift VALID_ISSUE_COMMENT_PARAM_NAME
+      arguments(args, required: [:owner, :repo, :number]) do
+        permit VALID_ISSUE_COMMENT_PARAM_NAME
         assert_required %w[ body ]
       end
       params = arguments.params
 
-      post_request("/repos/#{user}/#{repo}/issues/#{issue_id}/comments", params)
+      post_request("/repos/#{arguments.owner}/#{arguments.repo}/issues/#{arguments.number}/comments", params)
     end
 
     # Edit a comment
     #
-    # = Inputs
-    #  <tt>:body</tt> Required string
+    # @param [Hash] params
+    # @option params [String] :body
+    #   Required string
     #
-    # = Examples
+    # @example
     #  github = Github.new
-    #  github.issues.comments.edit 'user-name', 'repo-name', 'comment-id',
-    #     'body': 'a new comment'
+    #  github.issues.comments.edit 'owner-name', 'repo-name', 'id',
+    #     body: 'a new comment'
     #
+    # @example
+    #   github.issues.comments.edit
+    #     owner: 'owner-name',
+    #     repo: 'repo-name',
+    #     id: 'comment-id',
+    #     body: 'a new comment body'
+    #
+    # @api public
     def edit(*args)
-      arguments(args, :required => [:user, :repo, :comment_id]) do
-        sift VALID_ISSUE_COMMENT_PARAM_NAME
+      arguments(args, required: [:owner, :repo, :id]) do
+        permit VALID_ISSUE_COMMENT_PARAM_NAME
         assert_required %w[ body ]
       end
-      params = arguments.params
 
-      patch_request("/repos/#{user}/#{repo}/issues/comments/#{comment_id}", params)
+      patch_request("/repos/#{arguments.owner}/#{arguments.repo}/issues/comments/#{}", arguments.params)
     end
 
     # Delete a comment
     #
     # = Examples
     #  github = Github.new
-    #  github.issues.comments.delete 'user-name', 'repo-name', 'comment-id'
+    #  github.issues.comments.delete 'owner-name', 'repo-name', 'comment-id'
     #
+    # @example
+    #   github.issues.comments.delete
+    #     owner: 'owner-name',
+    #     repo: 'repo-name',
+    #     id: 'comment-id',
+    #
+    # @api public
     def delete(*args)
-      arguments(args, :required => [:user, :repo, :comment_id])
-      params = arguments.params
+      arguments(args, required: [:owner, :repo, :id])
 
-      delete_request("/repos/#{user}/#{repo}/issues/comments/#{comment_id}", params)
+      delete_request("/repos/#{arguments.owner}/#{arguments.repo}/issues/comments/#{arguments.id}", arguments.params)
     end
-
   end # Issues::Comments
 end # Github
