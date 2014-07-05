@@ -106,7 +106,7 @@ module Github
     # @api public
     def update(*args)
       arguments(args) do
-        sift VALID_USER_PARAMS_NAMES
+        permit VALID_USER_PARAMS_NAMES
       end
 
       patch_request("/user", arguments.params)
