@@ -18,28 +18,31 @@ module Github
 
     # List milestones for a repository
     #
-    # = Parameters
-    # <tt>:state</tt> - <tt>open</tt>, <tt>closed</tt>, default: <tt>open</tt>
-    # <tt>:sort</tt> - <tt>due_date</tt>, <tt>completeness</tt>, default: <tt>due_date</tt>
-    # <tt>:direction</tt> - <tt>asc</tt>, <tt>desc</tt>, default: <tt>desc</tt>
+    # @param [Hash] params
+    # @option params [String] :state
+    #   The state of the milestone. Either open, closed, or all. Default: open
+    # @option params [String] :sort
+    #   What to sort results by. Either due_date or completeness.
+    #   Default: due_date
+    # @option params [String] :direction
+    #   The directoin of the sort. Either asc or desc. Default: desc
     #
-    # = Examples
+    # @example
     #  github = Github.new user: 'user-name', repo: 'repo-name'
     #  github.issues.milestones.list
     #
-    #  or
-    #
+    # @example
     #  github.issues.milestones.list state: 'open', sort: 'due_date',
     #    direction: 'asc'
     #
+    # @api public
     def list(*args)
-      arguments(args, :required => [:user, :repo]) do
-        sift VALID_MILESTONE_OPTIONS.keys
+      arguments(args, required: [:user, :repo]) do
+        permit VALID_MILESTONE_OPTIONS.keys
         assert_values VALID_MILESTONE_OPTIONS
       end
-      params = arguments.params
 
-      response = get_request("/repos/#{user}/#{repo}/milestones", params)
+      response = get_request("/repos/#{arguments.user}/#{arguments.repo}/milestones", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -47,79 +50,95 @@ module Github
 
     # Get a single milestone
     #
-    # = Examples
-    #  github = Github.new
-    #  github.issues.milestones.get 'user-name', 'repo-name', 'milestone-id'
+    # @example
+    #   github = Github.new
+    #   github.issues.milestones.get 'user-name', 'repo-name', 'milestone-number'
     #
+    # @example
+    #   github.issues.milestones.get
+    #     user: 'user-name',
+    #     repo: 'repo-name',
+    #     number: 'milestone-number'
+    #
+    # @api public
     def get(*args)
-      arguments(args, :required => [:user, :repo, :milestone_id])
-      params = arguments.params
+      arguments(args, required: [:user, :repo, :number])
 
-      get_request("/repos/#{user}/#{repo}/milestones/#{milestone_id}", params)
+      get_request("/repos/#{arguments.user}/#{arguments.repo}/milestones/#{arguments.number}", arguments.params)
     end
     alias :find :get
 
     # Create a milestone
     #
-    # = Inputs
-    #  <tt>:title</tt> - Required string
-    #  <tt>:state</tt> - Optional string - <tt>open</tt> or <tt>closed</tt>
-    #  <tt>:description</tt> - Optional string
-    #  <tt>:due_on</tt> - Optional string - ISO 8601 time
+    # @param [Hash] params
+    # @option params [String] :title
+    #   Required string. The title of the milestone
+    # @option params [String] :state
+    #   The state of the milestone. Either open or closed. Default: open.
+    # @option params [String] :description
+    #   A description of the milestone
+    # @option params [String] :due_on
+    #   The milestone due date. This is a timestamp in ISO 8601 format:
+    #   YYYY-MM-DDTHH:MM:SSZ.
     #
-    # = Examples
-    #  github = Github.new :user => 'user-name', :repo => 'repo-name'
-    #  github.issues.milestones.create :title => 'hello-world',
-    #    :state => "open or closed",
-    #    :description => "String",
-    #    :due_on => "Time"
+    # @example
+    #  github = Github.new user: 'user-name', repo: 'repo-name'
+    #  github.issues.milestones.create title: 'hello-world',
+    #    state: "open or closed",
+    #    description: "String",
+    #    due_on: "Time"
     #
+    # @api public
     def create(*args)
-      arguments(args, :required => [:user, :repo]) do
-        sift VALID_MILESTONE_INPUTS
+      arguments(args, required: [:user, :repo]) do
+        permit VALID_MILESTONE_INPUTS
         assert_required %w[ title ]
       end
 
-      post_request("/repos/#{user}/#{repo}/milestones", arguments.params)
+      post_request("/repos/#{arguments.user}/#{arguments.repo}/milestones", arguments.params)
     end
 
     # Update a milestone
     #
-    # = Inputs
-    #  <tt>:title</tt> - Required string
-    #  <tt>:state</tt> - Optional string - <tt>open</tt> or <tt>closed</tt>
-    #  <tt>:description</tt> - Optional string
-    #  <tt>:due_on</tt> - Optional string - ISO 8601 time
+    # @param [Hash] params
+    # @option params [String] :title
+    #   Required string. The title of the milestone
+    # @option params [String] :state
+    #   The state of the milestone. Either open or closed. Default: open.
+    # @option params [String] :description
+    #   A description of the milestone
+    # @option params [String] :due_on
+    #   The milestone due date. This is a timestamp in ISO 8601 format:
+    #   YYYY-MM-DDTHH:MM:SSZ.
     #
-    # = Examples
-    #  github = Github.new
-    #  github.issues.milestones.update 'user-name', 'repo-name', 'milestone-id',
-    #    :title => 'hello-world',
-    #    :state => "open or closed",
-    #    :description => "String",
-    #    :due_on => "Time"
+    # @example
+    #   github = Github.new
+    #   github.issues.milestones.update 'user-name', 'repo-name', 'number',
+    #     :title => 'hello-world',
+    #     :state => "open or closed",
+    #     :description => "String",
+    #     :due_on => "Time"
     #
+    # @api public
     def update(*args)
-      arguments(args, :required => [:user, :repo, :milestone_id]) do
-        sift VALID_MILESTONE_INPUTS
+      arguments(args, required: [:user, :repo, :number]) do
+        permit VALID_MILESTONE_INPUTS
       end
-      params = arguments.params
 
-      patch_request("/repos/#{user}/#{repo}/milestones/#{milestone_id}", params)
+      patch_request("/repos/#{arguments.user}/#{arguments.repo}/milestones/#{arguments.number}", arguments.params)
     end
 
     # Delete a milestone
     #
-    # = Examples
-    #  github = Github.new
-    #  github.issues.milestones.delete 'user-name', 'repo-name', 'milestone-id'
+    # @example
+    #   github = Github.new
+    #   github.issues.milestones.delete 'user-name', 'repo-name', 'number'
     #
+    # @api public
     def delete(*args)
-      arguments(args, :required => [:user, :repo, :milestone_id])
-      params = arguments.params
+      arguments(args, required: [:user, :repo, :number])
 
-      delete_request("/repos/#{user}/#{repo}/milestones/#{milestone_id}", params)
+      delete_request("/repos/#{arguments.user}/#{arguments.repo}/milestones/#{arguments.number}", arguments.params)
     end
-
   end # Issues::Milestones
 end # Github

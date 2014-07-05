@@ -96,8 +96,8 @@ Feature: Labels API
   Scenario: Replace
 
     Given I want to replace resource with the following params:
-      | user  | repo            | issue_id | label1   | label 2   |
-      | murek | github_api_test | 1        | question | duplicate |
+      | user  | repo            | number | label1   | label 2   |
+      | murek | github_api_test | 1      | question | duplicate |
     When I make request within a cassette named "issues/labels/replace" and match on method
     Then the response status should be 200
       And the response type should be JSON
