@@ -6,11 +6,14 @@ module Github
 
     # List email addresses for the authenticated user
     #
-    # = Examples
-    #  github = Github.new :oauth_token => '...'
+    # @example
+    #  github = Github.new oauth_token: '...'
     #  github.users.emails.list
     #  github.users.emails.list { |email| ... }
     #
+    # @return [Hash]
+    #
+    # @api public
     def list(*args)
       arguments(args)
       response = get_request("/user/emails", arguments.params)
@@ -21,13 +24,14 @@ module Github
 
     # Add email address(es) for the authenticated user
     #
-    # = Inputs
-    # You can include a single email address or an array of addresses
+    # @param [Array[String]] emails
+    #   You can include a single email address or an array of addresses
     #
-    # = Examples
-    #  github = Github.new :oauth_token => '...'
+    # @example
+    #  github = Github.new oauth_token: '...'
     #  github.users.emails.add "octocat@github.com", "support@github.com"
     #
+    # @api public
     def add(*args)
       arguments(args)
       params = arguments.params
@@ -39,13 +43,14 @@ module Github
 
     # Delete email address(es) for the authenticated user
     #
-    # = Inputs
-    # You can include a single email address or an array of addresses
+    # @param [Array[String]] emails
+    #   You can include a single email address or an array of addresses
     #
-    # = Examples
-    #  github = Github.new :oauth_token => '...'
+    # @example
+    #  github = Github.new oauth_token: '...'
     #  github.users.emails.delete "octocat@github.com", "support@github.com"
     #
+    # @api public
     def delete(*args)
       arguments(args)
       params = arguments.params
@@ -53,6 +58,5 @@ module Github
 
       delete_request("/user/emails", params)
     end
-
   end # Users::Emails
 end # Github
