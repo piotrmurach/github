@@ -19,8 +19,8 @@ Feature: Events API
       | user         | repo   |
       | peter-murach | github |
     And I pass the following request options:
-      | issue_id |
-      | 61   |
+      | issue_number |
+      | 61           |
     When I make request within a cassette named "issues/events/list_issue"
     Then the response status should be 200
       And the response type should be JSON
@@ -29,7 +29,7 @@ Feature: Events API
   Scenario: Get
 
     Given I want to get resource with the following params:
-      | user         | repo   | event_id |
+      | user         | repo   | id       |
       | peter-murach | github | 29376722 |
     When I make request within a cassette named "issues/events/get"
     Then the response status should be 200
