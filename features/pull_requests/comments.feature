@@ -19,8 +19,8 @@ Feature: Pull Requests Comments API
       | user          | repo   |
       | peter-murach  | github |
       And I pass the following request options:
-        | request_id |
-        | 62         |
+        | number |
+        | 62     |
     When I make request within a cassette named "pull_requests/comments/list_pull"
     Then the response status should be 200
       And the response type should be JSON
