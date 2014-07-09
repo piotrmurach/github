@@ -5,9 +5,9 @@ require 'spec_helper'
 describe Github::Client::PullRequests::Comments, '#delete' do
   let(:user)   { 'peter-murach' }
   let(:repo)   { 'github' }
-  let(:comment_id) { 1 }
+  let(:number) { 1 }
 
-  let(:request_path) { "/repos/#{user}/#{repo}/pulls/comments/#{comment_id}" }
+  let(:request_path) { "/repos/#{user}/#{repo}/pulls/comments/#{number}" }
   let(:status) { 204 }
   let(:body) { fixture('pull_requests/comment.json') }
 
@@ -19,17 +19,17 @@ describe Github::Client::PullRequests::Comments, '#delete' do
   after { reset_authentication_for(subject) }
 
   context 'resource removed' do
-    it 'should raise error if comment_id not present' do
+    it 'should raise error if number not present' do
       expect { subject.delete user, repo }.to raise_error(ArgumentError)
     end
 
     it "should remove resource successfully" do
-      subject.delete user, repo, comment_id
+      subject.delete user, repo, number
       a_delete(request_path).should have_been_made
     end
   end
 
   it_should_behave_like 'request failure' do
-    let(:requestable) { subject.delete user, repo, comment_id }
+    let(:requestable) { subject.delete user, repo, number }
   end
 end # delete

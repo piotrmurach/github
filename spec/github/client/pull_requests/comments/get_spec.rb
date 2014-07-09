@@ -6,8 +6,8 @@ describe Github::Client::PullRequests::Comments, '#get' do
   let(:user)   { 'peter-murach' }
   let(:repo) { 'github' }
   let(:pull_request_id) { 1 }
-  let(:comment_id) { 1 }
-  let(:request_path) { "/repos/#{user}/#{repo}/pulls/comments/#{comment_id}" }
+  let(:number) { 1 }
+  let(:request_path) { "/repos/#{user}/#{repo}/pulls/comments/#{number}" }
 
   before {
     stub_get(request_path).to_return(:body => body, :status => status,
@@ -34,18 +34,18 @@ describe Github::Client::PullRequests::Comments, '#get' do
     end
 
     it "should get comment information" do
-      comment = subject.get user, repo, comment_id
-      comment.id.should eq comment_id
+      comment = subject.get user, repo, number
+      comment.id.should eq number
       comment.user.login.should == 'octocat'
     end
 
     it "should return mash" do
-      comment = subject.get user, repo, comment_id
+      comment = subject.get user, repo, number
       comment.should be_a Github::ResponseWrapper
     end
   end
 
   it_should_behave_like 'request failure' do
-    let(:requestable) { subject.get user, repo, comment_id }
+    let(:requestable) { subject.get user, repo, number }
   end
 end # get

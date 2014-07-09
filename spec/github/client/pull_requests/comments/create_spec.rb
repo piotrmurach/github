@@ -5,8 +5,8 @@ require 'spec_helper'
 describe Github::Client::PullRequests::Comments, '#create' do
   let(:user)   { 'peter-murach' }
   let(:repo)   { 'github' }
-  let(:request_path) { "/repos/#{user}/#{repo}/pulls/#{pull_request_id}/comments" }
-  let(:pull_request_id) { 1 }
+  let(:request_path) { "/repos/#{user}/#{repo}/pulls/#{number}/comments" }
+  let(:number) { 1 }
   let(:inputs) {
     {
       "body" => "Nice change",
@@ -32,27 +32,27 @@ describe Github::Client::PullRequests::Comments, '#create' do
 
     it { expect { subject.create }.to raise_error(ArgumentError) }
 
-    it 'raises error when pull_request_id is missing' do
+    it 'raises error when number is missing' do
       expect { subject.create user, repo }.to raise_error(ArgumentError)
     end
 
     it "should create resource successfully" do
-      subject.create user, repo, pull_request_id, inputs
+      subject.create user, repo, number, inputs
       a_post(request_path).with(inputs).should have_been_made
     end
 
     it "should return the resource" do
-      pull_request = subject.create user, repo, pull_request_id, inputs
+      pull_request = subject.create user, repo, number, inputs
       pull_request.should be_a Github::ResponseWrapper
     end
 
     it "should get the request information" do
-      pull_request = subject.create user, repo, pull_request_id, inputs
-      pull_request.id.should == pull_request_id
+      pull_request = subject.create user, repo, number, inputs
+      pull_request.id.should == number
     end
   end
 
   it_should_behave_like 'request failure' do
-    let(:requestable) { subject.create user, repo, pull_request_id, inputs }
+    let(:requestable) { subject.create user, repo, number, inputs }
   end
 end # create
