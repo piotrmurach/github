@@ -5,9 +5,15 @@ module Github
 
     VALID_DEPLOYMENTS_OPTIONS = %w[
       ref
-      force
-      payload
       auto_merge
+      required_contexts
+      payload
+      environment
+      description
+    ]
+
+    VALID_STATUS_OPTIONS = %w[
+      target_url
       description
     ]
 
@@ -36,14 +42,20 @@ module Github
     #
     # @param [Hash] params
     # @option params [String] :ref
-    #   Required string. Sha or branch to start listing commits from.
-    # @option params [Boolean] :force
-    #   Optional boolean. Ignore commit status checks.
-    # @option params [String] :payload
-    #   Optional json payload with information about the deployment.
+    #   Required string. The ref to deploy. This can be a branch, tag, or sha.
     # @option params [Boolean] :auto_merge
-    #   Optional boolean. Merge the default branch into the requested
-    #   deployment branch if necessary.
+    #   Optional boolean. Merge the default branch into the requested.
+    # @option params [Array] :required_contexts
+    #   Optional array of status contexts verified against commit status checks.
+    #   If this parameter is omitted from the parameters then all unique
+    #   contexts will be verified before a deployment is created. To bypass
+    #   checking entirely pass an empty array. Defaults to all unique contexts.
+    # @option params [String] :payload
+    #   Optional JSON payload with extra information about the deployment.
+    #   Default: ""
+    # @option params [String] :payload
+    #   Optional String. Name for the target deployment environment (e.g.,
+    #   production, staging, qa). Default: "production"
     # @option params [String] :description
     #   Optional string. Optional short description.
     #
@@ -112,6 +124,7 @@ module Github
     def create_status(*args)
       arguments(args, required: [:user, :repo, :id]) do
         assert_required %w[ state ]
+        permit VALID_STATUS_OPTIONS
       end
       params = arguments.params
       params['accept'] ||= PREVIEW_MEDIA
