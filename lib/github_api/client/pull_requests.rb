@@ -106,7 +106,7 @@ module Github
         permit VALID_REQUEST_PARAM_NAMES
       end
 
-      post_request("/repos/#{arguments.user}/#{argumentsrepo}/pulls", arguments.params)
+      post_request("/repos/#{arguments.user}/#{arguments.repo}/pulls", arguments.params)
     end
 
     # Update a pull request
