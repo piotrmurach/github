@@ -15,32 +15,36 @@ module Github
 
     # List comments on a pull request
     #
-    # = Examples
-    #  github = Github.new
-    #  github.pull_requests.comments.list 'user-name', 'repo-name', request_id: 'id'
+    # @example
+    #   github = Github.new
+    #   github.pull_requests.comments.list 'user-name', 'repo-name', number: 'id'
     #
     # List comments in a repository
     #
     # By default, Review Comments are ordered by ascending ID.
     #
-    # = Parameters
-    #
-    # * <tt>:sort</tt>      - Optional string, <tt>created</tt> or <tt>updated</tt>
-    # * <tt>:direction</tt> - Optional string, <tt>asc</tt> or <tt>desc</tt>.
-    #                         Ignored with sort parameter.
-    # * <tt>:since</tt>     - Optional string of a timestamp in ISO 8601
+    # @param [Hash] params
+    # @input params [String] :sort
+    #   Optional string. Can be either created or updated. Default: created
+    # @input params [String] :direction
+    #   Optional string. Can be either asc or desc. Ignored without sort parameter
+    # @input params [String] :since
+    #   Optional string of a timestamp in ISO 8601
     #                         format: YYYY-MM-DDTHH:MM:SSZ
-    # = Examples
-    #  github = Github.new
-    #  github.pull_requests.comments.list 'user-name', 'repo-name'
-    #  github.pull_requests.comments.list 'user-name', 'repo-name' { |comm| ... }
+    # @example
+    #   github = Github.new
+    #   github.pull_requests.comments.list 'user-name', 'repo-name'
+    #   github.pull_requests.comments.list 'user-name', 'repo-name' { |comm| ... }
     #
+    # @api public
     def list(*args)
-      arguments(args, :required => [:user, :repo])
+      arguments(args, required: [:user, :repo])
       params = arguments.params
+      user = arguments.user
+      repo = arguments.repo
 
-      response = if (request_id = params.delete('request_id'))
-        get_request("/repos/#{user}/#{repo}/pulls/#{request_id}/comments", params)
+      response = if (number = params.delete('number'))
+        get_request("/repos/#{user}/#{repo}/pulls/#{number}/comments", params)
       else
         get_request("/repos/#{user}/#{repo}/pulls/comments", params)
       end
@@ -50,82 +54,100 @@ module Github
     alias :all :list
 
     # Get a single comment for pull requests
-    # = Examples
-    #  github = Github.new
-    #  github.pull_requests.comments.get 'user-name', 'repo-name', 'comment-id'
     #
+    # @example
+    #   github = Github.new
+    #   github.pull_requests.comments.get 'user-name', 'repo-name', 'number'
+    #
+    # @example
+    #   github.pull_requests.comments.get
+    #     user: 'user-name',
+    #     repo: 'repo-name',
+    #     number: 'comment-number
+    #
+    # @api public
     def get(*args)
-      arguments(args, :required => [:user, :repo, :comment_id])
+      arguments(args, required: [:user, :repo, :number])
 
-      get_request("/repos/#{user}/#{repo}/pulls/comments/#{comment_id}", arguments.params)
+      get_request("/repos/#{arguments.user}/#{arguments.repo}/pulls/comments/#{arguments.number}", arguments.params)
     end
     alias :find :get
 
     # Create a pull request comment
     #
-    # = Inputs
-    # * <tt>:body</tt> - Required string
-    # * <tt>:commit_id</tt> - Required string - sha of the commit to comment on.
-    # * <tt>:path</tt> - Required string - Relative path of the file to comment on.
-    # * <tt>:position</tt> - Required number - Line index in the diff to comment on
+    # @param [Hash] params
+    # @option params [String] :body
+    #   Required string. The text of the comment.
+    # @option params [String] :commit_id
+    #   Required string - The SHA of the commit to comment on.
+    # @option params [String] :path
+    #   Required string. The relative path of the file to comment on.
+    # @option params [Number] :position
+    #   Required number. The line index in the diff to comment on.
     #
-    # = Examples
+    # @example
     #  github = Github.new
-    #  github.pull_requests.comments.create 'user-name','repo-name','request-id',
-    #   "body" => "Nice change",
-    #   "commit_id" => "6dcb09b5b57875f334f61aebed695e2e4193db5e",
-    #   "path" => "file1.txt",
-    #   "position" => 4
+    #  github.pull_requests.comments.create 'user-name', 'repo-name', 'number',
+    #    body: "Nice change",
+    #    commit_id: "6dcb09b5b57875f334f61aebed695e2e4193db5e",
+    #    path: "file1.txt",
+    #    position: 4
     #
-    # = Alternative Inputs
+    # Alternative Inputs
+    #
     # Instead of passing commit_id, path, and position you can reply to
     # an existing Pull Request Comment like this
-    # * <tt>:body</tt> - Required string
-    # * <tt>:in_reply_to</tt> - Required number - comment id to reply to.
+    # @option params [String] :body
+    #   Required string. The text of the comment.
+    # @option params [Number] :in_reply_to
+    #   Required number. The comment id to reply to.
     #
-    # = Examples
-    #  github = Github.new
-    #  github.pull_requests.comments.create 'user-name','repo-name','request-id',
-    #    "body" => "Nice change",
-    #    "in_reply_to" => 4
+    # @example
+    #   github = Github.new
+    #   github.pull_requests.comments.create 'user-name','repo-name', 'number',
+    #     body: "Nice change",
+    #     in_reply_to: 4
     #
+    # @api public
     def create(*args)
-      arguments(args, :required => [:user, :repo, :request_id]) do
-        sift VALID_REQUEST_COM_PARAM_NAMES
+      arguments(args, required: [:user, :repo, :number]) do
+        permit VALID_REQUEST_COM_PARAM_NAMES
       end
-      # _validate_reply_to(params)
 
-      post_request("/repos/#{user}/#{repo}/pulls/#{request_id}/comments", arguments.params)
+      post_request("/repos/#{arguments.user}/#{arguments.repo}/pulls/#{arguments.number}/comments", arguments.params)
     end
 
     # Edit a pull request comment
     #
-    # = Inputs
-    # * <tt>:body</tt> - Required string
+    # @param [Hash] params
+    # @option params [String] :body
+    #   Required string. The text of the comment.
     #
-    # = Examples
-    #  github = Github.new
-    #  github.pull_requests.comments.edit 'user-name', 'repo-name','comment-id',
-    #    "body" => "Nice change"
+    # @example
+    #   github = Github.new
+    #   github.pull_requests.comments.edit 'user-name', 'repo-name', 'number',
+    #     body: "Nice change"
     #
+    # @api public
     def edit(*args)
-      arguments(args, :required => [:user, :repo, :comment_id]) do
-        sift VALID_REQUEST_COM_PARAM_NAMES
+      arguments(args, required: [:user, :repo, :number]) do
+        permit VALID_REQUEST_COM_PARAM_NAMES
       end
 
-      patch_request("/repos/#{user}/#{repo}/pulls/comments/#{comment_id}", arguments.params)
+      patch_request("/repos/#{arguments.user}/#{arguments.repo}/pulls/comments/#{arguments.number}", arguments.params)
     end
 
     # Delete a pull request comment
     #
-    # = Examples
-    #  github = Github.new
-    #  github.pull_requests.comments.delete 'user-name', 'repo-name','comment-id'
+    # @example
+    #   github = Github.new
+    #   github.pull_requests.comments.delete 'user-name', 'repo-name', 'number'
     #
+    # @api public
     def delete(*args)
-      arguments(args, :required => [:user, :repo, :comment_id])
+      arguments(args, required: [:user, :repo, :number])
 
-      delete_request("/repos/#{user}/#{repo}/pulls/comments/#{comment_id}", arguments.params)
+      delete_request("/repos/#{arguments.user}/#{arguments.repo}/pulls/comments/#{arguments.number}", arguments.params)
     end
 
   private
