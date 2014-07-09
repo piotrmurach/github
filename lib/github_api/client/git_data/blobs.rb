@@ -11,36 +11,40 @@ module Github
 
     # Get a blob
     #
-    # = Examples
+    # @example
     #  github = Github.new
     #  github.git_data.blobs.get 'user-name', 'repo-name', 'sha'
     #
+    # @api public
     def get(*args)
-      arguments(args, :required => [:user, :repo, :sha])
+      arguments(args, required: [:user, :repo, :sha])
 
-      get_request("/repos/#{user}/#{repo}/git/blobs/#{sha}", arguments.params)
+      get_request("/repos/#{arguments.user}/#{arguments.repo}/git/blobs/#{arguments.sha}", arguments.params)
     end
     alias :find :get
 
     # Create a blob
     #
-    # = Inputs
-    # * <tt>:content</tt> - String of content
-    # * <tt>:encoding</tt> - String containing encoding<tt>utf-8</tt> or <tt>base64</tt>
-    # = Examples
+    # @param [Hash] params
+    # @input params [String] :content
+    #   String of content.
+    # @input params [String] :encoding
+    #   String containing encoding<tt>utf-8</tt> or <tt>base64</tt>
+    #
+    # @examples
     #  github = Github.new
     #  github.git_data.blobs.create 'user-name', 'repo-name',
-    #    "content" => "Content of the blob",
-    #    "encoding" => "utf-8"
+    #    content: "Content of the blob",
+    #    encoding: "utf-8"
     #
+    # @api public
     def create(*args)
-      arguments(args, :required => [:user, :repo]) do
-        sift VALID_BLOB_PARAM_NAMES
+      arguments(args, required: [:user, :repo]) do
+        permit VALID_BLOB_PARAM_NAMES
         assert_required VALID_BLOB_PARAM_NAMES
       end
 
-      post_request("/repos/#{user}/#{repo}/git/blobs", arguments.params)
+      post_request("/repos/#{arguments.user}/#{arguments.repo}/git/blobs", arguments.params)
     end
-
   end # GitData::Blobs
 end # Github
