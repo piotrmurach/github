@@ -36,5 +36,4 @@ describe Github::Client::GitData::References, '#delete' do
   it_should_behave_like 'request failure' do
     let(:requestable) { subject.delete user, repo, ref }
   end
-
 end # delete

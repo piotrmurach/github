@@ -18,15 +18,19 @@ module Github
     # Anything in the namespace, not just <tt>heads</tt> and <tt>tags</tt>,
     # though that would be the most common.
     #
-    # = Examples
+    # @example
     #  github = Github.new
     #  github.git_data.references.list 'user-name', 'repo-name'
     #
+    # @example
     #  github.git_data.references.list 'user-name', 'repo-name', ref:'tags'
     #
+    # @api public
     def list(*args)
-      arguments(args, :required => [:user, :repo])
+      arguments(args, required: [:user, :repo])
       params = arguments.params
+      user = arguments.user
+      repo = arguments.repo
 
       response = if (ref = params.delete('ref'))
         validate_reference ref
@@ -43,83 +47,93 @@ module Github
     #
     # The ref in the URL must be formatted as <tt>heads/branch</tt>,
     # not just branch. For example, the call to get the data for a
-    # branch named <tt>sc/featureA</tt> would be formatted as
-    # <tt>heads/sc/featureA</tt>
+    # branch named sc/featureA would be formatted as heads/sc/featureA
     #
-    # = Examples
+    # @example
     #  github = Github.new
     #  github.git_data.references.get 'user-name', 'repo-name', 'heads/branch'
     #
+    # @api public
     def get(*args)
-      arguments(args, :required => [:user, :repo, :ref])
-      validate_reference ref
+      arguments(args, required: [:user, :repo, :ref])
+      validate_reference arguments.ref
       params = arguments.params
 
-      get_request("/repos/#{user}/#{repo}/git/refs/#{ref}", params)
+      get_request("/repos/#{arguments.user}/#{arguments.repo}/git/refs/#{arguments.ref}", params)
     end
     alias :find :get
 
     # Create a reference
     #
-    # = Inputs
-    # * <tt>:ref</tt> - String of the name of the fully qualified reference (ie: refs/heads/master). If it doesn’t start with ‘refs’ and have at least two slashes, it will be rejected.
-    # * <tt>:sha</tt> - String of the SHA1 value to set this reference to
+    # @param [Hash] params
+    # @input params [String] :ref
+    #   The name of the fully qualified reference (ie: refs/heads/master).
+    #   If it doesn’t start with ‘refs’ and have at least two slashes,
+    #   it will be rejected.
+    # @input params [String] :sha
+    #   The SHA1 value to set this reference to
     #
-    # = Examples
+    # @example
     #  github = Github.new
     #  github.git_data.references.create 'user-name', 'repo-name',
-    #    "ref" => "refs/heads/master",
-    #    "sha" =>  "827efc6d56897b048c772eb4087f854f46256132"
+    #    ref: "refs/heads/master",
+    #    sha:  "827efc6d56897b048c772eb4087f854f46256132"
     #
+    # @api public
     def create(*args)
-      arguments(args, :required => [:user, :repo]) do
-        sift VALID_REF_PARAM_NAMES
+      arguments(args, required: [:user, :repo]) do
+        permit VALID_REF_PARAM_NAMES
         assert_required REQUIRED_REF_PARAMS
       end
       params = arguments.params
       validate_reference params['ref']
 
-      post_request("/repos/#{user}/#{repo}/git/refs", params)
+      post_request("/repos/#{arguments.user}/#{arguments.repo}/git/refs", params)
     end
 
     # Update a reference
     #
-    # = Inputs
-    # * <tt>:sha</tt> - String of the SHA1 value to set this reference to
-    # * <tt>:force</tt> - Boolean indicating whether to force the update or to make sure the update is a fast-forward update. The default is <tt>false</tt>, so leaving this out or setting it to false will make sure you’re not overwriting work.
+    # @param [Hash] params
+    # @input params [String] :sha
+    #   The SHA1 value to set this reference to
+    # @input params [Boolean] :force
+    #   Indicates whether to force the update or to make sure the update
+    #   is a fast-forward update. Leaving this out or setting it to false
+    #   will make sure you’re not overwriting work. Default: false
     #
-    # = Examples
+    # @example
     #  github = Github.new
     #  github.git_data.references.update 'user-name', 'repo-name', 'heads/master',
-    #    "sha" =>  "827efc6d56897b048c772eb4087f854f46256132",
-    #    "force" => true
+    #    sha:  "827efc6d56897b048c772eb4087f854f46256132",
+    #    force: true
     #
+    # @api public
     def update(*args)
-      arguments(args, :required => [:user, :repo, :ref]) do
-        sift VALID_REF_PARAM_NAMES
+      arguments(args, required: [:user, :repo, :ref]) do
+        permit VALID_REF_PARAM_NAMES
         assert_required %w[ sha ]
       end
-      params = arguments.params
 
-      patch_request("/repos/#{user}/#{repo}/git/refs/#{ref}", params)
+      patch_request("/repos/#{arguments.user}/#{arguments.repo}/git/refs/#{arguments.ref}", arguments.params)
     end
 
     # Delete a reference
     #
-    # = Examples
+    # @example
     #  github = Github.new
     #  github.git_data.references.delete 'user-name', 'repo-name',
-    #    "ref" => "refs/heads/master",
+    #    ref: "refs/heads/master"
     #
+    # @api public
     def delete(*args)
-      arguments(args, :required => [:user, :repo, :ref])
+      arguments(args, required: [:user, :repo, :ref])
       params = arguments.params
 
-      delete_request("/repos/#{user}/#{repo}/git/refs/#{ref}", params)
+      delete_request("/repos/#{arguments.user}/#{arguments.repo}/git/refs/#{arguments.ref}", params)
     end
     alias :remove :delete
 
-  private
+    private
 
     def validate_reference(ref)
       refs = (ref =~ (/^(\/)?refs.*/) ? ref : "refs/#{ref}").gsub(/(\/)+/, '/')
@@ -128,6 +142,5 @@ module Github
         raise ArgumentError, "Provided 'reference' is invalid"
       end
     end
-
   end # GitData::References
 end # Github
