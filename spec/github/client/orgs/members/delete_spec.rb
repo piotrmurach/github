@@ -31,5 +31,4 @@ describe Github::Client::Orgs::Members, '#delete' do
   it_should_behave_like 'request failure' do
     let(:requestable) { subject.delete org, member }
   end
-
 end # delete

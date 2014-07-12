@@ -49,7 +49,7 @@ describe Github::Client::Orgs::Members, '#member?' do
       let(:status) { 404 }
 
       it "should return false if resource not found" do
-        public_member = subject.member? org, member, :public => true
+        public_member = subject.member? org, member, public: true
         public_member.should be_false
       end
     end
@@ -58,10 +58,9 @@ describe Github::Client::Orgs::Members, '#member?' do
       let(:status) { 204 }
 
       it "should return true if resoure found" do
-        public_member = subject.member? org, member, :public => true
+        public_member = subject.member? org, member, public: true
         public_member.should be_true
       end
     end
   end
-
 end # member?

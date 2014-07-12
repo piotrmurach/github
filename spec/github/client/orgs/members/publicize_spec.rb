@@ -33,5 +33,4 @@ describe Github::Client::Orgs::Members, '#publicize' do
   it_should_behave_like 'request failure' do
     let(:requestable) { subject.publicize org, member }
   end
-
 end # publicize

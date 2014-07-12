@@ -33,5 +33,4 @@ describe Github::Client::Orgs::Members, '#conceal' do
   it_should_behave_like 'request failure' do
     let(:requestable) { subject.conceal org, user }
   end
-
 end # conceal
