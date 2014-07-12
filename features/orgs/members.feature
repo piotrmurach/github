@@ -26,13 +26,13 @@ Feature: Members API
       And the response type should be JSON
       And the response should not be empty
 
-#   Scenario: Check if member of organization (302)
-# 
-#     Given I want to member? resource with the following params:
-#       | org   | member |
-#       | rails | drogus |
-#     When I make request within a cassette named "orgs/members/member_false"
-#     Then the response should be false
+  Scenario: Check if member of organization (302)
+
+    Given I want to member? resource with the following params:
+      | org   | member |
+      | rails | drogus |
+    When I make request within a cassette named "orgs/members/member_false"
+    Then the response should be false
 
   Scenario: Check if public member of organization (404)
 
