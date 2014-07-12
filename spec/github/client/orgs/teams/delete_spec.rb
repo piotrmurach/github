@@ -32,5 +32,4 @@ describe Github::Client::Orgs::Teams, '#delete' do
   it_should_behave_like 'request failure' do
     let(:requestable) { subject.delete team_id }
   end
-
 end # delete

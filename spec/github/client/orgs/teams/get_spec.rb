@@ -41,5 +41,4 @@ describe Github::Client::Orgs::Teams, '#get' do
   it_should_behave_like 'request failure' do
     let(:requestable) { subject.get team }
   end
-
 end # get
