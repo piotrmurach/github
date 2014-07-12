@@ -21,7 +21,7 @@ module Github
 
     # Get a tree
     #
-    # = Examples
+    # @example
     #  github = Github.new
     #  github.git_data.trees.get 'user-name', 'repo-name', 'sha'
     #  github.git_data.trees.get 'user-name', 'repo-name', 'sha' do |file|
@@ -30,12 +30,16 @@ module Github
     #
     # Get a tree recursively
     #
-    # = Examples
+    # @example
     #  github = Github.new
-    #  github.git_data.trees.get 'user-name', 'repo-name', 'sha', 'recursive' => true
+    #  github.git_data.trees.get 'user-name', 'repo-name', 'sha', recursive: true
     #
+    # @api public
     def get(*args)
-      arguments(args, :required => [:user, :repo, :sha])
+      arguments(args, required: [:user, :repo, :sha])
+      user   = arguments.user
+      repo   = arguments.repo
+      sha    = arguments.sha
       params = arguments.params
 
       response = if params['recursive']
@@ -56,37 +60,52 @@ module Github
     # it will overwrite the contents of that tree with the new path contents
     # and write a new tree out.
     #
-    # = Parameters
-    # * <tt>:base_tree</tt> - optional string of the SHA1 of the tree you want to update with new data
-    # * <tt>:tree</tt> - array of hash objects(of <tt>:path</tt>, <tt>:mode</tt>, <tt>:type</tt> and <tt>sha</tt>)
-    # * tree.path:: String of the file referenced in the tree
-    # * tree.mode:: String of the file mode - one of <tt>100644</tt> for file(blob), <tt>100755</tt> for executable (blob), <tt>040000</tt> for subdirectory (tree), <tt>160000</tt> for submodule (commit) or <tt>120000</tt> for a blob that specifies the path of a symlink
-    # * tree.type:: String of <tt>blob</tt>, <tt>tree</tt>, <tt>commit</tt>
-    # * tree.sha:: String of SHA1 checksum ID of the object in the tree
-    # * tree.content:: String of content you want this file to have - GitHub will write this blob out and use the SHA for this entry. Use either this or <tt>tree.sha</tt>
+    # @param [Hash] params
+    # @input params [String] :base_tree
+    #   The SHA1 of the tree you want to update with new data
+    # @input params [Array[Hash]] :tree
+    #   Required. Objects (of path, mode, type, and sha)
+    #   specifying a tree structure
     #
-    # = Examples
+    # The tree parameter takes the following keys:
+    # @input tree [String] :path
+    #   The file referenced in the tree
+    # @input tree [String] :mode
+    #   The file mode; one of 100644 for file (blob), 100755 for
+    #   executable (blob), 040000 for subdirectory (tree), 160000 for
+    #   submodule (commit), or 120000 for a blob that specifies
+    #   the path of a symlink
+    # @input tree [String] :type
+    #   Either blob, tree, or commit
+    # @input tree [String] :sha
+    #   The SHA1 checksum ID of the object in the tree
+    # @input tree [String] :content
+    #   The content you want this file to have - GitHub will write
+    #   this blob out and use the SHA for this entry.
+    #   Use either this or <tt>tree.sha</tt>
+    #
+    # @example
     #  github = Github.new
     #  github.git_data.trees.create 'user-name', 'repo-name',
-    #    "tree" => [
+    #    tree: [
     #      {
-    #        "path" => "file.rb",
-    #        "mode" => "100644",
-    #        "type" => "blob",
-    #        "sha" => "44b4fc6d56897b048c772eb4087f854f46256132"
+    #        path: "file.rb",
+    #        mode: "100644",
+    #        type: "blob",
+    #        sha: "44b4fc6d56897b048c772eb4087f854f46256132"
     #      },
     #      ...
     #    ]
     #
+    # @api public
     def create(*args)
-      arguments(args, :required => [:user, :repo]) do
+      arguments(args, required: [:user, :repo]) do
         assert_required %w[ tree ]
-        sift VALID_TREE_PARAM_NAMES, 'tree', { recursive: true }
+        permit VALID_TREE_PARAM_NAMES, 'tree', { recursive: true }
         assert_values VALID_TREE_PARAM_VALUES, 'tree'
       end
 
-      post_request("/repos/#{user}/#{repo}/git/trees", arguments.params)
+      post_request("/repos/#{arguments.user}/#{arguments.repo}/git/trees", arguments.params)
     end
-
   end # GitData::Trees
 end # Github
