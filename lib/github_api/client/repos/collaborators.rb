@@ -4,6 +4,11 @@ module Github
   class Client::Repos::Collaborators < API
     # List collaborators
     #
+    # When authenticating as an organization owner of an
+    # organization-owned repository, all organization owners are included
+    # in the list of collaborators. Otherwise, only users with access to the
+    # repository are returned in the collaborators list.
+    #
     # @example
     #  github = Github.new
     #  github.repos.collaborators.list 'user-name', 'repo-name'
@@ -15,10 +20,10 @@ module Github
     #
     # @api public
     def list(*args)
-      arguments(args, :required => [:user, :repo])
+      arguments(args, required: [:user, :repo])
       params = arguments.params
 
-      response = get_request("/repos/#{user}/#{repo}/collaborators", params)
+      response = get_request("/repos/#{arguments.user}/#{arguments.repo}/collaborators", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -28,18 +33,17 @@ module Github
     #
     # @example
     #  github = Github.new
-    #  github.collaborators.add 'user', 'repo', 'collaborator'
+    #  github.collaborators.add 'user', 'repo', 'username'
     #
     # @example
     #  collaborators = Github::Repos::Collaborators.new
-    #  collaborators.add 'user', 'repo', 'collaborator'
+    #  collaborators.add 'user', 'repo', 'username'
     #
     # @api public
     def add(*args)
-      arguments(args, :required => [:user, :repo, :collaborator])
-      params = arguments.params
+      arguments(args, required: [:user, :repo, :username])
 
-      put_request("/repos/#{user}/#{repo}/collaborators/#{collaborator}", params)
+      put_request("/repos/#{arguments.user}/#{arguments.repo}/collaborators/#{arguments.username}", arguments.params)
     end
     alias :<< :add
 
@@ -47,18 +51,17 @@ module Github
     #
     # @example
     #  github = Github.new
-    #  github.repos.collaborators.collaborator?('user', 'repo', 'collaborator')
+    #  github.repos.collaborators.collaborator?('user', 'repo', 'username')
     #
     # @example
     #  github = Github.new user: 'user-name', repo: 'repo-name'
-    #  github.collaborators.collaborator? collaborator: 'collaborator'
+    #  github.collaborators.collaborator? username: 'collaborator'
     #
     # @api public
     def collaborator?(*args)
-      arguments(args, :required => [:user, :repo, :collaborator])
-      params = arguments.params
+      arguments(args, required: [:user, :repo, :username])
 
-      get_request("/repos/#{user}/#{repo}/collaborators/#{collaborator}", params)
+      get_request("/repos/#{arguments.user}/#{arguments.repo}/collaborators/#{arguments.username}", arguments.params)
       true
     rescue Github::Error::NotFound
       false
@@ -68,14 +71,13 @@ module Github
     #
     # @example
     #  github = Github.new
-    #  github.repos.collaborators.remove 'user', 'repo', 'collaborator'
+    #  github.repos.collaborators.remove 'user', 'repo', 'username'
     #
     # @api public
     def remove(*args)
-      arguments(args, :required => [:user, :repo, :collaborator])
-      params = arguments.params
+      arguments(args, required: [:user, :repo, :username])
 
-      delete_request("/repos/#{user}/#{repo}/collaborators/#{collaborator}", params)
+      delete_request("/repos/#{arguments.user}/#{arguments.repo}/collaborators/#{arguments.username}", arguments.params)
     end
   end # Client::Repos::Collaborators
 end # Github
