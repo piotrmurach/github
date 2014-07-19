@@ -25,12 +25,14 @@ module Github
     #
     # @example
     #  github.repos.comments.list 'user-name', 'repo-name',
-    #   :sha => '6dcb09b5b57875f334f61aebed695e2e4193db5e'
+    #   sha: '6dcb09b5b57875f334f61aebed695e2e4193db5e'
     #
     # @api public
     def list(*args)
-      arguments(args, :required => [:user, :repo])
+      arguments(args, required: [:user, :repo])
       params = arguments.params
+      user   = arguments.user
+      repo   = arguments.repo
 
       response = if (sha = params.delete('sha'))
         get_request("/repos/#{user}/#{repo}/commits/#{sha}/comments", params)
@@ -46,75 +48,77 @@ module Github
     #
     # @example
     #  github = Github.new
-    #  github.repos.comments.get 'user-name', 'repo-name', 'comment-id'
+    #  github.repos.comments.get 'user-name', 'repo-name', 'id'
     #
     # @api public
     def get(*args)
-      arguments(args, :required => [:user, :repo, :comment_id])
-      params = arguments.params
+      arguments(args, required: [:user, :repo, :id])
 
-      get_request("/repos/#{user}/#{repo}/comments/#{comment_id}", params)
+      get_request("/repos/#{arguments.user}/#{arguments.repo}/comments/#{arguments.id}", arguments.params)
     end
     alias :find :get
 
     # Creates a commit comment
     #
-    # = Inputs
-    # * <tt>:body</tt> - Required string.
-    # * <tt>:comment_id</tt> - Required string - Sha of the commit to comment on.
-    # * <tt>:line</tt> - Required number - Line number in the file to comment on.
-    # * <tt>:path</tt> - Required string - Relative path of the file to comment on.
-    # * <tt>:position</tt> - Required number - Line index in the diff to comment on.
+    # @param [Hash] params
+    # @option params [String] :body
+    #   Required. The contents of the comment.
+    # @option params [String] :path
+    #   Required. Relative path of the file to comment on.
+    # @option params [Number] :position
+    #   Required number - Line index in the diff to comment on.
+    # @option params [Number] :line
+    #   Required number - Line number in the file to comment on.
     #
-    # = Examples
+    # @example
     #  github = Github.new
-    #  github.repos.comments.create 'user-name', 'repo-name', 'sha-key', 
-    #    "body" => "Nice change",
-    #    "commit_id" => "6dcb09b5b57875f334f61aebed695e2e4193db5e",
-    #    "line" => 1,
-    #    "path" =>  "file1.txt",
-    #    "position" =>  4
+    #  github.repos.comments.create 'user-name', 'repo-name', 'sha-key',
+    #    body: "Nice change",
+    #    position: 4,
+    #    line: 1,
+    #    path: "file1.txt"
     #
+    # @api public
     def create(*args)
-      arguments(args, :required => [:user, :repo, :sha]) do
-        sift VALID_COMMENT_OPTIONS
+      arguments(args, required: [:user, :repo, :sha]) do
+        permit VALID_COMMENT_OPTIONS
         assert_required REQUIRED_COMMENT_OPTIONS
       end
-      params = arguments.params
 
-      post_request("/repos/#{user}/#{repo}/commits/#{sha}/comments", params)
+      post_request("/repos/#{arguments.user}/#{arguments.repo}/commits/#{arguments.sha}/comments", arguments.params)
     end
 
     # Update a commit comment
     #
-    # = Inputs
-    # * <tt>:body</tt> - Required string.
+    # @param [Hash] params
+    # @option params [String] :body
+    #   Required. The contents of the comment.
     #
-    # = Examples
-    #  github = Github.new
-    #  github.repos.comments.update 'user-name', 'repo-name',
-    #    'comment-id', "body" => "Nice change"
+    # @example
+    #   github = Github.new
+    #   github.repos.comments.update 'user-name', 'repo-name', 'id',
+    #     body: "Nice change"
     #
+    # @api public
     def update(*args)
-      arguments(args, :required => [:user, :repo, :comment_id]) do
+      arguments(args, required: [:user, :repo, :id]) do
         assert_required REQUIRED_COMMENT_OPTIONS
       end
-      params = arguments.params
 
-      patch_request("/repos/#{user}/#{repo}/comments/#{comment_id}", params)
+      patch_request("/repos/#{arguments.user}/#{arguments.repo}/comments/#{arguments.id}", arguments.params)
     end
 
     # Deletes a commit comment
     #
-    # = Examples
-    #  github = Github.new
-    #  github.repos.comments.delete 'user-name', 'repo-name', 'comment-id'
+    # @example
+    #   github = Github.new
+    #   github.repos.comments.delete 'user-name', 'repo-name', 'id'
     #
+    # @api public
     def delete(*args)
-      arguments(args, :required => [:user, :repo, :comment_id])
-      params = arguments.params
+      arguments(args, required: [:user, :repo, :id])
 
-      delete_request("/repos/#{user}/#{repo}/comments/#{comment_id}", params)
+      delete_request("/repos/#{arguments.user}/#{arguments.repo}/comments/#{arguments.id}", arguments.params)
     end
   end # Client::Repos::Comments
 end # Github
