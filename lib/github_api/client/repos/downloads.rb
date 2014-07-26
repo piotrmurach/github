@@ -1,7 +1,5 @@
 # encoding: utf-8
 
-require 'github_api/s3_uploader'
-
 module Github
   class Client::Repos::Downloads < API
 
