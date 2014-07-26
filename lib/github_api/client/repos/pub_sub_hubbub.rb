@@ -10,21 +10,25 @@ module Github
 
     # Subscribe to existing topic/event through pubsubhubbub
     #
-    # = Parameters
-    # * topic - Required string - The URI of the GitHub repository to subscribe to. The path must be in the format of /:user/:repo/events/:event.
-    # * callback - Required string - The URI to receive the updates to the topic.
+    # @param [Hash] params
+    # @input params [String] :topic
+    #   Required string. The URI of the GitHub repository to subscribe to.
+    #   The path must be in the format of /:user/:repo/events/:event.
+    # @input params [String] :callback
+    #   Required string - The URI to receive the updates to the topic.
     #
-    # = Examples
-    #  github = Github.new :oauth_token => '...'
+    # @example
+    #  github = Github.new oauth_token: 'token'
     #  github.repos.pubsubhubbub.subscribe
     #    'https://github.com/:user/:repo/events/push',
     #    'github://Email?address=peter-murach@gmail.com',
-    #    :verify => 'sync',
-    #    :secret => '...'
+    #    verify: 'sync',
+    #    secret: '...'
     #
+    # @api public
     def subscribe(*args)
-      params = arguments(args, :required => [:topic, :callback]).params
-      _merge_action!("subscribe", topic, callback, params)
+      params = arguments(args, required: [:topic, :callback]).params
+      _merge_action!("subscribe", arguments.topic, arguments.callback, params)
       params['options'] = OPTIONS
 
       post_request("/hub", params)
@@ -32,21 +36,26 @@ module Github
 
     # Unsubscribe from existing topic/event through pubsubhubbub
     #
-    # = Parameters
-    # * topic - Required string - The URI of the GitHub repository to unsubscribe from. The path must be in the format of /:user/:repo/events/:event.
-    # * callback - Required string - The URI to unsubscribe the topic from.
+    # @param [Hash] params
+    # @input params [String] :topic
+    #   Required string. The URI of the GitHub repository to
+    #   unsubscribe from. The path must be in the format of
+    #   /:user/:repo/events/:event.
+    # @input params [String] :callback
+    #   Required string. The URI to unsubscribe the topic from.
     #
-    # = Examples
-    #  github = Github.new :oauth_token => '...'
-    #  github.repos.pubsubhubbub.unsubscribe
-    #    'https://github.com/:user/:repo/events/push',
-    #    'github://Email?address=peter-murach@gmail.com',
-    #    :verify => 'sync',
-    #    :secret => '...'
+    # @example
+    #   github = Github.new oauth_token: 'token'
+    #   github.repos.pubsubhubbub.unsubscribe
+    #     'https://github.com/:user/:repo/events/push',
+    #     'github://Email?address=peter-murach@gmail.com',
+    #     verify: 'sync',
+    #     secret: '...'
     #
+    # @api public
     def unsubscribe(*args)
-      params = arguments(args, :required => [:topic, :callback]).params
-      _merge_action!("unsubscribe", topic, callback, params)
+      params = arguments(args, required: [:topic, :callback]).params
+      _merge_action!("unsubscribe", arguments.topic, arguments.callback, params)
       params['options'] = OPTIONS
 
       post_request("/hub", params)
@@ -54,24 +63,25 @@ module Github
 
     # Subscribe repository to service hook through pubsubhubbub
     #
-    # = Parameters
-    # * repo-name - Required string,
-    # * service-name - Required string
-    # * <tt>:event</tt> - Required hash key for the type of event. The default event is <tt>push</tt>
+    # @param [Hash] params
+    # @input params [String] :event
+    #   Required hash key for the type of event. The default event is push.
     #
-    # = Examples
-    #  github = Github.new :oauth_token => '...'
-    #  github.repos.pubsubhubbub.subscribe_service 'user-name', 'repo-name', 'campfire',
-    #    :subdomain => 'github',
-    #    :room => 'Commits',
-    #    :token => 'abc123',
-    #    :event => 'watch'
+    # @example
+    #   github = Github.new oauth_token: '...'
+    #   github.repos.pubsubhubbub.subscribe_service 'user-name', 'repo-name',
+    #    'campfire',
+    #     subdomain: 'github',
+    #     room: 'Commits',
+    #     token: 'abc123',
+    #     event: 'watch'
     #
+    # @api public
     def subscribe_service(*args)
-      params   = arguments(args, :required => [:user, :repo, :service]).params
+      params   = arguments(args, required: [:user, :repo, :service]).params
       event    = params.delete('event') || 'push'
-      topic    = "#{site}/#{user}/#{repo}/events/#{event}"
-      callback = "github://#{service}?#{params.serialize}"
+      topic    = "#{site}/#{arguments.user}/#{arguments.repo}/events/#{event}"
+      callback = "github://#{arguments.service}?#{params.serialize}"
 
       subscribe(topic, callback)
     end
@@ -80,27 +90,34 @@ module Github
 
     # Subscribe repository to service hook through pubsubhubbub
     #
-    # = Parameters
-    # * repo-name - Required string,
-    # * service-name - Required string
-    # * <tt>:event</tt> - Optional hash key for the type of event. The default event is <tt>push</tt>
+    # @param [Hash] params
+    # @input params [String] :event
+    #   Optional hash key for the type of event. The default event is push.
     #
-    # = Examples
-    #  github = Github.new :oauth_token => '...'
-    #  github.repos.pubsubhubbub.unsubscribe_service 'user-name', 'repo-name', 'campfire'
+    # @example
+    #   github = Github.new oauth_token: '...'
+    #   github.repos.pubsubhubbub.unsubscribe_service 'user-name', 'repo-name',
+    #     'campfire'
     #
+    # @example
+    #   github.repos.pubsubhubbub.unsubscribe_service
+    #     user: 'user-name',
+    #     repo: 'repo-name',
+    #     service: 'service-name'
+    #
+    # @api public
     def unsubscribe_service(*args)
-      params   = arguments(args, :required => [:user, :repo, :service]).params
+      params   = arguments(args, required: [:user, :repo, :service]).params
       event    = params.delete('event') || 'push'
-      topic    = "#{site}/#{user}/#{repo}/events/#{event}"
-      callback = "github://#{service}"
+      topic    = "#{site}/#{arguments.user}/#{arguments.repo}/events/#{event}"
+      callback = "github://#{arguments.service}"
 
       unsubscribe(topic, callback)
     end
     alias :unsubscribe_repository :unsubscribe_service
     alias :unsubscribe_repo :unsubscribe_service
 
-  private
+    private
 
     def _merge_action!(action, topic, callback, params) # :nodoc:
       options = {
