@@ -7,17 +7,16 @@ module Github
 
     # Get contributors list with additions, deletions, and commit counts
     #
-    # = Examples
+    # @example
+    #   github = Github.new
+    #   github.repos.stats.contributors user: '...', repo: '...'
+    #   github.repos.stats.contributors user: '...', repo: '...' { |stat| ... }
     #
-    #  github = Github.new
-    #  github.repos.stats.contributors user: '...', repo: '...'
-    #  github.repos.stats.contributors user: '...', repo: '...' { |stat| ... }
-    #
+    # @api public
     def contributors(*args)
-      arguments(args, :required => [:user, :repo])
-      params = arguments.params
+      arguments(args, required: [:user, :repo])
 
-      response = get_request("/repos/#{user}/#{repo}/stats/contributors", params)
+      response = get_request("/repos/#{arguments.user}/#{arguments.repo}/stats/contributors", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -27,64 +26,60 @@ module Github
     # Returns the last year of commit activity grouped by week.
     # The days array is a group of commits per day, starting on Sunday
     #
-    # = Examples
+    # @example
+    #   github = Github.new
+    #   github.repos.stats.commit_activity user: '...', repo: '...'
+    #   github.repos.stats.commit_activity user: '...', repo: '...' { |stat| ... }
     #
-    #  github = Github.new
-    #  github.repos.stats.commit_activity user: '...', repo: '...'
-    #  github.repos.stats.commit_activity user: '...', repo: '...' { |stat| ... }
-    #
+    # @api public
     def commit_activity(*args)
-      arguments(args, :required => [:user, :repo])
-      params = arguments.params
+      arguments(args, required: [:user, :repo])
 
-      response = get_request("/repos/#{user}/#{repo}/stats/commit_activity", params)
+      response = get_request("/repos/#{arguments.user}/#{arguments.repo}/stats/commit_activity", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
 
     # Get the number of additions and deletions per week
     #
-    # = Examples
-    #
+    # @example
     #  github = Github.new
     #  github.repos.stats.code_frequency user: '...', repo: '...'
     #  github.repos.stats.code_frequency user: '...', repo: '...' { |stat| ... }
     #
+    # @api public
     def code_frequency(*args)
-      arguments(args, :required => [:user, :repo])
-      params = arguments.params
+      arguments(args, required: [:user, :repo])
 
-      get_request("/repos/#{user}/#{repo}/stats/code_frequency", params)
+      get_request("/repos/#{arguments.user}/#{arguments.repo}/stats/code_frequency", arguments.params)
     end
 
     # Get the weekly commit count for the repo owner and everyone else
     #
-    # = Examples
+    # @example
+    #   github = Github.new
+    #   github.repos.stats.participation user: '...', repo: '...'
+    #   github.repos.stats.participation user: '...', repo: '...' { |stat| ... }
     #
-    #  github = Github.new
-    #  github.repos.stats.participation user: '...', repo: '...'
-    #  github.repos.stats.participation user: '...', repo: '...' { |stat| ... }
-    #
+    # @api public
     def participation(*args)
-      arguments(args, :required => [:user, :repo])
-      params = arguments.params
+      arguments(args, required: [:user, :repo])
 
-      get_request("/repos/#{user}/#{repo}/stats/participation", params)
+      get_request("/repos/#{arguments.user}/#{arguments.repo}/stats/participation", arguments.params)
     end
 
     # Get the number of commits per hour in each day
     #
-    # = Examples
+    # @example
+    #   github = Github.new
+    #   github.repos.stats.punch_card user: '...', repo: '...'
+    #   github.repos.stats.punch_card user: '...', repo: '...' { |stat| ... }
     #
-    #  github = Github.new
-    #  github.repos.stats.punch_card user: '...', repo: '...'
-    #  github.repos.stats.punch_card user: '...', repo: '...' { |stat| ... }
-    #
+    # @api public
     def punch_card(*args)
-      arguments(args, :required => [:user, :repo])
-      params = arguments.params
+      arguments(args, required: [:user, :repo])
 
-      response = get_request("/repos/#{user}/#{repo}/stats/punch_card", params)
+      response = get_request("/repos/#{arguments.user}/#{arguments.repo}/stats/punch_card", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
