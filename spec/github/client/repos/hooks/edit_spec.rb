@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Client::Repos::Hooks, '#list' do
+describe Github::Client::Repos::Hooks, '#edit' do
   let(:user) { 'peter-murach' }
   let(:repo) { 'github' }
   let(:hook_id) { 1 }
