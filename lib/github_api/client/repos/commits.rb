@@ -13,24 +13,32 @@ module Github
 
     # List commits on a repository
     #
-    # = Parameters
-    # * <tt>:sha</tt>     Optional string. Sha or branch to start listing commits from.
-    # * <tt>:path</tt>    Optional string. Only commits containing this file path will be returned.
-    # * <tt>:author</tt>  GitHub login, name, or email by which to filter by commit author.
-    # * <tt>:since</tt>   Optional string. Only commits after this date will be returned. This is a timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
-    # * <tt>:until</tt>   Optional string. Only commits before this date will be returned. This is a timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
-    # = Examples
-    #  github = Github.new
-    #  github.repos.commits.list 'user-name', 'repo-name', :sha => '...'
-    #  github.repos.commits.list 'user-name', 'repo-name', :sha => '...' { |commit| ... }
+    # @param [Hash] params
+    # @option params [String] :sha
+    #   Sha or branch to start listing commits from.
+    # @option params [String] :path
+    #   Only commits containing this file path will be returned.
+    # @option params [String] :author
+    #   GitHub login, name, or email by which to filter by commit author.
+    # @option params [String] :since
+    #   Only commits after this date will be returned. This is a timestamp
+    #   in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
+    # @option params [String] :until
+    #   Only commits before this date will be returned. This is a timestamp
+    #   in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
     #
+    # @example
+    #  github = Github.new
+    #  github.repos.commits.list 'user-name', 'repo-name', sha: '...'
+    #  github.repos.commits.list 'user-name', 'repo-name', sha: '...' { |commit| ... }
+    #
+    # @api public
     def list(*args)
-      arguments(args, :required => [:user, :repo]) do
-        sift VALID_COMMITS_OPTIONS
+      arguments(args, required: [:user, :repo]) do
+        permit VALID_COMMITS_OPTIONS
       end
-      params = arguments.params
 
-      response = get_request("/repos/#{user}/#{repo}/commits", params)
+      response = get_request("/repos/#{arguments.user}/#{arguments.repo}/commits", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -38,33 +46,33 @@ module Github
 
     # Gets a single commit
     #
-    # = Examples
+    # @example
     #  github = Github.new
     #  github.repos.commits.get 'user-name', 'repo-name', '6dcb09b5b57875f334f61aebed6')
     #
+    # @api public
     def get(*args)
-      arguments(args, :required => [:user, :repo, :sha])
-      params = arguments.params
+      arguments(args, required: [:user, :repo, :sha])
 
-      get_request("/repos/#{user}/#{repo}/commits/#{sha}", params)
+      get_request("/repos/#{arguments.user}/#{arguments.repo}/commits/#{arguments.sha}", arguments.params)
     end
     alias :find :get
 
     # Compares two commits
     #
-    # = Examples
-    #  github = Github.new
-    #  github.repos.commits.compare
-    #    'user-name',
-    #    'repo-name',
-    #    'v0.4.8',
-    #    'master'
+    # @note Both :base and :head can be either branch names in :repo or
+    # branch names in other repositories in the same network as :repo.
+    # For the latter case, use the format user:branch:
     #
+    # @example
+    #  github = Github.new
+    #  github.repos.commits.compare 'user-name', 'repo-name', 'v0.4.8', 'master'
+    #
+    # @api public
     def compare(*args)
-      arguments(args, :required => [:user, :repo, :base, :head])
-      params = arguments.params
+      arguments(args, required: [:user, :repo, :base, :head])
 
-      get_request("/repos/#{user}/#{repo}/compare/#{base}...#{head}", params)
+      get_request("/repos/#{arguments.user}/#{arguments.repo}/compare/#{arguments.base}...#{arguments.head}", arguments.params)
     end
   end # Client::Repos::Commits
 end # Github
