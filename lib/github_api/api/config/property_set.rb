@@ -3,7 +3,6 @@
 module Github
   class API
     class Config
-
       # Class responsible for storing configuration properties
       class PropertySet
         include Enumerable
@@ -58,11 +57,16 @@ module Github
           self
         end
 
+        # Access property by name
+        #
         # @api public
         def [](name)
           @map[name]
         end
+        alias_method :fetch, :[]
 
+        # Set property value by name
+        #
         # @api public
         def []=(name, property)
           update_map(name, property)
@@ -75,11 +79,15 @@ module Github
           @map[name.to_sym] = @map[name.to_s.freeze] = property
         end
 
-        # Fetch all properties and their values
+        # Convert properties to a hash of property names and
+        # corresponding values
         #
         # @api public
-        def fetch
-          @map
+        def to_hash
+          properties.each_with_object({}) do |property, props|
+            name = property.name
+            props[name] = self[name]
+          end
         end
 
         # Check if properties exist
