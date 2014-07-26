@@ -4,18 +4,21 @@ module Github
   class Client::Repos::Forks < API
     # List repository forks
     #
-    # = Parameters
-    # * <tt>:sort</tt> - newest, oldest, watchers, default: newest
+    # @param [Hash] params
+    # @input params [String] :sort
+    #   The sort order. Can be either newest, oldest, or stargazers.
+    #   Default: newest
     #
-    # = Examples
-    #  github = Github.new
-    #  github.repos.forks.list 'user-name', 'repo-name'
-    #  github.repos.forks.list 'user-name', 'repo-name' { |fork| ... }
+    # @example
+    #   github = Github.new
+    #   github.repos.forks.list 'user-name', 'repo-name'
+    #   github.repos.forks.list 'user-name', 'repo-name' { |fork| ... }
     #
+    # @api public
     def list(*args)
-      arguments(args, :required => [:user, :repo])
+      arguments(args, required: [:user, :repo])
 
-      response = get_request("/repos/#{user}/#{repo}/forks", arguments.params)
+      response = get_request("/repos/#{arguments.user}/#{arguments.repo}/forks", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -23,18 +26,21 @@ module Github
 
     # Create a fork for the authenticated user
     #
-    # = Inputs
-    # * <tt>:organization</tt> - Optional string - the name of the service that is being called.
+    # @param [Hash] params
+    # @input params [String] :organization
+    #   The organization login. The repository will be forked into
+    #   this organization.
     #
-    # = Examples
-    #  github = Github.new
-    #  github.repos.forks.create 'user-name', 'repo-name',
-    #    "organization" => "github"
+    # @example
+    #   github = Github.new
+    #   github.repos.forks.create 'user-name', 'repo-name',
+    #     organization: "github"
     #
+    # @api public
     def create(*args)
-      arguments(args, :required => [:user, :repo])
+      arguments(args, required: [:user, :repo])
 
-      post_request("/repos/#{user}/#{repo}/forks", arguments.params)
+      post_request("/repos/#{arguments.user}/#{arguments.repo}/forks", arguments.params)
     end
   end # Client::Repos::Forks
 end # Github
