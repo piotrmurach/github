@@ -16,26 +16,30 @@ module Github
 
     # Perform a merge
     #
-    # = Inputs
-    # * <tt>:base</tt> - Required String - The name of the base branch that the head will be merged into.
-    # * <tt>:head</tt> - Required String - The head to merge. This can be a branch name or a commit SHA1.
-    # * <tt>:commit_message</tt> - Optional String - Commit message to use for the merge commit. If omitted, a default message will be used.
+    # @param [Hash] params
+    # @input params [String] :base
+    #   Required. The name of the base branch that the head will be merged into.
+    # @input params [String] :head
+    #   Required. The head to merge. This can be a branch name or a commit SHA1.
+    # @input params [String] :commit_message
+    #   Commit message to use for the merge commit.
+    #   If omitted, a default message will be used.
     #
-    # = Examples
-    #  github = Github.new
-    #  github.repos.merging.merge 'user', 'repo',
-    #    "base": "master",
-    #    "head": "cool_feature",
-    #    "commit_message": "Shipped cool_feature!"
+    # @example
+    #   github = Github.new
+    #   github.repos.merging.merge 'user', 'repo',
+    #     base: "master",
+    #     head: "cool_feature",
+    #     commit_message: "Shipped cool_feature!"
     #
+    # @api public
     def merge(*args)
-      arguments(args, :required => [:user, :repo]) do
-        sift VALID_MERGE_PARAM_NAMES
+      arguments(args, required: [:user, :repo]) do
+        permit VALID_MERGE_PARAM_NAMES
         assert_required REQUIRED_MERGE_PARAMS
       end
-      params = arguments.params
 
-      post_request("/repos/#{user}/#{repo}/merges", params)
+      post_request("/repos/#{arguments.user}/#{arguments.repo}/merges", arguments.params)
     end
   end # Client::Repos::Merging
 end # Github
