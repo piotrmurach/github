@@ -12,15 +12,16 @@ module Github
 
     # List assets for a release
     #
-    # = Examples
-    #  github = Github.new
-    #  github.repos.releases.assets.list 'owner', 'repo', 'id'
-    #  github.repos.releases.assets.list 'owner', 'repo', 'id' { |asset| ... }
+    # @example
+    #   github = Github.new
+    #   github.repos.releases.assets.list 'owner', 'repo', 'id'
+    #   github.repos.releases.assets.list 'owner', 'repo', 'id' { |asset| ... }
     #
+    # @api public
     def list(*args)
-      params = arguments(args, required: [:owner, :repo, :id]).params
+      arguments(args, required: [:owner, :repo, :id]).params
 
-      response = get_request("/repos/#{owner}/#{repo}/releases/#{id}/assets", params)
+      response = get_request("/repos/#{arguments.owner}/#{arguments.repo}/releases/#{arguments.id}/assets", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -28,41 +29,45 @@ module Github
 
     # Get a single release asset
     #
-    # = Examples
-    #  github = Github.new
-    #  github.repos.releases.assets.get 'owner', 'repo', 'id'
+    # @example
+    #   github = Github.new
+    #   github.repos.releases.assets.get 'owner', 'repo', 'id'
     #
+    # @api public
     def get(*args)
       params = arguments(args, required: [:owner, :repo, :id]).params
 
-      get_request("/repos/#{owner}/#{repo}/releases/assets/#{id}" , params)
+      get_request("/repos/#{arguments.owner}/#{arguments.repo}/releases/assets/#{arguments.id}" , arguments.params)
     end
     alias :find :get
 
     # Upload a release asset
     #
-    # = Inputs
-    # * <tt>:name</tt> - Required string - The file name of the asset
-    # * <tt>:content_type</tt> - Required string - The content type
-    #                            of the asset. Example: “application/zip”.
+    # @param [Hash] params
+    # @input params [String] :name
+    #   Required string. The file name of the asset
+    # @input params [String] :content_type
+    #   Required string. The content type of the asset.
+    #   Example: “application/zip”.
     #
-    # = Examples
-    #  github = Github.new
-    #  github.repos.releases.assets.upload 'owner', 'repo', 'id', 'file-path'
-    #    "name": "batman.jpg",
-    #    "content_type": "application/octet-stream"
+    # @example
+    #   github = Github.new
+    #   github.repos.releases.assets.upload 'owner', 'repo', 'id', 'file-path'
+    #     name: "batman.jpg",
+    #     content_type: "application/octet-stream"
     #
+    # @api public
     def upload(*args)
       arguments(args, required: [:owner, :repo, :id, :filepath]) do
-        sift VALID_ASSET_PARAM_NAMES
+        permit VALID_ASSET_PARAM_NAMES
       end
       params = arguments.params
 
       unless type = params['content_type']
-        type = infer_media(filepath)
+        type = infer_media(arguments.filepath)
       end
 
-      file = Faraday::UploadIO.new(filepath, type)
+      file = Faraday::UploadIO.new(arguments.filepath, type)
       options = {
         headers: { content_type: type },
         endpoint: 'https://uploads.github.com',
@@ -71,7 +76,7 @@ module Github
       params['data']    = file.read
       params['options'] = options
 
-      post_request("/repos/#{owner}/#{repo}/releases/#{id}/assets", params)
+      post_request("/repos/#{arguments.owner}/#{arguments.repo}/releases/#{arguments.id}/assets", params)
     ensure
       file.close if file
     end
@@ -88,37 +93,42 @@ module Github
 
     # Edit a release asset
     #
-    # = Inputs
-    # * <tt>:name</tt>  - Required string - the filename of the asset
-    # * <tt>:label</tt> - Optional string - An alternate short description of
-    #                     the asset. Used in place of the filename.
+    # Users with push access to the repository can edit a release asset.
     #
-    # = Examples
-    #  github = Github.new
-    #  github.repos.releases.assets.edit 'owner', 'repo', 'id',
-    #    "name": "foo-1.0.0-osx.zip",
-    #    "label": "Mac binary"
+    # @param [Hash] params
+    # @input params [String] :name
+    #   Required. The file name of the asset.
+    # @input params [String] :label
+    #   An alternate short description of the asset.
+    #   Used in place of the filename.
     #
+    # @example
+    #   github = Github.new
+    #   github.repos.releases.assets.edit 'owner', 'repo', 'id',
+    #     name: "foo-1.0.0-osx.zip",
+    #     label: "Mac binary"
+    #
+    # @api public
     def edit(*args)
       arguments(args, required: [:owner, :repo, :id]) do
-        sift VALID_ASSET_PARAM_NAMES
+        permit VALID_ASSET_PARAM_NAMES
       end
-      params = arguments.params
 
-      patch_request("/repos/#{owner}/#{repo}/releases/assets/#{id}", params)
+      patch_request("/repos/#{arguments.owner}/#{arguments.repo}/releases/assets/#{arguments.id}", arguments.params)
     end
     alias :update :edit
 
     # Delete a release asset
     #
-    # = Examples
-    #  github = Github.new
-    #  github.repos.releases.assets.delete 'owner', 'repo', 'id'
+    # @example
+    #   github = Github.new
+    #   github.repos.releases.assets.delete 'owner', 'repo', 'id'
     #
+    # @api public
     def delete(*args)
-      params = arguments(args, required: [:owner, :repo, :id]).params
+      arguments(args, required: [:owner, :repo, :id])
 
-      delete_request("/repos/#{owner}/#{repo}/releases/assets/#{id}", params)
+      delete_request("/repos/#{arguments.owner}/#{arguments.repo}/releases/assets/#{arguments.id}", arguments.params)
     end
   end # Client::Repos::Releases::Assets
 end # Github
