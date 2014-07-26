@@ -26,7 +26,7 @@ describe Github::Client::Repos::Contents, '#get' do
   end
 
   context 'with defaults' do
-    let(:request_path) { "/repos/#{user}/#{repo}/zipball/master" }
+    let(:request_path) { "/repos/#{user}/#{repo}/tarball/master" }
 
     it { expect { subject.archive user }.to raise_error(ArgumentError) }
 

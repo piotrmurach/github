@@ -11,39 +11,49 @@ module Github
     #
     # This method returns the preferred README for a repository.
     #
-    # = Examples
-    #  github = Github.new
-    #  github.repos.contents.readme 'user-name', 'repo-name'
+    # @param [Hash] params
+    # @option params [String] :ref
+    #   The name of the commit/branch/tag.
+    #   Default: the repository’s default branch (usually master)
     #
-    #  content = Github::Repos;:Contents.new user: 'user-name', 'repo-name'
-    #  content.readme
+    # @example
+    #   github = Github.new
+    #   github.repos.contents.readme 'user-name', 'repo-name'
     #
+    #   content = Github::Repos;:Contents.new user: 'user-name', 'repo-name'
+    #   content.readme
+    #
+    # @api public
     def readme(*args)
-      arguments(args, :required => [:user, :repo])
-      params = arguments.params
+      arguments(args, required: [:user, :repo])
 
-      get_request("/repos/#{user}/#{repo}/readme", params)
+      get_request("/repos/#{arguments.user}/#{arguments.repo}/readme", arguments.params)
     end
 
     # Get contents
     #
     # This method returns the contents of any file or directory in a repository.
     #
-    # = Parameters
-    # * <tt>:ref</tt> - Optional string - valid Git reference, defaults to master
+    # @param [Hash] params
+    # @option params [String] :path
+    #   The content path.
+    # @option params [String] :ref
+    #   The name of the commit/branch/tag.
+    #   Default: the repository’s default branch (usually master)
     #
-    # = Examples
-    #  github = Github.new
-    #  github.repos.contents.get 'user-name', 'repo-name', 'path'
+    # @example
+    #   github = Github.new
+    #   github.repos.contents.get 'user-name', 'repo-name', 'path'
     #
-    #  github = Github.new user: 'user-name', repo: 'repo-name'
-    #  github.repos.contents.get path: 'README.md'
+    # @example
+    #   github = Github.new user: 'user-name', repo: 'repo-name'
+    #   github.repos.contents.get path: 'README.md'
     #
+    # @api public
     def get(*args)
-      arguments(args, :required => [:user, :repo, :path])
-      params = arguments.params
+      arguments(args, required: [:user, :repo, :path])
 
-      get_request("/repos/#{user}/#{repo}/contents/#{path}", params)
+      get_request("/repos/#{arguments.user}/#{arguments.repo}/contents/#{arguments.path}", arguments.params)
     end
     alias :find :get
 
@@ -51,66 +61,97 @@ module Github
     #
     # This method creates a new file in a repository
     #
-    # = Parameters
-    # * <tt>:path</tt>    - Requried string - The content path
-    # * <tt>:message</tt> - Requried string - The commit message
-    # * <tt>:content</tt> - Requried string - The new file content,
-    #                       which will be Base64 encoded
-    # * <tt>:branch</tt>  - Optional string - The branch name. If not provided,
-    #                       uses the repository’s default branch (usually master)
-    # = Optional Parameters
+    # @param [Hash] params
+    # @option params [String] :path
+    #   Requried string. The content path
+    # @option params [String]
+    # @option params [String] :message
+    #   Requried string. The commit message.
+    # @option params [String] :content
+    #   Requried string. The new file content, which will be Base64 encoded
+    # @option params [String] :branch
+    #   The branch name. If not provided, uses the repository’s
+    #   default branch (usually master)
     #
-    # The <tt>author</tt> section is optional and is filled in with the
-    # <tt>committer</tt> information if omitted. If the <tt>committer</tt>
+    # Optional Parameters
+    #
+    # The :author section is optional and is filled in with the
+    # :committer information if omitted. If the :committer
     # information is omitted, the authenticated user’s information is used.
     #
-    # You must provide values for both <tt>name</tt> and <tt>email</tt>, whether
-    # you choose to use <tt>author</tt> or <tt>committer</tt>. Otherwise, you’ll
-    # receive a <tt>500</tt> status code.
+    # You must provide values for both :name and :email, whether
+    # you choose to use :author or :committer. Otherwise, you’ll
+    # receive a 500 status code.
     #
-    # * <tt>author.name</tt>  - string - The name of the author of the commit
-    # * <tt>author.email</tt> - string - The email of the author of the commit
-    # * <tt>committer.name</tt> - string - The name of the committer of the commit
-    # * <tt>committer.email</tt> - string - The email of the committer of the commit
+    # Both the author and commiter parameters have the same keys:
     #
-    # = Examples
-    #  github = Github.new
-    #  github.repos.contents.create 'user-name', 'repo-name', 'path',
-    #    path: 'hello.rb',
-    #    content: "puts 'hello ruby'",
-    #    message: "my commit message"
+    # @option params [String] :name
+    #   The name of the author (or commiter) of the commit
+    # @option params [String] :email
+    #   The email of the author (or commiter) of the commit
     #
+    # @example
+    #   github = Github.new
+    #   github.repos.contents.create 'user-name', 'repo-name', 'path',
+    #     path: 'hello.rb',
+    #     content: "puts 'hello ruby'",
+    #     message: "my commit message"
+    #
+    # @api public
     def create(*args)
-      arguments(args, :required => [:user, :repo, :path]) do
+      arguments(args, required: [:user, :repo, :path]) do
         assert_required REQUIRED_CONTENT_OPTIONS
       end
       params = arguments.params
       params.strict_encode64('content')
 
-      put_request("/repos/#{user}/#{repo}/contents/#{path}", params)
+      put_request("/repos/#{arguments.user}/#{arguments.repo}/contents/#{arguments.path}", params)
     end
 
     # Update a file
     #
     # This method updates a file in a repository
     #
-    # = Parameters
-    # * <tt>:path</tt>    - Requried string - The content path
-    # * <tt>:message</tt> - Requried string - The commit message
-    # * <tt>:content</tt> - Requried string - The new file content,
-    #                       which will be Base64 encoded
-    # * <tt>:sha</tt>     - Requried string -  The blob SHA of the file being replaced.
-    # * <tt>:branch</tt>  - Optional string - The branch name. If not provided,
-    #                       uses the repository’s default branch (usually master)
+    # @param [Hash] params
+    # @option params [String] :path
+    #   Requried string. The content path
+    # @option params [String]
+    # @option params [String] :message
+    #   Requried string. The commit message.
+    # @option params [String] :content
+    #   Requried string. The new file content, which will be Base64 encoded
+    # @option params [String] :sha
+    #   Required string. The blob SHA of the file being replaced.
+    # @option params [String] :branch
+    #   The branch name. If not provided, uses the repository’s
+    #   default branch (usually master)
     #
-    # = Examples
-    #  github = Github.new
-    #  github.repos.contents.update 'user-name', 'repo-name', 'path',
-    #    path: 'hello.rb',
-    #    content: "puts 'hello ruby again'",
-    #    message: "my commit message",
-    #    sha: "25b0bef9e404bd2e3233de26b7ef8cbd86d0e913"
+    # Optional Parameters
     #
+    # The :author section is optional and is filled in with the
+    # :committer information if omitted. If the :committer
+    # information is omitted, the authenticated user’s information is used.
+    #
+    # You must provide values for both :name and :email, whether
+    # you choose to use :author or :committer. Otherwise, you’ll
+    # receive a 500 status code.
+    #
+    # Both the author and commiter parameters have the same keys:
+    #
+    # @option params [String] :name
+    #   The name of the author (or commiter) of the commit
+    # @option params [String] :email
+    #   The email of the author (or commiter) of the commit
+    #
+    # @example
+    #   github = Github.new
+    #   github.repos.contents.update 'user-name', 'repo-name', 'path',
+    #     path: 'hello.rb',
+    #     content: "puts 'hello ruby again'",
+    #     message: "my commit message",
+    #     sha: "25b0bef9e404bd2e3233de26b7ef8cbd86d0e913"
+    #
+    # @api public
     def update(*args)
       create(*args)
     end
@@ -119,28 +160,36 @@ module Github
     #
     # This method deletes a file in a repository
     #
-    # = Parameters
-    # * <tt>:path</tt>    - Requried string - The content path
-    # * <tt>:message</tt> - Requried string - The commit message
-    # * <tt>:sha</tt>     - Requried string - The blob SHA of the file being removed.
-    # * <tt>:branch</tt>  - Optional string - The branch name. If not provided,
-    #                       uses the repository’s default branch (usually master)
-    # = Optional Parameters
+    # @param [Hash] params
+    # @option params [String] :path
+    #   Requried string. The content path
+    # @option params [String]
+    # @option params [String] :message
+    #   Requried string. The commit message.
+    # @option params [String] :sha
+    #   Required string. The blob SHA of the file being replaced.
+    # @option params [String] :branch
+    #   The branch name. If not provided, uses the repository’s
+    #   default branch (usually master)
     #
-    # The <tt>author</tt> section is optional and is filled in with the
-    # <tt>committer</tt> information if omitted. If the <tt>committer</tt>
+    # Optional Parameters
+    #
+    # The :author section is optional and is filled in with the
+    # :committer information if omitted. If the :committer
     # information is omitted, the authenticated user’s information is used.
     #
-    # You must provide values for both <tt>name</tt> and <tt>email</tt>, whether
-    # you choose to use <tt>author</tt> or <tt>committer</tt>. Otherwise, you’ll
-    # receive a <tt>500</tt> status code.
+    # You must provide values for both :name and :email, whether
+    # you choose to use :author or :committer. Otherwise, you’ll
+    # receive a 500 status code.
     #
-    # * <tt>author.name</tt>  - string - The name of the author of the commit
-    # * <tt>author.email</tt> - string - The email of the author of the commit
-    # * <tt>committer.name</tt> - string - The name of the committer of the commit
-    # * <tt>committer.email</tt> - string - The email of the committer of the commit
+    # Both the author and commiter parameters have the same keys:
     #
-    # = Examples
+    # @option params [String] :name
+    #   The name of the author (or commiter) of the commit
+    # @option params [String] :email
+    #   The email of the author (or commiter) of the commit
+    #
+    # @example
     #  github = Github.new
     #  github.repos.contents.delete 'user-name', 'repo-name', 'path',
     #    path: 'hello.rb',
@@ -148,11 +197,11 @@ module Github
     #    sha: "329688480d39049927147c162b9d2deaf885005f"
     #
     def delete(*args)
-      arguments(args, :required => [:user, :repo, :path]) do
+      arguments(args, required: [:user, :repo, :path]) do
         assert_required %w[ path message sha ]
       end
 
-      delete_request("/repos/#{user}/#{repo}/contents/#{path}", arguments.params)
+      delete_request("/repos/#{arguments.user}/#{arguments.repo}/contents/#{arguments.path}", arguments.params)
     end
 
     # Get archive link
@@ -162,25 +211,30 @@ module Github
     # to follow redirects or you will need to use the Location header to make
     # a second GET request.
     #
-    # Note: For private repositories, these links are temporary and expire quickly.
+    # @note
+    #   For private repositories, these links are temporary and expire quickly.
     #
-    # = Parameters
-    # * <tt>:archive_format</tt> - Required string - either tarball or zipball
-    # * <tt>:ref</tt> - Optional string - valid Git reference, defaults to master
+    # @param [Hash] params
+    # @input params [String] :archive_format
+    #   Required string. Either tarball or zipball. Default: tarball
+    # @input params [String] :ref
+    #   Optional string. A valid Git reference.
+    #   Default: the repository’s default branch (usually master)
     #
-    # = Examples
+    # @example
     #  github = Github.new
     #  github.repos.contents.archive 'user-name', 'repo-name',
-    #    "archive_format" =>  "tarball",
-    #    "ref" => "master"
+    #    archive_format: "tarball",
+    #    ref: "master"
     #
+    # @api public
     def archive(*args)
-      arguments(args, :required => [:user, :repo])
+      arguments(args, required: [:user, :repo])
       params         = arguments.params
-      archive_format = params.delete('archive_format') || 'zipball'
+      archive_format = params.delete('archive_format') || 'tarball'
       ref            = params.delete('ref') || 'master'
 
-      get_request("/repos/#{user}/#{repo}/#{archive_format}/#{ref}", params)
+      get_request("/repos/#{arguments.user}/#{arguments.repo}/#{archive_format}/#{ref}", params)
     end
   end # Client::Repos::Contents
 end # Github
