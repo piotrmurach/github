@@ -8,44 +8,53 @@ module Github
     #
     # Find issues by state and keyword.
     #
-    # = Parameters
-    #  <tt>:state</tt> - open or closed.
-    #  <tt>:keyword</tt> - search term
+    # @param [Hash] params
+    # @option params [String] :state
+    #   Indicates the state of the issues to return. Can be either open or closed.
+    # @option params [String] :keyword
+    #   The search term
     #
-    # = Examples
-    #  github = Github.new
-    #  github.search.legacy.issues 'owner', 'repo-name', 'open','api'
-    #  github.search.legacy.issues owner: 'owner', repo: 'repo-name', state: 'open', keyword: 'api'
+    # @example
+    #   github = Github.new
+    #   github.search.legacy.issues 'owner', 'repo-name', 'open','api'
+    #   github.search.legacy.issues owner: 'owner', repo: 'repo-name', state: 'open', keyword: 'api'
     #
+    # @api public
     def issues(*args)
       required = %w[ owner repo state keyword ]
-      arguments(args, :required => required)
+      arguments(args, required: required)
 
-      get_request("/legacy/issues/search/#{owner}/#{repo}/#{state}/#{escape_uri(keyword)}", arguments.params)
+      get_request("/legacy/issues/search/#{arguments.owner}/#{arguments.repo}/#{arguments.state}/#{escape_uri(arguments.keyword)}", arguments.params)
     end
 
     # Search repositories
     #
     # Find repositories by keyword.
     #
-    # = Parameters
-    #  <tt>:keyword</tt> - search term
-    #  <tt>:language</tt> - Optional filter results by language
-    #  <tt>:start_page</tt> - Optional page number to fetch
-    #  <tt>:sort</tt> - Optional sort field. One of stars, forks, or updated.
-    #                   If not provided, results are sorted by best match.
-    #  <tt>:order</tt> - Optional sort order if sort param is provided.
-    #                    One of asc or desc.
+    # @param [Hash] params
+    # @option params [String] :keyword
+    #   The search term
+    # @option params [String] :language
+    #   Filter results by language
+    # @option params [String] :start_page
+    #   The page number to fetch
+    # @option params [String] :sort
+    #   The sort field. One of stars, forks, or updated.
+    #   Default: results are sorted by best match.
+    # @option params [String] :order
+    #   The sort field. if sort param is provided.
+    #   Can be either asc or desc.
     #
-    # = Examples
-    #  github = Github.new
-    #  github.search.legacy.repos 'api'
-    #  github.search.legacy.repos keyword: 'api'
+    # @example
+    #   github = Github.new
+    #   github.search.legacy.repos 'api'
+    #   github.search.legacy.repos keyword: 'api'
     #
+    # @api public
     def repos(*args)
-      arguments(args, :required => [:keyword])
+      arguments(args, required: [:keyword])
 
-      get_request("/legacy/repos/search/#{escape_uri(keyword)}", arguments.params)
+      get_request("/legacy/repos/search/#{escape_uri(arguments.keyword)}", arguments.params)
     end
     alias :repositories :repos
 
@@ -53,23 +62,28 @@ module Github
     #
     # Find users by keyword.
     #
-    # = Parameters
-    #  <tt>:keyword</tt> - search term
-    #  <tt>:start_page</tt> - Optional page number to fetch
-    #  <tt>:sort</tt> - Optional sort field. One of stars, forks, or updated.
-    #                   If not provided, results are sorted by best match.
-    #  <tt>:order</tt> - Optional sort order if sort param is provided.
-    #                    One of asc or desc.
+    # @param [Hash] params
+    # @option params [String] :keyword
+    #   The search term
+    # @option params [String] :start_page
+    #   The page number to fetch
+    # @option params [String] :sort
+    #   The sort field. One of stars, forks, or updated.
+    #   Default: results are sorted by best match.
+    # @option params [String] :order
+    #   The sort field. if sort param is provided.
+    #   Can be either asc or desc.
     #
-    # = Examples
-    #  github = Github.new
-    #  github.search.legacy.users 'user'
-    #  github.search.legacy.users keyword: 'user'
+    # @example
+    #   github = Github.new
+    #   github.search.legacy.users 'user'
+    #   github.search.legacy.users keyword: 'user'
     #
+    # @api public
     def users(*args)
-      arguments(args, :required => [:keyword])
+      arguments(args, required: [:keyword])
 
-      get_request("/legacy/user/search/#{escape_uri(keyword)}", arguments.params)
+      get_request("/legacy/user/search/#{escape_uri(arguments.keyword)}", arguments.params)
     end
 
     # Search email
@@ -77,18 +91,19 @@ module Github
     # This API call is added for compatibility reasons only. There’s no
     # guarantee that full email searches will always be available.
     #
-    # = Parameters
-    #  <tt>:email</tt> - email address
+    # @param [Hash] params
+    # @option params [String] :email
+    #   The email address
     #
-    # = Examples
+    # @example
     #  github = Github.new
     #  github.search.email 'email-address'
     #  github.search.email email: 'email-address'
     #
+    # @api public
     def email(*args)
-      arguments(args, :required => [:email])
-      get_request("/legacy/user/email/#{email}", arguments.params)
+      arguments(args, required: [:email])
+      get_request("/legacy/user/email/#{arguments.email}", arguments.params)
     end
-
   end # Search::Legacy
 end # Github
