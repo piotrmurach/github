@@ -80,10 +80,11 @@ module Github
       # @return [Hash[Symbol]]
       #
       # @api public
-      def fetch
-        self.class.property_set.properties.each_with_object({}) do |property, properties|
-          name = property.name
-          properties[name] = send(name)
+      def fetch(value = nil)
+        if value
+          self.class.property_set[value]
+        else
+          self.class.property_set.to_hash
         end
       end
 

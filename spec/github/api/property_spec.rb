@@ -36,6 +36,14 @@ describe ConfigTest, '#property' do
     subject.bar = :a
     expect(example.bar).to eql :a
   end
+
+  it 'allows to fetch all properties' do
+    expect(example.fetch.keys).to match_array([:bar, :foo, :test])
+  end
+
+  it 'allows to fetch individual property' do
+    expect(example.fetch(:foo)).to eq(:bar)
+  end
 end
 
 describe SubclassTest, '#property' do
