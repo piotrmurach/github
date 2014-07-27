@@ -5,11 +5,12 @@ module Github
 
     # List all public events
     #
-    # = Examples
+    # @example
     #  github = Github.new
     #  github.activity.events.public
     #  github.activity.events.public { |event| ... }
     #
+    # @api public
     def public(*args)
       arguments(args)
 
@@ -23,18 +24,20 @@ module Github
 
     # List all repository events for a given user
     #
-    # = Examples
-    #  github = Github.new
-    #  github.activity.events.repository 'user-name', 'repo-name'
-    #  github.activity.events.repository 'user-name', 'repo-name' { |event| ... }
+    # @example
+    #   github = Github.new
+    #   github.activity.events.repository 'user-name', 'repo-name'
+    #   github.activity.events.repository 'user-name', 'repo-name' { |event| ... }
     #
-    #  github.activity.events.repository user: 'user-name', repo: 'repo-name'
-    #  github.activity.events.repository user: 'user-name', repo: 'repo-name' {|event| ... }
+    # @example
+    #   github.activity.events.repository user: 'user-name', repo: 'repo-name'
+    #   github.activity.events.repository user: 'user-name', repo: 'repo-name' {|event| ... }
     #
+    # @api public
     def repository(*args)
-      arguments(args, :required => [:user, :repo])
+      arguments(args, required: [:user, :repo])
 
-      response = get_request("/repos/#{user}/#{repo}/events", arguments.params)
+      response = get_request("/repos/#{arguments.user}/#{arguments.repo}/events", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -45,19 +48,20 @@ module Github
 
     # List all issue events for a given repository
     #
-    # = Examples
-    #  github = Github.new
-    #  github.activity.events.issue 'user-name', 'repo-name'
-    #  github.activity.events.issue 'user-name', 'repo-name' { |event| ... }
+    # @example
+    #   github = Github.new
+    #   github.activity.events.issue 'user-name', 'repo-name'
+    #   github.activity.events.issue 'user-name', 'repo-name' { |event| ... }
     #
-    #  github.activity.events.issue user: 'user-name', repo: 'repo-name'
-    #  github.activity.events.issue user: 'user-name', repo: 'repo-name' { |event| ... }
+    # @example
+    #   github.activity.events.issue user: 'user-name', repo: 'repo-name'
+    #   github.activity.events.issue user: 'user-name', repo: 'repo-name' { |event| ... }
     #
+    # @api public
     def issue(*args)
-      arguments(args, :required => [:user, :repo])
-      params = arguments.params
+      arguments(args, required: [:user, :repo])
 
-      response = get_request("/repos/#{user}/#{repo}/issues/events", params)
+      response = get_request("/repos/#{arguments.user}/#{arguments.repo}/issues/events", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -67,18 +71,20 @@ module Github
 
     # List all public events for a network of repositories
     #
-    # = Examples
-    #  github = Github.new
-    #  github.activity.events.network 'user-name', 'repo-name'
-    #  github.activity.events.network 'user-name', 'repo-name' { |event| ... }
+    # @example
+    #   github = Github.new
+    #   github.activity.events.network 'user-name', 'repo-name'
+    #   github.activity.events.network 'user-name', 'repo-name' { |event| ... }
     #
-    #  github.activity.events.network user: 'user-name', repo: 'repo-name'
-    #  github.activity.events.network user: 'user-name', repo: 'repo-name' { |event| ... }
+    # @example
+    #   github.activity.events.network user: 'user-name', repo: 'repo-name'
+    #   github.activity.events.network user: 'user-name', repo: 'repo-name' { |event| ... }
     #
+    # @api public
     def network(*args)
-      arguments(args, :required => [:user, :repo])
+      arguments(args, required: [:user, :repo])
 
-      response = get_request("/networks/#{user}/#{repo}/events", arguments.params)
+      response = get_request("/networks/#{arguments.user}/#{arguments.repo}/events", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -89,18 +95,20 @@ module Github
 
     # List all public events for an organization
     #
-    # = Examples
-    #  github = Github.new
-    #  github.activity.events.org 'org-name'
-    #  github.activity.events.org 'org-name' { |event| ... }
+    # @example
+    #   github = Github.new
+    #   github.activity.events.org 'org-name'
+    #   github.activity.events.org 'org-name' { |event| ... }
     #
-    #  github.activity.events.org org: 'org-name'
-    #  github.activity.events.org org: 'org-name' { |event| ... }
+    # @example
+    #   github.activity.events.org name: 'org-name'
+    #   github.activity.events.org name: 'org-name' { |event| ... }
     #
+    # @api public
     def org(*args)
-      arguments(args, :required => [:org_name])
+      arguments(args, required: [:name])
 
-      response = get_request("/orgs/#{org_name}/events", arguments.params)
+      response = get_request("/orgs/#{arguments.name}/events", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -111,24 +119,25 @@ module Github
 
     # List all events that a user has received
     #
-    # These are events that you’ve received by watching repos and following users.
-    # If you are authenticated as the given user, you will see private events. 
-    # Otherwise, you’ll only see public events.
+    # These are events that you’ve received by watching repos
+    # and following users. If you are authenticated as the given user,
+    # you will see private events. Otherwise, you’ll only see public events.
     #
-    # = Examples
-    #  github = Github.new
-    #  github.activity.events.received 'user-name'
-    #  github.activity.events.received 'user-name' { |event| ... }
+    # @example
+    #   github = Github.new
+    #   github.activity.events.received 'user-name'
+    #   github.activity.events.received 'user-name' { |event| ... }
     #
     # List all public events that a user has received
     #
-    # = Examples
-    #  github = Github.new
-    #  github.activity.events.received 'user-name', :public => true
-    #  github.activity.events.received 'user-name', :public => true { |event| ... }
+    # @example
+    #   github = Github.new
+    #   github.activity.events.received 'user-name', public: true
+    #   github.activity.events.received 'user-name', public: true { |event| ... }
     #
+    # @api public
     def received(*args)
-      arguments(args, :required => [:user])
+      arguments(args, required: [:user])
       params = arguments.params
 
       public_events = if params['public']
@@ -136,7 +145,7 @@ module Github
         '/public'
       end
 
-      response = get_request("/users/#{user}/received_events#{public_events}", params)
+      response = get_request("/users/#{arguments.user}/received_events#{public_events}", params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -148,20 +157,21 @@ module Github
     # If you are authenticated as the given user, you will see your private
     # events. Otherwise, you’ll only see public events.
     #
-    # = Examples
-    #  github = Github.new
-    #  github.activity.events.performed 'user-name'
-    #  github.activity.events.performed 'user-name' { |event| ... }
+    # @example
+    #   github = Github.new
+    #   github.activity.events.performed 'user-name'
+    #   github.activity.events.performed 'user-name' { |event| ... }
     #
     # List all public events that a user has performed
     #
-    # = Examples
-    #  github = Github.new
-    #  github.activity.events.performed 'user-name', :public => true
-    #  github.activity.events.performed 'user-name', :public => true { |event| ... }
+    # @example
+    #   github = Github.new
+    #   github.activity.events.performed 'user-name', public: true
+    #   github.activity.events.performed 'user-name', public: true { |event| ... }
     #
+    # @api public
     def performed(*args)
-      arguments(args, :required => [:user])
+      arguments(args, required: [:user])
       params = arguments.params
 
       public_events = if params['public']
@@ -169,7 +179,7 @@ module Github
         '/public'
       end
 
-      response = get_request("/users/#{user}/events#{public_events}", params)
+      response = get_request("/users/#{arguments.user}/events#{public_events}", params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -181,19 +191,20 @@ module Github
     # This is the user’s organization dashboard. You must be authenticated
     # as the user to view this.
     #
-    # = Examples
-    #  github = Github.new
-    #  github.activity.events.user_org 'user-name', 'org-name'
-    #  github.activity.events.user_org 'user-name', 'org-name' { |event| ... }
+    # @example
+    #   github = Github.new
+    #   github.activity.events.user_org 'user-name', 'org-name'
+    #   github.activity.events.user_org 'user-name', 'org-name' { |event| ... }
     #
-    #  github.activity.events.user_org user: 'user-name', org_name: 'org-name'
-    #  github.activity.events.user_org user: 'user-name', org_name: 'org-name' {|event| ...}
+    # @example
+    #   github.activity.events.user_org user: 'user-name', name: 'org-name'
+    #   github.activity.events.user_org user: 'user-name', name: 'org-name' {|event| ...}
     #
+    # @api public
     def user_org(*args)
-      arguments(args, :required => [:user, :org_name])
-      params = arguments.params
+      arguments(args, required: [:user, :name])
 
-      response = get_request("/users/#{user}/events/orgs/#{org_name}", params)
+      response = get_request("/users/#{arguments.user}/events/orgs/#{arguments.name}", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -201,6 +212,5 @@ module Github
     alias :list_user_org :user_org
     alias :list_user_org_events :user_org
     alias :list_user_organization_events :user_org
-
-  end # Activity::Events
+  end # Client::Activity::Events
 end # Github
