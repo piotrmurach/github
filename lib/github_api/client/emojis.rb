@@ -1,18 +1,17 @@
 # encoding: utf-8
 
 module Github
-  class Emojis < API
-
-    # lists all the emojis.
+  class Client::Emojis < API
+    # Lists all the emojis.
     #
-    # = Examples
+    # @example
+    #   Github.emojis.list
     #
-    #  Github.emojis.list
-    #
+    # @api public
     def list(*args)
       arguments(args)
 
       get_request("/emojis", arguments.params)
     end
-  end # Emojis
+  end # Client::Emojis
 end # Github
