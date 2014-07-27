@@ -1,5 +1,6 @@
-# GithubAPI
-
+[![Application icon](https://github.com/peter-murach/github/raw/master/icons/github_api.png)][icon]
+[icon]: https://github.com/peter-murach/github/raw/master/icons/github_api.png
+# github_api
 [![Gem Version](https://badge.fury.io/rb/github_api.png)][gem]
 [![Build Status](https://secure.travis-ci.org/peter-murach/github.png?branch=master)][travis]
 [![Dependency Status](https://gemnasium.com/peter-murach/github.png?travis)][gemnasium]
@@ -14,9 +15,9 @@
 
 [Website](http://peter-murach.github.io/github/) | [Wiki](https://github.com/peter-murach/github/wiki) | [RDocs](http://rubydoc.info/github/peter-murach/github/master/frames)
 
-A Ruby wrapper for the GitHub REST API v3.
+A Ruby client for the official GitHub API.
 
-Supports all the API methods. It's built in a modular way. You can either instantiate the whole API wrapper Github.new or use parts of it i.e. Github::Repos.new if working solely with repositories is your main concern.
+Supports all the API methods. It's built in a modular way. You can either instantiate the whole API wrapper Github.new or use parts of it i.e. Github::Client::Repos.new if working solely with repositories is your main concern. Intuitive query methods allow you easily call API endpoints.
 
 ## Features
 
@@ -31,7 +32,7 @@ Supports all the API methods. It's built in a modular way. You can either instan
 * Supports multithreaded environment.
 * Custom media type specification through the 'media' parameter. [media](#7-media-types)
 * Request results caching (Status: TODO)
-* Fully tested with test coverage above 90% with over 1,700 specs and 1000 features. [testing](#16-testing)
+* Fully tested with test coverage above 90% with over 1,700 specs and 1200 feature tests. [testing](#16-testing)
 
 ## Installation
 
