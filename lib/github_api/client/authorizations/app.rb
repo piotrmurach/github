@@ -4,6 +4,8 @@ module Github
   class Client::Authorizations::App < Client::Authorizations
     # Get-or-create an authorization for a specific app
     #
+    # @see https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app
+    #
     # @param [Hash] params
     # @option params [String] client_secret
     #  The 40 character OAuth app client secret associated with the client

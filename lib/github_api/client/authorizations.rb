@@ -21,6 +21,8 @@ module Github
 
     # List authorizations
     #
+    # @see https://developer.github.com/v3/oauth_authorizations/#list-your-authorizations
+    #
     # @example
     #  github = Github.new basic_auth: 'login:password'
     #  github.oauth.list
@@ -39,6 +41,8 @@ module Github
 
     # Get a single authorization
     #
+    # @see https://developer.github.com/v3/oauth_authorizations/#get-a-single-authorization
+    #
     # @example
     #  github = Github.new basic_auth: 'login:password'
     #  github.oauth.get 'authorization-id'
@@ -48,9 +52,9 @@ module Github
     # @api public
     def get(*args)
       raise_authentication_error unless authenticated?
-      arguments(args, required: [:authorization_id])
+      arguments(args, required: [:id])
 
-      get_request("/authorizations/#{authorization_id}", arguments.params)
+      get_request("/authorizations/#{arguments.id}", arguments.params)
     end
     alias :find :get
 
@@ -77,7 +81,7 @@ module Github
     def create(*args)
       raise_authentication_error unless authenticated?
       arguments(args) do
-        sift VALID_AUTH_PARAM_NAMES
+        permit VALID_AUTH_PARAM_NAMES
       end
 
       post_request('/authorizations', arguments.params)
@@ -104,15 +108,17 @@ module Github
     # @api public
     def update(*args)
       raise_authentication_error unless authenticated?
-      arguments(args, required: [:authorization_id]) do
-        sift VALID_AUTH_PARAM_NAMES
+      arguments(args, required: [:id]) do
+        permit VALID_AUTH_PARAM_NAMES
       end
 
-      patch_request("/authorizations/#{authorization_id}", arguments.params)
+      patch_request("/authorizations/#{arguments.id}", arguments.params)
     end
     alias :edit :update
 
     # Delete an authorization
+    #
+    # @see https://developer.github.com/v3/oauth_authorizations/#delete-an-authorization
     #
     # @example
     #  github.oauth.delete 'authorization-id'
@@ -120,9 +126,9 @@ module Github
     # @api public
     def delete(*args)
       raise_authentication_error unless authenticated?
-      arguments(args, required: [:authorization_id])
+      arguments(args, required: [:id])
 
-      delete_request("/authorizations/#{authorization_id}", arguments.params)
+      delete_request("/authorizations/#{arguments.id}", arguments.params)
     end
     alias :remove :delete
 
