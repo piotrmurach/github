@@ -13,16 +13,19 @@ module Github
     def call(env)
       if request_with_body?(env)
         env[:request_headers][CONTENT_TYPE] ||= MIME_TYPE
-        env[:body] = encode_body env unless env[:body].respond_to?(:to_str)
+        env[:body] = encode_body env[:body] unless env[:body].respond_to?(:to_str)
+      else
+        # Ensure valid body for put and post requests
+        env[:body] = encode_body({})
       end
       @app.call env
     end
 
-    def encode_body(env)
+    def encode_body(value)
       if MultiJson.respond_to?(:dump)
-        MultiJson.dump env[:body]
+        MultiJson.dump(value)
       else
-        MultiJson.encode env[:body]
+        MultiJson.encode(value)
       end
     end
 
@@ -41,6 +44,5 @@ module Github
       type = type.split(';', 2).first if type.index(';')
       type
     end
-
   end # Request::Jsonize
 end # Github
