@@ -73,7 +73,7 @@ describe Github::API::Arguments, '#parse' do
     let(:args)     { ['peter-murach', {page: 23}] }
 
     it 'raises an error' do
-      expect { arguments }.to raise_error(ArgumentError, /wrong number/)
+      expect { arguments }.to raise_error(ArgumentError, /Wrong number/)
     end
   end
 

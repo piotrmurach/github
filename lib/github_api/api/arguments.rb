@@ -195,6 +195,7 @@ module Github
             hash[property] = self[property]
           elsif api_property?(property)
             hash[property] = api.send(:"#{property}")
+            self[property] = hash[property]
           end
           hash
         end
@@ -220,8 +221,10 @@ module Github
         required_length = @required.length
 
         if args_length < required_length
-          raise ArgumentError, "wrong number of arguments " \
-                               "(#{args_length} for #{required_length})"
+          raise ArgumentError, "Wrong number of arguments " \
+            "(#{args_length} for #{required_length}). " \
+            "Expected `#{@required.join(', ')}` as required arguments, " \
+            "but got `#{args.join(", ")}`."
         end
       end
 
