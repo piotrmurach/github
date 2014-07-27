@@ -7,30 +7,38 @@ module Github
     #
     # List all notifications for the current user, grouped by repository.
     #
-    # = Parameters
-    # * <tt>:all</tt> - Optional boolean - true to show notifications marked as read.
-    # * <tt>:participating</tt> - Optional boolean - true to show only
-    #                             notifications in which the user is directly
-    #                             participating or mentioned.
-    # * <tt>:since</tt> - Optional string - filters out any notifications updated
-    #                     before the given time. The time should be passed in as
-    #                     UTC in the ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
-    #                     Example: “2012-10-09T23:39:01Z”.
+    # @see https://developer.github.com/v3/activity/notifications/#list-your-notifications
     #
-    # = Examples
-    #  github = Github.new oauth_token: 'token'
-    #  github.activity.notifications.list
+    # @param [Hash] params
+    # @option params [Boolean] :all
+    #   If true, show notifications marked as read.
+    #   Default: false
+    # @option params [Boolean] :participating
+    #   If true, only shows notifications in which the user
+    #   is directly participating or mentioned. Default: false
+    # @option params [String] :since
+    #   Filters out any notifications updated before the given time.
+    #   This is a timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
+    #   Default: Time.now
+    #
+    # @example
+    #   github = Github.new oauth_token: 'token'
+    #   github.activity.notifications.list
     #
     # List your notifications in a repository
     #
-    # = Examples
+    # @see https://developer.github.com/v3/activity/notifications/#list-your-notifications-in-a-repository
+    #
+    # @example
     #  github = Github.new
     #  github.activity.notifications.list user: 'user-name', repo: 'repo-name'
     #
+    # @api public
     def list(*args)
-      params = arguments(args) do
-        sift %w[ all participating since user repo]
-      end.params
+      arguments(args) do
+        permit %w[ all participating since user repo]
+      end
+      params = arguments.params
 
       response = if ( (user_name = params.delete("user")) &&
                       (repo_name = params.delete("repo")) )
@@ -45,15 +53,18 @@ module Github
 
     # View a single thread
     #
-    # = Examples
+    # @see https://developer.github.com/v3/activity/notifications/#view-a-single-thread
+    #
+    # @example
     #  github = Github.new oauth_token: 'token'
     #  github.activity.notifications.get 'thread_id'
     #  github.activity.notifications.get 'thread_id' { |thread| ... }
     #
+    # @api public
     def get(*args)
-      arguments(args, :required => [:thread_id])
+      arguments(args, required: [:id])
 
-      response = get_request("/notifications/threads/#{thread_id}", arguments.params)
+      response = get_request("/notifications/threads/#{arguments.id}", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -63,41 +74,45 @@ module Github
     #
     # Marking a notification as “read” removes it from the default view on GitHub.com.
     #
-    # = Parameters
+    # @see https://developer.github.com/v3/activity/notifications/#mark-as-read
     #
-    # * <tt>:unread</tt> - boolean - Changes the unread status of the threads.
-    # * <tt>:read</tt> - boolean - Inverse of "unread"
-    # * <tt>:last_read_at</tt> - optional string time - describes the last point 
-    #                            that notifications were checked. Anything updated 
-    #                            since this time will not be updated. Default: Now.
-    #                            Expected in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
-    #                            Example: “2012-10-09T23:39:01Z”.
+    # @param [Hash] params
+    # @option params [String] :last_read_at
+    #   Describes the last point that notifications were checked.
+    #   Anything updated since this time will not be updated.
+    #   This is a timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
+    #   Default: Time.now
     #
-    # = Examples
+    # @example
     #  github = Github.new oauth_token: 'token'
-    #  github.activity.notifications.mark read: true
+    #  github.activity.notifications.mark
     #
     # Mark notifications as read in a repository
     #
-    # = Examples
-    #  github.activity.notifications.mark user: 'user-name', repo: 'repo-name',
-    #    read: true
+    # @see https://developer.github.com/v3/activity/notifications/#mark-notifications-as-read-in-a-repository
+    #
+    # @example
+    #  github.activity.notifications.mark user: 'user-name', repo: 'repo-name'
     #
     # Mark a thread as read
     #
-    # = Examples
-    #  github.activity.notifications.mark thread_id: 'id', read: true
+    # @see https://developer.github.com/v3/activity/notifications/#mark-a-thread-as-read
     #
+    # @example
+    #  github.activity.notifications.mark id: 'thread-id'
+    #
+    # @api public
     def mark(*args)
-      params = arguments(args) do
-        sift %w[ unread read last_read_at user repo thread_id]
-      end.params
+      arguments(args) do
+        permit %w[ unread read last_read_at user repo id]
+      end
+      params = arguments.params
 
       if ( (user_name = params.delete("user")) &&
            (repo_name = params.delete("repo")) )
 
         put_request("/repos/#{user_name}/#{repo_name}/notifications", params)
-      elsif (thread_id = params.delete("thread_id"))
+      elsif (thread_id = params.delete("id"))
         patch_request("/notifications/threads/#{thread_id}", params)
       else
         put_request("/notifications", params)
@@ -106,14 +121,20 @@ module Github
 
     # Check to see if the current user is subscribed to a thread.
     #
-    # = Examples
+    # @see https://developer.github.com/v3/activity/notifications/#get-a-thread-subscription
+    #
+    # @example
     #  github = Github.new oauth_token: 'token'
     #  github.activity.notifications.subscribed? 'thread-id'
     #
+    # @example
+    #   github.activity.notifications.subscribed? id: 'thread-id'
+    #
+    # @api public
     def subscribed?(*args)
-      arguments(args, :required => [:thread_id])
+      arguments(args, required: [:id])
 
-      get_request("/notifications/threads/#{thread_id}/subscription", arguments.params)
+      get_request("/notifications/threads/#{arguments.id}/subscription", arguments.params)
     end
 
     # Create a thread subscription
@@ -123,35 +144,41 @@ module Github
     # a thread will mute all future notifications (until you comment or get
     # @mentioned).
     #
-    # = Parameters
-    # * <tt>:subscribed</tt> - boolean - determines if notifications should be
-    #                          received from this thread.
-    # * <tt>:ignored</tt> - boolean - deterimines if all notifications should be
-    #                       blocked from this thread.
-    # = Examples
-    #  github = Github.new oauth_token: 'token'
-    #  github.activity.notifications.create 'thread-id',
-    #    'subscribed': true
-    #    'ignored': false
+    # @see https://developer.github.com/v3/activity/notifications/#set-a-thread-subscription
     #
+    # @param [Hash] params
+    # @option params [Boolean] :subscribed
+    #   Determines if notifications should be received from this thread
+    # @option params [Boolean] :ignored
+    #   Determines if all notifications should be blocked from this thread
+    #
+    # @example
+    #   github = Github.new oauth_token: 'token'
+    #   github.activity.notifications.create 'thread-id',
+    #     subscribed: true
+    #     ignored: false
+    #
+    # @api public
     def create(*args)
-      arguments(args, :required => [:thread_id])
+      arguments(args, required: [:id])
 
-      put_request("/notifications/threads/#{thread_id}/subscription", arguments.params)
+      put_request("/notifications/threads/#{arguments.id}/subscription", arguments.params)
     end
 
     # Delete a thread subscription
     #
-    # = Examples
-    #  github = Github.new oauth_token: 'token'
-    #  github.activity.notifications.delete 'thread_id'
+    # @see https://developer.github.com/v3/activity/notifications/#delete-a-thread-subscription
     #
+    # @example
+    #   github = Github.new oauth_token: 'token'
+    #   github.activity.notifications.delete 'thread_id'
+    #
+    # @api public
     def delete(*args)
-      arguments(args, :required => [:thread_id])
+      arguments(args, required: [:id])
 
-      delete_request("/notifications/threads/#{thread_id}/subscription", arguments.params)
+      delete_request("/notifications/threads/#{arguments.id}/subscription", arguments.params)
     end
     alias :remove :delete
-
-  end # Activity::Notifications
+  end # Client::Activity::Notifications
 end # Github

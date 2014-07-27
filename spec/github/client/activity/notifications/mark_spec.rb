@@ -65,7 +65,7 @@ describe Github::Client::Activity::Notifications, '#mark' do
     }
 
     it 'should get the resource' do
-      subject.mark inputs.merge(:thread_id => thread_id)
+      subject.mark inputs.merge(:id => thread_id)
       a_patch(request_path).
         with(:body => inputs, :query => {:access_token => OAUTH_TOKEN}).
         should have_been_made
