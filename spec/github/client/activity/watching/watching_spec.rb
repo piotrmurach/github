@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Client::Activity::Watching, '#list' do
+describe Github::Client::Activity::Watching, '#watching?' do
   let(:user) { 'peter-murach' }
   let(:repo) { 'github' }
   let(:request_path) { "/user/subscriptions/#{user}/#{repo}" }

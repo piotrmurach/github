@@ -24,7 +24,7 @@ Feature: Watching API
       And the response type should be JSON
       And the response should not be empty
 
-  Scenario: Watching
+  Scenario: Watching?
 
     Given I want to watching? resource with the following params:
       | user         | repo   |
@@ -46,5 +46,29 @@ Feature: Watching API
       | user         | repo   |
       | peter-murach | github |
     When I make request within a cassette named "activity/watching/unwatch"
+    Then the response status should be 204
+
+  Scenario: Subscribed?
+
+    Given I want to subscribed? resource with the following params:
+      | user  | repo            |
+      | murek | github_api_test |
+    When I make request within a cassette named "activity/watching/subscribed"
+    Then the response should be true
+
+  Scenario: Create
+
+    Given I want to create resource with the following params:
+      | user         | repo           |
+      | peter-murach | finite_machine |
+    When I make request within a cassette named "activity/watching/create"
+    Then the response status should be 200
+
+  Scenario: Delete
+
+    Given I want to delete resource with the following params:
+      | user         | repo           |
+      | peter-murach | finite_machine |
+    When I make request within a cassette named "activity/watching/delete"
     Then the response status should be 204
 
