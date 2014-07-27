@@ -6,7 +6,7 @@ describe Github::Client::Repos::Statuses, '#list' do
   let(:user) { 'peter-murach' }
   let(:repo) { 'github' }
   let(:sha) { 'f5f71ce1b7295c31f091be1654618c7ec0cc6b71' }
-  let(:request_path) { "/repos/#{user}/#{repo}/statuses/#{sha}" }
+  let(:request_path) { "/repos/#{user}/#{repo}/commits/#{sha}/statuses" }
 
   before {
     stub_get(request_path).to_return(:body => body, :status => status,
