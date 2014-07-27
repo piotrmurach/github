@@ -3,8 +3,8 @@
 module Github
   module VERSION
     MAJOR = 0
-    MINOR = 11
-    PATCH = 3
+    MINOR = 12
+    PATCH = 0
     BUILD = nil
 
     STRING = [MAJOR, MINOR, PATCH, BUILD].compact.join('.');
