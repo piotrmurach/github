@@ -1,16 +1,50 @@
+0.12.0 (July 27, 2014)
+--------------------
+
+#### Features Core
+* Add namespace helper to API to easily create nested resources
+* Add before_request & after_request callbacks to API
+* Change all scopes to use namespace helper
+* Move development dependencies out of rubygems
+* Add API::Config for configuration of main api
+* Change Configuration to use #property and drastically simplify setup
+* Change Request to be a class and simplify requests dispatch
+* Remove S3Uploader class
+
+#### Features Client
+* Add check method to Application Authorization Api (#157)
+* Add Deployments Api with feature tests
+* Add commits & forks calls to Gists Api
+* Add following? another user to Users::Followers Api
+* Add ability to list all the teams for the user to Orgs::Teams Api
+* Remove create, upload calls from Repos::Downloads Api
+* Add ping method to Repos::Hooks Api
+* Add combined status listing to Repos::Statuses Api
+* Add subscribe, unsubscribe and subscribed? calls to Activity::Watching Api
+
+#### Fixes
+* Remove scopes caching
+* Change Arguments to stop leaking to global namespace
+* Change features tests to generate JSON responses
+* Add feature tests for User Followers Api
+* Ensure works on Ruby 1.9.2, 1.9.3, 2.0, 2.1, JRuby & Rubinus
+
 0.11.3 (Feb 22, 2014)
+---------------------
 
 * Fix core extensions to not override other libraries
 * Add Pages Api
 * Add Application authorization Api
 
 0.11.2 (Feb 2, 2014)
+--------------------
 
 * Change autoload to require libs
 * Change Connection module to work with newest Faraday 0.9 release
 * Simplify and document Request module
 
 0.11.1 (December 16, 2013)
+--------------------------
 
 * Add status, body readers to service error.
 * Add descendants tracker.
@@ -18,6 +52,7 @@
 * Change search api to stop escaping query components.
 
 0.11.0 (December 7, 2013)
+-------------------------
 
 * Fix caching issues within the repository API object.
 * Change request module to accept params hash as default
@@ -31,6 +66,7 @@
 * Add root certs
 
 0.10.2 (June 26, 2013)
+----------------------
 
 * Fix issue with listing repository [#118]
 * Fix issue with ratelimit [#119]
@@ -39,10 +75,12 @@
 * Updated dependencies
 
 0.10.1 (May 21, 2013)
+---------------------
 
 * Fix issue with loading params hash
 
 0.10.0 (May 19, 2013)
+---------------------
 
 * Add addressable dependency
 * Fix Tree api create method #109
@@ -56,17 +94,20 @@
 * Change connection options to overwrite deep keys
 
 0.9.7 (April 13, 2013)
+----------------------
 
 * Add listing of user keys
 * Change gists listing to include :public option
 * Change repos listing to include :every option and fix issue #102
 
 0.9.6 (April 6, 2013)
+---------------------
 
 * Convert hook_id to id in repo hooks api
 * Fix #101 broken auto_pagination, ensure only get request is paginated that has enumerable body
 
 0.9.5 (April 1, 2013)
+---------------------
 
 * Add default_branch to repo valid parameters
 * Remove bundle command from rvm script
@@ -75,15 +116,18 @@
 * Fix issue #100 with oauth client site parameter
 
 0.9.4 (Mar 24, 2013)
+--------------------
 
 * Relax hashie dependency and update other dependencies.
 * Fix bug #96 with response wrapper equality
 
 0.9.3 (Mar 9, 2013)
+-------------------
 
 * Fix stack overflow issue #95 and add feature tests
 
 0.9.2 (Mar 3, 2013)
+-------------------
 
 * Add auto_pagination feature to allow for retrieval of all pages for a given
   resource - #91 feature request
@@ -93,6 +137,7 @@
 * Update hashie dependency to remove warnings
 
 0.9.1 (Feb 24, 2013)
+--------------------
 
 * Add request arguments parser to allow for flexibility when specifying
   required and optional parameters
@@ -105,6 +150,7 @@
 * Update hashie, faraday dependencies
 
 0.9.0 (Feb 18, 2013)
+--------------------
 
 * Add Pagination module to define interface for the response
 * Add Pagination#count_pages to return total number of pages
@@ -120,21 +166,25 @@
 * Change all Api instances to accept options hash and block
 
 0.8.11 (Feb 9, 2013)
+--------------------
 
 * Fix preserving query params in page iterator next action.
 * Add meta api.
 
 0.8.10 (Feb 4, 2013)
+--------------------
 
 * Fix reference validation in GitData::References.validate_reference
 
 0.8.9 (Jan 26, 2013)
+--------------------
 
 * Fix broken accepts header.
 * Change organization members listing to include flag for public listings.
 * Fix organization teams & members api query methods checking for response status.
 
 0.8.8 (Jan 20, 2013)
+--------------------
 
 * Add :ssl configuration option.
 * Add escaping of search keywords.
@@ -425,29 +475,34 @@
 * refactored parameter filtering fuction to fix tree_create bug
 
 0.3.7 (January 1, 2012)
+-----------------------
 
 * add block parameter passing for main github instance
 * refactor methods inside issues labels api
 * add specs to cover issues labels api
 
 0.3.6 (December 26, 2011)
+-------------------------
 
 * refactor specs setup to common base class
 * add specs for issues events and comments apis
 * fix bug with gem loading lib folder
 
 0.3.5 (December 18, 2011)
+-------------------------
 
 * adding specs for issues milestones api
 * updating specs to check for constants existence
 * fixing problems with some request missing passed parameters
 
 0.3.4 (December 17, 2011)
+-------------------------
 
 * adding coverage reporting
 * adding specs to authorization module to increase coverage to 100%
 * adding specs to issues api to fix create issues bug and increase code coverage
 
 0.3.3 (December 4, 2011)
+------------------------
 
 * fixing json parsing issue preventing repository creation
