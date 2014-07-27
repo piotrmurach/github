@@ -4,14 +4,14 @@ module Github
   class Client::Meta < API
     # Get meta information about GitHub.com, the service.
     #
-    # = Examples
-    #
+    # @example
     #   Github.meta.get
     #
+    # @api public
     def get(*args)
       arguments(*args)
 
       get_request("/meta", arguments.params)
     end
-  end # Meta
+  end # Client::Meta
 end # Github
