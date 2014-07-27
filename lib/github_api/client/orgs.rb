@@ -56,9 +56,9 @@ module Github
     #
     # @api public
     def get(*args)
-      arguments(args, required: [:org])
+      arguments(args, required: [:org_name])
 
-      get_request("/orgs/#{arguments.org}", arguments.params)
+      get_request("/orgs/#{arguments.org_name}", arguments.params)
     end
     alias :find :get
 
@@ -88,11 +88,11 @@ module Github
     #
     # @api public
     def edit(*args)
-      arguments(args, required: [:org]) do
+      arguments(args, required: [:org_name]) do
         permit VALID_ORG_PARAM_NAMES
       end
 
-      patch_request("/orgs/#{arguments.org}", arguments.params)
+      patch_request("/orgs/#{arguments.org_name}", arguments.params)
     end
   end # Orgs
 end # Github

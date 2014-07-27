@@ -35,13 +35,13 @@ module Github
     #
     # @api public
     def list(*args)
-      params = arguments(args, required: [:org]).params
-      org = arguments.org
+      params = arguments(args, required: [:org_name]).params
+      org_name = arguments.org_name
 
       response = if params.delete('public')
-        get_request("/orgs/#{org}/public_members", params)
+        get_request("/orgs/#{org_name}/public_members", params)
       else
-        get_request("/orgs/#{org}/members", params)
+        get_request("/orgs/#{org_name}/members", params)
       end
       return response unless block_given?
       response.each { |el| yield el }
@@ -62,14 +62,14 @@ module Github
     #
     # @api public
     def member?(*args)
-      params = arguments(args, required: [:org, :user]).params
-      org  = arguments.org
-      user = arguments.user
+      params   = arguments(args, required: [:org_name, :user]).params
+      org_name = arguments.org_name
+      user     = arguments.user
 
       response = if params.delete('public')
-        get_request("/orgs/#{org}/public_members/#{user}", params)
+        get_request("/orgs/#{org_name}/public_members/#{user}", params)
       else
-        get_request("/orgs/#{org}/members/#{user}", params)
+        get_request("/orgs/#{org_name}/members/#{user}", params)
       end
       response.status == 204
     rescue Github::Error::NotFound
@@ -87,9 +87,9 @@ module Github
     #
     # @api public
     def delete(*args)
-      arguments(args, required: [:org, :user])
+      arguments(args, required: [:org_name, :user])
 
-      delete_request("/orgs/#{arguments.org}/members/#{arguments.user}", arguments.params)
+      delete_request("/orgs/#{arguments.org_name}/members/#{arguments.user}", arguments.params)
     end
     alias :remove :delete
 
@@ -101,9 +101,9 @@ module Github
     #
     # @api public
     def publicize(*args)
-      arguments(args, required: [:org, :user])
+      arguments(args, required: [:org_name, :user])
 
-      put_request("/orgs/#{arguments.org}/public_members/#{arguments.user}", arguments.params)
+      put_request("/orgs/#{arguments.org_name}/public_members/#{arguments.user}", arguments.params)
     end
     alias :make_public :publicize
     alias :publicize_membership :publicize
@@ -116,9 +116,9 @@ module Github
     #
     # @api public
     def conceal(*args)
-      arguments(args, required: [:org, :user])
+      arguments(args, required: [:org_name, :user])
 
-      delete_request("/orgs/#{arguments.org}/public_members/#{arguments.user}", arguments.params)
+      delete_request("/orgs/#{arguments.org_name}/public_members/#{arguments.user}", arguments.params)
     end
     alias :conceal_membership :conceal
   end # Client::Orgs::Members

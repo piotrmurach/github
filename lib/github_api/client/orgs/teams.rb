@@ -11,7 +11,6 @@ module Github
       'permission' => %w[ pull push admin ].freeze
     }
 
-
     # List user teams
     #
     # List all of the teams across all of the organizations
@@ -86,13 +85,13 @@ module Github
     #
     # @api public
     def create(*args)
-      arguments(args, required: [:org]) do
+      arguments(args, required: [:org_name]) do
         permit VALID_TEAM_PARAM_NAMES
         assert_values VALID_TEAM_PARAM_VALUES
         assert_required %w[name]
       end
 
-      post_request("/orgs/#{arguments.org}/teams", arguments.params)
+      post_request("/orgs/#{arguments.org_name}/teams", arguments.params)
     end
 
     # Edit a team
