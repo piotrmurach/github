@@ -28,7 +28,7 @@ module Github
     #
     # @api public
     def new(options = {}, &block)
-      Github::Client.new(options, &block)
+      Client.new(options, &block)
     end
 
     # Delegate to Github::Client
@@ -52,7 +52,8 @@ module Github
   end
 
   module ClassMethods
-    # Requires internal github_api libraries
+
+    # Requires internal libraries
     #
     # @param [String] prefix
     #   the relative path prefix
@@ -66,9 +67,31 @@ module Github
       end
     end
 
-    # Main client global configuration
+    # The client configuration
+    #
+    # @return [Configuration]
+    #
+    # @api public
     def configuration
-      @configuration ||= Github::Configuration.new
+      @configuration ||= Configuration.new
+    end
+
+    # Configure options
+    #
+    # @example
+    #   Github.configure do |c|
+    #     c.some_option = true
+    #   end
+    #
+    # @yield the configuration block
+    # @yieldparam configuration [Github::Configuration]
+    #   the configuration instance
+    #
+    # @return [nil]
+    #
+    # @api public
+    def configure
+      yield configuration
     end
   end
 
