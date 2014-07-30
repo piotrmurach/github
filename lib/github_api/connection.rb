@@ -1,12 +1,5 @@
 # encoding: utf-8
 
-require 'faraday'
-require 'github_api/response'
-require 'github_api/response/mashify'
-require 'github_api/response/jsonize'
-require 'github_api/response/raise_error'
-require 'github_api/response/header'
-
 module Github
   # Specifies Http connection options
   module Connection
@@ -36,32 +29,6 @@ module Github
       }
     end
 
-    # Default middleware stack that uses default adapter as specified at
-    # configuration stage.
-    #
-    def default_middleware(options = {})
-      api = options[:api]
-      proc do |builder|
-        builder.use Github::Request::Jsonize
-        builder.use Faraday::Request::Multipart
-        builder.use Faraday::Request::UrlEncoded
-        builder.use Github::Request::OAuth2, api.oauth_token if api.oauth_token?
-        builder.use Github::Request::BasicAuth, api.authentication if api.basic_authed?
-
-        builder.use Faraday::Response::Logger if ENV['DEBUG']
-        unless options[:raw]
-          builder.use Github::Response::Mashify
-          builder.use Github::Response::Jsonize
-        end
-        builder.use Github::Response::RaiseError
-        builder.adapter options[:adapter]
-      end
-    end
-
-    @connection = nil
-
-    @stack = nil
-
     def clear_cache
       @connection = nil
     end
@@ -80,7 +47,7 @@ module Github
         if block_given?
           builder_class.new(&block)
         else
-          builder_class.new(&default_middleware(options))
+          builder_class.new(&Github.default_middleware(options))
         end
       end
     end
