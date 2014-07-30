@@ -19,7 +19,7 @@ describe Github::Request::Jsonize do
     let(:result) { process(nil) }
 
     it "returns empty object" do
-      expect(result_body).to eq('{}')
+      expect(result_body).to be_nil
     end
 
     it "doesn't add content type" do
@@ -31,7 +31,7 @@ describe Github::Request::Jsonize do
     let(:result) { process('') }
 
     it "returns empty object" do
-      expect(result_body).to eq('{}')
+      expect(result_body).to eq('')
     end
 
     it "doesn't add content type" do

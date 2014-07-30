@@ -16,7 +16,9 @@ module Github
         env[:body] = encode_body env[:body] unless env[:body].respond_to?(:to_str)
       else
         # Ensure valid body for put and post requests
-        env[:body] = encode_body({})
+        if [:put, :patch, :post].include? env[:method]
+          env[:body] = encode_body({})
+        end
       end
       @app.call env
     end
