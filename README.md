@@ -51,8 +51,13 @@ gem "github_api"
 ## Contents
 
 * [1. Usage](#1-usage)
+    * [1.1 API Navigation](#11-api-navigation)
+    * [1.2 Modularity](#12-modularity)
+    * [1.3 Response Querying](#13-respone-querying)
+* [2. Configuration](#2-configuration)
+    * [2.1 Basic](#21-configuration)
+    * [2.2 Advanced](#22-configuration)
 * [2. Arguments & Parameters](#2-arguments--parameters)
-* [3. Advanced Configuration](#3-advanced-configuration)
 * [4. Authentication](#4-authentication)
 * [5. SSL](#5-ssl)
 * [6. API](#6-api)
@@ -69,71 +74,27 @@ gem "github_api"
 
 ## 1 Usage
 
-To start using the gem, you can either perform direct calls on `Github`
+To start using the gem, you can either perform requests directly on `Github` namespace:
 
 ```ruby
-Github.repos.list user: 'wycats'
+Github.repos.list user: 'peter-murach'
 ```
 
-or create a new client instance
+or create a new client instance like so
 
 ```ruby
 github = Github.new
 ```
 
-### 1.1 Options
-
-At this stage, you can also supply various configuration parameters, such as
-```
-  adapter          # http client used for performing requests
-  auto_pagination  # false by default, set to true to traverse requests page links
-  oauth_token      # oauth authorization token
-  basic_auth       # login:password string
-  client_id        # oauth client id
-  client_secret    # oauth client secret
-  user             # global user used in requests if none provided
-  repo             # global repository used in requests in none provided
-  org              # global organization used in requests if none provided
-  endpoint         # enterprise API endpoint
-  site             # enterprise API web endpoint
-  ssl              # SSL settings
-  per_page         # number of items per page- max of 100
-  user_agent       # custom user agent name, 'Github API' by default
-```
-which are used throughout the API. These can be passed directly as hash options:
+and then call api methods, for instance, to list a given user repositories do
 
 ```ruby
-github = Github.new oauth_token: 'token'
+github.repos.list user: 'peter-murach'
 ```
 
-Alternatively, you can configure the GitHub settings by passing a block, for instance, for a custom enterprise endpoint and website like
+### 1.1 API Navigation
 
-```ruby
-github = Github.new do |config|
-  config.endpoint    = 'https://github.company.com/api/v3'
-  config.site        = 'https://github.company.com'
-  config.oauth_token = 'token'
-  config.adapter     = :net_http
-  config.ssl         = {:verify => false}
-end
-```
-
-You can authenticate either using OAuth authentication convenience methods (see OAuth section) or through basic authentication by passing your login and password credentials
-
-```ruby
-github = Github.new login:'peter-murach', password:'...'
-```
-
-or using a convenience method:
-
-```ruby
-github = Github.new basic_auth: 'login:password'
-```
-
-### 1.2 API navigation
-
-This gem closely mirrors the GitHub API hierarchy i.e. if you want to create a download resource,
-look up the GitHub API spec and issue the request as in `github.repos.downloads.create`
+This gem closely mirrors the GitHub API hierarchy i.e. if you want to create a download resource, look up the GitHub API spec and issue the request as in `github.repos.downloads.create`
 
 For example to interact with GitHub Repositories API, issue the following calls that correspond directly to the GitHub API hierarchy
 
@@ -143,22 +104,100 @@ github.repos.hooks.create 'user-name', 'repo-name', name: "web", active: true
 github.repos.keys.get     'user-name', 'repo-name'
 ```
 
-### 1.3 Modularity
+### 1.2 Modularity
 
 The code base is modular and allows for you to work specifically with a given part of GitHub API e.g. blobs
 
 ```ruby
-blobs = Github::GitData::Blobs.new
+blobs = Github::Client::GitData::Blobs.new
 blobs.create 'peter-murach', 'github', content: 'Blob content'
 ```
 
-### 1.4 Response querying
+### 1.3 Response Querying
 The response is of type [Github::ResponseWrapper] which allows traversing all the json response attributes like method calls i.e.
 
 ```ruby
-repos = Github::Repos.new user: 'peter-murach', repo: 'github'
+repos = Github::Client::Repos.new user: 'peter-murach', repo: 'github'
 repos.branches do |branch|
   puts branch.name
+end
+```
+
+## 2 Configuration
+
+The **github_api** provides ability to specify global configruation options. These options will be available to all api calls.
+
+### 2.1 Basic
+
+The configuration options can be set by using the `configure` helper
+
+```ruby
+Github.configure do |c|
+  c.basic_auth = "login:password"
+  c.adapter    = :typheous
+  c.user       = 'peter-murach'
+  c.repo       = 'finite_machine'
+end
+```
+
+Alternatively, you can configure the settings by passing a block to an instance like:
+
+```ruby
+Github.new do |c|
+  c.endpoint    = 'https://github.company.com/api/v3'
+  c.site        = 'https://github.company.com'
+end
+```
+
+or simply by passing hash of options to an instance like so
+
+```ruby
+github = Github.new basic_auth: 'login:password',
+                    adapter: :typheous,
+                    user: 'peter-murach',
+                    repo: 'finite_machine'
+```
+
+The following is the full list of available configuration options:
+
+```ruby
+adapter            # Http client used for performing requests. Default :net_http
+auto_pagination    # Automatically traverse requests page links. Default false
+basic_auth         # Basic authentication in form login:password.
+client_id          # Oauth client id.
+client_secret      # Oauth client secret.
+connection_options # Hash of connection options.
+endpoint           # Enterprise API endpoint. Default: 'https://api.github.com'
+oauth_token        # Oauth authorization token.
+org                # Global organization used in requests if none provided
+per_page           # Number of items per page. Max of 100. Default 30.
+repo               # Global repository used in requests in none provided
+site               # enterprise API web endpoint
+ssl                # SSL settings in hash form.
+user               # Global user used for requests if none provided
+user_agent         # Custom user agent name. Default 'Github API Ruby Gem'
+```
+
+### 2.2 Advanced
+
+The **github_api** will use the default middleware stack which is exposed by calling `stack` on a client instance. However, this stack can be freely modified with methods such as `insert`, `insert_after`, `delete` and `swap`. For instance, to add your `CustomMiddleware` do:
+
+```ruby
+Github.configure do |c|
+  c.stack.insert_after Github::Response::Helpers, CustomMiddleware
+end
+```
+
+Furthermore, you can build your entire custom stack and specify other connection options such as `adapter` by doing:
+
+```ruby
+Github.new do |c|
+  c.adapter :excon
+
+  c.stack do |builder|
+    builder.use Github::Response::Helpers
+    builder.use Github::Response::Jsonize
+  end
 end
 ```
 
@@ -229,28 +268,6 @@ github.git_data.trees.get 'peter-murach', 'github', 'c18647b75d72f19c1e0cc8af031
 end
 ```
 
-## 3 Advanced Configuration
-
-The `github_api` gem will use the default middleware stack which is exposed by calling `stack` on a client instance. However, this stack can be freely modified with methods such as `insert`, `insert_after`, `delete` and `swap`. For instance, to add your `CustomMiddleware` do
-
-```ruby
-github = Github.new do |config|
-  config.stack.insert_after Github::Response::Helpers, CustomMiddleware
-end
-```
-
-Furthermore, you can build your entire custom stack and specify other connection options such as `adapter`
-
-```ruby
-github = Github.new do |config|
-  config.adapter :excon
-
-  config.stack do |builder|
-    builder.use Github::Response::Helpers
-    builder.use Github::Response::Jsonize
-  end
-end
-```
 
 ## 4 Authentication
 
