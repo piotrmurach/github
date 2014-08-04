@@ -3,10 +3,17 @@
 require 'github_api/api/config'
 
 module Github
+  # Stores the configuration
   class Configuration < API::Config
 
     # Other adapters are :typhoeus, :patron, :em_synchrony, :excon, :test
     property :adapter, default: :net_http
+
+    # By default, don't traverse the page links
+    property :auto_pagination, default: false
+
+    # Basic authentication
+    property :basic_auth
 
     # By default, don't set an application key
     property :client_id
@@ -28,15 +35,16 @@ module Github
       :ca_file => File.expand_path('../ssl_certs/cacerts.pem', __FILE__)
     }
 
-    # By default the <tt>Accept</tt> header will make a request for <tt>JSON</tt>
+    # By default the Accept header will make a request for JSON
     property  :mime_type
 
     # The value sent in the http header for 'User-Agent' if none is set
-    property  :user_agent, default: "Github Ruby Gem #{Github::VERSION::STRING}".freeze
+    property  :user_agent, default: "Github API Ruby Gem #{Github::VERSION::STRING}".freeze
 
     # By default uses the Faraday connection options if none is set
     property  :connection_options, default: {}
 
+    # Global repository name
     property :repo
 
     property :user
@@ -47,10 +55,8 @@ module Github
 
     property :password
 
-    property :basic_auth
-
-    # By default, don't traverse the page links
-    property :auto_pagination, default: false
+    # By default display 30 resources
+    property :per_page, default: 30
 
   end # Configuration
 end # Github
