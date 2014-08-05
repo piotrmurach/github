@@ -21,18 +21,18 @@ Supports all the API methods. It's built in a modular way. You can either instan
 
 ## Features
 
-* Intuitive GitHub API interface navigation. [usage](#1-usage)
-* Modular design allows for working with parts of API. [api](#12-api-navigation)
-* Fully customizable including advanced middleware stack construction. [config](#3-advanced-configuration)
+* Intuitive GitHub API interface navigation.
 * It's comprehensive. You can request all GitHub API resources.
-* Supports OAuth2 authorization. [oauth](#42-application-oauth-access)
-* Flexible argument parsing. You can write expressive and natural queries. [params](#2-arguments--parameters)
-* Requests pagination with convenient DSL and automatic options. [pagination](#10-pagination)
-* Easy error handling split for client and server type errors. [error](#13-error-handling)
+* Modular design allows for working with parts of API.
+* Fully customizable including advanced middleware stack construction.
+* Supports OAuth2 authorization.
+* Flexible argument parsing. You can write expressive and natural queries.
+* Requests pagination with convenient DSL and automatic options.
+* Easy error handling split for client and server type errors.
 * Supports multithreaded environment.
-* Custom media type specification through the 'media' parameter. [media](#7-media-types)
-* Request results caching (Status: TODO)
-* Fully tested with test coverage above 90% with over 1,700 specs and 1200 feature tests. [testing](#16-testing)
+* Custom media type specification through the 'media' parameter.
+* Request results caching
+* Fully tested with unit and feature tests hitting the live api.
 
 ## Installation
 
@@ -94,24 +94,39 @@ github.repos.list user: 'peter-murach'
 
 ### 1.1 API Navigation
 
-This gem closely mirrors the GitHub API hierarchy i.e. if you want to create a download resource, look up the GitHub API spec and issue the request as in `github.repos.downloads.create`
-
-For example to interact with GitHub Repositories API, issue the following calls that correspond directly to the GitHub API hierarchy
+The **github_api** closely mirrors the [GitHub API](https://developer.github.com/v3/) hierarchy. For example, if you want to create a new file in a repository, look up the GitHub API spec. In there you will find contents sub category underneath the repository category. This would translte to the request:
 
 ```ruby
-github.repos.commits.all  'user-name', 'repo-name'
-github.repos.hooks.create 'user-name', 'repo-name', name: "web", active: true
-github.repos.keys.get     'user-name', 'repo-name'
+github = Github.new
+github.repos.contents.create 'peter-murach', 'finite_machine', 'hello.rb',
+                             path: 'hello.rb',
+                             content: "puts 'hello ruby'"
 ```
+
+The whole library reflects the same api navigation. Therefore, if you need to list releases for a repository do:
+
+```ruby
+github.repos.releases.list 'peter-murach', 'finite_machine'
+```
+
+or to list a user's followers:
+
+```ruby
+github.users.followers.list 'peter-murach'
+```
+
+The code base has been extensively documented with examples of how to use each method. Please refer to the [documentation](http://rubydoc.info/github/peter-murach/github/master/frames) under the `Github::Client` class name.
 
 ### 1.2 Modularity
 
-The code base is modular and allows for you to work specifically with a given part of GitHub API e.g. blobs
+The code base is modular. This means that you can work specifically with a given part of GitHub API. If you want to only work with activity starring API do the following:
 
 ```ruby
-blobs = Github::Client::GitData::Blobs.new
-blobs.create 'peter-murach', 'github', content: 'Blob content'
+starring = Github::Client::Activity::Starring.new
+starring.star 'peter-murach', 'github'
 ```
+
+Please refer to the [documentation](http://rubydoc.info/github/peter-murach/github/master/frames) and look under `Github::Client` to see all avilable classes.
 
 ### 1.3 Response Querying
 The response is of type [Github::ResponseWrapper] which allows traversing all the json response attributes like method calls i.e.
@@ -457,29 +472,6 @@ github.issues.get 'peter-murach', 'github', 108, accept: 'application/vnd.github
 ## 8 Hypermedia
 
 TODO
-
-## 9 Configuration
-
-Certain methods require authentication. To get your GitHub OAuth v2 credentials,
-register an app at https://github.com/settings/applications/
-You will need to be logged in to register the application.
-
-```ruby
-Github.configure do |config|
-  config.oauth_token   = YOUR_OAUTH_ACCESS_TOKEN
-  config.basic_auth    = 'login:password'
-end
-
-or
-
-Github.new(:oauth_token => YOUR_OAUTH_TOKEN)
-Github.new(:basic_auth => 'login:password')
-```
-
-All parameters can be overwritten each method call by passing a parameters hash.
-
-
-By default, no caching will be performed. In order to set the cache do... If no cache type is provided, a default memoization is done.
 
 ## 10 Pagination
 
