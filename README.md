@@ -53,12 +53,15 @@ gem "github_api"
 * [1. Usage](#1-usage)
     * [1.1 API Navigation](#11-api-navigation)
     * [1.2 Modularity](#12-modularity)
-    * [1.3 Response Querying](#13-respone-querying)
+    * [1.3 Arguments](#13-arguments)
+    * [1.4 Response Querying](#14-respone-querying)
 * [2. Configuration](#2-configuration)
     * [2.1 Basic](#21-configuration)
     * [2.2 Advanced](#22-configuration)
-* [2. Arguments & Parameters](#2-arguments--parameters)
-* [4. Authentication](#4-authentication)
+* [3. Authentication](#3-authentication)
+    * [3.1 Basic](#31-basic)
+    * [3.2 Application OAuth](#32-application-oauth)
+    * [3.3 Authorizations API](#33-authorizations-api)
 * [5. SSL](#5-ssl)
 * [6. API](#6-api)
 * [7. Media Types](#7-media-types)
@@ -94,7 +97,7 @@ github.repos.list user: 'peter-murach'
 
 ### 1.1 API Navigation
 
-The **github_api** closely mirrors the [GitHub API](https://developer.github.com/v3/) hierarchy. For example, if you want to create a new file in a repository, look up the GitHub API spec. In there you will find contents sub category underneath the repository category. This would translte to the request:
+The **github_api** closely mirrors the [GitHub API](https://developer.github.com/v3/) hierarchy. For example, if you want to create a new file in a repository, look up the GitHub API spec. In there you will find contents sub category underneath the repository category. This would translate to the request:
 
 ```ruby
 github = Github.new
@@ -126,14 +129,73 @@ starring = Github::Client::Activity::Starring.new
 starring.star 'peter-murach', 'github'
 ```
 
-Please refer to the [documentation](http://rubydoc.info/github/peter-murach/github/master/frames) and look under `Github::Client` to see all avilable classes.
+Please refer to the [documentation](http://rubydoc.info/github/peter-murach/github/master/frames) and look under `Github::Client` to see all available classes.
 
-### 1.3 Response Querying
-The response is of type [Github::ResponseWrapper] which allows traversing all the json response attributes like method calls i.e.
+### 1.3 Arguments
+
+The **github_api** library allows for flexible argument parsing.
+
+Arguments can be passed directly inside the method called. The `required` arguments are passed in first, followed by optional parameters supplied as hash options:
 
 ```ruby
-repos = Github::Client::Repos.new user: 'peter-murach', repo: 'github'
-repos.branches do |branch|
+issues = Github::Issues.new
+issues.milestones.list 'peter-murach', 'github', state: 'open'
+```
+
+In the previous example, the order of arguments is important. However, each method also allows you to specify `required` arguments using hash symbols and thus remove the need for ordering. Therefore, the same example could be rewritten like so:
+
+```ruby
+issues = Github::Issues.new
+issues.milestones.list user: 'peter-murach', repo: 'github', state: 'open'
+```
+
+Furthermore, `required` arguments can be passed during instance creation:
+
+```ruby
+issues = Github::Issues.new user: 'peter-murach', repo: 'github'
+issues.milestones.list state: 'open'
+```
+
+Similarly, the `required` arguments for the request can be passed inside the current scope such as:
+
+```ruby
+issues = Github::Issues.new
+issues.milestones(user: 'peter-murach', repo: 'github').list state: 'open'
+```
+
+But why limit ourselves? You can mix and match arguments, for example:
+
+```ruby
+issues = Github::Issues.new user: 'peter-murach'
+issues.milestones(repo: 'github').list
+issues.milestones(repo: 'tty').list
+```
+
+You can also use a bit of syntactic sugar whereby "username/repository" can be passed as well:
+
+```ruby
+issues = Github::Issues.new
+issues.milestones('peter-murach/github').list
+issues.milestones.list 'peter-murach/github'
+```
+
+Finally, use the `with` scope to clearly denote your requests
+
+```ruby
+issues = Github::Issues.new
+issues.milestones.with(user: 'peter-murach', repo: 'github').list
+```
+
+Please consult the method [documentation](http://rubydoc.info/github/peter-murach/github/master/frames) or [GitHub specification](https://developer.github.com/v3/) to see which arguments are required and what are the option parameters.
+
+### 1.4 Response Querying
+
+The response is of type `Github::ResponseWrapper` and allows traversing all the json response attributes like method calls.
+In addition, if the response returns more than one resource, these will be automatically yielded to the provided block one by one.
+
+```ruby
+repos = Github::Client::Repos.new 
+repos.branches user: 'peter-murach', repo: 'github' do |branch|
   puts branch.name
 end
 ```
@@ -216,77 +278,11 @@ Github.new do |c|
 end
 ```
 
-## 2 Arguments & Parameters
-
-The **GithubAPI** library allows for flexible argument parsing. Therefore, arguments can be passed during instance creation:
-
-```ruby
-  issues = Github::Issues.new user: 'peter-murach', repo: 'github'
-  issues.milestones.list state: 'open'
-```
-
-Further, arguments can be passed directly inside the method called, but then the order of parameters matters and hence please consult the method documentation or GitHub specification. For instance:
-
-```ruby
-  issues = Github::Issues.new
-  issues.milestones.list 'peter-murach', 'github', state: 'open'
-```
-
-Similarly, the arguments for the request can be passed inside the current scope such as:
-
-```ruby
-  issues = Github::Issues.new
-  issues.milestones(user: 'peter-murach', repo: 'github').list
-```
-
-But why limit ourselves? You can mix and match arguments, for example:
-
-```ruby
-  issues = Github::Issues.new user: 'peter-murach'
-  issues.milestones(repo: 'github').list
-  issues.milestones(repo: 'tty').list
-```
-
-You can also use a bit of syntactic sugar common among Ruby libraries whereby "username/repository" can be passed as well:
-
-```ruby
-  issues = Github::Issues.new
-  issues.milestones('peter-murach/github').list
-  issues.milestones.list 'peter-murach/github'
-```
-
-Finally, use the `with` scope to clearly denote your requests
-
-```ruby
-  issues = Github::Issues.new
-  issues.milestones.with(user: 'peter-murach', repo: 'github').list
-```
-
-Some API methods apart from required parameters such as username, repository name
-or organisation name, allow you to switch the way the data is returned to you, for instance
-
-```ruby
-github = Github.new
-github.git_data.trees.get 'peter-murach', 'github', 'c18647b75d72f19c1e0cc8af031e5d833b7f12ea'
-# => gets a tree
-
-github.git_data.trees.get 'peter-murach', 'github', 'c18647b75d72f19c1e0cc8af031e5d833b7f12ea',
-  recursive: true # => gets a whole tree recursively
-```
-
-by passing a block you can iterate over the file tree
-
-```ruby
-github.git_data.trees.get 'peter-murach', 'github', 'c18647b75d72f19c1e0cc8af031e5d833b7f12ea',
-  recursive: true do |file|
-    puts file.path
-end
-```
 
 
-## 4 Authentication
+## 3 Authentication
 
-### 4.1 Basic
+### 3.1 Basic
 
 To start making requests as authenticated user you can use your GitHub username and password like so
 
@@ -296,7 +292,7 @@ Github.new basic_auth: 'login:password'
 
 Though this method is convenient you should strongly consider using `OAuth` for improved security reasons.
 
-### 4.2 Application OAuth access
+### 3.2 Application OAuth
 
 In order to authenticate your app through OAuth2 on GitHub you need to
 
@@ -322,9 +318,9 @@ Once you have your access token, configure your github instance following instru
 
 **Note**: If you are working locally (i.e. your app URL and callback URL are localhost), do not specify a ```:redirect_uri``` otherwise you will get a ```redirect_uri_mismatch``` error.
 
-### 4.3 Authorizations API
+### 3.3 Authorizations API
 
-#### 4.3.1 For an User
+#### 3.3.1 For an User
 
 To create an access token through the GitHub Authrizations API, you are required to pass your basic credentials and scopes you wish to have for the authentication token.
 
@@ -335,7 +331,7 @@ github.oauth.create scopes: ['repo']
 
 You can add more than one scope from the `user`, `public_repo`, `repo`, `gist` or leave the scopes parameter out, in which case, the default read-only access will be assumed (includes public user profile info, public repo info, and gists).
 
-#### 4.3.2 For an App
+#### 3.3.2 For an App
 
 Furthermore, to create auth token for an application you need to pass `:app` argument together with `:client_id` and `:client_secret` parameters.
 
@@ -357,7 +353,7 @@ Revoke a specific app token.
 github.oauth.app.delete 'client-id', 'access-token'
 ```
 
-### 4.4 Scopes
+### 3.4 Scopes
 
 You can check OAuth scopes you have by:
 
