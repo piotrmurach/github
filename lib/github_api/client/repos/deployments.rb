@@ -13,6 +13,7 @@ module Github
     ]
 
     VALID_STATUS_OPTIONS = %w[
+      state
       target_url
       description
     ]
