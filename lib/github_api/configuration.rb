@@ -58,5 +58,7 @@ module Github
     # By default display 30 resources
     property :per_page, default: 30
 
+    # Add Faraday::RackBuilder to overwrite middleware
+    property :stack
   end # Configuration
 end # Github
