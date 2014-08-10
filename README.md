@@ -59,14 +59,13 @@ gem "github_api"
       * [1.4.2 Response Headers](#142-response-headers)
       * [1.4.3 Response Success](#143-response-success)
 * [2. Configuration](#2-configuration)
-    * [2.1 Basic](#21-configuration)
-    * [2.2 Advanced](#22-configuration)
+    * [2.1 Basic](#21-basic)
+    * [2.2 Advanced](#22-advanced)
+    * [2.3 SSL](#23-ssl)
 * [3. Authentication](#3-authentication)
     * [3.1 Basic](#31-basic)
     * [3.2 Application OAuth](#32-application-oauth)
     * [3.3 Authorizations API](#33-authorizations-api)
-* [5. SSL](#5-ssl)
-* [6. API](#6-api)
 * [7. Media Types](#7-media-types)
 * [8. Hypermeida](#8-hypermedia)
 * [10. Pagination](#10-pagination)
@@ -121,6 +120,13 @@ github.users.followers.list 'peter-murach'
 ```
 
 The code base has been extensively documented with examples of how to use each method. Please refer to the [documentation](http://rubydoc.info/github/peter-murach/github/master/frames) under the `Github::Client` class name.
+
+Alternatively, you can find out which methods are supported by an api by calling `actions` on a class or instance. For example, in order to find out available endpoints for `Github::Client::Repos::Contents` api call `actions` method:
+
+```ruby
+Github::Client::Repos::Contents.actions
+=> [:archive, :create, :delete, :find, :get, :readme, :update]
+```
 
 ### 1.2 Modularity
 
@@ -313,7 +319,26 @@ Github.new do |c|
 end
 ```
 
+### 2.3 SSL
 
+By default requests over SSL are set to OpenSSL::SSL::VERIFY_PEER. However, you can turn off peer verification by
+
+```ruby
+github = Github.new ssl: { verify: false }
+```
+
+If your client fails to find CA certs, you can pass other SSL options to specify exactly how the information is sourced
+
+```ruby
+ssl: {
+  client_cert: "/usr/local/www.example.com/client_cert.pem"
+  client_key:  "/user/local/www.example.com/client_key.pem"
+  ca_file:     "example.com.cert"
+  ca_path:     "/etc/ssl/"
+}
+```
+
+For instance, download CA root certificates from Mozilla [cacert](http://curl.haxx.se/ca/cacert.pem) and point ca_file at your certificate bundle location. This will allow the client to verify the github.com ssl certificate as authentic.
 
 ## 3 Authentication
 
@@ -393,92 +418,19 @@ github.oauth.app.delete 'client-id', 'access-token'
 You can check OAuth scopes you have by:
 
 ```ruby
-  github = Github.new :oauth_token => 'token'
-  github.scopes.list    # => ['repo']
+github = Github.new :oauth_token => 'token'
+github.scopes.list    # => ['repo']
 ```
 
 To list the scopes that the particular GitHub API action checks for do:
 
 ```ruby
-  repos = Github::Repos.new
-  res = repos.list :user => 'peter-murach'
-  res.headers.accepted_oauth_scopes    # => ['delete_repo', 'repo', 'public_repo', 'repo:status']
+repos = Github::Client::Repos.new
+response = repos.list user: 'peter-murach'
+response.headers.accepted_oauth_scopes  # => ['delete_repo', 'repo', 'public_repo']
 ```
 
 To understand what each scope means refer to [documentation](http://developer.github.com/v3/oauth/#scopes)
-
-## 5 SSL
-
-By default requests over SSL are set to OpenSSL::SSL::VERIFY_PEER. However, you can turn off peer verification by
-
-```ruby
-  Github.new ssl: { verify: false }
-```
-
-If your client fails to find CA certs, you can pass other SSL options to specify exactly how the information is sourced
-
-```ruby
-  ssl: {
-    client_cert: "/usr/local/www.example.com/client_cert.pem"
-    client_key:  "/user/local/www.example.com/client_key.pem"
-    ca_file:     "example.com.cert"
-    ca_path:     "/etc/ssl/"
-  }
-```
-
-For instance, download CA root certificates from Mozilla [cacert](http://curl.haxx.se/ca/cacert.pem) and point ca_file at your certificate bundle location.
-This will allow the client to verify the github.com ssl certificate as authentic.
-
-## 6 API
-
-Main API methods are grouped into the following classes that can be instantiated on their own
-
-```ruby
-Github         - full API access
-
-Github::Gists           Github::GitData    Github::Repos             Github::Search
-Github::Orgs            Github::Issues     Github::Authorizations
-Github::PullRequests    Github::Users      Github::Activity
-```
-
-Some parts of GitHub API v3 require you to be authenticated, for instance the following are examples of APIs only for the authenticated user
-
-```ruby
-Github::Users::Emails
-Github::Users::Keys
-```
-
-All method calls form Ruby like sentences and allow for intuitive API navigation, for instance
-
-```ruby
-github = Github.new :oauth_token => '...'
-github.users.followers.following 'wycats'  # => returns users that 'wycats' is following
-github.users.followers.following? 'wycats' # => returns true if following, otherwise false
-```
-
-For specifications on all available methods, go to http://developer.github.com/v3/ or
-read the rdoc. All methods are documented there with examples of usage.
-
-Alternatively, you can find out which methods are supported by calling `actions` on a class instance in your `irb`:
-
-```ruby
->> Github::Repos.actions                    >> github.issues.actions
----                                         ---
-|--> all                                    |--> all
-|--> branches                               |--> comments
-|--> collaborators                          |--> create
-|--> commits                                |--> edit
-|--> contribs                               |--> events
-|--> contributors                           |--> find
-|--> create                                 |--> get
-|--> downloads                              |--> labels
-|--> edit                                   |--> list
-|--> find                                   |--> list_repo
-|--> forks                                  |--> list_repository
-|--> get                                    |--> milestones
-|--> hooks                                  ...
-...
-```
 
 ## 7 Media Types
 
