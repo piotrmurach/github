@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# encoding: utf-8
 
 require 'spec_helper'
 
@@ -9,7 +9,7 @@ describe Github::API, '#with' do
 
   context 'with hash' do
     it 'supports list of options' do
-      subject.with(:user => user, :repo => 'github')
+      subject.with(user: user, repo: 'github')
       subject.user.should == user
     end
   end
@@ -24,5 +24,4 @@ describe Github::API, '#with' do
       expect { subject.with('peter-murach') }.to raise_error(ArgumentError)
     end
   end
-
 end

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# encoding: utf-8
 
 require 'spec_helper'
 
@@ -11,7 +11,7 @@ describe Github::API, '#set' do
   end
 
   context 'accpets more than one option' do
-    before { subject.set :user => 'user-name', :repo => 'repo-name' }
+    before { subject.set user: 'user-name', repo: 'repo-name' }
 
     it 'sets user' do
       expect(subject.user).to eql('user-name')
