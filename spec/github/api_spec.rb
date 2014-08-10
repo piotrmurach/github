@@ -23,11 +23,7 @@ describe Github::API do
     it 'ensures output contains api methods' do
       methods = [ 'method_a', 'method_b']
       repos.stub(:instance_methods).and_return methods
-      output = capture(:stdout) { 
-        subject.api_methods_in(repos)
-      }
-      output.should =~ /.*method_a.*/
-      output.should =~ /.*method_b.*/
+      expect(subject.api_methods_in(repos)).to eq(['method_a', 'method_b'])
     end
   end
 
