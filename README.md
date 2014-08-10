@@ -54,7 +54,10 @@ gem "github_api"
     * [1.1 API Navigation](#11-api-navigation)
     * [1.2 Modularity](#12-modularity)
     * [1.3 Arguments](#13-arguments)
-    * [1.4 Response Querying](#14-respone-querying)
+    * [1.4 Response Querying](#14-response-querying)
+      * [1.4.1 Response Body](#141-response-body)
+      * [1.4.2 Response Headers](#142-response-headers)
+      * [1.4.3 Response Success](#143-response-success)
 * [2. Configuration](#2-configuration)
     * [2.1 Basic](#21-configuration)
     * [2.2 Advanced](#22-configuration)
@@ -66,7 +69,6 @@ gem "github_api"
 * [6. API](#6-api)
 * [7. Media Types](#7-media-types)
 * [8. Hypermeida](#8-hypermedia)
-* [9. Configuration](#9-configurations)
 * [10. Pagination](#10-pagination)
 * [11. Caching](#11-caching)
 * [12. Debugging](#12-debugging)
@@ -138,35 +140,35 @@ The **github_api** library allows for flexible argument parsing.
 Arguments can be passed directly inside the method called. The `required` arguments are passed in first, followed by optional parameters supplied as hash options:
 
 ```ruby
-issues = Github::Issues.new
+issues = Github::Client::Issues.new
 issues.milestones.list 'peter-murach', 'github', state: 'open'
 ```
 
 In the previous example, the order of arguments is important. However, each method also allows you to specify `required` arguments using hash symbols and thus remove the need for ordering. Therefore, the same example could be rewritten like so:
 
 ```ruby
-issues = Github::Issues.new
+issues = Github::Client::Issues.new
 issues.milestones.list user: 'peter-murach', repo: 'github', state: 'open'
 ```
 
 Furthermore, `required` arguments can be passed during instance creation:
 
 ```ruby
-issues = Github::Issues.new user: 'peter-murach', repo: 'github'
+issues = Github::Client::Issues.new user: 'peter-murach', repo: 'github'
 issues.milestones.list state: 'open'
 ```
 
 Similarly, the `required` arguments for the request can be passed inside the current scope such as:
 
 ```ruby
-issues = Github::Issues.new
+issues = Github::Client::Issues.new
 issues.milestones(user: 'peter-murach', repo: 'github').list state: 'open'
 ```
 
 But why limit ourselves? You can mix and match arguments, for example:
 
 ```ruby
-issues = Github::Issues.new user: 'peter-murach'
+issues = Github::Client::Issues.new user: 'peter-murach'
 issues.milestones(repo: 'github').list
 issues.milestones(repo: 'tty').list
 ```
@@ -174,7 +176,7 @@ issues.milestones(repo: 'tty').list
 You can also use a bit of syntactic sugar whereby "username/repository" can be passed as well:
 
 ```ruby
-issues = Github::Issues.new
+issues = Github::Client::Issues.new
 issues.milestones('peter-murach/github').list
 issues.milestones.list 'peter-murach/github'
 ```
@@ -182,7 +184,7 @@ issues.milestones.list 'peter-murach/github'
 Finally, use the `with` scope to clearly denote your requests
 
 ```ruby
-issues = Github::Issues.new
+issues = Github::Client::Issues.new
 issues.milestones.with(user: 'peter-murach', repo: 'github').list
 ```
 
@@ -190,14 +192,47 @@ Please consult the method [documentation](http://rubydoc.info/github/peter-murac
 
 ### 1.4 Response Querying
 
-The response is of type `Github::ResponseWrapper` and allows traversing all the json response attributes like method calls.
-In addition, if the response returns more than one resource, these will be automatically yielded to the provided block one by one.
+The response is of type `Github::ResponseWrapper` and allows traversing all the json response attributes like method calls. In addition, if the response returns more than one resource, these will be automatically yielded to the provided block one by one.
+
+For example, when request is issued to list all the branches on a given repository, each branch will be yielded one by one:
 
 ```ruby
-repos = Github::Client::Repos.new 
+repos = Github::Client::Repos.new
 repos.branches user: 'peter-murach', repo: 'github' do |branch|
   puts branch.name
 end
+```
+
+#### 1.4.1 Response Body
+
+The `ResponseWrapper` allows you to call json attributes directly as method calls. there is no magic here, all calls are delegated to the response body. Therefore, you can directly inspect request body by calling `body` method on the `ResponseWrapper` like so:
+
+```ruby
+response = repos.branches user: 'peter-murach', repo: 'github'
+response.body  # => Array of branches
+```
+
+#### 1.4.2 Response Headers
+
+Each response comes packaged with methods allowing for inspection of HTTP start line and headers. For example, to check for rate limits and status codes do:
+
+```ruby
+response = Github::Client::Repos.branches 'peter-murach', 'github'
+response.headers.ratelimit_limit     # "5000"
+response.headers.ratelimit_remaining # "4999"
+response.headers.status              # "200"
+response.headers.content_type        # "application/json; charset=utf-8"
+response.headers.etag                # "\"2c5dfc54b3fe498779ef3a9ada9a0af9\""
+response.headers.cache_control       # "public, max-age=60, s-maxage=60"
+```
+
+#### 1.4.3 Response Success
+
+If you want to verify if the response was success, namely, that the `200` code was returned call the `success?` like so:
+
+```ruby
+response = Github::Client::Repos.branches 'peter-murach', 'github'
+response.success?  # => true
 ```
 
 ## 2 Configuration
@@ -573,19 +608,6 @@ rescue Github::Error::GithubError => e
 end
 ```
 
-## 14 Response Message
-
-Each response comes packaged with methods allowing for inspection of HTTP start line and headers. For example, to check for rate limits and status codes, call
-
-```ruby
-res = Github::Repos.new.branches 'peter-murach', 'github'
-res.headers.ratelimit_limit     # "5000"
-res.headers.ratelimit_remaining # "4999"
-res.headers.status              # "200"
-res.headers.content_type        # "application/json; charset=utf-8"
-res.headers.etag                # "\"2c5dfc54b3fe498779ef3a9ada9a0af9\""
-res.headers.cache_control       # "public, max-age=60, s-maxage=60"
-```
 
 ## 15 Examples
 
