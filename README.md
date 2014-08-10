@@ -75,6 +75,7 @@ gem "github_api"
 * [5. Error Handling](#5-error-handling)
 * [6. Examples](#6-examples)
   * [6.1 Rails](#61-rails)
+  * [6.2 Manipulating Files](#62-manipulating-files)
 * [7. Testing](#7-testing)
 
 ## 1 Usage
@@ -591,6 +592,56 @@ class GithubController < ApplicationController
     access_token.token   # => returns token value
   end
 end
+```
+
+### 6.2 Manipulating Files
+
+In order to be able to create/update/remove files you need to use Contents API like so:
+
+```ruby
+contents = Github::Client::Repos::Contents.new oauth_token: '...'
+```
+
+Having instantiaed the contents, to create a file do:
+
+```ruby
+contents.create 'username', 'repo_name', 'full_path_to/file.ext',
+  path: 'full_path_to/file.ext',
+  message: 'Your commit message',
+  content: 'The contents of your file'
+```
+
+Content is all Base64 encoded to/from the API, and when you create a file it encodes it automatically for you.
+
+To update a file, first you need to find the file so you can get the SHA you're updating off of:
+
+```ruby
+file = contents.find path: 'full_path_to/file.ext'
+```
+
+Then update the file just like you do with creating:
+
+```ruby
+contents.update 'username', 'repo_name', 'full_path_to/file.ext',
+  path: 'full_path_to/file.ext'
+  message: 'Your commit message',
+  content: 'The contens to be updated',
+  sha: file.sha
+```
+
+Finally to remove a file, find the file so you can get the SHA you're removing:
+
+```ruby
+file = contents.find path: 'full_path_to/file.ext'
+```
+
+Then delete the file like so:
+
+```ruby
+github.delete 'username', 'tome-of-knowledge', 'full_path_to/file.ext',
+  path: 'full_path_to/file.ext',
+  message: 'Your Commit Message',
+  sha: file.sha
 ```
 
 ## 7 Testing
