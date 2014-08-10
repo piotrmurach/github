@@ -9,7 +9,9 @@ module Github
       dependency 'base64'
 
       def call(env)
-        env[:request_headers].merge!('Authorization' => "Basic #{@auth}\"")
+        unless @auth.to_s.empty?
+          env[:request_headers].merge!('Authorization' => "Basic #{@auth}\"")
+        end
 
         @app.call env
       end
