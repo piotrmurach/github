@@ -1,4 +1,5 @@
 # encoding: utf-8
+require 'set'
 
 module Github
   class API
