@@ -58,23 +58,24 @@ gem "github_api"
       * [1.4.1 Response Body](#141-response-body)
       * [1.4.2 Response Headers](#142-response-headers)
       * [1.4.3 Response Success](#143-response-success)
+    * [1.5 Request Headers](#15-request-headers)
+      * [1.5.1 Media Types](#151-media-types)
 * [2. Configuration](#2-configuration)
     * [2.1 Basic](#21-basic)
     * [2.2 Advanced](#22-advanced)
     * [2.3 SSL](#23-ssl)
+    * [2.4 Caching](#24-caching)
 * [3. Authentication](#3-authentication)
     * [3.1 Basic](#31-basic)
     * [3.2 Application OAuth](#32-application-oauth)
     * [3.3 Authorizations API](#33-authorizations-api)
-* [7. Media Types](#7-media-types)
-* [8. Hypermeida](#8-hypermedia)
-* [10. Pagination](#10-pagination)
-* [11. Caching](#11-caching)
-* [12. Debugging](#12-debugging)
-* [13. Error Handling](#13-error-handling)
-* [14. Response Message](#14-response-message)
-* [15. Examples](#15-examples)
-* [16. Testing](#16-testing)
+    * [3.4 Scopes](#34-scopes)
+* [4. Pagination](#4-pagination)
+  * [4.1 Auto pagination](#41-auto-pagination)
+* [5. Error Handling](#5-error-handling)
+* [6. Examples](#6-examples)
+  * [6.1 Rails](#61-rails)
+* [7. Testing](#7-testing)
 
 ## 1 Usage
 
@@ -241,6 +242,31 @@ response = Github::Client::Repos.branches 'peter-murach', 'github'
 response.success?  # => true
 ```
 
+### 1.5 Request Headers
+
+It is possible to specify additional header information which will be added to the final request.
+
+For example, to set `etag` and `X-Poll_Interval` headers, use the `:headers` hash key inside the `:options` hash like in the following:
+
+```ruby
+events = Github::Client::Activity::Events.new
+events.public options: {
+  headers: {
+    'X-Poll-Interval': 60,
+    'ETag': "a18c3bded88eb5dbb5c849a489412bf3"
+  }
+}
+```
+
+#### 1.5.1 Media Types
+
+In order to set custom media types for a request use the accept header. By using the `:accept` key you can determine media type like in the example:
+
+```ruby
+issues = Github::Client::Issues.new
+issues.get 'peter-murach', 'github', 108, accept: 'application/vnd.github.raw'
+```
+
 ## 2 Configuration
 
 The **github_api** provides ability to specify global configruation options. These options will be available to all api calls.
@@ -340,6 +366,28 @@ ssl: {
 
 For instance, download CA root certificates from Mozilla [cacert](http://curl.haxx.se/ca/cacert.pem) and point ca_file at your certificate bundle location. This will allow the client to verify the github.com ssl certificate as authentic.
 
+### 2.4 Caching
+
+Caching is supported through the [`faraday-http-cache` gem](https://github.com/plataformatec/faraday-http-cache).
+
+Add the gem to your Gemfile:
+
+```ruby
+gem 'faraday-http-cache'
+```
+
+You can now configure cache parameters as follows
+
+```ruby
+Github.configure do |config|
+  config.stack do |builder|
+    builder.use Faraday::HttpCache, store: Rails.cache
+  end
+end
+```
+
+More details on the available options can be found in the gem's own documentation: https://github.com/plataformatec/faraday-http-cache#faraday-http-cache
+
 ## 3 Authentication
 
 ### 3.1 Basic
@@ -432,79 +480,42 @@ response.headers.accepted_oauth_scopes  # => ['delete_repo', 'repo', 'public_rep
 
 To understand what each scope means refer to [documentation](http://developer.github.com/v3/oauth/#scopes)
 
-## 7 Media Types
 
-You can specify custom media types to choose the format of the data you wish to receive. To make things easier you can specify the following shortcuts
-`json`, `blob`, `raw`, `text`, `html`, `full`. For instance:
-
-```ruby
-github = Github.new
-github.issues.get 'peter-murach', 'github', 108, media: 'text'
-```
-
-This will be expanded into `application/vnd.github.v3.text+json`
-
-If you wish to specify the version, pass `media: 'beta.text'` which will be converted to `application/vnd/github.beta.text+json`.
-
-Finally, you can always pass the whole accept header like so
-
-```ruby
-github.issues.get 'peter-murach', 'github', 108, accept: 'application/vnd.github.raw'
-```
-
-## 8 Hypermedia
-
-TODO
-
-## 10 Pagination
+## 4 Pagination
 
 Any request that returns multiple items will be paginated to 30 items by default. You can specify custom `page` and `per_page` query parameters to alter default behavior. For instance:
 
 ```ruby
-repos = Github::Repos.new
-repos.list user: 'wycats', per_page: 10, page: 5
+repos    = Github::Client::Repos.new
+response = repos.list user: 'wycats', per_page: 10, page: 5
 ```
 
 Then you can query the pagination information included in the link header by:
 
 ```ruby
-res.links.first  # Shows the URL of the first page of results.
-res.links.next   # Shows the URL of the immediate next page of results.
-res.links.prev   # Shows the URL of the immediate previous page of results.
-res.links.last   # Shows the URL of the last page of results.
+response.links.first  # Shows the URL of the first page of results.
+response.links.next   # Shows the URL of the immediate next page of results.
+response.links.prev   # Shows the URL of the immediate previous page of results.
+response.links.last   # Shows the URL of the last page of results.
 ```
 
 In order to iterate through the entire result set page by page, you can use convenience methods:
 
 ```ruby
-res.each_page do |page|
+response.each_page do |page|
   page.each do |repo|
     puts repo.name
   end
 end
 ```
 
-or use `has_next_page?` and `next_page` like in the following:
+or use `has_next_page?` and `next_page` helper methods like in the following:
 
 ```ruby
-while res.has_next_page?
+while response.has_next_page?
   ... process response ...
   res.next_page
 end
-```
-
-Alternatively, you can retrieve all pages in one invocation by passing the `auto_pagination` option like so:
-
-```ruby
-  github = Github.new auto_pagination: true
-```
-
-Depending at what stage you pass the `auto_pagination` it will affect all or only a single request:
-
-```ruby
-  Github::Repos.new auto_pagination: true         # affects Repos part of API
-
-  Github::Repos.new.list user: '...', auto_pagination: true  # affects a single request
 ```
 
 One can also navigate straight to the specific page by:
@@ -518,31 +529,27 @@ res.prev_page    # Get previous page
 res.last_page    # Get last page
 ```
 
-## 11 Caching
+### 4.1 Auto pagination
 
-Caching is supported through the [`faraday-http-cache` gem](https://github.com/plataformatec/faraday-http-cache).
-
-Add the gem to your Gemfile:
-
-    gem 'faraday-http-cache'
-
-You can now configure cache parameters as follows
+You can retrieve all pages in one invocation by passing the `auto_pagination` option like so:
 
 ```ruby
-Github.configure do |config|
-  config.stack do |builder|
-    builder.use Faraday::HttpCache, store: Rails.cache
-  end
-end
+github = Github.new auto_pagination: true
 ```
 
-More details on the available options can be found in the gem's own documentation: https://github.com/plataformatec/faraday-http-cache#faraday-http-cache
+Depending at what stage you pass the `auto_pagination` it will affect all or only a single request. For example, in order to auto paginate all Repository API methods do:
 
-## 12 Debugging
+```ruby
+Github::Repos.new auto_pagination: true
+```
 
-run with ENV['DEBUG'] flag  or include middleware by passing `debug` flag
+However, to only auto paginate results for a single request do:
 
-## 13 Error Handling
+```ruby
+Github::Repos.new.list user: '...', auto_pagination: true
+```
+
+## 5 Error Handling
 
 The generic error class `Github::Error::GithubError` will handle both the client (`Github::Error::ClientError`) and service (`Github::Error::ServiceError`) side errors. For instance in your code you can catch errors like
 
@@ -560,40 +567,9 @@ rescue Github::Error::GithubError => e
 end
 ```
 
+## 6 Examples
 
-## 15 Examples
-
-Some API methods require input parameters. These are simply added as a hash of properties, for instance
-
-```ruby
-issues = Github::Issues.new user:'peter-murach', repo: 'github-api'
-issues.milestones.list state: 'open', sort: 'due_date', direction: 'asc'
-```
-
-Other methods may require inputs as an array of strings
-
-```ruby
-users = Github::Users.new oauth_token: 'token'
-users.emails.add 'email1', 'email2', ..., 'emailn' # => Adds emails to the authenticated user
-```
-
-If a method returns a collection, you can iterate over it by supplying a block parameter,
-
-```ruby
-events = Github::Activity::Events.new
-events.public do |event|
-  puts event.actor.login
-end
-```
-
-Query requests return boolean values instead of HTTP responses
-
-```ruby
-github = Github.new
-github.orgs.members.member? 'github', 'technoweenie', public: true # => true
-```
-
-### 15.1 Rails Example
+### 6.1 Rails
 
 A Rails controller that allows a user to authorize their GitHub account and then performs a request.
 
@@ -617,7 +593,7 @@ class GithubController < ApplicationController
 end
 ```
 
-## 16 Testing
+## 7 Testing
 
 The test suite is split into two groups, `live` and `mock`.
 
