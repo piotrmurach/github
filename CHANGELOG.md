@@ -1,3 +1,11 @@
+0.12.1 (August 15, 2014)
+------------------------
+
+* Add #configure method on Github module to allow modification of settings
+* Change #actions to return Array of avilable methods for a given api
+* Add :per_page to configuration options
+* Fix bug with PropertySet not requiring 'set' standard library
+
 0.12.0 (July 27, 2014)
 --------------------
 
