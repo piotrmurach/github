@@ -270,7 +270,7 @@ issues.get 'peter-murach', 'github', 108, accept: 'application/vnd.github.raw'
 
 ## 2 Configuration
 
-The **github_api** provides ability to specify global configruation options. These options will be available to all api calls.
+The **github_api** provides ability to specify global configuration options. These options will be available to all api calls.
 
 ### 2.1 Basic
 
