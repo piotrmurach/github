@@ -4,7 +4,7 @@ module Github
   class Client::Issues::Milestones < API
 
     VALID_MILESTONE_OPTIONS = {
-     'state' => %w[ open closed ],
+     'state' => %w[ open closed all ],
      'sort'  => %w[ due_date completeness ],
      'direction' => %w[ desc asc ]
     }.freeze # :nodoc:
