@@ -11,9 +11,12 @@ module Github #:nodoc
       end
 
       def generate_message(attributes)
-        "\nProblem:\n #{attributes[:problem]}"+
-        "\nSummary:\n #{attributes[:summary]}"+
-        "\nResolution:\n #{attributes[:resolution]}"
+        @problem = attributes[:problem]
+        @summary = attributes[:summary]
+        @resolution = attributes[:resolution]
+        "\nProblem:\n #{@problem}"+
+        "\nSummary:\n #{@summary}"+
+        "\nResolution:\n #{@resolution}"
       end
     end
   end # Error
