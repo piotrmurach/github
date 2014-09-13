@@ -19,7 +19,7 @@ module Github
     ].freeze
 
     VALID_REQUEST_PARAM_VALUES = {
-      'state' => %w[ open closed ]
+      'state' => %w[ open closed all ]
     }
 
     # Access to PullRequests::Comments API
