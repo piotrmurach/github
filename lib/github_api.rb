@@ -1,5 +1,6 @@
 # encoding: utf-8
 
+require 'pp' if ENV['DEBUG']
 require 'faraday'
 require 'github_api/version'
 require 'github_api/configuration'
