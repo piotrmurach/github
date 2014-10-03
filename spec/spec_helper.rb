@@ -99,11 +99,3 @@ def reset_authentication_for(object)
     object.send("#{item}=", nil)
   end
 end
-
-class Hash
-  def except(*keys)
-    cpy = self.dup
-    keys.each { |key| cpy.delete(key) }
-    cpy
-  end
-end
