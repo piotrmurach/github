@@ -40,7 +40,7 @@ describe Github::Request::OAuth2 do
 
     it "creates header for ad hoc access token" do
       result = process(:q => 'query', :access_token => 'abc123')
-      auth_header(result).should eql 'Token token="abc123"'
+      auth_header(result).should eql 'token abc123'
     end
   end
 
@@ -53,13 +53,13 @@ describe Github::Request::OAuth2 do
     end
 
     it "creates header for access token" do
-      auth_header(process).should eql 'Token token="ABC"'
+      auth_header(process).should eql 'token ABC'
     end
 
     it "overrides default with explicit token" do
       result = process(:q => 'query', :access_token => 'abc123')
       result[:url].query.should eql 'access_token=abc123&q=query'
-      auth_header(result).should eql 'Token token="abc123"'
+      auth_header(result).should eql 'token abc123'
     end
 
     it "clears default token with explicit one" do
