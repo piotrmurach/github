@@ -1,3 +1,12 @@
+0.12.2 (October 25, 2014)
+------------------------
+
+* Fix Authorization header token for OAuth by @codenamev
+* Add pp support in DEBUG mode by @lukeasrodgers
+* Clean up PageIterator and simplify
+* Clean up and refactor PageLinks parser
+* Fix except! for core hash extension by @josacar
+
 0.12.1 (August 15, 2014)
 ------------------------
 
