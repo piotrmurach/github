@@ -35,7 +35,7 @@ module Github
     # iterate over this method will return current page.
     def each_page
       yield self
-      while page_iterator.has_next?
+      while page_iterator.next?
         yield next_page
       end
     end
@@ -88,7 +88,7 @@ module Github
     # Returns <tt>true</tt> if there is another page in the result set,
     # otherwise <tt>false</tt>
     def has_next_page?
-      page_iterator.has_next?
+      page_iterator.next?
     end
 
     private
