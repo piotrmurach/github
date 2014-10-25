@@ -15,7 +15,7 @@ module Github
             if Hash == args[0]
               hsh.replace args[0]
             elsif (args.size % 2) != 0
-              pp args
+              pp args if ENV['DEBUG']
               raise ArgumentError, "odd number of elements for Hash"
             else
               0.step(args.size - 1, 2) do |a|
