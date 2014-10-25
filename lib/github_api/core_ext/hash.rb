@@ -11,9 +11,8 @@ class Hash # :nodoc:
   # Similar to except but modifies self
   #
   def except!(*keys)
-    copy = self.dup
-    keys.each { |key| copy.delete!(key) }
-    copy
+    keys.each { |key| delete(key) }
+    self
   end unless method_defined? :except!
 
   # Returns a new hash with all the keys converted to symbols

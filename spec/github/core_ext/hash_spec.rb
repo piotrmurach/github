@@ -15,6 +15,9 @@ describe Hash do
   context '#except!' do
     it "should respond to except!" do
       @nested_hash.should respond_to :except!
+      copy = @nested_hash.dup
+      copy.except!('b', 'a')
+      copy.should be_empty
     end
   end
 
