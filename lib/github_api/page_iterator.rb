@@ -31,36 +31,31 @@ module Github
     end
 
     def count
-      return nil unless last_page_uri
-      parse_query(URI(last_page_uri).query)['page']
+      parse_query(URI(last_page_uri).query)['page'] if last_page_uri
     end
 
     # Perform http get request for the first resource
     #
     def first
-      return nil unless first_page_uri
-      perform_request(first_page_uri)
+      perform_request(first_page_uri) if first_page_uri
     end
 
     # Perform http get request for the next resource
     #
     def next
-      return nil unless has_next?
-      perform_request(next_page_uri)
+      perform_request(next_page_uri) if has_next?
     end
 
     # Perform http get request for the previous resource
     #
     def prev
-      return nil unless prev_page_uri
-      perform_request(prev_page_uri)
+      perform_request(prev_page_uri) if prev_page_uri
     end
 
     # Perform http get request for the last resource
     #
     def last
-      return nil unless last_page_uri
-      perform_request(last_page_uri)
+      perform_request(last_page_uri) if last_page_uri
     end
 
     # Returns the result for a specific page.
@@ -101,7 +96,6 @@ module Github
     def sha(params)
       return params['last_sha'] if params.keys.include?('last_sha')
       return DEFAULT_SHA if params.keys.include?('sha')
-      nil
     end
 
     def parse_per_page_number(uri) # :nodoc:
