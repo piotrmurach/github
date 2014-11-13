@@ -284,7 +284,7 @@ module Github
     # @option params [String] :homepage
     #   Optional string
     # @option params [Boolean] :private
-    #   Optional boolean, false to create public repos, false to create a private one
+    #   Optional boolean, true to make this a private repository, false to make it a public one
     # @option params [Boolean] :has_issues
     #   Optional boolean - true to enable issues for this repository,
     #   false to disable them
