@@ -14,9 +14,9 @@ module Github
       if request_with_body?(env)
         env[:request_headers][CONTENT_TYPE] ||= MIME_TYPE
         env[:body] = encode_body env[:body] unless env[:body].respond_to?(:to_str)
-      else
+      elsif safe_to_modify?(env)
         # Ensure valid body for put and post requests
-        if [:put, :patch, :post].include? env[:method]
+        if [:put, :patch, :post].include?(env[:method])
           env[:body] = encode_body({})
         end
       end
@@ -33,7 +33,12 @@ module Github
 
     def request_with_body?(env)
       type = request_type(env)
-      has_body?(env) and (type.empty? or type == MIME_TYPE)
+      has_body?(env) and safe_to_modify?(env)
+    end
+
+    def safe_to_modify?(env)
+      type = request_type(env)
+      type.empty? or type == MIME_TYPE
     end
 
     # Don't encode bodies in string form
