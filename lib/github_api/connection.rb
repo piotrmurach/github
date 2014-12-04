@@ -26,7 +26,12 @@ module Github
         },
         ssl: options[:ssl],
         url: options[:endpoint]
-      }
+      }.tap do |h|
+        if type = options[:headers] && options[:headers][CONTENT_TYPE]
+          h[:headers][CONTENT_TYPE] = type
+        end
+        h
+      end
     end
 
     def clear_cache
