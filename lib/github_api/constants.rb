@@ -7,6 +7,8 @@ module Github
 
     RATELIMIT_LIMIT = 'X-RateLimit-Limit'.freeze
 
+    RATELIMIT_RESET = 'X-RateLimit-Reset'.freeze
+
     CONTENT_TYPE = 'Content-Type'.freeze
 
     CONTENT_LENGTH = 'content-length'.freeze

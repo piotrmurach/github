@@ -30,6 +30,12 @@ module Github
         loaded? ? env[:response_headers][RATELIMIT_REMAINING] : nil
       end
 
+      # A unix timestamp describing when the ratelimit will
+      # be reset
+      def ratelimit_reset
+        loaded? ? env[:response_headers][RATELIMIT_RESET] : nil
+      end
+
       def cache_control
         loaded? ? env[:response_headers][CACHE_CONTROL] : nil
       end

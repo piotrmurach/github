@@ -8,6 +8,7 @@ describe Github::ResponseWrapper, '#headers' do
       'Content-Type' => "application/json; charset=utf-8",
       'X-RateLimit-Remaining' => '4999',
       'X-RateLimit-Limit' => '5000',
+      'X-RateLimit-Reset' => '1422262420',
       'content-length' => '344',
       'ETag' => "\"d9a88f20567726e29d35c6fae87cef2f\"",
       'Server' => "nginx/1.0.4",
@@ -26,6 +27,8 @@ describe Github::ResponseWrapper, '#headers' do
   its(:ratelimit_limit) { should == '5000' }
 
   its(:ratelimit_remaining) { should == '4999' }
+
+  its(:ratelimit_reset) { should == '1422262420' }
 
   its(:status) { should be 200 }
 
