@@ -68,11 +68,11 @@ module Github
       response = conn.send(action) do |request|
         case action.to_sym
         when *(HTTP_METHODS - METHODS_WITH_BODIES)
-          request.body = params.data if params.has_key?('data')
-          if params.has_key?('encoder')
+          request.body = params.data if params.key?('data')
+          if params.key?('encoder')
             request.params.params_encoder(params.encoder)
           end
-          request.url(self.path, params.to_hash)
+          request.url(self.path, params.request_params)
         when *METHODS_WITH_BODIES
           request.url(self.path, connection_options[:query] || {})
           request.body = params.data unless params.empty?
