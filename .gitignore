@@ -1,3 +1,6 @@
+*.gem
+.bundle
+Gemfile.lock
 coverage
 rdoc
 doc
