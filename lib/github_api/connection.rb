@@ -61,6 +61,7 @@ module Github
       clear_cache unless options.empty?
       builder = api.stack ? api.stack : stack(options.merge!(api: api))
       connection_options.merge!(builder: builder)
+      connection_options.deep_merge!(options[:connection_options]) if options[:connection_options]
       if ENV['DEBUG']
         p "Connection options : \n"
         pp connection_options
