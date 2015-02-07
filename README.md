@@ -67,9 +67,10 @@ gem "github_api"
     * [2.4 Caching](#24-caching)
 * [3. Authentication](#3-authentication)
     * [3.1 Basic](#31-basic)
-    * [3.2 Application OAuth](#32-application-oauth)
-    * [3.3 Authorizations API](#33-authorizations-api)
-    * [3.4 Scopes](#34-scopes)
+    * [3.2 Authorizations API](#32-authorizations-api)
+    * [3.3 Scopes](#33-scopes)
+    * [3.4 Application OAuth](#34-application-oauth)
+    * [3.5 Two-Factor](#35-two-factor)
 * [4. Pagination](#4-pagination)
   * [4.1 Auto pagination](#41-auto-pagination)
 * [5. Error Handling](#5-error-handling)
@@ -251,12 +252,10 @@ For example, to set `etag` and `X-Poll_Interval` headers, use the `:headers` has
 
 ```ruby
 events = Github::Client::Activity::Events.new
-events.public options: {
-  headers: {
+events.public headers: {
     'X-Poll-Interval': 60,
     'ETag': "a18c3bded88eb5dbb5c849a489412bf3"
   }
-}
 ```
 
 #### 1.5.1 Media Types
@@ -401,7 +400,61 @@ Github.new basic_auth: 'login:password'
 
 Though this method is convenient you should strongly consider using `OAuth` for improved security reasons.
 
-### 3.2 Application OAuth
+### 3.2 Authorizations API
+
+#### 3.2.1 For an User
+
+To create an access token through the GitHub Authrizations API, you are required to pass your basic credentials and scopes you wish to have for the authentication token.
+
+```ruby
+github = Github.new basic_auth: 'login:password'
+github.oauth.create scopes: ['repo']
+```
+
+You can add more than one scope from the `user`, `public_repo`, `repo`, `gist` or leave the scopes parameter out, in which case, the default read-only access will be assumed (includes public user profile info, public repo info, and gists).
+
+#### 3.2.2 For an App
+
+Furthermore, to create auth token for an application you need to pass `:app` argument together with `:client_id` and `:client_secret` parameters.
+
+```ruby
+github = Github.new basic_auth: 'login:password'
+github.oauth.app.create 'client-id', scopes: ['repo']
+```
+
+In order to revoke auth token(s) for an application you must use basic authentication with `client_id` as login and `client_secret` as password.
+
+```ruby
+github = Github.new basic_auth: "client_id:client_secret"
+github.oauth.app.delete 'client-id'
+```
+
+Revoke a specific app token.
+
+```ruby
+github.oauth.app.delete 'client-id', 'access-token'
+```
+
+### 3.3 Scopes
+
+You can check OAuth scopes you have by:
+
+```ruby
+github = Github.new oauth_token: 'token'
+github.scopes.list    # => ['repo']
+```
+
+To list the scopes that the particular GitHub API action checks for do:
+
+```ruby
+repos = Github::Client::Repos.new
+response = repos.list user: 'peter-murach'
+response.headers.accepted_oauth_scopes  # => ['delete_repo', 'repo', 'public_repo']
+```
+
+To understand what each scope means refer to [documentation](http://developer.github.com/v3/oauth/#scopes)
+
+### 3.4 Application OAuth
 
 In order to authenticate your app through OAuth2 on GitHub you need to
 
@@ -427,60 +480,26 @@ Once you have your access token, configure your github instance following instru
 
 **Note**: If you are working locally (i.e. your app URL and callback URL are localhost), do not specify a ```:redirect_uri``` otherwise you will get a ```redirect_uri_mismatch``` error.
 
-### 3.3 Authorizations API
+### 3.5 Two-Factor
 
-#### 3.3.1 For an User
+In order to use [Two-Factor](https://help.github.com/articles/about-two-factor-authentication) authentication you need provide `X-GitHub-OTP: required; :2fa-type` header.
 
-To create an access token through the GitHub Authrizations API, you are required to pass your basic credentials and scopes you wish to have for the authentication token.
+You can add headers during initialization:
+
+```ruby
+Github.new do |config|
+  config.basic_auth         = "user:password"
+  config.connection_options = {headers: {"X-GitHub-OTP" => '2fa token'}}
+end
+```
+
+or per request:
 
 ```ruby
 github = Github.new basic_auth: 'login:password'
-github.oauth.create scopes: ['repo']
+github.oauth.create scopes: ["public_repo"],
+                    headers: {"X-GitHub-OTP" => "2fa token"}
 ```
-
-You can add more than one scope from the `user`, `public_repo`, `repo`, `gist` or leave the scopes parameter out, in which case, the default read-only access will be assumed (includes public user profile info, public repo info, and gists).
-
-#### 3.3.2 For an App
-
-Furthermore, to create auth token for an application you need to pass `:app` argument together with `:client_id` and `:client_secret` parameters.
-
-```ruby
-github = Github.new basic_auth: 'login:password'
-github.oauth.app.create 'client-id', scopes: ['repo']
-```
-
-In order to revoke auth token(s) for an application you must use basic authentication with `client_id` as login and `client_secret` as password.
-
-```ruby
-github = Github.new basic_auth: "client_id:client_secret"
-github.oauth.app.delete 'client-id'
-```
-
-Revoke a specific app token.
-
-```ruby
-github.oauth.app.delete 'client-id', 'access-token'
-```
-
-### 3.4 Scopes
-
-You can check OAuth scopes you have by:
-
-```ruby
-github = Github.new :oauth_token => 'token'
-github.scopes.list    # => ['repo']
-```
-
-To list the scopes that the particular GitHub API action checks for do:
-
-```ruby
-repos = Github::Client::Repos.new
-response = repos.list user: 'peter-murach'
-response.headers.accepted_oauth_scopes  # => ['delete_repo', 'repo', 'public_repo']
-```
-
-To understand what each scope means refer to [documentation](http://developer.github.com/v3/oauth/#scopes)
-
 
 ## 4 Pagination
 
