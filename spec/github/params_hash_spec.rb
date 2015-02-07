@@ -2,34 +2,43 @@
 
 require 'spec_helper'
 
-describe Github::ParamsHash do
+RSpec.describe Github::ParamsHash do
   let(:object) { described_class }
 
-  subject { object.new(hash) }
+  subject(:params) { object.new(hash) }
+
+  context 'when empty' do
+    let(:hash) { {} }
+
+    it { expect(params.options).to eq({:raw => false}) }
+
+    it { expect(params.data).to eq({}) }
+
+    it { expect(params.accept).to eq(nil) }
+  end
 
   context 'converts key to string' do
-    let(:hash) { {:foo => 123 }}
+    let(:hash) { {foo: 123 } }
 
-    it { expect(subject).to be_a(Github::ParamsHash)}
+    it { expect(params['foo']).to eql(123) }
 
-    it { expect(subject['foo']).to eql(123) }
-
-    it { expect(subject.data).to eql({"foo" => 123}) }
+    it { expect(params.data).to eql({"foo" => 123}) }
   end
 
   context 'media' do
-    let(:hash) { {:media => "raw"} }
+    let(:hash) { {media: "raw"} }
 
     it 'parses media key' do
-      expect(subject.media).to eql('application/vnd.github.v3.raw+json')
+      expect(params.media).to eql('application/vnd.github.v3.raw+json')
     end
   end
 
   context 'with accept' do
-    let(:hash) { {:accept => "application/json"} }
+    let(:hash) { {accept: "application/json"} }
 
     it 'overwrites media key' do
-      expect(subject.accept).to eql('application/json')
+      expect(params.accept).to eql('application/json')
+      expect(params.to_hash).to eq({'accept' => 'application/json'})
     end
   end
 
@@ -37,39 +46,52 @@ describe Github::ParamsHash do
     let(:hash) { {} }
 
     it 'overwrites media key' do
-      expect(subject.accept).to be_nil
+      expect(params.accept).to be_nil
     end
   end
 
-  context 'extract data' do
-    let(:hash) { {:data => 'foobar'} }
+  context 'when data' do
+    let(:hash) { {data: 'foobar'} }
 
-    it { expect(subject.data).to eql('foobar') }
+    it 'extracts data key' do
+      expect(params.data).to eql('foobar')
+      expect(params.to_hash).to eql({'data' => 'foobar'})
+    end
   end
 
-  context 'extracts options headers' do
-    let(:hash) { {:content_type => 'application/octet-stream'} }
+  context 'when content_type' do
+    let(:hash) { {content_type: 'application/octet-stream'} }
 
-    it { expect(subject.options[:headers]).to eql(hash) }
+    it 'extracts content_type key' do
+      expect(params.options[:headers]).to eql(hash)
+    end
+  end
+
+  context 'when header' do
+    let(:hash) { {headers: {"X-GitHub-OTP" => "<2FA token>"}} }
+
+    it "sets headers" do
+      expect(params.options[:headers]).to eql({"X-GitHub-OTP" => "<2FA token>" })
+    end
   end
 
   context 'merges defaults' do
     let(:hash) { { :homepage => "https://tty.github.io" }}
     let(:defaults) {
-      { "homepage"   => "https://github.com",
-      "private"    => false}
+      { "homepage" => "https://github.com",
+        "private"  => false}
     }
 
     it 'correctly updates values' do
       subject.merge_default(defaults)
-      expect(subject['homepage']).to eql("https://tty.github.io")
-      expect(subject['private']).to be_false
+      expect(params['homepage']).to eql("https://tty.github.io")
+      expect(params['private']).to be_false
     end
   end
 
   context 'strict encode' do
-    let(:hash) { { :content => "puts 'hello ruby'"} }
+    let(:hash) { {content: "puts 'hello ruby'"} }
 
-    it { expect(subject.strict_encode64('content')).to eql('cHV0cyAnaGVsbG8gcnVieSc=')  }
+    it { expect(params.strict_encode64('content')).to eql('cHV0cyAnaGVsbG8gcnVieSc=')  }
   end
 end
