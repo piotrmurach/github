@@ -2,17 +2,8 @@ source 'https://rubygems.org'
 
 gemspec
 
-group :guard do
-  gem 'rb-fsevent',   :require => false if RUBY_PLATFORM =~ /darwin/i
-  gem 'growl',        :require => false if RUBY_PLATFORM =~ /darwin/i
-  gem 'growl_notify', :require => false if RUBY_PLATFORM =~ /darwin/i
-  gem 'guard',          '~> 1.8.1'
-  gem 'guard-rspec',    '~> 3.0.2'
-  gem 'guard-cucumber', '~> 1.4'
-end
-
 group :development do
-  gem 'rake',     '~> 10.3'
+  gem 'rake',     '~> 10.4'
   gem 'rspec',    '~> 2.14.1'
   gem 'cucumber', '~> 1.3'
   gem 'webmock',  '~> 1.17.3'
