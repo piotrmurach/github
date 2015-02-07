@@ -1,3 +1,12 @@
+0.12.3 (Feb 7, 2015)
+--------------------
+
+* Fix jsonize from overwritting non-json body for non-get requests by @timruffles
+* Fix content type parameter by @timruffles
+* Add ratelimit_reset to response header by @k0nserv
+* Add ability to specify connection options by @codenamev
+* Add two-factor authorization and document
+
 0.12.2 (October 25, 2014)
 ------------------------
 
