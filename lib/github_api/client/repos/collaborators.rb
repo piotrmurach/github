@@ -33,7 +33,7 @@ module Github
     #
     # @example
     #  github = Github.new
-    #  github.collaborators.add 'user', 'repo', 'username'
+    #  github.repos.collaborators.add 'user', 'repo', 'username'
     #
     # @example
     #  collaborators = Github::Repos::Collaborators.new
