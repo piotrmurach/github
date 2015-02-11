@@ -61,6 +61,7 @@ module Github
       connection_options = current_options.merge(request_options)
       conn               = connection(api, connection_options)
 
+      self.path = Utils::Url.normalize(self.path)
       if conn.path_prefix != '/' && self.path.index(conn.path_prefix) != 0
         self.path = (conn.path_prefix + self.path).gsub(/\/(\/)*/, '/')
       end

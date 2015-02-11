@@ -16,6 +16,8 @@ module Github
 
       def unescape(s) CGI.unescape(s.to_s) end
 
+      def normalize(s) Addressable::URI.parse(s.to_s).normalize.path end
+
       def build_query(params)
         params.map { |k, v|
           if v.class == Array
