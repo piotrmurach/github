@@ -38,4 +38,23 @@ describe Github::Request do
     expect(request).to receive(:call).with(github.current_options, params)
     github.delete_request path, params
   end
+
+  context "with invalid characters in path" do
+    let(:wrong_path)     { 'github.api/$repos★/!usersÇ' }
+    let(:normalized_url) { 'https://api.github.com/github.api/$repos%E2%98%85/!users%C3%87' }
+
+    before do
+      expect(params).to receive(:options).exactly(5).times        { { raw: false } }
+      expect(params).to receive(:request_params).exactly(2).times { {} }
+    end
+
+    it "removes invalid characters before making a request" do
+      [:get, :patch, :post, :put, :delete].each do |request_type|
+        stub_request(request_type, normalized_url).
+          to_return(:status => 200, :body => "", :headers => {})
+
+        github.send("#{request_type}_request".to_sym, wrong_path, params)
+      end
+    end
+  end
 end # Github::Request

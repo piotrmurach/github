@@ -21,6 +21,12 @@ describe Github::Utils::Url do
     described_class.unescape('%5C%2F%3F%7D%21%40%23%24%25%5E%26%2A%28%29').should eql '\\/?}!@#$%^&*()'
   end
 
+  it 'normalizes correctly' do
+    described_class.normalize('github.api/$repos★/!usersÇ').should eql 'github.api/$repos%E2%98%85/!users%C3%87'
+    described_class.normalize('123github!@').should eql '123github!@'
+    described_class.normalize('github.api/repos/users').should eql 'github.api/repos/users'
+  end
+
   context 'parses query strings correctly' do
     it { described_class.parse_query("a=b").should eq 'a' => 'b' }
     it { described_class.parse_query("a=b&a=c").should eq 'a' => ['b','c'] }
