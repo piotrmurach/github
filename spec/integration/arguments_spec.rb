@@ -71,4 +71,54 @@ describe 'Arguments' do
       subject.get user, repo, milestone_id, :auto_pagination => true
     end
   end
+
+  context 'handling per_page as a parameter' do
+    let(:per_page) { 2 }
+
+    before :each do
+      stub_request(:get, url).
+       to_return(:status => 200, :body => '', :headers => {})
+    end
+
+    context 'when per_page is passed on Github init' do
+      let(:token)    { [*('a'..'z')].sample(30).join }
+      let(:instance) { Github.new(oauth_token: token, per_page: per_page) }
+      let(:response) { instance.repos.list }
+      let(:url)      { "https://api.github.com/user/repos?access_token=#{token}&per_page=#{per_page}" }
+
+      it 'passes per_page params to url' do
+        expect(response.status).to eq 200
+      end
+    end
+
+    context 'when per_page is passed on Repos initialize only' do
+      let(:repos)    { Github::Client::Repos.new(per_page: per_page) }
+      let(:response) { repos.list(user: 'fpgentil') }
+      let(:url)      { "https://api.github.com/users/fpgentil/repos?per_page=#{per_page}" }
+
+      it 'passes per_page params to url' do
+        expect(response.status).to eq 200
+      end
+    end
+
+    context 'when per_page is passed on Repos initialize and list method' do
+      let(:repos)    { Github::Client::Repos.new(per_page: per_page + 5) }
+      let(:response) { repos.list(user: 'fpgentil', per_page: per_page) }
+      let(:url)      { "https://api.github.com/users/fpgentil/repos?per_page=#{per_page}" }
+
+      it 'passes per_page params to url' do
+        expect(response.status).to eq 200
+      end
+    end
+
+    context 'when per_page is not passed as params' do
+      let(:repos)    { Github::Client::Repos.new }
+      let(:response) { repos.list(user: 'fpgentil') }
+      let(:url)      { "https://api.github.com/users/fpgentil/repos" }
+
+      it 'does not pass per_page params to url' do
+        expect(response.status).to eq 200
+      end
+    end
+  end
 end
