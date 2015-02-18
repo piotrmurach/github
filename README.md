@@ -621,7 +621,7 @@ In order to be able to create/update/remove files you need to use Contents API l
 contents = Github::Client::Repos::Contents.new oauth_token: '...'
 ```
 
-Having instantiaed the contents, to create a file do:
+Having instantiated the contents, to create a file do:
 
 ```ruby
 contents.create 'username', 'repo_name', 'full_path_to/file.ext',
