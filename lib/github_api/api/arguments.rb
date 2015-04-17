@@ -9,7 +9,6 @@ module Github
       include Validations
 
       AUTO_PAGINATION = 'auto_pagination'.freeze
-      PER_PAGE        = 'per_page'.freeze
 
       # Parameters passed to request
       attr_reader :params
@@ -101,7 +100,6 @@ module Github
         @params    = options
         @remaining = args[@required.size..-1]
         extract_pagination(options)
-        set_per_page(options)
 
         yield_or_eval(&block)
         self
@@ -244,16 +242,6 @@ module Github
       def yield_or_eval(&block)
         return unless block
         block.arity > 0 ? yield(self) : instance_eval(&block)
-      end
-
-      # Handle pagination params when they are not passed directly
-      #
-      def set_per_page(options)
-        per_page_config = api.current_options[:"#{PER_PAGE}"]
-        if (per_page_config != Github::Configuration.property_set[:"#{PER_PAGE}"])
-          options[PER_PAGE] ||=  per_page_config unless per_page_config.nil?
-        end
-        options
       end
     end # Arguments
   end # Api
