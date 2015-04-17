@@ -6,8 +6,6 @@ module Github
   module Pagination
     include Github::Constants
 
-    PER_PAGE        = 'per_page'.freeze
-
     # Return page links
     def links
       @links = Github::PageLinks.new(env[:response_headers])
