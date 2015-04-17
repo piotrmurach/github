@@ -6,6 +6,8 @@ module Github
   module Pagination
     include Github::Constants
 
+    PER_PAGE        = 'per_page'.freeze
+
     # Return page links
     def links
       @links = Github::PageLinks.new(env[:response_headers])
@@ -89,6 +91,16 @@ module Github
     # otherwise <tt>false</tt>
     def has_next_page?
       page_iterator.next?
+    end
+
+    # Handle pagination params when they are not passed directly
+    #
+    def self.per_page_as_param(per_page_config)
+      params = {}
+      if (per_page_config != Github::Configuration.property_set[:per_page])
+        params[:per_page] = per_page_config unless per_page_config.nil?
+      end
+      params
     end
 
     private
