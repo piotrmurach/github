@@ -143,7 +143,7 @@ module Github
     # @example
     #   github = Github.new
     #   github.issues.labels.remove 'user-name', 'repo-name', 'issue-number',
-    #     lable_name: 'label-name'
+    #     label_name: 'label-name'
     #
     # Remove all labels from an issue
     #
