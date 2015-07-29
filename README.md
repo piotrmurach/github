@@ -5,7 +5,7 @@
 [![Build Status](https://secure.travis-ci.org/peter-murach/github.png?branch=master)][travis]
 [![Dependency Status](https://gemnasium.com/peter-murach/github.png?travis)][gemnasium]
 [![Code Climate](https://codeclimate.com/github/peter-murach/github.png)][codeclimate]
-[![Coverage Status](https://coveralls.io/repos/peter-murach/github/badge.png?branch=master)][coveralls]
+[![Coverage Status](https://coveralls.io/repos/peter-murach/github/badge.svg?branch=master)][coveralls]
 
 [gem]: http://badge.fury.io/rb/github_api
 [travis]: http://travis-ci.org/peter-murach/github
