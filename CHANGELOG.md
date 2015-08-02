@@ -1,3 +1,9 @@
+0.12.4 (Aug 2, 2015)
+--------------------
+
+* Change gem spec to exlude test files and require ruby version
+* Update dependencies
+
 0.12.3 (Feb 7, 2015)
 --------------------
 
