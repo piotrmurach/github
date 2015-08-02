@@ -12,7 +12,7 @@
 [travis]: http://travis-ci.org/peter-murach/github
 [codeclimate]: https://codeclimate.com/github/peter-murach/github
 [coverage]: https://coveralls.io/r/peter-murach/github
-[inchpages]: http://inch-ci.org/github/peter-murach/finite_machine
+[inchpages]: http://inch-ci.org/github/peter-murach/github
 [gemnasium]: https://gemnasium.com/peter-murach/github
 
 [Website](http://peter-murach.github.io/github/) | [Wiki](https://github.com/peter-murach/github/wiki) | [RDocs](http://rubydoc.info/github/peter-murach/github/master/frames)
