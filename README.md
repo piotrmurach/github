@@ -596,11 +596,7 @@ A Rails controller that allows a user to authorize their GitHub account and then
 ```ruby
 class GithubController < ApplicationController
 
-  attr_accessor :github
-  private :github
-
   def authorize
-    github  = Github.new client_id: '...', client_secret: '...'
     address = github.authorize_url redirect_uri: 'http://...', scope: 'repo'
     redirect_to address
   end
@@ -610,6 +606,12 @@ class GithubController < ApplicationController
     access_token = github.get_token authorization_code
     access_token.token   # => returns token value
   end
+  
+  private
+  
+   def github
+    @github ||= Github.new client_id: '...', client_secret: '...'
+   end
 end
 ```
 
@@ -621,7 +623,7 @@ In order to be able to create/update/remove files you need to use Contents API l
 contents = Github::Client::Repos::Contents.new oauth_token: '...'
 ```
 
-Having instantiaed the contents, to create a file do:
+Having instantiated the contents, to create a file do:
 
 ```ruby
 contents.create 'username', 'repo_name', 'full_path_to/file.ext',

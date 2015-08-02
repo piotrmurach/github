@@ -20,7 +20,8 @@ module Github
     #   github = Github.new
     #   github.repos.contents.readme 'user-name', 'repo-name'
     #
-    #   content = Github::Repos;:Contents.new user: 'user-name', 'repo-name'
+    # @example
+    #   content = Github::Client::Repos::Contents.new user: 'user-name', repo: 'repo-name'
     #   content.readme
     #
     # @api public
