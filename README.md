@@ -1,17 +1,19 @@
 [![Application icon](https://github.com/peter-murach/github/raw/master/icons/github_api.png)][icon]
 [icon]: https://github.com/peter-murach/github/raw/master/icons/github_api.png
 # github_api
-[![Gem Version](https://badge.fury.io/rb/github_api.png)][gem]
-[![Build Status](https://secure.travis-ci.org/peter-murach/github.png?branch=master)][travis]
+[![Gem Version](https://badge.fury.io/rb/github_api.svg)][gem]
+[![Build Status](https://secure.travis-ci.org/peter-murach/github.svg?branch=master)][travis]
+[![Code Climate](https://codeclimate.com/github/peter-murach/github/badges/gpa.svg)][codeclimate]
+[![Coverage Status](https://coveralls.io/repos/peter-murach/github/badge.svg?branch=master)][coverage]
+[![Inline docs](http://inch-ci.org/github/peter-murach/github.svg)][inchpages]
 [![Dependency Status](https://gemnasium.com/peter-murach/github.png?travis)][gemnasium]
-[![Code Climate](https://codeclimate.com/github/peter-murach/github.png)][codeclimate]
-[![Coverage Status](https://coveralls.io/repos/peter-murach/github/badge.svg?branch=master)][coveralls]
 
 [gem]: http://badge.fury.io/rb/github_api
 [travis]: http://travis-ci.org/peter-murach/github
-[gemnasium]: https://gemnasium.com/peter-murach/github
 [codeclimate]: https://codeclimate.com/github/peter-murach/github
-[coveralls]: https://coveralls.io/r/peter-murach/github
+[coverage]: https://coveralls.io/r/peter-murach/github
+[inchpages]: http://inch-ci.org/github/peter-murach/finite_machine
+[gemnasium]: https://gemnasium.com/peter-murach/github
 
 [Website](http://peter-murach.github.io/github/) | [Wiki](https://github.com/peter-murach/github/wiki) | [RDocs](http://rubydoc.info/github/peter-murach/github/master/frames)
 
