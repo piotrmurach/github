@@ -5,15 +5,16 @@ require File.expand_path('../lib/github_api/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.name          = 'github_api'
   gem.authors       = [ "Piotr Murach" ]
-  gem.email         = ""
+  gem.email         = ''
   gem.homepage      = 'http://peter-murach.github.io/github/'
-  gem.summary       = %q{ Ruby client for the official GitHub API }
-  gem.license       = "MIT"
+  gem.summary       = 'Ruby client for the official GitHub API'
   gem.description   = %q{ Ruby client that supports all of the GitHub API methods. It's build in a modular way, that is, you can either instantiate the whole api wrapper Github.new or use parts of it e.i. Github::Client::Repos.new if working solely with repositories is your main concern. Intuitive query methods allow you easily call API endpoints. }
+  gem.license       = "MIT"
   gem.version       = Github::VERSION::STRING.dup
 
-  gem.files = Dir['Rakefile', '{features,lib,spec}/**/*', 'README*', 'LICENSE*']
+  gem.files = Dir['{lib}/**/*']
   gem.require_paths = %w[ lib ]
+  gem.extra_rdoc_files = ['LICENSE.txt', 'README.md']
 
   gem.add_dependency 'addressable', '~> 2.3'
   gem.add_dependency 'hashie',      '>= 3.3'
