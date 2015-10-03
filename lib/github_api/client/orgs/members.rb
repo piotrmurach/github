@@ -39,10 +39,10 @@ module Github
       org_name = arguments.org_name
 
       response = if params.delete('public')
-        get_request("/orgs/#{org_name}/public_members", params)
-      else
-        get_request("/orgs/#{org_name}/members", params)
-      end
+                   get_request("/orgs/#{org_name}/public_members", params)
+                 else
+                   get_request("/orgs/#{org_name}/members", params)
+                 end
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -67,15 +67,15 @@ module Github
       user     = arguments.user
 
       response = if params.delete('public')
-        get_request("/orgs/#{org_name}/public_members/#{user}", params)
-      else
-        get_request("/orgs/#{org_name}/members/#{user}", params)
-      end
+                   get_request("/orgs/#{org_name}/public_members/#{user}", params)
+                 else
+                   get_request("/orgs/#{org_name}/members/#{user}", params)
+                 end
       response.status == 204
     rescue Github::Error::NotFound
       false
-    end
 
+    end
     # Remove a member
     #
     # Removing a user from this list will remove them from all teams and
@@ -121,5 +121,21 @@ module Github
       delete_request("/orgs/#{arguments.org_name}/public_members/#{arguments.user}", arguments.params)
     end
     alias :conceal_membership :conceal
+
+    # Add/update user’s membership with organization
+    #
+    # @example
+    #  github = Github.new oauth_token: '...'
+    #  github.orgs.members.grant_organization_membership 'org-name', 'member-name', {role: 'role'}
+    #
+    # role is optional and can be member / admin. default - member
+    #
+    # @api public
+    def grant_organization_membership(*args)
+      params = arguments(args, required: [:org, :username]).params
+      org = arguments.org
+      username = arguments.username
+      response= put_request("/orgs/#{org}/memberships/#{username}", params)
+    end
   end # Client::Orgs::Members
 end # Github
