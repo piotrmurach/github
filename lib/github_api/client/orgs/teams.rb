@@ -195,7 +195,7 @@ module Github
     def add_member(*args)
       arguments(args, required: [:id, :user])
 
-      put_request("/teams/#{arguments.id}/members/#{arguments.user}", arguments.params)
+      put_request("/teams/#{arguments.id}/memberships/#{arguments.user}", arguments.params)
     end
     alias :add_team_member :add_member
 
@@ -214,7 +214,7 @@ module Github
     def remove_member(*args)
       arguments(args, required: [:id, :user])
 
-      delete_request("/teams/#{arguments.id}/members/#{arguments.user}", arguments.params)
+      delete_request("/teams/#{arguments.id}/memberships/#{arguments.user}", arguments.params)
     end
     alias :remove_team_member :remove_member
 
