@@ -6,7 +6,7 @@ describe Github::Client::Orgs::Teams, '#remove_member' do
   let(:team_id)   { 1 }
   let(:user) { 'peter-murach' }
   let(:repo) { 'github' }
-  let(:request_path) { "/teams/#{team_id}/members/#{user}"}
+  let(:request_path) { "/teams/#{team_id}/memberships/#{user}"}
 
   before {
     stub_delete(request_path).to_return(:body => body, :status => status,
@@ -27,7 +27,7 @@ describe Github::Client::Orgs::Teams, '#remove_member' do
       expect { subject.remove_member team_id, nil }.to raise_error(ArgumentError)
     end
 
-    it "should add resource successfully" do
+    it "should remove resource successfully" do
       subject.remove_member team_id, user
       a_delete(request_path).should have_been_made
     end
