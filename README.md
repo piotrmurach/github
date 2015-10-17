@@ -406,7 +406,7 @@ Though this method is convenient you should strongly consider using `OAuth` for 
 
 #### 3.2.1 For an User
 
-To create an access token through the GitHub Authrizations API, you are required to pass your basic credentials and scopes you wish to have for the authentication token.
+To create an access token through the GitHub Authorizations API, you are required to pass your basic credentials and scopes you wish to have for the authentication token.
 
 ```ruby
 github = Github.new basic_auth: 'login:password'
@@ -648,7 +648,7 @@ Then update the file just like you do with creating:
 contents.update 'username', 'repo_name', 'full_path_to/file.ext',
   path: 'full_path_to/file.ext'
   message: 'Your commit message',
-  content: 'The contens to be updated',
+  content: 'The contents to be updated',
   sha: file.sha
 ```
 
