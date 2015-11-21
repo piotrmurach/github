@@ -10,20 +10,29 @@ module Github
     # both concealed and public members will be returned.
     # Otherwise only public members are returned.
     #
+    # @see https://developer.github.com/v3/orgs/members/#members-list
+    #
     # @param [Hash] params
-    # @input params [String] :filter
+    # @option params [String] :filter
     #   Filter members returned in the list. Can be one of:
     #   * 2fa_disabled: Members without two-factor authentication enabled.
     #   Available for owners of organizations with private repositories.
     #   * all: All members the authenticated user can see.
     #   Default: all
+    # @option params [String] :role
+    #   Filter members returned by their role. Can be one of:
+    #     * all: All members of the organization, regardless of role.
+    #     * admin: Organization owners.
+    #     * member: Non-owner organization members.
     #
     # @example
-    #  github = Github.new
-    #  github.orgs.members.list 'org-name'
-    #  github.orgs.members.list 'org-name' { |memb| ... }
+    #   github = Github.new
+    #   github.orgs.members.list 'org-name'
+    #   github.orgs.members.list 'org-name' { |memb| ... }
     #
     # List public members
+    #
+    # @see https://developer.github.com/v3/orgs/members/#public-members-list
     #
     # Members of an organization can choose to have their
     # membership publicized or not.
@@ -46,7 +55,7 @@ module Github
       return response unless block_given?
       response.each { |el| yield el }
     end
-    alias :all :list
+    alias_method :all, :list
 
     # Check if user is, publicly or privately, a member of an organization
     #
@@ -81,6 +90,8 @@ module Github
     # Removing a user from this list will remove them from all teams and
     # they will no longer have any access to the organization’s repositories.
     #
+    # @see https://developer.github.com/v3/orgs/members/#remove-a-member
+    #
     # @example
     #   github = Github.new
     #   github.orgs.members.remove 'org-name', 'member-name'
@@ -89,11 +100,14 @@ module Github
     def delete(*args)
       arguments(args, required: [:org_name, :user])
 
-      delete_request("/orgs/#{arguments.org_name}/members/#{arguments.user}", arguments.params)
+      delete_request("/orgs/#{arguments.org_name}/members/#{arguments.user}",
+                     arguments.params)
     end
-    alias :remove :delete
+    alias_method :remove, :delete
 
-    # Publicize a user’s membership
+    # Publicize a user's membership
+    #
+    # @see https://developer.github.com/v3/orgs/members/#publicize-a-users-membership
     #
     # @example
     #   github = Github.new oauth_token: '...'
@@ -108,7 +122,9 @@ module Github
     alias :make_public :publicize
     alias :publicize_membership :publicize
 
-    # Conceal a user’s membership
+    # Conceal a user's membership
+    #
+    # @see https://developer.github.com/v3/orgs/members/#conceal-a-users-membership
     #
     # @example
     #  github = Github.new oauth_token: '...'
@@ -120,6 +136,6 @@ module Github
 
       delete_request("/orgs/#{arguments.org_name}/public_members/#{arguments.user}", arguments.params)
     end
-    alias :conceal_membership :conceal
+    alias_method :conceal_membership, :conceal
   end # Client::Orgs::Members
 end # Github
