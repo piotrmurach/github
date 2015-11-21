@@ -4,7 +4,7 @@ module Github
   # The Releases API
   class Client::Repos::Releases < API
 
-    require_all 'github_api/client/repos/releases', 'assets'
+    require_all 'github_api/client/repos/releases', 'assets', 'tags'
 
     VALID_RELEASE_PARAM_NAMES = %w[
       tag_name
@@ -16,7 +16,7 @@ module Github
     ].freeze # :nodoc:
 
     # Access to Repos::Releases::Assets API
-    namespace :assets
+    namespace :assets, :tags
 
     # List releases for a repository
     #

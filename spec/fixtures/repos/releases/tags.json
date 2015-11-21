@@ -1,0 +1,40 @@
+{
+    "url": "https://api.github.com/repos/anuja-joshi/rails_express/releases/1936952",
+    "assets_url": "https://api.github.com/repos/anuja-joshi/rails_express/releases/1936952/assets",
+    "upload_url": "https://uploads.github.com/repos/anuja-joshi/rails_express/releases/1936952/assets{?name,label}",
+    "html_url": "https://github.com/anuja-joshi/rails_express/releases/tag/v1",
+    "id": 1936952,
+    "tag_name": "v1",
+    "target_commitish": "master",
+    "name": "v1",
+    "draft": false,
+    "author": {
+        "login": "anuja-joshi",
+        "id": 5124042,
+        "avatar_url": "https://avatars.githubusercontent.com/u/5124042?v=3",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/anuja-joshi",
+        "html_url": "https://github.com/anuja-joshi",
+        "followers_url": "https://api.github.com/users/anuja-joshi/followers",
+        "following_url": "https://api.github.com/users/anuja-joshi/following{/other_user}",
+        "gists_url": "https://api.github.com/users/anuja-joshi/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/anuja-joshi/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/anuja-joshi/subscriptions",
+        "organizations_url": "https://api.github.com/users/anuja-joshi/orgs",
+        "repos_url": "https://api.github.com/users/anuja-joshi/repos",
+        "events_url": "https://api.github.com/users/anuja-joshi/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/anuja-joshi/received_events",
+        "type": "User",
+        "site_admin": false
+    },
+    "prerelease": false,
+    "created_at": "2013-08-24T09:35:52Z",
+    "published_at": "2015-10-09T14:39:07Z",
+    "assets": [
+
+        ],
+    "tarball_url": "https://api.github.com/repos/anuja-joshi/rails_express/tarball/v1",
+    "zipball_url": "https://api.github.com/repos/anuja-joshi/rails_express/zipball/v1",
+    "body": ""
+}
+
