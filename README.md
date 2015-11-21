@@ -404,7 +404,7 @@ Though this method is convenient you should strongly consider using `OAuth` for 
 
 ### 3.2 Authorizations API
 
-#### 3.2.1 For an User
+#### 3.2.1 For a User
 
 To create an access token through the GitHub Authorizations API, you are required to pass your basic credentials and scopes you wish to have for the authentication token.
 
