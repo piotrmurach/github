@@ -14,8 +14,8 @@ describe Github::Client::Orgs::Teams, '#edit' do
 
   before {
     stub_patch(request_path).with(inputs).
-      to_return(:body => body, :status => status,
-      :headers => {:content_type => "application/json; charset=utf-8"})
+      to_return(body: body, status: status,
+      headers: {content_type: 'application/json; charset=utf-8'})
   }
 
   after { reset_authentication_for(subject) }
