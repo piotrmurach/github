@@ -56,3 +56,13 @@ Feature: Releases API
       | murek | github_api_test | 281255 |
     When I make request within a cassette named "repos/releases/delete"
     Then the response status should be 204
+
+  Scenario: Get Latest Release
+
+    Given I want latest resource with the following params:
+      | owner       | repo          |
+      | anuja-joshi | rails_express |
+    When I make request within a cassette named "repos/releases/latest"
+    Then the response status should be 200
+      And the response type should be JSON
+      And the response should not be empty

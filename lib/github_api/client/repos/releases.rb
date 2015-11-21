@@ -149,5 +149,21 @@ module Github
 
       delete_request("/repos/#{arguments.owner}/#{arguments.repo}/releases/#{arguments.id}", arguments.params)
     end
+
+    # Get the latest release
+    #
+    # View the latest published full release for the repository.
+    # Draft releases and prereleases are not returned.
+    #
+    # @example
+    #   github = Github.new
+    #   github.repos.releases.latest 'owner', 'repo'
+    #
+    # @api public
+    def latest(*args)
+      arguments(args, required: [:owner, :repo]).params
+
+      get_request("repos/#{arguments.owner}/#{arguments.repo}/releases/latest", arguments.params)
+    end
   end # Client::Repos::Statuses
 end # Github
