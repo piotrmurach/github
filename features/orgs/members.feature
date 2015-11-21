@@ -55,30 +55,3 @@ Feature: Members API
       | true   |
     When I make request within a cassette named "orgs/members/member_public_true"
     Then the response should be true
-
-  Scenario: Add/Update Organization Membership (unaffiliated user)
-
-    Given I want to grant_organization_membership resource with the following params:
-      | org    | username  |
-      | CodeCu | anujaware |
-    And I pass the following request options:
-      | role   |
-      | member |
-    When I make request within a cassette named "orgs/members/grant_organization_membership_unaffiliated_user"
-    Then the response status should be 200
-      And the response type should be JSON
-      And the response should not be empty
-
-
-  Scenario: Add/Update Organization Membership (already member)
-
-    Given I want to grant_organization_membership resource with the following params:
-      | org    | username    |
-      | CodeCu | anuja-joshi |
-    And I pass the following request options:
-      | role   |
-      | admin  |
-    When I make request within a cassette named "orgs/members/grant_organization_membership_already_member"
-    Then the response status should be 200
-      And the response type should be JSON
-      And the response should not be empty

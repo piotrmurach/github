@@ -6,6 +6,7 @@ module Github
 
     require_all 'github_api/client/orgs',
                 'members',
+                'memberships',
                 'teams'
 
     # Access to Client::Orgs::Members API
