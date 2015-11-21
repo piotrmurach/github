@@ -43,13 +43,13 @@ module Github
     #
     # @api public
     def get(*args)
-      arguments(args, required: [:org])
+      arguments(args, required: [:org_name])
       params = arguments.params
 
       if (username = params.delete('username'))
-        get_request("/orgs/#{arguments.org}/memberships/#{username}", params)
+        get_request("/orgs/#{arguments.org_name}/memberships/#{username}", params)
       else
-        get_request("/user/memberships/orgs/#{arguments.org}", params)
+        get_request("/user/memberships/orgs/#{arguments.org_name}", params)
       end
     end
     alias_method :find, :get
@@ -71,19 +71,42 @@ module Github
     #
     # @example
     #   github = Github.new oauth_token: '...'
-    #   github.orgs.memberhsips.add 'org-name', 'member-name', role: 'role'
+    #   github.orgs.memberships.add 'org-name', 'member-name', role: 'role'
     #
     # @api public
     def create(*args)
-      arguments(args, required: [:org, :username]) do
+      arguments(args, required: [:org_name, :username]) do
         assert_required :role
       end
 
-      put_request("/orgs/#{arguments.org}/memberships/#{arguments.username}",
+      put_request("/orgs/#{arguments.org_name}/memberships/#{arguments.username}",
                   arguments.params)
     end
     alias_method :update, :create
     alias_method :add, :create
+
+    # Edit your organization membership
+    #
+    # @see https://developer.github.com/v3/orgs/members/#edit-your-organization-membership
+    # @param [String] :org
+    # @param [Hash] params
+    # @option params [String] :state
+    #   Required. The state that the membership should be in.
+    #   Only "active" will be accepted.
+    #
+    # @example
+    #   github = Github.new oauth_token: '...'
+    #   github.orgs.memberships.edit 'org-name', state: 'active'
+    #
+    # @api public
+    def edit(*args)
+      arguments(args, required: [:org_name]) do
+        assert_required :state
+      end
+
+      patch_request("/user/memberships/orgs/#{arguments.org_name}",
+                    arguments.params)
+    end
 
     # Remove organization membership
     #
@@ -97,9 +120,9 @@ module Github
     #
     # @api public
     def delete(*args)
-      arguments(args, required: [:org, :username])
+      arguments(args, required: [:org_name, :username])
 
-      delete_request("/orgs/#{arguments.org}/memberships/#{arguments.username}", arguments.params)
+      delete_request("/orgs/#{arguments.org_name}/memberships/#{arguments.username}", arguments.params)
     end
     alias_method :remove, :delete
   end # Client::Orgs::Memberships

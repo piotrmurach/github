@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Client::Orgs::Memberships, '#get' do
+RSpec.describe Github::Client::Orgs::Memberships, '#get' do
   let(:org) { 'github' }
   let(:username) { 'piotr' }
   let(:body) { fixture('orgs/membership.json') }

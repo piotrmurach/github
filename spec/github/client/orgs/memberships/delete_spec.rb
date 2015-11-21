@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Client::Orgs::Memberships, '#delete' do
+RSpec.describe Github::Client::Orgs::Memberships, '#delete' do
   let(:request_path) { "/orgs/rails/memberships/piotr" }
 
   before {
