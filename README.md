@@ -1,5 +1,6 @@
-[![Application icon](https://github.com/peter-murach/github/raw/master/icons/github_api.png)][icon]
-[icon]: https://github.com/peter-murach/github/raw/master/icons/github_api.png
+<div align="center">
+  <a href="http://peter-murach.github.io/github/"><img width="136" src="https://github.com/peter-murach/github/raw/master/icons/github_api.png" alt="github api logo" /></a>
+</div>
 # github_api
 [![Gem Version](https://badge.fury.io/rb/github_api.svg)][gem]
 [![Build Status](https://secure.travis-ci.org/peter-murach/github.svg?branch=master)][travis]
