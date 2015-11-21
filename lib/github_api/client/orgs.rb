@@ -11,6 +11,9 @@ module Github
     # Access to Client::Orgs::Members API
     namespace :members
 
+    # Access to Client::Orgs::Memberships API
+    namespace :memberships
+
     # Access to Client::Orgs::Teams API
     namespace :teams
 
