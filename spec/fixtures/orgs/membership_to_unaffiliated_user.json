@@ -1,0 +1,37 @@
+{
+    "url": "https://api.github.com/orgs/CodeCu/memberships/anujaware",
+    "state": "pending",
+    "role": "member",
+    "organization_url": "https://api.github.com/orgs/CodeCu",
+    "organization": {
+        "login": "CodeCu",
+        "id": 14146669,
+        "url": "https://api.github.com/orgs/CodeCu",
+        "repos_url": "https://api.github.com/orgs/CodeCu/repos",
+        "events_url": "https://api.github.com/orgs/CodeCu/events",
+        "members_url": "https://api.github.com/orgs/CodeCu/members{/member}",
+        "public_members_url": "https://api.github.com/orgs/CodeCu/public_members{/member}",
+        "avatar_url": "https://avatars.githubusercontent.com/u/14146669?v=3",
+        "description": null
+    },
+    "user": {
+        "login": "anujaware",
+        "id": 562048,
+        "avatar_url": "https://avatars.githubusercontent.com/u/562048?v=3",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/anujaware",
+        "html_url": "https://github.com/anujaware",
+        "followers_url": "https://api.github.com/users/anujaware/followers",
+        "following_url": "https://api.github.com/users/anujaware/following{/other_user}",
+        "gists_url": "https://api.github.com/users/anujaware/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/anujaware/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/anujaware/subscriptions",
+        "organizations_url": "https://api.github.com/users/anujaware/orgs",
+        "repos_url": "https://api.github.com/users/anujaware/repos",
+        "events_url": "https://api.github.com/users/anujaware/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/anujaware/received_events",
+        "type": "User",
+        "site_admin": false
+    }
+}
+
