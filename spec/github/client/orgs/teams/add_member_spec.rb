@@ -5,7 +5,7 @@ require 'spec_helper'
 describe Github::Client::Orgs::Teams, '#add_member' do
   let(:team_id) { 1 }
   let(:user) { 'peter-murach' }
-  let(:request_path) { "/teams/#{team_id}/members/#{user}" }
+  let(:request_path) { "/teams/#{team_id}/memberships/#{user}" }
 
   before {
     stub_put(request_path).to_return(:body => body, :status => status,
@@ -15,22 +15,42 @@ describe Github::Client::Orgs::Teams, '#add_member' do
   after { reset_authentication_for(subject) }
 
   context "resouce added" do
-    let(:body) { '' }
-    let(:status) { 204 }
+    let(:status) { 200 }
 
-    it { expect { subject.add_member }.to raise_error(ArgumentError)}
+    context 'invalid arguments' do
+      let(:body) {''}
 
-    it "should fail to add resource if 'team_id' input is nil" do
-      expect { subject.add_member nil, user }.to raise_error(ArgumentError)
+      it { expect { subject.add_member }.to raise_error(ArgumentError)}
+
+      it "should fail to add resource if 'team_id' input is nil" do
+        expect { subject.add_member nil, user }.to raise_error(ArgumentError)
+      end
+
+      it "should fail to add resource if 'user' input is nil" do
+        expect { subject.add_member team_id, nil }.to raise_error(ArgumentError)
+      end
     end
 
-    it "should fail to add resource if 'user' input is nil" do
-      expect { subject.add_member team_id, nil }.to raise_error(ArgumentError)
+    context "affiliated resouce added" do
+      let(:body) { fixture('orgs/add_affiliated_member.json') }
+
+      it "should add resource successfully" do
+        response = subject.add_member team_id, user
+        a_put(request_path).should have_been_made
+        expect(response.state).to eq('active')
+      end
+
     end
 
-    it "should add resource successfully" do
-      subject.add_member team_id, user
-      a_put(request_path).should have_been_made
+    context "unaffiliated resouce added" do
+      let(:body) { fixture('orgs/add_unaffiliated_member.json') }
+
+      it "should add resource successfully" do
+        response = subject.add_member team_id, user
+        a_put(request_path).should have_been_made
+        expect(response.state).to eq('pending')
+      end
+
     end
   end
 
