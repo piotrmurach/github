@@ -118,8 +118,8 @@ module Github
       # Check if required keys are present inside parameters hash.
       #
       # @api public
-      def assert_required(required)
-        assert_required_keys required, params
+      def assert_required(*required)
+        assert_required_keys(required, params)
         self
       end
 
