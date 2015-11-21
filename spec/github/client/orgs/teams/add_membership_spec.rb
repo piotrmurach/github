@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Client::Orgs::Teams, '#add_member' do
+describe Github::Client::Orgs::Teams, '#add_membership' do
   let(:team_id) { 1 }
   let(:user) { 'peter-murach' }
   let(:request_path) { "/teams/#{team_id}/memberships/#{user}" }
@@ -20,14 +20,14 @@ describe Github::Client::Orgs::Teams, '#add_member' do
     context 'invalid arguments' do
       let(:body) {''}
 
-      it { expect { subject.add_member }.to raise_error(ArgumentError)}
+      it { expect { subject.add_membership }.to raise_error(ArgumentError)}
 
       it "should fail to add resource if 'team_id' input is nil" do
-        expect { subject.add_member nil, user }.to raise_error(ArgumentError)
+        expect { subject.add_membership nil, user }.to raise_error(ArgumentError)
       end
 
       it "should fail to add resource if 'user' input is nil" do
-        expect { subject.add_member team_id, nil }.to raise_error(ArgumentError)
+        expect { subject.add_membership team_id, nil }.to raise_error(ArgumentError)
       end
     end
 
@@ -35,7 +35,7 @@ describe Github::Client::Orgs::Teams, '#add_member' do
       let(:body) { fixture('orgs/add_affiliated_member.json') }
 
       it "should add resource successfully" do
-        response = subject.add_member team_id, user
+        response = subject.add_membership team_id, user
         a_put(request_path).should have_been_made
         expect(response.state).to eq('active')
       end
@@ -46,7 +46,7 @@ describe Github::Client::Orgs::Teams, '#add_member' do
       let(:body) { fixture('orgs/add_unaffiliated_member.json') }
 
       it "should add resource successfully" do
-        response = subject.add_member team_id, user
+        response = subject.add_membership team_id, user
         a_put(request_path).should have_been_made
         expect(response.state).to eq('pending')
       end
@@ -55,6 +55,6 @@ describe Github::Client::Orgs::Teams, '#add_member' do
   end
 
   it_should_behave_like 'request failure' do
-    let(:requestable) { subject.add_member team_id, user }
+    let(:requestable) { subject.add_membership team_id, user }
   end
-end # add_member
+end # add_membership
