@@ -411,7 +411,7 @@ To create an access token through the GitHub Authorizations API, you are require
 
 ```ruby
 github = Github.new basic_auth: 'login:password'
-github.oauth.create scopes: ['repo']
+github.oauth.create scopes: ['repo'], note: 'admin script'
 ```
 
 You can add more than one scope from the `user`, `public_repo`, `repo`, `gist` or leave the scopes parameter out, in which case, the default read-only access will be assumed (includes public user profile info, public repo info, and gists).

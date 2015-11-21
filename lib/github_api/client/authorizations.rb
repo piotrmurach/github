@@ -6,16 +6,6 @@ module Github
 
     require_all 'github_api/client/authorizations', 'app'
 
-    VALID_AUTH_PARAM_NAMES = %w[
-      scopes
-      add_scopes
-      remove_scopes
-      note
-      note_url
-      client_id
-      client_secret
-    ].freeze
-
     # Access to Authorizations::App API
     namespace :app
 
@@ -24,9 +14,9 @@ module Github
     # @see https://developer.github.com/v3/oauth_authorizations/#list-your-authorizations
     #
     # @example
-    #  github = Github.new basic_auth: 'login:password'
-    #  github.oauth.list
-    #  github.oauth.list { |auth| ... }
+    #   github = Github.new basic_auth: 'login:password'
+    #   github.oauth.list
+    #   github.oauth.list { |auth| ... }
     #
     # @api public
     def list(*args)
@@ -37,7 +27,7 @@ module Github
       return response unless block_given?
       response.each { |el| yield el }
     end
-    alias :all :list
+    alias_method :all, :list
 
     # Get a single authorization
     #
@@ -56,38 +46,44 @@ module Github
 
       get_request("/authorizations/#{arguments.id}", arguments.params)
     end
-    alias :find :get
+    alias_method :find, :get
 
     # Create a new authorization
+    #
+    # @see https://developer.github.com/v3/oauth_authorizations/#create-a-new-authorization
     #
     # @param [Hash] params
     # @option params [Array[String]] :scopes
     #   A list of scopes that this authorization is in.
     # @option params [String] :note
-    #   A note to remind you what the OAuth token is for.
+    #   Required. A note to remind you what the OAuth token is for.
     # @option params [String] :note_url
     #   A URL to remind you what the OAuth token is for.
     # @option params [String] :client_id
     #   The 20 character OAuth app client key for which to create the token.
     # @option params [String] :client_secret
     #   The 40 character OAuth app client secret for which to create the token.
+    # @option params [String] :fingerprint
+    #   A unique string to distinguish an authorization from others
+    #   created for the same client ID and user.
     #
     # @example
-    #  github = Github.new basic_auth: 'login:password'
-    #  github.oauth.create
-    #    "scopes" => ["public_repo"]
+    #   github = Github.new basic_auth: 'login:password'
+    #   github.oauth.create scopes: ["public_repo"], note: 'amdmin script'
     #
     # @api public
     def create(*args)
       raise_authentication_error unless authenticated?
       arguments(args) do
-        permit VALID_AUTH_PARAM_NAMES
+        assert_required :note, :scopes
       end
 
       post_request('/authorizations', arguments.params)
     end
 
     # Update an existing authorization
+    #
+    # @see https://developer.github.com/v3/oauth_authorizations/#update-an-existing-authorization
     #
     # @param [Hash] inputs
     # @option inputs [Array] :scopes
@@ -100,28 +96,30 @@ module Github
     #   Optional string - A note to remind you what the OAuth token is for.
     # @optoin inputs [String] :note_url
     #   Optional string - A URL to remind you what the OAuth token is for.
+    # @option params [String] :fingerprint
+    #   A unique string to distinguish an authorization from others
+    #   created for the same client ID and user.
     #
     # @example
-    #  github = Github.new basic_auth: 'login:password'
-    #  github.oauth.update "authorization-id", add_scopes: ["repo"]
+    #   github = Github.new basic_auth: 'login:password'
+    #   github.oauth.update "authorization-id", add_scopes: ["repo"]
     #
     # @api public
     def update(*args)
       raise_authentication_error unless authenticated?
-      arguments(args, required: [:id]) do
-        permit VALID_AUTH_PARAM_NAMES
-      end
+      arguments(args, required: [:id])
 
       patch_request("/authorizations/#{arguments.id}", arguments.params)
     end
-    alias :edit :update
+    alias_method :edit, :update
 
     # Delete an authorization
     #
     # @see https://developer.github.com/v3/oauth_authorizations/#delete-an-authorization
     #
     # @example
-    #  github.oauth.delete 'authorization-id'
+    #   github = Github.new
+    #   github.oauth.delete 'authorization-id'
     #
     # @api public
     def delete(*args)
@@ -130,14 +128,13 @@ module Github
 
       delete_request("/authorizations/#{arguments.id}", arguments.params)
     end
-    alias :remove :delete
+    alias_method :remove, :delete
 
     protected
 
     def raise_authentication_error
-      raise ArgumentError, 'You can only access your own tokens' +
-        ' via Basic Authentication'
+      raise ArgumentError, 'You can only access your own tokens' \
+                           ' via Basic Authentication'
     end
-
   end # Client::Authorizations
 end # Github

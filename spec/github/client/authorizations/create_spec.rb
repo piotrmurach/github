@@ -5,7 +5,7 @@ require 'spec_helper'
 describe Github::Client::Authorizations, '#create' do
   let(:basic_auth)   { 'login:password' }
   let(:host)         { "https://#{basic_auth}@api.github.com" }
-  let(:inputs)       { { :scopes => ['repo'] } }
+  let(:inputs)       { {scopes: ['repo'], note: 'admin script' } }
   let(:request_path) { "/authorizations" }
 
   before {
@@ -21,7 +21,6 @@ describe Github::Client::Authorizations, '#create' do
     let(:body) { fixture('auths/authorization.json') }
     let(:status) { 201 }
 
-
     it "fails to get resource without basic authentication" do
       reset_authentication_for subject
       expect { subject.create }.to raise_error(ArgumentError)
@@ -35,6 +34,13 @@ describe Github::Client::Authorizations, '#create' do
     it "returns the resource" do
       authorization = subject.create inputs
       authorization.should be_a Github::ResponseWrapper
+    end
+
+    it "fails without a note parameter" do
+      expect {
+        subject.create scopes: ['repos']
+      }.to raise_error(Github::Error::RequiredParams,
+                       /Required parameters are: note/)
     end
 
     it "gets the authorization information" do
