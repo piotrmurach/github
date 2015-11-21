@@ -2,10 +2,12 @@
 
 module Github
   class Client::Repos::Keys < API
-
-    VALID_KEY_OPTIONS = %w[ title key ].freeze
-
     # List deploy keys
+    #
+    # @see https://developer.github.com/v3/repos/keys/#list
+    #
+    # @param [String] :user
+    # @param [String :repo
     #
     # @example
     #   github = Github.new
@@ -20,13 +22,20 @@ module Github
     def list(*args)
       arguments(args, required: [:user, :repo])
 
-      response = get_request("/repos/#{arguments.user}/#{arguments.repo}/keys", arguments.params)
+      response = get_request("/repos/#{arguments.user}/#{arguments.repo}/keys",
+                             arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
-    alias :all :list
+    alias_method :all, :list
 
     # Get a key
+    #
+    # @see https://developer.github.com/v3/repos/keys/#get
+    #
+    # @param [String] :user
+    # @param [String] :repo
+    # @param [Integer] :id
     #
     # @example
     #   github = Github.new
@@ -34,19 +43,26 @@ module Github
     #
     # @api public
     def get(*args)
-      arguments(args, :required => [:user, :repo, :id])
+      arguments(args, required: [:user, :repo, :id])
 
       get_request("/repos/#{arguments.user}/#{arguments.repo}/keys/#{arguments.id}", arguments.params)
     end
-    alias :find :get
+    alias_method :find, :get
 
     # Create a key
     #
+    # @see https://developer.github.com/v3/repos/keys/#create
+    #
+    # @param [String] :user
+    # @param [String] :repo
     # @param [Hash] params
     # @option params [String] :title
     #   Required string.
     # @option params [String] :key
     #   Required string.
+    # @option params [String] :read_only
+    #   If true, the key will only be able to read repository contents.
+    #   Otherwise, the key will be able to read and write.
     #
     # @example
     #   github = Github.new
@@ -56,15 +72,20 @@ module Github
     #
     # @api public
     def create(*args)
-      arguments(args, required: [:user, :repo]) do
-        permit VALID_KEY_OPTIONS
-        assert_required VALID_KEY_OPTIONS
-      end
+      arguments(args, required: [:user, :repo])
 
-      post_request("/repos/#{arguments.user}/#{arguments.repo}/keys", arguments.params)
+      post_request("/repos/#{arguments.user}/#{arguments.repo}/keys",
+                   arguments.params)
     end
+    alias_method :add, :create
 
     # Delete key
+    #
+    # @see https://developer.github.com/v3/repos/keys/#delete
+    #
+    # @param [String] :user
+    # @param [String] :repo
+    # @param [Integer] :id
     #
     # @example
     #   github = Github.new
@@ -73,9 +94,9 @@ module Github
     # @api public
     def delete(*args)
       arguments(args, required: [:user, :repo, :id])
-      params = arguments.params
 
-      delete_request("/repos/#{arguments.user}/#{arguments.repo}/keys/#{arguments.id}", params)
+      delete_request("/repos/#{arguments.user}/#{arguments.repo}/keys/#{arguments.id}", arguments.params)
     end
+    alias_method :remove, :delete
   end # Client::Repos::Keys
 end # Github
