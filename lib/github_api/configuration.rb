@@ -39,7 +39,7 @@ module Github
     property  :mime_type
 
     # The value sent in the http header for 'User-Agent' if none is set
-    property  :user_agent, default: "Github API Ruby Gem #{Github::VERSION::STRING}".freeze
+    property  :user_agent, default: "Github API Ruby Gem #{Github::VERSION}".freeze
 
     # By default uses the Faraday connection options if none is set
     property  :connection_options, default: {}
