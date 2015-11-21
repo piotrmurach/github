@@ -48,10 +48,10 @@ module Github
       org_name = arguments.org_name
 
       response = if params.delete('public')
-        get_request("/orgs/#{org_name}/public_members", params)
-      else
-        get_request("/orgs/#{org_name}/members", params)
-      end
+                   get_request("/orgs/#{org_name}/public_members", params)
+                 else
+                   get_request("/orgs/#{org_name}/members", params)
+                 end
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -76,15 +76,15 @@ module Github
       user     = arguments.user
 
       response = if params.delete('public')
-        get_request("/orgs/#{org_name}/public_members/#{user}", params)
-      else
-        get_request("/orgs/#{org_name}/members/#{user}", params)
-      end
+                   get_request("/orgs/#{org_name}/public_members/#{user}", params)
+                 else
+                   get_request("/orgs/#{org_name}/members/#{user}", params)
+                 end
       response.status == 204
     rescue Github::Error::NotFound
       false
-    end
 
+    end
     # Remove a member
     #
     # Removing a user from this list will remove them from all teams and
@@ -127,8 +127,8 @@ module Github
     # @see https://developer.github.com/v3/orgs/members/#conceal-a-users-membership
     #
     # @example
-    #  github = Github.new oauth_token: '...'
-    #  github.orgs.members.conceal 'org-name', 'member-name'
+    #   github = Github.new oauth_token: '...'
+    #   github.orgs.members.conceal 'org-name', 'member-name'
     #
     # @api public
     def conceal(*args)
