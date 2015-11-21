@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Client::Repos::Releases::Tags, '#get' do
+RSpec.describe Github::Client::Repos::Releases::Tags, '#get' do
   let(:owner) { 'anuja-joshi' }
   let(:repo)  { 'rails_express' }
   let(:tag)    { 'v1' }
@@ -26,7 +26,7 @@ describe Github::Client::Repos::Releases::Tags, '#get' do
     end
 
     it "should get the resource" do
-      subject.get owner, repo, tag
+      subject.get(owner, repo, tag)
       expect(a_get(path)).to have_been_made
     end
 

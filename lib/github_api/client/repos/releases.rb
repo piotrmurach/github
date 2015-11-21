@@ -6,23 +6,19 @@ module Github
 
     require_all 'github_api/client/repos/releases', 'assets', 'tags'
 
-    VALID_RELEASE_PARAM_NAMES = %w[
-      tag_name
-      target_commitish
-      name
-      body
-      draft
-      prerelease
-    ].freeze # :nodoc:
-
     # Access to Repos::Releases::Assets API
-    namespace :assets, :tags
+    namespace :assets
+
+    # Access to Repos::Releases::Tags API
+    namespace :tags
 
     # List releases for a repository
     #
     # Users with push access to the repository will receive all releases
     # (i.e., published releases and draft releases). Users with pull access
     # will receive published releases only.
+    #
+    # @see https://developer.github.com/v3/repos/releases/#list-releases-for-a-repository
     #
     # @example
     #   github = Github.new
@@ -31,15 +27,17 @@ module Github
     #
     # @api public
     def list(*args)
-      arguments(args, required: [:owner, :repo]).params
+      arguments(args, required: [:owner, :repo])
 
       response = get_request("/repos/#{arguments.owner}/#{arguments.repo}/releases", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
-    alias :all :list
+    alias_method :all, :list
 
     # Get a single release
+    #
+    # @see https://developer.github.com/v3/repos/releases/#get-a-single-release
     #
     # @example
     #   github = Github.new
@@ -48,11 +46,16 @@ module Github
     # @api public
     def get(*args)
       arguments(args, required: [:owner, :repo, :id]).params
+
       get_request("/repos/#{arguments.owner}/#{arguments.repo}/releases/#{arguments.id}" , arguments.params)
     end
-    alias :find :get
+    alias_method :find, :get
 
     # Create a release
+    #
+    # Users with push access to the repository can create a release.
+    #
+    # @see https://developer.github.com/v3/repos/releases/#create-a-release
     #
     # @param [Hash] params
     # @input params [String] :tag_name
@@ -75,7 +78,7 @@ module Github
     #
     # @example
     #   github = Github.new
-    #   github.repos.releases.create 'owner', 'repo', 'tag-name',
+    #   github.repos.releases.create 'owner', 'repo',
     #     tag_name: "v1.0.0",
     #     target_commitish: "master",
     #     name: "v1.0.0",
@@ -85,17 +88,23 @@ module Github
     #
     # @api public
     def create(*args)
-      arguments(args, required: [:owner, :repo, :tag_name]) do
-        permit VALID_RELEASE_PARAM_NAMES
+      arguments(args, required: [:owner, :repo]) do
+        assert_required :tag_name
       end
-      params = arguments.params
-      params['tag_name'] = arguments.tag_name
 
-      post_request("/repos/#{arguments.owner}/#{arguments.repo}/releases", params)
+      post_request("/repos/#{arguments.owner}/#{arguments.repo}/releases",
+                   arguments.params)
     end
 
     # Edit a release
     #
+    # Users with push access to the repository can edit a release.
+    #
+    # @see https://developer.github.com/v3/repos/releases/#edit-a-release
+    #
+    # @param [String] :owner
+    # @param [String] :repo
+    # @param [Integer] :id
     # @param [Hash] params
     # @input params [String] :tag_name
     #   Required. The name of the tag.
@@ -127,17 +136,21 @@ module Github
     #
     # @api public
     def edit(*args)
-      arguments(args, required: [:owner, :repo, :id]) do
-        permit VALID_RELEASE_PARAM_NAMES
-      end
+      arguments(args, required: [:owner, :repo, :id])
 
       patch_request("/repos/#{arguments.owner}/#{arguments.repo}/releases/#{arguments.id}", arguments.params)
     end
-    alias :update :edit
+    alias_method :update, :edit
 
     # Delete a release
     #
     # Users with push access to the repository can delete a release.
+    #
+    # @see https://developer.github.com/v3/repos/releases/#delete-a-release
+    #
+    # @param [String] :owner
+    # @param [String] :repo
+    # @param [Integer] :id
     #
     # @example
     #   github = Github.new
@@ -154,6 +167,11 @@ module Github
     #
     # View the latest published full release for the repository.
     # Draft releases and prereleases are not returned.
+    #
+    # @see https://developer.github.com/v3/repos/releases/#get-the-latest-release
+    #
+    # @param [String] :owner
+    # @param [String] :repo
     #
     # @example
     #   github = Github.new

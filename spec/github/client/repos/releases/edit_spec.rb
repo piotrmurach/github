@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Client::Repos::Releases, '#edit' do
+RSpec.describe Github::Client::Repos::Releases, '#edit' do
   let(:owner)  { 'peter-murach' }
   let(:repo)   { 'github' }
   let(:id)     { 1 }
@@ -22,12 +22,12 @@ describe Github::Client::Repos::Releases, '#edit' do
 
     it { expect {subject.edit owner, repo }.to raise_error(ArgumentError) }
 
-    it "should edit the resource" do
+    it "edits the resource" do
       subject.edit owner, repo, id, inputs
       expect(a_patch(path)).to have_been_made
     end
 
-    it "should get the key information back" do
+    it "gets the key information back" do
       release = subject.edit owner, repo, id, inputs
       expect(release.id).to eq id
     end
