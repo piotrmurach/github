@@ -1,7 +1,7 @@
 <div align="center">
   <a href="http://peter-murach.github.io/github/"><img width="136" src="https://github.com/peter-murach/github/raw/master/icons/github_api.png" alt="github api logo" /></a>
 </div>
-# github_api
+# GithubAPI
 [![Gem Version](https://badge.fury.io/rb/github_api.svg)][gem]
 [![Build Status](https://secure.travis-ci.org/peter-murach/github.svg?branch=master)][travis]
 [![Code Climate](https://codeclimate.com/github/peter-murach/github/badges/gpa.svg)][codeclimate]
