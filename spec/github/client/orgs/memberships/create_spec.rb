@@ -12,6 +12,8 @@ RSpec.describe Github::Client::Orgs::Memberships, '#create' do
       headers: {content_type: 'application/json; charset=utf-8'})
   }
 
+  after { reset_authentication_for(subject) }
+
   context 'Add/update organization membership - unaffiliated user' do
     let(:username) { 'anujaware' }
     let(:request_path) { "/orgs/#{org}/memberships/#{username}" }
