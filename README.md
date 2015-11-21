@@ -138,7 +138,7 @@ Github::Client::Repos::Contents.actions
 The code base is modular. This means that you can work specifically with a given part of GitHub API. If you want to only work with activity starring API do the following:
 
 ```ruby
-starring = Github::Client::Activity::Starring.new
+starring = Github::Client::Activity::Starring.new oauth_token: token
 starring.star 'peter-murach', 'github'
 ```
 
