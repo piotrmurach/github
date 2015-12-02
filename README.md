@@ -563,13 +563,13 @@ github = Github.new auto_pagination: true
 Depending at what stage you pass the `auto_pagination` it will affect all or only a single request. For example, in order to auto paginate all Repository API methods do:
 
 ```ruby
-Github::Repos.new auto_pagination: true
+Github::Сlient::Repos.new auto_pagination: true
 ```
 
 However, to only auto paginate results for a single request do:
 
 ```ruby
-Github::Repos.new.list user: '...', auto_pagination: true
+Github::Client::Repos.new.list user: '...', auto_pagination: true
 ```
 
 ## 5 Error Handling
