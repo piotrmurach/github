@@ -7,6 +7,14 @@ rvm:
   - 2.1
   - 2.2
   - ruby-head
+before_install:
+- gem update --system
+- gem install bundler
+install: bundle install
+script: bundle exec rake build
+env:
+  global:
+    secure: 0dc92adb26454f7a8fcf0639f9f85150fd82b08cabfe8a66e0c5dc85a9cdddbc83b38468f863048af3e7dec3dd3e354e0a50c1b327a1a9f556357897e13e8bc6
 matrix:
   include:
     - rvm: jruby-19mode
