@@ -24,9 +24,7 @@ module Github
     # @api public
     def create(*args)
       raise_authentication_error unless authenticated?
-      arguments(args, required: [:client_id]) do
-        permit VALID_AUTH_PARAM_NAMES
-      end
+      arguments(args, required: [:client_id])
 
       if arguments.client_id
         put_request("/authorizations/clients/#{arguments.client_id}", arguments.params)

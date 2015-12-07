@@ -12,4 +12,6 @@ describe Github::Client::Orgs, 'integration' do
 
   its(:teams)   { should be_a Github::Client::Orgs::Teams }
 
+  its(:memberships) { should be_a(Github::Client::Orgs::Memberships) }
+
 end # Github::Client::Orgs

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Client::Repos::Releases, '#delete' do
+RSpec.describe Github::Client::Repos::Releases, '#delete' do
   let(:user) { 'peter-murach' }
   let(:repo) { 'github' }
   let(:id)   { 1 }

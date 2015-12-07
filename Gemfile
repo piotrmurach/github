@@ -5,7 +5,7 @@ gemspec
 group :development do
   gem 'rake',     '~> 10.4'
   gem 'rspec',    '~> 2.14.1'
-  gem 'cucumber', '~> 1.3'
+  gem 'cucumber', '~> 2.1'
   gem 'webmock',  '~> 1.17.3'
   gem 'vcr',      '~> 2.6'
   gem 'yard',     '~> 0.8.7'

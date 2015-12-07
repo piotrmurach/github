@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Client::Repos::Releases, '#get' do
+RSpec.describe Github::Client::Repos::Releases, '#get' do
   let(:owner) { 'peter-murach' }
   let(:repo)  { 'github' }
   let(:id)    { 1 }

@@ -7,8 +7,8 @@ describe Github::Client::Orgs::Teams, '#get' do
   let(:request_path) { "/teams/#{team}" }
 
   before {
-    stub_get(request_path).to_return(:body => body, :status => status,
-      :headers => {:content_type => "application/json; charset=utf-8"})
+    stub_get(request_path).to_return(body: body, status: status,
+      headers: {:content_type => "application/json; charset=utf-8"})
   }
 
   after { reset_authentication_for(subject) }

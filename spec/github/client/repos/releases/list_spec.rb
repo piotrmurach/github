@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Client::Repos::Releases, '#list' do
+RSpec.describe Github::Client::Repos::Releases, '#list' do
   let(:owner) { 'peter-murach' }
   let(:repo)  { 'github' }
   let(:path)  { "/repos/#{owner}/#{repo}/releases" }

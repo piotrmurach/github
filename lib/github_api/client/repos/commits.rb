@@ -19,7 +19,7 @@ module Github
     # @option params [String] :path
     #   Only commits containing this file path will be returned.
     # @option params [String] :author
-    #   GitHub login, name, or email by which to filter by commit author.
+    #   GitHub login, name or email by which to filter by commit author.
     # @option params [String] :since
     #   Only commits after this date will be returned. This is a timestamp
     #   in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ.
@@ -48,7 +48,7 @@ module Github
     #
     # @example
     #  github = Github.new
-    #  github.repos.commits.get 'user-name', 'repo-name', '6dcb09b5b57875f334f61aebed6')
+    #  github.repos.commits.get 'user-name', 'repo-name', '6dcb09b5b57875f334f61aebed6'
     #
     # @api public
     def get(*args)

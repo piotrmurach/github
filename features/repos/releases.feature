@@ -26,11 +26,11 @@ Feature: Releases API
   Scenario: Create
 
     Given I want to create resource with the following params:
-      | owner | repo            | tag_name |
-      | murek | github_api_test | v1.0.0   |
+      | owner | repo            |
+      | murek | github_api_test |
       And I pass the following request options:
-        | name   | body         | draft | target_commitish |
-        | v1.0.0 | Main release | false | master           |
+        | tag_name | name   | body         | draft | target_commitish |
+        | v1.0.0   | v1.0.0 | Main release | false | master           |
     When I make request within a cassette named "repos/releases/create"
     Then the response status should be 201
       And the response type should be JSON
@@ -56,3 +56,13 @@ Feature: Releases API
       | murek | github_api_test | 281255 |
     When I make request within a cassette named "repos/releases/delete"
     Then the response status should be 204
+
+  Scenario: Get Latest Release
+
+    Given I want latest resource with the following params:
+      | owner       | repo          |
+      | anuja-joshi | rails_express |
+    When I make request within a cassette named "repos/releases/latest"
+    Then the response status should be 200
+      And the response type should be JSON
+      And the response should not be empty

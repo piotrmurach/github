@@ -7,8 +7,8 @@ describe Github::Client::Orgs::Teams, '#delete' do
   let(:request_path) { "/teams/#{team_id}" }
 
   before {
-    stub_delete(request_path).to_return(:body => body, :status => status,
-      :headers => {:content_type => "application/json; charset=utf-8"})
+    stub_delete(request_path).to_return(body: body, status: status,
+      headers: {content_type: 'application/json; charset=utf-8'})
   }
 
   after { reset_authentication_for(subject) }

@@ -1,27 +1,40 @@
 # encoding: utf-8
 
 module Github
+  # Organizations API
   class Client::Orgs < API
 
     require_all 'github_api/client/orgs',
-      'members',
-      'teams'
-
-    VALID_ORG_PARAM_NAMES = %w[
-      billing_email
-      company
-      email
-      location
-      name
-    ].freeze
+                'members',
+                'memberships',
+                'teams'
 
     # Access to Client::Orgs::Members API
     namespace :members
 
+    # Access to Client::Orgs::Memberships API
+    namespace :memberships
+
     # Access to Client::Orgs::Teams API
     namespace :teams
 
+    # List all organizations
+    #
+    # Lists all organizations, in the order that they were created on GitHub.
+    #
+    # @see https://developer.github.com/v3/orgs/#list-all-organizations
+    #
+    # @param [Hash] params
+    # @option params [String] :since
+    #   The integer ID of the last Organization that you've seen.
+    #
+    # @example
+    #   github = Github.new
+    #   github.orgs.list :every
+    #
     # List all public organizations for a user.
+    #
+    # @see https://developer.github.com/v3/orgs/#list-user-organizations
     #
     # @example
     #   github = Github.new
@@ -37,18 +50,22 @@ module Github
     def list(*args)
       params = arguments(args).params
 
-      response = if (user_name = params.delete("user"))
-        get_request("/users/#{user_name}/orgs", params)
+      if (user_name = params.delete('user'))
+        response = get_request("/users/#{user_name}/orgs", params)
+      elsif args.map(&:to_s).include?('every')
+        response = get_request('/organizations', params)
       else
         # For the authenticated user
-        get_request("/user/orgs", params)
+        response = get_request('/user/orgs', params)
       end
       return response unless block_given?
       response.each { |el| yield el }
     end
-    alias :all :list
+    alias_method :all, :list
 
     # Get properties for a single organization
+    #
+    # @see https://developer.github.com/v3/orgs/#get-an-organization
     #
     # @example
     #  github = Github.new
@@ -60,21 +77,25 @@ module Github
 
       get_request("/orgs/#{arguments.org_name}", arguments.params)
     end
-    alias :find :get
+    alias_method :find, :get
 
     # Edit organization
     #
+    # @see https://developer.github.com/v3/orgs/#edit-an-organization
+    #
     # @param [Hash] params
-    # @input params [String] :billing_email
+    # @option params [String] :billing_email
     #   Billing email address. This address is not publicized.
-    # @input params [String] :company
+    # @option params [String] :company
     #   The company name
-    # @input params [String] :email
+    # @option params [String] :email
     #   The publicly visible email address
-    # @input params [String] :location
+    # @option params [String] :location
     #   The location
-    # @input params [String] :name
+    # @option params [String] :name
     #   The shorthand name of the company.
+    # @option params [String] :description
+    #   The description of the company.
     #
     # @example
     #  github = Github.new oauth_token: '...'
@@ -88,9 +109,7 @@ module Github
     #
     # @api public
     def edit(*args)
-      arguments(args, required: [:org_name]) do
-        permit VALID_ORG_PARAM_NAMES
-      end
+      arguments(args, required: [:org_name])
 
       patch_request("/orgs/#{arguments.org_name}", arguments.params)
     end

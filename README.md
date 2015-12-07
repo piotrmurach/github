@@ -1,6 +1,7 @@
-[![Application icon](https://github.com/peter-murach/github/raw/master/icons/github_api.png)][icon]
-[icon]: https://github.com/peter-murach/github/raw/master/icons/github_api.png
-# github_api
+<div align="center">
+  <a href="http://peter-murach.github.io/github/"><img width="136" src="https://github.com/peter-murach/github/raw/master/icons/github_api.png" alt="github api logo" /></a>
+</div>
+# GithubAPI
 [![Gem Version](https://badge.fury.io/rb/github_api.svg)][gem]
 [![Build Status](https://secure.travis-ci.org/peter-murach/github.svg?branch=master)][travis]
 [![Code Climate](https://codeclimate.com/github/peter-murach/github/badges/gpa.svg)][codeclimate]
@@ -138,7 +139,7 @@ Github::Client::Repos::Contents.actions
 The code base is modular. This means that you can work specifically with a given part of GitHub API. If you want to only work with activity starring API do the following:
 
 ```ruby
-starring = Github::Client::Activity::Starring.new
+starring = Github::Client::Activity::Starring.new oauth_token: token
 starring.star 'peter-murach', 'github'
 ```
 
@@ -404,13 +405,13 @@ Though this method is convenient you should strongly consider using `OAuth` for 
 
 ### 3.2 Authorizations API
 
-#### 3.2.1 For an User
+#### 3.2.1 For a User
 
-To create an access token through the GitHub Authrizations API, you are required to pass your basic credentials and scopes you wish to have for the authentication token.
+To create an access token through the GitHub Authorizations API, you are required to pass your basic credentials and scopes you wish to have for the authentication token.
 
 ```ruby
 github = Github.new basic_auth: 'login:password'
-github.oauth.create scopes: ['repo']
+github.oauth.create scopes: ['repo'], note: 'admin script'
 ```
 
 You can add more than one scope from the `user`, `public_repo`, `repo`, `gist` or leave the scopes parameter out, in which case, the default read-only access will be assumed (includes public user profile info, public repo info, and gists).
@@ -562,13 +563,13 @@ github = Github.new auto_pagination: true
 Depending at what stage you pass the `auto_pagination` it will affect all or only a single request. For example, in order to auto paginate all Repository API methods do:
 
 ```ruby
-Github::Repos.new auto_pagination: true
+Github::Сlient::Repos.new auto_pagination: true
 ```
 
 However, to only auto paginate results for a single request do:
 
 ```ruby
-Github::Repos.new.list user: '...', auto_pagination: true
+Github::Client::Repos.new.list user: '...', auto_pagination: true
 ```
 
 ## 5 Error Handling
@@ -648,7 +649,7 @@ Then update the file just like you do with creating:
 contents.update 'username', 'repo_name', 'full_path_to/file.ext',
   path: 'full_path_to/file.ext'
   message: 'Your commit message',
-  content: 'The contens to be updated',
+  content: 'The contents to be updated',
   sha: file.sha
 ```
 

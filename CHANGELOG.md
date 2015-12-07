@@ -1,3 +1,18 @@
+0.13.0 (Nov 21, 2015)
+-------------------
+
+* Add latest release #releases.latest by @anuja-joshi
+* Add release by tag name #tags.get by @Shwetakale
+* Add listing of all organizations #list :every
+* Add team membership #team_membership
+* Add team membership addition #add_membership by @anuja-joshi
+* Add team membership removeal #remove_membership by @anuja-joshi
+* Change authorizations api #create to require note parameter and
+  remove restrictions on available parameters
+* Add Client::Orgs::Memberships api with contribution from @Shwetakale
+* Remove support for Ruby 1.9.2
+* Remove required parameters checks from Client::Repos::Keys api
+
 0.12.4 (Aug 2, 2015)
 --------------------
 

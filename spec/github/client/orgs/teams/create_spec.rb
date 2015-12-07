@@ -15,8 +15,8 @@ describe Github::Client::Orgs::Teams, '#create' do
 
   before {
     stub_post(request_path).with(inputs).
-      to_return(:body => body, :status => status,
-      :headers => {:content_type => "application/json; charset=utf-8"})
+      to_return(body: body, status: status,
+      headers: {content_type: 'application/json; charset=utf-8'})
   }
 
   after { reset_authentication_for(subject) }
