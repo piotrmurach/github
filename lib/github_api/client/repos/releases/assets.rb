@@ -70,7 +70,7 @@ module Github
       file = Faraday::UploadIO.new(arguments.filepath, type)
       options = {
         headers: { content_type: type },
-        endpoint: 'https://uploads.github.com',
+        endpoint: upload_endpoint,
         query: {'name' => params['name']}
       }
       params['data']    = file.read
