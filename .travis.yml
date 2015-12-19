@@ -1,6 +1,6 @@
 language: ruby
 before_install:
-  - gem install bundler
+  - gem update bundler
 bundler_args: --without guard
 script: "bundle exec rake ci"
 rvm:
