@@ -293,7 +293,7 @@ Alternatively, you can configure the settings by passing a block to an instance 
 Github.new do |c|
   c.endpoint    = 'https://github.company.com/api/v3'
   c.site        = 'https://github.company.com'
-  c.upload_endpoint = 'https://github.company.com'
+  c.upload_endpoint = 'https://github.company.com/api/uploads'
 end
 ```
 
