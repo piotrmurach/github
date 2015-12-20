@@ -8,7 +8,7 @@ describe Github::Client::Repos::Releases::Assets, '#upload' do
   let(:id)       { 1 }
   let(:filepath) { 'batman.js' }
   let(:file)     { double(:file, read: nil, close: nil) }
-  let(:endpoint) { 'https://uploads.github.com' }
+  let(:endpoint) { Github.upload_endpoint }
   let(:inputs)   { {name: 'batman.jpg', content_type: 'application/javascript'} }
   let(:path)     { "/repos/#{owner}/#{repo}/releases/#{id}/assets" }
 
