@@ -2,7 +2,7 @@
 
 module Github
   # Watching a Repository registers the user to receive notificactions on new
-  # discussions, as well as events in the user’s activity feed.
+  # discussions, as well as events in the user's activity feed.
   class Client::Activity::Watching < API
     # List repository watchers
     #
@@ -21,7 +21,7 @@ module Github
       return response unless block_given?
       response.each { |el| yield el }
     end
-    alias :all :list
+    alias_method :all, :list
 
     # List repos being watched by a user
     #
@@ -45,7 +45,7 @@ module Github
       response = if (user_name = params.delete('user'))
         get_request("/users/#{user_name}/subscriptions", params)
       else
-        get_request("/user/subscriptions", params)
+        get_request('/user/subscriptions', params)
       end
       return response unless block_given?
       response.each { |el| yield el }
