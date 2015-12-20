@@ -11,6 +11,7 @@
 ### Changed
 * Change activity notifications api to remove permitted options guard
 * Update dependencies by relaxig bundler and rake dev dependencies
+* Remove nokogiri dependency
 
 ## [v0.13.0] - 2015-11-21
 
