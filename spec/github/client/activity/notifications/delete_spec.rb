@@ -21,8 +21,8 @@ describe Github::Client::Activity::Notifications, '#delete' do
 
   it "should delete the resource successfully" do
     subject.delete thread_id
-    a_delete(request_path).with(:query => {:access_token => OAUTH_TOKEN}).
-      should have_been_made
+    expect(a_delete(request_path).with(:query => {:access_token => OAUTH_TOKEN})).
+      to have_been_made
   end
 
   it "should fail to delete resource without 'user' parameter" do

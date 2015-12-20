@@ -25,13 +25,13 @@ describe Github::Client::Activity::Notifications, '#subscribed?' do
 
     it 'gets the resource' do
       subject.subscribed? thread_id
-      a_get(request_path).with(:query => {:access_token => OAUTH_TOKEN }).
-        should have_been_made
+      expect(a_get(request_path).with(:query => {:access_token => OAUTH_TOKEN })).
+        to have_been_made
     end
 
     it 'gets resource information' do
       subscribed = subject.subscribed? thread_id
-      subscribed.subscribed.should be_true
+      expect(subscribed.subscribed).to be_true
     end
   end
 

@@ -25,22 +25,22 @@ describe Github::Client::Activity::Notifications, '#get' do
 
     it "should find resources" do
       subject.get thread_id
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it "should return repository mash" do
       threads = subject.get thread_id
-      threads.should be_an Enumerable
-      threads.should have(1).items
+      expect(threads).to be_an Enumerable
+      expect(threads.size).to eq(1)
     end
 
     it "should get repository information" do
       threads = subject.get thread_id
-      threads.first.repository.name.should == 'Hello-World'
+      expect(threads.first.repository.name).to eq('Hello-World')
     end
 
     it "should yield repositories to a block" do
-      subject.should_receive(:get).and_yield('octocat')
+      expect(subject).to receive(:get).and_yield('octocat')
       subject.get(thread_id) { |repo| 'octocat' }
     end
   end

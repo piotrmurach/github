@@ -25,8 +25,8 @@ describe Github::Client::Activity::Notifications, '#list' do
 
     it 'should get the resource' do
       subject.list
-      a_get(request_path).with(:query => {:access_token => OAUTH_TOKEN}).
-        should have_been_made
+      expect(a_get(request_path).with(:query => {:access_token => OAUTH_TOKEN})).
+        to have_been_made
     end
 
     it_should_behave_like 'an array of resources' do
@@ -35,11 +35,11 @@ describe Github::Client::Activity::Notifications, '#list' do
 
     it "should get resource information" do
       notifications = subject.list
-      notifications.first.repository.name.should == 'Hello-World'
+      expect(notifications.first.repository.name).to eq('Hello-World')
     end
 
     it "should yield repositories to a block" do
-      subject.should_receive(:list).and_yield('octocat')
+      expect(subject).to receive(:list).and_yield('octocat')
       subject.list { |repo| 'octocat' }
     end
 
@@ -61,8 +61,8 @@ describe Github::Client::Activity::Notifications, '#list' do
 
     it "should get the resource" do
       subject.list :user => user, :repo => repo
-      a_get(request_path).with(:query => {:access_token => OAUTH_TOKEN}).
-        should have_been_made
+      expect(a_get(request_path).with(:query => {:access_token => OAUTH_TOKEN})).
+        to have_been_made
     end
   end
 

@@ -31,14 +31,14 @@ describe Github::Client::Activity::Notifications, '#create' do
 
     it 'should create resource' do
       subject.create thread_id, inputs
-      a_put(request_path).
-        with(:body => inputs, :query => {:access_token => OAUTH_TOKEN}).
-        should have_been_made
+      expect(a_put(request_path).
+        with(:body => inputs, :query => {:access_token => OAUTH_TOKEN})).
+        to have_been_made
     end
 
     it 'should return the resource' do
       thread = subject.create thread_id, inputs
-      thread.subscribed.should be_true
+      expect(thread.subscribed).to be_true
     end
   end
 end # create
