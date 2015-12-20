@@ -10,3 +10,13 @@ Feature: Feeds API
     Then the response status should be 200
       And the response type should be JSON
       And the response should not be empty
+
+#  Scenario: Get
+#
+#    Given I want to get resource with the following arguments:
+#      | name     |
+#      | timeline |
+#    When I make request within a cassette named "activity/feeds/get_timeline"
+#    Then the response status should be 200
+#      And the response type should be JSON
+#      And the response should not be empty
