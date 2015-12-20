@@ -3,6 +3,7 @@
 require 'github_api/response'
 require 'github_api/response/mashify'
 require 'github_api/response/jsonize'
+require 'github_api/response/atom_parser'
 require 'github_api/response/raise_error'
 require 'github_api/response/header'
 
@@ -21,6 +22,7 @@ module Github
         unless options[:raw]
           builder.use Github::Response::Mashify
           builder.use Github::Response::Jsonize
+          builder.use Github::Response::AtomParser
         end
         builder.use Github::Response::RaiseError
         builder.adapter options[:adapter]
