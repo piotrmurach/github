@@ -118,3 +118,4 @@ DEPENDENCIES
   webmock (~> 1.17.3)
   yard (~> 0.8.7)
   yardstick (~> 0.9.9)
+  
