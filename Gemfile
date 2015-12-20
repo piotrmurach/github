@@ -3,7 +3,6 @@ source 'https://rubygems.org'
 gemspec
 
 group :development do
-  gem 'rake',     '~> 10.4'
   gem 'rspec',    '~> 2.14.1'
   gem 'cucumber', '~> 2.1'
   gem 'webmock',  '~> 1.17.3'

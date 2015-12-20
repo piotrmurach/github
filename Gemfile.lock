@@ -105,11 +105,11 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (~> 1.5)
+  bundler
   coveralls (~> 0.7.0)
   cucumber (~> 2.1)
   github_api!
-  rake (~> 10.4)
+  rake
   reek (~> 1.2.12)
   roodi (~> 2.2.0)
   rspec (~> 2.14.1)
