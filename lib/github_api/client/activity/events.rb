@@ -2,8 +2,9 @@
 
 module Github
   class Client::Activity::Events < API
-
     # List all public events
+    #
+    # @see https://developer.github.com/v3/activity/events/#list-public-events
     #
     # @example
     #  github = Github.new
@@ -18,9 +19,9 @@ module Github
       return response unless block_given?
       response.each { |el| yield el }
     end
-    alias :public_events :public
-    alias :list_public :public
-    alias :list_public_events :public
+    alias_method :public_events, :public
+    alias_method :list_public, :public
+    alias_method :list_public_events, :public
 
     # List all repository events for a given user
     #
@@ -41,10 +42,10 @@ module Github
       return response unless block_given?
       response.each { |el| yield el }
     end
-    alias :repos :repository
-    alias :repo_events :repository
-    alias :repository_events :repository
-    alias :list_repository_events :repository
+    alias_method :repos,                  :repository
+    alias_method :repo_events,            :repository
+    alias_method :repository_events,      :repository
+    alias_method :list_repository_events, :repository
 
     # List all issue events for a given repository
     #
@@ -65,11 +66,13 @@ module Github
       return response unless block_given?
       response.each { |el| yield el }
     end
-    alias :issues :issue
-    alias :issue_events :issue
-    alias :list_issue_events :issue
+    alias_method :issues,            :issue
+    alias_method :issue_events,      :issue
+    alias_method :list_issue_events, :issue
 
     # List all public events for a network of repositories
+    #
+    # @see https://developer.github.com/v3/activity/events/#list-public-events-for-a-network-of-repositories
     #
     # @example
     #   github = Github.new
@@ -88,12 +91,14 @@ module Github
       return response unless block_given?
       response.each { |el| yield el }
     end
-    alias :repo_network :network
-    alias :repository_network :network
-    alias :list_repo_network_events :network
-    alias :list_repository_network_events :network
+    alias_method :repo_network,                   :network
+    alias_method :repository_network,             :network
+    alias_method :list_repo_network_events,       :network
+    alias_method :list_repository_network_events, :network
 
     # List all public events for an organization
+    #
+    # @see https://developer.github.com/v3/activity/events/#list-public-events-for-an-organization
     #
     # @example
     #   github = Github.new
@@ -112,12 +117,14 @@ module Github
       return response unless block_given?
       response.each { |el| yield el }
     end
-    alias :organization :org
-    alias :list_orgs :org
-    alias :list_org_events :org
-    alias :list_organization_events :org
+    alias_method :organization,             :org
+    alias_method :list_orgs,                :org
+    alias_method :list_org_events,          :org
+    alias_method :list_organization_events, :org
 
     # List all events that a user has received
+    #
+    # @see https://developer.github.com/v3/activity/events/#list-events-that-a-user-has-received
     #
     # These are events that you’ve received by watching repos
     # and following users. If you are authenticated as the given user,
@@ -129,6 +136,8 @@ module Github
     #   github.activity.events.received 'user-name' { |event| ... }
     #
     # List all public events that a user has received
+    #
+    # @see https://developer.github.com/v3/activity/events/#list-public-events-that-a-user-has-received
     #
     # @example
     #   github = Github.new
@@ -149,10 +158,12 @@ module Github
       return response unless block_given?
       response.each { |el| yield el }
     end
-    alias :user_received :received
-    alias :list_user_received :received
+    alias_method :user_received,      :received
+    alias_method :list_user_received, :received
 
     # List all events that a user has performed
+    #
+    # @see https://developer.github.com/v3/activity/events/#list-events-performed-by-a-user
     #
     # If you are authenticated as the given user, you will see your private
     # events. Otherwise, you’ll only see public events.
@@ -163,6 +174,8 @@ module Github
     #   github.activity.events.performed 'user-name' { |event| ... }
     #
     # List all public events that a user has performed
+    #
+    # @see https://developer.github.com/v3/activity/events/#list-public-events-performed-by-a-user
     #
     # @example
     #   github = Github.new
@@ -183,12 +196,14 @@ module Github
       return response unless block_given?
       response.each { |el| yield el }
     end
-    alias :user_performed :performed
-    alias :list_user_performed :performed
+    alias_method :user_performed,      :performed
+    alias_method :list_user_performed, :performed
 
     # List all events for an organization
     #
-    # This is the user’s organization dashboard. You must be authenticated
+    # @see https://developer.github.com/v3/activity/events/#list-events-for-an-organization
+    #
+    # This is the user's organization dashboard. You must be authenticated
     # as the user to view this.
     #
     # @example
@@ -208,9 +223,9 @@ module Github
       return response unless block_given?
       response.each { |el| yield el }
     end
-    alias :user_organization :user_org
-    alias :list_user_org :user_org
-    alias :list_user_org_events :user_org
-    alias :list_user_organization_events :user_org
+    alias_method :user_organization,             :user_org
+    alias_method :list_user_org,                 :user_org
+    alias_method :list_user_org_events,          :user_org
+    alias_method :list_user_organization_events, :user_org
   end # Client::Activity::Events
 end # Github
