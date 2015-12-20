@@ -23,12 +23,6 @@ describe Github::Client::Activity::Notifications, '#list' do
 
     it { should respond_to :all }
 
-    it 'filters unknown parameters' do
-      subject.list :unknown => true
-      a_get(request_path).with(:query => {:access_token => OAUTH_TOKEN}).
-        should have_been_made
-    end
-
     it 'should get the resource' do
       subject.list
       a_get(request_path).with(:query => {:access_token => OAUTH_TOKEN}).

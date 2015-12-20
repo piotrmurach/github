@@ -35,21 +35,19 @@ module Github
     #
     # @api public
     def list(*args)
-      arguments(args) do
-        permit %w[ all participating since user repo]
-      end
+      arguments(args)
       params = arguments.params
 
-      response = if ( (user_name = params.delete("user")) &&
-                      (repo_name = params.delete("repo")) )
+      response = if ( (user_name = params.delete('user')) &&
+                      (repo_name = params.delete('repo')) )
         get_request("/repos/#{user_name}/#{repo_name}/notifications", params)
       else
-        get_request("/notifications", params)
+        get_request('/notifications', params)
       end
       return response unless block_given?
       response.each { |el| yield el }
     end
-    alias :all :list
+    alias_method :all, :list
 
     # View a single thread
     #
@@ -62,13 +60,13 @@ module Github
     #
     # @api public
     def get(*args)
-      arguments(args, required: [:id])
+      arguments(args, required: [:thread_id])
 
-      response = get_request("/notifications/threads/#{arguments.id}", arguments.params)
+      response = get_request("/notifications/threads/#{arguments.thread_id}", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
-    alias :find :get
+    alias_method :find, :get
 
     # Mark as read
     #
@@ -103,19 +101,17 @@ module Github
     #
     # @api public
     def mark(*args)
-      arguments(args) do
-        permit %w[ unread read last_read_at user repo id]
-      end
+      arguments(args)
       params = arguments.params
 
-      if ( (user_name = params.delete("user")) &&
-           (repo_name = params.delete("repo")) )
+      if ( (user_name = params.delete('user')) &&
+           (repo_name = params.delete('repo')) )
 
         put_request("/repos/#{user_name}/#{repo_name}/notifications", params)
       elsif (thread_id = params.delete("id"))
         patch_request("/notifications/threads/#{thread_id}", params)
       else
-        put_request("/notifications", params)
+        put_request('/notifications', params)
       end
     end
 
@@ -132,9 +128,9 @@ module Github
     #
     # @api public
     def subscribed?(*args)
-      arguments(args, required: [:id])
+      arguments(args, required: [:thread_id])
 
-      get_request("/notifications/threads/#{arguments.id}/subscription", arguments.params)
+      get_request("/notifications/threads/#{arguments.thread_id}/subscription", arguments.params)
     end
 
     # Create a thread subscription
@@ -160,9 +156,9 @@ module Github
     #
     # @api public
     def create(*args)
-      arguments(args, required: [:id])
+      arguments(args, required: [:thread_id])
 
-      put_request("/notifications/threads/#{arguments.id}/subscription", arguments.params)
+      put_request("/notifications/threads/#{arguments.thread_id}/subscription", arguments.params)
     end
 
     # Delete a thread subscription
@@ -175,10 +171,10 @@ module Github
     #
     # @api public
     def delete(*args)
-      arguments(args, required: [:id])
+      arguments(args, required: [:thread_id])
 
-      delete_request("/notifications/threads/#{arguments.id}/subscription", arguments.params)
+      delete_request("/notifications/threads/#{arguments.thread_id}/subscription", arguments.params)
     end
-    alias :remove :delete
+    alias_method :remove, :delete
   end # Client::Activity::Notifications
 end # Github
