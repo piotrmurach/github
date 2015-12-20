@@ -7,7 +7,7 @@
 [![Code Climate](https://codeclimate.com/github/peter-murach/github/badges/gpa.svg)][codeclimate]
 [![Coverage Status](https://coveralls.io/repos/peter-murach/github/badge.svg?branch=master)][coverage]
 [![Inline docs](http://inch-ci.org/github/peter-murach/github.svg)][inchpages]
-[![Dependency Status](https://gemnasium.com/peter-murach/github.png?travis)][gemnasium]
+[![Dependency Status](https://gemnasium.com/peter-murach/github.svg?travis)][gemnasium]
 
 [gem]: http://badge.fury.io/rb/github_api
 [travis]: http://travis-ci.org/peter-murach/github
