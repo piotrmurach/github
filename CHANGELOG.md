@@ -1,54 +1,79 @@
-0.13.0 (Nov 21, 2015)
--------------------
+# Change log
 
+## [v0.13.1] - 2015-12-20
+
+### Added
+* Add activity feeds api by MaximAbramchuck
+* Add activity feed convenience method
+* Add upload_api configuration option by shadabahmed
+* Add atom parser middleware
+
+### Changed
+* Change activity notifications api to remove permitted options guard
+* Update dependencies by relaxig bundler and rake dev dependencies
+
+## [v0.13.0] - 2015-11-21
+
+### Added
 * Add latest release #releases.latest by @anuja-joshi
 * Add release by tag name #tags.get by @Shwetakale
 * Add listing of all organizations #list :every
 * Add team membership #team_membership
 * Add team membership addition #add_membership by @anuja-joshi
 * Add team membership removeal #remove_membership by @anuja-joshi
+* Add Client::Orgs::Memberships api with contribution from @Shwetakale
+
+### Changed
 * Change authorizations api #create to require note parameter and
   remove restrictions on available parameters
-* Add Client::Orgs::Memberships api with contribution from @Shwetakale
 * Remove support for Ruby 1.9.2
 * Remove required parameters checks from Client::Repos::Keys api
 
-0.12.4 (Aug 2, 2015)
---------------------
+## [v0.12.4] - 2015-08-02
 
+### Changed
 * Change gem spec to exlude test files and require ruby version
 * Update dependencies
 
-0.12.3 (Feb 7, 2015)
---------------------
+## [v0.12.3] - 2015-02-07
 
-* Fix jsonize from overwritting non-json body for non-get requests by @timruffles
-* Fix content type parameter by @timruffles
+### Added
 * Add ratelimit_reset to response header by @k0nserv
 * Add ability to specify connection options by @codenamev
 * Add two-factor authorization and document
 
-0.12.2 (October 25, 2014)
-------------------------
+### Fixed
+* Fix jsonize from overwritting non-json body for non-get requests by @timruffles
+* Fix content type parameter by @timruffles
 
-* Fix Authorization header token for OAuth by @codenamev
+## [v0.12.2] - 2015-10-25
+
+### Added
 * Add pp support in DEBUG mode by @lukeasrodgers
+
+### Changed
 * Clean up PageIterator and simplify
 * Clean up and refactor PageLinks parser
+
+### Fixed
+* Fix Authorization header token for OAuth by @codenamev
 * Fix except! for core hash extension by @josacar
 
-0.12.1 (August 15, 2014)
-------------------------
+## [v0.12.1] - 2015-08-15
 
+### Added
 * Add #configure method on Github module to allow modification of settings
-* Change #actions to return Array of avilable methods for a given api
 * Add :per_page to configuration options
+
+### Changed
+* Change #actions to return Array of avilable methods for a given api
+
+### Fixed
 * Fix bug with PropertySet not requiring 'set' standard library
 
-0.12.0 (July 27, 2014)
---------------------
+## [v0.12.0] - 2014-07-27
 
-#### Features Core
+### Features Core
 * Add namespace helper to API to easily create nested resources
 * Add before_request & after_request callbacks to API
 * Change all scopes to use namespace helper
@@ -58,7 +83,7 @@
 * Change Request to be a class and simplify requests dispatch
 * Remove S3Uploader class
 
-#### Features Client
+### Features Client
 * Add check method to Application Authorization Api (#157)
 * Add Deployments Api with feature tests
 * Add commits & forks calls to Gists Api
@@ -69,7 +94,7 @@
 * Add combined status listing to Repos::Statuses Api
 * Add subscribe, unsubscribe and subscribed? calls to Activity::Watching Api
 
-#### Fixes
+### Fixed
 * Remove scopes caching
 * Change Arguments to stop leaking to global namespace
 * Change features tests to generate JSON responses
@@ -553,3 +578,12 @@
 ------------------------
 
 * fixing json parsing issue preventing repository creation
+
+[v0.13.1]: https://github.com/peter-murach/github/compare/v0.13.0...v0.13.1
+[v0.13.0]: https://github.com/peter-murach/github/compare/v0.12.4...v0.13.0
+[v0.12.4]: https://github.com/peter-murach/github/compare/v0.12.3...v0.12.4
+[v0.12.3]: https://github.com/peter-murach/github/compare/v0.12.2...v0.12.3
+[v0.12.2]: https://github.com/peter-murach/github/compare/v0.12.1...v0.12.2
+[v0.12.1]: https://github.com/peter-murach/github/compare/v0.12.0...v0.12.1
+[v0.12.0]: https://github.com/peter-murach/github/compare/v0.11.3...v0.12.0
+
