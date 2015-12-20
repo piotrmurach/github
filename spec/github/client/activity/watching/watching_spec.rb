@@ -19,7 +19,7 @@ describe Github::Client::Activity::Watching, '#watching?' do
 
     it "should return false if resource not found" do
       watching = subject.watching? user, repo
-      watching.should be_false
+      expect(watching).to be_false
     end
 
     it "should return true if resoure found" do
@@ -27,7 +27,7 @@ describe Github::Client::Activity::Watching, '#watching?' do
           to_return(:body => "[]", :status => 200,
             :headers => {:user_agent => subject.user_agent})
       watching = subject.watching? user, repo
-      watching.should be_true
+      expect(watching).to be_true
     end
   end
 

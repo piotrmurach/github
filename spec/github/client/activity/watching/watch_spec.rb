@@ -20,8 +20,8 @@ describe Github::Client::Activity::Watching, '#watch' do
 
       it "should successfully watch a repo" do
         subject.watch user, repo
-        a_put(request_path).with(:query => {:access_token => OAUTH_TOKEN}).
-          should have_been_made
+        expect(a_put(request_path).with(:query => {:access_token => OAUTH_TOKEN})).
+          to have_been_made
       end
     end
   end

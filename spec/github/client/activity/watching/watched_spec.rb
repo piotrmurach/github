@@ -20,7 +20,7 @@ describe Github::Client::Activity::Watching, '#watched' do
       stub_get("/users/#{user}/subscriptions").
         to_return(:body => fixture("repos/watched.json"), :status => 200, :headers => {})
       subject.watched :user => user
-      a_get("/users/#{user}/subscriptions").should have_been_made
+      expect(a_get("/users/#{user}/subscriptions")).to have_been_made
     end
   end
 
@@ -34,19 +34,19 @@ describe Github::Client::Activity::Watching, '#watched' do
 
     it "should get the resources" do
       subject.watched
-      a_get("/user/subscriptions").with(:query => {:access_token => OAUTH_TOKEN}).
-        should have_been_made
+      expect(a_get("/user/subscriptions").with(:query => {:access_token => OAUTH_TOKEN})).
+        to have_been_made
     end
 
     it "should return array of resources" do
       watched = subject.watched
-      watched.should be_an Enumerable
-      watched.should have(1).items
+      expect(watched).to be_an Enumerable
+      expect(watched.size).to eq(1)
     end
 
     it "should get watched information" do
       watched = subject.watched
-      watched.first.name.should == 'Hello-World'
+      expect(watched.first.name).to eq('Hello-World')
     end
   end
 end # watched

@@ -23,13 +23,13 @@ describe Github::Client::Activity::Watching, '#list' do
   end
 
   it "should yield iterator if block given" do
-    subject.should_receive(:list).with(user, repo).and_yield('github')
+    expect(subject).to receive(:list).with(user, repo).and_yield('github')
     subject.list(user, repo) { |param| 'github' }
   end
 
   it "should get the resources" do
     subject.list user, repo
-    a_get(request_path).should have_been_made
+    expect(a_get(request_path)).to have_been_made
   end
 
   it_should_behave_like 'an array of resources' do
@@ -38,7 +38,7 @@ describe Github::Client::Activity::Watching, '#list' do
 
   it "should get watcher information" do
     watchers = subject.list user, repo
-    watchers.first.login.should == 'octocat'
+    expect(watchers.first.login).to eq('octocat')
   end
 
   it_should_behave_like 'request failure' do
