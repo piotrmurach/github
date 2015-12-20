@@ -6,6 +6,7 @@ module Github
     require_all 'github_api/client/activity',
       'events',
       'notifications',
+      'feeds',
       'starring',
       'watching'
 
@@ -14,6 +15,9 @@ module Github
 
     # Access to Activity::Notifications API
     namespace :notifications
+
+    # Access to Activity::Feeds API
+    namespace :feeds
 
     # Access to Activity::Starring API
     namespace :starring
