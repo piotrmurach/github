@@ -23,7 +23,7 @@ describe Github::Client::Activity::Events, '#performed' do
 
     it "should get the resources" do
       subject.performed user
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it_should_behave_like 'an array of resources' do
@@ -32,13 +32,13 @@ describe Github::Client::Activity::Events, '#performed' do
 
     it "should get event information" do
       events = subject.performed user
-      events.first.type.should == 'Event'
+      expect(events.first.type).to eq('Event')
     end
 
     it "should yield to a block" do
       yielded = []
       result = subject.performed(user) { |obj| yielded << obj }
-      yielded.should == result
+      expect(yielded).to eq(result)
     end
   end
 
@@ -47,7 +47,7 @@ describe Github::Client::Activity::Events, '#performed' do
 
     it "should get the resources" do
       subject.performed user, :public => true
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it_should_behave_like 'an array of resources' do
@@ -56,13 +56,13 @@ describe Github::Client::Activity::Events, '#performed' do
 
     it "should get event information" do
       events = subject.performed user, :public => true
-      events.first.type.should == 'Event'
+      expect(events.first.type).to eq('Event')
     end
 
     it "should yield to a block" do
       yielded = []
       result = subject.performed(user, :public => true) { |obj| yielded << obj }
-      yielded.should == result
+      expect(yielded).to eq(result)
     end
   end
 

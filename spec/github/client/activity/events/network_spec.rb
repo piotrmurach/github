@@ -23,7 +23,7 @@ describe Github::Client::Activity::Events, '#network' do
 
     it "should get the resources" do
       subject.network user, repo
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it_should_behave_like 'an array of resources' do
@@ -32,13 +32,13 @@ describe Github::Client::Activity::Events, '#network' do
 
     it "should get event information" do
       events = subject.network user, repo
-      events.first.type.should == 'Event'
+      expect(events.first.type).to eq('Event')
     end
 
     it "should yield to a block" do
       yielded = []
       result = subject.network(user, repo) { |obj| yielded << obj }
-      yielded.should == result
+      expect(yielded).to eq(result)
     end
   end
 

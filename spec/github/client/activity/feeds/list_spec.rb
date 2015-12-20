@@ -25,43 +25,43 @@ describe Github::Client::Activity::Feeds, '#list' do
 
     it 'should get the resource' do
       subject.list
-      a_get(request_path).with(:query => {:access_token => OAUTH_TOKEN}).
-        should have_been_made
+      expect(a_get(request_path).with(:query => {:access_token => OAUTH_TOKEN})).
+        to have_been_made
     end
 
     it "should get timeline url" do
       feeds = subject.list
-      feeds.timeline_url.should == 'https://github.com/timeline'
+      expect(feeds.timeline_url).to eq('https://github.com/timeline')
     end
 
     it "should get user url" do
       feeds = subject.list
-      feeds.user_url.should == 'https://github.com/{user}'
+      expect(feeds.user_url).to eq('https://github.com/{user}')
     end
 
     it "should get current user public url" do
       feeds = subject.list
-      feeds.current_user_public_url.should == 'https://github.com/defunkt'
+      expect(feeds.current_user_public_url).to eq('https://github.com/defunkt')
     end
 
     it "should get current user url" do
       feeds = subject.list
-      feeds.current_user_url.should == 'https://github.com/defunkt.private?token=abc123'
+      expect(feeds.current_user_url).to eq('https://github.com/defunkt.private?token=abc123')
     end
 
     it "should get current user actor url" do
       feeds = subject.list
-      feeds.current_user_actor_url.should == 'https://github.com/defunkt.private.actor?token=abc123'
+      expect(feeds.current_user_actor_url).to eq('https://github.com/defunkt.private.actor?token=abc123')
     end
 
     it "should get current user organization url" do
       feeds = subject.list
-      feeds.current_user_organization_url.should == ''
+      expect(feeds.current_user_organization_url).to eq('')
     end
 
     it "should get current user public url" do
       feeds = subject.list
-      feeds.current_user_organization_urls.first.should == 'https://github.com/organizations/github/defunkt.private.atom?token=abc123'
+      expect(feeds.current_user_organization_urls.first).to eq('https://github.com/organizations/github/defunkt.private.atom?token=abc123')
     end
 
     it_should_behave_like 'request failure' do

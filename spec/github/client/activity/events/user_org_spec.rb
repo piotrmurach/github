@@ -27,7 +27,7 @@ describe Github::Client::Activity::Events, '#user_org' do
 
     it "should get the resources" do
       subject.user_org user, org
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it_should_behave_like 'an array of resources' do
@@ -36,13 +36,13 @@ describe Github::Client::Activity::Events, '#user_org' do
 
     it "should get event information" do
       events = subject.user_org user, org
-      events.first.type.should == 'Event'
+      expect(events.first.type).to eq('Event')
     end
 
     it "should yield to a block" do
       yielded = []
       result = subject.user_org(user, org) { |obj| yielded << obj }
-      yielded.should == result
+      expect(yielded).to eq(result)
     end
   end
 
