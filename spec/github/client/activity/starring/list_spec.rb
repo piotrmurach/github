@@ -29,12 +29,12 @@ describe Github::Client::Activity::Starring, '#list' do
     it "should yield iterator if block given" do
       yielded = []
       result = subject.list(user, repo) { |obj| yielded << obj }
-      yielded.should == result
+      expect(yielded).to eq(result)
     end
 
     it "should get the resources" do
       subject.list user, repo
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it_should_behave_like 'an array of resources' do
@@ -43,7 +43,7 @@ describe Github::Client::Activity::Starring, '#list' do
 
     it "should get watcher information" do
       stargazers = subject.list user, repo
-      stargazers.first.login.should == 'octocat'
+      expect(stargazers.first.login).to eq('octocat')
     end
   end
 

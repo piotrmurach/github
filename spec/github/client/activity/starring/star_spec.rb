@@ -19,8 +19,8 @@ describe Github::Client::Activity::Starring, '#star' do
 
       it "should successfully star a repo" do
         subject.star user, repo
-        a_put(request_path).with(:query => {:access_token => OAUTH_TOKEN}).
-          should have_been_made
+        expect(a_put(request_path).with(:query => {:access_token => OAUTH_TOKEN})).
+          to have_been_made
       end
     end
   end

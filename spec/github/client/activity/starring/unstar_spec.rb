@@ -20,8 +20,8 @@ describe Github::Client::Activity::Starring, '#unstar' do
 
       it "should successfully unstar a repo" do
         subject.unstar user, repo
-        a_delete(request_path).with(:query => {:access_token => OAUTH_TOKEN}).
-          should have_been_made
+        expect(a_delete(request_path).with(:query => {:access_token => OAUTH_TOKEN})).
+          to have_been_made
       end
     end
   end

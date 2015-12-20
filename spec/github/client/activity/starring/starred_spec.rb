@@ -19,7 +19,7 @@ describe Github::Client::Activity::Starring, '#starred' do
       stub_get("/users/#{user}/starred").
         to_return(:body => fixture("repos/starred.json"), :status => 200, :headers => {})
       subject.starred :user => user
-      a_get("/users/#{user}/starred").should have_been_made
+      expect(a_get("/users/#{user}/starred")).to have_been_made
     end
   end
 
@@ -34,20 +34,20 @@ describe Github::Client::Activity::Starring, '#starred' do
 
     it "should get the resources" do
       subject.starred
-      a_get("/user/starred").with(:query => {:access_token => OAUTH_TOKEN}).
-        should have_been_made
+      expect(a_get("/user/starred").with(:query => {:access_token => OAUTH_TOKEN})).
+        to have_been_made
     end
 
     it "should return array of resources" do
       starred = subject.starred
-      starred.should be_an Enumerable
-      starred.should have(1).items
+      expect(starred).to be_an Enumerable
+      expect(starred.size).to eq(1)
     end
 
     it "should get starred information" do
       starred = subject.starred
-      starred.first.name.should == 'Hello-World'
-      starred.first.owner.login.should == 'octocat'
+      expect(starred.first.name).to eq('Hello-World')
+      expect(starred.first.owner.login).to eq('octocat')
     end
   end
 end # starred

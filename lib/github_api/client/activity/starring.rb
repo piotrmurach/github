@@ -2,7 +2,8 @@
 
 module Github
   # Repository Starring is a feature that lets users bookmark repositories.
-  # Stars are shown next to repositories to show an approximate level of interest.  # Stars have no effect on notifications or the activity feed.
+  # Stars are shown next to repositories to show an approximate level of interest.
+  # Stars have no effect on notifications or the activity feed.
   class Client::Activity::Starring < API
     # List stargazers
     #
@@ -21,7 +22,7 @@ module Github
       return response unless block_given?
       response.each { |el| yield el }
     end
-    alias :all :list
+    alias_method :all, :list
 
     # List repos being starred by a user
     #
@@ -54,14 +55,13 @@ module Github
       response = if (user_name = params.delete('user'))
         get_request("/users/#{user_name}/starred", params)
       else
-        get_request("/user/starred", params)
+        get_request('/user/starred', params)
       end
       return response unless block_given?
       response.each { |el| yield el }
     end
 
     # Check if you are starring a repository
-    #
     #
     # @see https://developer.github.com/v3/activity/starring/#check-if-you-are-starring-a-repository
     #

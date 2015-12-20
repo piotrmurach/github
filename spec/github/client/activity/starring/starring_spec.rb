@@ -19,14 +19,14 @@ describe Github::Client::Activity::Starring, '#starring?' do
 
     it "should return false if resource not found" do
       starring = subject.starring? user, repo
-      starring.should be_false
+      expect(starring).to be_false
     end
 
     it "should return true if resoure found" do
         stub_get(request_path).to_return(:body => "[]", :status => 200,
           :headers => {:user_agent => subject.user_agent})
       starring = subject.starring? user, repo
-      starring.should be_true
+      expect(starring).to be_true
     end
   end
 
