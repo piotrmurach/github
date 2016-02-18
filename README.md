@@ -384,7 +384,7 @@ You can now configure cache parameters as follows
 
 ```ruby
 Github.configure do |config|
-  config.stack do |builder|
+  config.stack = proc do |builder|
     builder.use Faraday::HttpCache, store: Rails.cache
   end
 end
