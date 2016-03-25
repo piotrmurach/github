@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.name          = 'github_api'
   gem.authors       = [ "Piotr Murach" ]
   gem.email         = ''
-  gem.homepage      = 'http://peter-murach.github.io/github/'
+  gem.homepage      = 'http://piotrmurach.github.io/github/'
   gem.summary       = 'Ruby client for the official GitHub API'
   gem.description   = %q{ Ruby client that supports all of the GitHub API methods. It's build in a modular way, that is, you can either instantiate the whole api wrapper Github.new or use parts of it e.i. Github::Client::Repos.new if working solely with repositories is your main concern. Intuitive query methods allow you easily call API endpoints. }
   gem.license       = "MIT"
