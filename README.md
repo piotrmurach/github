@@ -1,22 +1,22 @@
 <div align="center">
-  <a href="http://peter-murach.github.io/github/"><img width="136" src="https://github.com/peter-murach/github/raw/master/icons/github_api.png" alt="github api logo" /></a>
+  <a href="http://piotrmurach.github.io/github/"><img width="136" src="https://github.com/piotrmurach/github/raw/master/icons/github_api.png" alt="github api logo" /></a>
 </div>
 # GithubAPI
 [![Gem Version](https://badge.fury.io/rb/github_api.svg)][gem]
-[![Build Status](https://secure.travis-ci.org/peter-murach/github.svg?branch=master)][travis]
-[![Code Climate](https://codeclimate.com/github/peter-murach/github/badges/gpa.svg)][codeclimate]
-[![Coverage Status](https://coveralls.io/repos/peter-murach/github/badge.svg?branch=master)][coverage]
-[![Inline docs](http://inch-ci.org/github/peter-murach/github.svg)][inchpages]
-[![Dependency Status](https://gemnasium.com/peter-murach/github.svg?travis)][gemnasium]
+[![Build Status](https://secure.travis-ci.org/piotrmurach/github.svg?branch=master)][travis]
+[![Code Climate](https://codeclimate.com/github/piotrmurach/github/badges/gpa.svg)][codeclimate]
+[![Coverage Status](https://coveralls.io/repos/piotrmurach/github/badge.svg?branch=master)][coverage]
+[![Inline docs](http://inch-ci.org/github/piotrmurach/github.svg)][inchpages]
+[![Dependency Status](https://gemnasium.com/piotrmurach/github.svg?travis)][gemnasium]
 
 [gem]: http://badge.fury.io/rb/github_api
-[travis]: http://travis-ci.org/peter-murach/github
-[codeclimate]: https://codeclimate.com/github/peter-murach/github
-[coverage]: https://coveralls.io/r/peter-murach/github
-[inchpages]: http://inch-ci.org/github/peter-murach/github
-[gemnasium]: https://gemnasium.com/peter-murach/github
+[travis]: http://travis-ci.org/piotrmurach/github
+[codeclimate]: https://codeclimate.com/github/piotrmurach/github
+[coverage]: https://coveralls.io/r/piotrmurach/github
+[inchpages]: http://inch-ci.org/github/piotrmurach/github
+[gemnasium]: https://gemnasium.com/piotrmurach/github
 
-[Website](http://peter-murach.github.io/github/) | [Wiki](https://github.com/peter-murach/github/wiki) | [RDocs](http://rubydoc.info/github/peter-murach/github/master/frames)
+[Website](http://piotrmurach.github.io/github/) | [Wiki](https://github.com/piotrmurach/github/wiki) | [RDocs](http://rubydoc.info/github/piotrmurach/github/master/frames)
 
 A Ruby client for the official GitHub API.
 
@@ -87,7 +87,7 @@ gem "github_api"
 To start using the gem, you can either perform requests directly on `Github` namespace:
 
 ```ruby
-Github.repos.list user: 'peter-murach'
+Github.repos.list user: 'piotrmurach'
 ```
 
 or create a new client instance like so
@@ -99,7 +99,7 @@ github = Github.new
 and then call api methods, for instance, to list a given user repositories do
 
 ```ruby
-github.repos.list user: 'peter-murach'
+github.repos.list user: 'piotrmurach'
 ```
 
 ### 1.1 API Navigation
@@ -108,7 +108,7 @@ The **github_api** closely mirrors the [GitHub API](https://developer.github.com
 
 ```ruby
 github = Github.new
-github.repos.contents.create 'peter-murach', 'finite_machine', 'hello.rb',
+github.repos.contents.create 'piotrmurach', 'finite_machine', 'hello.rb',
                              path: 'hello.rb',
                              content: "puts 'hello ruby'"
 ```
@@ -116,16 +116,16 @@ github.repos.contents.create 'peter-murach', 'finite_machine', 'hello.rb',
 The whole library reflects the same api navigation. Therefore, if you need to list releases for a repository do:
 
 ```ruby
-github.repos.releases.list 'peter-murach', 'finite_machine'
+github.repos.releases.list 'piotrmurach', 'finite_machine'
 ```
 
 or to list a user's followers:
 
 ```ruby
-github.users.followers.list 'peter-murach'
+github.users.followers.list 'piotrmurach'
 ```
 
-The code base has been extensively documented with examples of how to use each method. Please refer to the [documentation](http://rubydoc.info/github/peter-murach/github/master/frames) under the `Github::Client` class name.
+The code base has been extensively documented with examples of how to use each method. Please refer to the [documentation](http://rubydoc.info/github/piotrmurach/github/master/frames) under the `Github::Client` class name.
 
 Alternatively, you can find out which methods are supported by an api by calling `actions` on a class or instance. For example, in order to find out available endpoints for `Github::Client::Repos::Contents` api call `actions` method:
 
@@ -140,10 +140,10 @@ The code base is modular. This means that you can work specifically with a given
 
 ```ruby
 starring = Github::Client::Activity::Starring.new oauth_token: token
-starring.star 'peter-murach', 'github'
+starring.star 'piotrmurach', 'github'
 ```
 
-Please refer to the [documentation](http://rubydoc.info/github/peter-murach/github/master/frames) and look under `Github::Client` to see all available classes.
+Please refer to the [documentation](http://rubydoc.info/github/piotrmurach/github/master/frames) and look under `Github::Client` to see all available classes.
 
 ### 1.3 Arguments
 
@@ -153,20 +153,20 @@ Arguments can be passed directly inside the method called. The `required` argume
 
 ```ruby
 issues = Github::Client::Issues.new
-issues.milestones.list 'peter-murach', 'github', state: 'open'
+issues.milestones.list 'piotrmurach', 'github', state: 'open'
 ```
 
 In the previous example, the order of arguments is important. However, each method also allows you to specify `required` arguments using hash symbols and thus remove the need for ordering. Therefore, the same example could be rewritten like so:
 
 ```ruby
 issues = Github::Client::Issues.new
-issues.milestones.list user: 'peter-murach', repo: 'github', state: 'open'
+issues.milestones.list user: 'piotrmurach', repo: 'github', state: 'open'
 ```
 
 Furthermore, `required` arguments can be passed during instance creation:
 
 ```ruby
-issues = Github::Client::Issues.new user: 'peter-murach', repo: 'github'
+issues = Github::Client::Issues.new user: 'piotrmurach', repo: 'github'
 issues.milestones.list state: 'open'
 ```
 
@@ -174,13 +174,13 @@ Similarly, the `required` arguments for the request can be passed inside the cur
 
 ```ruby
 issues = Github::Client::Issues.new
-issues.milestones(user: 'peter-murach', repo: 'github').list state: 'open'
+issues.milestones(user: 'piotrmurach', repo: 'github').list state: 'open'
 ```
 
 But why limit ourselves? You can mix and match arguments, for example:
 
 ```ruby
-issues = Github::Client::Issues.new user: 'peter-murach'
+issues = Github::Client::Issues.new user: 'piotrmurach'
 issues.milestones(repo: 'github').list
 issues.milestones(repo: 'tty').list
 ```
@@ -189,18 +189,18 @@ You can also use a bit of syntactic sugar whereby "username/repository" can be p
 
 ```ruby
 issues = Github::Client::Issues.new
-issues.milestones('peter-murach/github').list
-issues.milestones.list 'peter-murach/github'
+issues.milestones('piotrmurach/github').list
+issues.milestones.list 'piotrmurach/github'
 ```
 
 Finally, use the `with` scope to clearly denote your requests
 
 ```ruby
 issues = Github::Client::Issues.new
-issues.milestones.with(user: 'peter-murach', repo: 'github').list
+issues.milestones.with(user: 'piotrmurach', repo: 'github').list
 ```
 
-Please consult the method [documentation](http://rubydoc.info/github/peter-murach/github/master/frames) or [GitHub specification](https://developer.github.com/v3/) to see which arguments are required and what are the option parameters.
+Please consult the method [documentation](http://rubydoc.info/github/piotrmurach/github/master/frames) or [GitHub specification](https://developer.github.com/v3/) to see which arguments are required and what are the option parameters.
 
 ### 1.4 Response Querying
 
@@ -210,7 +210,7 @@ For example, when request is issued to list all the branches on a given reposito
 
 ```ruby
 repos = Github::Client::Repos.new
-repos.branches user: 'peter-murach', repo: 'github' do |branch|
+repos.branches user: 'piotrmurach', repo: 'github' do |branch|
   puts branch.name
 end
 ```
@@ -220,7 +220,7 @@ end
 The `ResponseWrapper` allows you to call json attributes directly as method calls. there is no magic here, all calls are delegated to the response body. Therefore, you can directly inspect request body by calling `body` method on the `ResponseWrapper` like so:
 
 ```ruby
-response = repos.branches user: 'peter-murach', repo: 'github'
+response = repos.branches user: 'piotrmurach', repo: 'github'
 response.body  # => Array of branches
 ```
 
@@ -229,7 +229,7 @@ response.body  # => Array of branches
 Each response comes packaged with methods allowing for inspection of HTTP start line and headers. For example, to check for rate limits and status codes do:
 
 ```ruby
-response = Github::Client::Repos.branches 'peter-murach', 'github'
+response = Github::Client::Repos.branches 'piotrmurach', 'github'
 response.headers.ratelimit_limit     # "5000"
 response.headers.ratelimit_remaining # "4999"
 response.headers.status              # "200"
@@ -243,7 +243,7 @@ response.headers.cache_control       # "public, max-age=60, s-maxage=60"
 If you want to verify if the response was success, namely, that the `200` code was returned call the `success?` like so:
 
 ```ruby
-response = Github::Client::Repos.branches 'peter-murach', 'github'
+response = Github::Client::Repos.branches 'piotrmurach', 'github'
 response.success?  # => true
 ```
 
@@ -267,7 +267,7 @@ In order to set custom media types for a request use the accept header. By using
 
 ```ruby
 issues = Github::Client::Issues.new
-issues.get 'peter-murach', 'github', 108, accept: 'application/vnd.github.raw'
+issues.get 'piotrmurach', 'github', 108, accept: 'application/vnd.github.raw'
 ```
 
 ## 2 Configuration
@@ -282,7 +282,7 @@ The configuration options can be set by using the `configure` helper
 Github.configure do |c|
   c.basic_auth = "login:password"
   c.adapter    = :typheous
-  c.user       = 'peter-murach'
+  c.user       = 'piotrmurach'
   c.repo       = 'finite_machine'
 end
 ```
@@ -302,7 +302,7 @@ or simply by passing hash of options to an instance like so
 ```ruby
 github = Github.new basic_auth: 'login:password',
                     adapter: :typheous,
-                    user: 'peter-murach',
+                    user: 'piotrmurach',
                     repo: 'finite_machine'
 ```
 
@@ -452,7 +452,7 @@ To list the scopes that the particular GitHub API action checks for do:
 
 ```ruby
 repos = Github::Client::Repos.new
-response = repos.list user: 'peter-murach'
+response = repos.list user: 'piotrmurach'
 response.headers.accepted_oauth_scopes  # => ['delete_repo', 'repo', 'public_repo']
 ```
 
@@ -679,8 +679,8 @@ The `mock` tests are in the `spec` directory and their primary concern is to tes
 
 ## Development
 
-Questions or problems? Please post them on the [issue tracker](https://github.com/peter-murach/github/issues). You can contribute changes by forking the project and submitting a pull request. You can ensure the tests are passing by running `bundle` and `rake`.
+Questions or problems? Please post them on the [issue tracker](https://github.com/piotrmurach/github/issues). You can contribute changes by forking the project and submitting a pull request. You can ensure the tests are passing by running `bundle` and `rake`.
 
 ## Copyright
 
-Copyright (c) 2011-2014 Piotr Murach. See LICENSE.txt for further details.
+Copyright (c) 2011-2016 Piotr Murach. See LICENSE.txt for further details.
