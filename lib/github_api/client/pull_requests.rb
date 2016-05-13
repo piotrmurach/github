@@ -22,6 +22,13 @@ module Github
       'state' => %w[ open closed all ]
     }
 
+    VALID_MERGE_REQUEST_PARAM_VALUES = %w[
+      commit_title
+      commit_message
+      sha
+      squash
+    ].freeze
+
     # Access to PullRequests::Comments API
     namespace :comments
 
@@ -186,8 +193,14 @@ module Github
     # Merge a pull request(Merge Button)
     #
     # @param [Hash] params
+    # @option params [String] :commit_title
+    #   Optional string - The first line of the message that will be used for the merge commit
     # @option params [String] :commit_message
     #   Optional string - The message that will be used for the merge commit
+    # @option params [String] :sha
+    #   Optional string - The SHA that pull request head must match to allow merge
+    # @option params [Boolean] :squash
+    #   Optional boolean - Commit a single commit to the head branch.
     #
     # @example
     #  github = Github.new
@@ -196,7 +209,7 @@ module Github
     # @api public
     def merge(*args)
       arguments(args, required: [:user, :repo, :number]) do
-        permit VALID_REQUEST_PARAM_NAMES
+        permit VALID_MERGE_REQUEST_PARAM_VALUES
       end
 
       put_request("/repos/#{arguments.user}/#{arguments.repo}/pulls/#{arguments.number}/merge", arguments.params)
