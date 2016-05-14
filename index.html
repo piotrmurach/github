@@ -6,10 +6,7 @@
     <title>Unicorn • A place for open source creatures</title>
     <meta name="viewport" content="width=device-width">
     <link rel="icon" type="image/png" href="favicon.png" />
-    
-      
-    
-    <link rel="stylesheet" type="text/css" href="assets/./app-a95816ffd9a3eb0794dd793f850a3974.css" />
+    <link rel="stylesheet" type="text/css" href="app-aa6bafacfb7d261fc0236d9447e57a918d12e57a103b90de005ca2896e1c718a.css" />
     <!-- google analytics -->
 
 <script>
@@ -18,7 +15,7 @@
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-31255537-1', 'peter-murach.github.io/github');
+  ga('create', 'UA-31255537-1', 'piotrmurach.github.io/github');
   ga('send', 'pageview');
 </script>
 
@@ -41,17 +38,17 @@
 </ul>
 
   </nav>
-  <h1 class="top-logo"><a href="" class="unicorn-icon"><img src="assets/./unicorn_logo_small-308866df5bf309aacfe8a74caa566766.png" alt="unicorn logo small" /></a>
+  <h1 class="top-logo"><a href="" class="unicorn-icon"><img src="unicorn_logo_small-10b32aab81f9eec9eb4677ea91e960d07b57747a3e763af437885b0e5e983248.png" alt="unicorn logo small" /></a>
   </h1>
   <div class="clear"></div>
   <h2 class="blurb"><span class="primary">Github API ruby gem.</span><span class="secondary">Discover Open Source.</span></h2>
-  <a href="https://github.com/peter-murach/github" class="button"><span class="github-icon"></span><span class="text">View source on GitHub</span></a>
+  <a href="https://github.com/piotrmurach/github" class="button"><span class="github-icon"></span><span class="text">View source on GitHub</span></a>
 </header>
 
 
     <section class="intro section">
   <header>
-    <a href=""><img class="logo" src="assets/./unicorn_logo-9d56a27152325cc090d46de2b20b48e6.png" alt="unicorn logo" /></a>
+    <a href=""><img class="logo" src="unicorn_logo-d144d12638279718f4f5fb501f22c6662da8bf3ded6d847913ac24298cf3f406.png" alt="unicorn logo" /></a>
   </header>
 </section>
 
@@ -91,23 +88,19 @@
     Install the gem by issuing
   </p>
 
-<div class="highlight"><pre><code class="ruby"><span class="err">$</span> <span class="n">gem</span> <span class="n">install</span> <span class="n">github_api</span>
-</code></pre></div>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">gem</span> <span class="n">install</span> <span class="n">github_api</span></code></pre></figure>
 
   <p> or put it in your Gemfile and run bundle install </p>
 
-<div class="highlight"><pre><code class="ruby"><span class="n">gem</span> <span class="s2">&quot;github_api&quot;</span>
-</code></pre></div>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">gem</span> <span class="s2">"github_api"</span></code></pre></figure>
 
   <p>To start using the gem you can either perform direct call on the Github</p>
 
-<div class="highlight"><pre><code class="ruby"><span class="no">Github</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">list</span> <span class="ss">user</span><span class="p">:</span> <span class="s1">&#39;wycats&#39;</span>
-</code></pre></div>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">Github</span><span class="p">.</span><span class="nf">repos</span><span class="p">.</span><span class="nf">list</span> <span class="ss">user: </span><span class="s1">'wycats'</span></code></pre></figure>
 
   <p>or create a new client instance</p>
 
-<div class="highlight"><pre><code class="ruby"><span class="n">github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span>
-</code></pre></div>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">github</span> <span class="o">=</span> <span class="no">Github</span><span class="p">.</span><span class="nf">new</span></code></pre></figure>
   </article>
 </section>
 
@@ -117,40 +110,35 @@
 
     <p>This library closely mirrors the GitHub Api hierarchy. For example to interact with GitHub Repositories API, issue the following calls that correspond directly to the GitHub API hierarchy</p>
 
-<div class="highlight"><pre><code class="ruby"><span class="n">github</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">commits</span><span class="o">.</span><span class="n">all</span>  <span class="s1">&#39;user-name&#39;</span><span class="p">,</span> <span class="s1">&#39;repo-name&#39;</span>
-<span class="n">github</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">hooks</span><span class="o">.</span><span class="n">create</span> <span class="s1">&#39;user-name&#39;</span><span class="p">,</span> <span class="s1">&#39;repo-name&#39;</span><span class="p">,</span> <span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;web&quot;</span><span class="p">,</span> <span class="ss">active</span><span class="p">:</span> <span class="kp">true</span>
-<span class="n">github</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">keys</span><span class="o">.</span><span class="n">get</span>     <span class="s1">&#39;user-name&#39;</span><span class="p">,</span> <span class="s1">&#39;repo-name&#39;</span>
-</code></pre></div>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">github</span><span class="p">.</span><span class="nf">repos</span><span class="p">.</span><span class="nf">commits</span><span class="p">.</span><span class="nf">all</span>  <span class="s1">'user-name'</span><span class="p">,</span> <span class="s1">'repo-name'</span>
+<span class="n">github</span><span class="p">.</span><span class="nf">repos</span><span class="p">.</span><span class="nf">hooks</span><span class="p">.</span><span class="nf">create</span> <span class="s1">'user-name'</span><span class="p">,</span> <span class="s1">'repo-name'</span><span class="p">,</span> <span class="ss">name: </span><span class="s2">"web"</span><span class="p">,</span> <span class="ss">active: </span><span class="kp">true</span>
+<span class="n">github</span><span class="p">.</span><span class="nf">repos</span><span class="p">.</span><span class="nf">keys</span><span class="p">.</span><span class="nf">get</span>     <span class="s1">'user-name'</span><span class="p">,</span> <span class="s1">'repo-name'</span></code></pre></figure>
 
     <p>The code base is modular and allows for you to work specifically with a given part of GitHub API e.g. blobs</p>
 
-<div class="highlight"><pre><code class="ruby"><span class="n">blobs</span> <span class="o">=</span> <span class="ss">Github</span><span class="p">:</span><span class="ss">:GitData</span><span class="o">::</span><span class="no">Blobs</span><span class="o">.</span><span class="n">new</span>
-<span class="n">blobs</span><span class="o">.</span><span class="n">create</span> <span class="s1">&#39;peter-murach&#39;</span><span class="p">,</span> <span class="s1">&#39;github&#39;</span><span class="p">,</span> <span class="ss">content</span><span class="p">:</span> <span class="s1">&#39;Blob content&#39;</span>
-</code></pre></div>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">blobs</span> <span class="o">=</span> <span class="no">Github</span><span class="o">::</span><span class="no">GitData</span><span class="o">::</span><span class="no">Blobs</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">blobs</span><span class="p">.</span><span class="nf">create</span> <span class="s1">'piotrmurach'</span><span class="p">,</span> <span class="s1">'github'</span><span class="p">,</span> <span class="ss">content: </span><span class="s1">'Blob content'</span></code></pre></figure>
 
     <p>The response is of type <span class="keyword">Github::ResponseWrapper</span> and allows to traverse all the json response attributes like method calls e.i.</p>
 
-<div class="highlight"><pre><code class="ruby"><span class="n">repos</span> <span class="o">=</span> <span class="ss">Github</span><span class="p">:</span><span class="ss">:Repos</span><span class="o">.</span><span class="n">new</span> <span class="ss">:user</span> <span class="o">=&gt;</span> <span class="s1">&#39;peter-murach&#39;</span><span class="p">,</span> <span class="ss">:repo</span> <span class="o">=&gt;</span> <span class="s1">&#39;github&#39;</span>
-<span class="n">repos</span><span class="o">.</span><span class="n">branches</span> <span class="k">do</span> <span class="o">|</span><span class="n">branch</span><span class="o">|</span>
-  <span class="nb">puts</span> <span class="n">branch</span><span class="o">.</span><span class="n">name</span>
-<span class="k">end</span>
-</code></pre></div>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">repos</span> <span class="o">=</span> <span class="no">Github</span><span class="o">::</span><span class="no">Repos</span><span class="p">.</span><span class="nf">new</span> <span class="ss">:user</span> <span class="o">=&gt;</span> <span class="s1">'piotrmurach'</span><span class="p">,</span> <span class="ss">:repo</span> <span class="o">=&gt;</span> <span class="s1">'github'</span>
+<span class="n">repos</span><span class="p">.</span><span class="nf">branches</span> <span class="k">do</span> <span class="o">|</span><span class="n">branch</span><span class="o">|</span>
+  <span class="nb">puts</span> <span class="n">branch</span><span class="p">.</span><span class="nf">name</span>
+<span class="k">end</span></code></pre></figure>
 
     <p>All method calls form ruby like sentences and allow for intuitive api navigation, for instance</p>
 
-<div class="highlight"><pre><code class="ruby"><span class="n">github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span> <span class="ss">:oauth_token</span> <span class="o">=&gt;</span> <span class="s1">&#39;...&#39;</span>
-<span class="n">github</span><span class="o">.</span><span class="n">users</span><span class="o">.</span><span class="n">followers</span><span class="o">.</span><span class="n">following</span> <span class="s1">&#39;wycats&#39;</span>  <span class="c1"># =&gt; returns users that &#39;wycats&#39; is following</span>
-<span class="n">github</span><span class="o">.</span><span class="n">users</span><span class="o">.</span><span class="n">followers</span><span class="o">.</span><span class="n">following?</span> <span class="s1">&#39;wycats&#39;</span> <span class="c1"># =&gt; returns true if following, otherwise false</span>
-</code></pre></div>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">github</span> <span class="o">=</span> <span class="no">Github</span><span class="p">.</span><span class="nf">new</span> <span class="ss">:oauth_token</span> <span class="o">=&gt;</span> <span class="s1">'...'</span>
+<span class="n">github</span><span class="p">.</span><span class="nf">users</span><span class="p">.</span><span class="nf">followers</span><span class="p">.</span><span class="nf">following</span> <span class="s1">'wycats'</span>  <span class="c1"># =&gt; returns users that 'wycats' is following</span>
+<span class="n">github</span><span class="p">.</span><span class="nf">users</span><span class="p">.</span><span class="nf">followers</span><span class="p">.</span><span class="nf">following?</span> <span class="s1">'wycats'</span> <span class="c1"># =&gt; returns true if following, otherwise false</span></code></pre></figure>
 
     <p>The library allows for flexible arguments parsing. Therefore arguments can be passed during instance creation</p>
 
-<div class="highlight"><pre><code class="ruby"><span class="n">issues</span> <span class="o">=</span> <span class="ss">Github</span><span class="p">:</span><span class="ss">:Issues</span><span class="o">.</span><span class="n">new</span> <span class="ss">user</span><span class="p">:</span> <span class="s1">&#39;peter-murach&#39;</span><span class="p">,</span> <span class="ss">repo</span><span class="p">:</span> <span class="s1">&#39;github&#39;</span>
-<span class="n">issues</span><span class="o">.</span><span class="n">milestones</span><span class="o">.</span><span class="n">list</span> <span class="ss">state</span><span class="p">:</span> <span class="s1">&#39;open&#39;</span>
-</code></pre></div>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">issues</span> <span class="o">=</span> <span class="no">Github</span><span class="o">::</span><span class="no">Issues</span><span class="p">.</span><span class="nf">new</span> <span class="ss">user: </span><span class="s1">'piotrmurach'</span><span class="p">,</span> <span class="ss">repo: </span><span class="s1">'github'</span>
+<span class="n">issues</span><span class="p">.</span><span class="nf">milestones</span><span class="p">.</span><span class="nf">list</span> <span class="ss">state: </span><span class="s1">'open'</span></code></pre></figure>
 
     <aside class="more">
-      <a class="learn" href="https://github.com/peter-murach/github#arguments--parameters">Learn more</a>
+      <a class="learn" href="https://github.com/piotrmurach/github#arguments--parameters">Learn more</a>
     </aside>
   </article>
 </section>
@@ -159,7 +147,7 @@
   <article class="content">
     <h2 class='headline'>Configuration</h2>
     <p>At this stage you can also supply various configuration parameters, such as</p>
-<div class="highlight"><pre><code class="ruby">  <span class="n">adapter</span>          <span class="c1"># http client used for performing requests</span>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">  <span class="n">adapter</span>          <span class="c1"># http client used for performing requests</span>
   <span class="n">auto_pagination</span>  <span class="c1"># by default false, set to true traverses requests page links</span>
   <span class="n">oauth_token</span>      <span class="c1"># oauth authorization token</span>
   <span class="n">basic_auth</span>       <span class="c1"># login:password string</span>
@@ -172,31 +160,27 @@
   <span class="n">site</span>             <span class="c1"># enterprise api web endpoint</span>
   <span class="n">ssl</span>              <span class="c1"># ssl settings</span>
   <span class="n">per_page</span>         <span class="c1"># number of items per page, max 100</span>
-  <span class="n">user_agent</span>       <span class="c1"># custom user agent name, by default &#39;Github API&#39;</span>
-</code></pre></div>
+  <span class="n">user_agent</span>       <span class="c1"># custom user agent name, by default 'Github API'</span></code></pre></figure>
 
     <p>which are used throughout the API. These can be passed directly as hash options:</p>
 
-<div class="highlight"><pre><code class="ruby"><span class="n">github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span> <span class="n">oauth_token</span><span class="p">:</span> <span class="s1">&#39;token&#39;</span>
-</code></pre></div>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">github</span> <span class="o">=</span> <span class="no">Github</span><span class="p">.</span><span class="nf">new</span> <span class="ss">oauth_token: </span><span class="s1">'token'</span></code></pre></figure>
 
 <p>Alternatively, you can configure the Github settings by passing a block, for instance, with custom enterprise endpoint and website like</p>
 
-<div class="highlight"><pre><code class="ruby"><span class="n">github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
-  <span class="n">config</span><span class="o">.</span><span class="n">endpoint</span>    <span class="o">=</span> <span class="s1">&#39;https://github.company.com/api/v3&#39;</span>
-  <span class="n">config</span><span class="o">.</span><span class="n">site</span>        <span class="o">=</span> <span class="s1">&#39;https://github.company.com&#39;</span>
-  <span class="n">config</span><span class="o">.</span><span class="n">oauth_token</span> <span class="o">=</span> <span class="s1">&#39;token&#39;</span>
-  <span class="n">config</span><span class="o">.</span><span class="n">adapter</span>     <span class="o">=</span> <span class="ss">:net_http</span>
-  <span class="n">config</span><span class="o">.</span><span class="n">ssl</span>         <span class="o">=</span> <span class="p">{</span><span class="ss">:verify</span> <span class="o">=&gt;</span> <span class="kp">false</span><span class="p">}</span>
-<span class="k">end</span>
-</code></pre></div>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">github</span> <span class="o">=</span> <span class="no">Github</span><span class="p">.</span><span class="nf">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="p">.</span><span class="nf">endpoint</span>    <span class="o">=</span> <span class="s1">'https://github.company.com/api/v3'</span>
+  <span class="n">config</span><span class="p">.</span><span class="nf">site</span>        <span class="o">=</span> <span class="s1">'https://github.company.com'</span>
+  <span class="n">config</span><span class="p">.</span><span class="nf">oauth_token</span> <span class="o">=</span> <span class="s1">'token'</span>
+  <span class="n">config</span><span class="p">.</span><span class="nf">adapter</span>     <span class="o">=</span> <span class="ss">:net_http</span>
+  <span class="n">config</span><span class="p">.</span><span class="nf">ssl</span>         <span class="o">=</span> <span class="p">{</span><span class="ss">:verify</span> <span class="o">=&gt;</span> <span class="kp">false</span><span class="p">}</span>
+<span class="k">end</span></code></pre></figure>
 
 <p>The <span class="keyword">github_api</span> gem will use the default middleware stack which is exposed by calling <span class="keyword">stack</span> on client instance. However, this stack can be freely modified with methods such as <span class="keyword">insert</span>, <span class="keyword">insert_after</span>, <span class="keyword">delete</span> and <span class="keyword">swap</span>. For instance to add your <span class="keyword">CustomMiddleware</span> do</p>
 
-<div class="highlight"><pre><code class="ruby"><span class="n">github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
-  <span class="n">config</span><span class="o">.</span><span class="n">stack</span><span class="o">.</span><span class="n">insert_after</span> <span class="ss">Github</span><span class="p">:</span><span class="ss">:Response</span><span class="o">::</span><span class="no">Helpers</span><span class="p">,</span> <span class="no">CustomMiddleware</span>
-<span class="k">end</span>
-</code></pre></div>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">github</span> <span class="o">=</span> <span class="no">Github</span><span class="p">.</span><span class="nf">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="p">.</span><span class="nf">stack</span><span class="p">.</span><span class="nf">insert_after</span> <span class="no">Github</span><span class="o">::</span><span class="no">Response</span><span class="o">::</span><span class="no">Helpers</span><span class="p">,</span> <span class="no">CustomMiddleware</span>
+<span class="k">end</span></code></pre></figure>
 
   </article>
 </section>
@@ -208,19 +192,16 @@
 
     <p>You can authenticate either using <span class="keyword">OAuth</span> authentication convenience methods(see section OAuth) or through basic authentication by passing your login and password credentials<p>
 
-<div class="highlight"><pre><code class="ruby"><span class="n">github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span> <span class="ss">login</span><span class="p">:</span><span class="s1">&#39;peter-murach&#39;</span><span class="p">,</span> <span class="ss">password</span><span class="p">:</span><span class="s1">&#39;...&#39;</span>
-</code></pre></div>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">github</span> <span class="o">=</span> <span class="no">Github</span><span class="p">.</span><span class="nf">new</span> <span class="n">login</span><span class="ss">:'piotrmurach'</span><span class="p">,</span> <span class="n">password</span><span class="ss">:'...'</span></code></pre></figure>
 
   <p>or use convenience method</p>
 
-<div class="highlight"><pre><code class="ruby"><span class="n">github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span> <span class="n">basic_auth</span><span class="p">:</span> <span class="s1">&#39;login:password&#39;</span>
-</code></pre></div>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">github</span> <span class="o">=</span> <span class="no">Github</span><span class="p">.</span><span class="nf">new</span> <span class="ss">basic_auth: </span><span class="s1">'login:password'</span></code></pre></figure>
 
     <p>Alternatively you can use OAuth Authorizations API. For instance, to create access token through GitHub API you required to pass your basic credentials as in the following:</p>
 
-<div class="highlight"><pre><code class="ruby"><span class="n">github</span> <span class="o">=</span> <span class="no">Github</span><span class="o">.</span><span class="n">new</span> <span class="n">basic_auth</span><span class="p">:</span> <span class="s1">&#39;login:password&#39;</span>
-<span class="n">github</span><span class="o">.</span><span class="n">oauth</span><span class="o">.</span><span class="n">create</span> <span class="s1">&#39;scopes&#39;</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="s1">&#39;repo&#39;</span><span class="o">]</span>
-</code></pre></div>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">github</span> <span class="o">=</span> <span class="no">Github</span><span class="p">.</span><span class="nf">new</span> <span class="ss">basic_auth: </span><span class="s1">'login:password'</span>
+<span class="n">github</span><span class="p">.</span><span class="nf">oauth</span><span class="p">.</span><span class="nf">create</span> <span class="s1">'scopes'</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'repo'</span><span class="p">]</span></code></pre></figure>
 
 <p>You can add more than one scope from the <span class="keyword">user</span>, <span class="keyword">public_repo</span>, <span class="keyword">repo</span>, <span class="keyword">gist</span> or leave the scopes parameter out, in which case, the default read-only access will be assumed(includes public user profile info, public repo info, and gists).</p>
 
@@ -235,53 +216,47 @@
 
     <p>To install it do</p>
 
-<div class="highlight"><pre><code class="ruby"><span class="err">$</span> <span class="n">gem</span> <span class="n">install</span> <span class="n">github_cli</span>
-</code></pre></div>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">gem</span> <span class="n">install</span> <span class="n">github_cli</span></code></pre></figure>
 
     <p>To run it execute command</p>
 
-<div class="highlight"><pre><code class="ruby"><span class="err">$</span> <span class="n">gcli</span>
-</code></pre></div>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">gcli</span></code></pre></figure>
 
   <p>The first step is to create a configuration file, either global in home directory or local inside the project:</p>
 
-<div class="highlight"><pre><code class="ruby"><span class="err">$</span> <span class="n">gcli</span> <span class="n">init</span> <span class="o">[--</span><span class="n">local</span><span class="o">]</span> <span class="o">[</span><span class="n">filename</span><span class="o">]</span>
-</code></pre></div>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">gcli</span> <span class="n">init</span> <span class="p">[</span><span class="o">--</span><span class="n">local</span><span class="p">]</span> <span class="p">[</span><span class="n">filename</span><span class="p">]</span></code></pre></figure>
 
   <p>Without any options this command will setup a <span class="keyword">.githubrc</span> configuration file in your home/project directory with all the global settings. By passing <span class="keyword">--local</span> option the config file will be created locally in the execution directory. Further, by default <span class="keyword">.githubrc</span> name is used which can be changed by passing the <span class="keyword">filename</span>.</p>
 
   <p>Main configuration options are:</p>
 
-<div class="highlight"><pre><code class="ruby"><span class="n">user</span><span class="o">.</span><span class="n">token</span>            <span class="c1"># Authentication token</span>
-<span class="n">user</span><span class="o">.</span><span class="n">login</span>            <span class="c1"># User login</span>
-<span class="n">user</span><span class="o">.</span><span class="n">password</span>         <span class="c1"># User password</span>
-<span class="n">user</span><span class="o">.</span><span class="n">name</span>             <span class="c1"># Default user name</span>
-<span class="n">user</span><span class="o">.</span><span class="n">repo</span>             <span class="c1"># Default repo name</span>
-<span class="n">user</span><span class="o">.</span><span class="n">org</span>              <span class="c1"># Default organization name</span>
-<span class="n">core</span><span class="o">.</span><span class="n">editor</span>           <span class="c1"># Editor to be opened</span>
-<span class="n">core</span><span class="o">.</span><span class="n">endpoint</span>         <span class="c1"># The api endpoint, by deafult https://api.github.com</span>
-<span class="n">core</span><span class="o">.</span><span class="n">site</span>             <span class="c1"># The web endpoint, by default https://github.com</span>
-<span class="n">core</span><span class="o">.</span><span class="n">pager</span>            <span class="c1"># Pager to be used, by default less</span>
-<span class="n">core</span><span class="o">.</span><span class="n">format</span>           <span class="c1"># Output formating</span>
-<span class="n">core</span><span class="o">.</span><span class="n">quiet</span>            <span class="c1"># Surpass output to show only response status</span>
-<span class="n">core</span><span class="o">.</span><span class="n">ssl</span>              <span class="c1"># SSL settings</span>
-<span class="n">core</span><span class="o">.</span><span class="n">auto_pagination</span>  <span class="c1"># Switch on default results pagination, default false</span>
-</code></pre></div>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">user</span><span class="p">.</span><span class="nf">token</span>            <span class="c1"># Authentication token</span>
+<span class="n">user</span><span class="p">.</span><span class="nf">login</span>            <span class="c1"># User login</span>
+<span class="n">user</span><span class="p">.</span><span class="nf">password</span>         <span class="c1"># User password</span>
+<span class="n">user</span><span class="p">.</span><span class="nf">name</span>             <span class="c1"># Default user name</span>
+<span class="n">user</span><span class="p">.</span><span class="nf">repo</span>             <span class="c1"># Default repo name</span>
+<span class="n">user</span><span class="p">.</span><span class="nf">org</span>              <span class="c1"># Default organization name</span>
+<span class="n">core</span><span class="p">.</span><span class="nf">editor</span>           <span class="c1"># Editor to be opened</span>
+<span class="n">core</span><span class="p">.</span><span class="nf">endpoint</span>         <span class="c1"># The api endpoint, by deafult https://api.github.com</span>
+<span class="n">core</span><span class="p">.</span><span class="nf">site</span>             <span class="c1"># The web endpoint, by default https://github.com</span>
+<span class="n">core</span><span class="p">.</span><span class="nf">pager</span>            <span class="c1"># Pager to be used, by default less</span>
+<span class="n">core</span><span class="p">.</span><span class="nf">format</span>           <span class="c1"># Output formating</span>
+<span class="n">core</span><span class="p">.</span><span class="nf">quiet</span>            <span class="c1"># Surpass output to show only response status</span>
+<span class="n">core</span><span class="p">.</span><span class="nf">ssl</span>              <span class="c1"># SSL settings</span>
+<span class="n">core</span><span class="p">.</span><span class="nf">auto_pagination</span>  <span class="c1"># Switch on default results pagination, default false</span></code></pre></figure>
 
 <p>Moreover, <span class="keyword">gcli config</span> command allows you to set/get any configuration option such as output format, editor or oauth token.</p>
 
 <p>For instance, to check value for your authentication token do</p>
 
-<div class="highlight"><pre><code class="ruby"><span class="err">$</span> <span class="n">gcli</span> <span class="n">config</span> <span class="o">[--</span><span class="n">local</span><span class="o">]</span> <span class="n">user</span><span class="o">.</span><span class="n">token</span>
-</code></pre></div>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">gcli</span> <span class="n">config</span> <span class="p">[</span><span class="o">--</span><span class="n">local</span><span class="p">]</span> <span class="n">user</span><span class="p">.</span><span class="nf">token</span></code></pre></figure>
 
 <p>and to set the value do</p>
 
-<div class="highlight"><pre><code class="ruby"><span class="err">$</span> <span class="n">gcli</span> <span class="n">config</span> <span class="o">[--</span><span class="n">local</span><span class="o">]</span> <span class="n">user</span><span class="o">.</span><span class="n">token</span> <span class="n">lh23l4kj234</span><span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">.</span>
-</code></pre></div>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">gcli</span> <span class="n">config</span> <span class="p">[</span><span class="o">--</span><span class="n">local</span><span class="p">]</span> <span class="n">user</span><span class="p">.</span><span class="nf">token</span> <span class="n">lh23l4kj234</span><span class="p">.</span><span class="nf">.</span><span class="p">.</span><span class="nf">.</span></code></pre></figure>
 
     <aside class="more">
-      <a class="learn" href="https://github.com/peter-murach/github_cli">Learn more</a>
+      <a class="learn" href="https://github.com/piotrmurach/github_cli">Learn more</a>
     </aside>
 
   </article>
@@ -299,7 +274,7 @@
         </a>
       </li>
       <li>
-        <a href="https://github.com/peter-murach/github" class="box">
+        <a href="https://github.com/piotrmurach/github" class="box">
           <span class="icon github"></span>
           <span class="text">Watch on github</span>
         </a>
@@ -320,13 +295,13 @@
     <footer class="footer" role="contentinfo">
   <div class="contact">
     <p>
-      Brought to you by Piotr Murach &copy; 2013
+      Brought to you by Piotr Murach &copy; 2013 - 2016
     </p>
   </div>
 </footer>
 
   </div> <!-- /container -->
 
-<script type="text/javascript" src="assets/./app-b67846fa8950f6a7455080849ffa5872.js"></script>
+<script type="text/javascript" src="app-0db72b20509041751084cb6b3dd225f7bee35172823cd7e2f06ed35b3df49c8a.js"></script>
 </body>
 </html>
