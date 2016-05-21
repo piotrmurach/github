@@ -91,6 +91,16 @@ module Github
       page_iterator.next?
     end
 
+    # Handle pagination params when they are not passed directly
+    #
+    def self.per_page_as_param(per_page_config)
+      params = {}
+      if (per_page_config != Github::Configuration.property_set[:per_page])
+        params[:per_page] = per_page_config unless per_page_config.nil?
+      end
+      params
+    end
+
     private
 
     # Internally used page iterator

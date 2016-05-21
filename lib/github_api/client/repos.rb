@@ -132,6 +132,9 @@ module Github
         permit %w[ user org type sort direction since ]
       end
       params = arguments.params
+      unless params.symbolize_keys[:per_page]
+        params.merge!(Pagination.per_page_as_param(current_options[:per_page]))
+      end
 
       response = if (user_name = params.delete('user') || user)
         get_request("/users/#{user_name}/repos", params)
