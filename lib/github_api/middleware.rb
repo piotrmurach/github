@@ -24,6 +24,9 @@ module Github
           builder.use Github::Response::Jsonize
           builder.use Github::Response::AtomParser
         end
+        if api.stack
+          api.stack.call(builder)
+        end
         builder.use Github::Response::RaiseError
         builder.adapter options[:adapter]
       end

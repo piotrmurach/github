@@ -59,8 +59,7 @@ module Github
     def connection(api, options = {})
       connection_options = default_options(options)
       clear_cache unless options.empty?
-      builder = api.stack ? api.stack : stack(options.merge!(api: api))
-      connection_options.merge!(builder: builder)
+      connection_options.merge!(builder: stack(options.merge!(api: api)))
       connection_options.deep_merge!(options[:connection_options]) if options[:connection_options]
       if ENV['DEBUG']
         p "Connection options : \n"
