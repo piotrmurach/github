@@ -1,5 +1,14 @@
 # Change log
 
+## [v0.13.2] - 2016-x-x
+
+### Changed
+* Add support for merge parameters by @codenamev
+* Add pull request list new params by @tknzk
+
+### Fixed
+* Fix custom middleware stack by @zacksiri
+
 ## [v0.13.1] - 2015-12-20
 
 ### Added
