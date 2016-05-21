@@ -16,6 +16,8 @@ module Github
       commit_message
       mime_type
       resource
+      sort
+      direction
     ].freeze
 
     VALID_REQUEST_PARAM_VALUES = {
@@ -75,7 +77,7 @@ module Github
     # Create a pull request
     #
     # @param [Hash] params
-    # @option params [String] :title 
+    # @option params [String] :title
     #   Required string
     # @option params [String] :body
     #   Optional string
