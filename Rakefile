@@ -16,12 +16,3 @@ task default: [:spec, :features]
 
 desc 'Run all specs on CI'
 task ci: [:spec, :features, 'coveralls:push']
-
-desc 'Load gem inside irb console'
-task :console do
-  require 'irb'
-  require 'irb/completion'
-  require File.join(__FILE__, '../lib/github_api')
-  ARGV.clear
-  IRB.start
-end
