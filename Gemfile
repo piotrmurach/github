@@ -14,6 +14,4 @@ group :metrics do
   gem 'coveralls', '~> 0.8.9'
   gem 'simplecov', '~> 0.10.0'
   gem 'yardstick', '~> 0.9.9'
-  gem 'reek',      '~> 1.2.12'
-  gem 'roodi',     '~> 2.2.0'
 end
