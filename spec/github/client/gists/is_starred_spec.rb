@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Client::Gists, '#unstar' do
+RSpec.describe Github::Client::Gists, '#starred?' do
   let(:gist_id) { 1 }
   let(:request_path) { "/gists/#{gist_id}/star" }
   let(:body) { '' }
@@ -20,25 +20,25 @@ describe Github::Client::Gists, '#unstar' do
 
     it { expect { subject.starred? }.to raise_error(ArgumentError) }
 
-    it 'should raise error if gist id not present' do
+    it 'raises error if gist id not present' do
       expect { subject.starred? nil }.to raise_error(ArgumentError)
     end
 
-    it 'should perform request' do
+    it 'performs request' do
       subject.starred? gist_id
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
-    it 'should return true if gist is already starred' do
-      subject.starred?(gist_id).should be_true
+    it 'returns true if gist is already starred' do
+      expect(subject.starred?(gist_id)).to be_true
     end
   end
 
   context 'when gist is not starred' do
     let(:status) { 404 }
 
-    it 'should return false if gist is not starred' do
-      subject.starred?(gist_id).should be_false
+    it 'returns false if gist is not starred' do
+      expect(subject.starred?(gist_id)).to be_false
     end
   end
 end # starred?

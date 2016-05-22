@@ -5,17 +5,12 @@ module Github
 
     require_all 'github_api/client/gists', 'comments'
 
-    REQUIRED_GIST_INPUTS = %w[
-      description
-      public
-      files
-      content
-    ].freeze
-
     # Access to Gists::Comments API
     namespace :comments
 
     # List a user's gists
+    #
+    # @see https://developer.github.com/v3/gists/#list-a-users-gists
     #
     # @example
     #  github = Github.new
@@ -29,6 +24,8 @@ module Github
     #  github.gists.list
     #
     # List all public gists
+    #
+    # @see https://developer.github.com/v3/gists/#list-all-public-gists
     #
     #  github = Github.new
     #  github.gists.list :public
@@ -49,13 +46,15 @@ module Github
       return response unless block_given?
       response.each { |el| yield el }
     end
-    alias :all :list
+    alias_method :all, :list
 
     # List the authenticated user's starred gists
     #
+    # @see https://developer.github.com/v3/gists/#list-starred-gists
+    #
     # @example
-    #  github = Github.new oauth_token: '...'
-    #  github.gists.starred
+    #   github = Github.new oauth_token: '...'
+    #   github.gists.starred
     #
     # @return [Hash]
     #
@@ -69,9 +68,19 @@ module Github
 
     # Get a single gist
     #
+    # @see https://developer.github.com/v3/gists/#get-a-single-gist
+    #
     # @example
-    #  github = Github.new
-    #  github.gists.get 'gist-id'
+    #   github = Github.new
+    #   github.gists.get 'gist-id'
+    #
+    # Get a specific revision of gist
+    #
+    # @see https://developer.github.com/v3/gists/#get-a-specific-revision-of-a-gist
+    #
+    # @example
+    #   github = Github.new
+    #   github.gists.get 'gist-id', sha: '
     #
     # @return [Hash]
     #
@@ -79,11 +88,17 @@ module Github
     def get(*args)
       arguments(args, required: [:id])
 
-      get_request("/gists/#{arguments.id}", arguments.params)
+      if (sha = arguments.params.delete('sha'))
+        get_request("/gists/#{arguments.id}/#{sha}")
+      else
+        get_request("/gists/#{arguments.id}", arguments.params)
+      end
     end
-    alias :find :get
+    alias_method :find, :get
 
     # Create a gist
+    #
+    # @see https://developer.github.com/v3/gists/#create-a-gist
     #
     # @param [Hash] params
     # @option params [String] :description
@@ -112,14 +127,14 @@ module Github
     #
     # @api public
     def create(*args)
-      arguments(args) do
-        assert_required REQUIRED_GIST_INPUTS
-      end
+      arguments(args)
 
       post_request("/gists", arguments.params)
     end
 
     # Edit a gist
+    #
+    # @see https://developer.github.com/v3/gists/#edit-a-gist
     #
     # @param [Hash] params
     # @option [String] :description
@@ -162,6 +177,8 @@ module Github
 
     # List gist commits
     #
+    # @see https://developer.github.com/v3/gists/#list-gist-commits
+    #
     # @example
     #  github = Github.new
     #  github.gists.commits 'gist-id'
@@ -177,6 +194,8 @@ module Github
 
     # Star a gist
     #
+    # @see https://developer.github.com/v3/gists/#star-a-gist
+    #
     # @example
     #  github = Github.new
     #  github.gists.star 'gist-id'
@@ -189,6 +208,8 @@ module Github
     end
 
     # Unstar a gist
+    #
+    # @see https://developer.github.com/v3/gists/#unstar-a-gist
     #
     # @xample
     #  github = Github.new
@@ -203,10 +224,13 @@ module Github
 
     # Check if a gist is starred
     #
-    # = Examples
-    #  github = Github.new
-    #  github.gists.starred? 'gist-id'
+    # @see https://developer.github.com/v3/gists/#check-if-a-gist-is-starred
     #
+    # @example
+    #   github = Github.new
+    #   github.gists.starred? 'gist-id'
+    #
+    # @api public
     def starred?(*args)
       arguments(args, required: [:id])
       get_request("/gists/#{arguments.id}/star", arguments.params)
@@ -225,14 +249,16 @@ module Github
     def fork(*args)
       arguments(args, required: [:id])
 
-      post_request("/gists/#{arguments.id}/fork", arguments.params)
+      post_request("/gists/#{arguments.id}/forks", arguments.params)
     end
 
     # List gist forks
     #
+    # @see https://developer.github.com/v3/gists/#list-gist-forks
+    #
     # @example
-    #  github = Github.new
-    #  github.gists.forks 'gist-id'
+    #   github = Github.new
+    #   github.gists.forks 'gist-id'
     #
     # @api public
     def forks(*args)
@@ -244,6 +270,8 @@ module Github
     end
 
     # Delete a gist
+    #
+    # @see https://developer.github.com/v3/gists/#delete-a-gist
     #
     # @example
     #  github = Github.new
