@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Error::ServiceError, 'parse_response' do
+RSpec.describe Github::Error::ServiceError, '#new' do
   let(:message) { 'Requires authentication' }
   let(:url)     { 'https://api.github.com/user/repos' }
   let(:body)    { "{\"message\":\"#{message}\"}" }
@@ -15,24 +15,27 @@ describe Github::Error::ServiceError, 'parse_response' do
     url: url
   }}
 
-  let(:object) { described_class.new(response) }
-
-  subject { object.parse_response(response) }
-
   it "parses body" do
-    expect(object).to receive(:parse_body).with(body)
-    subject
+    error = described_class.new(response)
+
+    expect(error.body).to eq(message)
   end
 
   it "parses http headers" do
-    expect(object.http_headers).to eql(response_headers)
+    error = described_class.new(response)
+
+    expect(error.http_headers).to eq(response_headers)
   end
 
   it "parses status" do
-    expect(object.status).to eql(status)
+    error = described_class.new(response)
+
+    expect(error.status).to eq(status)
   end
 
   it "assembles error message" do
-    expect(subject).to eql(" #{url}: #{status} #{message}")
+    error = described_class.new(response)
+
+    expect(error.message).to eql(" #{url}: #{status} #{message}")
   end
 end # Github::Error::ServiceError

@@ -6,26 +6,25 @@ module Github
   # Raised when GitHub returns any of the HTTP status codes
   module Error
     class ServiceError < GithubError
-
       attr_reader :http_headers, :body, :status
 
       MIN_BODY_LENGTH = 2
 
       def initialize(response)
         @http_headers = response[:response_headers]
-        message       = parse_response(response)
-        super(message)
+        @body         = parse_body(response[:body])
+        @status       = response[:status]
+
+        super(create_message(response))
       end
 
-      def parse_response(response)
-        @body   = parse_body(response[:body])
-        @status = response[:status]
-        "#{response[:method].to_s.upcase} #{response[:url].to_s}: #{@status} #{@body}"
+      def create_message(response)
+        "#{response[:method].to_s.upcase} #{response[:url]}: #{@status} #{@body}"
       end
 
       def decode_body(body)
         if body.respond_to?(:to_str) && body.length >= MIN_BODY_LENGTH
-           JSON.parse(body, symbolize_names: true)
+          JSON.parse(body, symbolize_names: true)
         else
           body
         end
@@ -40,11 +39,7 @@ module Github
           body[:error]
         elsif body[:errors]
           error = Array(body[:errors]).first
-          if error.kind_of?(Hash)
-            error[:message]
-          else
-            error
-          end
+          error.is_a?(Hash) ? error[:message] : error
         elsif body[:message]
           body[:message]
         else
