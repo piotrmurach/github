@@ -681,6 +681,10 @@ The `mock` tests are in the `spec` directory and their primary concern is to tes
 
 Questions or problems? Please post them on the [issue tracker](https://github.com/piotrmurach/github/issues). You can contribute changes by forking the project and submitting a pull request. You can ensure the tests are passing by running `bundle` and `rake`.
 
+## Contributing
+
+Bug reports and pull requests are welcome on GitHub at https://github.com/piotrmurach/github. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+
 ## Copyright
 
 Copyright (c) 2011-2016 Piotr Murach. See LICENSE.txt for further details.
