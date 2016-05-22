@@ -2,15 +2,15 @@
 
 require 'spec_helper'
 
-describe Github::Client::PullRequests, '#merge' do
+RSpec.describe Github::Client::PullRequests, '#merge' do
   let(:user)   { 'peter-murach' }
   let(:repo)   { 'github' }
   let(:number) { 1347 }
   let(:request_path) { "/repos/#{user}/#{repo}/pulls/#{number}/merge" }
 
   before {
-    stub_put(request_path).to_return(:body => body, :status => status,
-      :headers => {:content_type => "application/json; charset=utf-8"})
+    stub_put(request_path).to_return(body: body, status: status,
+      headers: {content_type: "application/json; charset=utf-8"})
   }
 
   after { reset_authentication_for(subject) }
@@ -23,12 +23,12 @@ describe Github::Client::PullRequests, '#merge' do
 
     it 'performs request' do
       subject.merge user, repo, number
-      a_put(request_path).should have_been_made
+      expect(a_put(request_path)).to have_been_made
     end
 
     it 'response contains merge success flag' do
       response = subject.merge(user, repo, number)
-      response.merged.should be_true
+      expect(response.merged).to be_true
     end
   end
 
@@ -38,7 +38,7 @@ describe Github::Client::PullRequests, '#merge' do
 
     it 'response contains merge failure flag' do
       response = subject.merge(user, repo, number)
-      response.merged.should be_false
+      expect(response.merged).to be_false
     end
   end
 end # merge

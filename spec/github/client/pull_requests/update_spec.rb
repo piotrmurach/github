@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Client::PullRequests, '#update' do
+RSpec.describe Github::Client::PullRequests, '#update' do
   let(:user)   { 'peter-murach' }
   let(:repo)   { 'github' }
   let(:number) { 1347 }
@@ -34,17 +34,17 @@ describe Github::Client::PullRequests, '#update' do
 
     it "should create resource successfully" do
       subject.update user, repo, number, inputs
-      a_patch(request_path).with(inputs).should have_been_made
+      expect(a_patch(request_path).with(inputs)).to have_been_made
     end
 
     it "should return the resource" do
       pull_request = subject.update user, repo, number, inputs
-      pull_request.should be_a Github::ResponseWrapper
+      expect(pull_request).to be_a Github::ResponseWrapper
     end
 
     it "should get the pull_request information" do
       pull_request = subject.update user, repo, number, inputs
-      pull_request.title.should == 'new-feature'
+      expect(pull_request.title).to eq('new-feature')
     end
   end
 

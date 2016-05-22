@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Client::PullRequests, '#create' do
+RSpec.describe Github::Client::PullRequests, '#create' do
   let(:user)   { 'peter-murach' }
   let(:repo)   { 'github' }
   let(:request_path) { "/repos/#{user}/#{repo}/pulls" }
@@ -35,17 +35,17 @@ describe Github::Client::PullRequests, '#create' do
 
     it "should create resource successfully" do
       subject.create user, repo, inputs
-      a_post(request_path).with(inputs).should have_been_made
+      expect(a_post(request_path).with(inputs)).to have_been_made
     end
 
     it "should return the resource" do
       pull_request = subject.create user, repo, inputs
-      pull_request.should be_a Github::ResponseWrapper
+      expect(pull_request).to be_a Github::ResponseWrapper
     end
 
     it "should get the request information" do
       pull_request = subject.create user, repo, inputs
-      pull_request.title.should eql "new-feature"
+      expect(pull_request.title).to eql "new-feature"
     end
   end
 

@@ -6,31 +6,6 @@ module Github
     require_all 'github_api/client/pull_requests',
       'comments'
 
-    VALID_REQUEST_PARAM_NAMES = %w[
-      title
-      body
-      base
-      head
-      state
-      issue
-      commit_message
-      mime_type
-      resource
-      sort
-      direction
-    ].freeze
-
-    VALID_REQUEST_PARAM_VALUES = {
-      'state' => %w[ open closed all ]
-    }
-
-    VALID_MERGE_REQUEST_PARAM_VALUES = %w[
-      commit_title
-      commit_message
-      sha
-      squash
-    ].freeze
-
     # Access to PullRequests::Comments API
     namespace :comments
 
@@ -47,16 +22,14 @@ module Github
     #
     # @api public
     def list(*args)
-      arguments(args, required: [:user, :repo]) do
-        permit VALID_REQUEST_PARAM_NAMES
-        assert_values VALID_REQUEST_PARAM_VALUES
-      end
+      arguments(args, required: [:user, :repo])
 
-      response = get_request("/repos/#{arguments.user}/#{arguments.repo}/pulls", arguments.params)
+      response = get_request("/repos/#{arguments.user}/#{arguments.repo}/pulls",
+                             arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
-    alias :all :list
+    alias_method :all, :list
 
     # Get a single pull request
     #
@@ -72,7 +45,7 @@ module Github
 
       get_request("/repos/#{arguments.user}/#{arguments.repo}/pulls/#{arguments.number}", arguments.params)
     end
-    alias :find :get
+    alias_method :find, :get
 
     # Create a pull request
     #
@@ -111,11 +84,10 @@ module Github
     #
     # @api public
     def create(*args)
-      arguments(args, required: [:user, :repo]) do
-        permit VALID_REQUEST_PARAM_NAMES
-      end
+      arguments(args, required: [:user, :repo])
 
-      post_request("/repos/#{arguments.user}/#{arguments.repo}/pulls", arguments.params)
+      post_request("/repos/#{arguments.user}/#{arguments.repo}/pulls",
+                   arguments.params)
     end
 
     # Update a pull request
@@ -138,10 +110,7 @@ module Github
     #
     # @api public
     def update(*args)
-      arguments(args, required: [:user, :repo, :number]) do
-        permit VALID_REQUEST_PARAM_NAMES
-        assert_values VALID_REQUEST_PARAM_VALUES
-      end
+      arguments(args, required: [:user, :repo, :number])
 
       patch_request("/repos/#{arguments.user}/#{arguments.repo}/pulls/#{arguments.number}", arguments.params)
     end
@@ -210,9 +179,7 @@ module Github
     #
     # @api public
     def merge(*args)
-      arguments(args, required: [:user, :repo, :number]) do
-        permit VALID_MERGE_REQUEST_PARAM_VALUES
-      end
+      arguments(args, required: [:user, :repo, :number])
 
       put_request("/repos/#{arguments.user}/#{arguments.repo}/pulls/#{arguments.number}/merge", arguments.params)
     end

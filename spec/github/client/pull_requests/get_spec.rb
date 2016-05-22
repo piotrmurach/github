@@ -2,15 +2,15 @@
 
 require 'spec_helper'
 
-describe Github::Client::PullRequests, '#get' do
+RSpec.describe Github::Client::PullRequests, '#get' do
   let(:user)   { 'peter-murach' }
   let(:repo) { 'github' }
   let(:number) { 1 }
   let(:request_path) { "/repos/#{user}/#{repo}/pulls/#{number}" }
 
   before {
-    stub_get(request_path).to_return(:body => body, :status => status,
-      :headers => {:content_type => "application/json; charset=utf-8"})
+    stub_get(request_path).to_return(body: body, status: status,
+      headers: {content_type: "application/json; charset=utf-8"})
   }
 
   after { reset_authentication_for(subject) }
@@ -27,18 +27,18 @@ describe Github::Client::PullRequests, '#get' do
 
     it "should get the resource" do
       subject.get user, repo, number
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it "should get pull_request information" do
       pull_request = subject.get user, repo, number
-      pull_request.number.should eq number
-      pull_request.head.user.login.should == 'octocat'
+      expect(pull_request.number).to eq number
+      expect(pull_request.head.user.login).to eq('octocat')
     end
 
     it "should return mash" do
       pull_request = subject.get user, repo, number
-      pull_request.should be_a Github::ResponseWrapper
+      expect(pull_request).to be_a Github::ResponseWrapper
     end
   end
 
