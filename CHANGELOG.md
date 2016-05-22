@@ -1,13 +1,20 @@
 # Change log
 
-## [v0.13.2] - 2016-x-x
+## [v0.14.0] - 2016-05-22
+
+### Added
+* Add ability to get a specific gist revision
 
 ### Changed
-* Add support for merge parameters by @codenamev
-* Add pull request list new params by @tknzk
+* Remove request params checks from PullRequests & PullRequests::Comments
+* Remove request params checks from Gists & Gists::Comments
+* Remove multi_json dependency in favour of plain json
+* Change ServiceError response header parsing
 
 ### Fixed
 * Fix custom middleware stack by @zacksiri
+* Fix gist fork to use new url path
+* Fix respond_to signature
 
 ## [v0.13.1] - 2015-12-20
 
@@ -589,6 +596,7 @@
 
 * fixing json parsing issue preventing repository creation
 
+[v0.14.0]: https://github.com/peter-murach/github/compare/v0.13.1...v0.14.0
 [v0.13.1]: https://github.com/peter-murach/github/compare/v0.13.0...v0.13.1
 [v0.13.0]: https://github.com/peter-murach/github/compare/v0.12.4...v0.13.0
 [v0.12.4]: https://github.com/peter-murach/github/compare/v0.12.3...v0.12.4
@@ -596,4 +604,7 @@
 [v0.12.2]: https://github.com/peter-murach/github/compare/v0.12.1...v0.12.2
 [v0.12.1]: https://github.com/peter-murach/github/compare/v0.12.0...v0.12.1
 [v0.12.0]: https://github.com/peter-murach/github/compare/v0.11.3...v0.12.0
+[v0.11.3]: https://github.com/peter-murach/github/compare/v0.11.2...v0.11.3
+[v0.11.2]: https://github.com/peter-murach/github/compare/v0.11.1...v0.11.2
+[v0.11.1]: https://github.com/peter-murach/github/compare/v0.11.0...v0.11.1
 
