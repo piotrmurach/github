@@ -3,8 +3,7 @@
 module Github
   class Client::PullRequests < API
 
-    require_all 'github_api/client/pull_requests',
-      'comments'
+    require_all 'github_api/client/pull_requests', 'comments'
 
     # Access to PullRequests::Comments API
     namespace :comments
@@ -161,6 +160,8 @@ module Github
       false
     end
 
+    PREVIEW_MEDIA = 'application/vnd.github.polaris-preview+json'.freeze # :nodoc:
+
     # Merge a pull request(Merge Button)
     #
     # @param [Hash] params
@@ -180,8 +181,10 @@ module Github
     # @api public
     def merge(*args)
       arguments(args, required: [:user, :repo, :number])
+      params = arguments.params
+      params['accept'] ||= PREVIEW_MEDIA
 
-      put_request("/repos/#{arguments.user}/#{arguments.repo}/pulls/#{arguments.number}/merge", arguments.params)
+      put_request("/repos/#{arguments.user}/#{arguments.repo}/pulls/#{arguments.number}/merge", params)
     end
   end # PullRequests
 end # Github
