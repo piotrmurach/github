@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Client::Gists::Comments do
+RSpec.describe Github::Client::Gists::Comments do
 
   after { reset_authentication_for subject }
 
