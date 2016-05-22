@@ -3,8 +3,6 @@
 require 'spec_helper'
 
 describe Github::Client::Repos, '#list' do
-  include Github::Jsonable
-
   let(:user) { 'peter-murach' }
   let(:repo) { 'github' }
   let(:request_path) { "/user/repos?access_token=#{OAUTH_TOKEN}" }

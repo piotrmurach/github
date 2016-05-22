@@ -1,16 +1,15 @@
 # encoding: utf-8
 
 require 'faraday'
-require 'github_api/jsonable'
+require 'json'
 
 module Github
   class Response::Jsonize < Response
-    include Github::Jsonable
 
-    dependency 'multi_json'
+    dependency 'json'
 
     define_parser do |body|
-      Github::Jsonable.decode body
+      JSON.parse(body)
     end
 
     def parse(body)
@@ -22,7 +21,7 @@ module Github
       when 'false'
         false
       else
-        self.class.parser.call body
+        self.class.parser.call(body)
       end
     end
   end # Response::Jsonize
