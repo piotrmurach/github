@@ -1,7 +1,6 @@
 # encoding: utf-8
 
 module Github
-
   # A class responsible for proxing to faraday response
   class ResponseWrapper
     extend Forwardable
@@ -130,7 +129,7 @@ module Github
 
     # Check if method is defined on the body
     #
-    def respond_to?(method_name)
+    def respond_to?(method_name, include_all = false)
       if self.has_key?(method_name.to_s)
         true
       else
