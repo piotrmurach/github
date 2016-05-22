@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Client::PullRequests::Comments do
+RSpec.describe Github::Client::PullRequests::Comments do
 
   after { reset_authentication_for subject }
 

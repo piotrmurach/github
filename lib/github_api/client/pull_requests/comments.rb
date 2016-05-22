@@ -2,17 +2,6 @@
 
 module Github
   class Client::PullRequests::Comments < API
-
-    VALID_REQUEST_COM_PARAM_NAMES = %w[
-      body
-      commit_id
-      path
-      position
-      in_reply_to
-      mime_type
-      resource
-    ].freeze
-
     # List comments on a pull request
     #
     # @example
@@ -51,7 +40,7 @@ module Github
       return response unless block_given?
       response.each { |el| yield el }
     end
-    alias :all :list
+    alias_method :all, :list
 
     # Get a single comment for pull requests
     #
@@ -71,7 +60,7 @@ module Github
 
       get_request("/repos/#{arguments.user}/#{arguments.repo}/pulls/comments/#{arguments.number}", arguments.params)
     end
-    alias :find :get
+    alias_method :find, :get
 
     # Create a pull request comment
     #
@@ -110,9 +99,7 @@ module Github
     #
     # @api public
     def create(*args)
-      arguments(args, required: [:user, :repo, :number]) do
-        permit VALID_REQUEST_COM_PARAM_NAMES
-      end
+      arguments(args, required: [:user, :repo, :number])
 
       post_request("/repos/#{arguments.user}/#{arguments.repo}/pulls/#{arguments.number}/comments", arguments.params)
     end
@@ -130,9 +117,7 @@ module Github
     #
     # @api public
     def edit(*args)
-      arguments(args, required: [:user, :repo, :number]) do
-        permit VALID_REQUEST_COM_PARAM_NAMES
-      end
+      arguments(args, required: [:user, :repo, :number])
 
       patch_request("/repos/#{arguments.user}/#{arguments.repo}/pulls/comments/#{arguments.number}", arguments.params)
     end
@@ -148,18 +133,6 @@ module Github
       arguments(args, required: [:user, :repo, :number])
 
       delete_request("/repos/#{arguments.user}/#{arguments.repo}/pulls/comments/#{arguments.number}", arguments.params)
-    end
-
-  private
-
-    # To let user know that the params supplied are wrong before request is made
-    def _validate_reply_to(params)
-      if params['in_reply_to'] && !assert_required_keys(%w[ body in_reply_to ], params)
-        raise ArgumentError, "Required params are: #{%w[ body in_reply_to].join(',')}"
-
-      elsif !assert_required_keys(VALID_REQUEST_COM_PARAM_NAMES - %w[ in_reply_to ], params)
-        raise ArgumentError, "Required params are: #{VALID_REQUEST_COM_PARAM_NAMES.join(', ')}"
-      end
     end
   end # PullRequests::Comments
 end # Github

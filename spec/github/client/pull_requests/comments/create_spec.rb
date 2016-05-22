@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Client::PullRequests::Comments, '#create' do
+RSpec.describe Github::Client::PullRequests::Comments, '#create' do
   let(:user)   { 'peter-murach' }
   let(:repo)   { 'github' }
   let(:request_path) { "/repos/#{user}/#{repo}/pulls/#{number}/comments" }
@@ -20,8 +20,8 @@ describe Github::Client::PullRequests::Comments, '#create' do
 
   before {
     stub_post(request_path).with(inputs.except('unrelated')).
-      to_return(:body => body, :status => status,
-      :headers => {:content_type => "application/json; charset=utf-8"})
+      to_return(body: body, status: status,
+                headers: {content_type: "application/json; charset=utf-8"})
   }
 
   after { reset_authentication_for(subject) }
@@ -36,19 +36,19 @@ describe Github::Client::PullRequests::Comments, '#create' do
       expect { subject.create user, repo }.to raise_error(ArgumentError)
     end
 
-    it "should create resource successfully" do
+    it "creates resource successfully" do
       subject.create user, repo, number, inputs
-      a_post(request_path).with(inputs).should have_been_made
+      expect(a_post(request_path).with(inputs)).to have_been_made
     end
 
-    it "should return the resource" do
+    it "returns the resource" do
       pull_request = subject.create user, repo, number, inputs
-      pull_request.should be_a Github::ResponseWrapper
+      expect(pull_request).to be_a(Github::ResponseWrapper)
     end
 
-    it "should get the request information" do
+    it "gets the request information" do
       pull_request = subject.create user, repo, number, inputs
-      pull_request.id.should == number
+      expect(pull_request.id).to eq(number)
     end
   end
 

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Client::PullRequests::Comments, '#get' do
+RSpec.describe Github::Client::PullRequests::Comments, '#get' do
   let(:user)   { 'peter-murach' }
   let(:repo) { 'github' }
   let(:pull_request_id) { 1 }
@@ -10,8 +10,8 @@ describe Github::Client::PullRequests::Comments, '#get' do
   let(:request_path) { "/repos/#{user}/#{repo}/pulls/comments/#{number}" }
 
   before {
-    stub_get(request_path).to_return(:body => body, :status => status,
-      :headers => {:content_type => "application/json; charset=utf-8"})
+    stub_get(request_path).to_return(body: body, status: status,
+      headers: {content_type: "application/json; charset=utf-8"})
   }
 
   after { reset_authentication_for(subject) }
@@ -24,24 +24,24 @@ describe Github::Client::PullRequests::Comments, '#get' do
 
     it { expect { subject.get }.to raise_error(ArgumentError) }
 
-    it "should fail to get resource without comment id" do
+    it "fails to get resource without comment id" do
       expect { subject.get user, repo }.to raise_error(ArgumentError)
     end
 
-    it "should get the resource" do
+    it "gets the resource" do
       subject.get user, repo, pull_request_id
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
-    it "should get comment information" do
+    it "gets comment information" do
       comment = subject.get user, repo, number
-      comment.id.should eq number
-      comment.user.login.should == 'octocat'
+      expect(comment.id).to eq number
+      expect(comment.user.login).to eq('octocat')
     end
 
-    it "should return mash" do
+    it "returns response wrapper" do
       comment = subject.get user, repo, number
-      comment.should be_a Github::ResponseWrapper
+      expect(comment).to be_a(Github::ResponseWrapper)
     end
   end
 
