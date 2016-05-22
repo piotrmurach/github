@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Client::Activity::Notifications, '#create' do
+RSpec.describe Github::Client::Activity::Notifications, '#create' do
   let(:thread_id) { 1 }
   let(:request_path) { "/notifications/threads/#{thread_id}/subscription" }
 
@@ -29,14 +29,14 @@ describe Github::Client::Activity::Notifications, '#create' do
       expect { subject.create }.to raise_error(ArgumentError)
     end
 
-    it 'should create resource' do
+    it 'creates resource' do
       subject.create thread_id, inputs
       expect(a_put(request_path).
         with(:body => inputs, :query => {:access_token => OAUTH_TOKEN})).
         to have_been_made
     end
 
-    it 'should return the resource' do
+    it 'returns the resource' do
       thread = subject.create thread_id, inputs
       expect(thread.subscribed).to be_true
     end

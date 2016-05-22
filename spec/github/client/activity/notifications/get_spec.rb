@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Client::Activity::Notifications, '#get' do
+RSpec.describe Github::Client::Activity::Notifications, '#get' do
   let(:thread_id) { 1 }
   let(:request_path) { "/notifications/threads/#{thread_id}" }
 

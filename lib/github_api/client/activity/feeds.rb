@@ -2,7 +2,6 @@
 
 module Github
   class Client::Activity::Feeds < API
-
     # List all the feeds available to the authenticated user.
     #
     # @see https://developer.github.com/v3/activity/feeds/#list-feeds

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Client::Activity::Starring, '#starring?' do
+RSpec.describe Github::Client::Activity::Starring, '#starring?' do
   let(:user) { 'peter-murach' }
   let(:repo) { 'github' }
   let(:request_path) { "/user/starred/#{user}/#{repo}" }

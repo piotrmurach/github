@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Client::Activity::Notifications, '#list' do
+RSpec.describe Github::Client::Activity::Notifications, '#list' do
   let(:user) { 'peter-murach' }
   let(:repo) { 'github' }
 

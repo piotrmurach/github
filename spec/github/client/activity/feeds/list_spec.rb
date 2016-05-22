@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Client::Activity::Feeds, '#list' do
+RSpec.describe Github::Client::Activity::Feeds, '#list' do
   let(:user) { 'peter-murach' }
   let(:repo) { 'github' }
 
@@ -23,43 +23,43 @@ describe Github::Client::Activity::Feeds, '#list' do
 
     it { should respond_to :all }
 
-    it 'should get the resource' do
+    it 'gets the resource' do
       subject.list
       expect(a_get(request_path).with(:query => {:access_token => OAUTH_TOKEN})).
         to have_been_made
     end
 
-    it "should get timeline url" do
+    it "gets timeline url" do
       feeds = subject.list
       expect(feeds.timeline_url).to eq('https://github.com/timeline')
     end
 
-    it "should get user url" do
+    it "gest user url" do
       feeds = subject.list
       expect(feeds.user_url).to eq('https://github.com/{user}')
     end
 
-    it "should get current user public url" do
+    it "gets current user public url" do
       feeds = subject.list
       expect(feeds.current_user_public_url).to eq('https://github.com/defunkt')
     end
 
-    it "should get current user url" do
+    it "gets current user url" do
       feeds = subject.list
       expect(feeds.current_user_url).to eq('https://github.com/defunkt.private?token=abc123')
     end
 
-    it "should get current user actor url" do
+    it "gets current user actor url" do
       feeds = subject.list
       expect(feeds.current_user_actor_url).to eq('https://github.com/defunkt.private.actor?token=abc123')
     end
 
-    it "should get current user organization url" do
+    it "gets current user organization url" do
       feeds = subject.list
       expect(feeds.current_user_organization_url).to eq('')
     end
 
-    it "should get current user public url" do
+    it "gets current user public url" do
       feeds = subject.list
       expect(feeds.current_user_organization_urls.first).to eq('https://github.com/organizations/github/defunkt.private.atom?token=abc123')
     end
@@ -68,5 +68,4 @@ describe Github::Client::Activity::Feeds, '#list' do
       let(:requestable) { subject.list }
     end
   end
-
 end

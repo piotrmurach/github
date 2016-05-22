@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Client::Activity::Notifications, '#mark' do
+RSpec.describe Github::Client::Activity::Notifications, '#mark' do
   let(:body) { '[]' }
   let(:status) { 205 }
   let(:inputs) { {

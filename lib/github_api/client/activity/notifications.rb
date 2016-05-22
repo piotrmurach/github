@@ -2,7 +2,6 @@
 
 module Github
   class Client::Activity::Notifications < API
-
     # List your notifications
     #
     # List all notifications for the current user, grouped by repository.

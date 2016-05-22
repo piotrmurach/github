@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Client::Activity::Starring, '#list' do
+RSpec.describe Github::Client::Activity::Starring, '#list' do
   let(:user) { 'peter-murach' }
   let(:repo) { 'github' }
   let(:request_path) { "/repos/#{user}/#{repo}/stargazers" }
@@ -11,7 +11,7 @@ describe Github::Client::Activity::Starring, '#list' do
 
   before {
     stub_get(request_path).
-      to_return(:body => body, :status => status, :headers => {})
+      to_return(body: body, status: status, headers: {})
   }
 
   context 'resource found' do
@@ -22,17 +22,17 @@ describe Github::Client::Activity::Starring, '#list' do
 
     it { expect { subject.list user }.to raise_error(ArgumentError) }
 
-    it "should fail to get resource without username" do
+    it "fails to get resource without username" do
       expect { subject.list }.to raise_error(ArgumentError)
     end
 
-    it "should yield iterator if block given" do
+    it "yields iterator if block given" do
       yielded = []
       result = subject.list(user, repo) { |obj| yielded << obj }
       expect(yielded).to eq(result)
     end
 
-    it "should get the resources" do
+    it "gets the resources" do
       subject.list user, repo
       expect(a_get(request_path)).to have_been_made
     end
@@ -41,7 +41,7 @@ describe Github::Client::Activity::Starring, '#list' do
       let(:requestable) { subject.list user, repo }
     end
 
-    it "should get watcher information" do
+    it "gets watcher information" do
       stargazers = subject.list user, repo
       expect(stargazers.first.login).to eq('octocat')
     end
