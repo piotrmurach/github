@@ -5,6 +5,7 @@ module Github
   class Client::Orgs < API
 
     require_all 'github_api/client/orgs',
+                'hooks'
                 'members',
                 'memberships',
                 'teams'
