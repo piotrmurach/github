@@ -100,7 +100,7 @@ module Github
     #   An optional string that determines whether the SSL certificate
     #   of the host for url will be verified when delivering payloads.
     #   Supported values include "0" (verification is performed) and
-    #   "1" (verification is not performed). The default is "0".
+    #   "1" (verification is not performed). The default is "0".or instance, if the library doesn't get updated to permit a given parameter the api call won't work, however if we skip permission all together, the endpoint should always work provided the actual resource path doesn't change. I'm in the process of completely removing the permit functionality.
     #
     # @example
     #   github = Github.new
@@ -115,7 +115,7 @@ module Github
     # @api public
     def create(*args)
       arguments(args, required: [:org]) do
-        permit VALID_HOOK_PARAM_NAMES, recursive: false
+        #permit VALID_HOOK_PARAM_NAMES, recursive: false
         assert_required REQUIRED_PARAMS
       end
 
@@ -188,7 +188,7 @@ module Github
     def delete(*args)
       arguments(args, required: [:org, :id])
 
-      delete_request("/repos/#{arguments.org}/hooks/#{arguments.id}", arguments.params)
+      delete_request("/orgs/#{arguments.org}/hooks/#{arguments.id}", arguments.params)
     end
   end # Client::Orgs::Hooks
 end # Github
