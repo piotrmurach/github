@@ -18,9 +18,9 @@ module Github
     #
     # @api public
     def list(*args)
-      arguments(args, required: [:org])
+      arguments(args, required: [:org_name])
 
-      response = get_request("/orgs/#{arguments.org}/hooks", arguments.params)
+      response = get_request("/orgs/#{arguments.org_name}/hooks", arguments.params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -36,9 +36,10 @@ module Github
     #
     # @api public
     def get(*args)
-      arguments(args, required: [:org, :id])
+      arguments(args, required: [:org_name, :id])
 
-      get_request("/orgs/#{arguments.org}/hooks/#{arguments.id}", arguments.params)
+      get_request("/orgs/#{arguments.org_name}/hooks/#{arguments.id}",
+                  arguments.params)
     end
     alias_method :find, :get
 
@@ -92,11 +93,11 @@ module Github
     #
     # @api public
     def create(*args)
-      arguments(args, required: [:org]) do
+      arguments(args, required: [:org_name]) do
         assert_required REQUIRED_PARAMS
       end
 
-      post_request("/orgs/#{arguments.org}/hooks", arguments.params)
+      post_request("/orgs/#{arguments.org_name}/hooks", arguments.params)
     end
 
     # Edit a hook
@@ -134,11 +135,12 @@ module Github
     #
     # @api public
     def edit(*args)
-      arguments(args, required: [:org, :id]) do
+      arguments(args, required: [:org_name, :id]) do
         assert_required REQUIRED_PARAMS
       end
 
-      patch_request("/orgs/#{arguments.org}/hooks/#{arguments.id}", arguments.params)
+      patch_request("/orgs/#{arguments.org_name}/hooks/#{arguments.id}",
+                    arguments.params)
     end
 
     # Ping a hook
@@ -153,9 +155,10 @@ module Github
     #
     # @api public
     def ping(*args)
-      arguments(args, required: [:org, :id])
+      arguments(args, required: [:org_name, :id])
 
-      post_request("/orgs/#{arguments.org}/hooks/#{arguments.id}/pings", arguments.params)
+      post_request("/orgs/#{arguments.org_name}/hooks/#{arguments.id}/pings",
+                   arguments.params)
     end
 
     # Delete a hook
@@ -168,9 +171,10 @@ module Github
     #
     # @api public
     def delete(*args)
-      arguments(args, required: [:org, :id])
+      arguments(args, required: [:org_name, :id])
 
-      delete_request("/orgs/#{arguments.org}/hooks/#{arguments.id}", arguments.params)
+      delete_request("/orgs/#{arguments.org_name}/hooks/#{arguments.id}",
+                     arguments.params)
     end
   end # Client::Orgs::Hooks
 end # Github
