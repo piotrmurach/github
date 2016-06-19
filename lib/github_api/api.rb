@@ -17,6 +17,7 @@ module Github
   # Core class responsible for api interface operations
   class API
     extend Github::ClassMethods
+
     include Constants
     include Authorization
     include MimeType
@@ -43,36 +44,39 @@ module Github
     #
     # @api public
     def initialize(options={}, &block)
-      setup(options)
+      opts = Github.configuration.fetch.merge(options)
+      @current_options = opts
+
+      Github.configuration.property_names.each do |key|
+        send("#{key}=", opts[key])
+      end
+
+      if opts.key?(:login)
+        @login, @password = opts[:login], opts[:password]
+      elsif opts.key?(:basic_auth)
+        @login, @password = extract_basic_auth(opts[:basic_auth])
+      end
+
       yield_or_eval(&block) if block_given?
     end
 
+    # Call block with argument
+    #
+    # @api private
     def yield_or_eval(&block)
       return unless block
       block.arity > 0 ? yield(self) : self.instance_eval(&block)
     end
 
-    # Configure options and process basic authorization
-    #
-    # @api private
-    def setup(options={})
-      options = Github.configuration.fetch.merge(options)
-      self.current_options = options
-      Github.configuration.property_names.each do |key|
-        send("#{key}=", options[key])
-      end
-      process_basic_auth(options[:basic_auth])
-    end
-
     # Extract login and password from basic_auth parameter
     #
-    def process_basic_auth(auth)
+    # @api private
+    def extract_basic_auth(auth)
       case auth
       when String
-        self.login, self.password = auth.split(':', 2)
+        auth.split(':', 2)
       when Hash
-        self.login    = auth[:login]
-        self.password = auth[:password]
+        [auth[:login], auth[:password]]
       end
     end
 

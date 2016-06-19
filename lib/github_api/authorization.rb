@@ -71,6 +71,5 @@ module Github
     def _verify_client # :nodoc:
       raise ArgumentError, 'Need to provide client_id and client_secret' unless client_id? && client_secret?
     end
-
   end # Authorization
 end # Github
