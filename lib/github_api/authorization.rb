@@ -56,13 +56,13 @@ module Github
     end
 
     # Select authentication parameters
+    #
+    # @api public
     def authentication
-      if basic_auth?
-        { :basic_auth => basic_auth }
-      elsif login? && password?
-        { :login => login, :password => password }
+      if basic_authed?
+        { login: login, password: password }
       else
-        { }
+        {}
       end
     end
 
