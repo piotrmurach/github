@@ -5,37 +5,11 @@ module Github
   # service hooks for an organization.
   class Client::Orgs::Hooks < API
 
-    VALID_HOOK_PARAM_NAMES = %w[
-      name
-      config
-      active
-      events
-      add_events
-      remove_events
-    ].freeze # :nodoc:
-
-    # Active hooks can be configured to trigger for one or more events.
-    # The default event is push. The available events are:
-    VALID_HOOK_PARAM_VALUES = {
-      'events' => %w[
-        push
-        issues
-        issue_comment
-        commit_comment
-        pull_request
-        gollum
-        watch
-        download
-        fork
-        fork_apply
-        member
-        public
-      ]
-    }.freeze # :nodoc:
-
-    REQUIRED_PARAMS = %w[ name config ].freeze # :nodoc:
+    REQUIRED_PARAMS = %w( name config ).freeze # :nodoc:
 
     # List organization hooks
+    #
+    # @see https://developer.github.com/v3/orgs/hooks/#list-hooks
     #
     # @example
     #   github = Github.new
@@ -50,9 +24,11 @@ module Github
       return response unless block_given?
       response.each { |el| yield el }
     end
-    alias :all :list
+    alias_method :all, :list
 
     # Get a single hook
+    #
+    # @see https://developer.github.com/v3/orgs/hooks/#get-single-hook
     #
     # @example
     #   github = Github.new
@@ -64,9 +40,11 @@ module Github
 
       get_request("/orgs/#{arguments.org}/hooks/#{arguments.id}", arguments.params)
     end
-    alias :find :get
+    alias_method :find, :get
 
     # Create a hook
+    #
+    # @see https://developer.github.com/v3/orgs/hooks/#create-a-hook
     #
     # @param [Hash] params
     # @input params [String] :name
@@ -75,7 +53,7 @@ module Github
     #   Required. Key/value pairs to provide settings for this hook.
     #   These settings vary between the services and are defined in
     #   the github-services repository. Booleans are stored internally
-    #   as “1” for true, and “0” for false. Any JSON true/false values
+    #   as "1" for true, and "0" for false. Any JSON true/false values
     #   will be converted automatically.
     # @input params [Array] :events
     #   Determines what events the hook is triggered for. Default: ["push"]
@@ -115,7 +93,6 @@ module Github
     # @api public
     def create(*args)
       arguments(args, required: [:org]) do
-        #permit VALID_HOOK_PARAM_NAMES, recursive: false
         assert_required REQUIRED_PARAMS
       end
 
@@ -124,12 +101,14 @@ module Github
 
     # Edit a hook
     #
+    # @see https://developer.github.com/v3/orgs/hooks/#edit-a-hook
+    #
     # @param [Hash] params
     # @input params [Hash] :config
     #   Required. Key/value pairs to provide settings for this hook.
     #   These settings vary between the services and are defined in
     #   the github-services repository. Booleans are stored internally
-    #   as “1” for true, and “0” for false. Any JSON true/false values
+    #   as "1" for true, and "0" for false. Any JSON true/false values
     #   will be converted automatically.
     # @input params [Array] :events
     #   Determines what events the hook is triggered for. Default: ["push"]
@@ -156,7 +135,6 @@ module Github
     # @api public
     def edit(*args)
       arguments(args, required: [:org, :id]) do
-        permit VALID_HOOK_PARAM_NAMES, recursive: false
         assert_required REQUIRED_PARAMS
       end
 
@@ -166,6 +144,8 @@ module Github
     # Ping a hook
     #
     # This will trigger a ping event to be sent to the hook.
+    #
+    # @see https://developer.github.com/v3/orgs/hooks/#ping-a-hook
     #
     # @example
     #   github = Github.new
@@ -179,6 +159,8 @@ module Github
     end
 
     # Delete a hook
+    #
+    # @see https://developer.github.com/v3/orgs/hooks/#delete-a-hook
     #
     # @example
     #   github = Github.new
