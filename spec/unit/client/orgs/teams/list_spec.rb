@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Client::Orgs::Teams, '#list' do
+RSpec.describe Github::Client::Orgs::Teams, '#list' do
   let(:org) { 'github' }
   let(:body) { fixture('orgs/teams.json') }
   let(:status) { 200 }
@@ -17,24 +17,24 @@ describe Github::Client::Orgs::Teams, '#list' do
   context "resource found for the organization" do
     let(:request_path) { "/orgs/#{org}/teams" }
 
-    it "should get the resources" do
+    it "gets the resources" do
       subject.list org: org
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it_should_behave_like 'an array of resources' do
       let(:requestable) { subject.list org: org }
     end
 
-    it "should get teams information" do
-      teams = subject.list org: org
-      teams.first.name.should == 'Owners'
+    it "gets teams information" do
+      teams = subject.list(org: org)
+      expect(teams.first.name).to eq('Owners')
     end
 
-    it "should yield to a block" do
+    it "yields to a block" do
       yielded = []
       result = subject.list(org: org) { |obj| yielded << obj }
-      yielded.should == result
+      expect(yielded).to eq(result)
     end
 
     it_should_behave_like 'request failure' do
@@ -45,24 +45,24 @@ describe Github::Client::Orgs::Teams, '#list' do
   context "resource found for the authenticated user" do
     let(:request_path) { "/user/teams" }
 
-    it "should get the resources" do
+    it "gets the resources" do
       subject.list
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it_should_behave_like 'an array of resources' do
       let(:requestable) { subject.list }
     end
 
-    it "should get teams information" do
+    it "gets teams information" do
       teams = subject.list
-      teams.first.name.should == 'Owners'
+      expect(teams.first.name).to eq('Owners')
     end
 
-    it "should yield to a block" do
+    it "yields to a block" do
       yielded = []
       result = subject.list { |obj| yielded << obj }
-      yielded.should == result
+      expect(yielded).to eq(result)
     end
 
     it_should_behave_like 'request failure' do

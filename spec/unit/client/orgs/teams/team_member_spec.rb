@@ -2,16 +2,16 @@
 
 require 'spec_helper'
 
-describe Github::Client::Orgs::Teams, '#team_member?' do
+RSpec.describe Github::Client::Orgs::Teams, '#team_member?' do
   let(:team_id) { 1 }
   let(:user) { 'peter-murach' }
   let(:request_path) { "/teams/#{team_id}/members/#{user}" }
   let(:body) { '' }
 
-  before {
-    stub_get(request_path).to_return(:body => body, :status => status,
-      :headers => {:content_type => "application/json; charset=utf-8"})
-  }
+  before do
+    stub_get(request_path).to_return(body: body, status: status,
+      headers: {content_type: "application/json; charset=utf-8"})
+  end
 
   after { reset_authentication_for(subject) }
 
@@ -20,22 +20,22 @@ describe Github::Client::Orgs::Teams, '#team_member?' do
 
     it { expect { subject.team_member?(team_id, nil)}.to raise_error(ArgumentError)}
 
-    it "should fail validation " do
+    it "fails validation " do
       expect { subject.team_member? }.to raise_error(ArgumentError)
     end
 
-    it "should return true if resoure found" do
+    it "returns true if resoure found" do
       team_membership = subject.team_member? team_id, user
-      team_membership.should be_true
+      expect(team_membership).to be_true
     end
   end
 
   context 'when user is not a member' do
     let(:status) { 404 }
 
-    it "should return false if resource not found" do
+    it "returns false if resource not found" do
       team_membership = subject.team_member? team_id, user
-      team_membership.should be_false
+      expect(team_membership).to be_false
     end
   end
 end # team_member?

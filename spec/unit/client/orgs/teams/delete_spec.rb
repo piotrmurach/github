@@ -2,14 +2,14 @@
 
 require 'spec_helper'
 
-describe Github::Client::Orgs::Teams, '#delete' do
+RSpec.describe Github::Client::Orgs::Teams, '#delete' do
   let(:team_id)   { 1 }
   let(:request_path) { "/teams/#{team_id}" }
 
-  before {
+  before do
     stub_delete(request_path).to_return(body: body, status: status,
       headers: {content_type: 'application/json; charset=utf-8'})
-  }
+  end
 
   after { reset_authentication_for(subject) }
 
@@ -19,13 +19,13 @@ describe Github::Client::Orgs::Teams, '#delete' do
 
     it { should respond_to :remove }
 
-    it "should fail to delete without 'team_id' parameter" do
+    it "fails to delete without 'team_id' parameter" do
       expect { subject.delete }.to raise_error(ArgumentError)
     end
 
-    it "should delete the resource" do
+    it "deletes the resource" do
       subject.delete team_id
-      a_delete(request_path).should have_been_made
+      expect(a_delete(request_path)).to have_been_made
     end
   end
 
