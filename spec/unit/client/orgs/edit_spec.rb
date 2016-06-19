@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Client::Orgs, '#edit' do
+RSpec.describe Github::Client::Orgs, '#edit' do
   let(:org)   { 'github' }
   let(:request_path) { "/orgs/#{org}" }
   let(:body) { fixture("orgs/org.json") }
@@ -17,33 +17,32 @@ describe Github::Client::Orgs, '#edit' do
     }
   }
 
-  before {
+  before do
     stub_patch(request_path).with(inputs).
       to_return(body: body, status: status,
       headers: {content_type: 'application/json; charset=utf-8'})
-  }
+  end
 
   after { reset_authentication_for(subject) }
 
   context "resource edited successfully" do
-
-    it "should fail to edit without 'user/repo' parameters" do
+    it "fails to edit without 'user/repo' parameters" do
       expect { subject.edit }.to raise_error(ArgumentError)
     end
 
-    it "should edit the resource" do
-      subject.edit org
-      a_patch(request_path).with(inputs).should have_been_made
+    it "edits the resource" do
+      subject.edit(org)
+      expect(a_patch(request_path).with(inputs)).to have_been_made
     end
 
-    it "should return resource" do
+    it "returns resource" do
       organisation = subject.edit org
-      organisation.should be_a Github::ResponseWrapper
+      expect(organisation).to be_a Github::ResponseWrapper
     end
 
-    it "should be able to retrieve information" do
+    it "retrieves information" do
       organisation = subject.edit org
-      organisation.name.should == 'github'
+      expect(organisation.name).to eq('github')
     end
   end
 
