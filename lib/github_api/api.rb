@@ -50,10 +50,9 @@ module Github
       Github.configuration.property_names.each do |key|
         send("#{key}=", opts[key])
       end
-
-      if opts.key?(:login)
+      if opts.key?(:login) && !opts[:login].nil?
         @login, @password = opts[:login], opts[:password]
-      elsif opts.key?(:basic_auth)
+      elsif opts.key?(:basic_auth) && !opts[:basic_auth].nil?
         @login, @password = extract_basic_auth(opts[:basic_auth])
       end
 
