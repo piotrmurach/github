@@ -3,9 +3,9 @@
 require 'spec_helper'
 
 RSpec.describe Github::Client::Orgs::Hooks, '#delete' do
-  let(:org) { 'API-sampler' }
+  let(:org_name) { 'API-sampler' }
   let(:hook_id) { 1 }
-  let(:request_path) { "/orgs/#{org}/hooks/#{hook_id}" }
+  let(:request_path) { "/orgs/#{org_name}/hooks/#{hook_id}" }
 
   before {
     stub_delete(request_path).to_return(body: body, status: status,
@@ -23,16 +23,16 @@ RSpec.describe Github::Client::Orgs::Hooks, '#delete' do
     end
 
     it "fails to delete resource without 'hook_id'" do
-      expect { subject.delete(org) }.to raise_error(ArgumentError)
+      expect { subject.delete(org_name) }.to raise_error(ArgumentError)
     end
 
     it "deletes the resource" do
-      subject.delete(org, hook_id)
+      subject.delete(org_name, hook_id)
       expect(a_delete(request_path)).to have_been_made
     end
   end
 
   it_should_behave_like 'request failure' do
-    let(:requestable) { subject.delete org, hook_id }
+    let(:requestable) { subject.delete org_name, hook_id }
   end
 end # delete
