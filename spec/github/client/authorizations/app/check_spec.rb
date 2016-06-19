@@ -2,21 +2,19 @@
 
 require 'spec_helper'
 
-describe Github::Client::Authorizations::App, '#check' do
+RSpec.describe Github::Client::Authorizations::App, '#check' do
   let(:basic_auth) { 'login:password' }
   let(:host)       { "https://#{basic_auth}@api.github.com" }
   let(:request_path) { "/applications/#{client_id}/tokens/#{access_token}" }
   let(:client_id) { 1 }
   let(:access_token) { 'abc123' }
 
-  before {
-    subject.basic_auth = basic_auth
+  subject { described_class.new(basic_auth: basic_auth) }
 
+  before do
     stub_get(request_path, host).to_return(body: body, status: status,
       headers: {content_type: 'application/json; charset=utf-8'})
-  }
-
-  after { reset_authentication_for(subject) }
+  end
 
   context 'when app makes a request' do
     let(:body)   { "" }

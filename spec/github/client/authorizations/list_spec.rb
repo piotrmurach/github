@@ -2,19 +2,17 @@
 
 require 'spec_helper'
 
-describe Github::Client::Authorizations, '#list' do
+RSpec.describe Github::Client::Authorizations, '#list' do
   let(:basic_auth) { 'login:password' }
   let(:request_path) { "/authorizations" }
   let(:host) { "https://#{basic_auth}@api.github.com" }
 
-  before {
+  subject { described_class.new(basic_auth: basic_auth) }
+
+  before do
     stub_get(request_path, host).to_return(:body => body, :status => status,
       :headers => {:content_type => "application/json; charset=utf-8"})
-  }
-
-  before { subject.basic_auth = basic_auth }
-
-  after { reset_authentication_for(subject) }
+  end
 
   context "resource found" do
     let(:body) { fixture('auths/authorizations.json') }

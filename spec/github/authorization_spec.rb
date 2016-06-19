@@ -145,8 +145,8 @@ describe Github::Authorization do
       let(:options) { { :basic_auth => 'github:pass' } }
 
       it "should return hash with basic auth params" do
-        expect(github.authentication).to be_a Hash
-        expect(github.authentication).to have_key(:basic_auth)
+        expect(github.authentication).to include({login: 'github'})
+        expect(github.authentication).to include({password: 'pass'})
       end
     end
 

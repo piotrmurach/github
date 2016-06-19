@@ -2,21 +2,19 @@
 
 require 'spec_helper'
 
-describe Github::Client::Authorizations, '#update' do
+RSpec.describe Github::Client::Authorizations, '#update' do
   let(:basic_auth) { 'login:password' }
   let(:request_path) { "/authorizations/#{authorization_id}" }
   let(:host) { "https://#{basic_auth}@api.github.com" }
   let(:authorization_id) { 1 }
   let(:inputs) { { :add_scopes => ['repo'] } }
 
-  before {
-    stub_patch(request_path, host).to_return(:body => body, :status => status,
-      :headers => {:content_type => "application/json; charset=utf-8"})
-  }
+  subject { described_class.new(basic_auth: basic_auth) }
 
-  before { subject.basic_auth = basic_auth }
-
-  after { reset_authentication_for(subject) }
+  before do
+    stub_patch(request_path, host).to_return(body: body, status: status,
+      headers: {content_type: "application/json; charset=utf-8"})
+  end
 
   context "resouce updated" do
     let(:body) { fixture('auths/authorization.json') }
