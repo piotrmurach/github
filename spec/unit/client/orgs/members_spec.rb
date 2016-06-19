@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-describe Github::Client::Orgs::Members do
+RSpec.describe Github::Client::Orgs::Members do
 
 end # Github::Orgs::Members

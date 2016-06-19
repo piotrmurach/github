@@ -2,15 +2,15 @@
 
 require 'spec_helper'
 
-describe Github::Client::Orgs::Members, '#publicize' do
+RSpec.describe Github::Client::Orgs::Members, '#publicize' do
   let(:org)    { 'github' }
   let(:member) { 'peter-murach' }
   let(:request_path) { "/orgs/#{org}/public_members/#{member}" }
 
-  before {
-    stub_put(request_path).to_return(:body => body, :status => status,
-      :headers => {:content_type => "application/json; charset=utf-8"})
-  }
+  before do
+    stub_put(request_path).to_return(body: body, status: status,
+      headers: {content_type: "application/json; charset=utf-8"})
+  end
 
   after { reset_authentication_for(subject) }
 
@@ -18,15 +18,15 @@ describe Github::Client::Orgs::Members, '#publicize' do
     let(:body) { fixture('orgs/members.json') }
     let(:status) { 204 }
 
-    it "should fail to get resource without org name" do
+    it "fails to get resource without org name" do
       expect { subject.publicize }.to raise_error(ArgumentError)
     end
 
     it { expect { subject.publicize org }.to raise_error(ArgumentError) }
 
-    it "should get the resources" do
+    it "gets the resources" do
       subject.publicize org, member
-      a_put(request_path).should have_been_made
+      expect(a_put(request_path)).to have_been_made
     end
   end
 

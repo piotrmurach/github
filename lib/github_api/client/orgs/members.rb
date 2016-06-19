@@ -83,12 +83,11 @@ module Github
       response.status == 204
     rescue Github::Error::NotFound
       false
-
     end
     # Remove a member
     #
     # Removing a user from this list will remove them from all teams and
-    # they will no longer have any access to the organization’s repositories.
+    # they will no longer have any access to the organization's repositories.
     #
     # @see https://developer.github.com/v3/orgs/members/#remove-a-member
     #
@@ -119,8 +118,8 @@ module Github
 
       put_request("/orgs/#{arguments.org_name}/public_members/#{arguments.user}", arguments.params)
     end
-    alias :make_public :publicize
-    alias :publicize_membership :publicize
+    alias_method :make_public, :publicize
+    alias_method :publicize_membership, :publicize
 
     # Conceal a user's membership
     #

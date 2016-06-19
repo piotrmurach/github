@@ -2,15 +2,15 @@
 
 require 'spec_helper'
 
-describe Github::Client::Orgs::Members, '#conceal' do
+RSpec.describe Github::Client::Orgs::Members, '#conceal' do
   let(:org)    { 'github' }
   let(:user) { 'peter-murach' }
   let(:request_path) { "/orgs/#{org}/public_members/#{user}" }
 
-  before {
-    stub_delete(request_path).to_return(:body => body, :status => status,
-      :headers => {:content_type => "application/json; charset=utf-8"})
-  }
+  before do
+    stub_delete(request_path).to_return(body: body, status: status,
+      headers: {content_type: "application/json; charset=utf-8"})
+  end
 
   after { reset_authentication_for(subject) }
 
@@ -18,15 +18,15 @@ describe Github::Client::Orgs::Members, '#conceal' do
     let(:body) { fixture('orgs/members.json') }
     let(:status) { 204 }
 
-    it "should fail to get resource without org name" do
+    it "fails to get resource without org name" do
       expect { subject.conceal }.to raise_error(ArgumentError)
     end
 
     it { expect { subject.conceal org }.to raise_error(ArgumentError) }
 
-    it "should get the resources" do
-      subject.conceal org, user
-      a_delete(request_path).should have_been_made
+    it "gets the resources" do
+      subject.conceal(org, user)
+      expect(a_delete(request_path)).to have_been_made
     end
   end
 
