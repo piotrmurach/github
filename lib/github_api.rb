@@ -65,7 +65,6 @@ module Github
   end
 
   module ClassMethods
-
     # Requires internal libraries
     #
     # @param [String] prefix
@@ -88,6 +87,7 @@ module Github
     def configuration
       @configuration ||= Configuration.new
     end
+    alias_method :config, :configuration
 
     # Configure options
     #
