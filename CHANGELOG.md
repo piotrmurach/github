@@ -1,12 +1,13 @@
 # Change log
 
-## [v0.14.0] - 2016-x-x
+## [v0.14.1] - 2016-06-21
 
 ### Added
 * Add organization hooks by @pkhxcp
 
 ### Changed
-
+* Change processing of :basic_auth and :login parameters to prevent mutation
+* Change basic auth middleware to rely on simple login param
 
 ## [v0.14.0] - 2016-05-22
 
@@ -604,6 +605,7 @@
 
 * fixing json parsing issue preventing repository creation
 
+[v0.14.1]: https://github.com/peter-murach/github/compare/v0.14.0...v0.14.1
 [v0.14.0]: https://github.com/peter-murach/github/compare/v0.13.1...v0.14.0
 [v0.13.1]: https://github.com/peter-murach/github/compare/v0.13.0...v0.13.1
 [v0.13.0]: https://github.com/peter-murach/github/compare/v0.12.4...v0.13.0
