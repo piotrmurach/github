@@ -10,6 +10,9 @@ module Github
                 'memberships',
                 'teams'
 
+    # Access to Client::Orgs::Hooks API
+    namespace :hooks
+
     # Access to Client::Orgs::Members API
     namespace :members
 
