@@ -2,26 +2,25 @@
 
 module Github
   class Client < API
-
     require_all 'github_api/client',
-      'activity',
-      'authorizations',
-      'emojis',
-      'gists',
-      'gitignore',
-      'git_data',
-      'issues',
-      'markdown',
-      'meta',
-      'orgs',
-      'pull_requests',
-      'repos',
-      'say',
-      'scopes',
-      'search',
-      'users'
+                'activity',
+                'authorizations',
+                'emojis',
+                'gists',
+                'gitignore',
+                'git_data',
+                'issues',
+                'markdown',
+                'meta',
+                'orgs',
+                'pull_requests',
+                'repos',
+                'say',
+                'scopes',
+                'search',
+                'users'
 
-    # Serving up the ‘social’ in Social Coding™, the Activity APIs
+    # Serving up the 'social' in Social Coding, the Activity APIs
     # provide access to notifications, subscriptions, and timelines.
     namespace :activity
 
@@ -48,6 +47,7 @@ module Github
     # tokens, and only through Basic Authentication.
     namespace :authorizations
     alias :oauth :authorizations
+    alias :auth :authorizations
 
     namespace :orgs
     alias :organizations :orgs
