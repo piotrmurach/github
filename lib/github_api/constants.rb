@@ -29,7 +29,7 @@ module Github
 
     ACCEPT_CHARSET = 'Accept-Charset'.freeze
 
-    OAUTH_SCOPES = 'X-Oauth-Scopes'.freeze
+    OAUTH_SCOPES = 'X-OAuth-Scopes'.freeze
 
     ACCEPTED_OAUTH_SCOPES = 'X-Accepted-Oauth-Scopes'.freeze
 
