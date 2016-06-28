@@ -412,7 +412,7 @@ To create an access token through the GitHub Authorizations API, you are require
 
 ```ruby
 github = Github.new basic_auth: 'login:password'
-github.oauth.create scopes: ['repo'], note: 'admin script'
+github.auth.create scopes: ['repo'], note: 'admin script'
 ```
 
 You can add more than one scope from the `user`, `public_repo`, `repo`, `gist` or leave the scopes parameter out, in which case, the default read-only access will be assumed (includes public user profile info, public repo info, and gists).
@@ -423,20 +423,20 @@ Furthermore, to create auth token for an application you need to pass `:app` arg
 
 ```ruby
 github = Github.new basic_auth: 'login:password'
-github.oauth.app.create 'client-id', scopes: ['repo']
+github.auth.app.create 'client-id', scopes: ['repo']
 ```
 
 In order to revoke auth token(s) for an application you must use basic authentication with `client_id` as login and `client_secret` as password.
 
 ```ruby
 github = Github.new basic_auth: "client_id:client_secret"
-github.oauth.app.delete 'client-id'
+github.auth.app.delete 'client-id'
 ```
 
 Revoke a specific app token.
 
 ```ruby
-github.oauth.app.delete 'client-id', 'access-token'
+github.auth.app.delete 'client-id', 'access-token'
 ```
 
 ### 3.3 Scopes
@@ -446,6 +446,13 @@ You can check OAuth scopes you have by:
 ```ruby
 github = Github.new oauth_token: 'token'
 github.scopes.list    # => ['repo']
+```
+
+or inidividually for a given user:
+
+```ruby
+github = Github.new
+github.scopes.list 'token'
 ```
 
 To list the scopes that the particular GitHub API action checks for do:
