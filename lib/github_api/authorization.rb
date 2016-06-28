@@ -3,8 +3,6 @@
 module Github
   module Authorization
 
-    attr_accessor :scopes
-
     # Setup OAuth2 instance
     def client
       @client ||= ::OAuth2::Client.new(client_id, client_secret,

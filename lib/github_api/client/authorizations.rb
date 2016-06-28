@@ -15,8 +15,8 @@ module Github
     #
     # @example
     #   github = Github.new basic_auth: 'login:password'
-    #   github.oauth.list
-    #   github.oauth.list { |auth| ... }
+    #   github.auth.list
+    #   github.auth.list { |auth| ... }
     #
     # @api public
     def list(*args)
