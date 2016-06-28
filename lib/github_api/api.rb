@@ -300,6 +300,9 @@ module Github
     # @param [Array[Symbol]] names
     #   the name for the scope
     #
+    # @example
+    #   namespace :scopes
+    #
     # @return [self]
     #
     # @api public
@@ -307,14 +310,17 @@ module Github
       options = names.last.is_a?(Hash) ? names.pop : {}
       names   = names.map(&:to_sym)
       name    = names.pop
-      return if public_method_defined?(name)
+
+      if public_method_defined?(name)
+        raise ArgumentError, "namespace '#{name}' is already defined"
+      end
 
       class_name = extract_class_name(name, options)
+
       define_method(name) do |*args, &block|
         options = args.last.is_a?(Hash) ? args.pop : {}
         API::Factory.new(class_name, current_options.merge(options), &block)
       end
-      self
     end
 
     # Extracts class name from options
@@ -324,6 +330,9 @@ module Github
     #   the full name for the class
     # @option options [Boolean] :root
     #   if the class is at the root or not
+    #
+    # @example
+    #   extract_class_name(:stats, class_name: :statistics)
     #
     # @return [String]
     #
