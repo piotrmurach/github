@@ -1,5 +1,21 @@
 # Change log
 
+## [v0.14.2] - 2016-06-28
+
+## Added
+* Add hooks namespace to orgs
+
+## Changed
+* Change default headers in Connection
+* Change API::namespace to raise on redefinition
+* Change API::extend_with_actions to skip anonymous classes
+* Remove connection caching
+* Remove API::with
+
+## Fixed
+* Changed creation of default connection options to fix issue with mergin custom request headers
+* Fix issue with scopes listing #219
+
 ## [v0.14.1] - 2016-06-21
 
 ### Added
@@ -127,41 +143,49 @@
 * Add feature tests for User Followers Api
 * Ensure works on Ruby 1.9.2, 1.9.3, 2.0, 2.1, JRuby & Rubinus
 
-0.11.3 (Feb 22, 2014)
----------------------
+## [v0.11.3] - 2014-02-22
 
-* Fix core extensions to not override other libraries
+### Added
 * Add Pages Api
 * Add Application authorization Api
 
-0.11.2 (Feb 2, 2014)
---------------------
+### Fixed
+* Fix core extensions to not override other libraries
 
+## [v0.11.2] - 2014-02-02
+
+### Changed
 * Change autoload to require libs
 * Change Connection module to work with newest Faraday 0.9 release
 * Simplify and document Request module
 
-0.11.1 (December 16, 2013)
---------------------------
+## [v0.11.1] - 2013-12-16
 
+### Added
 * Add status, body readers to service error.
 * Add descendants tracker.
 * Add encoder to faraday.
+
+### Changed
 * Change search api to stop escaping query components.
 
-0.11.0 (December 7, 2013)
--------------------------
+## [v0.11.0] - 2013-12-07
 
-* Fix caching issues within the repository API object.
-* Change request module to accept params hash as default
-* Rewrite specs to properly test error conditions
-* Fix default org option to be respected when repository listing
-* Change dev tools to update to latest
+### Added
 * Add Legacy namespace for old Search Api
 * Add new Search Api
 * Add new Releases & Assets Api including file uploads
 * Add new UnkownMedia client error type
 * Add root certs
+
+### Changed
+* Change request module to accept params hash as default
+* Change dev tools to update to latest
+* Rewrite specs to properly test error conditions
+
+### Fixed
+* Fix caching issues within the repository API object.
+* Fix default org option to be respected when repository listing
 
 0.10.2 (June 26, 2013)
 ----------------------
@@ -605,6 +629,7 @@
 
 * fixing json parsing issue preventing repository creation
 
+[v0.14.2]: https://github.com/peter-murach/github/compare/v0.14.1...v0.14.2
 [v0.14.1]: https://github.com/peter-murach/github/compare/v0.14.0...v0.14.1
 [v0.14.0]: https://github.com/peter-murach/github/compare/v0.13.1...v0.14.0
 [v0.13.1]: https://github.com/peter-murach/github/compare/v0.13.0...v0.13.1
@@ -617,4 +642,4 @@
 [v0.11.3]: https://github.com/peter-murach/github/compare/v0.11.2...v0.11.3
 [v0.11.2]: https://github.com/peter-murach/github/compare/v0.11.1...v0.11.2
 [v0.11.1]: https://github.com/peter-murach/github/compare/v0.11.0...v0.11.1
-
+[v0.11.0]: https://github.com/peter-murach/github/compare/v0.10.2...v0.11.0
