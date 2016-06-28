@@ -9,10 +9,12 @@ module Github
     #
     # @api public
     def self.extend_with_actions(child_class)
+      return unless child_class.is_a?(Class)
+      return if child_class.name.nil? # Skip anonymous classes
+
       child_class.class_eval <<-RUBY_EVAL, __FILE__, __LINE__ + 1
         def self.actions
-          self.new.api_methods_in(#{child_class}) +
-          self.new.module_methods_in(#{child_class})
+          self.new.actions
         end
 
         def actions
