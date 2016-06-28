@@ -255,20 +255,6 @@ module Github
       end
     end
 
-    # Scope for passing request required arguments.
-    #
-    def with(args)
-      case args
-      when Hash
-        set args
-      when /.*\/.*/i
-        user, repo = args.split('/')
-        set :user => user, :repo => repo
-      else
-        ::Kernel.raise ArgumentError, 'This api does not support passed in arguments'
-      end
-    end
-
     # Set a configuration option for a given namespace
     #
     # @param [String] option
