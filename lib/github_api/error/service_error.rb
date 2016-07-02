@@ -114,5 +114,75 @@ module Github
         end
       end
     end # ServiceError
+
+    # Raised when Github returns the HTTP status code 400
+    class BadRequest < ServiceError
+      http_status_code 400
+    end
+
+    # Raised when GitHub returns the HTTP status code 401
+    class Unauthorized < ServiceError
+      http_status_code 401
+    end
+
+    # Raised when Github returns the HTTP status code 403
+    class Forbidden < ServiceError
+      http_status_code 403
+    end
+
+    # Raised when Github returns the HTTP status code 404
+    class NotFound < ServiceError
+      http_status_code 404
+    end
+
+    # Raised when Github returns the HTTP status code 405
+    class MethodNotAllowed < ServiceError
+      http_status_code 405
+    end
+
+    # Raised when Github returns the HTTP status code 406
+    class NotAcceptable < ServiceError
+      http_status_code 406
+    end
+
+    # Raised when GitHub returns the HTTP status code 409
+    class Conflict < ServiceError
+      http_status_code 409
+    end
+
+    # Raised when GitHub returns the HTTP status code 414
+    class UnsupportedMediaType < ServiceError
+      http_status_code 414
+    end
+
+    # Raised when GitHub returns the HTTP status code 422
+    class UnprocessableEntity < ServiceError
+      http_status_code 422
+    end
+
+    # Raised when GitHub returns the HTTP status code 451
+    class UnavailableForLegalReasons < ServiceError
+      http_status_code 451
+    end
+
+    # Raised when Github returns the HTTP status code 500
+    class InternalServerError < ServiceError
+      http_status_code 500
+    end
+
+    # Raised when Github returns the HTTP status code 501
+    class NotImplemented < ServiceError
+      http_status_code 501
+    end
+
+    # Raised when Github returns the HTTP status code 502
+    class BadGateway < ServiceError
+      http_status_code 502
+    end
+
+    # Raised when GitHub returns the HTTP status code 503
+    class ServiceUnavailable < ServiceError
+      http_status_code 503
+    end
   end # Error
 end # Github
