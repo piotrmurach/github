@@ -20,7 +20,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'addressable', '~> 2.4.0'
   gem.add_dependency 'hashie',      '>= 3.4'
   gem.add_dependency 'faraday',     '~> 0.8', '< 0.10'
-  gem.add_dependency 'oauth2'
+  gem.add_dependency 'oauth2',      '~> 1.1.0'
   gem.add_dependency 'descendants_tracker', '~> 0.0.4'
 
   gem.add_development_dependency 'bundler'
