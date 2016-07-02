@@ -1,5 +1,18 @@
 # Change log
 
+## [v0.14.3] - 2016-07-02
+
+### Added
+* Add more specific ServiceError types such as BadGateway, UnsupportedMediaType
+* Add documentation_url to ServiceError message
+
+### Changed
+* Change oauth2 dependency requirement and lock to 1.0.0 to support older ruby versions
+* Change to include all client errors inside ClientError
+
+### Fixed
+* Fix ServiceError to handle multiple errors in response body by Jonathan Chan(@jonmchan)
+
 ## [v0.14.2] - 2016-06-28
 
 ## Added
@@ -629,6 +642,7 @@
 
 * fixing json parsing issue preventing repository creation
 
+[v0.14.3]: https://github.com/peter-murach/github/compare/v0.14.2...v0.14.3
 [v0.14.2]: https://github.com/peter-murach/github/compare/v0.14.1...v0.14.2
 [v0.14.1]: https://github.com/peter-murach/github/compare/v0.14.0...v0.14.1
 [v0.14.0]: https://github.com/peter-murach/github/compare/v0.13.1...v0.14.0
