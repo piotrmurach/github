@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Error::ServiceError do
+RSpec.describe Github::Error::ServiceError do
   let(:user) { 'peter-murach' }
   let(:repo) { 'github' }
 

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Error::ServiceError, 'parse_body' do
+RSpec.describe Github::Error::ServiceError, 'parse_body' do
   let(:message) { 'Requires authentication' }
   let(:body)    { "{\"message\":\"#{message}\"}" }
   let(:status)  { "401 Unauthorized" }
