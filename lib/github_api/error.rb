@@ -21,7 +21,7 @@ module Github
       end
 
       def backtrace
-        @response_message ? @response_message.backtrace : super
+        @response_message && @response_message.respond_to?(:backtrace) ? @response_message.backtrace : super
       end
     end # GithubError
   end # Error
