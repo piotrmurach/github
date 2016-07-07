@@ -29,6 +29,8 @@ module Github
 
       MIN_BODY_LENGTH = 2
 
+      attr_reader :errors
+
       # Crate a ServiceError
       #
       # @param [Hash[Symbol]] response
@@ -38,6 +40,9 @@ module Github
         @headers = response[:response_headers]
         @body    = response[:body]
         @status  = response[:status]
+
+        @response_headers = @headers
+        @response_message = @body
 
         super(create_message(response))
       end
@@ -94,6 +99,7 @@ module Github
           message << "\nSee: #{docs}" if docs
           message
         when String
+          @errors = [data]
           data
         end
       end
@@ -105,12 +111,17 @@ module Github
       # @api private
       def create_error_summary(data)
         if data[:error]
+          @errors = [data]
           return "\nError: #{data[:error]}"
         elsif data[:errors]
+          @errors = data[:errors]
           message = "\nErrors:\n"
           message << data[:errors].map do |error|
             "Error: #{error.map { |k, v| "#{k}: #{v}" }.join(', ')}"
           end.join("\n")
+        else
+          @errors = [data]
+          nil
         end
       end
     end # ServiceError
