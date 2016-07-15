@@ -31,8 +31,6 @@ module Github
 
       MIN_BODY_LENGTH = 2
 
-      attr_reader :errors
-
       # Crate a ServiceError
       #
       # @param [Hash[Symbol]] response
@@ -47,6 +45,27 @@ module Github
         @response_message = @body
 
         super(create_message(response))
+      end
+
+      # Expose response payload as JSON object if possible
+      #
+      # @return [Hash[Symbol]|String]
+      #
+      # @api public
+      def data
+        @data ||= decode_data(@body)
+      end
+
+      # Stores error message(s) returned in response body
+      #
+      # @return [Array[Hash[Symbol]]]
+      #   the array of hash error objects
+      #
+      # @api public
+      def error_messages
+        @error_messages ||= begin
+          data[:errors] ? data[:errors] : [data]
+        end
       end
 
       private
@@ -65,7 +84,7 @@ module Github
 
         message = "#{response[:method].to_s.upcase} "
         message << "#{response[:url]}: "
-        message << "#{@status} - #{parse_body(@body)}"
+        message << "#{@status} - #{format_response}"
         message
       end
 
@@ -86,22 +105,23 @@ module Github
         end
       end
 
+      # Read response body and convert to human friendly format
+      #
+      # @return [String]
+      #
       # @api private
-      def parse_body(body)
-        data = decode_data(body)
-
+      def format_response
         return '' if data.nil? || data.empty?
 
         case data
         when Hash
           message = data[:message] ? data[:message] : ' '
           docs = data[:documentation_url]
-          error = create_error_summary(data)
+          error = create_error_summary
           message << error if error
           message << "\nSee: #{docs}" if docs
           message
         when String
-          @errors = [data]
           data
         end
       end
@@ -111,19 +131,14 @@ module Github
       # @return [String]
       #
       # @api private
-      def create_error_summary(data)
+      def create_error_summary
         if data[:error]
-          @errors = [data]
-          return "\nError: #{data[:error]}"
+          "\nError: #{data[:error]}"
         elsif data[:errors]
-          @errors = data[:errors]
           message = "\nErrors:\n"
           message << data[:errors].map do |error|
             "Error: #{error.map { |k, v| "#{k}: #{v}" }.join(', ')}"
           end.join("\n")
-        else
-          @errors = [data]
-          nil
         end
       end
     end # ServiceError

@@ -27,7 +27,7 @@ RSpec.describe Github::Error::ServiceError, '#new' do
     expect(error.to_s).to eq("POST #{url}: #{status} - Requires authentication")
     expect(error.response_headers).to eql(response_headers)
     expect(error.response_message).to eql(body)
-    expect(error.errors).to eql([{ message: 'Requires authentication' }])
+    expect(error.error_messages).to eql([{ message: 'Requires authentication' }])
   end
 
   it "creates message with single error summary" do
@@ -43,7 +43,7 @@ RSpec.describe Github::Error::ServiceError, '#new' do
     ].join("\n"))
     expect(error.response_headers).to eql(response_headers)
     expect(error.response_message).to eql(body)
-    expect(error.errors).to eql([{:message=>"Validation Failed\nError: No commits between master and noexist\nSee: https://developer.github.com/enterprise/2.6/v3/pulls/#create-a-pull-request", :error=>"No commits between master and noexist", :documentation_url=>"https://developer.github.com/enterprise/2.6/v3/pulls/#create-a-pull-request"}])
+    expect(error.error_messages).to eql([{:message=>"Validation Failed\nError: No commits between master and noexist\nSee: https://developer.github.com/enterprise/2.6/v3/pulls/#create-a-pull-request", :error=>"No commits between master and noexist", :documentation_url=>"https://developer.github.com/enterprise/2.6/v3/pulls/#create-a-pull-request"}])
   end
 
   it "creates message with multiple errors summary" do
@@ -62,6 +62,9 @@ RSpec.describe Github::Error::ServiceError, '#new' do
     ].join("\n"))
     expect(error.response_headers).to eql(response_headers)
     expect(error.response_message).to eql(body)
-    expect(error.errors).to eql([{:resource=>"PullRequest", :code=>"missing_field", :field=>"head_sha"}, {:resource=>"PullRequest", :code=>"missing_field", :field=>"base_sha"}, {:resource=>"PullRequest", :code=>"custom", :message=>"No commits between master and noexist"}])
+    expect(error.error_messages).to eql([
+      {:resource=>"PullRequest", :code=>"missing_field", :field=>"head_sha"},
+      {:resource=>"PullRequest", :code=>"missing_field", :field=>"base_sha"},
+      {:resource=>"PullRequest", :code=>"custom", :message=>"No commits between master and noexist"}])
   end
 end # Github::Error::ServiceError
