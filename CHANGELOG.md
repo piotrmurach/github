@@ -1,5 +1,11 @@
 # Change log
 
+## [v0.14.4] - 2016-07-15
+
+### Added
+* Add ServiceError#data to expose full response payload
+* Add ServiceError#error_messages to expose only error messages contained in the paylod
+
 ## [v0.14.3] - 2016-07-02
 
 ### Added
