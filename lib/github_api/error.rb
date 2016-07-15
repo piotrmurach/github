@@ -11,7 +11,7 @@ module Github
 
       # Initialize a new Github error object.
       #
-      def initialize(message=$!)
+      def initialize(message = $!)
         if message.respond_to?(:backtrace)
           super(message.message)
           @response_message = message
@@ -21,7 +21,11 @@ module Github
       end
 
       def backtrace
-        @response_message && @response_message.respond_to?(:backtrace) ? @response_message.backtrace : super
+        if @response_message && @response_message.respond_to?(:backtrace)
+          @response_message.backtrace
+        else
+          super
+        end
       end
     end # GithubError
   end # Error
