@@ -77,6 +77,10 @@ gem "github_api"
 * [4. Pagination](#4-pagination)
   * [4.1 Auto pagination](#41-auto-pagination)
 * [5. Error Handling](#5-error-handling)
+  * [5.1 Client Error](#51-client-error)
+  * [5.2 Service Error](#52-service-error)
+    * [5.2.1 Data](#521-data)
+    * [5.2.2 Error Messages](#522-error-messages)
 * [6. Examples](#6-examples)
   * [6.1 Rails](#61-rails)
   * [6.2 Manipulating Files](#62-manipulating-files)
@@ -582,14 +586,15 @@ Github::Client::Repos.new.list user: '...', auto_pagination: true
 
 ## 5 Error Handling
 
-The generic error class `Github::Error::GithubError` will handle both the client (`Github::Error::ClientError`) and service (`Github::Error::ServiceError`) side errors. For instance in your code you can catch errors like
+The generic error class `Github::Error::GithubError` will handle both the client (`Github::Error::ClientError`) and service (`Github::Error::ServiceError`) side errors.
+
+For instance in your code you can catch errors like
 
 ```ruby
 begin
   # Do something with github_api gem
 rescue Github::Error::GithubError => e
   puts e.message
-
   if e.is_a? Github::Error::ServiceError
     # handle GitHub service errors such as 404
   elsif e.is_a? Github::Error::ClientError
@@ -597,6 +602,24 @@ rescue Github::Error::GithubError => e
   end
 end
 ```
+
+### 5.1 Client Error
+
+Any time **Github** client has a problem sending request a `Github::Error::ClientError` is raised that will provide a summary of the problem and possible solutions.
+
+### 5.2 Service Error
+
+When the **Github** client receives a HTTP response from GitHub service that indicates error then `Github::Error::ServiceError` is raised.
+
+There are number of specific error types such as `Github::Error::NotAcceptable` when `406` status code is returned.
+
+#### 5.2.1 Data
+
+When `Github::Error::ServiceError` is raised you can call `data` to access it payload in JSON format.
+
+#### 5.2.2 Error messages
+
+Anytime there are error messages provided with `Github::Error::ServiceError` you can access them by calling `error_messages` helper.
 
 ## 6 Examples
 
