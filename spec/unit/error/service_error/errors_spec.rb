@@ -2,9 +2,9 @@
 
 require 'spec_helper'
 
-RSpec.describe Github::Error::ServiceError, '::errors' do
+RSpec.describe Github::Error::ServiceError, '::error_mapping' do
   it "matches error codes to error types" do
-    expect(described_class.errors).to include({
+    expect(described_class.error_mapping).to include({
       400 => Github::Error::BadRequest,
       401 => Github::Error::Unauthorized,
       403 => Github::Error::Forbidden,

@@ -38,6 +38,4 @@ RSpec.describe Github::Error::ServiceError do
       Github.repos.branches user, repo
     }.to raise_error(Github::Error::NotFound, /key is already in use/)
   end
-
-
 end # Github::Error::ServiceError

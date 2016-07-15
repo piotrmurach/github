@@ -21,9 +21,11 @@ module Github
       # @return [Hash[Integer, Object]]
       #
       # @api public
-      def self.errors
-        @errors ||= Hash[
-          descendants.map { |klass| [klass.new({}).http_status_code, klass] }
+      def self.error_mapping
+        @error_mapping ||= Hash[
+          descendants.map do |klass|
+            [klass.new({}).http_status_code, klass]
+          end
         ]
       end
 
