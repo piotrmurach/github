@@ -1,5 +1,10 @@
 # Change log
 
+## [v0.14.5] - 2016-08-07
+
+## Fixed
+* Fix oauth2 dependency to allow for latest by @jkeiser
+
 ## [v0.14.4] - 2016-07-15
 
 ### Added
