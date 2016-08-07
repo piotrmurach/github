@@ -653,6 +653,8 @@
 
 * fixing json parsing issue preventing repository creation
 
+[v0.14.5]: https://github.com/peter-murach/github/compare/v0.14.4...v0.14.5
+[v0.14.4]: https://github.com/peter-murach/github/compare/v0.14.3...v0.14.4
 [v0.14.3]: https://github.com/peter-murach/github/compare/v0.14.2...v0.14.3
 [v0.14.2]: https://github.com/peter-murach/github/compare/v0.14.1...v0.14.2
 [v0.14.1]: https://github.com/peter-murach/github/compare/v0.14.0...v0.14.1
