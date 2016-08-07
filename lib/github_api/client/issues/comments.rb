@@ -80,7 +80,7 @@ module Github
     #   github.issues.comments.create
     #     user: 'owner-name',
     #     repo: 'repo-name',
-    #     number: 'comment-number',
+    #     number: 'issue-number',
     #     body: 'a new comment body'
     #
     # @api public
