@@ -2,6 +2,9 @@ source 'https://rubygems.org'
 
 gemspec
 
+# Rack 2.0.x doesn't work on < Ruby 2.2
+gem 'rack', '< 2.0'
+
 group :development do
   gem 'rspec',    '~> 2.14.1'
   gem 'cucumber', '~> 2.1'
