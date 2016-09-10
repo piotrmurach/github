@@ -20,14 +20,6 @@ module Github
       'statistics',
       'statuses'
 
-    DEFAULT_REPO_OPTIONS = {
-      "homepage"   => "https://github.com",
-      "private"    => false,
-      "has_issues" => true,
-      "has_wiki"   => true,
-      "has_downloads" => true
-    }.freeze
-
     REQUIRED_REPO_OPTIONS = %w[ name ]
 
     VALID_REPO_OPTIONS = %w[
@@ -229,9 +221,9 @@ module Github
 
       # Requires authenticated user
       if (org = params.delete('org') || org)
-        post_request("/orgs/#{org}/repos", params.merge_default(DEFAULT_REPO_OPTIONS))
+        post_request("/orgs/#{org}/repos", params)
       else
-        post_request('/user/repos', params.merge_default(DEFAULT_REPO_OPTIONS))
+        post_request("/user/repos", params)
       end
     end
 
@@ -313,7 +305,7 @@ module Github
         assert_required %w[ name ]
       end
 
-      patch_request("/repos/#{arguments.user}/#{arguments.repo}", arguments.params.merge_default(DEFAULT_REPO_OPTIONS))
+      patch_request("/repos/#{arguments.user}/#{arguments.repo}", arguments.params)
     end
 
     # Delete a repository
