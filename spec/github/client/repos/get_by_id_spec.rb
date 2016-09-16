@@ -3,9 +3,7 @@
 require 'spec_helper'
 
 describe Github::Client::Repos, '#get_by_id' do
-  let(:user) { 'peter-murach' }
-  let(:repo) { 'github' }
-  let(:repo_id) { '2456210' }
+  let(:repo_id) { 1296269 }
   let(:request_path) { "/repositories/#{repo_id}" }
 
   before {
