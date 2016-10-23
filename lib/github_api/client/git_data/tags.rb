@@ -4,6 +4,7 @@ module Github
   class Client::GitData::Tags < API
     # This tags api only deals with tag objects -
     # so only annotated tags, not lightweight tags.
+    # Refer https://developer.github.com/v3/git/tags/#parameters
 
     VALID_TAG_PARAM_NAMES = %w[
       tag
@@ -13,8 +14,6 @@ module Github
       name
       email
       date
-      sha
-      url
       tagger
     ].freeze
 

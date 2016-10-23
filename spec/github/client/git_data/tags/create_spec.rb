@@ -18,19 +18,15 @@ describe Github::Client::GitData::Tags, '#create' do
 
   let(:inputs) {
     {
-      "tag" => "v0.0.1",
-      "message" => "initial version\n",
-        "object" => {
-          "type" => "commit",
-          "sha" => "c3d0be41ecbe669545ee3e94d31ed9a4bc91ee3c",
-          "url" => "https://api.github.com/repos/octocat/Hello-World/git/commits/c3d0be41ecbe669545ee3e94d31ed9a4bc91ee3c"
-        },
-      "tagger" => {
-        "name" => "Scott Chacon",
-        "email" => "schacon@gmail.com",
-        "date" => "2011-06-17T14:53:35-07:00"
-      },
-      'unrelated' => 'giberrish'
+      "tag": "v0.0.1",
+      "message": "initial version\n",
+      "object": "c3d0be41ecbe669545ee3e94d31ed9a4bc91ee3c",
+      "type": "commit",
+      "tagger": {
+        "name": "Scott Chacon",
+        "email": "schacon@gmail.com",
+        "date": "2011-06-17T14:53:35-07:00"
+      }
     }
   }
 
