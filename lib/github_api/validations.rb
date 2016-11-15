@@ -18,8 +18,8 @@ module Github
       'page',
       'per_page',
       'auto_pagination',
-      'jsonp_callback',
-      'redirection'
+      "jsonp_callback",
+      "redirection"
     ]
 
   end # Validation

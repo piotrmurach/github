@@ -9,7 +9,7 @@ module Github
       include Validations
 
       AUTO_PAGINATION = 'auto_pagination'.freeze
-      REDIRECTION = 'redirection'.freeze
+      REDIRECTION = "redirection".freeze
 
       # Parameters passed to request
       attr_reader :params
