@@ -9,6 +9,7 @@ module Github
       include Validations
 
       AUTO_PAGINATION = 'auto_pagination'.freeze
+      REDIRECTION = 'redirection'.freeze
 
       # Parameters passed to request
       attr_reader :params
@@ -100,6 +101,7 @@ module Github
         @params    = options
         @remaining = args[@required.size..-1]
         extract_pagination(options)
+        extract_redirection(options)
 
         yield_or_eval(&block)
         self
@@ -233,6 +235,14 @@ module Github
       def extract_pagination(options)
         if (value = options.delete(AUTO_PAGINATION))
           api.auto_pagination = value
+        end
+      end
+
+      # Find redirection parameter in options hash
+      #
+      def extract_redirection(options)
+        if (value = options.delete(REDIRECTION))
+          api.redirection = value
         end
       end
 
