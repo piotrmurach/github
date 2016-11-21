@@ -158,6 +158,21 @@ module Github
     end
     alias :find :get
 
+    # Get a repository
+    #
+    # @example
+    #  github = Github.new
+    #  github.repos.get_by_id 'repo-id'
+    #  github.repos.get_by_id id: 'repo-id'
+    #  github.repos(id: 'repo-id').get_by_id
+    #
+    def get_by_id(*args)
+      arguments(args, required: [:id])
+
+      get_request("/repositories/#{arguments.id}", arguments.params)
+    end
+    alias :find_by_id :get_by_id
+
     # Create a new repository for the autheticated user.
     #
     # @param [Hash] params
