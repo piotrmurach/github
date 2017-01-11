@@ -16,19 +16,19 @@ describe Github::Client::GitData::Tags, '#create' do
 
   after { reset_authentication_for subject }
 
-  let(:inputs) {
+  let(:inputs) do
     {
-      "tag": "v0.0.1",
-      "message": "initial version\n",
-      "object": "c3d0be41ecbe669545ee3e94d31ed9a4bc91ee3c",
-      "type": "commit",
-      "tagger": {
-        "name": "Scott Chacon",
-        "email": "schacon@gmail.com",
-        "date": "2011-06-17T14:53:35-07:00"
+      "tag"     => "v0.0.1",
+      "message" => "initial version\n",
+      "object"  => "c3d0be41ecbe669545ee3e94d31ed9a4bc91ee3c",
+      "type"    => "commit",
+      "tagger"  => {
+        "name"  => "Scott Chacon",
+        "email" => "schacon@gmail.com",
+        "date"  => "2011-06-17T14:53:35-07:00"
       }
     }
-  }
+  end
 
   context "resouce created" do
     let(:body) { fixture('git_data/tag.json') }

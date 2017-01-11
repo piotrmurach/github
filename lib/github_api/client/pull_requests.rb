@@ -3,10 +3,12 @@
 module Github
   class Client::PullRequests < API
 
-    require_all 'github_api/client/pull_requests', 'comments'
+    require_all 'github_api/client/pull_requests', 'comments', 'reviews'
 
     # Access to PullRequests::Comments API
     namespace :comments
+    # Access to PullRequests::Reviews API
+    namespace :reviews
 
     # List pull requests
     #
