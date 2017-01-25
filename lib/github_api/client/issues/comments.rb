@@ -61,7 +61,7 @@ module Github
       arguments(args, required: [:user, :repo, :id])
       params = arguments.params
 
-      get_request("/repos/#{arguments.user}/#{arguments.repo}/issues/comments/#{arguments.id}", params)
+      get_request("/repos/#{arguments.user}/#{arguments.repo}/issues/#{arguments.id}/comments", params)
     end
     alias :find :get
 

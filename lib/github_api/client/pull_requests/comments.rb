@@ -58,7 +58,7 @@ module Github
     def get(*args)
       arguments(args, required: [:user, :repo, :number])
 
-      get_request("/repos/#{arguments.user}/#{arguments.repo}/pulls/comments/#{arguments.number}", arguments.params)
+      get_request("/repos/#{arguments.user}/#{arguments.repo}/pulls/#{arguments.number}/comments", arguments.params)
     end
     alias_method :find, :get
 
