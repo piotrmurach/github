@@ -173,8 +173,9 @@ module Github
     #   Optional string - The message that will be used for the merge commit
     # @option params [String] :sha
     #   Optional string - The SHA that pull request head must match to allow merge
-    # @option params [Boolean] :squash
-    #   Optional boolean - Commit a single commit to the head branch.
+    # @option params [String] :merge_method
+    #   Optional string - Merge method to use.
+    #   Valid values are merge, squash, and rebase. Default is merge.
     #
     # @example
     #  github = Github.new
