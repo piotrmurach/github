@@ -17,8 +17,9 @@ module Github
         builder.use Faraday::Request::UrlEncoded
         builder.use Github::Request::OAuth2, api.oauth_token if api.oauth_token?
         builder.use Github::Request::BasicAuth, api.authentication if api.basic_authed?
-
+        builder.use FaradayMiddleware::FollowRedirects if api.redirection
         builder.use Faraday::Response::Logger if ENV['DEBUG']
+
         unless options[:raw]
           builder.use Github::Response::Mashify
           builder.use Github::Response::Jsonize

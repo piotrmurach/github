@@ -2,6 +2,7 @@
 
 require 'pp' if ENV['DEBUG']
 require 'faraday'
+require "faraday_middleware"
 require 'github_api/version'
 require 'github_api/configuration'
 require 'github_api/constants'

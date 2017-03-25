@@ -22,6 +22,8 @@ describe Github::Configuration do
 
   its(:auto_pagination) { should be_false }
 
+  its(:redirection) { should be_false }
+
   its(:ssl) { should_not be_empty }
 
   its(:ssl) { should be_a Hash }
