@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 require 'faraday'
+require 'hashie'
 
 module Github
   class Response::Mashify < Response
