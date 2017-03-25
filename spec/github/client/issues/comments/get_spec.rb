@@ -6,7 +6,7 @@ describe Github::Client::Issues::Comments, '#get' do
   let(:user)   { 'peter-murach' }
   let(:repo)   { 'github' }
   let!(:comment_id) { 1 }
-  let(:request_path) { "/repos/#{user}/#{repo}/issues/#{comment_id}/comments" }
+  let(:request_path) { "/repos/#{user}/#{repo}/issues/comments/#{comment_id}" }
 
   before {
     stub_get(request_path).to_return(:body => body, :status => status,
