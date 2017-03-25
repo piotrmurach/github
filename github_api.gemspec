@@ -24,5 +24,5 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'descendants_tracker', '~> 0.0.4'
 
   gem.add_development_dependency 'bundler'
-  gem.add_development_dependency 'rake'
+  gem.add_development_dependency 'rake', '< 11.0'
 end
