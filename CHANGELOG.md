@@ -1,18 +1,21 @@
 # Change log
 
-## [v0.15.0] - 2017-03-xx
+## [v0.15.0] - 2017-03-25
 
 ### Added
 * Add feature to retrieve repo info using repo id by Prasad Surase(@prasadsurase)
 * Add support for Pull Request Reviews preview by Valentino(@codenamev)
+* Add mime-types as dependency
 
 ### Changed
 * Remove default options for repos by Dan Rice(@dnrce)
 * Change API calls for issues and pull_request comments by Paul Friedman(@pfriedman)
 * Lock tins and term-ansicolor to fix coveralls for ruby 1.9.3 by Valentino(@codenamev)
+* Change #issues.comments.get api path
 
 ### Fixed
 * Fix improper hash formatting in creating git tag spec by Valentino(@codenamev)
+* Fix hashie requirement by @betesh
 
 ## [v0.14.5] - 2016-08-07
 
@@ -667,6 +670,7 @@
 
 * fixing json parsing issue preventing repository creation
 
+[v0.15.0]: https://github.com/peter-murach/github/compare/v0.14.5...v0.15.0
 [v0.14.5]: https://github.com/peter-murach/github/compare/v0.14.4...v0.14.5
 [v0.14.4]: https://github.com/peter-murach/github/compare/v0.14.3...v0.14.4
 [v0.14.3]: https://github.com/peter-murach/github/compare/v0.14.2...v0.14.3
