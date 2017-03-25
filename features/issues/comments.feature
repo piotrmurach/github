@@ -6,8 +6,8 @@ Feature: Issues Comments API
   Scenario: List in a repository
 
     Given I want to list resources with the following params:
-      | owner        | repo   |
-      | peter-murach | github |
+      | owner       | repo   |
+      | piotrmurach | github |
     When I make request within a cassette named "issues/comments/list_repo"
     Then the response status should be 200
       And the response type should be JSON
@@ -16,8 +16,8 @@ Feature: Issues Comments API
   Scenario: List on an issue
 
     Given I want to list resources with the following params:
-      | owner        | repo   |
-      | peter-murach | github |
+      | owner       | repo   |
+      | piotrmurach | github |
       And I pass the following request options:
         | number |
         | 61     |
@@ -29,8 +29,8 @@ Feature: Issues Comments API
   Scenario: Get a single comment
 
     Given I want to get resource with the following params:
-      | owner        | repo   | id         |
-      | peter-murach | github | 10321836   |
+      | owner       | repo   | id        |
+      | piotrmurach | github | 229496555 |
     When I make request within a cassette named "issues/comments/get"
     Then the response status should be 200
       And the response type should be JSON
