@@ -7,7 +7,7 @@ RSpec.describe Github::Client::PullRequests::Comments, '#get' do
   let(:repo) { 'github' }
   let(:pull_request_id) { 1 }
   let(:number) { 1 }
-  let(:request_path) { "/repos/#{user}/#{repo}/pulls/comments/#{number}" }
+  let(:request_path) { "/repos/#{user}/#{repo}/pulls/#{number}/comments" }
 
   before {
     stub_get(request_path).to_return(body: body, status: status,
