@@ -122,7 +122,7 @@ module Github
     # @example
     #  github = Github.new
     #  github.git_data.references.delete 'user-name', 'repo-name',
-    #    ref: "refs/heads/master"
+    #    "heads/master"
     #
     # @api public
     def delete(*args)
