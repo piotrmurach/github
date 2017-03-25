@@ -1,5 +1,19 @@
 # Change log
 
+## [v0.15.0] - 2017-03-xx
+
+### Added
+* Add feature to retrieve repo info using repo id by Prasad Surase(@prasadsurase)
+* Add support for Pull Request Reviews preview by Valentino(@codenamev)
+
+### Changed
+* Remove default options for repos by Dan Rice(@dnrce)
+* Change API calls for issues and pull_request comments by Paul Friedman(@pfriedman)
+* Lock tins and term-ansicolor to fix coveralls for ruby 1.9.3 by Valentino(@codenamev)
+
+### Fixed
+* Fix improper hash formatting in creating git tag spec by Valentino(@codenamev)
+
 ## [v0.14.5] - 2016-08-07
 
 ## Fixed
