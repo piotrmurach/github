@@ -13,6 +13,10 @@ module Github
         !!env
       end
 
+      def [](property)
+        loaded? ? env[:response_headers][property] : nil
+      end
+
       def oauth_scopes
         loaded? ? env[:response_headers][OAUTH_SCOPES] : nil
       end
@@ -76,7 +80,6 @@ module Github
       def body
         loaded? ? env[:body] : nil
       end
-
     end # Header
   end # Response
 end # Github
