@@ -235,7 +235,10 @@ module Github
       archive_format = params.delete('archive_format') || 'tarball'
       ref            = params.delete('ref') || 'master'
 
-      get_request("/repos/#{arguments.user}/#{arguments.repo}/#{archive_format}/#{ref}", params)
+      disable_redirects do
+        response = get_request("/repos/#{arguments.user}/#{arguments.repo}/#{archive_format}/#{ref}", params)
+        response.headers.location
+      end
     end
   end # Client::Repos::Contents
 end # Github
