@@ -1,5 +1,19 @@
 # Change log
 
+## [v0.16.0] - 2017-04-02
+
+### Added
+* Add ability to follow HTTP 301, 302, 303, 307, and 308 redirects by Jeremy Fabre (@jfabre)
+* Add :follow_redirects configuration option to allow disabling rediredcts for client
+* Add API#disable_redirects call to allow disabling redirects inside a block call
+* Add ability to query response headers as hash structures
+
+### Changed
+* Change Repos::Contents#archive to return location header to download resource
+
+### Fixed
+* Fix mashi warnings with key/in-built method collisions by Sam Davies (@samphilipd)
+
 ## [v0.15.0] - 2017-03-25
 
 ### Added
@@ -228,14 +242,18 @@
 * Fix caching issues within the repository API object.
 * Fix default org option to be respected when repository listing
 
-0.10.2 (June 26, 2013)
-----------------------
+## [v0.10.2] - 2013-06-26
 
-* Fix issue with listing repository [#118]
-* Fix issue with ratelimit [#119]
+### Added
 * Add ability to encode params hash vlaues strings to base 64
 * Add repo content create/update/delete api calls
+
+### Changed
 * Updated dependencies
+
+### Fixed
+* Fix issue with listing repository [#118]
+* Fix issue with ratelimit [#119]
 
 0.10.1 (May 21, 2013)
 ---------------------
@@ -670,6 +688,7 @@
 
 * fixing json parsing issue preventing repository creation
 
+[v0.16.0]: https://github.com/peter-murach/github/compare/v0.15.0...v0.16.0
 [v0.15.0]: https://github.com/peter-murach/github/compare/v0.14.5...v0.15.0
 [v0.14.5]: https://github.com/peter-murach/github/compare/v0.14.4...v0.14.5
 [v0.14.4]: https://github.com/peter-murach/github/compare/v0.14.3...v0.14.4
@@ -688,3 +707,5 @@
 [v0.11.2]: https://github.com/peter-murach/github/compare/v0.11.1...v0.11.2
 [v0.11.1]: https://github.com/peter-murach/github/compare/v0.11.0...v0.11.1
 [v0.11.0]: https://github.com/peter-murach/github/compare/v0.10.2...v0.11.0
+[v0.10.2]: https://github.com/peter-murach/github/compare/v0.10.1...v0.10.2
+[v0.10.1]: https://github.com/peter-murach/github/compare/v0.10.0...v0.10.1
