@@ -719,4 +719,4 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/piotrm
 
 ## Copyright
 
-Copyright (c) 2011-2016 Piotr Murach. See LICENSE.txt for further details.
+Copyright (c) 2011-2017 Piotr Murach. See LICENSE.txt for further details.
