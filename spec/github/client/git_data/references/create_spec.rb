@@ -51,7 +51,7 @@ describe Github::Client::GitData::References, '#create' do
 
     it "should return the resource" do
       reference = subject.create user, repo, inputs
-      reference.first.should be_a Hashie::Mash
+      reference.first.should be_a Github::Mash
     end
 
     it "should get the reference information" do

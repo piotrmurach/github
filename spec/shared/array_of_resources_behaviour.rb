@@ -10,6 +10,6 @@ shared_examples_for 'an array of resources' do
 
   it "should be a mash type" do
     objects = requestable
-    objects.first.should be_a Hashie::Mash
+    objects.first.should be_a ::Github::Mash
   end
 end

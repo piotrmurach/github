@@ -2,13 +2,14 @@
 
 require 'faraday'
 require 'hashie'
+require 'github_api/mash'
 
 module Github
   class Response::Mashify < Response
     dependency 'hashie/mash'
 
     define_parser do |body|
-      ::Hashie::Mash.new body
+      ::Github::Mash.new body
     end
 
     def parse(body)

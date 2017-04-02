@@ -78,7 +78,7 @@ describe Github::Client::GitData::References, '#list' do
 
     it "should be a mash type" do
       references = subject.list user, repo, :ref => ref
-      references.first.should be_a Hashie::Mash
+      references.first.should be_a Github::Mash
     end
 
     it "should get reference information" do

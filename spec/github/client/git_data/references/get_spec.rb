@@ -45,7 +45,7 @@ describe Github::Client::GitData::References, '#get' do
 
     it "should return mash" do
       reference = subject.get user, repo, ref
-      reference.first.should be_a Hashie::Mash
+      reference.first.should be_a Github::Mash
     end
   end
 

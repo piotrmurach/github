@@ -35,7 +35,7 @@ describe Github::Client::Issues::Labels, '#add' do
 
     it "should return the resource" do
       labels = subject.add user, repo, issue_id, label
-      labels.first.should be_a Hashie::Mash
+      labels.first.should be_a Github::Mash
     end
 
     it "should get the label information" do
