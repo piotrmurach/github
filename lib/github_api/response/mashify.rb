@@ -6,8 +6,6 @@ require 'github_api/mash'
 
 module Github
   class Response::Mashify < Response
-    dependency 'hashie/mash'
-
     define_parser do |body|
       ::Github::Mash.new body
     end
