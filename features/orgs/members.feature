@@ -31,8 +31,8 @@ Feature: Members API
     Given I want to member? resource with the following params:
       | org   | member |
       | rails | drogus |
-    When I make request within a cassette named "orgs/members/member_false"
-    Then the response should be false
+    When I make request within a cassette named "orgs/members/is_member"
+    Then the response should be true
 
   Scenario: Check if public member of organization (404)
 
@@ -42,7 +42,7 @@ Feature: Members API
     And I pass the following request options:
       | public |
       | true   |
-    When I make request within a cassette named "orgs/members/member_public_false"
+    When I make request within a cassette named "orgs/members/is_public_member_no"
     Then the response should be false
 
   Scenario: Check if public member of organization (204)
@@ -53,5 +53,5 @@ Feature: Members API
     And I pass the following request options:
       | public |
       | true   |
-    When I make request within a cassette named "orgs/members/member_public_true"
+    When I make request within a cassette named "orgs/members/is_public_member_yes"
     Then the response should be true
