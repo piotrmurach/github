@@ -6,6 +6,7 @@ require 'github_api/response/jsonize'
 require 'github_api/response/atom_parser'
 require 'github_api/response/raise_error'
 require 'github_api/response/header'
+require 'github_api/response/follow_redirects'
 
 module Github
   class Middleware
@@ -18,6 +19,7 @@ module Github
         builder.use Github::Request::OAuth2, api.oauth_token if api.oauth_token?
         builder.use Github::Request::BasicAuth, api.authentication if api.basic_authed?
 
+        builder.use Github::Response::FollowRedirects
         builder.use Faraday::Response::Logger if ENV['DEBUG']
         unless options[:raw]
           builder.use Github::Response::Mashify
