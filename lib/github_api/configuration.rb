@@ -12,6 +12,8 @@ module Github
     # By default, don't traverse the page links
     property :auto_pagination, default: false
 
+    property :follow_redirects, default: true
+
     # Basic authentication
     property :basic_auth
 
