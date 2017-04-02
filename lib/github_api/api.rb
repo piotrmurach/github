@@ -79,6 +79,16 @@ module Github
       end
     end
 
+    # Disable following redirects inside a block
+    #
+    # @api public
+    def disable_redirects
+      self.follow_redirects = false
+      yield
+    ensure
+      self.follow_redirects = true
+    end
+
     # List of before callbacks
     #
     # @api public
