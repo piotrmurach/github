@@ -17,7 +17,7 @@ describe Github::Client::Repos::Contents, '#get' do
   let(:archive_format) { 'tarball' }
   let(:ref) { 'master' }
   let(:body) { '[]' }
-  let(:status) { 302 }
+  let(:status) { 200 }
 
 
   it "should get the resources" do
