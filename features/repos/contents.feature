@@ -65,10 +65,10 @@ Feature: Contents API
   Scenario: Archive
 
     Given I want archive resource with the following params:
-      | user         | repo   |
-      | peter-murach | github |
+      | user        | repo   |
+      | piotrmurach | pastel |
     And I pass the following request options:
       | archive_format | ref    |
       | tarball        | master |
     When I make request within a cassette named "repos/contents/archive"
-    Then the response status should be 302
+    Then the response should be https://codeload.github.com/piotrmurach/pastel/legacy.tar.gz/master
