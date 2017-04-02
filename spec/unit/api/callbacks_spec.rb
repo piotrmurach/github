@@ -26,7 +26,7 @@ class ApiTest < Github::API
   end
 end
 
-describe Github::API, '#callbacks' do
+RSpec.describe Github::API, '#callbacks' do
   it "retrieves only public api methods" do
     expect(ApiTest.request_methods.to_a - [
       'list',
