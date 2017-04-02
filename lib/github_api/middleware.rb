@@ -19,7 +19,7 @@ module Github
         builder.use Github::Request::OAuth2, api.oauth_token if api.oauth_token?
         builder.use Github::Request::BasicAuth, api.authentication if api.basic_authed?
 
-        builder.use Github::Response::FollowRedirects
+        builder.use Github::Response::FollowRedirects if api.follow_redirects
         builder.use Faraday::Response::Logger if ENV['DEBUG']
         unless options[:raw]
           builder.use Github::Response::Mashify
