@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::API, '#set' do
+RSpec.describe Github::API, '#set' do
 
   after { reset_authentication_for subject }
 
@@ -23,10 +23,15 @@ describe Github::API, '#set' do
   end
 
   context 'defines accessors' do
-    before { subject.set :branch, 'arguments' }
+    before { subject.set :branch, :master }
 
-    it { should respond_to :branch }
+    it 'reads property default value' do
+      expect(subject.branch).to eql(:master)
+    end
 
-    it { should respond_to 'branch=' }
+    it 'sets property' do
+      subject.branch = 'hotfix'
+      expect(subject.branch).to eq('hotfix')
+    end
   end
 end
