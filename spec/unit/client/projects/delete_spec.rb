@@ -15,11 +15,11 @@ describe Github::Client::Projects, '#delete' do
 
   after { reset_authentication_for subject }
 
-  it { should respond_to :remove }
+  it { expect(subject).to respond_to :remove }
 
   it "should delete the resource successfully" do
     subject.delete project_id
-    a_delete(request_path).should have_been_made
+    expect(a_delete(request_path)).to have_been_made
   end
 
   it "should fail to delete resource without 'id' parameter" do

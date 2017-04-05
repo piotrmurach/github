@@ -32,17 +32,17 @@ describe Github::Client::Repos::Projects, '#create' do
 
     it "should create resource" do
       subject.create owner, repo, inputs
-      a_post(request_path).with(body: inputs).should have_been_made
+      expect(a_post(request_path).with(body: inputs)).to have_been_made
     end
 
     it "should return the resource" do
       project = subject.create owner, repo, inputs
-      project.name.should == 'Projects Documentation'
+      expect(project.name).to eq 'Projects Documentation'
     end
 
     it "should return mash type" do
       project = subject.create owner, repo, inputs
-      project.should be_a Github::ResponseWrapper
+      expect(project).to be_a Github::ResponseWrapper
     end
   end
 end # create

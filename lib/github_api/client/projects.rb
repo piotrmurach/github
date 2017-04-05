@@ -46,9 +46,7 @@ module Github
     #
     # @api public
     def edit(*args)
-      arguments(args, required: [:id]) do
-        permit %w[ name body state ]
-      end
+      arguments(args, required: [:id])
 
       params = arguments.params
       params['options'] = OPTIONS

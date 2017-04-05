@@ -22,9 +22,7 @@ module Github
     #
     # @api public
     def list(*args)
-      arguments(args, required: [:org_name]) do
-        permit %w[ state ]
-      end
+      arguments(args, required: [:org_name])
       params = arguments.params
 
       params['options'] = OPTIONS
@@ -49,7 +47,6 @@ module Github
     #  github.repos.create name: 'project-name', body: 'project-body', owner: 'owner-name', repo: 'repo-name'
     def create(*args)
       arguments(args, required: [:org_name]) do
-        permit %w[ body name ]
         assert_required %w[ name ]
       end
       params = arguments.params
