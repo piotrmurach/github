@@ -2,9 +2,9 @@
 
 require 'spec_helper'
 
-describe Github::Client::Repos::Projects, '#create' do
-  let(:owner) { 'octocat' }
-  let(:repo) { 'api-playground' }
+describe Github::Client::Orgs::Projects, '#create' do
+  let(:org) { 'API-sampler' }
+  let(:request_path) { "/orgs/#{org}/projects" }
   let(:inputs) do
     {
       :name => 'Projects Documentation',
@@ -22,26 +22,24 @@ describe Github::Client::Repos::Projects, '#create' do
     let(:body)   { fixture('projects/project.json') }
     let(:status) { 201 }
 
-    let(:request_path) { "/repos/#{owner}/#{repo}/projects" }
-
     it "should fail to create resource if 'name' inputs is missing" do
       expect {
-        subject.create owner, repo, inputs.except(:name)
+        subject.create org, inputs.except(:name)
       }.to raise_error(Github::Error::RequiredParams)
     end
 
     it "should create resource" do
-      subject.create owner, repo, inputs
+      subject.create org, inputs
       a_post(request_path).with(body: inputs).should have_been_made
     end
 
     it "should return the resource" do
-      project = subject.create owner, repo, inputs
+      project = subject.create org, inputs
       project.name.should == 'Projects Documentation'
     end
 
     it "should return mash type" do
-      project = subject.create owner, repo, inputs
+      project = subject.create org, inputs
       project.should be_a Github::ResponseWrapper
     end
   end

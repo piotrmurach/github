@@ -34,5 +34,29 @@ module Github
       response.each { |el| yield el }
     end
     alias_method :all, :list
+
+    # Create a new project for the specified repo
+    #
+    # @param [Hash] params
+    # @option params [String] :name
+    #   Required string - The name of the project.
+    # @option params [String] :body
+    #   Optional string - The body of the project.
+    #
+    # @example
+    #  github = Github.new
+    #  github.repos.create 'owner-name', 'repo-name', name: 'project-name'
+    #  github.repos.create name: 'project-name', body: 'project-body', owner: 'owner-name', repo: 'repo-name'
+    def create(*args)
+      arguments(args, required: [:org_name]) do
+        permit %w[ body name ]
+        assert_required %w[ name ]
+      end
+      params = arguments.params
+
+      params['options'] = OPTIONS
+
+      post_request("/orgs/#{arguments.org_name}/projects", params)
+    end
   end # Projects
 end # Github
