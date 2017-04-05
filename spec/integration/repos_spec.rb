@@ -34,4 +34,6 @@ describe Github::Client::Repos, 'integration' do
 
   its(:pubsubhubbub)  { should be_a Github::Client::Repos::PubSubHubbub }
 
+  its(:projects)      { should be_a Github::Client::Repos::Projects }
+
 end # Github::Repos
