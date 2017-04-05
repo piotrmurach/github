@@ -13,6 +13,7 @@ module Github
                 'markdown',
                 'meta',
                 'orgs',
+                'projects',
                 'pull_requests',
                 'repos',
                 'say',
