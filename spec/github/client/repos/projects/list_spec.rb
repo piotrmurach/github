@@ -45,7 +45,7 @@ describe Github::Client::Repos::Projects, '#list' do
 
     it "should get project information" do
       projects = subject.list user, repo
-      projects.first.name.should == 'Implement new APIs'
+      projects.first.name.should == 'Projects Documentation'
     end
 
     it "should yield to a block" do

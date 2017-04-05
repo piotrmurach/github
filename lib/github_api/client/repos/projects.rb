@@ -35,5 +35,5 @@ module Github
       response.each { |el| yield el }
     end
     alias :all :list
-  end
-end
+  end # Projects
+end # Github
