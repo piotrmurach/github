@@ -22,9 +22,11 @@ module Github
     #
     # @api public
     def list(*args)
-      arguments(args, required: [:org_name])
-
+      arguments(args, required: [:org_name]) do
+        permit %w[ state ]
+      end
       params = arguments.params
+
       params['options'] = OPTIONS
 
       response = get_request("/orgs/#{arguments.org_name}/projects", params)
