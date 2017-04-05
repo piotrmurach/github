@@ -55,5 +55,19 @@ module Github
 
       patch_request("/projects/#{arguments.id}",params)
     end
+
+    # Delete a project
+    #
+    # @example
+    #  github = Github.new
+    #  github.projects.delete 1002604
+    #
+    # @api public
+    def delete(*args)
+      arguments(args, required: [:id])
+
+      delete_request("/projects/#{arguments.id}", arguments.params)
+    end
+    alias :remove :delete
   end # Projects
 end # Github
