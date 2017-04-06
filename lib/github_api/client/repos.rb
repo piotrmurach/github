@@ -15,6 +15,7 @@ module Github
       'keys',
       'merging',
       'pages',
+      'projects',
       'pub_sub_hubbub',
       'releases',
       'statistics',
@@ -70,6 +71,9 @@ module Github
 
     # Access to Repos::Pages API
     namespace :pages
+
+    # Access to Repos::Projects API
+    namespace :projects
 
     # Access to Repos::PubSubHubbub API
     namespace :pubsubhubbub, full_name: :pub_sub_hubbub

@@ -5,7 +5,7 @@ module Github
 
     # List a user's followers
     #
-    # @xample
+    # @example
     #  github = Github.new
     #  github.users.followers.list 'user-name'
     #  github.users.followers.list 'user-name' { |user| ... }

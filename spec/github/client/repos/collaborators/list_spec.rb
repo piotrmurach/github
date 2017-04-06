@@ -23,7 +23,7 @@ describe Github::Client::Repos::Collaborators, '#list' do
       expect { subject.list }.to raise_error(ArgumentError)
     end
 
-    it "failse to get resource with missing arguments" do
+    it "fails to get resource with missing arguments" do
       expect { subject.list user }.to raise_error(ArgumentError)
     end
 

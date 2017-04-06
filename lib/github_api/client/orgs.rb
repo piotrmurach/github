@@ -8,6 +8,7 @@ module Github
                 'hooks',
                 'members',
                 'memberships',
+                'projects',
                 'teams'
 
     # Access to Client::Orgs::Hooks API
@@ -18,6 +19,9 @@ module Github
 
     # Access to Client::Orgs::Memberships API
     namespace :memberships
+
+    # Access to Client::Orgs::Projects API
+    namespace :projects
 
     # Access to Client::Orgs::Teams API
     namespace :teams

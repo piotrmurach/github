@@ -9,7 +9,7 @@ module Github
     include Normalizer
     include MimeType
 
-    REQUEST_PARAMS = [:accept, :media, :data, :raw, :content_type, :headers]
+    REQUEST_PARAMS = [:accept, :media, :data, :raw, :content_type, :headers, :options]
 
     def initialize(hash)
       super(normalize!(Hash[hash]))

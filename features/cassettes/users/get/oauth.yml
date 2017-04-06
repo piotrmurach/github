@@ -1,52 +1,54 @@
---- 
-http_interactions: 
-- request: 
+---
+http_interactions:
+- request:
     method: get
-    uri: https://<BASIC_AUTH>@api.github.com/user?access_token=<TOKEN>
-    body: 
+    uri: https://api.github.com/user?access_token=<TOKEN>
+    body:
       encoding: US-ASCII
-      string: ""
-    headers: 
-      Accept-Encoding: 
+      string: ''
+    headers:
+      Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept: 
+      Accept:
       - "*/*"
-      User-Agent: 
+      User-Agent:
       - Ruby
-  response: 
-    status: 
+      Authorization: Basic <%= Base64.encode64("foobarmostunique:foobazquxmostrighteous").chomp
+        %>
+  response:
+    status:
       code: 200
       message: OK
-    headers: 
-      Server: 
+    headers:
+      Server:
       - nginx/1.0.13
-      Date: 
+      Date:
       - Mon, 11 Jun 2012 21:31:28 GMT
-      Content-Type: 
+      Content-Type:
       - application/json; charset=utf-8
-      Transfer-Encoding: 
+      Transfer-Encoding:
       - chunked
-      Connection: 
+      Connection:
       - keep-alive
-      Status: 
+      Status:
       - 200 OK
-      X-Ratelimit-Limit: 
-      - "5000"
-      Vary: 
+      X-Ratelimit-Limit:
+      - '5000'
+      Vary:
       - Accept, Authorization, Cookie
-      Etag: 
-      - "\"202d99b964a36da44cf3964b1678c1a2\""
-      Last-Modified: 
+      Etag:
+      - '"202d99b964a36da44cf3964b1678c1a2"'
+      Last-Modified:
       - Sun, 20 May 2012 10:27:30 GMT
-      X-Ratelimit-Remaining: 
-      - "4997"
-      Cache-Control: 
+      X-Ratelimit-Remaining:
+      - '4997'
+      Cache-Control:
       - private, max-age=60
-      Content-Encoding: 
+      Content-Encoding:
       - gzip
-    body: 
+    body:
       encoding: ASCII-8BIT
-      string: !binary |
+      string: !binary |-
         H4sIAAAAAAAAA4VSQW7DIBD8C1Jvjg2YxKmlqre+oL30Yq0xdpCxQYAbVVH+
         3k0cp4lSqRKHZTU7zOxwINIaA7X1EK0PpKQJ2cXBVJM3pMQyulBmWafjbqpT
         aYdsmLzqSULit1OI+AjK463z8AURfKUbbG6prCVt5UbSvBF5K57XNc8Fr3PW
@@ -55,7 +57,6 @@ http_interactions:
         746e+JseoFMBi+W123rFBE3d2KFQux/RyqPJFlOxe42YUyKNDn01BaQkZSFY
         QtxUGy2ry1KKhNw7Badv5GQTZhSuwc3U2DlTOwMYw+GPb/AoKjiQqCCnBac4
         OsJw+gGtV4ocE3JKnnGes/XmKvCSJjv+AEryqZpoAgAA
-
     http_version: 
   recorded_at: Mon, 11 Jun 2012 21:31:28 GMT
 recorded_with: VCR 2.2.0
