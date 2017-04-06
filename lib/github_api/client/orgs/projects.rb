@@ -2,9 +2,7 @@
 
 module Github
   class Client::Orgs::Projects < API
-    HEADERS = {
-      ACCEPT => 'application/vnd.github.inertia-preview+json'
-    }
+    PREVIEW_MEDIA = "application/vnd.github.inertia-preview+json".freeze # :nodoc:
 
     # List your organization projects
     #
@@ -23,7 +21,7 @@ module Github
       arguments(args, required: [:org_name])
       params = arguments.params
 
-      params['headers'] = HEADERS
+      params["accept"] ||= PREVIEW_MEDIA
 
       response = get_request("/orgs/#{arguments.org_name}/projects", params)
       return response unless block_given?
@@ -49,7 +47,7 @@ module Github
       end
       params = arguments.params
 
-      params['headers'] = HEADERS
+      params["accept"] ||= PREVIEW_MEDIA
 
       post_request("/orgs/#{arguments.org_name}/projects", params)
     end

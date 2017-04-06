@@ -3,10 +3,7 @@
 module Github
   # Projects API
   class Client::Projects < API
-    HEADERS = {
-      ACCEPT => 'application/vnd.github.inertia-preview+json'
-    }
-
+    PREVIEW_MEDIA = "application/vnd.github.inertia-preview+json".freeze # :nodoc:
 
     # Get properties for a single project
     #
@@ -19,9 +16,9 @@ module Github
     # @api public
     def get(*args)
       arguments(args, required: [:id])
-
       params = arguments.params
-      params['headers'] = HEADERS
+
+      params["accept"] ||= PREVIEW_MEDIA
 
       get_request("/projects/#{arguments.id}", params)
     end
@@ -46,9 +43,9 @@ module Github
     # @api public
     def edit(*args)
       arguments(args, required: [:id])
-
       params = arguments.params
-      params['headers'] = HEADERS
+
+      params["accept"] ||= PREVIEW_MEDIA
 
       patch_request("/projects/#{arguments.id}",params)
     end
@@ -62,9 +59,9 @@ module Github
     # @api public
     def delete(*args)
       arguments(args, required: [:id])
-
       params = arguments.params
-      params['headers'] = HEADERS
+
+      params["accept"] ||= PREVIEW_MEDIA
 
       delete_request("/projects/#{arguments.id}", arguments.params)
     end

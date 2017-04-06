@@ -2,9 +2,7 @@
 
 module Github
   class Client::Repos::Projects < API
-    HEADERS = {
-      ACCEPT => 'application/vnd.github.inertia-preview+json'
-    }
+    PREVIEW_MEDIA = "application/vnd.github.inertia-preview+json".freeze # :nodoc:
 
     # List a repo's projects
     #
@@ -26,7 +24,7 @@ module Github
       arguments(args, required: [:owner, :repo])
       params = arguments.params
 
-      params['headers'] = HEADERS
+      params["accept"] ||= PREVIEW_MEDIA
 
       response = get_request("/repos/#{arguments.owner}/#{arguments.repo}/projects", params)
       return response unless block_given?
@@ -52,7 +50,7 @@ module Github
       end
       params = arguments.params
 
-      params['headers'] = HEADERS
+      params["accept"] ||= PREVIEW_MEDIA
 
       post_request("/repos/#{arguments.owner}/#{arguments.repo}/projects", params)
     end
