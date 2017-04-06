@@ -9,7 +9,7 @@ RSpec.describe Github::Client::Repos::Keys, '#create' do
   let(:inputs) { {:title => "octocat@octomac", :key => "ssh-rsa AAA..." } }
 
   before {
-    stub_post(request_path).with(inputs).
+    stub_post(request_path).with(body: inputs).
       to_return(body: body, status: status,
         headers: {content_type: "application/json; charset=utf-8"})
   }
@@ -22,7 +22,7 @@ RSpec.describe Github::Client::Repos::Keys, '#create' do
 
     it "should create the resource" do
       subject.create(user, repo, inputs)
-      expect(a_post(request_path).with(inputs)).to have_been_made
+      expect(a_post(request_path).with(body: inputs)).to have_been_made
     end
 
     it "should get the key information back" do

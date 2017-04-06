@@ -10,7 +10,7 @@ RSpec.describe Github::Client::Repos::Releases, '#edit' do
   let(:inputs) { {'name' => 'v1.0.0', 'body' => 'New release'} }
 
   before {
-    stub_patch(path).with(inputs).to_return(body: body, status: status,
+    stub_patch(path).with(body: inputs).to_return(body: body, status: status,
       headers: {content_type: 'application/json; charset=utf-8'})
   }
 

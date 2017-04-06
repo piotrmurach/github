@@ -12,13 +12,12 @@ RSpec.describe Github::Client::PullRequests, '#create' do
       "body" => "Please pull this in!",
       "head" => "octocat:new-feature",
       "base" => "master",
-      "state" => "open",
-      'unrelated' => 'giberrish'
+      "state" => "open"
     }
   }
 
   before {
-    stub_post(request_path).with(inputs.except('unrelated')).
+    stub_post(request_path).with(body: inputs.except('unrelated')).
       to_return(:body => body, :status => status,
       :headers => {:content_type => "application/json; charset=utf-8"})
   }
@@ -35,7 +34,7 @@ RSpec.describe Github::Client::PullRequests, '#create' do
 
     it "should create resource successfully" do
       subject.create user, repo, inputs
-      expect(a_post(request_path).with(inputs)).to have_been_made
+      expect(a_post(request_path).with(body: inputs)).to have_been_made
     end
 
     it "should return the resource" do

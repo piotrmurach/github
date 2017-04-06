@@ -10,7 +10,7 @@ describe Github::Client::Repos::Comments, '#update' do
   let(:request_path) { "/repos/#{user}/#{repo}/comments/#{comment_id}" }
 
   before {
-    stub_patch(request_path).with(inputs).
+    stub_patch(request_path).with(body: inputs).
       to_return(:body => body,:status => status,
         :headers => {:content_type => "application/json; charset=utf-8"})
   }
@@ -27,7 +27,7 @@ describe Github::Client::Repos::Comments, '#update' do
 
     it "should create resource successfully" do
       subject.update user, repo, comment_id, inputs
-      a_patch(request_path).with(inputs).should have_been_made
+      a_patch(request_path).with(body: inputs).should have_been_made
     end
 
     it "should return the resource" do

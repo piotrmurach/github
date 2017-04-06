@@ -16,7 +16,7 @@ describe Github::Client::Repos, '#create' do
 
   before {
     subject.oauth_token = OAUTH_TOKEN
-    stub_post(request_path).with(inputs).
+    stub_post(request_path).with(body: inputs).
       to_return(:body => body, :status => status,
         :headers => {:content_type => "application/json; charset=utf-8"} )
   }
@@ -30,7 +30,7 @@ describe Github::Client::Repos, '#create' do
     context "for the authenticated user" do
       let(:request_path) { "/user/repos?access_token=#{OAUTH_TOKEN}" }
 
-      it "should faile to create resource if 'name' inputs is missing" do
+      it "should fail to create resource if 'name' inputs is missing" do
         expect {
           subject.create inputs.except(:name)
         }.to raise_error(Github::Error::RequiredParams)
@@ -38,7 +38,7 @@ describe Github::Client::Repos, '#create' do
 
       it "should create resource" do
         subject.create inputs
-        a_post(request_path).with(inputs).should have_been_made
+        a_post(request_path).with(body: inputs).should have_been_made
       end
 
       it "should return the resource" do
@@ -58,7 +58,7 @@ describe Github::Client::Repos, '#create' do
 
       it "should get the resource" do
         subject.create inputs.merge(:org => org)
-        a_post(request_path).with(inputs).should have_been_made
+        a_post(request_path).with(body: inputs).should have_been_made
       end
     end
   end

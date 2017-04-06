@@ -26,7 +26,7 @@ describe Github::Client::Authorizations, '#create' do
 
     it "creates resource successfully" do
       subject.create inputs
-      a_post(request_path, host).with(inputs).should have_been_made
+      a_post(request_path, host).with(body: inputs).should have_been_made
     end
 
     it "returns the resource" do

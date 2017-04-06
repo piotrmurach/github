@@ -13,7 +13,7 @@ RSpec.describe Github::Client::Authorizations, 'two-factor' do
         content_type: 'application/json',
         'X-GitHub-OTP' => 'required; sms'
       },
-      body: {message: "Require two-factor authentication OTP token."}
+      body: {message: "Require two-factor authentication OTP token."}.to_json
     )
     expect {
       described_class.new(basic_auth: 'login:password').get(1)

@@ -233,7 +233,6 @@ module Github
     # @example
     def create(*args)
       arguments(args) do
-        permit VALID_REPO_OPTIONS + %w[ org ]
         assert_required %w[ name ]
       end
       params = arguments.params

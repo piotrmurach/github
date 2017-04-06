@@ -17,13 +17,12 @@ describe Github::Client::GitData::Commits, '#get' do
       "parents" => [
         "7d1b31e74ee336d15cbd21741bc88a537ed063a0"
       ],
-      "tree" => "827efc6d56897b048c772eb4087f854f46256132",
-      'unrelated' => 'giberrish'
+      "tree" => "827efc6d56897b048c772eb4087f854f46256132"
     }
   }
 
   before {
-    stub_post(request_path).with(inputs.except('unrelated')).
+    stub_post(request_path).with(body: inputs).
       to_return(:body => body, :status => status,
         :headers => {:content_type => "application/json; charset=utf-8"})
   }
@@ -56,7 +55,7 @@ describe Github::Client::GitData::Commits, '#get' do
 
     it "should create resource successfully" do
       subject.create user, repo, inputs
-      a_post(request_path).with(inputs).should have_been_made
+      a_post(request_path).with(body: inputs).should have_been_made
     end
 
     it "should return the resource" do

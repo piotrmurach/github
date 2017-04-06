@@ -27,7 +27,7 @@ RSpec.describe Github::Client::Authorizations, '#update' do
 
     it "should update resource successfully" do
       subject.update authorization_id, inputs
-      a_patch(request_path, host).with(inputs).should have_been_made
+      a_patch(request_path, host).with(body: inputs).should have_been_made
     end
 
     it "should return the resource" do

@@ -9,7 +9,7 @@ RSpec.describe Github::Client::Orgs::Memberships, '#edit' do
   let(:request_path) { "/user/memberships/orgs/#{orgname}" }
 
   before {
-    stub_patch(request_path).with({state: 'active'}).
+    stub_patch(request_path).with(body: {state: 'active'}).
       to_return(body: body, status: status,
       headers: {content_type: 'application/json; charset=utf-8'})
   }

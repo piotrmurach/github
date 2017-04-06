@@ -6,9 +6,9 @@ RSpec.describe Github::Error::ServiceError do
   let(:user) { 'peter-murach' }
   let(:repo) { 'github' }
 
-  def test_request(body='')
+  def test_request(body={})
     stub_get("/repos/#{user}/#{repo}/branches").
-      to_return(:body => body, :status => 404, :headers => {:content_type => "application/json; charset=utf-8"})
+      to_return(:body => body.to_json, :status => 404, :headers => {:content_type => "application/json; charset=utf-8"})
   end
 
   it "handles empty message" do
@@ -33,7 +33,7 @@ RSpec.describe Github::Error::ServiceError do
   end
 
   it 'decodes message' do
-    test_request MultiJson.dump(:errors => { :message => 'key is already in use' })
+    test_request({ :errors => { :message => 'key is already in use' } })
     expect {
       Github.repos.branches user, repo
     }.to raise_error(Github::Error::NotFound, /key is already in use/)
