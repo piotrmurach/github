@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe Github::Client::Authorizations, 'two-factor' do
   let(:basic_auth) { 'login:password' }
-  let(:host) { "https://#{basic_auth}@api.github.com" }
+  let(:host) { "https://api.github.com" }
 
   it "fails with known OTP error" do
     stub_get("/authorizations/1", host).to_return(

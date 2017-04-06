@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe Github::Client::Authorizations, '#delete' do
   let(:basic_auth) { 'login:password' }
-  let(:host)       { "https://#{basic_auth}@api.github.com" }
+  let(:host)       { "https://api.github.com" }
 
   subject { described_class.new(basic_auth: basic_auth) }
 
