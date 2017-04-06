@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://<BASIC_AUTH>@api.github.com/user/keys?access_token=<TOKEN>
+    uri: https://api.github.com/user/keys?access_token=<TOKEN>
     body:
       encoding: US-ASCII
       string: ''
@@ -17,6 +17,8 @@ http_interactions:
       - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Authorization: Basic <%= Base64.encode64("foobarmostunique:foobazquxmostrighteous").chomp
+        %>
   response:
     status:
       code: 200
@@ -43,7 +45,7 @@ http_interactions:
       Last-Modified:
       - Wed, 23 Jan 2013 10:27:19 GMT
       Etag:
-      - ! '"35217ca008626c2edeb80604cf854530"'
+      - '"35217ca008626c2edeb80604cf854530"'
       X-Github-Media-Type:
       - github.v3; param=full; format=json
       X-Content-Type-Options:
@@ -55,10 +57,10 @@ http_interactions:
       Access-Control-Expose-Headers:
       - Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
       Access-Control-Allow-Origin:
-      - ! '*'
+      - "*"
     body:
       encoding: US-ASCII
-      string: ! '[]'
-    http_version: !!null 
+      string: "[]"
+    http_version: 
   recorded_at: Wed, 10 Apr 2013 21:32:32 GMT
 recorded_with: VCR 2.4.0
