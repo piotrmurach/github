@@ -8,7 +8,7 @@ gem 'rack', '< 2.0'
 group :development do
   gem 'cucumber', '~> 2.1'
   gem 'rspec',    '~> 2.14.1'
-  gem 'vcr',      '~> 2.6'
+  gem 'vcr',      '~> 3'
   gem 'webmock',  '~> 1.17.3'
   gem 'yard',     '~> 0.8.7'
   gem 'pry'
