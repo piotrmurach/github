@@ -1,4 +1,5 @@
 require 'vcr'
+require 'webmock/cucumber'
 
 VCR.configure do |conf|
   conf.hook_into :webmock
