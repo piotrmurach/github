@@ -55,7 +55,7 @@ module Github
         raise ArgumentError, "unknown http method: #{method}"
       end
 
-      puts "EXECUTED: #{action} - #{path} with PARAMS: #{params}" if ENV['DEBUG']
+      puts "EXECUTED: #{action} - #{path} with PARAMS: #{params.request_params}" if ENV['DEBUG']
 
       request_options    = params.options
       connection_options = current_options.merge(request_options)

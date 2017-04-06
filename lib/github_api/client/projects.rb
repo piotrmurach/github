@@ -3,11 +3,10 @@
 module Github
   # Projects API
   class Client::Projects < API
-    OPTIONS = {
-      headers: {
-        ACCEPT => 'application/vnd.github.inertia-preview+json'
-      }
+    HEADERS = {
+      ACCEPT => 'application/vnd.github.inertia-preview+json'
     }
+
 
     # Get properties for a single project
     #
@@ -22,7 +21,7 @@ module Github
       arguments(args, required: [:id])
 
       params = arguments.params
-      params['options'] = OPTIONS
+      params['headers'] = HEADERS
 
       get_request("/projects/#{arguments.id}", params)
     end
@@ -49,7 +48,7 @@ module Github
       arguments(args, required: [:id])
 
       params = arguments.params
-      params['options'] = OPTIONS
+      params['headers'] = HEADERS
 
       patch_request("/projects/#{arguments.id}",params)
     end
@@ -63,6 +62,9 @@ module Github
     # @api public
     def delete(*args)
       arguments(args, required: [:id])
+
+      params = arguments.params
+      params['headers'] = HEADERS
 
       delete_request("/projects/#{arguments.id}", arguments.params)
     end

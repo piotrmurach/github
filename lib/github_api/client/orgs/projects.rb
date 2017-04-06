@@ -2,10 +2,8 @@
 
 module Github
   class Client::Orgs::Projects < API
-    OPTIONS = {
-      headers: {
-        ACCEPT => 'application/vnd.github.inertia-preview+json'
-      }
+    HEADERS = {
+      ACCEPT => 'application/vnd.github.inertia-preview+json'
     }
 
     # List your organization projects
@@ -25,7 +23,7 @@ module Github
       arguments(args, required: [:org_name])
       params = arguments.params
 
-      params['options'] = OPTIONS
+      params['headers'] = HEADERS
 
       response = get_request("/orgs/#{arguments.org_name}/projects", params)
       return response unless block_given?
@@ -51,7 +49,7 @@ module Github
       end
       params = arguments.params
 
-      params['options'] = OPTIONS
+      params['headers'] = HEADERS
 
       post_request("/orgs/#{arguments.org_name}/projects", params)
     end

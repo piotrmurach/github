@@ -2,10 +2,8 @@
 
 module Github
   class Client::Repos::PubSubHubbub < API
-    OPTIONS = {
-      :headers => {
-        CONTENT_TYPE => 'application/x-www-form-urlencoded'
-      }
+    HEADERS = {
+      CONTENT_TYPE => 'application/x-www-form-urlencoded'
     }
 
     # Subscribe to existing topic/event through pubsubhubbub
@@ -29,7 +27,7 @@ module Github
     def subscribe(*args)
       params = arguments(args, required: [:topic, :callback]).params
       _merge_action!("subscribe", arguments.topic, arguments.callback, params)
-      params['options'] = OPTIONS
+      params['headers'] = HEADERS
 
       post_request("/hub", params)
     end
@@ -56,7 +54,7 @@ module Github
     def unsubscribe(*args)
       params = arguments(args, required: [:topic, :callback]).params
       _merge_action!("unsubscribe", arguments.topic, arguments.callback, params)
-      params['options'] = OPTIONS
+      params['headers'] = HEADERS
 
       post_request("/hub", params)
     end

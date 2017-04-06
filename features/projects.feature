@@ -25,3 +25,12 @@ Feature: Organizations API
     Then the response status should be 200
       And the response type should be JSON
       And the response should not be empty
+
+  Scenario: Delete a Project
+
+    Given I want delete resource with the following params:
+      | id     |
+      | 515967 |
+    When I make request within a cassette named "projects/delete"
+    Then the response status should be 204
+      And the response should be empty

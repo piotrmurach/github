@@ -2,10 +2,8 @@
 
 module Github
   class Client::Repos::Projects < API
-    OPTIONS = {
-      headers: {
-        ACCEPT => 'application/vnd.github.inertia-preview+json'
-      }
+    HEADERS = {
+      ACCEPT => 'application/vnd.github.inertia-preview+json'
     }
 
     # List a repo's projects
@@ -28,7 +26,7 @@ module Github
       arguments(args, required: [:owner, :repo])
       params = arguments.params
 
-      params['options'] = OPTIONS
+      params['headers'] = HEADERS
 
       response = get_request("/repos/#{arguments.owner}/#{arguments.repo}/projects", params)
       return response unless block_given?
@@ -53,7 +51,8 @@ module Github
         assert_required %w[ name ]
       end
       params = arguments.params
-      params['options'] = OPTIONS
+
+      params['headers'] = HEADERS
 
       post_request("/repos/#{arguments.owner}/#{arguments.repo}/projects", params)
     end
