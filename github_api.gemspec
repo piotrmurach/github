@@ -24,6 +24,10 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'descendants_tracker', '~> 0.0.4'
   gem.add_dependency 'mime-types',  '>= 1.16', '< 3.0'
 
-  gem.add_development_dependency 'bundler'
-  gem.add_development_dependency 'rake', '< 11.0'
+  gem.add_development_dependency 'bundler', '>= 1.5.0', '< 2.0'
+  gem.add_development_dependency 'rake',     '< 11.0'
+  gem.add_development_dependency 'cucumber', '~> 2.1'
+  gem.add_development_dependency 'rspec',    '~> 2.14.1'
+  gem.add_development_dependency 'vcr',      '~> 2.6'
+  gem.add_development_dependency 'webmock',  '~> 1.17.3'
 end
