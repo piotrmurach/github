@@ -81,7 +81,6 @@ module Github
     # @api public
     def create(*args)
       arguments(args, required: [:user, :repo, :sha]) do
-        permit VALID_COMMENT_OPTIONS
         assert_required REQUIRED_COMMENT_OPTIONS
       end
 

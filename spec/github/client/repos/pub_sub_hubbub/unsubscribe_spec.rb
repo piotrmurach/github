@@ -7,11 +7,11 @@ describe Github::Client::Repos::PubSubHubbub, '#unsubscribe' do
   let(:callback) { "github://campfire?subdomain=github&room=Commits&token=abc123" }
   let(:hub_inputs) {
     {
-       "hub.mode" => 'subscribe',
        "hub.topic" => topic,
        "hub.callback" => callback,
        "hub.verify"   => 'sync',
-       "hub.secret"   => ''
+       "hub.secret"   => '',
+       "hub.mode" => 'unsubscribe'
     }
   }
 
@@ -19,7 +19,7 @@ describe Github::Client::Repos::PubSubHubbub, '#unsubscribe' do
 
   before {
     subject.oauth_token = OAUTH_TOKEN
-    stub_post(request_path).with(hub_inputs.merge("hub.mode" => 'unsubscribe')).
+    stub_post(request_path).with(body: hub_inputs).
       to_return(:body => '[]', :status => status,
         :headers => {:content_type => "application/json; charset=utf-8"})
 
@@ -34,7 +34,7 @@ describe Github::Client::Repos::PubSubHubbub, '#unsubscribe' do
 
     it "should subscribe to hub" do
       subject.unsubscribe topic, callback
-      a_post("/hub?access_token=#{OAUTH_TOKEN}").with(hub_inputs).should have_been_made
+      a_post("/hub?access_token=#{OAUTH_TOKEN}").with(body: hub_inputs).should have_been_made
     end
   end
 
@@ -48,7 +48,7 @@ describe Github::Client::Repos::PubSubHubbub, '#unsubscribe' do
 #       stub_post("/hub?access_token=#{OAUTH_TOKEN}").with(hub_inputs.merge("hub.mode" => 'unsubscribe')).
 #         to_return(:body => '[]', :status => 404, :headers => {:content_type => "application/json; charset=utf-8"})
 #     end
-# 
+#
 #     it "should fail to subscribe to hub" do
 #       expect {
 #         subject.unsubscribe topic, callback

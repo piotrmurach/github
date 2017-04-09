@@ -29,7 +29,7 @@ describe Github::Client::Issues::Comments, '#edit' do
 
     it "should create resource successfully" do
       subject.edit user, repo, number, inputs
-      a_patch(request_path).with(inputs).should have_been_made
+      a_patch(request_path).with(body: inputs).should have_been_made
     end
 
     it "should return the resource" do

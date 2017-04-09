@@ -5,7 +5,7 @@ require 'spec_helper'
 RSpec.describe Github::Client::Authorizations, '#update' do
   let(:basic_auth) { 'login:password' }
   let(:request_path) { "/authorizations/#{authorization_id}" }
-  let(:host) { "https://#{basic_auth}@api.github.com" }
+  let(:host) { "https://api.github.com" }
   let(:authorization_id) { 1 }
   let(:inputs) { { :add_scopes => ['repo'] } }
 
@@ -27,7 +27,7 @@ RSpec.describe Github::Client::Authorizations, '#update' do
 
     it "should update resource successfully" do
       subject.update authorization_id, inputs
-      a_patch(request_path, host).with(inputs).should have_been_made
+      a_patch(request_path, host).with(body: inputs).should have_been_made
     end
 
     it "should return the resource" do

@@ -16,7 +16,7 @@ describe Github::Client::Repos, '#edit' do
   end
 
   before {
-    stub_patch(request_path).with(inputs).
+    stub_patch(request_path).with(body: inputs).
       to_return(:body => body, :status => status,
         :headers => { :content_type => "application/json; charset=utf-8"})
   }
@@ -39,7 +39,7 @@ describe Github::Client::Repos, '#edit' do
 
     it "should edit the resource" do
       subject.edit user, repo, inputs
-      a_patch(request_path).with(inputs).should have_been_made
+      a_patch(request_path).with(body: inputs).should have_been_made
     end
 
     it "should return resource" do

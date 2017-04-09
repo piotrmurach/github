@@ -18,7 +18,7 @@ RSpec.describe Github::Client::Orgs::Hooks, '#edit' do
   }
 
   before do
-    stub_patch(request_path).with(inputs.except(:unrelated)).
+    stub_patch(request_path).with(body: inputs.except(:unrelated)).
       to_return(body: body, status: status,
         headers: {content_type: "application/json; charset=utf-8"})
   end
@@ -51,7 +51,7 @@ RSpec.describe Github::Client::Orgs::Hooks, '#edit' do
 
     it "edits the resource" do
       subject.edit org, hook_id, inputs
-      expect(a_patch(request_path).with(inputs)).to have_been_made
+      expect(a_patch(request_path).with(body: inputs)).to have_been_made
     end
 
     it "returns resource" do

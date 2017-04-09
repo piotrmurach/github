@@ -18,7 +18,7 @@ RSpec.describe Github::Client::PullRequests::Reviews, "#update" do
   end
 
   before do
-    stub_post(request_path).with(inputs).to_return(
+    stub_post(request_path).with(body: inputs).to_return(
       body: body,
       status: status,
       headers: { content_type: "application/json; charset=utf-8" }
@@ -35,7 +35,7 @@ RSpec.describe Github::Client::PullRequests::Reviews, "#update" do
 
     it "updates resource successfully" do
       subject.update(user, repo, pr_number, number, inputs)
-      expect(a_post(request_path).with(inputs)).to have_been_made
+      expect(a_post(request_path).with(body: inputs)).to have_been_made
     end
 
     it "returns the resource" do

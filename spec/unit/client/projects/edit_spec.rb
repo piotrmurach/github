@@ -15,7 +15,7 @@ RSpec.describe Github::Client::Projects, '#edit' do
   }
 
   before do
-    stub_patch(request_path).with(inputs).
+    stub_patch(request_path).with(body: inputs).
       to_return(body: body, status: status,
       headers: {content_type: 'application/json; charset=utf-8'})
   end
@@ -29,7 +29,7 @@ RSpec.describe Github::Client::Projects, '#edit' do
 
     it "edits the resource" do
       subject.edit(project_id, inputs)
-      expect(a_patch(request_path).with(inputs)).to have_been_made
+      expect(a_patch(request_path).with(body: inputs)).to have_been_made
     end
 
     it "returns resource" do
@@ -38,12 +38,12 @@ RSpec.describe Github::Client::Projects, '#edit' do
     end
 
     it "retrieves information" do
-      project = subject.edit project_id
+      project = subject.edit project_id, inputs
       expect(project.name).to eq('Projects Documentation')
     end
   end
 
   it_should_behave_like 'request failure' do
-    let(:requestable) { subject.edit project_id }
+    let(:requestable) { subject.edit project_id, inputs }
   end
 end # edit

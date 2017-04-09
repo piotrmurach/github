@@ -7,7 +7,7 @@ RSpec.describe Github::Client::Orgs::Memberships, '#create' do
   let(:status) { 200 }
 
   before {
-    stub_put(request_path).with(inputs).
+    stub_put(request_path).with(body: inputs).
       to_return(body: body, status: status,
       headers: {content_type: 'application/json; charset=utf-8'})
   }

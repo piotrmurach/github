@@ -95,7 +95,7 @@ describe Github::Client::Repos, '#list' do
 
     it "should filter the parameters" do
       subject.list 'user' => user, :unknown => true
-      a_get(request_path).with({}).should have_been_made
+      a_get(request_path).with(body: {}).should have_been_made
     end
 
     it "should get the resources" do

@@ -10,13 +10,12 @@ describe Github::Client::GitData::Blobs, '#create' do
   let(:inputs) {
     {
       "content" => "Content of the blob",
-      "encoding" =>  "utf-8",
-      "unrelated" => 'giberrish'
+      "encoding" =>  "utf-8"
     }
   }
 
   before {
-    stub_post(request_path).with(inputs.except('unrelated')).
+    stub_post(request_path).with(body: inputs).
       to_return(:body => body, :status => status,
         :headers => {:content_type => "application/json; charset=utf-8"})
   }
@@ -43,7 +42,7 @@ describe Github::Client::GitData::Blobs, '#create' do
 
     it "should create resource successfully" do
       subject.create user, repo, inputs
-      a_post(request_path).with(inputs).should have_been_made
+      a_post(request_path).with(body: inputs).should have_been_made
     end
 
     it "should return the resource" do

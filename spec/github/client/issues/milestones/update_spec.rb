@@ -17,7 +17,7 @@ describe Github::Client::Issues::Milestones, '#update' do
   }
 
   before {
-    stub_patch(request_path).with(inputs).
+    stub_patch(request_path).with(body: inputs).
       to_return(:body => body, :status => status,
       :headers => {:content_type => "application/json; charset=utf-8"})
   }
@@ -36,7 +36,7 @@ describe Github::Client::Issues::Milestones, '#update' do
 
     it "should update resource successfully" do
       subject.update user, repo, number, inputs
-      a_patch(request_path).with(inputs).should have_been_made
+      a_patch(request_path).with(body: inputs).should have_been_made
     end
 
     it "should return the resource" do
