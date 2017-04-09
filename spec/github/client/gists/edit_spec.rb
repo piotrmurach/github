@@ -26,7 +26,7 @@ RSpec.describe Github::Client::Gists, '#edit' do
   }
 
   before {
-    stub_patch(request_path).with(inputs).
+    stub_patch(request_path).with(body: inputs).
       to_return(body: body, status: status,
       headers: {content_type: "application/json; charset=utf-8"})
   }
@@ -39,7 +39,7 @@ RSpec.describe Github::Client::Gists, '#edit' do
 
     it "edits resource successfully" do
       subject.edit(gist_id, inputs)
-      expect(a_patch(request_path).with(inputs)).to have_been_made
+      expect(a_patch(request_path).with(body: inputs)).to have_been_made
     end
 
     it "returns the resource" do

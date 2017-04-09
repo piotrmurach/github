@@ -17,7 +17,7 @@ RSpec.describe Github::Client::Orgs::Hooks, '#create' do
   }
 
   before {
-    stub_post(request_path).with(inputs.except('unrelated')).
+    stub_post(request_path).with(body: inputs.except('unrelated')).
       to_return(body: body, status: status,
         headers: {content_type: "application/json; charset=utf-8"})
   }
@@ -42,7 +42,7 @@ RSpec.describe Github::Client::Orgs::Hooks, '#create' do
 
     it "creates resource successfully" do
       subject.create org, inputs
-      expect(a_post(request_path).with(inputs)).to have_been_made
+      expect(a_post(request_path).with(body: inputs)).to have_been_made
     end
 
     it "returns the resource" do

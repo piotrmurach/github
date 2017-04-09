@@ -12,13 +12,12 @@ RSpec.describe Github::Error::UnprocessableEntity do
         "body" => "Please pull this in!",
         "head" => "noexist",
         "base" => "master",
-        "state" => "open",
-        'unrelated' => 'giberrish'
+        "state" => "open"
     }
   end
 
   def test_request(body='')
-    stub_post(request_path).with(inputs.except('unrelated')).
+    stub_post(request_path).with(body: inputs).
       to_return(body: body, status: 422, headers: {content_type: "application/json; charset=utf-8"})
   end
 

@@ -39,7 +39,7 @@ describe Github::Client::Repos::Merging, '#merge' do
 
     it "should merge resource successfully" do
       subject.merge user, repo, inputs
-      a_post(request_path).with(inputs).should have_been_made
+      a_post(request_path).with(body: inputs).should have_been_made
     end
 
     it "should return the resource" do

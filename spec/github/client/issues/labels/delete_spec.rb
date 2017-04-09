@@ -7,15 +7,9 @@ describe Github::Client::Issues::Labels, '#delete' do
   let(:repo)   { 'github' }
   let(:label_id) { 1 }
   let(:request_path) { "/repos/#{user}/#{repo}/labels/#{label_id}" }
-  let(:inputs) {
-    {
-      "name" => "API",
-      "color" => "FFFFFF",
-    }
-  }
 
   before {
-    stub_delete(request_path).with(inputs).
+    stub_delete(request_path).
       to_return(:body => body, :status => status,
       :headers => {:content_type => "application/json; charset=utf-8"})
   }

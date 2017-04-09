@@ -9,7 +9,7 @@ describe Github::Client::GitData::Trees, '#create' do
   let(:request_path) { "/repos/#{user}/#{repo}/git/trees" }
 
   before {
-    stub_post(request_path).with(inputs).
+    stub_post(request_path).with(body: inputs).
       to_return(:body => body, :status => status,
       :headers => {:content_type => "application/json; charset=utf-8"})
   }
@@ -41,7 +41,7 @@ describe Github::Client::GitData::Trees, '#create' do
 
     it "should create resource successfully" do
       subject.create user, repo, inputs
-      a_post(request_path).with(inputs).should have_been_made
+      a_post(request_path).with(body: inputs).should have_been_made
     end
 
     it "should return the resource" do

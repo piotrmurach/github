@@ -10,13 +10,12 @@ describe Github::Client::GitData::References, '#update' do
   let(:inputs) {
     {
       "sha" => "827efc6d56897b048c772eb4087f854f46256132",
-      "force" => true,
-      "unrelated" => 'giberrish'
+      "force" => true
     }
   }
 
   before {
-    stub_patch(request_path).with(inputs.except('unrelated')).
+    stub_patch(request_path).with(body: inputs).
       to_return(:body => body, :status => status,
         :headers => {:content_type => "application/json; charset=utf-8"})
   }
@@ -41,7 +40,7 @@ describe Github::Client::GitData::References, '#update' do
 
     it "should update resource successfully" do
       subject.update user, repo, ref, inputs
-      a_patch(request_path).with(inputs).should have_been_made
+      a_patch(request_path).with(body: inputs).should have_been_made
     end
 
     it "should return the resource" do

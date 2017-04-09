@@ -7,7 +7,8 @@ describe Github::Client::Repos::Comments, '#create' do
   let(:repo) { 'github' }
   let(:sha) { '23432dfosfsufd' }
   let(:inputs) do
-    { 'body' => 'web',
+    {
+      'body' => 'web',
       :commit_id => 1,
       :line => 1,
       :path => 'file1.txt',
@@ -16,7 +17,7 @@ describe Github::Client::Repos::Comments, '#create' do
   let(:request_path) { "/repos/#{user}/#{repo}/commits/#{sha}/comments" }
 
   before {
-    stub_post(request_path).with(inputs).
+    stub_post(request_path).with(body: inputs).
       to_return(:body => body, :status => status,
         :headers => {:content_type => "application/json; charset=utf-8"})
   }
@@ -39,7 +40,7 @@ describe Github::Client::Repos::Comments, '#create' do
 
     it "should create resource successfully" do
       subject.create user, repo, sha, inputs
-      a_post(request_path).with(inputs).should have_been_made
+      a_post(request_path).with(body: inputs).should have_been_made
     end
 
     it "should return the resource" do

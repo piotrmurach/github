@@ -5,7 +5,7 @@ require 'spec_helper'
 RSpec.describe Github::Client::Authorizations, '#list' do
   let(:basic_auth) { 'login:password' }
   let(:request_path) { "/authorizations" }
-  let(:host) { "https://#{basic_auth}@api.github.com" }
+  let(:host) { "https://api.github.com" }
 
   subject { described_class.new(basic_auth: basic_auth) }
 
