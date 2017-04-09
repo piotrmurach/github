@@ -6,8 +6,8 @@ Feature: Projects API
   Scenario: List
 
     Given I want to list resources with the following params:
-      | user         | repo           |
-      | samphilipd   | github         |
+      | user   | repo   |
+      | murek  | github_api_test |
     When I make request within a cassette named "repos/projects/list"
     Then the response status should be 200
       And the response type should be JSON
@@ -16,8 +16,8 @@ Feature: Projects API
   Scenario: Create
 
     Given I want create resource with the following params:
-      | user         | repo           |
-      | samphilipd   | github         |
+      | user  | repo            |
+      | murek | github_api_test |
     And I pass the following request options:
       | name                   | body                                                    |
       | Projects Documentation | Developer documentation project for the developer site. |
