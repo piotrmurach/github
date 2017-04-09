@@ -1,10 +1,10 @@
 require 'faraday'
 require 'set'
 
-# First saw on octokit, then copied from lostisland/faraday_middleware 
+# First saw on octokit, then copied from lostisland/faraday_middleware
 # and adapted for this library.
 #
-# faraday_middleware/lib/faraday_middleware/response/follow_redirects.rb 
+# faraday_middleware/lib/faraday_middleware/response/follow_redirects.rb
 
 module Github
   # Public: Exception thrown when the maximum amount of requests is exceeded.
@@ -35,7 +35,7 @@ module Github
   #     faraday.use :cookie_jar
   #     faraday.adapter Faraday.default_adapter
   #   end
-  
+
   class Response::FollowRedirects < Faraday::Middleware
     # HTTP methods for which 30x redirects can be followed
     ALLOWED_METHODS = Set.new [:head, :options, :get, :post, :put, :patch, :delete]

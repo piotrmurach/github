@@ -11,6 +11,7 @@ group :development do
   gem 'vcr',      '~> 2.6'
   gem 'webmock',  '~> 1.17.3'
   gem 'yard',     '~> 0.8.7'
+  gem 'pry'
 end
 
 group :metrics do
