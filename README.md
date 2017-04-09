@@ -705,9 +705,27 @@ github.delete 'username', 'tome-of-knowledge', 'full_path_to/file.ext',
 
 The test suite is split into two groups, `live` and `mock`.
 
-The `live` tests are the ones in `features` folder and they simply exercise the GitHub API by making live requests and then being cached with VCR in directory named `features\cassettes`. For details on how to get set up, please navigate to the `features` folder.
+The `live` tests are in the `features` folder and exercise the GitHub API directly by making live requests and then caching responses with VCR in directory named `features\cassettes`. For details on how to get set up, please navigate to the `features` folder.
 
-The `mock` tests are in the `spec` directory and their primary concern is to test the gem internals without the hindrance of external calls.
+To run all feature tests do:
+
+```ruby
+bundle exec rake features
+```
+
+The `mock` tests are in the `spec` folder and their primary concern is to test the gem internals without the hindrance of external calls.
+
+To run all specs do:
+
+```ruby
+bundle exec rake spec
+```
+
+Finally to run all tests do:
+
+```ruby
+bundle exec rake
+```
 
 ## Development
 
