@@ -12,7 +12,6 @@ VCR.configure do |conf|
   conf.filter_sensitive_data('<EMAIL>') { SETTINGS['email'] }
   conf.filter_sensitive_data('<TOKEN>') { SETTINGS['oauth_token'] }
   conf.filter_sensitive_data('<BASIC_AUTH>') { SETTINGS['basic_auth'] }
-  conf.filter_sensitive_data('<USER>') { SETTINGS['user'] }
   conf.debug_logger = File.open('test.log', 'w')
 end
 
