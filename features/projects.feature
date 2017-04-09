@@ -1,4 +1,4 @@
-Feature: Organizations API
+Feature: Projects API
 
   Background:
     Given I have "Github::Client::Projects" instance
