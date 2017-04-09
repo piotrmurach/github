@@ -1,3 +1,4 @@
+# encoding: utf-8
 # frozen_string_literal: true
 
 module Github
@@ -22,7 +23,7 @@ module Github
 
       get_request("/projects/#{arguments.id}", params)
     end
-    alias_method :find, :get
+    alias find get
 
     # Edit a project
     #
@@ -47,7 +48,7 @@ module Github
 
       params["accept"] ||= PREVIEW_MEDIA
 
-      patch_request("/projects/#{arguments.id}",params)
+      patch_request("/projects/#{arguments.id}", params)
     end
 
     # Delete a project
@@ -65,6 +66,6 @@ module Github
 
       delete_request("/projects/#{arguments.id}", arguments.params)
     end
-    alias :remove :delete
+    alias remove delete
   end # Projects
 end # Github
