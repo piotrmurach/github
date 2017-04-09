@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe Github::Client::Authorizations, '#create' do
   let(:basic_auth)   { 'login:password' }
-  let(:host)         { "https://#{basic_auth}@api.github.com" }
+  let(:host)         { "https://api.github.com" }
   let(:inputs)       { {scopes: ['repo'], note: 'admin script' } }
   let(:request_path) { "/authorizations" }
 
@@ -26,7 +26,7 @@ describe Github::Client::Authorizations, '#create' do
 
     it "creates resource successfully" do
       subject.create inputs
-      a_post(request_path, host).with(inputs).should have_been_made
+      a_post(request_path, host).with(body: inputs).should have_been_made
     end
 
     it "returns the resource" do

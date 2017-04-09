@@ -29,7 +29,7 @@ describe Github::Client::Repos, '#contributors' do
 
     it 'filters out unknown parameters' do
       subject.contributors user, repo, :unknown => true
-      a_get(request_path).with({}).should have_been_made
+      a_get(request_path).with(body: {}).should have_been_made
     end
 
     it "should find resources" do

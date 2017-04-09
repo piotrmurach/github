@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe Github::Client::Authorizations::App, '#create' do
   let(:basic_auth) { 'login:password' }
-  let(:host)       { "https://#{basic_auth}@api.github.com" }
+  let(:host)       { "https://api.github.com" }
   let(:inputs)     { { :scopes => ['repo'] } }
   let(:request_path) { "/authorizations/clients/#{client_id}" }
 

@@ -19,7 +19,7 @@ describe Github::Client::Repos::PubSubHubbub, '#subscribe' do
 
   before {
     subject.oauth_token = OAUTH_TOKEN
-    stub_post(request_path).with(hub_inputs).
+    stub_post(request_path).with(body: hub_inputs).
       to_return(:body => '[]', :status => status,
         :headers => {:content_type => "application/json; charset=utf-8"})
 
@@ -36,7 +36,7 @@ describe Github::Client::Repos::PubSubHubbub, '#subscribe' do
 
     it "subscribes to hub" do
       subject.subscribe topic, callback
-      a_post("/hub?access_token=#{OAUTH_TOKEN}").with(hub_inputs).should have_been_made
+      a_post("/hub?access_token=#{OAUTH_TOKEN}").with(body: hub_inputs).should have_been_made
     end
   end
 

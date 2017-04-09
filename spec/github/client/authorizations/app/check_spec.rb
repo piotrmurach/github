@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe Github::Client::Authorizations::App, '#check' do
   let(:basic_auth) { 'login:password' }
-  let(:host)       { "https://#{basic_auth}@api.github.com" }
+  let(:host)       { "https://api.github.com" }
   let(:request_path) { "/applications/#{client_id}/tokens/#{access_token}" }
   let(:client_id) { 1 }
   let(:access_token) { 'abc123' }

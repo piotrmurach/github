@@ -15,13 +15,12 @@ RSpec.describe Github::Client::PullRequests::Reviews, "#create" do
       "commit_id"   => "6dcb09b5b57875f334f61aebed695e2e4193db5e",
       "path"        => "file1.txt",
       "position"    => 4,
-      "in_reply_to" => 4,
-      "unrelated"   => "giberrish"
+      "in_reply_to" => 4
     }
   end
 
   before do
-    stub_post(request_path).with(inputs.except("unrelated")).to_return(
+    stub_post(request_path).with(body: inputs).to_return(
         body: body,
         status: status,
         headers: { content_type: "application/json; charset=utf-8" }
@@ -42,7 +41,7 @@ RSpec.describe Github::Client::PullRequests::Reviews, "#create" do
 
     it "creates resource successfully" do
       subject.create user, repo, number, inputs
-      expect(a_post(request_path).with(inputs)).to have_been_made
+      expect(a_post(request_path).with(body: inputs)).to have_been_made
     end
 
     it "returns the resource" do

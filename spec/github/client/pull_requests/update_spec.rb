@@ -11,13 +11,12 @@ RSpec.describe Github::Client::PullRequests, '#update' do
     {
       "title" => "new title",
       "body" => "updated body",
-      "state" => "open",
-      "unrelated" => true
+      "state" => "open"
     }
   }
 
   before {
-    stub_patch(request_path).with(inputs.except('unrelated')).
+    stub_patch(request_path).with(body: inputs).
       to_return(:body => body, :status => status,
       :headers => {:content_type => "application/json; charset=utf-8"})
   }
@@ -34,7 +33,7 @@ RSpec.describe Github::Client::PullRequests, '#update' do
 
     it "should create resource successfully" do
       subject.update user, repo, number, inputs
-      expect(a_patch(request_path).with(inputs)).to have_been_made
+      expect(a_patch(request_path).with(body: inputs)).to have_been_made
     end
 
     it "should return the resource" do

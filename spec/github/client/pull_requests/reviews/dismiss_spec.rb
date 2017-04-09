@@ -16,7 +16,7 @@ RSpec.describe Github::Client::PullRequests::Reviews, "#dismiss" do
 
   before do
     stub_put(request_path).to_return(
-      message: message,
+      body: { message: message }.to_json,
       status: status,
       headers: { content_type: "application/json; charset=utf-8" }
     )
