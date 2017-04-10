@@ -7,7 +7,7 @@ Feature: Projects Columns API
 
     Given I want to list resource with the following params:
       | project_id |
-      | 525658     |
+      | 524103     |
     When I make request within a cassette named "projects/columns/list"
     Then the response status should be 200
       And the response type should be JSON
@@ -17,7 +17,7 @@ Feature: Projects Columns API
 
     Given I want to get resource with the following params:
       | column_id |
-      | 890044    |
+      | 887705    |
     When I make request within a cassette named "projects/columns/get"
     Then the response status should be 200
       And the response type should be JSON
@@ -27,7 +27,7 @@ Feature: Projects Columns API
 
     Given I want to create resource with the following params:
       | project_id |
-      | 525658     |
+      | 524103     |
     And I pass the following request options:
       | name                   |
       | New column             |
@@ -40,10 +40,10 @@ Feature: Projects Columns API
 
     Given I want to update resource with the following params:
       | column_id |
-      | 890044    |
+      | 887705    |
     And I pass the following request options:
       | name                   |
-      | Updated name           |
+      | To Do                  |
     When I make request within a cassette named "projects/columns/update"
     Then the response status should be 200
       And the response type should be JSON
@@ -53,10 +53,10 @@ Feature: Projects Columns API
 
     Given I want to move resource with the following params:
       | column_id |
-      | 890044    |
+      | 887706    |
     And I pass the following request options:
       | position            |
-      | after:890048        |
+      | after:887708        |
     When I make request within a cassette named "projects/columns/move"
     Then the response status should be 201
       And the response type should be JSON
@@ -66,7 +66,7 @@ Feature: Projects Columns API
 
     Given I want to delete resource with the following params:
       | column_id |
-      | 890044    |
+      | 895044    |
     When I make request within a cassette named "projects/columns/delete"
     Then the response status should be 204
       And the response should be empty

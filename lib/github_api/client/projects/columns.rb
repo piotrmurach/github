@@ -92,6 +92,7 @@ module Github
 
       patch_request("/projects/columns/#{arguments.column_id}", params)
     end
+    alias edit update
 
     # Delete a project column
     #
@@ -110,6 +111,7 @@ module Github
 
       delete_request("/projects/columns/#{arguments.column_id}", params)
     end
+    alias remove delete
 
     # Move a project column
     #
