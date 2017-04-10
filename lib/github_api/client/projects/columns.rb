@@ -3,7 +3,7 @@
 
 module Github
   class Client::Projects::Columns < API
-    PREVIEW_MEDIA = "application/vnd.github.inertia-preview+json".freeze # :nodoc:
+    PREVIEW_MEDIA = "application/vnd.github.inertia-preview+json" # :nodoc:
     REQUIRED_COLUMN_PARAMS = %w(name).freeze
     REQUIRED_MOVE_COLUMN_PARAMS = %w(position).freeze
 
