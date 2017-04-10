@@ -6,6 +6,12 @@ module Github
   class Client::Projects < API
     PREVIEW_MEDIA = "application/vnd.github.inertia-preview+json".freeze # :nodoc:
 
+    require_all 'github_api/client/projects',
+                'columns'
+
+    # Access to Projects::Columns API
+    namespace :columns
+
     # Get properties for a single project
     #
     # @see https://developer.github.com/v3/projects/#get-a-project

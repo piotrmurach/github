@@ -53,6 +53,8 @@ module Github
     namespace :orgs
     alias :organizations :orgs
 
+    namespace :projects
+
     namespace :pull_requests
     alias :pulls :pull_requests
 
