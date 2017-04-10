@@ -11,7 +11,7 @@ RSpec.describe Github::Error::InvalidOptions do
     end
 
     it 'contains the summary in the message' do
-      expect(error.message).to include "Github gem checks the request parameters passed to ensure that github api is not hit unnecessairly and to fail fast."
+      expect(error.message).to include "Github gem checks the request parameters passed to ensure that github api is not hit unnecessarily and to fail fast."
     end
 
     it 'contains the resolution in the message' do

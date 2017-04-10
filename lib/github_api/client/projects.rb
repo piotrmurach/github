@@ -4,7 +4,7 @@
 module Github
   # Projects API
   class Client::Projects < API
-    PREVIEW_MEDIA = "application/vnd.github.inertia-preview+json".freeze # :nodoc:
+    PREVIEW_MEDIA = "application/vnd.github.inertia-preview+json" # :nodoc:
 
     require_all 'github_api/client/projects',
                 'columns'
