@@ -1,3 +1,8 @@
+AllCops:
+  TargetRubyVersion: 2.4
+
 Style/StringLiterals:
   Enabled: false
 
+Style/ClassAndModuleChildren:
+  Enabled: false
