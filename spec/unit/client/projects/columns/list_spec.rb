@@ -22,7 +22,7 @@ describe Github::Client::Repos::Projects, '#list' do
   after { reset_authentication_for(subject) }
 
   context "resource found" do
-    let(:body)   { fixture('repos/projects.json') }
+    let(:body)   { fixture('projects/columns/columns.json') }
     let(:status) { 200 }
 
     it { expect(subject).to respond_to :all }
@@ -43,8 +43,8 @@ describe Github::Client::Repos::Projects, '#list' do
     end
 
     it "should get project information" do
-      projects = subject.list user, repo
-      expect(projects.first.name).to eq 'Projects Documentation'
+      columns = subject.list user, repo
+      expect(columns.first.name).to eq 'To Do'
     end
 
     it "should yield to a block" do

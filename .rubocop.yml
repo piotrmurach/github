@@ -4,5 +4,8 @@ AllCops:
 Style/StringLiterals:
   Enabled: false
 
+Metrics/BlockLength:
+  Enabled: false
+
 Style/ClassAndModuleChildren:
   Enabled: false
