@@ -1,5 +1,19 @@
 # Change log
 
+## [v0.17.0] - 2017-04-xx
+
+### Added
+* Add Projects API (@samphilipd)
+* Add Project Columns API (@samphilipd)
+* Add Project Cards API (@samphilipd)
+
+### Changed
+* Change Normalizer to remove unnecessary branch condition (@samphilipd)
+
+### Fixed
+* Fix ServiceError to account for non Hash type error message (@samphilipd)
+* Remove :content_type key from ParamsHash as clashes with reponse payload (@samphilipd)
+
 ## [v0.16.0] - 2017-04-02
 
 ### Added
