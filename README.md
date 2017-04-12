@@ -2,7 +2,7 @@
   <a href="http://piotrmurach.github.io/github/"><img width="136" src="https://github.com/piotrmurach/github/raw/master/icons/github_api.png" alt="github api logo" /></a>
 </div>
 
-# GithubAPI
+# GithubAPI [![Gitter](https://badges.gitter.im/Join%20Chat.svg)][gitter]
 
 [![Gem Version](https://badge.fury.io/rb/github_api.svg)][gem]
 [![Build Status](https://secure.travis-ci.org/piotrmurach/github.svg?branch=master)][travis]
@@ -11,6 +11,7 @@
 [![Inline docs](http://inch-ci.org/github/piotrmurach/github.svg)][inchpages]
 [![Dependency Status](https://gemnasium.com/piotrmurach/github.svg?travis)][gemnasium]
 
+[gitter]: https://gitter.im/piotrmurach/github_api
 [gem]: http://badge.fury.io/rb/github_api
 [travis]: http://travis-ci.org/piotrmurach/github
 [codeclimate]: https://codeclimate.com/github/piotrmurach/github
