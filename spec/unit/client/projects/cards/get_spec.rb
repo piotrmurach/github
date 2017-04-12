@@ -9,8 +9,9 @@ RSpec.describe Github::Client::Projects::Cards, '#get' do
   let(:status) { 200 }
 
   before do
-    stub_get(request_path).to_return(body: body, status: status,
-                                     headers: { content_type: "application/json; charset=utf-8" })
+    stub_get(request_path).
+      to_return(body: body, status: status,
+                headers: { content_type: "application/json; charset=utf-8" })
   end
 
   after { reset_authentication_for(subject) }

@@ -14,9 +14,9 @@ describe Github::Client::Projects::Cards, '#create' do
 
   before do
     subject.oauth_token = OAUTH_TOKEN
-    stub_post(request_path).with(body: inputs)
-                           .to_return(body: body, status: status,
-                                      headers: { content_type: "application/json; charset=utf-8" })
+    stub_post(request_path).with(body: inputs).
+      to_return(body: body, status: status,
+                headers: { content_type: "application/json; charset=utf-8" })
   end
 
   after { reset_authentication_for subject }
@@ -28,17 +28,17 @@ describe Github::Client::Projects::Cards, '#create' do
     context "for the authenticated user" do
       let(:request_path) { "/projects/columns/#{column_id}/cards?access_token=#{OAUTH_TOKEN}" }
 
-      it "should create resource" do
+      it "creates resource" do
         subject.create column_id, inputs
         a_post(request_path).with(body: inputs).should have_been_made
       end
 
-      it "should return the resource" do
+      it "returns the resource" do
         card = subject.create column_id, inputs
         expect(card.note).to eq 'Add payload for delete Project column'
       end
 
-      it "should return mash type" do
+      it "returns mash type" do
         card = subject.create column_id, inputs
         expect(card).to be_a Github::ResponseWrapper
       end

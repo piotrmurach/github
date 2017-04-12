@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Client::Projects::Cards, '#list' do
+RSpec.describe Github::Client::Projects::Cards, '#list' do
   let(:column_id) { 367 }
   let(:request_path) { "/projects/columns/#{column_id}/cards" }
 

@@ -14,9 +14,9 @@ RSpec.describe Github::Client::Projects::Cards, '#update' do
   end
 
   before do
-    stub_patch(request_path).with(body: inputs)
-                            .to_return(body: body, status: status,
-                                       headers: { content_type: 'application/json; charset=utf-8' })
+    stub_patch(request_path).with(body: inputs).
+      to_return(body: body, status: status,
+                headers: { content_type: 'application/json; charset=utf-8' })
   end
 
   after { reset_authentication_for(subject) }
