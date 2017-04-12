@@ -102,6 +102,7 @@ module Github
 
       patch_request("/projects/columns/cards/#{arguments.card_id}", params)
     end
+    alias edit update
 
     # Delete a project card
     #
