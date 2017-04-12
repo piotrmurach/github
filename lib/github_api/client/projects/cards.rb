@@ -2,14 +2,14 @@
 # encoding: utf-8
 
 module Github
-  class Client::Projects::Columns::Cards < API
+  class Client::Projects::Cards < API
     REQUIRED_MOVE_CARD_PARAMS = %w(position).freeze
 
     # List project cards for a column
     #
     # @example
     #  github = Github.new
-    #  github.projects.columns.cards.list :column_id
+    #  github.projects.cards.list :column_id
     #
     # @see https://developer.github.com/v3/projects/cards/#list-project-cards
     #
@@ -20,7 +20,10 @@ module Github
 
       params["accept"] ||= ::Github::Client::Projects::PREVIEW_MEDIA
 
-      get_request("/projects/columns/#{arguments.column_id}/cards", params)
+      response = get_request("/projects/columns/#{arguments.column_id}/cards", params)
+
+      return response unless block_given?
+      response.each { |el| yield el }
     end
     alias all list
 
@@ -28,7 +31,7 @@ module Github
     #
     # @example
     #  github = Github.new
-    #  github.projects.columns.cards.get :card_id
+    #  github.projects.cards.get :card_id
     #
     # @see https://developer.github.com/v3/projects/cards/#get-a-project-card
     #
@@ -58,11 +61,11 @@ module Github
     #
     # @example
     #  github = Github.new
-    #  github.projects.columns.cards.create :column_id, note: 'Card Note'
+    #  github.projects.cards.create :column_id, note: 'Card Note'
     #
     # @example
     # github = Github.new
-    # github.projects.columns.cards.create :column_id, id: <content-id>, content_type: 'content-type'
+    # github.projects.cards.create :column_id, id: <content-id>, content_type: 'content-type'
     #
     # @see https://developer.github.com/v3/projects/cards/#create-a-project-card
     #
@@ -86,7 +89,7 @@ module Github
     #
     # @example
     #   github = Github.new
-    #   github.projects.columns.cards.update :card_id, note: 'New card note'
+    #   github.projects.cards.update :card_id, note: 'New card note'
     #
     # @see https://developer.github.com/v3/projects/cards/#update-a-project-card
     #
@@ -104,7 +107,7 @@ module Github
     #
     # @example
     #   github = Github.new
-    #   github.projects.columns.cards.delete :card_id
+    #   github.projects.cards.delete :card_id
     #
     # @see https://developer.github.com/v3/projects/cards/#delete-a-project-card
     #
@@ -117,6 +120,7 @@ module Github
 
       delete_request("/projects/columns/cards/#{arguments.card_id}", params)
     end
+    alias remove delete
 
     # Move a project card
     #
@@ -128,11 +132,11 @@ module Github
     #
     # @example
     #  github = Github.new
-    #  github.projects.columns.cards.move :card_id, position: 'bottom'
+    #  github.projects.cards.move :card_id, position: 'bottom'
     #
     # @example
     #  github = Github.new
-    #  github.projects.columns.cards.move :card_id, position: 'after:<card-id>', column_id: <column-id>
+    #  github.projects.cards.move :card_id, position: 'after:<card-id>', column_id: <column-id>
     #
     # @see https://developer.github.com/v3/projects/cards/#move-a-project-card
     #

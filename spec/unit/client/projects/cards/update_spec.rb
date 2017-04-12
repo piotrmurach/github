@@ -2,14 +2,14 @@
 
 require 'spec_helper'
 
-RSpec.describe Github::Client::Projects::Columns, '#update' do
-  let(:column_id)    { 367 }
-  let(:request_path) { "/projects/columns/#{column_id}" }
-  let(:body) { fixture("projects/columns/column.json") }
+RSpec.describe Github::Client::Projects::Cards, '#update' do
+  let(:card_id)    { 1478 }
+  let(:request_path) { "/projects/columns/cards/#{card_id}" }
+  let(:body) { fixture("projects/cards/card.json") }
   let(:status) { 200 }
   let(:inputs) do
     {
-      "name" => 'To Do'
+      "note" => 'Add payload for delete Project column'
     }
   end
 
@@ -29,22 +29,22 @@ RSpec.describe Github::Client::Projects::Columns, '#update' do
     end
 
     it "updates the resource" do
-      subject.update(column_id, inputs)
+      subject.update(card_id, inputs)
       expect(a_patch(request_path).with(body: inputs)).to have_been_made
     end
 
     it "returns resource" do
-      column = subject.update column_id, inputs
-      expect(column).to be_a Github::ResponseWrapper
+      card = subject.update card_id, inputs
+      expect(card).to be_a Github::ResponseWrapper
     end
 
     it "retrieves information" do
-      column = subject.update column_id, inputs
-      expect(column.name).to eq('To Do')
+      card = subject.update card_id, inputs
+      expect(card.note).to eq('Add payload for delete Project column')
     end
   end
 
   it_should_behave_like 'request failure' do
-    let(:requestable) { subject.update column_id, inputs }
+    let(:requestable) { subject.update card_id, inputs }
   end
 end # update

@@ -7,10 +7,14 @@ module Github
     PREVIEW_MEDIA = "application/vnd.github.inertia-preview+json" # :nodoc:
 
     require_all 'github_api/client/projects',
-                'columns'
+                'columns',
+                'cards'
 
     # Access to Projects::Columns API
     namespace :columns
+
+    # Access to Projects::Cards API
+    namespace :cards
 
     # Get properties for a single project
     #

@@ -1,7 +1,7 @@
 Feature: Projects Cards API
 
   Background:
-    Given I have "Github::Client::Projects::Columns::Cards" instance
+    Given I have "Github::Client::Projects::Cards" instance
 
   Scenario: List
 

@@ -6,12 +6,6 @@ module Github
     REQUIRED_COLUMN_PARAMS = %w(name).freeze
     REQUIRED_MOVE_COLUMN_PARAMS = %w(position).freeze
 
-    require_all 'github_api/client/projects/columns',
-                'cards'
-
-    # Access to Projects::Cards API
-    namespace :cards
-
     # List a project's columns
     #
     # @example
@@ -27,7 +21,10 @@ module Github
 
       params["accept"] ||= ::Github::Client::Projects::PREVIEW_MEDIA
 
-      get_request("/projects/#{arguments.project_id}/columns", params)
+      response = get_request("/projects/#{arguments.project_id}/columns", params)
+
+      return response unless block_given?
+      response.each { |el| yield el }
     end
     alias all list
 

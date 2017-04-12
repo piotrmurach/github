@@ -9,4 +9,6 @@ describe Github::Client::Projects do
   subject(:client) { object.new }
 
   it { expect(client.columns).to be_a Github::Client::Projects::Columns }
+
+  it { expect(client.cards).to be_a Github::Client::Projects::Cards }
 end
