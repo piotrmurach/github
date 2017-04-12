@@ -137,7 +137,12 @@ module Github
         elsif data[:errors]
           message = "\nErrors:\n"
           message << data[:errors].map do |error|
-            "Error: #{error.map { |k, v| "#{k}: #{v}" }.join(', ')}"
+            case error
+            when Hash
+              "Error: #{error.map { |k, v| "#{k}: #{v}" }.join(', ')}"
+            else
+              "Error: #{error}"
+            end
           end.join("\n")
         end
       end

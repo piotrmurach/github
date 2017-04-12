@@ -55,6 +55,13 @@ end
 
 When /^I pass the following request options:$/ do |table|
   table.hashes.each do |options|
+    options.each do |k, v|
+      begin
+        options[k] = Integer(v) # Github API requires Integers in data to be sent as literal integers
+      rescue ArgumentError
+        next
+      end
+    end
     @options = options
   end
 end

@@ -9,7 +9,7 @@ module Github
     include Normalizer
     include MimeType
 
-    REQUEST_PARAMS = [:accept, :media, :data, :raw, :content_type, :headers]
+    REQUEST_PARAMS = [:accept, :media, :data, :raw, :headers]
 
     def initialize(hash)
       super(normalize!(Hash[hash]))
@@ -70,9 +70,6 @@ module Github
       headers = fetch('headers', {})
       if value = accept
         headers[:accept] = value
-      end
-      if self['content_type']
-        headers[:content_type] = self['content_type']
       end
       opts[:raw]     = key?('raw') ? self['raw'] : false
       opts[:headers] = headers unless headers.empty?

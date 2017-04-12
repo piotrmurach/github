@@ -3,9 +3,14 @@
 
 module Github
   class Client::Projects::Columns < API
-    PREVIEW_MEDIA = "application/vnd.github.inertia-preview+json" # :nodoc:
     REQUIRED_COLUMN_PARAMS = %w(name).freeze
     REQUIRED_MOVE_COLUMN_PARAMS = %w(position).freeze
+
+    require_all 'github_api/client/projects/columns',
+                'cards'
+
+    # Access to Projects::Cards API
+    namespace :cards
 
     # List a project's columns
     #
@@ -20,7 +25,7 @@ module Github
       arguments(args, required: [:project_id])
       params = arguments.params
 
-      params["accept"] ||= PREVIEW_MEDIA
+      params["accept"] ||= ::Github::Client::Projects::PREVIEW_MEDIA
 
       get_request("/projects/#{arguments.project_id}/columns", params)
     end
@@ -39,7 +44,7 @@ module Github
       arguments(args, required: [:column_id])
       params = arguments.params
 
-      params["accept"] ||= PREVIEW_MEDIA
+      params["accept"] ||= ::Github::Client::Projects::PREVIEW_MEDIA
 
       get_request("/projects/columns/#{arguments.column_id}", params)
     end
@@ -64,7 +69,7 @@ module Github
       end
       params = arguments.params
 
-      params["accept"] ||= PREVIEW_MEDIA
+      params["accept"] ||= ::Github::Client::Projects::PREVIEW_MEDIA
 
       post_request("/projects/#{arguments.project_id}/columns", params)
     end
@@ -88,7 +93,7 @@ module Github
       end
       params = arguments.params
 
-      params["accept"] ||= PREVIEW_MEDIA
+      params["accept"] ||= ::Github::Client::Projects::PREVIEW_MEDIA
 
       patch_request("/projects/columns/#{arguments.column_id}", params)
     end
@@ -107,7 +112,7 @@ module Github
       arguments(args, required: [:column_id])
       params = arguments.params
 
-      params["accept"] ||= PREVIEW_MEDIA
+      params["accept"] ||= ::Github::Client::Projects::PREVIEW_MEDIA
 
       delete_request("/projects/columns/#{arguments.column_id}", params)
     end
@@ -134,7 +139,7 @@ module Github
       end
       params = arguments.params
 
-      params["accept"] ||= PREVIEW_MEDIA
+      params["accept"] ||= ::Github::Client::Projects::PREVIEW_MEDIA
 
       post_request("/projects/columns/#{arguments.column_id}/moves", params)
     end

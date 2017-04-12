@@ -62,8 +62,8 @@ RSpec.describe Github::ParamsHash do
   context 'when content_type' do
     let(:hash) { {content_type: 'application/octet-stream'} }
 
-    it 'extracts content_type key' do
-      expect(params.options[:headers]).to eql(hash)
+    it 'does not extract content_type key' do
+      expect(params.options[:headers]).to be_nil
     end
   end
 
