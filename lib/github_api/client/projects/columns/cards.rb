@@ -9,7 +9,7 @@ module Github
     #
     # @example
     #  github = Github.new
-    #  github.projects.cards.list :column_id
+    #  github.projects.columns.cards.list :column_id
     #
     # @see https://developer.github.com/v3/projects/cards/#list-project-cards
     #
@@ -28,7 +28,7 @@ module Github
     #
     # @example
     #  github = Github.new
-    #  github.projects.cards.get :card_id
+    #  github.projects.columns.cards.get :card_id
     #
     # @see https://developer.github.com/v3/projects/cards/#get-a-project-card
     #
@@ -58,11 +58,11 @@ module Github
     #
     # @example
     #  github = Github.new
-    #  github.projects.cards.create :column_id, note: 'Card Note'
+    #  github.projects.columns.cards.create :column_id, note: 'Card Note'
     #
     # @example
     # github = Github.new
-    # github.projects.cards.create :column_id, id: <content-id>, content_type: 'content-type'
+    # github.projects.columns.cards.create :column_id, id: <content-id>, content_type: 'content-type'
     #
     # @see https://developer.github.com/v3/projects/cards/#create-a-project-card
     #
@@ -86,7 +86,7 @@ module Github
     #
     # @example
     #   github = Github.new
-    #   github.repos.projects.update :card_id, note: 'New card note'
+    #   github.projects.columns.cards.update :card_id, note: 'New card note'
     #
     # @see https://developer.github.com/v3/projects/cards/#update-a-project-card
     #
@@ -104,7 +104,7 @@ module Github
     #
     # @example
     #   github = Github.new
-    #   github.projects.columns.delete :card_id
+    #   github.projects.columns.cards.delete :card_id
     #
     # @see https://developer.github.com/v3/projects/cards/#delete-a-project-card
     #
@@ -128,11 +128,11 @@ module Github
     #
     # @example
     #  github = Github.new
-    #  github.projects.columns.move :card_id, position: 'bottom'
+    #  github.projects.columns.cards.move :card_id, position: 'bottom'
     #
     # @example
     #  github = Github.new
-    #  github.projects.columns.move :card_id, position: 'after:<card-id>', column_id: <column-id>
+    #  github.projects.columns.cards.move :card_id, position: 'after:<card-id>', column_id: <column-id>
     #
     # @see https://developer.github.com/v3/projects/cards/#move-a-project-card
     #
