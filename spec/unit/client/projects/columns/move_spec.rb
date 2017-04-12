@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Client::Projects::Columns, '#move' do
+RSpec.describe Github::Client::Projects::Columns, '#move' do
   let(:column_id) { 367 }
   let(:request_path) { "/projects/columns/#{column_id}/moves" }
   let(:body) { '' }
@@ -14,18 +14,19 @@ describe Github::Client::Projects::Columns, '#move' do
   end
 
   before do
-    stub_post(request_path).with(body: inputs.to_json).to_return(body: body, status: status,
-                                                                 headers: { content_type: "application/json; charset=utf-8" })
+    stub_post(request_path).with(body: inputs.to_json).
+      to_return(body: body, status: status,
+                headers: { content_type: "application/json; charset=utf-8" })
   end
 
   after { reset_authentication_for subject }
 
-  it "should move the resource successfully" do
+  it "moves the resource successfully" do
     subject.move column_id, inputs
     expect(a_post(request_path)).to have_been_made
   end
 
-  it "should fail to move resource without 'id' parameter" do
+  it "fails to move resource without 'id' parameter" do
     expect { subject.move inputs }.to raise_error(ArgumentError)
   end
 

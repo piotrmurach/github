@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Client::Projects::Columns, '#list' do
+RSpec.describe Github::Client::Projects::Columns, '#list' do
   let(:project_id) { 120 }
   let(:request_path) { "/projects/#{project_id}/columns" }
 
@@ -26,11 +26,11 @@ describe Github::Client::Projects::Columns, '#list' do
 
     it { expect(subject).to respond_to :all }
 
-    it "should fail to get resource without project_id" do
+    it "fails to get resource without project_id" do
       expect { subject.list }.to raise_error(ArgumentError)
     end
 
-    it "should get the resources" do
+    it "gets the resources" do
       subject.list project_id
       expect(a_get(request_path)).to have_been_made
     end
@@ -39,12 +39,12 @@ describe Github::Client::Projects::Columns, '#list' do
       let(:requestable) { subject.list project_id }
     end
 
-    it "should get project information" do
+    it "gets project information" do
       columns = subject.list project_id
       expect(columns.first.name).to eq 'To Do'
     end
 
-    it "should yield to a block" do
+    it "yields to a block" do
       yielded = []
       result = subject.list(project_id) { |obj| yielded << obj }
       expect(yielded).to eq result
