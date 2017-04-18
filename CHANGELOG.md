@@ -1,6 +1,6 @@
 # Change log
 
-## [v0.17.0] - 2017-04-xx
+## [v0.17.0] - 2017-04-18
 
 ### Added
 * Add Projects API (@samphilipd)
@@ -702,6 +702,7 @@
 
 * fixing json parsing issue preventing repository creation
 
+[v0.17.0]: https://github.com/peter-murach/github/compare/v0.16.0...v0.17.0
 [v0.16.0]: https://github.com/peter-murach/github/compare/v0.15.0...v0.16.0
 [v0.15.0]: https://github.com/peter-murach/github/compare/v0.14.5...v0.15.0
 [v0.14.5]: https://github.com/peter-murach/github/compare/v0.14.4...v0.14.5
