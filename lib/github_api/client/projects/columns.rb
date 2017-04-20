@@ -3,6 +3,7 @@
 
 module Github
   class Client::Projects::Columns < API
+    PREVIEW_MEDIA = "application/vnd.github.inertia-preview+json" # :nodoc:
     REQUIRED_COLUMN_PARAMS = %w(name).freeze
     REQUIRED_MOVE_COLUMN_PARAMS = %w(position).freeze
 
@@ -19,7 +20,7 @@ module Github
       arguments(args, required: [:project_id])
       params = arguments.params
 
-      params["accept"] ||= ::Github::Client::Projects::PREVIEW_MEDIA
+      params["accept"] ||= PREVIEW_MEDIA
 
       response = get_request("/projects/#{arguments.project_id}/columns", params)
 
@@ -41,7 +42,7 @@ module Github
       arguments(args, required: [:column_id])
       params = arguments.params
 
-      params["accept"] ||= ::Github::Client::Projects::PREVIEW_MEDIA
+      params["accept"] ||= PREVIEW_MEDIA
 
       get_request("/projects/columns/#{arguments.column_id}", params)
     end
@@ -66,7 +67,7 @@ module Github
       end
       params = arguments.params
 
-      params["accept"] ||= ::Github::Client::Projects::PREVIEW_MEDIA
+      params["accept"] ||= PREVIEW_MEDIA
 
       post_request("/projects/#{arguments.project_id}/columns", params)
     end
@@ -90,7 +91,7 @@ module Github
       end
       params = arguments.params
 
-      params["accept"] ||= ::Github::Client::Projects::PREVIEW_MEDIA
+      params["accept"] ||= PREVIEW_MEDIA
 
       patch_request("/projects/columns/#{arguments.column_id}", params)
     end
@@ -109,7 +110,7 @@ module Github
       arguments(args, required: [:column_id])
       params = arguments.params
 
-      params["accept"] ||= ::Github::Client::Projects::PREVIEW_MEDIA
+      params["accept"] ||= PREVIEW_MEDIA
 
       delete_request("/projects/columns/#{arguments.column_id}", params)
     end
@@ -136,7 +137,7 @@ module Github
       end
       params = arguments.params
 
-      params["accept"] ||= ::Github::Client::Projects::PREVIEW_MEDIA
+      params["accept"] ||= PREVIEW_MEDIA
 
       post_request("/projects/columns/#{arguments.column_id}/moves", params)
     end
