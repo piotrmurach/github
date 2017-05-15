@@ -79,7 +79,7 @@ module Github
           request.body = params.data unless params.empty?
         end
       end
-      ResponseWrapper.new(response, api)
+      response
     end
   end # Request
 end # Github
