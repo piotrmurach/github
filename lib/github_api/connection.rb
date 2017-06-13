@@ -23,6 +23,7 @@ module Github
       {
         ACCEPT         => 'application/vnd.github.v3+json,' \
                           'application/vnd.github.beta+json;q=0.5,' \
+                          'application/vnd.github.loki-preview+json,' \
                           'application/json;q=0.1',
         ACCEPT_CHARSET => 'utf-8'
       }
