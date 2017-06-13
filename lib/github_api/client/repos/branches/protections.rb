@@ -3,7 +3,6 @@
 module Github
   # The Branch Protections API
   class Client::Repos::Branches::Protections < API
-
     VALID_PROTECTION_PARAM_NAMES = %w[
       required_status_checks
       enforce_admins
@@ -20,7 +19,7 @@ module Github
     def get(*args)
       arguments(args, required: [:user, :repo, :branch])
 
-      get_request("/repos/#{arguments.user}/#{arguments.repo}/branches/#{arguments.branch}/protection", arguments.params)
+      get_request("/repos/#{arguments.user}/#{arguments.repo}/branches/#{arguments.branch}/protection", arguments.params.reverse_merge({accept: 'application/vnd.github.loki-preview+json'}))
     end
     alias :find :get
 
@@ -47,7 +46,7 @@ module Github
         permit VALID_PROTECTION_PARAM_NAMES
       end
 
-      patch_request("/repos/#{arguments.user}/#{arguments.repo}/branches/#{arguments.branch}/protection", arguments.params)
+      put_request("/repos/#{arguments.user}/#{arguments.repo}/branches/#{arguments.branch}/protection", arguments.params.reverse_merge({accept: 'application/vnd.github.loki-preview+json'}))
     end
     alias :update :edit
 
@@ -61,7 +60,7 @@ module Github
     def delete(*args)
       arguments(args, required: [:user, :repo, :branch])
 
-      delete_request("/repos/#{arguments.user}/#{arguments.repo}/branches/#{arguments.branch}/protection", arguments.params)
+      delete_request("/repos/#{arguments.user}/#{arguments.repo}/branches/#{arguments.branch}/protection", arguments.params.reverse_merge({accept: 'application/vnd.github.loki-preview+json'}))
     end
   end # Client::Repos::Branches::Protections
 end # Github
