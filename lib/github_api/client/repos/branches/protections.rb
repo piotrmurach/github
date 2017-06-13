@@ -5,8 +5,10 @@ module Github
   class Client::Repos::Branches::Protections < API
     VALID_PROTECTION_PARAM_NAMES = %w[
       required_status_checks
+      required_pull_request_reviews
       enforce_admins
       restrictions
+      accept
     ].freeze
 
     # Get a single branch protection
