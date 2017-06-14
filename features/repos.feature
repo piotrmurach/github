@@ -3,40 +3,6 @@ Feature: Repositories API
   Background:
     Given I have "Github::Client::Repos" instance
 
-  Scenario: Branches
-
-    Given I want branches resource with the following params:
-      | user          | repo   |
-      | peter-murach  | github |
-    When I make request within a cassette named "repos/branches"
-    Then the response status should be 200
-      And the response type should be JSON
-      And the response should not be empty
-
-  Scenario: Get Branch
-
-    Given I want branch resource with the following params:
-      | user          | repo   | branch  |
-      | peter-murach  | github | new_dsl |
-    When I make request within a cassette named "repos/branch"
-    Then the response status should be 200
-      And the response type should be JSON
-      And the response should not be empty
-
-  Scenario: Get Branch mutation (Issue #154)
-
-    Given I want branch resource with the following params:
-      | user          | repo   | branch  |
-      | peter-murach  | github | new_dsl |
-    When I make request within a cassette named "repos/branch_mutation_one"
-    Then the response status should be 200
-      And the response type should be JSON
-      And the response should not be empty
-    When I make request within a cassette named "repos/branch_mutation_two"
-    Then the response status should be 200
-      And the response type should be JSON
-      And the response should not be empty
-
   Scenario: Tags
 
     Given I want tags resource with the following params:
