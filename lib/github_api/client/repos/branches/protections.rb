@@ -11,11 +11,11 @@ module Github
       accept
     ].freeze
 
-    # Get a single branch protection
+    # Get a single branch's protection
     #
     # @example
     #   github = Github.new
-    #   github.repos.branches.protections.get 'user', 'repo', 'id'
+    #   github.repos.branches.protections.get 'user', 'repo', 'branch'
     #
     # @api public
     def get(*args)
@@ -30,17 +30,21 @@ module Github
     # Users with push access to the repository can edit a branch protection.
     #
     # @param [Hash] params
-    # @input params [String] :name
-    #   Required. The file name of the asset.
-    # @input params [String] :label
-    #   An alternate short description of the asset.
-    #   Used in place of the filename.
+    # @input params [String] :required_status_checks
+    #   Required.
+    # @input params [String] :enforce_admins
+    #   Required.
+    # @input params [String] :restrictions
+    #   Required.
+    # @input params [String] :required_pull_request_reviews
+    #   Required.
+    # Look to the branch protection API t see how to use these
+    # https://developer.github.com/v3/repos/branches/#update-branch-protection
     #
     # @example
     #   github = Github.new
-    #   github.repos.branches.protections.edit 'user', 'repo', 'id',
-    #     name: "foo-1.0.0-osx.zip",
-    #     label: "Mac binary"
+    #   github.repos.branches.protections.edit 'user', 'repo', 'branch',
+    #     required_pull_request_reviews: {dismiss_stale_reviews: false}
     #
     # @api public
     def edit(*args)
@@ -56,7 +60,7 @@ module Github
     #
     # @example
     #   github = Github.new
-    #   github.repos.branches.protections.delete 'user', 'repo', 'id'
+    #   github.repos.branches.protections.delete 'user', 'repo', 'branch'
     #
     # @api public
     def delete(*args)
@@ -64,5 +68,6 @@ module Github
 
       delete_request("/repos/#{arguments.user}/#{arguments.repo}/branches/#{arguments.branch}/protection", arguments.params)
     end
+    alias :remove :delete
   end # Client::Repos::Branches::Protections
 end # Github

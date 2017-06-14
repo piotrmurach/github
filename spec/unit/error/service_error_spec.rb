@@ -14,28 +14,28 @@ RSpec.describe Github::Error::ServiceError do
   it "handles empty message" do
     test_request
     expect {
-      Github.repos.branches user, repo
+      Github.repos.branches.list user, repo
     }.to raise_error(Github::Error::NotFound)
   end
 
   it "handles error message" do
     test_request :error => 'not found'
     expect {
-      Github.repos.branches user, repo
+      Github.repos.branches.list user, repo
     }.to raise_error(Github::Error::NotFound, /not found/)
   end
 
   it "handles nested errors" do
     test_request :errors => { :message => 'key is already in use' }
     expect {
-      Github.repos.branches user, repo
+      Github.repos.branches.list user, repo
     }.to raise_error(Github::Error::NotFound, /key is already in use/)
   end
 
   it 'decodes message' do
     test_request({ :errors => { :message => 'key is already in use' } })
     expect {
-      Github.repos.branches user, repo
+      Github.repos.branches.list user, repo
     }.to raise_error(Github::Error::NotFound, /key is already in use/)
   end
 end # Github::Error::ServiceError
