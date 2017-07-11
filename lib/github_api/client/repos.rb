@@ -278,7 +278,6 @@ module Github
       arguments(args, required: [:user, :repo]) do
         permit %w[ anon ]
       end
-      params = arguments.params
 
       response = get_request("/repos/#{arguments.user}/#{arguments.repo}/contributors", arguments.params)
       return response unless block_given?
@@ -338,7 +337,6 @@ module Github
     # @api public
     def delete(*args)
       arguments(args, required: [:user, :repo])
-      params = arguments.params
 
       delete_request("/repos/#{arguments.user}/#{arguments.repo}", arguments.params)
     end

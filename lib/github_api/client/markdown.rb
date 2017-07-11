@@ -49,7 +49,7 @@ module Github
     #
     def render_raw(*args)
       params = arguments(args).params
-      mime_type, params['data'] = params['mime'], args.shift
+      params['data'] = args.shift
       params['raw'] = true
       params['accept'] = params.fetch('accept') { 'text/plain' }
 
