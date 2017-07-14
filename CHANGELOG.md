@@ -1,5 +1,17 @@
 # Change log
 
+## [v0.18.0] - 2017-07-xx
+
+### Added
+* Add the new Branch Protection API by Kartik Luke Singh(@kartikluke)
+
+### Changed
+* Remove hard dependency on old Faraday versions by David Calavera(@calavera)
+* Change to relax addressable dependency
+
+### Fixed
+* Fix Ruby warnings by Olle Jonsson(@olleolleolle)
+
 ## [v0.17.0] - 2017-04-18
 
 ### Added
