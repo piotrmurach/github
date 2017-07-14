@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Client::Repos, '#branches' do
+describe Github::Client::Repos::Branches, '#list' do
   let(:user) { 'peter-murach' }
   let(:repo) { 'github' }
   let(:request_path) { "/repos/#{user}/#{repo}/branches" }
@@ -19,35 +19,35 @@ describe Github::Client::Repos, '#branches' do
     let(:status) { 200 }
 
     it "should raise error when no user/repo parameters" do
-      expect { subject.branches nil, repo }.to raise_error(ArgumentError)
+      expect { subject.list nil, repo }.to raise_error(ArgumentError)
     end
 
     it "should raise error when no repository" do
-      expect { subject.branches user, nil }.to raise_error(ArgumentError)
+      expect { subject.list user, nil }.to raise_error(ArgumentError)
     end
 
     it "should find resources" do
-      subject.branches user, repo
+      subject.list user, repo
       a_get(request_path).should have_been_made
     end
 
     it_should_behave_like 'an array of resources' do
-      let(:requestable) { subject.branches user, repo }
+      let(:requestable) { subject.list user, repo }
     end
 
     it "should get branch information" do
-      branches = subject.branches user, repo
+      branches = subject.list user, repo
       branches.first.name.should == 'master'
     end
 
     it "should yield to a block" do
       block = lambda { |el| repo }
-      subject.should_receive(:branches).with(user, repo).and_yield repo
-      subject.branches(user, repo, &block)
+      subject.should_receive(:list).with(user, repo).and_yield repo
+      subject.list(user, repo, &block)
     end
   end
 
   it_should_behave_like 'request failure' do
-    let(:requestable) { subject.branches user, repo }
+    let(:requestable) { subject.list user, repo }
   end
 end # branches

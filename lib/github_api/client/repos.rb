@@ -4,6 +4,7 @@ module Github
   class Client::Repos < API
     # Load all the modules after initializing Repos to avoid superclass mismatch
     require_all 'github_api/client/repos',
+      'branches',
       'collaborators',
       'comments',
       'commits',
@@ -86,6 +87,9 @@ module Github
 
     # Access to Repos::Statuses API
     namespace :statuses
+
+    # Access to Repos::Branches API
+    namespace :branches
 
     # List repositories for the authenticated user
     #
@@ -356,14 +360,14 @@ module Github
     #   repos.branches 'user-name', 'repo-name'
     #
     # @api public
-    def branches(*args)
-      arguments(args, required: [:user, :repo])
+    # def branches(*args)
+    #   arguments(args, required: [:user, :repo])
 
-      response = get_request("/repos/#{arguments.user}/#{arguments.repo}/branches", arguments.params)
-      return response unless block_given?
-      response.each { |el| yield el }
-    end
-    alias :list_branches :branches
+    #   response = get_request("/repos/#{arguments.user}/#{arguments.repo}/branches", arguments.params)
+    #   return response unless block_given?
+    #   response.each { |el| yield el }
+    # end
+    # alias :list_branches :branches
 
     # Get branch
     #
@@ -373,11 +377,11 @@ module Github
     #   github.repos.branch user: 'user-name', repo: 'repo-name', branch: 'branch-name'
     #   github.repos(user: 'user-name', repo: 'repo-name', branch: 'branch-name').branch
     # @api public
-    def branch(*args)
-      arguments(args, required: [:user, :repo, :branch])
+    # def branch(*args)
+    #   arguments(args, required: [:user, :repo, :branch])
 
-      get_request("/repos/#{arguments.user}/#{arguments.repo}/branches/#{arguments.branch}", arguments.params)
-    end
+    #   get_request("/repos/#{arguments.user}/#{arguments.repo}/branches/#{arguments.branch}", arguments.params)
+    # end
 
     # List contributors
     #
