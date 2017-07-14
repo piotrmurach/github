@@ -21,7 +21,7 @@ module Github
       end
 
       def backtrace
-        if @response_message && @response_message.respond_to?(:backtrace)
+        if @response_message.respond_to?(:backtrace)
           @response_message.backtrace
         else
           super

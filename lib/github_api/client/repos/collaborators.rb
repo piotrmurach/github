@@ -21,7 +21,6 @@ module Github
     # @api public
     def list(*args)
       arguments(args, required: [:user, :repo])
-      params = arguments.params
 
       response = get_request("/repos/#{arguments.user}/#{arguments.repo}/collaborators", arguments.params)
       return response unless block_given?

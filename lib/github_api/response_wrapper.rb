@@ -19,6 +19,7 @@ module Github
       @response    = response
       @current_api = current_api
       @env         = response.env
+      @body        = nil
     end
 
     # Overwrite methods to hash keys

@@ -47,7 +47,7 @@ module Github
       if arguments.client_id
         begin
           get_request("/applications/#{arguments.client_id}/tokens/#{arguments.access_token}", params)
-        rescue Github::Error::NotFound => e
+        rescue Github::Error::NotFound
           nil
         end
       else

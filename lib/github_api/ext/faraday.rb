@@ -7,7 +7,7 @@ module Faraday
       def params_encoder(encoder = nil)
         if encoder
           @encoder = encoder
-        else
+        elsif defined?(@encoder)
           @encoder
         end
       end

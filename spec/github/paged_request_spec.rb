@@ -6,7 +6,7 @@ describe Github::PagedRequest, '#page_request' do
   let(:current_api) { Github::Client::Repos.new }
   let(:path) { "/repositories/"}
   let(:klass) {
-    klass = Class.new do
+    Class.new do
       include Github::PagedRequest
     end
   }

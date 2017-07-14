@@ -32,7 +32,6 @@ module Github
     end
 
     def request_with_body?(env)
-      type = request_type(env)
       has_body?(env) and safe_to_modify?(env)
     end
 
