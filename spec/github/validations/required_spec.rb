@@ -6,7 +6,7 @@ require 'github_api/core_ext/hash'
 describe Github::Validations::Required do
 
   let(:validator) {
-    klaz = Class.new.extend(described_class)
+    Class.new.extend(described_class)
   }
 
   context '#assert_required_keys' do

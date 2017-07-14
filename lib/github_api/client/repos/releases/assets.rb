@@ -35,7 +35,7 @@ module Github
     #
     # @api public
     def get(*args)
-      params = arguments(args, required: [:owner, :repo, :id]).params
+      arguments(args, required: [:owner, :repo, :id]).params
 
       get_request("/repos/#{arguments.owner}/#{arguments.repo}/releases/assets/#{arguments.id}" , arguments.params)
     end

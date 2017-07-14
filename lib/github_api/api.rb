@@ -24,9 +24,9 @@ module Github
     include Request::Verbs
     include RateLimit
 
-    attr_reader *Github.configuration.property_names
+    attr_reader(*Github.configuration.property_names)
 
-    attr_accessor *Validations::VALID_API_KEYS
+    attr_accessor(*Validations::VALID_API_KEYS)
 
     attr_accessor :current_options
 
@@ -209,7 +209,7 @@ module Github
     #
     # @api private
     def filter_callbacks(kind, action_name)
-      matched_callbacks = self.class.send("#{kind}_callbacks").select do |callback|
+      self.class.send("#{kind}_callbacks").select do |callback|
         callback[:only].nil? || callback[:only].include?(action_name)
       end
     end
