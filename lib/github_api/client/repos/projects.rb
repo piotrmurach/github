@@ -42,8 +42,8 @@ module Github
     #
     # @example
     #  github = Github.new
-    #  github.repos.create 'owner-name', 'repo-name', name: 'project-name'
-    #  github.repos.create name: 'project-name', body: 'project-body', owner: 'owner-name', repo: 'repo-name'
+    #  github.repos.projects.create 'owner-name', 'repo-name', name: 'project-name'
+    #  github.repos.projects.create name: 'project-name', body: 'project-body', owner: 'owner-name', repo: 'repo-name'
     #
     # @api public
     def create(*args)

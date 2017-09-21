@@ -65,7 +65,7 @@ module Github
     #
     # @example
     # github = Github.new
-    # github.projects.cards.create :column_id, id: <content-id>, content_type: 'content-type'
+    # github.projects.cards.create :column_id, content_id: <content-id>, content_type: 'content-type'
     #
     # @see https://developer.github.com/v3/projects/cards/#create-a-project-card
     #
