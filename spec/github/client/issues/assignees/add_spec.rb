@@ -19,7 +19,7 @@ describe Github::Client::Issues::Assignees, '#add' do
   let(:assignee) { "octocat" }
 
   context "assignees added" do
-    let(:body) { fixture('issues/issue_assignees.json') }
+    let(:body) { fixture('issues/assignees.json') }
     let(:status) { 200 }
 
     it "should fail to add assignees if issue-id is missing" do
