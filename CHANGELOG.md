@@ -4,6 +4,7 @@
 
 ### Added
 * Add the new Branch Protection API by Kartik Luke Singh(@kartikluke)
+* Add ability to add & remove assignees to/from an issue by @soh335
 
 ### Changed
 * Remove hard dependency on old Faraday versions by David Calavera(@calavera)
