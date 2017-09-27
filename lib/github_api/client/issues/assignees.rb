@@ -38,5 +38,38 @@ module Github
     rescue Github::Error::NotFound
       false
     end
+
+    # Add assignees to an issue
+    #
+    # @example
+    #   github = Github.new
+    #   github.issues.assignees.add 'user', 'repo', 'issue-number',
+    #     'hubot', 'other_assignee', ...
+    #
+    # @api public
+    def add(*args)
+      arguments(args, required: [:user, :repo, :number])
+      params = arguments.params
+      params['data'] = { 'assignees' => arguments.remaining } unless arguments.remaining.empty?
+
+      post_request("/repos/#{arguments.user}/#{arguments.repo}/issues/#{arguments.number}/assignees", params)
+    end
+    alias :<< :add
+
+    # Remove a assignees from an issue
+    #
+    # @example
+    #   github = Github.new
+    #   github.issues.assignees.remove 'user', 'repo', 'issue-number',
+    #     'hubot', 'other_assignee'
+    #
+    # @api public
+    def remove(*args)
+      arguments(args, required: [:user, :repo, :number])
+      params = arguments.params
+      params['data'] = { 'assignees' => arguments.remaining } unless arguments.remaining.empty?
+
+      delete_request("/repos/#{arguments.user}/#{arguments.repo}/issues/#{arguments.number}/assignees", params)
+    end
   end # Issues::Assignees
 end # Github
