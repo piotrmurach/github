@@ -11,7 +11,7 @@ Gem::Specification.new do |gem|
   gem.description   = %q{ Ruby client that supports all of the GitHub API methods. It's build in a modular way, that is, you can either instantiate the whole api wrapper Github.new or use parts of it e.i. Github::Client::Repos.new if working solely with repositories is your main concern. Intuitive query methods allow you easily call API endpoints. }
   gem.license       = "MIT"
   gem.version       = Github::VERSION.dup
-  gem.required_ruby_version = '>= 1.9.2'
+  gem.required_ruby_version = '>= 2.0.0'
 
   gem.files = Dir['{lib}/**/*']
   gem.require_paths = %w[ lib ]
