@@ -1,6 +1,6 @@
 # Change log
 
-## [v0.18.0] - 2017-07-xx
+## [v0.18.0] - 2017-10-06
 
 ### Added
 * Add the new Branch Protection API by Kartik Luke Singh(@kartikluke)
@@ -9,6 +9,7 @@
 ### Changed
 * Remove hard dependency on old Faraday versions by David Calavera(@calavera)
 * Change to relax addressable dependency
+* Drop support for Ruby 1.9.3
 
 ### Fixed
 * Fix Ruby warnings by Olle Jonsson(@olleolleolle)
@@ -715,6 +716,7 @@
 
 * fixing json parsing issue preventing repository creation
 
+[v0.18.0]: https://github.com/peter-murach/github/compare/v0.17.0...v0.18.0
 [v0.17.0]: https://github.com/peter-murach/github/compare/v0.16.0...v0.17.0
 [v0.16.0]: https://github.com/peter-murach/github/compare/v0.15.0...v0.16.0
 [v0.15.0]: https://github.com/peter-murach/github/compare/v0.14.5...v0.15.0
