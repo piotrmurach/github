@@ -1,5 +1,10 @@
 # encoding: utf-8
 
+require_relative '../normalizer'
+require_relative '../parameter_filter'
+require_relative '../params_hash'
+require_relative '../validations'
+
 module Github
   class API
     # A class responsible for handilng request arguments

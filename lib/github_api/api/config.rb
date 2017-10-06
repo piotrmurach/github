@@ -1,14 +1,12 @@
 # encoding: utf-8
 
-require 'github_api/api/config/property'
-require 'github_api/api/config/property_set'
+require_relative 'config/property'
+require_relative 'config/property_set'
 
 module Github
-
   class API
     # A base class for constructing api configuration
     class Config
-
       # Defines a property on an object's class or instance
       #
       # @example
