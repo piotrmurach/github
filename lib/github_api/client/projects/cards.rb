@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 # encoding: utf-8
 
+require_relative '../../api'
+
 module Github
   class Client::Projects::Cards < API
     REQUIRED_MOVE_CARD_PARAMS = %w(position).freeze

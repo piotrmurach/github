@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require_relative '../../api'
+
 module Github
   class Client::Orgs::Memberships < API
     # List your organization memberships

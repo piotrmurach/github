@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require_relative '../../api'
+
 module Github
   # The Pages API retrieves information about your GitHub Pages configuration,
   # and the statuses of your builds. Information about the site and the builds

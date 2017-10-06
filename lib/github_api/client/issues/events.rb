@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require_relative '../../api'
+
 module Github
   class Client::Issues::Events < API
     # List events for an issue

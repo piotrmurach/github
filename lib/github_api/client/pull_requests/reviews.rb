@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require_relative '../../api'
+
 module Github
   class Client::PullRequests::Reviews < API
     PREVIEW_MEDIA = "application/vnd.github.black-cat-preview+json".freeze # :nodoc:

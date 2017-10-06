@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require_relative '../../api'
+
 module Github
   # All actions against teams require at a minimum an authenticated user
   # who is a member of the owner's team in the :org being managed.

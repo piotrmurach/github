@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require_relative '../../api'
+
 module Github
   class Client::Repos::Branches < API
     require_all 'github_api/client/repos/branches', 'protections'

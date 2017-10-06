@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require_relative '../../../api'
+
 module Github
   # The Release Assets API
   class Client::Repos::Releases::Assets < API

@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require_relative '../../../api'
+
 module Github
   # The Releases API
   class Client::Repos::Releases::Tags < API

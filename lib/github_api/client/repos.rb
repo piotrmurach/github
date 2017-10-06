@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require_relative '../api'
+
 module Github
   class Client::Repos < API
     # Load all the modules after initializing Repos to avoid superclass mismatch

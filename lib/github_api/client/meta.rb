@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require_relative '../api'
+
 module Github
   class Client::Meta < API
     # Get meta information about GitHub.com, the service.

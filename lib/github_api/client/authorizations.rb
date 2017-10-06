@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require_relative '../api'
+
 module Github
   # OAuth Authorizations API
   class Client::Authorizations < API

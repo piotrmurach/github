@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 # encoding: utf-8
 
+require_relative '../../api'
+
 module Github
   class Client::Projects::Columns < API
     REQUIRED_COLUMN_PARAMS = %w(name).freeze

@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require_relative '../../api'
+
 module Github
   # The Repository Statistics API allows you to fetch the data that GitHub uses
   # for visualizing different types of repository activity.

@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require_relative '../../api'
+
 module Github
   # Watching a Repository registers the user to receive notificactions on new
   # discussions, as well as events in the user's activity feed.

@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require_relative '../../api'
+
 module Github
   class Client::Issues::Assignees < API
     # Lists all the available assignees (owner + collaborators)

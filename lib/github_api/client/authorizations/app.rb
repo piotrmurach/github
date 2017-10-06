@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require_relative '../../api'
+
 module Github
   class Client::Authorizations::App < Client::Authorizations
     # Get-or-create an authorization for a specific app

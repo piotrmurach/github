@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require_relative '../../api'
+
 module Github
   # These API methods let you retrieve the contents of files within a repository
   # as Base64 encoded content.

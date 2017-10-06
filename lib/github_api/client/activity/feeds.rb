@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require_relative '../../api'
+
 module Github
   class Client::Activity::Feeds < API
     # List all the feeds available to the authenticated user.

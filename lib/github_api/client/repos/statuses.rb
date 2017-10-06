@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require_relative '../../api'
+
 module Github
   # The Status API allows external services to mark commits with a success,
   # failure, error, or pending state, which is then reflected in pull requests

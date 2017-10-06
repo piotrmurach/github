@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require_relative '../../api'
+
 module Github
   # The Organizations Hooks API manages the post-receive web and
   # service hooks for an organization.

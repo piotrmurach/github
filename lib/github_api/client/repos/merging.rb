@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require_relative '../../api'
+
 module Github
   # The Repo Merging API supports merging branches in a repository. This
   # accomplishes essentially the same thing as merging one branch into another

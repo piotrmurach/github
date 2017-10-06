@@ -1,5 +1,8 @@
 # encoding: utf-8
+
 require 'cgi'
+
+require_relative '../../api'
 
 module Github
   class Client::Users::Emails < API

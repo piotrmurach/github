@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative '../../api'
+
 module Github
   class Client::Orgs::Projects < API
     PREVIEW_MEDIA = "application/vnd.github.inertia-preview+json".freeze # :nodoc:

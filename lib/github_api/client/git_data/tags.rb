@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require_relative '../../api'
+
 module Github
   class Client::GitData::Tags < API
     # This tags api only deals with tag objects -

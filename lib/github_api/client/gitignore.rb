@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require_relative '../api'
+
 module Github
   # When you create a new GitHub repository via the API, you can specify a
   # .gitignore template to apply to the repository upon creation.

@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require_relative '../../api'
+
 module Github
   class Client::PullRequests::Comments < API
     # List comments on a pull request
