@@ -1,28 +1,25 @@
 # encoding: utf-8
 
-require 'github_api/configuration'
-require 'github_api/mime_type'
-require 'github_api/rate_limit'
-require 'github_api/core_ext/hash'
-require 'github_api/core_ext/array'
-require 'github_api/null_encoder'
-
-require 'github_api/request/verbs'
-
-require 'github_api/api/actions'
-require 'github_api/api/factory'
-require 'github_api/api/arguments'
+require_relative 'authorization'
+require_relative 'api/actions'
+require_relative 'api/factory'
+require_relative 'api/arguments'
+require_relative 'configuration'
+require_relative 'constants'
+require_relative 'mime_type'
+require_relative 'null_encoder'
+require_relative 'rate_limit'
+require_relative 'request/verbs'
+require_relative 'validations'
 
 module Github
   # Core class responsible for api interface operations
   class API
-    extend Github::ClassMethods
-
     include Constants
     include Authorization
     include MimeType
-    include Request::Verbs
     include RateLimit
+    include Request::Verbs
 
     attr_reader(*Github.configuration.property_names)
 
@@ -39,6 +36,22 @@ module Github
          end
        end
      end
+
+    # Requires internal libraries
+    #
+    # @param [String] prefix
+    #   the relative path prefix
+    # @param [Array[String]] libs
+    #   the array of libraries to require
+    #
+    # @return [self]
+    #
+    # @api public
+    def self.require_all(prefix, *libs)
+      libs.each do |lib|
+        require "#{File.join(prefix, lib)}"
+      end
+    end
 
     # Create new API
     #
@@ -251,6 +264,10 @@ module Github
       else
         super
       end
+    end
+
+    def respond_to?(method_name, include_private = false)
+      method_name.to_s.start_with?('clear_') || super
     end
 
     # Acts as setter and getter for api requests arguments parsing.
