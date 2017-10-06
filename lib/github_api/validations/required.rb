@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require_relative '../error/client_error'
+
 module Github
   module Validations
     module Required

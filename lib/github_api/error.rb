@@ -30,6 +30,3 @@ module Github
     end # GithubError
   end # Error
 end # Github
-
-require 'github_api/error/service_error'
-require 'github_api/error/client_error'

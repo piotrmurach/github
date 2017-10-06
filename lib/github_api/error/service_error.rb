@@ -2,6 +2,8 @@
 
 require 'json'
 
+require_relative '../error'
+
 module Github
   # Raised when GitHub returns any of the HTTP status codes
   module Error

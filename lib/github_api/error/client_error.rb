@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require_relative '../error'
+
 module Github #:nodoc
   # Raised when Github returns the HTTP status code 404
   module Error

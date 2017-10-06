@@ -1,14 +1,12 @@
 # encoding: utf-8
 
+require_relative 'validations/format'
+require_relative 'validations/presence'
+require_relative 'validations/required'
+require_relative 'validations/token'
+
 module Github
   module Validations
-
-    Github::require_all 'github_api/validations',
-      'presence',
-      'token',
-      'format',
-      'required'
-
     include Presence
     include Format
     include Token
@@ -20,6 +18,5 @@ module Github
       'auto_pagination',
       'jsonp_callback'
     ]
-
   end # Validation
 end # Github
