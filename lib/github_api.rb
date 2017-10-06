@@ -1,16 +1,9 @@
 # encoding: utf-8
 
 require 'pp' if ENV['DEBUG']
+
 require 'faraday'
-require 'github_api/version'
-require 'github_api/configuration'
-require 'github_api/constants'
-require 'github_api/utils/url'
-require 'github_api/connection'
-require 'github_api/deprecation'
-require 'github_api/core_ext/ordered_hash'
-require 'github_api/ext/faraday'
-require 'github_api/middleware'
+require_relative 'github_api/ext/faraday'
 
 module Github
   LIBNAME = 'github_api'
@@ -18,8 +11,32 @@ module Github
   LIBDIR = File.expand_path("../#{LIBNAME}", __FILE__)
 
   class << self
-    def included(base)
-      base.extend ClassMethods
+    # The client configuration
+    #
+    # @return [Configuration]
+    #
+    # @api public
+    def configuration
+      @configuration ||= Configuration.new
+    end
+    alias_method :config, :configuration
+
+    # Configure options
+    #
+    # @example
+    #   Github.configure do |c|
+    #     c.some_option = true
+    #   end
+    #
+    # @yield the configuration block
+    # @yieldparam configuration [Github::Configuration]
+    #   the configuration instance
+    #
+    # @return [nil]
+    #
+    # @api public
+    def configure
+      yield configuration
     end
 
     # Alias for Github::Client.new
@@ -63,69 +80,14 @@ module Github
       super(method_name, include_private)
     end
   end
-
-  module ClassMethods
-    # Requires internal libraries
-    #
-    # @param [String] prefix
-    #   the relative path prefix
-    # @param [Array[String]] libs
-    #   the array of libraries to require
-    #
-    # @return [self]
-    def require_all(prefix, *libs)
-      libs.each do |lib|
-        require "#{File.join(prefix, lib)}"
-      end
-    end
-
-    # The client configuration
-    #
-    # @return [Configuration]
-    #
-    # @api public
-    def configuration
-      @configuration ||= Configuration.new
-    end
-    alias_method :config, :configuration
-
-    # Configure options
-    #
-    # @example
-    #   Github.configure do |c|
-    #     c.some_option = true
-    #   end
-    #
-    # @yield the configuration block
-    # @yieldparam configuration [Github::Configuration]
-    #   the configuration instance
-    #
-    # @return [nil]
-    #
-    # @api public
-    def configure
-      yield configuration
-    end
-  end
-
-  extend ClassMethods
-
-  require_all LIBDIR,
-    'authorization',
-    'validations',
-    'normalizer',
-    'parameter_filter',
-    'api',
-    'client',
-    'pagination',
-    'request',
-    'response',
-    'response_wrapper',
-    'error',
-    'mime_type',
-    'page_links',
-    'paged_request',
-    'page_iterator',
-    'params_hash'
-
 end # Github
+
+require_relative 'github_api/api'
+require_relative 'github_api/client'
+require_relative 'github_api/configuration'
+require_relative 'github_api/deprecation'
+require_relative 'github_api/core_ext/array'
+require_relative 'github_api/core_ext/hash'
+require_relative 'github_api/core_ext/ordered_hash'
+require_relative 'github_api/middleware'
+require_relative 'github_api/version'
