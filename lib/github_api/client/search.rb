@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require_relative '../utils/url'
+
 module Github
   # The Search API is optimized to help you find the specific item
   # you're looking for (e.g., a specific user, a specific file

@@ -2,6 +2,8 @@
 
 require 'faraday'
 
+require_relative '../utils/url'
+
 module Github
   class Request
     class OAuth2 < Faraday::Middleware

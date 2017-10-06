@@ -1,3 +1,7 @@
+# encoding: utf-8
+
+require_relative 'constants'
+
 module Github
   # Determines the links in the current response link header to be used
   # to find the links to other pages of request responses. These will

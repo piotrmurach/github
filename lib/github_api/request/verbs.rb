@@ -1,5 +1,8 @@
 # encoding: utf-8
 
+require_relative '../request'
+require_relative '../params_hash'
+
 module Github
   # A class responsible for dispatching http requests
   class Request

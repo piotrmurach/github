@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-require 'github_api/api/config'
+require_relative 'api/config'
 
 module Github
   # Stores the configuration

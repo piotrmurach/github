@@ -3,6 +3,9 @@
 require 'delegate'
 require 'base64'
 
+require_relative 'normalizer'
+require_relative 'mime_type'
+
 module Github
   # Class responsible for holding request parameters
   class ParamsHash < DelegateClass(Hash)

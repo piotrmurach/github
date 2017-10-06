@@ -1,4 +1,7 @@
-# -*- encoding: utf-8 -*-
+# encoding: utf-8
+
+require_relative 'params_hash'
+require_relative 'validations'
 
 module Github
   # Allows you to specify parameters keys which will be preserved

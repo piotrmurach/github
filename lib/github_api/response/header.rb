@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require_relative '../constants'
+
 module Github
   class Response
 

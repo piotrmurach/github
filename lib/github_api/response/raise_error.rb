@@ -1,7 +1,8 @@
 # encoding: utf-8
 
 require 'faraday'
-require 'github_api/error'
+
+require_relative '../error/service_error'
 
 module Github
   class Response::RaiseError < Faraday::Response::Middleware

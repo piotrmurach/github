@@ -1,12 +1,12 @@
 # encoding: utf-8
 
-require 'github_api/response'
-require 'github_api/response/mashify'
-require 'github_api/response/jsonize'
-require 'github_api/response/atom_parser'
-require 'github_api/response/raise_error'
-require 'github_api/response/header'
-require 'github_api/response/follow_redirects'
+require_relative 'response'
+require_relative 'response/mashify'
+require_relative 'response/jsonize'
+require_relative 'response/atom_parser'
+require_relative 'response/raise_error'
+require_relative 'response/header'
+require_relative 'response/follow_redirects'
 
 module Github
   class Middleware

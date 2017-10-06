@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 require 'spec_helper'
+require 'github_api/paged_request'
 
 describe Github::PagedRequest, '#page_request' do
   let(:current_api) { Github::Client::Repos.new }

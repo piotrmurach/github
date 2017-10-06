@@ -1,10 +1,10 @@
 # encoding: utf-8
 
-require 'github_api/request/oauth2'
-require 'github_api/request/basic_auth'
-require 'github_api/request/jsonize'
-
-require 'github_api/connection'
+require_relative 'connection'
+require_relative 'response_wrapper'
+require_relative 'request/oauth2'
+require_relative 'request/basic_auth'
+require_relative 'request/jsonize'
 
 module Github
   # A class responsible for dispatching http requests

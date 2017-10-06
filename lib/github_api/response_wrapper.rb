@@ -1,5 +1,9 @@
 # encoding: utf-8
 
+require 'forwardable'
+
+require_relative 'pagination'
+
 module Github
   # A class responsible for proxing to faraday response
   class ResponseWrapper

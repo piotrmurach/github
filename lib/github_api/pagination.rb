@@ -1,7 +1,10 @@
 # encoding: utf-8
 
-module Github
+require_relative 'constants'
+require_relative 'page_links'
+require_relative 'page_iterator'
 
+module Github
   # A module that decorates response with pagination helpers
   module Pagination
     include Github::Constants

@@ -1,7 +1,10 @@
 # encoding: utf-8
 
-require 'github_api/utils/url'
 require 'uri'
+
+require_relative 'constants'
+require_relative 'paged_request'
+require_relative 'utils/url'
 
 module Github
   # A class responsible for requesting resources through page links

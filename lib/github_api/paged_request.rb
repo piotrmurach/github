@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require_relative 'constants'
+
 module Github
 
   # A module that adds http get request to response pagination

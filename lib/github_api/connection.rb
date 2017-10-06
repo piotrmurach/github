@@ -1,5 +1,9 @@
 # encoding: utf-8
 
+require 'faraday'
+
+require_relative 'constants'
+
 module Github
   # Specifies Http connection options
   module Connection
