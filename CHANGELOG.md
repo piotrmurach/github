@@ -10,6 +10,9 @@
 * Remove hard dependency on old Faraday versions by David Calavera(@calavera)
 * Change to relax addressable dependency
 * Drop support for Ruby 1.9.3
+* Change Github module to remove ClassMethods module inclusion
+* Change Github::API to add require_all helper
+* Change all class to load required dependencies in place of global
 
 ### Fixed
 * Fix Ruby warnings by Olle Jonsson(@olleolleolle)
