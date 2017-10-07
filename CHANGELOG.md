@@ -1,6 +1,6 @@
 # Change log
 
-## [v0.18.0] - 2017-10-06
+## [v0.18.1] - 2017-10-07
 
 ### Added
 * Add the new Branch Protection API by Kartik Luke Singh(@kartikluke)
@@ -719,7 +719,7 @@
 
 * fixing json parsing issue preventing repository creation
 
-[v0.18.0]: https://github.com/peter-murach/github/compare/v0.17.0...v0.18.0
+[v0.18.1]: https://github.com/peter-murach/github/compare/v0.17.0...v0.18.1
 [v0.17.0]: https://github.com/peter-murach/github/compare/v0.16.0...v0.17.0
 [v0.16.0]: https://github.com/peter-murach/github/compare/v0.15.0...v0.16.0
 [v0.15.0]: https://github.com/peter-murach/github/compare/v0.14.5...v0.15.0
