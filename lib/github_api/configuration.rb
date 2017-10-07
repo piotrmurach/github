@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 require_relative 'api/config'
+require_relative 'version'
 
 module Github
   # Stores the configuration
