@@ -1,40 +1,46 @@
 # encoding: utf-8
 
 require 'spec_helper'
+require 'github_api/paged_request'
 
-describe Github::PagedRequest do
-  it { described_class.constants.should include :FIRST_PAGE }
-  it { described_class.constants.should include :PER_PAGE }
-  it { described_class.constants.should include :NOT_FOUND }
-
-  context 'page_request' do
-    let(:path) { '/repos' }
-    let(:client) { Github::Client }
-
-    before do
-      Github.stub(:api_client).and_return client
-      client.stub(:get_request)
+describe Github::PagedRequest, '#page_request' do
+  let(:current_api) { Github::Client::Repos.new }
+  let(:path) { "/repositories/"}
+  let(:klass) {
+    Class.new do
+      include Github::PagedRequest
     end
+  }
 
-    it 'sets default per_page when only custom page passed' do
-      Github.stub_chain(:api_client, :per_page).and_return nil
-      Github::PagedRequest.page_request path, {'page' => 3, 'per_page' => -1}
-      Github::PagedRequest.page.should eq 3
-      Github::PagedRequest.per_page.should eq 30
-    end
+  subject(:instance) { klass.new }
 
-    it 'sets default page when only custom per_page passed' do
-      Github.stub_chain(:api_client, :page).and_return nil
-      Github::PagedRequest.page_request path, {'per_page' => 33, 'page' => -1}
-      Github::PagedRequest.page.should eq 1
-      Github::PagedRequest.per_page.should eq 33
-    end
+  before {
+    instance.stub(:current_api).and_return current_api
+  }
 
-    it 'sends get request with passed parameters' do
-      Github::Client.should_receive(:get_request).
-        with(path, 'page' => 2, 'per_page' => 33)
-      Github::PagedRequest.page_request path, {'page' => 2, 'per_page' => 33}
-    end
+  it { klass.constants.should include :FIRST_PAGE }
+
+  it { klass.constants.should include :PER_PAGE }
+
+  it { klass.constants.should include :NOT_FOUND }
+
+  it { should respond_to(:page_request) }
+
+  it 'calls get_request on api current instance' do
+    current_api.should_receive(:get_request).with(path, {})
+    instance.page_request(path)
+  end
+
+  it 'sets default per_page when only custom page passed' do
+    current_api.should_receive(:get_request).
+      with(path, {'page' => 3, 'per_page' => 30})
+    instance.page_request(path, {'page' => 3, 'per_page' => -1})
+  end
+
+  it 'sets default page when only custom per_page passed' do
+    current_api.should_receive(:get_request).
+      with(path, {'page' => 1, 'per_page' => 33})
+    instance.page_request(path, {'page' => -1, 'per_page' => 33})
   end
 
 end # Github::PagedRequest

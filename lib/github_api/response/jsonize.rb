@@ -1,17 +1,15 @@
 # encoding: utf-8
 
 require 'faraday'
+require 'json'
 
 module Github
   class Response::Jsonize < Response
-    dependency 'multi_json'
+
+    dependency 'json'
 
     define_parser do |body|
-      if MultiJson.respond_to?(:load)
-        MultiJson.load body
-      else
-        MultiJson.decode body
-      end
+      JSON.parse(body)
     end
 
     def parse(body)
@@ -23,7 +21,7 @@ module Github
       when 'false'
         false
       else
-        self.class.parser.call body
+        self.class.parser.call(body)
       end
     end
   end # Response::Jsonize

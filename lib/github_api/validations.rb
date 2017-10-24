@@ -1,15 +1,12 @@
 # encoding: utf-8
 
+require_relative 'validations/format'
+require_relative 'validations/presence'
+require_relative 'validations/required'
+require_relative 'validations/token'
+
 module Github
   module Validations
-    extend AutoloadHelper
-
-    autoload_all 'github_api/validations',
-      :Presence => 'presence',
-      :Token    => 'token',
-      :Format   => 'format',
-      :Required => 'required'
-
     include Presence
     include Format
     include Token
@@ -18,8 +15,8 @@ module Github
     VALID_API_KEYS = [
       'page',
       'per_page',
+      'auto_pagination',
       'jsonp_callback'
     ]
-
   end # Validation
 end # Github

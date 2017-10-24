@@ -3,55 +3,33 @@
 require 'spec_helper'
 
 describe Github::Client do
-  let(:github) { Github.new }
+  let(:object) { described_class }
 
-  after { reset_authentication_for github }
+  subject(:client) { object.new }
 
-  it "should return Github::Gists instance" do
-    github.gists.should be_a Github::Gists
-  end
+  after { reset_authentication_for client }
 
-  it "should return Github::GitData instance" do
-    github.git_data.should be_a Github::GitData
-  end
+  it { expect(client.activity).to be_a Github::Client::Activity }
 
-  it "should return Github::Issues instance" do
-    github.issues.should be_a Github::Issues
-  end
+  it { expect(client.oauth).to be_a Github::Client::Authorizations }
 
-  it "should return Github::Orgs instance" do
-    github.orgs.should be_a Github::Orgs
-  end
+  it { expect(client.gists).to be_a Github::Client::Gists }
 
-  it "should return Github::PullRequests instance" do
-    github.pull_requests.should be_a Github::PullRequests
-  end
+  it { expect(client.git_data).to be_a Github::Client::GitData }
 
-  it "should return Github::Repos instance" do
-    github.repos.should be_a Github::Repos
-  end
+  it { expect(client.issues).to be_a Github::Client::Issues }
 
-  it "should return Github::Users instance" do
-    github.users.should be_a Github::Users
-  end
+  it { expect(client.markdown).to be_a Github::Client::Markdown }
 
-  it "should return Github::Authorizations instance" do
-    github.oauth.should be_a Github::Authorizations
-  end
+  it { expect(client.meta).to be_a Github::Client::Meta }
 
-  it "should respond to repos" do
-    github.should respond_to :repos
-  end
+  it { expect(client.orgs).to be_a Github::Client::Orgs }
 
-  it "should respond to repositories" do
-    github.should respond_to :repositories
-  end
+  it { expect(client.projects).to be_a Github::Client::Projects }
 
-  it "should respond to git_data" do
-    github.should respond_to :git_data
-  end
+  it { expect(client.pull_requests).to be_a Github::Client::PullRequests }
 
-  it "should respond to git" do
-    github.should respond_to :git
-  end
+  it { expect(client.repos).to be_a Github::Client::Repos }
+
+  it { expect(client.users).to be_a Github::Client::Users }
 end

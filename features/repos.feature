@@ -1,62 +1,89 @@
-Feature: Accessing Repos Main API
-  In order to interact with github repositories
-  GithubAPI gem
-  Should return the expected results depending on passed parameters
+Feature: Repositories API
 
   Background:
-    Given I have "Github::Repos" instance
+    Given I have "Github::Client::Repos" instance
 
-  Scenario: Returning all repository branches
-    When I am looking for "branches" with the following params:
+  Scenario: Tags
+
+    Given I want tags resource with the following params:
       | user          | repo   |
       | peter-murach  | github |
-      And I make request within a cassette named "repos/branches"
-    Then the response should be "200"
-      And the response type should be "JSON"
+    When I make request within a cassette named "repos/tags"
+    Then the response status should be 200
+      And the response type should be JSON
       And the response should not be empty
 
-  Scenario: Returning all repository tags
-    When I am looking for "tags" with the following params:
-      | user          | repo   |
-      | peter-murach  | github |
-      And I make request within a cassette named "repos/tags"
-    Then the response should be "200"
-      And the response type should be "JSON"
-      And the response should not be empty
+  Scenario: All repositories for the user
 
-  Scenario: Returning all repositories for the user
     Given I want to list resources
       And I pass the following request options:
         | user          |
         | peter-murach  |
     When I make request within a cassette named "repos/list"
-    Then the response should be "200"
-      And the response type should be "JSON"
+    Then the response status should be 200
+      And the response type should be JSON
+      And the response should not be empty
+
+  Scenario: All repositories for an organization
+
+    Given I want to list resources
+      And I pass the following request options:
+        | org   |
+        | rspec |
+    When I make request within a cassette named "repos/list_org"
+    Then the response status should be 200
+      And the response type should be JSON
+      And the response should have 15 items
+
+  Scenario: All repositories for an organization set on instance
+
+    Given I set the following attributes of instance:
+      | org   |
+      | rails |
+    Given I want to list resources
+    When I make request within a cassette named "repos/list_org_instance"
+    Then the response status should be 200
+      And the response type should be JSON
+      And the response should have 30 items
+
+  Scenario: All repositories
+
+    Given I want to list resources with the following params:
+      | every |
+      | every |
+    When I make request within a cassette named "repos/list_repos"
+    Then the response status should be 200
+      And the response type should be JSON
       And the response should not be empty
 
   Scenario: Get a repository
+
     Given I want to get resource with the following params:
-      | user   | repo |
-      | wycats | thor |
+      | user         | repo |
+      | peter-murach | tty  |
     When I make request within a cassette named "repos/get"
-    Then the response should be "200"
-      And the response type should be "JSON"
+    Then the response status should be 200
+      And the response type should be JSON
       And the response should not be empty
 
-  Scenario: Listing repository languages
-    When I am looking for "languages" with the following params:
+  Scenario: Languages
+
+    Given I want languages resource with the following params:
       | user          | repo   |
       | peter-murach  | github |
-      And I make request within a cassette named "repos/languages"
-    Then the response should be "200"
-      And the response type should be "JSON"
+    When I make request within a cassette named "repos/languages"
+    Then the response status should be 200
+      And the response type should be JSON
+      And the response should not be empty
 
   Scenario: Create repository
+
     Given I want to create resource
       And I pass the following request options:
-        | name            |
-        | github_api_test |
+        | name             |
+        | github_api_test2 |
     When I make request within a cassette named "repos/create"
-    Then the response should be "201"
-      And the response type should be "JSON"
+    Then the response status should be 201
+      And the response type should be JSON
       And the response should not be empty
+

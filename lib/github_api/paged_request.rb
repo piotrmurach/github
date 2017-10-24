@@ -1,8 +1,12 @@
+# encoding: utf-8
+
+require_relative 'constants'
+
 module Github
+
+  # A module that adds http get request to response pagination
   module PagedRequest
     include Github::Constants
-
-    extend self
 
     FIRST_PAGE = 1 # Default request page if none provided
 
@@ -10,18 +14,19 @@ module Github
 
     NOT_FOUND  = -1 # Either page or per_page parameter not present
 
-    class << self
-      attr_accessor :page, :per_page
-    end
-
+    # Check if current api instance has default per_page param set,
+    # otherwise use global default.
+    #
     def default_page_size
-      Github.api_client.per_page ? Github.api_client.per_page : PER_PAGE
+      current_api.per_page ? current_api.per_page : PER_PAGE
     end
 
     def default_page
-      Github.api_client.page ? Github.api_client.page : FIRST_PAGE
+      current_api.page ? current_api.page : FIRST_PAGE
     end
 
+    # Perform http get request with pagination parameters
+    #
     def page_request(path, params={})
       if params[PARAM_PER_PAGE] == NOT_FOUND
         params[PARAM_PER_PAGE] = default_page_size
@@ -30,10 +35,7 @@ module Github
         params[PARAM_PAGE] = default_page
       end
 
-      Github::PagedRequest.page = params[PARAM_PAGE]
-      Github::PagedRequest.per_page = params[PARAM_PER_PAGE]
-
-      Github.api_client.get_request path, params
+      current_api.get_request(path, ParamsHash.new(params))
     end
 
   end # PagedRequest
