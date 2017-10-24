@@ -1,88 +1,77 @@
 # encoding: utf-8
 
+require_relative 'api'
+
 module Github
   class Client < API
+    require_all 'github_api/client',
+                'activity',
+                'authorizations',
+                'emojis',
+                'gists',
+                'gitignore',
+                'git_data',
+                'issues',
+                'markdown',
+                'meta',
+                'orgs',
+                'projects',
+                'pull_requests',
+                'repos',
+                'say',
+                'scopes',
+                'search',
+                'users'
 
-    # Serving up the ‘social’ in Social Coding™, the Activity APIs
+    # Serving up the 'social' in Social Coding, the Activity APIs
     # provide access to notifications, subscriptions, and timelines.
-    #
-    def activity(options={}, &block)
-      @activity ||= ApiFactory.new('Activity', current_options.merge(options), &block)
-    end
+    namespace :activity
 
-    def emojis(options={}, &block)
-      @emojis ||= ApiFactory.new('Emojis', current_options.merge(options), &block)
-    end
+    namespace :emojis
 
-    def gists(options={}, &block)
-      @gists ||= ApiFactory.new('Gists', current_options.merge(options), &block)
-    end
+    namespace :gists
 
-    def gitignore(options={}, &block)
-      @gitignore ||= ApiFactory.new('Gitignore', current_options.merge(options), &block)
-    end
+    namespace :gitignore
     alias :git_ignore :gitignore
 
     # The Git Database API gives you access to read and write raw Git objects
     # to your Git database on GitHub and to list and update your references
     # (branch heads and tags).
-    def git_data(options={}, &block)
-      @git_data ||= ApiFactory.new('GitData', current_options.merge(options), &block)
-    end
+    namespace :git_data
     alias :git :git_data
 
-    def issues(options={}, &block)
-      @issues ||= ApiFactory.new('Issues', current_options.merge(options), &block)
-    end
+    namespace :issues
 
-    def markdown(options={}, &block)
-      @markdown ||= ApiFactory.new('Markdown', current_options.merge(options), &block)
-    end
+    namespace :markdown
 
-    def meta(options={}, &block)
-      @meta ||= ApiFactory.new('Meta', current_options.merge(options), &block)
-    end
+    namespace :meta
 
     # An API for users to manage their own tokens. You can only access your own
     # tokens, and only through Basic Authentication.
-    def oauth(options={}, &block)
-      @oauth ||= ApiFactory.new('Authorizations', current_options.merge(options), &block)
-    end
-    alias :authorizations :oauth
+    namespace :authorizations
+    alias :oauth :authorizations
+    alias :auth :authorizations
 
-    def orgs(options={}, &block)
-      @orgs ||= ApiFactory.new('Orgs', current_options.merge(options), &block)
-    end
+    namespace :orgs
     alias :organizations :orgs
 
-    def pull_requests(options={}, &block)
-      @pull_requests ||= ApiFactory.new('PullRequests', current_options.merge(options), &block)
-    end
+    namespace :projects
+
+    namespace :pull_requests
     alias :pulls :pull_requests
 
-    def repos(options={}, &block)
-      @repos ||= ApiFactory.new('Repos', current_options.merge(options), &block)
-    end
+    namespace :repos
     alias :repositories :repos
 
-    def octocat(options={}, &block)
-      @octocat ||= ApiFactory.new('Say', current_options.merge(options), &block)
-    end
+    namespace :say
+    alias :octocat :say
 
-    def scopes(options={}, &block)
-      @scopes ||= ApiFactory.new('Scopes', current_options.merge(options), &block)
-    end
+    namespace :scopes
 
-    def search(options={}, &block)
-      @search ||= ApiFactory.new('Search', current_options.merge(options), &block)
-    end
+    namespace :search
 
     # Many of the resources on the users API provide a shortcut for getting
     # information about the currently authenticated user.
-    #
-    def users(options={}, &block)
-      @users ||= ApiFactory.new('Users', current_options.merge(options), &block)
-    end
-
+    namespace :users
   end # Client
 end # Github

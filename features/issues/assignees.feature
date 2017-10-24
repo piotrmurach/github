@@ -1,7 +1,7 @@
 Feature: Assignees API
 
   Background:
-    Given I have "Github::Issues::Assignees" instance
+    Given I have "Github::Client::Issues::Assignees" instance
 
   Scenario: List
 

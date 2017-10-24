@@ -2,17 +2,17 @@
 
 require 'spec_helper'
 
-describe Github::Activity, 'integration' do
+describe Github::Client::Activity, 'integration' do
 
   after { reset_authentication_for subject }
 
   it_should_behave_like 'api interface'
 
-  its(:events)        { should be_a Github::Activity::Events }
+  its(:events)        { should be_a Github::Client::Activity::Events }
 
-  its(:notifications) { should be_a Github::Activity::Notifications }
+  its(:notifications) { should be_a Github::Client::Activity::Notifications }
 
-  its(:starring)      { should be_a Github::Activity::Starring }
+  its(:starring)      { should be_a Github::Client::Activity::Starring }
 
-  its(:watching)      { should be_a Github::Activity::Watching }
+  its(:watching)      { should be_a Github::Client::Activity::Watching }
 end

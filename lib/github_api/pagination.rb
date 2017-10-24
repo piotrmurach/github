@@ -1,7 +1,10 @@
 # encoding: utf-8
 
-module Github
+require_relative 'constants'
+require_relative 'page_links'
+require_relative 'page_iterator'
 
+module Github
   # A module that decorates response with pagination helpers
   module Pagination
     include Github::Constants
@@ -35,7 +38,7 @@ module Github
     # iterate over this method will return current page.
     def each_page
       yield self
-      while page_iterator.has_next?
+      while page_iterator.next?
         yield next_page
       end
     end
@@ -88,7 +91,17 @@ module Github
     # Returns <tt>true</tt> if there is another page in the result set,
     # otherwise <tt>false</tt>
     def has_next_page?
-      page_iterator.has_next?
+      page_iterator.next?
+    end
+
+    # Handle pagination params when they are not passed directly
+    #
+    def self.per_page_as_param(per_page_config)
+      params = {}
+      if (per_page_config != Github::Configuration.property_set[:per_page])
+        params[:per_page] = per_page_config unless per_page_config.nil?
+      end
+      params
     end
 
     private

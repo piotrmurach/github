@@ -10,6 +10,9 @@ end
 
 Cucumber::Rake::Task.new(:features)
 
-FileList['tasks/**/*.rake'].each { |task| import task }
+FileList['tasks/**/*.rake'].each(&method(:import))
 
-task :default => [:spec, :features]
+task default: [:spec, :features]
+
+desc 'Run all specs on CI'
+task ci: [:spec, :features, 'coveralls:push']

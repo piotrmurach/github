@@ -1,7 +1,10 @@
 # encoding: utf-8
 
-module Github
+require 'forwardable'
 
+require_relative 'pagination'
+
+module Github
   # A class responsible for proxing to faraday response
   class ResponseWrapper
     extend Forwardable
@@ -20,6 +23,15 @@ module Github
       @response    = response
       @current_api = current_api
       @env         = response.env
+      @body        = nil
+    end
+
+    # Overwrite methods to hash keys
+    #
+    ['id', 'type', 'fork'].each do |method_name|
+      define_method(method_name) do
+        self.body.fetch(method_name.to_s)
+      end
     end
 
     # Request url
@@ -122,7 +134,7 @@ module Github
 
     # Check if method is defined on the body
     #
-    def respond_to?(method_name)
+    def respond_to?(method_name, include_all = false)
       if self.has_key?(method_name.to_s)
         true
       else

@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://<BASIC_AUTH>@api.github.com/users/wycats/keys?access_token=<TOKEN>
+    uri: https://api.github.com/users/wycats/keys?access_token=<TOKEN>
     body:
       encoding: US-ASCII
       string: ''
@@ -17,6 +17,8 @@ http_interactions:
       - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Authorization: Basic <%= Base64.encode64("foobarmostunique:foobazquxmostrighteous").chomp
+        %>
   response:
     status:
       code: 200
@@ -45,7 +47,7 @@ http_interactions:
       Last-Modified:
       - Wed, 10 Apr 2013 21:28:41 GMT
       Etag:
-      - ! '"f2cb84edaf3717927473ca494e9fa1ec"'
+      - '"f2cb84edaf3717927473ca494e9fa1ec"'
       X-Github-Media-Type:
       - github.v3; param=full; format=json
       X-Content-Type-Options:
@@ -55,11 +57,11 @@ http_interactions:
       Access-Control-Expose-Headers:
       - Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-OAuth-Scopes, X-Accepted-OAuth-Scopes
       Access-Control-Allow-Origin:
-      - ! '*'
+      - "*"
       Content-Encoding:
       - gzip
     body:
-      encoding: ASCII-8BIT
+      encoding: US-ASCII
       string: !binary |-
         H4sIAAAAAAAAA4ySya6jVhRFfyXy1BXRYyipBvRg+sZcICMMvjZwAZseovx7
         XhIpybD24EhbOpOttX77/VSVp+8EcyFY/Nupeeyn76dxfP06jPkvwldEyjly
@@ -86,6 +88,6 @@ http_interactions:
         EDACXcR0aG+af0nrpA9aCydY3ApsbCjcjzmvSjliEQbPMLdUltaLBM2oC66l
         jtaayFkpZyiw+FS51onEh9I2Fjjz90BbQxcq2pAYrvv072hvINuBminEgPiD
         u/vb79cfKh9lsKIFAAA=
-    http_version: !!null 
+    http_version: 
   recorded_at: Wed, 10 Apr 2013 21:30:59 GMT
 recorded_with: VCR 2.4.0

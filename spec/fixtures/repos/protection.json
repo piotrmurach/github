@@ -1,0 +1,11 @@
+{
+  "url": "https://api.github.com/repos/peter-murach/github/branches/master/protection",
+  "required_pull_request_reviews": {
+    "url": "https://api.github.com/repos/peter-murach/github/branches/master/protection/required_pull_request_reviews",
+    "dismiss_stale_reviews": false
+  },
+  "enforce_admins": {
+    "url":"https://api.github.com/repos/peter-murach/github/branches/master/protection/enforce_admins",
+    "enabled": false
+  }
+}

@@ -3,12 +3,22 @@
 module Github
   module RateLimit
 
-    def ratelimit
-      get_request("/rate_limit").rate.limit
+    def ratelimit(*args)
+      arguments(args)
+
+      get_request("/rate_limit", arguments.params).rate.limit
     end
 
-    def ratelimit_remaining
-      get_request("/rate_limit").rate.remaining
+    def ratelimit_remaining(*args)
+      arguments(args)
+
+      get_request("/rate_limit", arguments.params).rate.remaining
+    end
+
+    def ratelimit_reset(*args)
+      arguments(args)
+
+      get_request("/rate_limit", arguments.params).rate.reset
     end
 
   end # RateLimit

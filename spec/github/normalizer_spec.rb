@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require 'spec_helper'
 require 'github_api/core_ext/hash'
 
@@ -15,10 +17,10 @@ describe Github::Normalizer, '#normalize!' do
   context '#normalize!' do
     it 'converts hash keys to string' do
       ['a', 'b', 'c'].each do |key|
-        subject.normalize!(hash).all_keys.should include key
+        expect(subject.normalize!(hash).deep_key?(key)).to be_true
       end
       [:a, :b, :c].each do |key|
-        subject.normalize!(hash).all_keys.should_not include key
+        expect(subject.normalize!(hash).deep_key?(key)).to be_false
       end
     end
 

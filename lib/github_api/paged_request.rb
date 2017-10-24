@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require_relative 'constants'
+
 module Github
 
   # A module that adds http get request to response pagination
@@ -33,7 +35,7 @@ module Github
         params[PARAM_PAGE] = default_page
       end
 
-      current_api.get_request(path, params)
+      current_api.get_request(path, ParamsHash.new(params))
     end
 
   end # PagedRequest

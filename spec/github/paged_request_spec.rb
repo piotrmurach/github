@@ -1,12 +1,13 @@
 # encoding: utf-8
 
 require 'spec_helper'
+require 'github_api/paged_request'
 
 describe Github::PagedRequest, '#page_request' do
-  let(:current_api) { Github::Repos.new }
+  let(:current_api) { Github::Client::Repos.new }
   let(:path) { "/repositories/"}
   let(:klass) {
-    klass = Class.new do
+    Class.new do
       include Github::PagedRequest
     end
   }

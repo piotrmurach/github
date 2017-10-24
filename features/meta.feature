@@ -1,7 +1,7 @@
 Feature: Emojis API
 
   Background:
-    Given I have "Github::Meta" instance
+    Given I have "Github::Client::Meta" instance
 
   Scenario: Get
 

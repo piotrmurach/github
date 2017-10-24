@@ -2,8 +2,10 @@
 
 require 'faraday'
 
+require_relative '../utils/url'
+
 module Github
-  module Request
+  class Request
     class OAuth2 < Faraday::Middleware
       include Github::Utils::Url
 
@@ -18,7 +20,7 @@ module Github
 
         if token = params[ACCESS_TOKEN] and !token.empty?
           env[:url].query = build_query params
-          env[:request_headers].merge!(AUTH_HEADER => "Token token=\"#{token}\"")
+          env[:request_headers].merge!(AUTH_HEADER => "token #{token}")
         end
 
         @app.call env

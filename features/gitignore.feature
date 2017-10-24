@@ -1,7 +1,7 @@
 Feature: Markdown API
 
   Background:
-    Given I have "Github::Gitignore" instance
+    Given I have "Github::Client::Gitignore" instance
 
   Scenario: List available templates
 
@@ -9,7 +9,7 @@ Feature: Markdown API
     When I make request within a cassette named "gitignore/list"
     Then the response status should be 200
       And the response type should be JSON
-      And the response should have 76 items
+      And the response should have 102 items
       And the response should contain Ruby
       And the response should contain Rails
 
@@ -29,7 +29,7 @@ Feature: Markdown API
       | template_name |
       | Ruby          |
     And I pass the following request options:
-      | mime                       |
+      | accept                     |
       | application/vnd.github.raw |
     When I make request within a cassette named "gitignore/get_raw"
     Then the response status should be 200

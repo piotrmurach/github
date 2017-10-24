@@ -1,11 +1,10 @@
-# -*- encoding: utf-8 -*-
+# frozen_string_literal: true
+# encoding: utf-8
 
 module Github
-  # Deals with normalazing client supplied parameter keys.
+  # Normalize client-supplied parameter keys.
   module Normalizer
-
     # Turns any keys from nested hashes including nested arrays into strings
-    #
     def normalize!(params)
       case params
       when Hash
@@ -17,11 +16,8 @@ module Github
         params.map! do |el|
           normalize!(el)
         end
-      else
-        params.to_s
       end
-      return params
+      params
     end
-
   end # Normalizer
 end # Github

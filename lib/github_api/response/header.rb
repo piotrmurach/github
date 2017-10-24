@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require_relative '../constants'
+
 module Github
   class Response
 
@@ -11,6 +13,10 @@ module Github
 
       def loaded?
         !!env
+      end
+
+      def [](property)
+        loaded? ? env[:response_headers][property] : nil
       end
 
       def oauth_scopes
@@ -28,6 +34,12 @@ module Github
 
       def ratelimit_remaining
         loaded? ? env[:response_headers][RATELIMIT_REMAINING] : nil
+      end
+
+      # A unix timestamp describing when the ratelimit will
+      # be reset
+      def ratelimit_reset
+        loaded? ? env[:response_headers][RATELIMIT_RESET] : nil
       end
 
       def cache_control
@@ -70,7 +82,6 @@ module Github
       def body
         loaded? ? env[:body] : nil
       end
-
     end # Header
   end # Response
 end # Github

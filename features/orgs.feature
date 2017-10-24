@@ -1,7 +1,17 @@
 Feature: Organizations API
 
   Background:
-    Given I have "Github::Orgs" instance
+    Given I have "Github::Client::Orgs" instance
+
+  Scenario: List all organizations
+
+    Given I want to list resources with the following params:
+      | every |
+      | every |
+    When I make request within a cassette named "orgs/list/all"
+    Then the response status should be 200
+      And the response type should be JSON
+      And the response should not be empty
 
   Scenario: List for the user
 

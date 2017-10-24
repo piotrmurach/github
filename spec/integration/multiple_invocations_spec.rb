@@ -12,7 +12,7 @@ describe Github, 'invocations' do
     let(:request_path) { "/repos/#{user}/#{repo}/commits/#{sha}" }
 
     before {
-      stub_get(request_path).to_return(:body => nil, :status => 200,
+      stub_get(request_path).to_return(:body => '{}', :status => 200,
         :headers => {:content_type => "application/json; charset=utf-8"})
     }
 
@@ -29,7 +29,7 @@ describe Github, 'invocations' do
     let(:request_path) { "/orgs/#{org}" }
 
     before {
-      stub_get(request_path).to_return(:body => nil, :status => 200,
+      stub_get(request_path).to_return(:body => '{}', :status => 200,
         :headers => {:content_type => "application/json; charset=utf-8"})
     }
 

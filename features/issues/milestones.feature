@@ -1,7 +1,7 @@
 Feature: Milestones API
 
   Background:
-    Given I have "Github::Issues::Milestones" instance
+    Given I have "Github::Client::Issues::Milestones" instance
 
   Scenario: List
 
@@ -16,8 +16,8 @@ Feature: Milestones API
   Scenario: Get a single milestone
 
     Given I want to get resource with the following params:
-      | user | repo            | milestone_id |
-      | josh | rails-behaviors | 1            |
+      | user | repo            | number |
+      | josh | rails-behaviors | 1      |
     And I pass the following request options:
       | state  |
       | closed |
@@ -42,8 +42,8 @@ Feature: Milestones API
   Scenario: Update
 
     Given I want to update resource with the following params:
-      | user  | repo            | milestone_id |
-      | murek | github_api_test | 1            |
+      | user  | repo            | number |
+      | murek | github_api_test | 1      |
     And I pass the following request options:
       | state  |
       | closed |
@@ -55,8 +55,8 @@ Feature: Milestones API
   Scenario: Delete
 
     Given I want to delete resource with the following params:
-      | user  | repo            | milestone_id |
-      | murek | github_api_test | 1            |
+      | user  | repo            | number |
+      | murek | github_api_test | 1      |
     When I make request within a cassette named "issues/milestones/delete" and match on method
     Then the response status should be 204
 

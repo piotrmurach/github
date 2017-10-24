@@ -14,7 +14,7 @@ describe Github::Validations::Format do
       }
     }
 
-    it 'fails to accept unkown value for a given parameter key' do
+    it 'fails to accept unknown value for a given parameter key' do
       actual = { 'param_a' => 'x' }
       expect {
         validator.assert_valid_values(permitted, actual)

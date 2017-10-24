@@ -3,10 +3,7 @@
 require 'spec_helper'
 
 describe Github do
-  after {
-    subject.reset!
-    reset_authentication_for subject
-  }
+  after { reset_authentication_for subject }
 
   it { should respond_to :new }
 

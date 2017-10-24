@@ -1,9 +1,9 @@
 # encoding: utf-8
 
+require 'oauth2'
+
 module Github
   module Authorization
-
-    attr_accessor :scopes
 
     # Setup OAuth2 instance
     def client
@@ -25,7 +25,7 @@ module Github
 
     # Sends authorization request to GitHub.
     # = Parameters
-    # * <tt>:redirect_uri</tt> - Required string.
+    # * <tt>:redirect_uri</tt> - Optional string.
     # * <tt>:scope</tt> - Optional string. Comma separated list of scopes.
     #   Available scopes:
     #   * (no scope) - public read-only access (includes public user profile info, public repo info, and gists).
@@ -56,13 +56,13 @@ module Github
     end
 
     # Select authentication parameters
+    #
+    # @api public
     def authentication
-      if basic_auth?
-        { :basic_auth => basic_auth }
-      elsif login? && password?
-        { :login => login, :password => password }
+      if basic_authed?
+        { login: login, password: password }
       else
-        { }
+        {}
       end
     end
 
@@ -71,6 +71,5 @@ module Github
     def _verify_client # :nodoc:
       raise ArgumentError, 'Need to provide client_id and client_secret' unless client_id? && client_secret?
     end
-
   end # Authorization
 end # Github

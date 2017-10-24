@@ -1,13 +1,17 @@
+# encoding: utf-8
+
 require 'spec_helper'
 
-describe Github::Orgs, 'integration' do
+describe Github::Client::Orgs, 'integration' do
 
   after { reset_authentication_for subject }
 
   it_should_behave_like 'api interface'
 
-  its(:members) { should be_a Github::Orgs::Members }
+  its(:members) { should be_a Github::Client::Orgs::Members }
 
-  its(:teams)   { should be_a Github::Orgs::Teams }
+  its(:teams)   { should be_a Github::Client::Orgs::Teams }
 
-end # Github::Orgs
+  its(:memberships) { should be_a(Github::Client::Orgs::Memberships) }
+
+end # Github::Client::Orgs

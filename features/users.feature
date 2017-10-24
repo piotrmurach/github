@@ -1,7 +1,7 @@
 Feature: Users API
 
   Background:
-    Given I have "Github::Users" instance
+    Given I have "Github::Client::Users" instance
 
   Scenario: List all users
 

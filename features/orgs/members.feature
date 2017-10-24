@@ -1,7 +1,7 @@
 Feature: Members API
 
   Background:
-    Given I have "Github::Orgs::Members" instance
+    Given I have "Github::Client::Orgs::Members" instance
 
   Scenario: List
 
@@ -26,13 +26,13 @@ Feature: Members API
       And the response type should be JSON
       And the response should not be empty
 
-#   Scenario: Check if member of organization (302)
-# 
-#     Given I want to member? resource with the following params:
-#       | org   | member |
-#       | rails | drogus |
-#     When I make request within a cassette named "orgs/members/member_false"
-#     Then the response should be false
+  Scenario: Check if member of organization (302)
+
+    Given I want to member? resource with the following params:
+      | org   | member |
+      | rails | drogus |
+    When I make request within a cassette named "orgs/members/is_member"
+    Then the response should be true
 
   Scenario: Check if public member of organization (404)
 
@@ -42,7 +42,7 @@ Feature: Members API
     And I pass the following request options:
       | public |
       | true   |
-    When I make request within a cassette named "orgs/members/member_public_false"
+    When I make request within a cassette named "orgs/members/is_public_member_no"
     Then the response should be false
 
   Scenario: Check if public member of organization (204)
@@ -53,5 +53,5 @@ Feature: Members API
     And I pass the following request options:
       | public |
       | true   |
-    When I make request within a cassette named "orgs/members/member_public_true"
+    When I make request within a cassette named "orgs/members/is_public_member_yes"
     Then the response should be true

@@ -1,7 +1,7 @@
 Feature: GitData Commits API
 
   Background:
-    Given I have "Github::GitData::Commits" instance
+    Given I have "Github::Client::GitData::Commits" instance
 
   Scenario: Gets a single commit
 

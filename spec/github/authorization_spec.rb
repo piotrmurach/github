@@ -9,10 +9,10 @@ describe Github::Authorization do
   let(:site) { 'http://github-ent.example.com/' }
   let(:options) { {:site => site} }
 
-  subject(:github) { Github.new options }
+  subject(:github) { Github.new(options) }
 
   after do
-    reset_authentication_for github
+    reset_authentication_for(github)
   end
 
   context '.client' do
@@ -145,19 +145,22 @@ describe Github::Authorization do
       let(:options) { { :basic_auth => 'github:pass' } }
 
       it "should return hash with basic auth params" do
-        expect(github.authentication).to be_a Hash
-        expect(github.authentication).to have_key(:basic_auth)
+        expect(github.authentication).to include({login: 'github'})
+        expect(github.authentication).to include({password: 'pass'})
       end
     end
 
     context 'login & password' do
-      let(:options) { { :login => 'github', :password => 'pass' } }
-
       it "should return hash with login & password params" do
-        expect(github.authentication).to be_a Hash
-        expect(github.authentication).to have_key(:login)
+        options = {login: 'github', password: 'pass'}
+        github = Github.new(options)
+
+        expect(github.authentication).to be_a(Hash)
+        expect(github.authentication).to include({login: 'github'})
+        expect(github.authentication).to include({password: 'pass'})
+
+        reset_authentication_for(github)
       end
     end
   end # authentication
-
 end # Github::Authorization

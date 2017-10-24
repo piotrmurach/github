@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Github::Authorizations do
+describe Github::Client::Authorizations do
 
   after { reset_authentication_for subject }
 
