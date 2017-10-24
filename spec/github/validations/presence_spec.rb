@@ -16,9 +16,7 @@ describe Github::Validations::Presence do
 
     it 'asserts array without nil value' do
       user, repo = 'peter-murach', 'github_api'
-      expect {
-        validator.assert_presence_of user, repo
-      }.to_not raise_error(ArgumentError)
+      expect { validator.assert_presence_of user, repo }.to_not raise_error()
     end
 
     it 'assert hash with nil value' do
@@ -29,8 +27,7 @@ describe Github::Validations::Presence do
 
     it 'asserts hash without nil value' do
       args = {:user => 'peter-murach', :repo => 'github_api'}
-      expect { validator.assert_presence_of args }.
-        to_not raise_error(Github::Error::Validations)
+      expect { validator.assert_presence_of args }.to_not raise_error()
     end
   end
 

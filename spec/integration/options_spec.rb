@@ -10,8 +10,8 @@ describe Github, 'options' do
 
   context 'when different instances of the same class' do
     it 'instantiates the same api classes with different options' do
-      repos  = Github::Repos.new
-      repos2 = Github::Repos.new options
+      repos  = Github::Client::Repos.new
+      repos2 = Github::Client::Repos.new options
 
       expect(repos.object_id).to_not eql(repos2.object_id)
 
@@ -54,7 +54,7 @@ describe Github, 'options' do
     end
 
     it "inherits properties from api and doesn't pass them up the tree" do
-      repos    = Github::Repos.new options
+      repos    = Github::Client::Repos.new options
       comments = repos.comments
 
       expect(repos.adapter).to eql(adapter)
@@ -105,10 +105,11 @@ describe Github, 'options' do
       expect(client.repos.current_options[:endpoint]).to eql endpoint
       expect(client.repos.endpoint).to eql endpoint
 
-      client.repos.endpoint = default_endpoint
+      repos = client.repos
+      repos.endpoint = default_endpoint
 
-      expect(client.repos.endpoint).to eql default_endpoint
-      expect(client.repos.current_options[:endpoint]).to eql default_endpoint
+      expect(repos.endpoint).to eql default_endpoint
+      expect(repos.current_options[:endpoint]).to eql default_endpoint
     end
   end
 

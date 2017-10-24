@@ -1,4 +1,7 @@
+# encoding:utf-8
+
 require 'cgi'
+require 'addressable/uri'
 
 module Github
   module Utils
@@ -9,9 +12,13 @@ module Github
 
       KEY_VALUE_SEP = '='.freeze
 
-      def escape(s) CGI.escape s.to_s end
+      def escape_uri(s) Addressable::URI.escape(s.to_s) end
 
-      def unescape(s) CGI.unescape s.to_s end
+      def escape(s) CGI.escape(s.to_s) end
+
+      def unescape(s) CGI.unescape(s.to_s) end
+
+      def normalize(s) Addressable::URI.parse(s.to_s).normalize.path end
 
       def build_query(params)
         params.map { |k, v|

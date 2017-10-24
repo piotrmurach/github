@@ -61,6 +61,17 @@ Then /^the response should not be empty$/ do
   @response.should_not be_empty
 end
 
+Then /^the response should in (.*) contain (.*)$/ do |attr, item|
+  case @response.body
+  when Array
+    found = nil
+    @response.body.each do |element|
+      found = element[attr] if element[attr] == item
+    end
+    expect(found).to eql(item)
+  end
+end
+
 Then /^the response should contain (.*)$/ do |item|
   case @response.body
   when Array
@@ -69,7 +80,7 @@ Then /^the response should contain (.*)$/ do |item|
 end
 
 Then /^the response should contain:$/ do |string|
-  unescape(@response.body).should include(unescape(string))
+  expect(@response.body.strip).to eql(string.strip)
 end
 
 Then /^the response (.*) link should contain:$/ do |type, table|
@@ -78,6 +89,10 @@ Then /^the response (.*) link should contain:$/ do |type, table|
       @response.links.send(:"#{type}").should match /#{key}=#{val}/
     end
   end
+end
+
+Then /^the response body (.*) should be (.*)$/ do |attr, result|
+  expect(@response.body[attr]).to eql result
 end
 
 Then /^the response (.*) item (.*) should be (.*)$/ do |action, field, result|

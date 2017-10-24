@@ -1,16 +1,24 @@
 # encoding: utf-8
 
-require 'github_api/utils/url'
 require 'uri'
 
+require_relative 'constants'
+require_relative 'paged_request'
+require_relative 'utils/url'
+
 module Github
+  # A class responsible for requesting resources through page links
+  #
+  # @api private
   class PageIterator
     include Github::Constants
     include Github::Utils::Url
     include Github::PagedRequest
 
     # Setup attribute accesor for all the link types
-    ATTRIBUTES = [ META_FIRST, META_NEXT, META_PREV, META_LAST ]
+    ATTRIBUTES = [META_FIRST, META_NEXT, META_PREV, META_LAST]
+
+    DEFAULT_SHA = 'master'
 
     ATTRIBUTES.each do |attr|
       attr_accessor :"#{attr}_page_uri", :"#{attr}_page"
@@ -21,82 +29,39 @@ module Github
     def initialize(links, current_api)
       @links       = links
       @current_api = current_api
-      update_page_links @links
+      update_page_links(@links)
     end
 
-    def has_next?
+    def next?
       next_page == 0 || !next_page_uri.nil?
     end
 
     def count
-      return nil unless last_page_uri
-      parse_query(URI(last_page_uri).query)['page']
+      parse_query(URI(last_page_uri).query)['page'] if last_page_uri
     end
 
     # Perform http get request for the first resource
     #
     def first
-      return nil unless first_page_uri
-      page_uri = URI(first_page_uri)
-      params = parse_query(page_uri.query)
-      if next_page < 1
-        params['sha'] = 'master' if params.keys.include?('sha')
-        params['per_page'] = parse_per_page_number(first_page_uri)
-      else
-        params['page']     = parse_page_number(first_page_uri)
-        params['per_page'] = parse_per_page_number(first_page_uri)
-      end
-
-      response = page_request(page_uri.path, params)
-      update_page_links response.links
-      response
+      perform_request(first_page_uri) if first_page_uri
     end
 
     # Perform http get request for the next resource
     #
     def next
-      return nil unless has_next?
-      page_uri = URI(next_page_uri)
-      params   = parse_query(page_uri.query)
-      if next_page < 1
-        params['sha'] = params['last_sha'] if params.keys.include?('last_sha')
-        params['per_page'] = parse_per_page_number(next_page_uri)
-      else
-        params['page']     = parse_page_number(next_page_uri)
-        params['per_page'] = parse_per_page_number(next_page_uri)
-      end
-
-      response = page_request(page_uri.path, params)
-      update_page_links response.links
-      response
+      perform_request(next_page_uri) if next?
     end
 
     # Perform http get request for the previous resource
     #
     def prev
-      return nil unless prev_page_uri
-      page_uri = URI(prev_page_uri)
-      params = parse_query(page_uri.query)
-      params['page']     = parse_page_number(prev_page_uri)
-      params['per_page'] = parse_per_page_number(prev_page_uri)
-
-      response = page_request(page_uri.path, params)
-      update_page_links response.links
-      response
+      perform_request(prev_page_uri) if prev_page_uri
     end
 
     # Perform http get request for the last resource
     #
     def last
-      return nil unless last_page_uri
-      page_uri = URI(last_page_uri)
-      params = parse_query(page_uri.query)
-      params['page']     = parse_page_number(last_page_uri)
-      params['per_page'] = parse_per_page_number(last_page_uri)
-
-      response = page_request(page_uri.path, params)
-      update_page_links response.links
-      response
+      perform_request(last_page_uri) if last_page_uri
     end
 
     # Returns the result for a specific page.
@@ -106,16 +71,35 @@ module Github
       # last page URI then there is only one page.
       page_uri = first_page_uri || last_page_uri
       return nil unless page_uri
-      params = parse_query URI(page_uri).query
-      params['page']     = page_number
-      params['per_page'] = parse_per_page_number(page_uri)
 
-      response = page_request URI(page_uri).path, params
+      perform_request(page_uri, page_number)
+    end
+
+    private
+
+    def perform_request(page_uri_path, page_number = nil)
+      page_uri = URI(page_uri_path)
+      params = parse_query(page_uri.query)
+
+      if page_number
+        params['page'] = page_number
+      elsif next_page < 1
+        sha = sha(params)
+        params['sha'] = sha if sha
+      else
+        params['page'] = parse_page_number(page_uri_path)
+      end
+      params['per_page'] = parse_per_page_number(page_uri_path)
+
+      response = page_request(page_uri.path, params)
       update_page_links response.links
       response
     end
 
-  private
+    def sha(params)
+      return params['last_sha'] if params.keys.include?('last_sha')
+      return DEFAULT_SHA if params.keys.include?('sha')
+    end
 
     def parse_per_page_number(uri) # :nodoc:
       parse_page_params(uri, PARAM_PER_PAGE)
@@ -131,14 +115,14 @@ module Github
       parsed = nil
       begin
         parsed = URI.parse(uri)
-      rescue URI::Error => e
+      rescue URI::Error
         return -1
       end
       param = parse_query_for_param(parsed.query, attr)
       return -1 if param.nil? || param.empty?
       begin
         return param.to_i
-      rescue ArgumentError => err
+      rescue ArgumentError
         return -1
       end
     end
@@ -146,10 +130,9 @@ module Github
     # Wholesale update of all link attributes
     def update_page_links(links) # :nodoc:
       ATTRIBUTES.each do |attr|
-        self.send(:"#{attr}_page_uri=", links.send(:"#{attr}"))
-        self.send(:"#{attr}_page=", parse_page_number(links.send(:"#{attr}")))
+        send(:"#{attr}_page_uri=", links.send(:"#{attr}"))
+        send(:"#{attr}_page=", parse_page_number(links.send(:"#{attr}")))
       end
     end
-
   end # PageIterator
 end # Github

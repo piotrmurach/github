@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require 'spec_helper'
 
 describe Github::Request::Jsonize do
@@ -16,24 +18,24 @@ describe Github::Request::Jsonize do
   context 'no body' do
     let(:result) { process(nil) }
 
-    it "doesn't change body" do
-      result_body.should be_nil
+    it "returns empty object" do
+      expect(result_body).to be_nil
     end
 
     it "doesn't add content type" do
-      result_type.should be_nil
+      expect(result_type).to be_nil
     end
   end
 
   context 'empty body' do
     let(:result) { process('') }
 
-    it "doesn't change body" do
-      result_body.should be_empty
+    it "returns empty object" do
+      expect(result_body).to eq('')
     end
 
-    it "doesn't add conten type" do
-      result_type.should be_nil
+    it "doesn't add content type" do
+      expect(result_type).to be_nil
     end
   end
 
@@ -84,5 +86,4 @@ describe Github::Request::Jsonize do
       result_type.should eql 'application/json; charset=utf-8'
     end
   end
-
 end # Github::Request::Jsonize

@@ -1,18 +1,20 @@
-require 'rubygems'
+# encoding: utf-8
 
-$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
-$LOAD_PATH.unshift(File.dirname(__FILE__))
+if RUBY_VERSION > '1.9' and (ENV['COVERAGE'] || ENV['TRAVIS'])
+  require 'simplecov'
+  require 'coveralls'
 
-require 'rspec'
-require 'json'
+  SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
+    SimpleCov::Formatter::HTMLFormatter,
+    Coveralls::SimpleCov::Formatter
+  ]
+  SimpleCov.start do
+    command_name 'ci'
+  end
+end
+
 require 'webmock/rspec'
 require 'github_api'
-
-if RUBY_VERSION > '1.9' and ENV['COVERAGE']
-  require 'coverage_adapter'
-  SimpleCov.start 'github_api'
-  SimpleCov.coverage_dir 'coverage/rspec'
-end
 
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories.
@@ -31,6 +33,7 @@ RSpec.configure do |config|
   config.order = :rand
   config.color_enabled = true
   config.treat_symbols_as_metadata_keys_with_true_values = true
+  config.run_all_when_everything_filtered = true
 
   config.before(:each) do
     WebMock.reset!
@@ -94,13 +97,5 @@ def reset_authentication_for(object)
   [ 'user', 'repo', 'basic_auth', 'oauth_token', 'login', 'password' ].each do |item|
     Github.send("#{item}=", nil)
     object.send("#{item}=", nil)
-  end
-end
-
-class Hash
-  def except(*keys)
-    cpy = self.dup
-    keys.each { |key| cpy.delete(key) }
-    cpy
   end
 end

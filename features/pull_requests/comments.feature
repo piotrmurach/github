@@ -1,7 +1,7 @@
 Feature: Pull Requests Comments API
 
   Background:
-    Given I have "Github::PullRequests::Comments" instance
+    Given I have "Github::Client::PullRequests::Comments" instance
 
   Scenario: List in a repository
 
@@ -11,7 +11,7 @@ Feature: Pull Requests Comments API
     When I make request within a cassette named "pull_requests/comments/list_repo"
     Then the response status should be 200
       And the response type should be JSON
-      And the response should have 0 items
+      And the response should have 4 items
 
   Scenario: List on a pull request
 
@@ -19,8 +19,8 @@ Feature: Pull Requests Comments API
       | user          | repo   |
       | peter-murach  | github |
       And I pass the following request options:
-        | request_id |
-        | 62         |
+        | number |
+        | 62     |
     When I make request within a cassette named "pull_requests/comments/list_pull"
     Then the response status should be 200
       And the response type should be JSON

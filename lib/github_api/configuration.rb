@@ -1,119 +1,70 @@
 # encoding: utf-8
 
-module Github
-  module Configuration
+require_relative 'api/config'
+require_relative 'version'
 
-    VALID_OPTIONS_KEYS = [
-      :adapter,
-      :client_id,
-      :client_secret,
-      :oauth_token,
-      :endpoint,
-      :site,
-      :ssl,
-      :mime_type,
-      :user_agent,
-      :connection_options,
-      :repo,
-      :user,
-      :org,
-      :login,
-      :password,
-      :basic_auth
-    ].freeze
+module Github
+  # Stores the configuration
+  class Configuration < API::Config
 
     # Other adapters are :typhoeus, :patron, :em_synchrony, :excon, :test
-    DEFAULT_ADAPTER = :net_http
+    property :adapter, default: :net_http
+
+    # By default, don't traverse the page links
+    property :auto_pagination, default: false
+
+    property :follow_redirects, default: true
+
+    # Basic authentication
+    property :basic_auth
 
     # By default, don't set an application key
-    DEFAULT_CLIENT_ID = nil
+    property :client_id
 
     # By default, don't set an application secret
-    DEFAULT_CLIENT_SECRET = nil
+    property :client_secret
 
     # By default, don't set a user oauth access token
-    DEFAULT_OAUTH_TOKEN = nil
-
-    # By default, don't set a user login name
-    DEFAULT_LOGIN = nil
-
-    # By default, don't set a user password
-    DEFAULT_PASSWORD = nil
-
-    # By default, don't set a user basic authentication
-    DEFAULT_BASIC_AUTH = nil
+    property  :oauth_token
 
     # The api endpoint used to connect to GitHub if none is set
-    DEFAULT_ENDPOINT = 'https://api.github.com'.freeze
+    property  :endpoint, default: 'https://api.github.com'.freeze
 
     # The web endpoint used to connect to GitHub if none is set
-    DEFAULT_SITE = 'https://github.com'.freeze
+    property  :site, default: 'https://github.com'.freeze
+
+    # The web endpoint used to upload release assets to GitHub if none is set
+    property  :upload_endpoint, default: 'https://uploads.github.com'.freeze
 
     # The default SSL configuration
-    DEFAULT_SSL = {}
+    property  :ssl, default: {
+      :ca_file => File.expand_path('../ssl_certs/cacerts.pem', __FILE__)
+    }
+
+    # By default the Accept header will make a request for JSON
+    property  :mime_type
 
     # The value sent in the http header for 'User-Agent' if none is set
-    DEFAULT_USER_AGENT = "Github Ruby Gem #{Github::VERSION::STRING}".freeze
-
-    # By default the <tt>Accept</tt> header will make a request for <tt>JSON</tt>
-    DEFAULT_MIME_TYPE = :json
+    property  :user_agent, default: "Github API Ruby Gem #{Github::VERSION}".freeze
 
     # By default uses the Faraday connection options if none is set
-    DEFAULT_CONNECTION_OPTIONS = {}
+    property  :connection_options, default: {}
 
-    # By default, don't set user name
-    DEFAULT_USER = nil
+    # Global repository name
+    property :repo
 
-    # By default, don't set repository name
-    DEFAULT_REPO = nil
+    property :user
 
-    # By default, don't set organization name
-    DEFAULT_ORG = nil
+    property :org
 
-    attr_accessor *VALID_OPTIONS_KEYS
+    property :login
 
-    # Convenience method to allow for global setting of configuration options
-    def configure
-      yield self
-    end
+    property :password
 
-    def self.extended(base)
-      base.reset!
-    end
+    # By default display 30 resources
+    property :per_page, default: 30
 
-    class << self
-      def keys
-        VALID_OPTIONS_KEYS
-      end
-    end
-
-    def options
-      options = {}
-      VALID_OPTIONS_KEYS.each { |k| options[k] = send(k) }
-      options
-    end
-
-    # Reset configuration options to their defaults
-    #
-    def reset!
-      self.adapter            = DEFAULT_ADAPTER
-      self.client_id          = DEFAULT_CLIENT_ID
-      self.client_secret      = DEFAULT_CLIENT_SECRET
-      self.oauth_token        = DEFAULT_OAUTH_TOKEN
-      self.endpoint           = DEFAULT_ENDPOINT
-      self.site               = DEFAULT_SITE
-      self.ssl                = DEFAULT_SSL
-      self.user_agent         = DEFAULT_USER_AGENT
-      self.connection_options = DEFAULT_CONNECTION_OPTIONS
-      self.mime_type          = DEFAULT_MIME_TYPE
-      self.user               = DEFAULT_USER
-      self.repo               = DEFAULT_REPO
-      self.org                = DEFAULT_ORG
-      self.login              = DEFAULT_LOGIN
-      self.password           = DEFAULT_PASSWORD
-      self.basic_auth         = DEFAULT_BASIC_AUTH
-      self
-    end
-
+    # Add Faraday::RackBuilder to overwrite middleware
+    property :stack
   end # Configuration
 end # Github

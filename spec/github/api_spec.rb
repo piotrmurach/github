@@ -1,64 +1,34 @@
+# encoding: utf-8
+
 require 'spec_helper'
 
-describe Github::API do
-  let(:api) { Github::API.new }
-  let(:repos) { Github::Repos }
-
-  it { described_class.included_modules.should include Github::Authorization }
-  it { described_class.included_modules.should include Github::MimeType }
-  it { described_class.included_modules.should include Github::Connection }
-  it { described_class.included_modules.should include Github::Request }
-
-  context 'actions' do
-    it { described_class.new.should respond_to :api_methods_in }
-
+RSpec.describe Github::API do
+  context '#actions' do
     it 'dynamically adds actions inspection to classes inheriting from api' do
-      repos.should respond_to :actions
-      repos.new.should respond_to :actions
+      repos = Github::Client::Repos
+      expect(repos).to respond_to(:actions)
+      expect(repos.new).to respond_to(:actions)
     end
 
     it 'ensures output contains api methods' do
-      methods = [ 'method_a', 'method_b']
-      repos.stub(:instance_methods).and_return methods
-      output = capture(:stdout) { 
-        api.api_methods_in(repos)
-      }
-      output.should =~ /.*method_a.*/
-      output.should =~ /.*method_b.*/
+      repos = Github::Client::Repos
+      methods = [:method_a, :method_b]
+      allow(repos).to receive(:instance_methods).and_return(methods)
+      expect(repos.new.api_methods_in(repos)).to eq([:method_a, :method_b])
     end
   end
 
-  context '_process_basic_auth' do
-    let(:github) { Github.new :basic_auth => 'login:password' }
+  context '#extract_basic_auth' do
+    let(:options) { { basic_auth: 'piotr:secret' } }
 
-    after { reset_authentication_for github }
+    it "extracts login from :basic_auth param" do
+      api = Github::API.new(options)
+      expect(api.login).to eq('piotr')
+    end
 
-    it 'should parse authentication params' do
-      github.login.should eq 'login'
-      github.password.should eq 'password'
+    it "extracts password from :basic_auth param" do
+      api = Github::API.new(options)
+      expect(api.password).to eq('secret')
     end
   end
-
-  context 'normalize!' do
-    before do
-      @params = { 'a' => { :b => { 'c' => 1 }, 'd' => [ 'a', { :e => 2 }] } }
-    end
-
-    it "should stringify all the keys inside nested hash" do
-      actual = api.normalize! @params
-      expected = { 'a' => { 'b'=> { 'c' => 1 }, 'd' => [ 'a', { 'e'=> 2 }] } }
-      actual.should be_eql expected
-    end
-  end
-
-  context 'filter!' do
-    it "should remove non valid param keys" do
-      valid = ['a', 'b', 'e']
-      hash = {'a' => 1, 'b' => 3, 'c' => 2, 'd'=> 4, 'e' => 5 }
-      actual = api.filter! valid, hash
-      expected = {'a' => 1, 'b' => 3, 'e' => 5 }
-      actual.should be_eql expected
-    end
-  end
-
 end # Github::API

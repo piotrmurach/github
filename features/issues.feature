@@ -1,7 +1,7 @@
 Feature: Issues API
 
   Background:
-    Given I have "Github::Issues" instance
+    Given I have "Github::Client::Issues" instance
 
   Scenario: List
 
@@ -15,12 +15,12 @@ Feature: Issues API
 
   Scenario: List on repository
 
-    Given I want to list_repo resources with the following params:
-      | user          | repo   |
-      | peter-murach  | github |
+    Given I want to list resources with the following params:
+      | user        | repo   |
+      | piotrmurach | github |
     And I pass the following request options:
-      | state  | assignee | sort    | direction |
-      | closed | none     | created | asc       |
+      | state  | assignee | sort    | direction | user        | repo   |
+      | closed | none     | created | asc       | piotrmurach | github |
     When I make request within a cassette named "issues/list/repo"
     Then the response status should be 200
       And the response type should be JSON
@@ -29,8 +29,8 @@ Feature: Issues API
   Scenario: Get single
 
     Given I want to get resource with the following params:
-      | user          | repo   | issue_id |
-      | peter-murach  | github | 15       |
+      | user        | repo   | issue_id |
+      | piotrmurach | github | 15       |
     When I make request within a cassette named "issues/get"
     Then the response status should be 200
       And the response type should be JSON

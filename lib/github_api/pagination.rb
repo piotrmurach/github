@@ -1,7 +1,10 @@
 # encoding: utf-8
 
-module Github
+require_relative 'constants'
+require_relative 'page_links'
+require_relative 'page_iterator'
 
+module Github
   # A module that decorates response with pagination helpers
   module Pagination
     include Github::Constants
@@ -16,11 +19,26 @@ module Github
       page_iterator.count.to_i
     end
 
+    # Iterate over results set pages by automatically calling `next_page`
+    # until all pages are exhausted. Caution needs to be exercised when
+    # using this feature - 100 pages iteration will perform 100 API calls.
+    # By default this is off. You can set it on the client, individual API
+    # instances or just per given request.
+    #
+    def auto_paginate(auto=false)
+      if (current_api.auto_pagination? || auto) && self.body.is_a?(Array)
+        resources_bodies = []
+        each_page { |resource| resources_bodies += resource.body }
+        self.body = resources_bodies
+      end
+      self
+    end
+
     # Iterator like each for response pages. If there are no pages to
     # iterate over this method will return current page.
     def each_page
       yield self
-      while page_iterator.has_next?
+      while page_iterator.next?
         yield next_page
       end
     end
@@ -73,7 +91,17 @@ module Github
     # Returns <tt>true</tt> if there is another page in the result set,
     # otherwise <tt>false</tt>
     def has_next_page?
-      page_iterator.has_next?
+      page_iterator.next?
+    end
+
+    # Handle pagination params when they are not passed directly
+    #
+    def self.per_page_as_param(per_page_config)
+      params = {}
+      if (per_page_config != Github::Configuration.property_set[:per_page])
+        params[:per_page] = per_page_config unless per_page_config.nil?
+      end
+      params
     end
 
     private

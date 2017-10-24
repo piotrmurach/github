@@ -1,7 +1,7 @@
 Feature: Forks API
 
   Background:
-    Given I have "Github::Repos::Forks" instance
+    Given I have "Github::Client::Repos::Forks" instance
 
   Scenario: List
 
@@ -25,4 +25,4 @@ Feature: Forks API
     Then the response status should be 200
       And the response type should be JSON
       And the response should not be empty
-      And the response first item created_at should be 2011-10-03T20:19:43Z
+      And the response first item created_at should be 2011-12-16T17:06:03Z

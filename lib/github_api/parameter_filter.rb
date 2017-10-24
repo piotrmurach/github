@@ -1,4 +1,7 @@
-# -*- encoding: utf-8 -*-
+# encoding: utf-8
+
+require_relative 'params_hash'
+require_relative 'validations'
 
 module Github
   # Allows you to specify parameters keys which will be preserved
@@ -10,7 +13,7 @@ module Github
     #
     def filter!(keys, params, options={:recursive => true})  # :nodoc:
       case params
-      when Hash
+      when Hash, ParamsHash
         params.keys.each do |k, v|
           unless (keys.include?(k) or Github::Validations::VALID_API_KEYS.include?(k))
             params.delete(k)

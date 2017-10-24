@@ -1,7 +1,7 @@
 Feature: Starring API
 
   Background:
-    Given I have "Github::Activity::Starring" instance
+    Given I have "Github::Client::Activity::Starring" instance
 
   Scenario: List
 
@@ -30,7 +30,7 @@ Feature: Starring API
       | user         | repo   |
       | peter-murach | github |
     When I make request within a cassette named "activity/starring/starring"
-    Then the response should be false
+    Then the response should be true
 
   Scenario: Star
 

@@ -1,14 +1,22 @@
+---
+language: ruby
+sudo: false
+cache: bundler
+script: "bundle exec rake ci"
+rvm:
+  - 2.0.0
+  - 2.1.10
+  - 2.2.6
+  - 2.3.3
+  - 2.4.1
+  - ruby-head
+  - jruby-9000
+  - jruby-head
 matrix:
   allow_failures:
-        - rvm: ruby-head
-        - rvm: jruby-19mode
-        - rvm: rbx-19mode
-rvm:
-  - 1.9.2
-  - 1.9.3
-  - rbx-19mode
-  - jruby-19mode
-  - ruby-head
+    - rvm: ruby-head
+    - rvm: jruby-head
+  fast_finish: true
 branches:
   only: master
 notifications:

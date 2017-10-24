@@ -1,0 +1,23 @@
+{
+  "issues": [
+    {
+      "gravatar_id": "4c3d600867886124a73f14a907b1a955",
+      "position": 10,
+      "number": 10,
+      "votes": 2,
+      "created_at": "2010-06-04T23:20:33-07:00",
+      "comments": 5,
+      "body": "Issue body goes here",
+      "title": "This is is the issue title",
+      "updated_at": "2010-06-04T23:20:33-07:00",
+      "html_url": "https => //github.com/pengwynn/linkedin/issues/10",
+      "user": "ckarbass",
+      "labels": [
+        "api",
+        "feature request",
+        "investigation"
+      ],
+      "state": "open"
+    }
+  ]
+}

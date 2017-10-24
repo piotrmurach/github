@@ -1,7 +1,7 @@
 Feature: Emojis API
 
   Background:
-    Given I have "Github::Emojis" instance
+    Given I have "Github::Client::Emojis" instance
 
   Scenario: List
 

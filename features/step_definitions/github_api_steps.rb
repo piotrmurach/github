@@ -12,6 +12,18 @@ Given /^I have "([^"]*)" instance$/ do |api_classes|
   )
 end
 
+Given /^I do not verify ssl$/ do
+  @instance.ssl = {:verify => false}
+end
+
+Given /^I set the following (?:attribute|attributes) of instance:$/ do |table|
+  table.hashes.each do |element|
+    element.each do |attr, val|
+      @instance.send(:"#{attr}=", val)
+    end
+  end
+end
+
 When /^I am not authorized$/ do
   [:basic_auth, :login, :password, :oauth_token].each do |attr|
     @instance.send("#{attr}=", nil)
@@ -34,7 +46,7 @@ When /^I want(?: to|) (.*) (?:resource|resources)$/ do |method|
   @method = method
 end
 
-When /^I want(?: to|) (.*) (?:resource|resources) with the following params:$/ do |method, table|
+When /^I want(?: to|) (.*) (?:resource|resources) with the following (?:params|arguments):$/ do |method, table|
   table.hashes.each do |attributes|
     @method = method.to_sym
     @attributes = attributes
@@ -43,6 +55,13 @@ end
 
 When /^I pass the following request options:$/ do |table|
   table.hashes.each do |options|
+    options.each do |k, v|
+      begin
+        options[k] = Integer(v) # Github API requires Integers in data to be sent as literal integers
+      rescue ArgumentError
+        next
+      end
+    end
     @options = options
   end
 end
@@ -69,6 +88,10 @@ When /^I iterate through collection pages$/ do
   @response.each_page do |page|
     @pages << page.flatten
   end
+end
+
+Then /^the request header (.*) should be$/ do |header, value|
+  expect(@response.headers.env[:request_headers][header]).to eql(value)
 end
 
 Then /^the response collection of resources is different for "([^"]*)" attribute$/ do |attr|

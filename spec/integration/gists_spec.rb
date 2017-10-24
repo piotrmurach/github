@@ -2,12 +2,12 @@
 
 require 'spec_helper'
 
-describe Github::Gists do
+describe Github::Client::Gists do
 
   after { reset_authentication_for subject }
 
   it_should_behave_like 'api interface'
 
-  its(:comments)   { should be_a Github::Gists::Comments }
+  its(:comments)   { should be_a Github::Client::Gists::Comments }
 
 end # Github::Gists

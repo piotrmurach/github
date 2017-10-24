@@ -6,12 +6,13 @@ describe Github::Authorization do
   let(:client_id) { '234jl23j4l23j4l' }
   let(:client_secret) { 'asasd79sdf9a7asfd7sfd97s' }
   let(:code) { 'c9798sdf97df98ds'}
-  let(:options) { {} }
+  let(:site) { 'http://github-ent.example.com/' }
+  let(:options) { {:site => site} }
 
-  subject(:github) { Github.new options }
+  subject(:github) { Github.new(options) }
 
   after do
-    reset_authentication_for github
+    reset_authentication_for(github)
   end
 
   context '.client' do
@@ -22,15 +23,15 @@ describe Github::Authorization do
     end
 
     it "should assign site from the options hash" do
-      github.client.site.should == 'https://github.com'
+      github.client.site.should == site
     end
 
     it "should assign 'authorize_url" do
-      github.client.authorize_url.should == 'https://github.com/login/oauth/authorize'
+      github.client.authorize_url.should == "#{site}login/oauth/authorize"
     end
 
     it "should assign 'token_url" do
-      github.client.token_url.should == 'https://github.com/login/oauth/access_token'
+      github.client.token_url.should == "#{site}login/oauth/access_token"
     end
   end
 
@@ -144,19 +145,22 @@ describe Github::Authorization do
       let(:options) { { :basic_auth => 'github:pass' } }
 
       it "should return hash with basic auth params" do
-        expect(github.authentication).to be_a Hash
-        expect(github.authentication).to have_key(:basic_auth)
+        expect(github.authentication).to include({login: 'github'})
+        expect(github.authentication).to include({password: 'pass'})
       end
     end
 
     context 'login & password' do
-      let(:options) { { :login => 'github', :password => 'pass' } }
-
       it "should return hash with login & password params" do
-        expect(github.authentication).to be_a Hash
-        expect(github.authentication).to have_key(:login)
+        options = {login: 'github', password: 'pass'}
+        github = Github.new(options)
+
+        expect(github.authentication).to be_a(Hash)
+        expect(github.authentication).to include({login: 'github'})
+        expect(github.authentication).to include({password: 'pass'})
+
+        reset_authentication_for(github)
       end
     end
   end # authentication
-
 end # Github::Authorization

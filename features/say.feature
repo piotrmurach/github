@@ -1,7 +1,7 @@
 Feature: Octocat ASCII API
 
   Background:
-    Given I have "Github::Say" instance
+    Given I have "Github::Client::Say" instance
 
   Scenario: ASCII octocat with random text
 
@@ -11,27 +11,27 @@ Feature: Octocat ASCII API
       And the response type should be TEXT
       And the response should contain:
         """
-                   MMM.           .MMM
-                   MMMMMMMMMMMMMMMMMMM
-                   MMMMMMMMMMMMMMMMMMM      ______________________________________
-                  MMMMMMMMMMMMMMMMMMMMM    |                                      |
-                 MMMMMMMMMMMMMMMMMMMMMMM   | Mind your words, they are important. |
-                MMMMMMMMMMMMMMMMMMMMMMMM   |_   __________________________________|
-                MMMM::- -:::::::- -::MMMM    |/
-                 MM~:~   ~:::::~   ~:~MM
-            .. MMMMM::. .:::+:::. .::MMMMM ..
-                  .MM::::: ._. :::::MM.
-                     MMMM;:::::;MMMM
-              -MM        MMMMMMM
-              ^  M+     MMMMMMMMM
-                  MMMMMMM MM MM MM
-                       MM MM MM MM
-                       MM MM MM MM
-                    .~~MM~MM~MM~MM~~.
-                 ~~~~MM:~MM~~~MM~:MM~~~~
-                ~~~~~~==~==~~~==~==~~~~~~
-                 ~~~~~~==~==~==~==~~~~~~
-                     :~==~==~==~==~~
+                       MMM.           .MMM
+                       MMMMMMMMMMMMMMMMMMM
+                       MMMMMMMMMMMMMMMMMMM      _______________________________________
+                      MMMMMMMMMMMMMMMMMMMMM    |                                       |
+                     MMMMMMMMMMMMMMMMMMMMMMM   | Non-blocking is better than blocking. |
+                    MMMMMMMMMMMMMMMMMMMMMMMM   |_   ___________________________________|
+                    MMMM::- -:::::::- -::MMMM    |/
+                     MM~:~   ~:::::~   ~:~MM
+                .. MMMMM::. .:::+:::. .::MMMMM ..
+                      .MM::::: ._. :::::MM.
+                         MMMM;:::::;MMMM
+                  -MM        MMMMMMM
+                  ^  M+     MMMMMMMMM
+                      MMMMMMM MM MM MM
+                           MM MM MM MM
+                           MM MM MM MM
+                        .~~MM~MM~MM~MM~~.
+                     ~~~~MM:~MM~~~MM~:MM~~~~
+                    ~~~~~~==~==~~~==~==~~~~~~
+                     ~~~~~~==~==~==~==~~~~~~
+                         :~==~==~==~==~~
         """
 
   Scenario: ASCII octocat with custom text
@@ -44,25 +44,25 @@ Feature: Octocat ASCII API
       And the response type should be TEXT
       And the response should contain:
         """
-                   MMM.           .MMM
-                   MMMMMMMMMMMMMMMMMMM
-                   MMMMMMMMMMMMMMMMMMM      __________________
-                  MMMMMMMMMMMMMMMMMMMMM    |                  |
-                 MMMMMMMMMMMMMMMMMMMMMMM   | Hello cool world |
-                MMMMMMMMMMMMMMMMMMMMMMMM   |_   ______________|
-                MMMM::- -:::::::- -::MMMM    |/
-                 MM~:~   ~:::::~   ~:~MM
-            .. MMMMM::. .:::+:::. .::MMMMM ..
-                  .MM::::: ._. :::::MM.
-                     MMMM;:::::;MMMM
-              -MM        MMMMMMM
-              ^  M+     MMMMMMMMM
-                  MMMMMMM MM MM MM
-                       MM MM MM MM
-                       MM MM MM MM
-                    .~~MM~MM~MM~MM~~.
-                 ~~~~MM:~MM~~~MM~:MM~~~~
-                ~~~~~~==~==~~~==~==~~~~~~
-                 ~~~~~~==~==~==~==~~~~~~
-                     :~==~==~==~==~~
+                       MMM.           .MMM
+                       MMMMMMMMMMMMMMMMMMM
+                       MMMMMMMMMMMMMMMMMMM      __________________
+                      MMMMMMMMMMMMMMMMMMMMM    |                  |
+                     MMMMMMMMMMMMMMMMMMMMMMM   | Hello cool world |
+                    MMMMMMMMMMMMMMMMMMMMMMMM   |_   ______________|
+                    MMMM::- -:::::::- -::MMMM    |/
+                     MM~:~   ~:::::~   ~:~MM
+                .. MMMMM::. .:::+:::. .::MMMMM ..
+                      .MM::::: ._. :::::MM.
+                         MMMM;:::::;MMMM
+                  -MM        MMMMMMM
+                  ^  M+     MMMMMMMMM
+                      MMMMMMM MM MM MM
+                           MM MM MM MM
+                           MM MM MM MM
+                        .~~MM~MM~MM~MM~~.
+                     ~~~~MM:~MM~~~MM~:MM~~~~
+                    ~~~~~~==~==~~~==~==~~~~~~
+                     ~~~~~~==~==~==~==~~~~~~
+                         :~==~==~==~==~~
         """

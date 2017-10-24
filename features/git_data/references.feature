@@ -5,12 +5,12 @@ Feature: Accessing GitData References API
   Should return the expected results depending on passed parameters
 
   Background:
-    Given I have "Github::GitData::References" instance
+    Given I have "Github::Client::GitData::References" instance
 
   Scenario: Lists all references on a repository
     Given I want to list resources with the following params:
-      | user   | repo |
-      | wycats | thor |
+      | user         | repo           |
+      | peter-murach | finite_machine |
     When I make request within a cassette named "git_data/references/all"
     Then the response status should be 200
       And the response type should be JSON
@@ -18,8 +18,8 @@ Feature: Accessing GitData References API
 
   Scenario: Lists all references on a repository scoped by branch
     Given I want to list resources with the following params:
-      | user   | repo |
-      | wycats | thor |
+      | user         | repo           |
+      | peter-murach | finite_machine |
     And I pass the following request options:
       | ref  |
       | tags |
@@ -30,8 +30,8 @@ Feature: Accessing GitData References API
 
   Scenario: Gets a single reference
     Given I want to get resource with the following params:
-      | user   | repo | ref            |
-      | wycats | thor | heads/gh-pages |
+      | user         | repo | ref            |
+      | peter-murach | tty  | heads/gh-pages |
     When I make request within a cassette named "git_data/references/one"
     Then the response status should be 200
       And the response type should be JSON

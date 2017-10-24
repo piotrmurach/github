@@ -2,15 +2,15 @@
 
 require 'spec_helper'
 
-describe Github::Users, 'integration' do
+describe Github::Client::Users, 'integration' do
 
   after { reset_authentication_for subject }
 
   it_should_behave_like 'api interface'
 
-  its(:emails)    { should be_a Github::Users::Emails }
+  its(:emails)    { should be_a Github::Client::Users::Emails }
 
-  its(:followers) { should be_a Github::Users::Followers }
+  its(:followers) { should be_a Github::Client::Users::Followers }
 
-  its(:keys)      { should be_a Github::Users::Keys }
+  its(:keys)      { should be_a Github::Client::Users::Keys }
 end
