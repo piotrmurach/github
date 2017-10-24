@@ -4,6 +4,7 @@ require 'faraday'
 
 module Github
   class Response::Xmlize < Response
+
     dependency 'nokogiri'
 
     define_parser do |body|
@@ -19,7 +20,7 @@ module Github
       when 'false'
         false
       else
-        self.class.parser.call body
+        self.class.parser.call(body)
       end
     end
   end # Response::Xmlize

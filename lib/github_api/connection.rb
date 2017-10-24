@@ -1,75 +1,82 @@
 # encoding: utf-8
 
 require 'faraday'
-require 'github_api/response'
-require 'github_api/response/mashify'
-require 'github_api/response/jsonize'
-require 'github_api/response/helpers'
-require 'github_api/response/raise_error'
-require 'github_api/request/oauth2'
-require 'github_api/request/basic_auth'
+
+require_relative 'constants'
 
 module Github
+  # Specifies Http connection options
   module Connection
+    extend self
+    include Github::Constants
 
-  ALLOWED_OPTIONS = [
-    :headers,
-    :url,
-    :params,
-    :request,
-    :ssl
-  ].freeze
+    ALLOWED_OPTIONS = [
+      :headers,
+      :url,
+      :params,
+      :request,
+      :ssl
+    ].freeze
 
-  private
-
-    def default_options(options={}) # :nodoc:
+    # Default requets header information
+    #
+    # @return [Hash[String]]
+    #
+    # @api private
+    def default_headers
       {
-        :headers => {
-          :accept       => '*/*', #accepts,
-          :user_agent   => user_agent,
-          :content_type => 'application/x-www-form-urlencoded'
-        },
-        :ssl => { :verify => false },
-        :url => endpoint
+        ACCEPT         => 'application/vnd.github.v3+json,' \
+                          'application/vnd.github.beta+json;q=0.5,' \
+                          'application/json;q=0.1',
+        ACCEPT_CHARSET => 'utf-8'
       }
     end
 
-    def clear_cache # :nodoc:
-      @connection = nil
+    # Create default connection options
+    #
+    # @return [Hash[Symbol]]
+    #   the default options
+    #
+    # @api private
+    def default_options(options = {})
+      headers = default_headers.merge(options[:headers] || {})
+      headers.merge!({USER_AGENT => options[:user_agent]})
+      {
+        headers: headers,
+        ssl: options[:ssl],
+        url: options[:endpoint]
+      }
     end
 
-    def caching? # :nodoc:
-      !@connection.nil?
-    end
-
-    def connection(options = {}) # :nodoc:
-
-      merged_options = _filter_params_keys(ALLOWED_OPTIONS, default_options.merge(options))
-      clear_cache unless options.empty?
-
-      @connection ||= begin
-        Faraday.new(merged_options.merge(connection_options)) do |builder|
-          puts options.inspect if ENV['DEBUG']
-
-          builder.use Faraday::Request::JSON
-          builder.use Faraday::Request::Multipart
-          builder.use Faraday::Request::UrlEncoded
-          builder.use Faraday::Response::Logger if ENV['DEBUG']
-
-          builder.use Github::Request::OAuth2, oauth_token if oauth_token?
-          builder.use Github::Request::BasicAuth, authentication if basic_authed?
-
-          builder.use Github::Response::Helpers
-          unless options[:raw]
-            builder.use Github::Response::Mashify
-            builder.use Github::Response::Jsonize
-          end
-
-          builder.use Github::Response::RaiseError
-          builder.adapter adapter
-        end
+    # Exposes middleware builder to facilitate custom stacks and easy
+    # addition of new extensions such as cache adapter.
+    #
+    # @api public
+    def stack(options = {})
+      @stack ||= begin
+        builder_class = if defined?(Faraday::RackBuilder)
+                          Faraday::RackBuilder
+                        else
+                          Faraday::Builder
+                        end
+        builder_class.new(&Github.default_middleware(options))
       end
     end
 
+    # Creates http connection
+    #
+    # Returns a Fraday::Connection object
+    def connection(api, options = {})
+      connection_options = default_options(options)
+      connection_options.merge!(builder: stack(options.merge!(api: api)))
+      if options[:connection_options]
+        connection_options.deep_merge!(options[:connection_options])
+      end
+      if ENV['DEBUG']
+        p "Connection options : \n"
+        pp connection_options
+      end
+      Faraday.new(connection_options)
+    end
   end # Connection
 end # Github

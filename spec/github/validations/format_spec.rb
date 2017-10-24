@@ -14,28 +14,28 @@ describe Github::Validations::Format do
       }
     }
 
-    it 'fails to accept unkown value for a given parameter key' do
+    it 'fails to accept unknown value for a given parameter key' do
       actual = { 'param_a' => 'x' }
       expect {
-        validator._validate_params_values(permitted, actual)
-      }.to raise_error(ArgumentError)
+        validator.assert_valid_values(permitted, actual)
+      }.to raise_error(Github::Error::UnknownValue)
     end
 
     it 'accepts known value for a given parameter key' do
       actual = { 'param_a' => 'a'}
-      validator._validate_params_values(permitted, actual)
+      validator.assert_valid_values(permitted, actual)
     end
 
     it 'fails to match regex value for a given parameter key' do
       actual = { 'param_b' => 'xgithub' }
       expect {
-        validator._validate_params_values(permitted, actual)
-      }.to raise_error(ArgumentError)
+        validator.assert_valid_values(permitted, actual)
+      }.to raise_error(Github::Error::UnknownValue)
     end
 
     it 'matches regex value for a given parameter key' do
       actual = { 'param_b' => 'github'}
-      validator._validate_params_values(permitted, actual)
+      validator.assert_valid_values(permitted, actual)
     end
   end
 

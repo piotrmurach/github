@@ -1,0 +1,37 @@
+{
+    "url": "https://api.github.com/orgs/CodeCu/memberships/anuja-joshi",
+    "state": "active",
+    "role": "admin",
+    "organization_url": "https://api.github.com/orgs/CodeCu",
+    "organization": {
+        "login": "CodeCu",
+        "id": 14146669,
+        "url": "https://api.github.com/orgs/CodeCu",
+        "repos_url": "https://api.github.com/orgs/CodeCu/repos",
+        "events_url": "https://api.github.com/orgs/CodeCu/events",
+        "members_url": "https://api.github.com/orgs/CodeCu/members{/member}",
+        "public_members_url": "https://api.github.com/orgs/CodeCu/public_members{/member}",
+        "avatar_url": "https://avatars.githubusercontent.com/u/14146669?v=3",
+        "description": null
+    },
+    "user": {
+        "login": "anuja-joshi",
+        "id": 5124042,
+        "avatar_url": "https://avatars.githubusercontent.com/u/5124042?v=3",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/anuja-joshi",
+        "html_url": "https://github.com/anuja-joshi",
+        "followers_url": "https://api.github.com/users/anuja-joshi/followers",
+        "following_url": "https://api.github.com/users/anuja-joshi/following{/other_user}",
+        "gists_url": "https://api.github.com/users/anuja-joshi/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/anuja-joshi/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/anuja-joshi/subscriptions",
+        "organizations_url": "https://api.github.com/users/anuja-joshi/orgs",
+        "repos_url": "https://api.github.com/users/anuja-joshi/repos",
+        "events_url": "https://api.github.com/users/anuja-joshi/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/anuja-joshi/received_events",
+        "type": "User",
+        "site_admin": false
+    }
+}
+

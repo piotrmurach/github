@@ -1,56 +1,77 @@
 # encoding: utf-8
 
+require_relative 'api'
+
 module Github
   class Client < API
+    require_all 'github_api/client',
+                'activity',
+                'authorizations',
+                'emojis',
+                'gists',
+                'gitignore',
+                'git_data',
+                'issues',
+                'markdown',
+                'meta',
+                'orgs',
+                'projects',
+                'pull_requests',
+                'repos',
+                'say',
+                'scopes',
+                'search',
+                'users'
 
-    def gists(options = {})
-      @gists ||= ApiFactory.new 'Gists', options
-    end
+    # Serving up the 'social' in Social Coding, the Activity APIs
+    # provide access to notifications, subscriptions, and timelines.
+    namespace :activity
+
+    namespace :emojis
+
+    namespace :gists
+
+    namespace :gitignore
+    alias :git_ignore :gitignore
 
     # The Git Database API gives you access to read and write raw Git objects
     # to your Git database on GitHub and to list and update your references
     # (branch heads and tags).
-    def git_data(options = {})
-      @git_data ||= ApiFactory.new 'GitData', options
-    end
+    namespace :git_data
     alias :git :git_data
 
-    def issues(options = {})
-      @issues ||= ApiFactory.new 'Issues', options
-    end
+    namespace :issues
 
-    def orgs(options = {})
-      @orgs ||= ApiFactory.new 'Orgs', options
-    end
-    alias :organizations :orgs
+    namespace :markdown
 
-    def pull_requests(options = {})
-      @pull_requests ||= ApiFactory.new 'PullRequests', options
-    end
-
-    def repos(options = {})
-      @repos ||= ApiFactory.new 'Repos', options
-    end
-    alias :repositories :repos
-
-    # Many of the resources on the users API provide a shortcut for getting 
-    # information about the currently authenticated user.
-    def users(options = {})
-      @users ||= ApiFactory.new 'Users', options
-    end
-
-    # This is a read-only API to the GitHub events.
-    # These events power the various activity streams on the site.
-    def events(options = {})
-      @events ||= ApiFactory.new 'Events', options
-    end
+    namespace :meta
 
     # An API for users to manage their own tokens. You can only access your own
     # tokens, and only through Basic Authentication.
-    def oauth(options = {})
-      @oauth ||= ApiFactory.new 'Authorizations', options
-    end
-    alias :authorizations :oauth
+    namespace :authorizations
+    alias :oauth :authorizations
+    alias :auth :authorizations
 
+    namespace :orgs
+    alias :organizations :orgs
+
+    namespace :projects
+
+    namespace :pull_requests
+    alias :pulls :pull_requests
+
+    namespace :repos
+    alias :repositories :repos
+
+    namespace :say
+    alias :octocat :say
+
+    namespace :scopes
+
+    namespace :search
+
+    # Many of the resources on the users API provide a shortcut for getting
+    # information about the currently authenticated user.
+    namespace :users
   end # Client
 end # Github
