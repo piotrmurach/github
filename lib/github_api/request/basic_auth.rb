@@ -26,7 +26,7 @@ module Github
       # @api private
       def call(env)
         if @auth
-          env[:request_headers].merge!('Authorization' => "Basic #{@auth}\"")
+          env[:request_headers].merge!('Authorization' => "Basic #{@auth}")
         end
 
         @app.call(env)
