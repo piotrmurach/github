@@ -1,5 +1,11 @@
 # Change log
 
+## [v0.18.2] - 2017-11-19
+
+### Fixed
+* Fix basic auth header and remove spurious character by soh335
+* Fix 'disable_warnings' error in hashie dependency by requiring minimum version
+
 ## [v0.18.1] - 2017-10-07
 
 ### Added
@@ -719,6 +725,7 @@
 
 * fixing json parsing issue preventing repository creation
 
+[v0.18.2]: https://github.com/peter-murach/github/compare/v0.18.1...v0.18.2
 [v0.18.1]: https://github.com/peter-murach/github/compare/v0.17.0...v0.18.1
 [v0.17.0]: https://github.com/peter-murach/github/compare/v0.16.0...v0.17.0
 [v0.16.0]: https://github.com/peter-murach/github/compare/v0.15.0...v0.16.0
