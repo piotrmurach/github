@@ -18,7 +18,7 @@ Gem::Specification.new do |gem|
   gem.extra_rdoc_files = ['LICENSE.txt', 'README.md']
 
   gem.add_dependency 'addressable', '~> 2.4'
-  gem.add_dependency 'hashie',      '>= 3.4'
+  gem.add_dependency 'hashie',      '~> 3.5', '>= 3.5.2'
   gem.add_dependency 'faraday',     '~> 0.8'
   gem.add_dependency 'oauth2',      '~> 1.0'
   gem.add_dependency 'descendants_tracker', '~> 0.0.4'
