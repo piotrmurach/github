@@ -35,8 +35,8 @@ module Github
       repo = arguments.repo
 
       response = if (ref = params.delete('ref'))
-        validate_reference ref
-        get_request("/repos/#{user}/#{repo}/git/refs/#{ref}", params)
+        formatted_ref = validate_reference ref
+        get_request("/repos/#{user}/#{repo}/git/#{formatted_ref}", params)
       else
         get_request("/repos/#{user}/#{repo}/git/refs", params)
       end
@@ -143,6 +143,8 @@ module Github
       unless VALID_REF_PARAM_VALUES['ref'] =~ refs
         raise ArgumentError, "Provided 'reference' is invalid"
       end
+
+      refs
     end
   end # GitData::References
 end # Github

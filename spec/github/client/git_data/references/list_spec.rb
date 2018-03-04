@@ -6,7 +6,7 @@ describe Github::Client::GitData::References, '#list' do
   let(:user) { 'peter-murach' }
   let(:repo) { 'github' }
   let(:ref) { "heads/master" }
-  let(:request_path) { "/repos/#{user}/#{repo}/git/refs/#{ref}".gsub(/(\/)+/, '/') }
+  let(:request_path) { "/repos/#{user}/#{repo}/git/refs/#{ref.gsub(/^\/?refs\//, '')}".gsub(/(\/)+/, '/') }
 
   before {
     stub_get(request_path).to_return(:body => body, :status => status,
