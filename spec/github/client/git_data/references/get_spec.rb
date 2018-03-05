@@ -29,7 +29,7 @@ describe Github::Client::GitData::References, '#get' do
       let(:ref) { 'branch' }
 
       it "should fail to get resource with wrong ref" do
-        expect { subject.get user, repo, '/branch' }.not_to raise_error()
+        expect { subject.get user, repo, ref }.not_to raise_error()
       end
     end
 

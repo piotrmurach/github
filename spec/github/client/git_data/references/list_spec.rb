@@ -49,7 +49,7 @@ describe Github::Client::GitData::References, '#list' do
       end
     end
 
-    context 'with valid renference and refs' do
+    context 'with valid reference and refs' do
       let(:ref) { 'refs/heads/lleger-refactor' }
 
       it "should pass with valid reference" do
@@ -57,7 +57,7 @@ describe Github::Client::GitData::References, '#list' do
       end
     end
 
-    context 'with valid renference and refs with leading slash' do
+    context 'with valid reference and refs with leading slash' do
       let(:ref) { '/refs/heads/lleger-refactor' }
 
       it "should pass with valid reference" do
