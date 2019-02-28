@@ -32,6 +32,7 @@ module Github
       homepage
       private
       has_issues
+      has_projects
       has_wiki
       has_downloads
       team_id
