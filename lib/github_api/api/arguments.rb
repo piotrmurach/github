@@ -7,7 +7,7 @@ require_relative '../validations'
 
 module Github
   class API
-    # A class responsible for handilng request arguments
+    # A class responsible for handling request arguments
     class Arguments
       include Normalizer
       include ParameterFilter

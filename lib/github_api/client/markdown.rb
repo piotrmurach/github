@@ -5,7 +5,7 @@ require_relative '../api'
 module Github
   class Client::Markdown < API
 
-    # Render an arbritrary Markdown document
+    # Render an arbitrary Markdown document
     #
     # = Parameters
     #  <tt>:text</tt> - Required string - The Markdown text to render

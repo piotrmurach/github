@@ -66,12 +66,12 @@ module Github
     #
     # @param [Hash] params
     # @option params [String] :path
-    #   Requried string. The content path
+    #   Required string. The content path
     # @option params [String]
     # @option params [String] :message
-    #   Requried string. The commit message.
+    #   Required string. The commit message.
     # @option params [String] :content
-    #   Requried string. The new file content, which will be Base64 encoded
+    #   Required string. The new file content, which will be Base64 encoded
     # @option params [String] :branch
     #   The branch name. If not provided, uses the repository’s
     #   default branch (usually master)

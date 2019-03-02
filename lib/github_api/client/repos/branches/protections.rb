@@ -40,7 +40,7 @@ module Github
     #   Required.
     # @input params [String] :required_pull_request_reviews
     #   Required.
-    # Look to the branch protection API t see how to use these
+    # Look to the branch protection API to see how to use these
     # https://developer.github.com/v3/repos/branches/#update-branch-protection
     #
     # @example

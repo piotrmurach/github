@@ -33,7 +33,7 @@ module Github
 
       MIN_BODY_LENGTH = 2
 
-      # Crate a ServiceError
+      # Create a ServiceError
       #
       # @param [Hash[Symbol]] response
       #

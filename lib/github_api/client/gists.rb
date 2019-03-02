@@ -143,7 +143,7 @@ module Github
     #   Optional string
     # @option [Hash] :files
     #   Optional hash - Files that make up this gist.
-    #   The key of which should be a optional string filename and 
+    #   The key of which should be a optional string filename and
     #   the value another optional hash with parameters:
     #     @option [String] :content
     #       Updated string - Update file contents.
@@ -213,7 +213,7 @@ module Github
     #
     # @see https://developer.github.com/v3/gists/#unstar-a-gist
     #
-    # @xample
+    # @example
     #  github = Github.new
     #  github.gists.unstar 'gist-id'
     #
