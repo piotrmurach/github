@@ -73,7 +73,7 @@ module Github
         property_set.properties.map(&:name)
       end
 
-      # Fetach all the properties and their values
+      # Fetch all the properties and their values
       #
       # @return [Hash[Symbol]]
       #

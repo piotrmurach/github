@@ -14,7 +14,7 @@ module Github
       @links = Github::PageLinks.new(env[:response_headers])
     end
 
-    # Retrive number of total pages base on current :per_page parameter
+    # Retrieve number of total pages base on current :per_page parameter
     def count_pages
       page_iterator.count.to_i
     end
@@ -43,7 +43,7 @@ module Github
       end
     end
 
-    # Retrives the result of the first page. Returns <tt>nil</tt> if there is
+    # Retrieves the result of the first page. Returns <tt>nil</tt> if there is
     # no first page - either because you are already on the first page
     # or there are no pages at all in the result.
     def first_page
@@ -52,7 +52,7 @@ module Github
       first_request
     end
 
-    # Retrives the result of the next page. Returns <tt>nil</tt> if there is
+    # Retrieves the result of the next page. Returns <tt>nil</tt> if there is
     # no next page or no pages at all.
     def next_page
       next_request = page_iterator.next
@@ -60,7 +60,7 @@ module Github
       next_request
     end
 
-    # Retrives the result of the previous page. Returns <tt>nil</tt> if there is
+    # Retrieves the result of the previous page. Returns <tt>nil</tt> if there is
     # no previous page or no pages at all.
     def prev_page
       prev_request = page_iterator.prev
@@ -69,7 +69,7 @@ module Github
     end
     alias :previous_page :prev_page
 
-    # Retrives the result of the last page. Returns <tt>nil</tt> if there is
+    # Retrieves the result of the last page. Returns <tt>nil</tt> if there is
     # no last page - either because you are already on the last page,
     # there is only one page or there are no pages at all in the result.
     def last_page
@@ -78,7 +78,7 @@ module Github
       last_request
     end
 
-    # Retrives a specific result for a page given page number.
+    # Retrieves a specific result for a page given page number.
     # The <tt>page_number</tt> parameter is not validate, hitting a page
     # that does not exist will return Github API error. Consequently, if
     # there is only one page, this method returns nil

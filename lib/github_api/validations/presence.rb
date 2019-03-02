@@ -7,7 +7,7 @@ module Github
     # A mixin to help validate presence of non-empty values
     module Presence
 
-      # Ensure that esential arguments are present before request is made.
+      # Ensure that essential arguments are present before request is made.
       #
       # == Parameters
       #  Hash/Array of arguments to be checked against nil and empty string

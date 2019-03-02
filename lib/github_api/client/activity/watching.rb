@@ -13,7 +13,7 @@ module Github
     # @example
     #   github = Github.new
     #   github.activity.watching.list user: 'user-name', repo: 'repo-name'
-    #   github.activity.watching.list user: 'user-naem', repo: 'repo-name' { |watcher| ... }
+    #   github.activity.watching.list user: 'user-name', repo: 'repo-name' { |watcher| ... }
     #
     # @api public
     def list(*args)

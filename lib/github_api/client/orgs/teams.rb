@@ -79,7 +79,7 @@ module Github
     #    * pull - team members can pull, but not push or
     #             administor this repositories.
     #    * push - team members can pull and push,
-    #             but not administor this repositores.
+    #             but not administer this repositores.
     #    * admin - team members can pull, push and
     #              administor these repositories.
     #   Default: pull
@@ -125,9 +125,9 @@ module Github
     #    * pull - team members can pull, but not push or
     #             administor this repositories.
     #    * push - team members can pull and push,
-    #             but not administor this repositores.
+    #             but not administer this repositores.
     #    * admin - team members can pull, push and
-    #              administor these repositories.
+    #              administer these repositories.
     #   Default: pull
     #
     # @example

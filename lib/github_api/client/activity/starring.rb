@@ -118,7 +118,7 @@ module Github
     #   github.activity.starring.unstar 'user-name', 'repo-name'
     #
     # @example
-    #   github.activit.starring.unstar user: 'user-name', repo: 'repo-name'
+    #   github.activity.starring.unstar user: 'user-name', repo: 'repo-name'
     #
     # @api public
     def unstar(*args)

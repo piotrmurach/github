@@ -183,7 +183,7 @@ module Github
     end
     alias :find_by_id :get_by_id
 
-    # Create a new repository for the autheticated user.
+    # Create a new repository for the authenticated user.
     #
     # @param [Hash] params
     # @option params [String] :name

@@ -85,7 +85,7 @@ module Github
     #
     # @see https://developer.github.com/v3/gists/comments/#delete-a-comment
     #
-    # @xample
+    # @example
     #   github = Github.new
     #   github.gists.comments.delete 'gist-id', 'comment-id'
     #

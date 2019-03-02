@@ -24,7 +24,7 @@ module Github
 
     # List deployments on a repository
     #
-    # @xample
+    # @example
     #  github = Github.new
     #  github.repos.deployments.list 'user-name', 'repo-name'
     #  github.repos.deployments.list 'user-name', 'repo-name' { |deployment| ... }
