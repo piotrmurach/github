@@ -25,5 +25,17 @@ module Github
     end
     alias :all :list
 
+    # Deletes a repo invitation
+    #
+    # @example
+    #   github = Github.new
+    #   github.repos.invitations.delete 'user-name', 'repo-name', 'invitation-id'
+    #
+    # @api public
+    def delete(*args)
+      arguments(args, required: [:user, :repo, :id])
+
+      delete_request("/repos/#{arguments.user}/#{arguments.repo}/invitations/#{arguments.id}", arguments.params)
+    end
   end
 end
