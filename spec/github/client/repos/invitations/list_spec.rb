@@ -31,19 +31,15 @@ describe Github::Client::Repos::Invitations, '#list' do
       a_get(request_path).should have_been_made
     end
 
-    it_should_behave_like 'an array of resources' do
-      let(:requestable) { subject.list user, repo }
-    end
-
     it "should get invitations information" do
       invitations = subject.list user, repo
-      invitations.first.name.should == 'Hello-World'
+      expect(invitations.first.invitee.login).to eq('octocat')
     end
 
     it "should yield to a block" do
       yielded = []
       result = subject.list(user, repo) { |obj| yielded << obj }
-      yielded.should == result
+      expect(yielded).to eq(result)
     end
   end
 
