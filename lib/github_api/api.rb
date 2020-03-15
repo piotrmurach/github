@@ -229,7 +229,7 @@ module Github
 
     # Run all callbacks associated with this action
     #
-    # @apram [Symbol] action_name
+    # @param [Symbol] action_name
     #
     # @api private
     def run_callbacks(action_name, &block)

@@ -13,8 +13,10 @@ module Github
     #
     # @example
     #   github = Github.new
-    #   github.repos.forks.list 'user-name', 'repo-name'
-    #   github.repos.forks.list 'user-name', 'repo-name' { |fork| ... }
+    #   github.repos.forks.list('user-name', 'repo-name')
+    #   github.repos.forks.list('user-name', 'repo-name') { |fork|
+    #     #...
+    #   }
     #
     # @api public
     def list(*args)

@@ -43,8 +43,7 @@ module Github
 
     # Performs a request
     #
-    # @param [Symbol] method - The Symbol the HTTP verb
-    # @param [String] path   - String relative URL to access
+    # @param current_options [Hash]
     # @param [ParamsHash] params - ParamsHash to configure the request API
     #
     # @return [Github::ResponseWrapper]
