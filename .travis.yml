@@ -8,7 +8,9 @@ rvm:
   - 2.2.9
   - 2.3.6
   - 2.4.3
-  - 2.5.0
+  - 2.5.8
+  - 2.6.6
+  - 2.7.1
   - ruby-head
   - jruby-9000
   - jruby-head
@@ -17,7 +19,5 @@ matrix:
     - rvm: ruby-head
     - rvm: jruby-head
   fast_finish: true
-branches:
-  only: master
 notifications:
   email: false

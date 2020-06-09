@@ -19,11 +19,11 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency 'addressable', '~> 2.4'
   gem.add_dependency 'hashie',      '~> 3.5', '>= 3.5.2'
-  gem.add_dependency 'faraday',     '~> 0.8'
+  gem.add_dependency 'faraday',     '>= 0.8', '< 2'
   gem.add_dependency 'oauth2',      '~> 1.0'
   gem.add_dependency 'descendants_tracker', '~> 0.0.4'
 
-  gem.add_development_dependency 'bundler', '>= 1.5.0', '< 2.0'
+  gem.add_development_dependency 'bundler', '>= 1.5.0', '< 3.0'
   gem.add_development_dependency 'rake',     '< 11.0'
   gem.add_development_dependency 'cucumber', '~> 2.1'
   gem.add_development_dependency 'rspec',    '~> 2.14.1'

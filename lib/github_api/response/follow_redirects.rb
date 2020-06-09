@@ -8,7 +8,7 @@ require 'set'
 
 module Github
   # Public: Exception thrown when the maximum amount of requests is exceeded.
-  class RedirectLimitReached < Faraday::Error::ClientError
+  class RedirectLimitReached < Faraday::ClientError
     attr_reader :response
 
     def initialize(response)
