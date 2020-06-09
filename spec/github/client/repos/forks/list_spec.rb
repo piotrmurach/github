@@ -18,7 +18,7 @@ describe Github::Client::Repos::Forks, '#list' do
     let(:body)   { fixture('repos/forks.json') }
     let(:status) { 200 }
 
-    it { should respond_to :all }
+    it { is_expected.to respond_to :all }
 
     it { expect { subject.list }.to raise_error(ArgumentError) }
 
@@ -28,7 +28,7 @@ describe Github::Client::Repos::Forks, '#list' do
 
     it "should get the resources" do
       subject.list user, repo
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it_should_behave_like 'an array of resources' do
@@ -37,13 +37,13 @@ describe Github::Client::Repos::Forks, '#list' do
 
     it "should get fork information" do
       forks = subject.list user, repo
-      forks.first.name.should == 'Hello-World'
+      expect(forks.first.name).to eq 'Hello-World'
     end
 
     it "should yield to a block" do
       yielded = []
       result = subject.list(user, repo) { |obj| yielded << obj }
-      yielded.should == result
+      expect(yielded).to eq result
     end
   end
 

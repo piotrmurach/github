@@ -19,7 +19,7 @@ describe Github::Client::GitData::References, '#get' do
     let(:body) { fixture('git_data/reference.json') }
     let(:status) { 200 }
 
-    it { should respond_to :find }
+    it { is_expected.to respond_to :find }
 
     it "should fail to get resource without ref" do
       expect { subject.get user, repo, nil }.to raise_error(ArgumentError)
@@ -35,17 +35,17 @@ describe Github::Client::GitData::References, '#get' do
 
     it "should get the resource" do
       subject.get user, repo, ref
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it "should get reference information" do
       reference = subject.get user, repo, ref
-      reference.first.ref.should eql "refs/heads/sc/featureA"
+      expect(reference.first.ref).to eql "refs/heads/sc/featureA"
     end
 
     it "should return mash" do
       reference = subject.get user, repo, ref
-      reference.first.should be_a Github::Mash
+      expect(reference.first).to be_a Github::Mash
     end
   end
 

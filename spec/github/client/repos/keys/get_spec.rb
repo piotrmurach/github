@@ -19,7 +19,7 @@ describe Github::Client::Repos::Keys, '#get' do
     let(:body) { fixture("repos/key.json") }
     let(:status) { 200 }
 
-    it { should respond_to :find }
+    it { is_expected.to respond_to :find }
 
     it { expect { subject.get }.to raise_error(ArgumentError) }
 
@@ -29,12 +29,12 @@ describe Github::Client::Repos::Keys, '#get' do
 
     it "should get the resource" do
       subject.get user, repo, key_id
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it "should get key information" do
       key = subject.get user, repo, key_id
-      key.id.should == key_id
+      expect(key.id).to eq key_id
     end
   end
 

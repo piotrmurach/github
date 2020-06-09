@@ -17,7 +17,7 @@ RSpec.describe Github::Client::Activity::Notifications, '#get' do
     let(:body)   { fixture('activity/threads.json') }
     let(:status) { 200 }
 
-    it { should respond_to(:find) }
+    it { is_expected.to respond_to(:find) }
 
     it "should raise error when no thread-id parameter" do
       expect { subject.get }.to raise_error(ArgumentError)

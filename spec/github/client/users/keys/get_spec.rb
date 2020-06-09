@@ -19,7 +19,7 @@ describe Github::Client::Users::Keys, '#get' do
     let(:body) { fixture('users/key.json') }
     let(:status) { 200 }
 
-    it { should respond_to :find }
+    it { is_expected.to respond_to :find }
 
     it "should fail to get resource without key id" do
       expect { subject.get }.to raise_error(ArgumentError)
@@ -27,19 +27,19 @@ describe Github::Client::Users::Keys, '#get' do
 
     it "should get the resource" do
       subject.get key_id
-      a_get(request_path).with(:query => { :access_token => "#{OAUTH_TOKEN}"}).
-        should have_been_made
+      expect(a_get(request_path).with(:query => { :access_token => "#{OAUTH_TOKEN}"})).
+        to have_been_made
     end
 
     it "should get public key information" do
       key = subject.get key_id
-      key.id.should == key_id
-      key.title.should == 'octocat@octomac'
+      expect(key.id).to eq key_id
+      expect(key.title).to eq 'octocat@octomac'
     end
 
     it "should return mash" do
       key = subject.get key_id
-      key.should be_a Github::ResponseWrapper
+      expect(key).to be_a Github::ResponseWrapper
     end
   end
 

@@ -19,7 +19,7 @@ describe Github::Client::Repos::Comments, '#get' do
     let(:body)   { fixture('repos/commit_comment.json') }
     let(:status) { 200 }
 
-    it { should respond_to(:find) }
+    it { is_expected.to respond_to(:find) }
 
     it 'failse to get resource without required arguments' do
       expect { subject.get }.to raise_error(ArgumentError)
@@ -31,17 +31,17 @@ describe Github::Client::Repos::Comments, '#get' do
 
     it "should get the resource" do
       subject.get user, repo, comment_id
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it "should get commit comment information" do
       commit_comment = subject.get user, repo, comment_id
-      commit_comment.user.login.should == 'octocat'
+      expect(commit_comment.user.login).to eq 'octocat'
     end
 
     it "should return mash" do
       commit_comment = subject.get user, repo, comment_id
-      commit_comment.should be_a Github::ResponseWrapper
+      expect(commit_comment).to be_a Github::ResponseWrapper
     end
   end
 

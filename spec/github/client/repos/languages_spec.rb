@@ -28,22 +28,22 @@ describe Github::Client::Repos, '#languages' do
 
     it "should find resources" do
       subject.languages user, repo
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it "should return hash of languages" do
       languages = subject.languages user, repo
-      languages.should be_an Github::ResponseWrapper
-      languages.should have(2).keys
+      expect(languages).to be_an Github::ResponseWrapper
+      expect(languages.keys.size).to be 2
     end
 
     it "should get language information" do
       languages = subject.languages user, repo
-      languages.keys.first.should == 'Ruby'
+      expect(languages.keys.first).to eq 'Ruby'
     end
 
     it "should yield to a block" do
-      subject.should_receive(:languages).with(user, repo).and_yield('web')
+      expect(subject).to receive(:languages).with(user, repo).and_yield('web')
       subject.languages(user, repo) { |param| 'web'}
     end
   end

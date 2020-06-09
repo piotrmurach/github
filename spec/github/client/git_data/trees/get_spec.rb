@@ -19,7 +19,7 @@ describe Github::Client::GitData::Trees, '#get' do
     let(:body) { fixture('git_data/tree.json') }
     let(:status) { 200 }
 
-    it { should respond_to :find }
+    it { is_expected.to respond_to :find }
 
     it "should fail to get resource without sha" do
       expect { subject.get user, repo }.to raise_error(ArgumentError)
@@ -27,17 +27,17 @@ describe Github::Client::GitData::Trees, '#get' do
 
     it "should get the resource" do
       subject.get user, repo, sha
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it "should get tree information" do
       tree = subject.get user, repo, sha
-      tree.sha.should eql sha
+      expect(tree.sha).to eql sha
     end
 
     it "should return response wrapper" do
       tree = subject.get user, repo, sha
-      tree.should be_a Github::ResponseWrapper
+      expect(tree).to be_a Github::ResponseWrapper
     end
   end
 
@@ -48,17 +48,17 @@ describe Github::Client::GitData::Trees, '#get' do
 
     it "should get the resource" do
       subject.get user, repo, sha, 'recursive' => true
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it "should get tree information" do
       tree = subject.get user, repo, sha, 'recursive' => true
-      tree.sha.should eql sha
+      expect(tree.sha).to eql sha
     end
 
     it "should return response wrapper" do
       tree = subject.get user, repo, sha, 'recursive' => true
-      tree.should be_a Github::ResponseWrapper
+      expect(tree).to be_a Github::ResponseWrapper
     end
   end
 

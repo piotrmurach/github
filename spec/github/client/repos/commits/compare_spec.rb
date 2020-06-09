@@ -26,11 +26,11 @@ describe Github::Client::Repos::Commits, '#compare' do
 
   it "should compare successfully" do
     subject.compare user, repo, base, head
-    a_get(request_path).should have_been_made
+    expect(a_get(request_path)).to have_been_made
   end
 
   it "should get comparison information" do
     commit = subject.compare user, repo, base, head
-    commit.base_commit.commit.author.name.should == 'Monalisa Octocat'
+    expect(commit.base_commit.commit.author.name).to eq 'Monalisa Octocat'
   end
 end # compare

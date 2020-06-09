@@ -42,17 +42,17 @@ describe Github::Client::GitData::Blobs, '#create' do
 
     it "should create resource successfully" do
       subject.create user, repo, inputs
-      a_post(request_path).with(body: inputs).should have_been_made
+      expect(a_post(request_path).with(body: inputs)).to have_been_made
     end
 
     it "should return the resource" do
       blob_sha = subject.create user, repo, inputs
-      blob_sha.should be_a Github::ResponseWrapper
+      expect(blob_sha).to be_a Github::ResponseWrapper
     end
 
     it "should get the blob information" do
       blob_sha = subject.create user, repo, inputs
-      blob_sha.sha.should == sha
+      expect(blob_sha.sha).to eq sha
     end
   end
 

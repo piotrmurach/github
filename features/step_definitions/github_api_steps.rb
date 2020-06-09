@@ -39,7 +39,7 @@ When /^I call (.*)$/ do |api_part|
 end
 
 When /^I will have access to "([^"]*)" API$/ do |api|
-  @response.class.to_s.should match api
+  expect(@response.class.to_s).to match api
 end
 
 When /^I want(?: to|) (.*) (?:resource|resources)$/ do |method|
@@ -99,7 +99,7 @@ Then /^the response collection of resources is different for "([^"]*)" attribute
 end
 
 Then /^this collection should include first page$/ do
-  @pages.flatten.map(&:name).should include @response.first.name
+  expect(@pages.flatten.map(&:name)).to include @response.first.name
 end
 
 Then /^request should fail with "([^"]*)"$/ do |exception|

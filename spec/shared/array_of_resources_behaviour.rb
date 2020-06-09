@@ -4,12 +4,12 @@ shared_examples_for 'an array of resources' do
 
   it "should return array of resources" do
     objects = requestable
-    objects.should be_a Enumerable
-    objects.should have(1).items
+    expect(objects).to be_a Enumerable
+    expect(objects.size).to be 1
   end
 
-  it "should be a mash type" do
+  it "is_expected.to be a mash type" do
     objects = requestable
-    objects.first.should be_a ::Github::Mash
+    expect(objects.first).to be_a ::Github::Mash
   end
 end

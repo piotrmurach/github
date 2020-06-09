@@ -39,17 +39,17 @@ describe Github::Client::Issues, '#create' do
 
     it "should create resource successfully" do
       subject.create user, repo, inputs
-      a_post(request_path).with(body: inputs).should have_been_made
+      expect(a_post(request_path).with(body: inputs)).to have_been_made
     end
 
     it "should return the resource" do
       issue = subject.create user, repo, inputs
-      issue.should be_a Github::ResponseWrapper
+      expect(issue).to be_a Github::ResponseWrapper
     end
 
     it "should get the issue information" do
       issue = subject.create(user, repo, inputs)
-      issue.title.should == 'Found a bug'
+      expect(issue.title).to eq 'Found a bug'
     end
   end
 

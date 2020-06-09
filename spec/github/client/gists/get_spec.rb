@@ -17,7 +17,7 @@ RSpec.describe Github::Client::Gists, '#get' do
     let(:body) { fixture('gists/gist.json') }
     let(:status) { 200 }
 
-    it { should respond_to :find }
+    it { is_expected.to respond_to :find }
 
     it "fails to get resource without gist id" do
       expect { subject.get }.to raise_error(ArgumentError)

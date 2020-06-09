@@ -17,7 +17,7 @@ RSpec.describe Github::Client::Orgs::Members, '#list' do
   context "resource found" do
     let(:request_path) { "/orgs/#{org}/members" }
 
-    it { should respond_to :all }
+    it { is_expected.to respond_to :all }
 
     it "fails to get resource without org name" do
       expect { subject.list }.to raise_error(ArgumentError)

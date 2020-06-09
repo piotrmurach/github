@@ -17,19 +17,19 @@ describe Github::PageLinks do
   context 'build page links instance' do
 
     it 'parses first link successfully' do
-      Github::PageLinks.new(response_headers).first.should eql first
+      expect(Github::PageLinks.new(response_headers).first).to eql first
     end
 
     it 'parses last link successfully' do
-      Github::PageLinks.new(response_headers).last.should eql last
+      expect(Github::PageLinks.new(response_headers).last).to eql last
     end
 
     it 'parses next link successfully' do
-      Github::PageLinks.new(response_headers).next.should eql nexxt
+      expect(Github::PageLinks.new(response_headers).next).to eql nexxt
     end
 
     it 'parses prev link successfully' do
-      Github::PageLinks.new(response_headers).prev.should eql prev
+      expect(Github::PageLinks.new(response_headers).prev).to eql prev
     end
   end
 

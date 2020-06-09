@@ -19,7 +19,7 @@ describe Github::Client::Repos::Statuses, '#list' do
     let(:body) { fixture('repos/statuses.json') }
     let(:status) { 200 }
 
-    it { should respond_to :all }
+    it { is_expected.to respond_to :all }
 
     it "should fail to get resource without sha" do
       expect { subject.list user, repo }.to raise_error(ArgumentError)
@@ -27,7 +27,7 @@ describe Github::Client::Repos::Statuses, '#list' do
 
     it "should get the resources" do
       subject.list user, repo, sha
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it_should_behave_like 'an array of resources' do
@@ -36,13 +36,13 @@ describe Github::Client::Repos::Statuses, '#list' do
 
     it "should get status information" do
       statuses = subject.list user, repo, sha
-      statuses.first.state.should == 'success'
+      expect(statuses.first.state).to eq 'success'
     end
 
     it "should yield to a block" do
       yielded = []
       result = subject.list(user, repo, sha) { |obj| yielded << obj }
-      yielded.should == result
+      expect(yielded).to eq result
     end
   end
 

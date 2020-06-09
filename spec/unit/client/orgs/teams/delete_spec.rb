@@ -17,7 +17,7 @@ RSpec.describe Github::Client::Orgs::Teams, '#delete' do
     let(:body) { '' }
     let(:status) { 204 }
 
-    it { should respond_to :remove }
+    it { is_expected.to respond_to :remove }
 
     it "fails to delete without 'team_id' parameter" do
       expect { subject.delete }.to raise_error(ArgumentError)

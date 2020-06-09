@@ -17,20 +17,20 @@ describe Github::ResponseWrapper, '#eql?' do
 
     it { expect(object.body).to eql('some') }
 
-    it { should be_true }
+    it { is_expected.to be true }
 
     it 'is symmetric' do
-      should eql(other.eql?(object))
+      is_expected.to eql(other.eql?(object))
     end
   end
 
   context 'with an equivalent object' do
     let(:other) { object.dup }
 
-    it { should be_true }
+    it { is_expected.to be true }
 
     it 'is symmetric' do
-      should eql(other.eql?(object))
+      is_expected.to eql(other.eql?(object))
     end
   end
 
@@ -41,10 +41,10 @@ describe Github::ResponseWrapper, '#eql?' do
 
     it { expect(other.body).to be_nil }
 
-    it { should be_false }
+    it { is_expected.to be false }
 
     it 'is symmetric' do
-      should eql(other.eql?(object))
+      is_expected.to eql(other.eql?(object))
     end
   end
 
@@ -55,10 +55,10 @@ describe Github::ResponseWrapper, '#eql?' do
 
     it { expect(other.body).to eql(["some"]) }
 
-    it { should be_false }
+    it { is_expected.to be false }
 
     it 'is symmetric' do
-      should eql(other.eql?(object))
+      is_expected.to eql(other.eql?(object))
     end
   end
 
@@ -69,10 +69,10 @@ describe Github::ResponseWrapper, '#eql?' do
       end.new
     }
 
-    it { should be_false }
+    it { is_expected.to be false }
 
     it 'is symmetric' do
-      should eql(other.eql?(object))
+      is_expected.to eql(other.eql?(object))
     end
   end
 
@@ -83,10 +83,10 @@ describe Github::ResponseWrapper, '#eql?' do
       end.new
     }
 
-    it { should be_false }
+    it { is_expected.to be false }
 
     it 'is symmetric' do
-      should eql(other.eql?(object))
+      is_expected.to eql(other.eql?(object))
     end
   end
 end

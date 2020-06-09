@@ -85,7 +85,7 @@ RSpec.describe Github::ParamsHash do
     it 'correctly updates values' do
       subject.merge_default(defaults)
       expect(params['homepage']).to eql("https://tty.github.io")
-      expect(params['private']).to be_false
+      expect(params['private']).to be false
     end
   end
 

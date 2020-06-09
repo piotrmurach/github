@@ -25,11 +25,11 @@ describe Github::Client::Issues::Assignees, '#check' do
 
     it "should get the resource" do
       subject.check user, repo, assignee
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it "should find assignee" do
-      subject.should_receive(:check).with(user, repo, assignee) { true }
+      expect(subject).to receive(:check).with(user, repo, assignee) { true }
       subject.check user, repo, assignee
     end
   end
@@ -39,7 +39,7 @@ describe Github::Client::Issues::Assignees, '#check' do
     let(:status) { 404 }
 
     it "should fail to retrieve resource" do
-      subject.should_receive(:check).with(user, repo, assignee) { false }
+      expect(subject).to receive(:check).with(user, repo, assignee) { false }
       subject.check user, repo, assignee
     end
   end

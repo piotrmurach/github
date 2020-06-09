@@ -26,17 +26,17 @@ describe Github::Client::Issues::Labels, '#remove' do
 
     it "should remove label successfully" do
       subject.remove user, repo, number, :label_name => label_name
-      a_delete(request_path).should have_been_made
+      expect(a_delete(request_path)).to have_been_made
     end
 
     it "should return the resource" do
       labels = subject.remove user, repo, number, :label_name => label_name
-      labels.first.should be_a Github::Mash
+      expect(labels.first).to be_a Github::Mash
     end
 
     it "should get the label information" do
       labels = subject.remove user, repo, number, :label_name => label_name
-      labels.first.name.should == 'bug'
+      expect(labels.first.name).to eq 'bug'
     end
   end
 
@@ -47,7 +47,7 @@ describe Github::Client::Issues::Labels, '#remove' do
 
     it "should remove labels successfully" do
       subject.remove user, repo, number
-      a_delete(request_path).should have_been_made
+      expect(a_delete(request_path)).to have_been_made
     end
   end
 

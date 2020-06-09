@@ -20,7 +20,7 @@ describe Github::Client::Repos::PubSubHubbub, '#subscribe_service' do
   it { expect { subject.subscribe_service }.to raise_error(ArgumentError) }
 
   it "subscribes to service" do
-    subject.should_receive(:subscribe).with(topic, callback)
+    expect(subject).to receive(:subscribe).with(topic, callback)
     subject.subscribe_service user, repo, service, options
   end
 end # subscribe_service

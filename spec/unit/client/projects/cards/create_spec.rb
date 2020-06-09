@@ -30,7 +30,7 @@ describe Github::Client::Projects::Cards, '#create' do
 
       it "creates resource" do
         subject.create column_id, inputs
-        a_post(request_path).with(body: inputs).should have_been_made
+        expect(a_post(request_path).with(body: inputs)).to have_been_made
       end
 
       it "returns the resource" do

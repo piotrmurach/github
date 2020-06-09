@@ -29,17 +29,17 @@ describe Github::Client::Issues::Comments, '#create' do
 
     it "should create resource successfully" do
       subject.create user, repo, number, inputs
-      a_post(request_path).with(body: inputs).should have_been_made
+      expect(a_post(request_path).with(body: inputs)).to have_been_made
     end
 
     it "should return the resource" do
       comment = subject.create user, repo, number, inputs
-      comment.should be_a Github::ResponseWrapper
+      expect(comment).to be_a Github::ResponseWrapper
     end
 
     it "should get the comment information" do
       comment = subject.create user, repo, number, inputs
-      comment.user.login.should == 'octocat'
+      expect(comment.user.login).to eq 'octocat'
     end
   end
 

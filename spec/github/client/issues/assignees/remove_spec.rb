@@ -30,17 +30,17 @@ describe Github::Client::Issues::Assignees, '#remove' do
 
     it "should remove resource successfully" do
       subject.remove user, repo, issue_id, assignee
-      a_delete(request_path).should have_been_made
+      expect(a_delete(request_path)).to have_been_made
     end
 
     it "should return the resource" do
       issue = subject.remove user, repo, issue_id, assignee
-      issue.assignees.first.should be_a Github::Mash
+      expect(issue.assignees.first).to be_a Github::Mash
     end
 
     it "should get the assignee information" do
       issue = subject.remove user, repo, issue_id, assignee
-      issue.assignees.first.login.should == 'octocat'
+      expect(issue.assignees.first.login).to eq 'octocat'
     end
   end
 

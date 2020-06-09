@@ -20,7 +20,7 @@ describe Github::Client::Repos::Comments, '#list' do
       let(:body)   { fixture('repos/repo_comments.json') }
       let(:status) { 200 }
 
-      it { should respond_to(:all) }
+      it { is_expected.to respond_to(:all) }
 
       it "should fail to get resource without username" do
         expect { subject.list }.to raise_error(ArgumentError)
@@ -28,7 +28,7 @@ describe Github::Client::Repos::Comments, '#list' do
 
       it "should get the resources" do
         subject.list user, repo
-        a_get(request_path).should have_been_made
+        expect(a_get(request_path)).to have_been_made
       end
 
       it_should_behave_like 'an array of resources' do
@@ -37,13 +37,13 @@ describe Github::Client::Repos::Comments, '#list' do
 
       it "should get commit comment information" do
         repo_comments = subject.list user, repo
-        repo_comments.first.user.login.should == 'octocat'
+        expect(repo_comments.first.user.login).to eq 'octocat'
       end
 
       it "should yield to a block" do
         yielded = []
         result = subject.list(user, repo) { |obj| yielded << obj }
-        yielded.should == result
+        expect(yielded).to eq result
       end
     end
 
@@ -68,7 +68,7 @@ describe Github::Client::Repos::Comments, '#list' do
 
       it "should get the resource" do
         subject.list user, repo, :sha => sha
-        a_get(request_path).should have_been_made
+        expect(a_get(request_path)).to have_been_made
       end
 
       it_should_behave_like 'an array of resources' do
@@ -77,13 +77,13 @@ describe Github::Client::Repos::Comments, '#list' do
 
       it "should get commit comment information" do
         commit_comments = subject.list user, repo, :sha => sha
-        commit_comments.first.user.login.should == 'octocat'
+        expect(commit_comments.first.user.login).to eq 'octocat'
       end
 
       it "should yield to a block" do
         yielded = []
         result = subject.list(user, repo, :sha => sha) { |obj| yielded << obj }
-        yielded.should == result
+        expect(yielded).to eq result
       end
     end
 

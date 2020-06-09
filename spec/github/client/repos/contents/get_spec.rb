@@ -25,11 +25,11 @@ describe Github::Client::Repos::Contents, '#get' do
 
   it "should get the resources" do
     subject.get user, repo, path
-    a_get(request_path).should have_been_made
+    expect(a_get(request_path)).to have_been_made
   end
 
   it "should get repository information" do
     content = subject.get user, repo, path
-    content.name.should == 'README.md'
+    expect(content.name).to eq 'README.md'
   end
 end

@@ -23,12 +23,12 @@ describe Github::Client::Users::Followers, '#following?' do
 
   it 'should perform request' do
     subject.following?(user)
-    a_get(request_path).with(:query => { :access_token => "#{OAUTH_TOKEN}"}).
-      should have_been_made
+    expect(a_get(request_path).with(:query => { :access_token => "#{OAUTH_TOKEN}"})).
+      to have_been_made
   end
 
   it 'should return true if user is being followed' do
-    subject.following?(user).should be_true
+    expect(subject.following?(user)).to be true
   end
 
   it 'should return false if user is not being followed' do
@@ -36,6 +36,6 @@ describe Github::Client::Users::Followers, '#following?' do
       with(:query => { :access_token => "#{OAUTH_TOKEN}"}).
       to_return(:body => '',:status => 404,
         :headers => {:content_type => "application/json; charset=utf-8"})
-    subject.following?(user).should be_false
+    expect(subject.following?(user)).to be false
   end
 end # following?

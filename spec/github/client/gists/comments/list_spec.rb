@@ -17,7 +17,7 @@ RSpec.describe Github::Client::Gists::Comments, '#list' do
     let(:body) { fixture('gists/comments.json') }
     let(:status) { 200 }
 
-    it { should respond_to :all }
+    it { is_expected.to respond_to :all }
 
     it "throws error if gist id not provided" do
       expect { subject.list }.to raise_error(ArgumentError)

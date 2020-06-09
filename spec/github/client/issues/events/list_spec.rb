@@ -21,7 +21,7 @@ describe Github::Client::Issues::Events, '#list' do
 
     context "resource found" do
 
-      it { subject.should respond_to :all }
+      it { expect(subject).to respond_to :all }
 
       it { expect { subject.list }.to raise_error(ArgumentError) }
 
@@ -31,7 +31,7 @@ describe Github::Client::Issues::Events, '#list' do
 
       it "should get the resources" do
         subject.list user, repo
-        a_get(request_path).should have_been_made
+        expect(a_get(request_path)).to have_been_made
       end
 
       it_should_behave_like 'an array of resources' do
@@ -40,13 +40,13 @@ describe Github::Client::Issues::Events, '#list' do
 
       it "should get issue information" do
         events = subject.list user, repo
-        events.first.actor.login.should == 'octocat'
+        expect(events.first.actor.login).to eq 'octocat'
       end
 
       it "should yield to a block" do
         yielded = []
         result = subject.list(user, repo) { |obj| yielded << obj }
-        yielded.should == result
+        expect(yielded).to eq result
       end
     end
 
@@ -63,7 +63,7 @@ describe Github::Client::Issues::Events, '#list' do
     context "resource found" do
       it "should get the resources" do
         subject.list user, repo, :issue_number => issue_number
-        a_get(request_path).should have_been_made
+        expect(a_get(request_path)).to have_been_made
       end
 
       it_should_behave_like 'an array of resources' do
@@ -72,13 +72,13 @@ describe Github::Client::Issues::Events, '#list' do
 
       it "should get issue information" do
         events = subject.list user, repo, :issue_number => issue_number
-        events.first.actor.login.should == 'octocat'
+        expect(events.first.actor.login).to eq 'octocat'
       end
 
       it "should yield to a block" do
         yielded = []
         result = subject.list(user, repo, :issue_number => issue_number) { |obj| yielded << obj }
-        yielded.should == result
+        expect(yielded).to eq result
       end
     end
   end # with issue_number

@@ -41,23 +41,23 @@ describe Github::Client::GitData::Trees, '#create' do
 
     it "should create resource successfully" do
       subject.create user, repo, inputs
-      a_post(request_path).with(body: inputs).should have_been_made
+      expect(a_post(request_path).with(body: inputs)).to have_been_made
     end
 
     it "should return the resource" do
       tree_sha = subject.create user, repo, inputs
-      tree_sha.should be_a Github::ResponseWrapper
+      expect(tree_sha).to be_a Github::ResponseWrapper
     end
 
     it "should not erase the tree data while evaluating params" do
       original_tree = inputs['tree'].dup
       tree_sha = subject.create user, repo, inputs
-      inputs['tree'].should == original_tree
+      expect(inputs['tree']).to eq original_tree
     end
 
     it "should get the tree information" do
       tree_sha = subject.create user, repo, inputs
-      tree_sha.sha.should == sha
+      expect(tree_sha.sha).to eq sha
     end
   end
 

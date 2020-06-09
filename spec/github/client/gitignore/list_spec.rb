@@ -16,22 +16,22 @@ describe Github::Client::Gitignore, '#list' do
     let(:body) { fixture("gitignore/templates.json") }
     let(:status) { 200 }
 
-    it { should respond_to :all }
+    it { is_expected.to respond_to :all }
 
     it "should get the resources" do
       subject.list
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it "should get template information" do
       templates = subject.list
-      templates.first.should == 'Actionscript'
+      expect(templates.first).to eq 'Actionscript'
     end
 
     it "should yield to a block" do
       yielded = []
       result = subject.list { |obj| yielded << obj }
-      yielded.should == result
+      expect(yielded).to eq result
     end
   end
 

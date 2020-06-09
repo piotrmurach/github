@@ -28,17 +28,17 @@ describe Github::Client::Issues::Labels, '#replace' do
 
     it "should create resource successfully" do
       subject.replace user, repo, number, label
-      a_put(request_path).should have_been_made
+      expect(a_put(request_path)).to have_been_made
     end
 
     it "should return the resource" do
       labels = subject.replace user, repo, number, label
-      labels.first.should be_a Github::Mash
+      expect(labels.first).to be_a Github::Mash
     end
 
     it "should get the label information" do
       labels = subject.replace user, repo, number, label
-      labels.first.name.should == 'bug'
+      expect(labels.first.name).to eq 'bug'
     end
   end
 

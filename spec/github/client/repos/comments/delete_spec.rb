@@ -32,7 +32,7 @@ describe Github::Client::Repos::Comments, '#delete' do
 
     it "should delete the resource" do
       subject.delete user, repo, comment_id
-      a_delete(request_path).should have_been_made
+      expect(a_delete(request_path)).to have_been_made
     end
   end
 

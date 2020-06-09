@@ -28,7 +28,7 @@ describe Github::Client::Repos::Collaborators, '#remove' do
 
     it "should add resource successfully" do
       subject.remove user, repo, collaborator
-      a_delete(request_path).should have_been_made
+      expect(a_delete(request_path)).to have_been_made
     end
   end
 

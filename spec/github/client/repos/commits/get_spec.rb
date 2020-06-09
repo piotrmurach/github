@@ -19,7 +19,7 @@ describe Github::Client::Repos::Commits, '#get' do
     let(:body)   { fixture('repos/commit.json') }
     let(:status) { 200 }
 
-    it { should respond_to :find }
+    it { is_expected.to respond_to :find }
 
     it { expect { subject.get }.to raise_error(ArgumentError) }
 
@@ -29,17 +29,17 @@ describe Github::Client::Repos::Commits, '#get' do
 
     it "should get the resource" do
       subject.get user, repo, sha
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it "should get commit information" do
       commit = subject.get user, repo, sha
-      commit.commit.author.name.should == 'Monalisa Octocat'
+      expect(commit.commit.author.name).to eq 'Monalisa Octocat'
     end
 
     it "should return mash" do
       commit = subject.get user, repo, sha
-      commit.should be_a Github::ResponseWrapper
+      expect(commit).to be_a Github::ResponseWrapper
     end
   end
 

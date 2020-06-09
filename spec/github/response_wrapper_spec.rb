@@ -45,11 +45,11 @@ describe Github::ResponseWrapper do
   end
 
   it "should assess successful" do
-    res.success?.should be_true
+    expect(res.success?).to be true
   end
 
   it "should read response body" do
-    res.body.should_not be_empty
+    expect(res.body).to_not be_empty
   end
 
   context "pagination methods" do
@@ -58,21 +58,21 @@ describe Github::ResponseWrapper do
     let(:iterator)    { Github::PageIterator.new(links, current_api) }
 
     before do
-      described_class.stub(:page_iterator).and_return iterator
+      allow(described_class).to receive(:page_iterator).and_return iterator
     end
 
     it "should respond to links" do
-      res.links.should be_a Github::PageLinks
+      expect(res.links).to be_a Github::PageLinks
     end
 
     %w[ next prev ].each do |link|
       context "#{link}_page" do
         it "responds to #{link}_page request" do
-          res.send(:"#{link}_page").should be_nil
+          expect(res.send(:"#{link}_page")).to be_nil
         end
 
         it 'should have no link information' do
-          res.links.send(:"#{link}").should be_nil
+          expect(res.links.send(:"#{link}")).to be_nil
         end
       end
     end
@@ -80,23 +80,23 @@ describe Github::ResponseWrapper do
     %w[ first last].each do |link|
       context "#{link}_page" do
         it "should return resource if exists" do
-          res.send(:"#{link}_page").should_not be_empty
+          expect(res.send(:"#{link}_page")).to_not be_empty
         end
 
         it "should have link information" do
-          res.send(:"#{link}_page").should_not be_nil
+          expect(res.send(:"#{link}_page")).to_not be_nil
         end
       end
     end
 
     it 'finds single page successfully' do
-      iterator.stub(:get_page).and_return res
-      res.page(5).should eq res
+      allow(iterator).to receive(:get_page).and_return res
+      expect(res.page(5)).to eq res
     end
 
     it 'checks if there are more pages' do
-      res.should_receive(:has_next_page?).and_return true
-      res.has_next_page?.should be_true
+      expect(res).to receive(:has_next_page?).and_return true
+      expect(res.has_next_page?).to be true
     end
 
   end # pagination

@@ -20,21 +20,21 @@ describe Github::ResponseWrapper, '#headers' do
 
   subject { object.headers }
 
-  its(:content_type) { should match 'application/json' }
+  its(:content_type) { is_expected.to match 'application/json' }
 
-  its(:content_length) { should match '344' }
+  its(:content_length) { is_expected.to match '344' }
 
-  its(:ratelimit_limit) { should == '5000' }
+  its(:ratelimit_limit) { is_expected.to eq '5000' }
 
-  its(:ratelimit_remaining) { should == '4999' }
+  its(:ratelimit_remaining) { is_expected.to eq '4999' }
 
-  its(:ratelimit_reset) { should == '1422262420' }
+  its(:ratelimit_reset) { is_expected.to eq '1422262420' }
 
-  its(:status) { should be 200 }
+  its(:status) { is_expected.to be 200 }
 
-  its(:etag) { should eql "\"d9a88f20567726e29d35c6fae87cef2f\"" }
+  its(:etag) { is_expected.to eql "\"d9a88f20567726e29d35c6fae87cef2f\"" }
 
-  its(:date) { should eql "Sun, 05 Feb 2012 15:02:34 GMT" }
+  its(:date) { is_expected.to eql "Sun, 05 Feb 2012 15:02:34 GMT" }
 
-  its(:server) { should eql "nginx/1.0.4" }
+  its(:server) { is_expected.to eql "nginx/1.0.4" }
 end

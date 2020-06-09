@@ -6,7 +6,7 @@ describe Github do
   let(:method) { 'create_repos'}
   let(:alt_method) { 'repos.create'}
 
-  it { described_class.constants.should include :DEPRECATION_PREFIX }
+  it { expect(described_class.constants).to include :DEPRECATION_PREFIX }
 
   context '.deprecate' do
     before do
@@ -14,19 +14,19 @@ describe Github do
     end
 
     it 'tracks messages' do
-      Github.should_receive(:warn).once()
+      expect(Github).to receive(:warn).once()
       Github.deprecate(method)
       Github.deprecate(method)
     end
 
     it 'prints the message through Kernel' do
-      Github.should_receive(:warn).once()
+      expect(Github).to receive(:warn).once()
       Github.deprecate method
     end
   end
 
   it 'prints the message through Kernel' do
-    Github.should_receive(:warn)
+    expect(Github).to receive(:warn)
     Github.warn_deprecation method
   end
 end # Github

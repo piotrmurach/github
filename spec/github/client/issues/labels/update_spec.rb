@@ -40,17 +40,17 @@ describe Github::Client::Issues::Labels, '#update' do
 
     it "should update resource successfully" do
       subject.update user, repo, label_id, inputs
-      a_patch(request_path).with(body: inputs).should have_been_made
+      expect(a_patch(request_path).with(body: inputs)).to have_been_made
     end
 
     it "should return the resource" do
       label = subject.update user, repo, label_id, inputs
-      label.should be_a Github::ResponseWrapper
+      expect(label).to be_a Github::ResponseWrapper
     end
 
     it "should get the label information" do
       label = subject.update user, repo, label_id, inputs
-      label.name.should == 'bug'
+      expect(label.name).to eq 'bug'
     end
   end
 

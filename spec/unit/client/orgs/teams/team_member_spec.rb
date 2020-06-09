@@ -26,7 +26,7 @@ RSpec.describe Github::Client::Orgs::Teams, '#team_member?' do
 
     it "returns true if resoure found" do
       team_membership = subject.team_member? team_id, user
-      expect(team_membership).to be_true
+      expect(team_membership).to be true
     end
   end
 
@@ -35,7 +35,7 @@ RSpec.describe Github::Client::Orgs::Teams, '#team_member?' do
 
     it "returns false if resource not found" do
       team_membership = subject.team_member? team_id, user
-      expect(team_membership).to be_false
+      expect(team_membership).to be false
     end
   end
 end # team_member?

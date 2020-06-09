@@ -35,17 +35,17 @@ describe Github::Client::Issues::Milestones, '#create' do
 
     it "should create resource successfully" do
       subject.create user, repo, inputs
-      a_post(request_path).with(body: inputs).should have_been_made
+      expect(a_post(request_path).with(body: inputs)).to have_been_made
     end
 
     it "should return the resource" do
       milestone = subject.create user, repo, inputs
-      milestone.should be_a Github::ResponseWrapper
+      expect(milestone).to be_a Github::ResponseWrapper
     end
 
     it "should get the milestone information" do
       milestone = subject.create user, repo, inputs
-      milestone.title.should == 'v1.0'
+      expect(milestone.title).to eq 'v1.0'
     end
   end
 

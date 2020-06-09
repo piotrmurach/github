@@ -38,17 +38,17 @@ describe Github::Client::GitData::Tags, '#create' do
 
     it "should create resource successfully" do
       subject.create user, repo, inputs
-      a_post(request_path).with(body: inputs).should have_been_made
+      expect(a_post(request_path).with(body: inputs)).to have_been_made
     end
 
     it "should return the resource" do
       tag = subject.create user, repo, inputs
-      tag.should be_a Github::ResponseWrapper
+      expect(tag).to be_a Github::ResponseWrapper
     end
 
     it "should get the tag information" do
       tag = subject.create user, repo, inputs
-      tag.sha.should == sha
+      expect(tag.sha).to eq sha
     end
   end
 

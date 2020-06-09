@@ -31,11 +31,11 @@ describe Github::Client::Repos::Contents, '#create' do
 
   it "creates the resource" do
     subject.create user, repo, path, params
-    a_put(request_path).should have_been_made
+    expect(a_put(request_path)).to have_been_made
   end
 
   it "gets repository contents information" do
     content = subject.create user, repo, path, params
-    content.content.name.should == 'hello.txt'
+    expect(content.content.name).to eq 'hello.txt'
   end
 end

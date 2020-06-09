@@ -19,7 +19,7 @@ describe Github::Client::GitData::Tags, '#get' do
     let(:body) { fixture('git_data/tag.json') }
     let(:status) { 200 }
 
-    it { should respond_to :find }
+    it { is_expected.to respond_to :find }
 
     it "should fail to get resource without sha" do
       expect { subject.get user, repo }.to raise_error(ArgumentError)
@@ -27,17 +27,17 @@ describe Github::Client::GitData::Tags, '#get' do
 
     it "should get the resource" do
       subject.get user, repo, sha
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it "should get tag information" do
       tag = subject.get user, repo, sha
-      tag.tag.should eql "v0.0.1"
+      expect(tag.tag).to eql "v0.0.1"
     end
 
     it "should return mash" do
       tag = subject.get user, repo, sha
-      tag.should be_a Github::ResponseWrapper
+      expect(tag).to be_a Github::ResponseWrapper
     end
   end
 

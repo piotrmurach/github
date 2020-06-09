@@ -28,7 +28,7 @@ describe Github::Client::Repos::Collaborators, '#add' do
 
     it "should add resource successfully" do
       subject.add user, repo, collaborator
-      a_put(request_path).should have_been_made
+      expect(a_put(request_path)).to have_been_made
     end
   end
 

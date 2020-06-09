@@ -23,17 +23,17 @@ describe Github::Client::Search::Legacy, '#issues' do
 
     it "should get the resources" do
       subject.issues owner, repo, state, keyword
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it "should get the resource through params hash" do
       subject.issues owner: owner, repo: repo, state: state, keyword: keyword
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it "should get repository information" do
       issues = subject.issues owner: owner, repo: repo, state: state, keyword: keyword
-      issues.issues.first.user.should == 'ckarbass'
+      expect(issues.issues.first.user).to eq 'ckarbass'
     end
   end
 end

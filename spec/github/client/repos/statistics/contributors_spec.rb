@@ -19,7 +19,7 @@ describe Github::Client::Repos::Statistics, '#contributors' do
 
     it "should get the resources" do
       subject.contributors user, repo
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it_should_behave_like 'an array of resources' do

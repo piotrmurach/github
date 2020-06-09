@@ -24,7 +24,7 @@ RSpec.describe Github::Client::PullRequests::Reviews, "#list" do
       "/repos/#{user}/#{repo}/pulls/#{number}/reviews"
     end
 
-    it { should respond_to :all }
+    it { is_expected.to respond_to :all }
 
     it { expect { subject.list }.to raise_error(ArgumentError) }
 

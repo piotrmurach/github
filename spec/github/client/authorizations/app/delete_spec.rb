@@ -26,7 +26,7 @@ RSpec.describe Github::Client::Authorizations::App, '#delete' do
 
     it "revokes resource successfully" do
       subject.delete client_id
-      a_delete(request_path, host).should have_been_made
+      expect(a_delete(request_path, host)).to have_been_made
     end
 
     it_should_behave_like 'request failure' do
@@ -42,12 +42,12 @@ RSpec.describe Github::Client::Authorizations::App, '#delete' do
 
     it "revokes resource successfully" do
       subject.delete client_id, access_token
-      a_delete(request_path, host).should have_been_made
+      expect(a_delete(request_path, host)).to have_been_made
     end
 
     it "revokes resource successfully with access token as parameter" do
       subject.delete client_id, access_token: access_token
-      a_delete(request_path, host).should have_been_made
+      expect(a_delete(request_path, host)).to have_been_made
     end
 
     it_should_behave_like 'request failure' do

@@ -8,9 +8,9 @@ describe Github::Client::Users, 'integration' do
 
   it_should_behave_like 'api interface'
 
-  its(:emails)    { should be_a Github::Client::Users::Emails }
+  its(:emails)    { is_expected.to be_a Github::Client::Users::Emails }
 
-  its(:followers) { should be_a Github::Client::Users::Followers }
+  its(:followers) { is_expected.to be_a Github::Client::Users::Followers }
 
-  its(:keys)      { should be_a Github::Client::Users::Keys }
+  its(:keys)      { is_expected.to be_a Github::Client::Users::Keys }
 end

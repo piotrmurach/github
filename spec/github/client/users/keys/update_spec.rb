@@ -34,18 +34,18 @@ describe Github::Client::Users::Keys, '#update' do
 
     it "should create resource successfully" do
       subject.update key_id, inputs
-      a_patch(request_path).with(:body => inputs.except(:unrelated),
-        :query => {:access_token => OAUTH_TOKEN}).should have_been_made
+      expect(a_patch(request_path).with(:body => inputs.except(:unrelated),
+        :query => {:access_token => OAUTH_TOKEN})).to have_been_made
     end
 
     it "should return the resource" do
       key = subject.update key_id, inputs
-      key.should be_a Github::ResponseWrapper
+      expect(key).to be_a Github::ResponseWrapper
     end
 
     it "should get the key information" do
       key = subject.update key_id, inputs
-      key.title.should == 'octocat@octomac'
+      expect(key.title).to eq 'octocat@octomac'
     end
   end
 

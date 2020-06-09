@@ -29,7 +29,7 @@ describe Github::Client::Repos::Hooks, '#ping' do
 
     it "should trigger test for the resource" do
       subject.ping user, repo, hook_id
-      a_post(request_path).should have_been_made
+      expect(a_post(request_path)).to have_been_made
     end
   end
 

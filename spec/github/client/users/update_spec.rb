@@ -34,18 +34,18 @@ describe Github::Client::Users, '#update' do
 
     it "should create resource successfully" do
       subject.update inputs
-      a_patch(request_path).with(:body => inputs,
-        :query => {:access_token => OAUTH_TOKEN}).should have_been_made
+      expect(a_patch(request_path).with(:body => inputs,
+        :query => {:access_token => OAUTH_TOKEN})).to have_been_made
     end
 
     it "should return the resource" do
       user_resource = subject.update inputs
-      user_resource.should be_a Github::ResponseWrapper
+      expect(user_resource).to be_a Github::ResponseWrapper
     end
 
     it "should get the resource information" do
       user_resource = subject.update inputs
-      user_resource.login.should == 'octocat'
+      expect(user_resource.login).to eq 'octocat'
     end
   end
 

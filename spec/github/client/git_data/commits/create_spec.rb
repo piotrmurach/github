@@ -55,17 +55,17 @@ describe Github::Client::GitData::Commits, '#get' do
 
     it "should create resource successfully" do
       subject.create user, repo, inputs
-      a_post(request_path).with(body: inputs).should have_been_made
+      expect(a_post(request_path).with(body: inputs)).to have_been_made
     end
 
     it "should return the resource" do
       commit = subject.create user, repo, inputs
-      commit.should be_a Github::ResponseWrapper
+      expect(commit).to be_a Github::ResponseWrapper
     end
 
     it "should get the commit information" do
       commit = subject.create user, repo, inputs
-      commit.author.name.should eql "Scott Chacon"
+      expect(commit.author.name).to eql "Scott Chacon"
     end
   end
 

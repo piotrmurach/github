@@ -19,12 +19,12 @@ describe Github::Client::Users::Followers, '#list' do
     let(:status) { 200 }
     let(:body) { fixture('users/followers.json') }
 
-    it { should respond_to :all }
+    it { is_expected.to respond_to :all }
 
     it "should get the resources" do
       subject.list user
-      a_get(request_path).with(:query => { :access_token => OAUTH_TOKEN}).
-        should have_been_made
+      expect(a_get(request_path).with(:query => { :access_token => OAUTH_TOKEN})).
+        to have_been_made
     end
 
     it_should_behave_like 'an array of resources' do
@@ -33,13 +33,13 @@ describe Github::Client::Users::Followers, '#list' do
 
     it "should get followers information" do
       followers = subject.list user
-      followers.first.login.should == 'octocat'
+      expect(followers.first.login).to eq 'octocat'
     end
 
     it "should yield to a block" do
       yielded = []
       result = subject.list(user) { |obj| yielded << obj }
-      yielded.should == result
+      expect(yielded).to eq result
     end
   end
 
@@ -50,8 +50,8 @@ describe Github::Client::Users::Followers, '#list' do
 
     it "should get the resources" do
       subject.list
-      a_get(request_path).with(:query => { :access_token => "#{OAUTH_TOKEN}"}).
-        should have_been_made
+      expect(a_get(request_path).with(:query => { :access_token => "#{OAUTH_TOKEN}"})).
+        to have_been_made
     end
   end
 
