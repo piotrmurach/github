@@ -1,7 +1,7 @@
 require 'simplecov'
 require 'coveralls'
 
-SimpleCov.adapters.define 'github_api' do
+SimpleCov.profiles.define 'github_api' do
   add_filter "/spec/"
   add_filter "/features/"
 
