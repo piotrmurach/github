@@ -17,7 +17,7 @@ describe Github::Client::Issues::Labels, '#list' do
   after { reset_authentication_for(subject) }
 
   context "for this repository" do
-    it { should respond_to :all }
+    it { is_expected.to respond_to :all }
 
     it { expect { subject.list }.to raise_error(ArgumentError) }
 
@@ -27,7 +27,7 @@ describe Github::Client::Issues::Labels, '#list' do
 
     it "should get the resources" do
       subject.list user, repo
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it_should_behave_like 'an array of resources' do
@@ -36,13 +36,13 @@ describe Github::Client::Issues::Labels, '#list' do
 
     it "should get issue information" do
       labels = subject.list user, repo
-      labels.first.name.should == 'bug'
+      expect(labels.first.name).to eq 'bug'
     end
 
     it "should yield to a block" do
       yielded = []
       result = subject.list(user, repo) { |obj| yielded << obj }
-      yielded.should == result
+      expect(yielded).to eq result
     end
   end
 
@@ -54,7 +54,7 @@ describe Github::Client::Issues::Labels, '#list' do
 
     it "should get the resources" do
       subject.list user, repo, :milestone_id => milestone_id
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it_should_behave_like 'an array of resources' do
@@ -63,13 +63,13 @@ describe Github::Client::Issues::Labels, '#list' do
 
     it "should get issue information" do
       labels = subject.list user, repo, :milestone_id => milestone_id
-      labels.first.name.should == 'bug'
+      expect(labels.first.name).to eq 'bug'
     end
 
     it "should yield to a block" do
       yielded = []
       result = subject.list(user, repo, :milestone_id => milestone_id) { |obj| yielded << obj }
-      yielded.should == result
+      expect(yielded).to eq result
     end
   end
 
@@ -81,18 +81,18 @@ describe Github::Client::Issues::Labels, '#list' do
 
     it "should get the resources" do
       subject.list user, repo, :issue_id => issue_id
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it "should get issue information" do
       labels = subject.list user, repo, :issue_id => issue_id
-      labels.first.name.should == 'bug'
+      expect(labels.first.name).to eq 'bug'
     end
 
     it "should yield to a block" do
       yielded = []
       result = subject.list(user, repo, :issue_id => issue_id) { |obj| yielded << obj }
-      yielded.should == result
+      expect(yielded).to eq result
     end
   end
 

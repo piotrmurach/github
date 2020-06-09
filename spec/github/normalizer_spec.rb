@@ -17,17 +17,17 @@ describe Github::Normalizer, '#normalize!' do
   context '#normalize!' do
     it 'converts hash keys to string' do
       ['a', 'b', 'c'].each do |key|
-        expect(subject.normalize!(hash).deep_key?(key)).to be_true
+        expect(subject.normalize!(hash).deep_key?(key)).to be true
       end
       [:a, :b, :c].each do |key|
-        expect(subject.normalize!(hash).deep_key?(key)).to be_false
+        expect(subject.normalize!(hash).deep_key?(key)).to be false
       end
     end
 
     it "should stringify all the keys inside nested hash" do
       actual = subject.normalize! hash
       expected = { 'a' => { 'b'=> { 'c' => 1 }, 'd' => [ 'a', { 'e'=> 2 }] } }
-      actual.should be_eql expected
+      expect(actual).to be_eql expected
     end
   end
 

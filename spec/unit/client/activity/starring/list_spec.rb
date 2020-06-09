@@ -18,7 +18,7 @@ RSpec.describe Github::Client::Activity::Starring, '#list' do
     let(:body) { fixture("repos/stargazers.json") }
     let(:status) { 200 }
 
-    it { should respond_to :all }
+    it { is_expected.to respond_to :all }
 
     it { expect { subject.list user }.to raise_error(ArgumentError) }
 

@@ -26,11 +26,11 @@ describe Github::Client::Repos::Collaborators, '#collaborator?' do
 
     it "should get the resource" do
       subject.collaborator? user, repo, collaborator
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it "should find collaborator" do
-      subject.should_receive(:collaborator?).
+      expect(subject).to receive(:collaborator?).
         with(user, repo, collaborator) { true }
       subject.collaborator? user, repo, collaborator
     end
@@ -41,7 +41,7 @@ describe Github::Client::Repos::Collaborators, '#collaborator?' do
     let(:status) { 404 }
 
     it "should fail to retrieve resource" do
-      subject.should_receive(:collaborator?).
+      expect(subject).to receive(:collaborator?).
         with(user, repo, collaborator) { false }
       subject.collaborator? user, repo, collaborator
     end

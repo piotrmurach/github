@@ -28,9 +28,9 @@ RSpec.describe Github::Client::Orgs::Teams, '#team_member?' do
       expect { subject.team_membership }.to raise_error(ArgumentError)
     end
 
-    it "returns true if resoure found" do
+    it "returns true if resource found" do
       team_membership = subject.team_membership(team_id, user)
-      expect(team_membership).to be_true
+      expect(team_membership).to be_truthy
     end
   end
 end # team_membership

@@ -21,17 +21,17 @@ describe Github::Client::Issues::Milestones, '#create' do
 
     it "should remove resource successfully" do
       subject.delete user, repo, number
-      a_delete(request_path).should have_been_made
+      expect(a_delete(request_path)).to have_been_made
     end
 
     it "should return the resource" do
       milestone = subject.delete user, repo, number
-      milestone.should be_a Github::ResponseWrapper
+      expect(milestone).to be_a Github::ResponseWrapper
     end
 
     it "should get the milestone information" do
       milestone = subject.delete user, repo, number
-      milestone.title.should == 'v1.0'
+      expect(milestone.title).to eq 'v1.0'
     end
   end
 

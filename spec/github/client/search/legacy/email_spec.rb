@@ -18,17 +18,17 @@ describe Github::Client::Search::Legacy, '#email' do
 
     it "should get the resources" do
       subject.email keyword
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it "should get the resource through params hash" do
       subject.email email: keyword
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it "should get user information" do
       user = subject.email email: keyword
-      user.user.username.should == 'techno'
+      expect(user.user.username).to eq 'techno'
     end
   end
 end

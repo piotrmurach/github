@@ -28,7 +28,7 @@ describe Github::Client::Repos::Branches, '#list' do
 
     it "should find resources" do
       subject.list user, repo
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it_should_behave_like 'an array of resources' do
@@ -37,12 +37,12 @@ describe Github::Client::Repos::Branches, '#list' do
 
     it "should get branch information" do
       branches = subject.list user, repo
-      branches.first.name.should == 'master'
+      expect(branches.first.name).to eq 'master'
     end
 
     it "should yield to a block" do
       block = lambda { |el| repo }
-      subject.should_receive(:list).with(user, repo).and_yield repo
+      expect(subject).to receive(:list).with(user, repo).and_yield repo
       subject.list(user, repo, &block)
     end
   end

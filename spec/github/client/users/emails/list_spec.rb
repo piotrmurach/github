@@ -19,29 +19,29 @@ describe Github::Client::Users::Emails, '#list' do
     let(:body) { fixture('users/emails.json') }
     let(:status) { 200 }
 
-    it { should respond_to :all }
+    it { is_expected.to respond_to :all }
 
     it "should get the resources" do
       subject.list
-      a_get(request_path).with(:query => { :access_token => "#{OAUTH_TOKEN}"}).
-        should have_been_made
+      expect(a_get(request_path).with(:query => { :access_token => "#{OAUTH_TOKEN}"})).
+        to have_been_made
     end
 
     it "should return resource" do
       emails = subject.list
-      emails.should be_an Enumerable
-      emails.should have(2).items
+      expect(emails).to be_an Enumerable
+      expect(emails.size).to be 2
     end
 
     it "should get emails information" do
       emails = subject.list
-      emails.first.should == email
+      expect(emails.first).to eq email
     end
 
     it "should yield to a block" do
       yielded = []
       result = subject.list { |obj| yielded << obj }
-      yielded.should == result
+      expect(yielded).to eq result
     end
   end
 

@@ -26,7 +26,7 @@ describe Github::Client::Authorizations, '#delete' do
 
     it "deletes resource successfully" do
       subject.delete authorization_id
-      a_delete(request_path, host).should have_been_made
+      expect(a_delete(request_path, host)).to have_been_made
     end
 
     it_should_behave_like 'request failure' do

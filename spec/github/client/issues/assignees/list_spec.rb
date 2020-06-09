@@ -18,11 +18,11 @@ describe Github::Client::Issues::Assignees, '#list' do
     let(:body) { fixture('repos/assignees.json') }
     let(:status) { 200 }
 
-    it { should respond_to(:all) }
+    it { is_expected.to respond_to(:all) }
 
     it 'should get the resources' do
       subject.list user, repo
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it_should_behave_like 'an array of resources' do
@@ -31,13 +31,13 @@ describe Github::Client::Issues::Assignees, '#list' do
 
     it "should get collaborator information" do
       assignees = subject.list user, repo
-      assignees.first.login.should == 'octocat'
+      expect(assignees.first.login).to eq 'octocat'
     end
 
     it "should yield to a block" do
       yielded = []
       result = subject.list(user, repo) { |obj| yielded << obj }
-      yielded.should == result
+      expect(yielded).to eq result
     end
   end
 

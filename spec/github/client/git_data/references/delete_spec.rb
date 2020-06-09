@@ -19,7 +19,7 @@ describe Github::Client::GitData::References, '#delete' do
     let(:body) { '' }
     let(:status) { 204 }
 
-    it { should respond_to :remove }
+    it { is_expected.to respond_to :remove }
 
     it { expect { subject.delete }.to raise_error(ArgumentError) }
 
@@ -29,7 +29,7 @@ describe Github::Client::GitData::References, '#delete' do
 
     it "should delete resource successfully" do
       subject.delete user, repo, ref
-      a_delete(request_path).should have_been_made
+      expect(a_delete(request_path)).to have_been_made
     end
   end
 

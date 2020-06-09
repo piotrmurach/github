@@ -25,7 +25,7 @@ describe 'Arguments' do
 
     it 'performs request' do
       subject.list
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it "does not set argument to nil" do

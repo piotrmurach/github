@@ -25,18 +25,18 @@ RSpec.describe Github::Client::Authorizations, '#get' do
 
     it "should get the resource" do
       subject.get authorization_id
-      a_get(request_path, host).should have_been_made
+      expect(a_get(request_path, host)).to have_been_made
     end
 
     it "should get authorization information" do
       authorization = subject.get authorization_id
-      authorization.id.should == authorization_id
-      authorization.token.should == 'abc123'
+      expect(authorization.id).to eq authorization_id
+      expect(authorization.token).to eq 'abc123'
     end
 
     it "should return mash" do
       authorization = subject.get authorization_id
-      authorization.should be_a Github::ResponseWrapper
+      expect(authorization).to be_a Github::ResponseWrapper
     end
   end
 

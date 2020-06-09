@@ -11,7 +11,7 @@ describe Github::Client::Repos, '#list' do
 
   after { reset_authentication_for subject }
 
-  it { should respond_to(:find) }
+  it { is_expected.to respond_to(:find) }
 
   context "resource found for authenticated user" do
     before {
@@ -27,12 +27,12 @@ describe Github::Client::Repos, '#list' do
       stub_get("/user/repos").to_return(:body => '[]', :status => 200,
         :headers => {:content_type => "application/json; charset=utf-8"} )
       subject.list
-      a_get('/user/repos').should have_been_made
+      expect(a_get('/user/repos')).to have_been_made
     end
 
     it "should get the resources" do
       subject.list
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it_should_behave_like 'an array of resources' do
@@ -41,18 +41,18 @@ describe Github::Client::Repos, '#list' do
 
     it "should return array of resources sorted by pushed_at time" do
       repositories = subject.list(:sort => 'pushed')
-      repositories.first.name.should == "Hello-World-2"
+      expect(repositories.first.name).to eq "Hello-World-2"
     end
 
     it "should get resource information" do
       repositories = subject.list
-      repositories.first.name.should == 'Hello-World'
+      expect(repositories.first.name).to eq 'Hello-World'
     end
 
     it "should yield result to a block" do
       yielded = []
       result = subject.list { |obj| yielded << obj }
-      yielded.should == result
+      expect(yielded).to eq result
     end
   end
 
@@ -66,7 +66,7 @@ describe Github::Client::Repos, '#list' do
 
     it "should get the resources" do
       subject.list :every
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
   end
 
@@ -81,7 +81,7 @@ describe Github::Client::Repos, '#list' do
 
     it "should get the resources" do
       subject.list :org => org
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
   end
 
@@ -95,12 +95,12 @@ describe Github::Client::Repos, '#list' do
 
     it "should filter the parameters" do
       subject.list 'user' => user, :unknown => true
-      a_get(request_path).with(body: {}).should have_been_made
+      expect(a_get(request_path).with(body: {})).to have_been_made
     end
 
     it "should get the resources" do
       subject.list :user => user
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
   end
 

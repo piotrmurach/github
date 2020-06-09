@@ -17,7 +17,7 @@ RSpec.describe Github::Client::Activity::Notifications, '#delete' do
 
   after { reset_authentication_for subject }
 
-  it { should respond_to :remove }
+  it { is_expected.to respond_to :remove }
 
   it "should delete the resource successfully" do
     subject.delete thread_id

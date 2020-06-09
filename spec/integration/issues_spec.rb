@@ -8,14 +8,14 @@ describe Github::Client::Issues do
 
   it_should_behave_like 'api interface'
 
-  its(:assignees)  { should be_a Github::Client::Issues::Assignees }
+  its(:assignees)  { is_expected.to be_a Github::Client::Issues::Assignees }
 
-  its(:comments)   { should be_a Github::Client::Issues::Comments }
+  its(:comments)   { is_expected.to be_a Github::Client::Issues::Comments }
 
-  its(:events)     { should be_a Github::Client::Issues::Events }
+  its(:events)     { is_expected.to be_a Github::Client::Issues::Events }
 
-  its(:labels)     { should be_a Github::Client::Issues::Labels }
+  its(:labels)     { is_expected.to be_a Github::Client::Issues::Labels }
 
-  its(:milestones) { should be_a Github::Client::Issues::Milestones }
+  its(:milestones) { is_expected.to be_a Github::Client::Issues::Milestones }
 
 end # Github::Issues

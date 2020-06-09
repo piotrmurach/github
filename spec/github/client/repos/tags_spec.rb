@@ -28,22 +28,22 @@ describe Github::Client::Repos, '#tags' do
 
     it "should find resources" do
       subject.tags user, repo
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it "should return array of resources" do
       tags = subject.tags user, repo
-      tags.should be_an Enumerable
-      tags.should have(1).items
+      expect(tags).to be_an Enumerable
+      expect(tags.size).to be 1
     end
 
     it "should get tag information" do
       tags = subject.tags user, repo
-      tags.first.name.should == 'v0.1'
+      expect(tags.first.name).to eq 'v0.1'
     end
 
     it "should yield to a block" do
-      subject.should_receive(:tags).with(user, repo).and_yield('web')
+      expect(subject).to receive(:tags).with(user, repo).and_yield('web')
       subject.tags(user, repo) { |param| 'web'}
     end
   end

@@ -27,17 +27,17 @@ RSpec.describe Github::Client::Authorizations, '#update' do
 
     it "should update resource successfully" do
       subject.update authorization_id, inputs
-      a_patch(request_path, host).with(body: inputs).should have_been_made
+      expect(a_patch(request_path, host).with(body: inputs)).to have_been_made
     end
 
     it "should return the resource" do
       authorization = subject.update authorization_id, inputs
-      authorization.should be_a Github::ResponseWrapper
+      expect(authorization).to be_a Github::ResponseWrapper
     end
 
     it "should get the authorization information" do
       authorization = subject.update authorization_id, inputs
-      authorization.token.should == 'abc123'
+      expect(authorization.token).to eq 'abc123'
     end
   end
 

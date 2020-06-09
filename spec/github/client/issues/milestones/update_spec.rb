@@ -36,17 +36,17 @@ describe Github::Client::Issues::Milestones, '#update' do
 
     it "should update resource successfully" do
       subject.update user, repo, number, inputs
-      a_patch(request_path).with(body: inputs).should have_been_made
+      expect(a_patch(request_path).with(body: inputs)).to have_been_made
     end
 
     it "should return the resource" do
       milestone = subject.update user, repo, number, inputs
-      milestone.should be_a Github::ResponseWrapper
+      expect(milestone).to be_a Github::ResponseWrapper
     end
 
     it "should get the milestone information" do
       milestone = subject.update user, repo, number, inputs
-      milestone.title.should == 'v1.0'
+      expect(milestone.title).to eq 'v1.0'
     end
   end
 

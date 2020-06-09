@@ -14,7 +14,7 @@ describe Github::API, 'endpoint' do
       to_return(:body => "[]", :status => 200, :headers =>{})
   }
 
-  its(:endpoint) { should == endpoint }
+  its(:endpoint) { is_expected.to eq endpoint }
 
   it "doesn't truncate endpoint" do
     expect { api.get_request(path) }.not_to raise_error()

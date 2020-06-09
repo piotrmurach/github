@@ -17,7 +17,7 @@ describe Github::Client::Repos, '#get_by_id' do
     let(:body)   { fixture('repos/repo.json') }
     let(:status) { 200 }
 
-    it { should respond_to(:find_by_id) }
+    it { is_expected.to respond_to(:find_by_id) }
 
     it "should raise error when no parameters" do
       expect { subject.get_by_id }.to raise_error(ArgumentError)
@@ -25,17 +25,17 @@ describe Github::Client::Repos, '#get_by_id' do
 
     it "should find resources" do
       subject.get_by_id repo_id
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it "should return repository mash" do
       repository = subject.get_by_id repo_id
-      repository.should be_a Github::ResponseWrapper
+      expect(repository).to be_a Github::ResponseWrapper
     end
 
     it "should get repository information" do
       repository = subject.get_by_id repo_id
-      repository.name.should == 'Hello-World'
+      expect(repository.name).to eq 'Hello-World'
     end
   end
 

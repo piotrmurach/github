@@ -51,7 +51,7 @@ module Github
     # @api private
     def call(current_options, params)
       unless HTTP_METHODS.include?(action)
-        raise ArgumentError, "unknown http method: #{method}"
+        raise ArgumentError, "unknown http method: #{action}"
       end
 
       puts "EXECUTED: #{action} - #{path} with PARAMS: #{params.request_params}" if ENV['DEBUG']

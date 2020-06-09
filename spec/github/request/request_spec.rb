@@ -29,8 +29,8 @@ describe Github::API, '#request' do
 
   it 'handles enterprise uri correctly' do
     instance = Github::Request.new(:get, path, subject)
-    instance.stub(:connection).and_return conn
-    Github::Request.stub(:new).and_return instance
+    allow(instance).to receive(:connection).and_return conn
+    allow(Github::Request).to receive(:new).and_return instance
     expect { subject.get_request(path) }.not_to raise_error()
   end
 end

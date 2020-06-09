@@ -40,17 +40,17 @@ describe Github::Client::Issues, '#edit' do
 
     it "should edit the resource" do
       subject.edit user, repo, issue_id, inputs
-      a_patch(request_path).with(body: inputs).should have_been_made
+      expect(a_patch(request_path).with(body: inputs)).to have_been_made
     end
 
     it "should return resource" do
       issue = subject.edit user, repo, issue_id, inputs
-      issue.should be_a Github::ResponseWrapper
+      expect(issue).to be_a Github::ResponseWrapper
     end
 
-    it "should be able to retrieve information" do
+    it "is_expected.to be able to retrieve information" do
       issue = subject.edit user, repo, issue_id, inputs
-      issue.title.should == 'Found a bug'
+      expect(issue.title).to eq 'Found a bug'
     end
   end
 

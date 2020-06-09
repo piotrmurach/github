@@ -39,17 +39,17 @@ describe Github::Client::Repos::Branches::Protections, '#edit' do
 
     it "should edit the resource" do
       subject.edit user, repo, branch, inputs
-      a_put(request_path).with(body: inputs).should have_been_made
+      expect(a_put(request_path).with(body: inputs)).to have_been_made
     end
 
     it "should return resource" do
       repository = subject.edit user, repo, branch, inputs
-      repository.should be_a Github::ResponseWrapper
+      expect(repository).to be_a Github::ResponseWrapper
     end
 
-    it "should be able to retrieve information" do
+    it "is_expected.to be able to retrieve information" do
       protection = subject.edit user, repo, branch, inputs
-      protection.required_pull_request_reviews.dismiss_stale_reviews.should eq false
+      expect(protection.required_pull_request_reviews.dismiss_stale_reviews).to eq false
     end
   end
 

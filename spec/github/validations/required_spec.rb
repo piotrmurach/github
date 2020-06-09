@@ -16,12 +16,12 @@ describe Github::Validations::Required do
     it 'detect missing parameter' do
       expect {
         validator.assert_required_keys(required, provided.except('param_c')).
-          should be_false
+          is_expected.to be false
       }.to raise_error(Github::Error::RequiredParams)
     end
 
     it 'asserts correct required parameters' do
-      validator.assert_required_keys(required, provided).should be_true
+      expect(validator.assert_required_keys(required, provided)).to be true
     end
   end
 

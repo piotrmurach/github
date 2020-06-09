@@ -8,10 +8,10 @@ describe Github::Client::Orgs, 'integration' do
 
   it_should_behave_like 'api interface'
 
-  its(:members) { should be_a Github::Client::Orgs::Members }
+  its(:members) { is_expected.to be_a Github::Client::Orgs::Members }
 
-  its(:teams)   { should be_a Github::Client::Orgs::Teams }
+  its(:teams)   { is_expected.to be_a Github::Client::Orgs::Teams }
 
-  its(:memberships) { should be_a(Github::Client::Orgs::Memberships) }
+  its(:memberships) { is_expected.to be_a(Github::Client::Orgs::Memberships) }
 
 end # Github::Client::Orgs

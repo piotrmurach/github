@@ -39,17 +39,17 @@ describe Github::Client::GitData::References, '#create' do
 
     it "should create resource successfully" do
       subject.create user, repo, inputs
-      a_post(request_path).with(body: inputs).should have_been_made
+      expect(a_post(request_path).with(body: inputs)).to have_been_made
     end
 
     it "should return the resource" do
       reference = subject.create user, repo, inputs
-      reference.first.should be_a Github::Mash
+      expect(reference.first).to be_a Github::Mash
     end
 
     it "should get the reference information" do
       reference = subject.create user, repo, inputs
-      reference.first.ref.should eql 'refs/heads/sc/featureA'
+      expect(reference.first.ref).to eql 'refs/heads/sc/featureA'
     end
   end
 

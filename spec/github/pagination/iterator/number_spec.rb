@@ -26,7 +26,7 @@ describe Github::PageIterator, 'when number' do
       to_return(:body => '', :status => 200, :headers => header)
   }
 
-  it { described_class::ATTRIBUTES.should_not be_nil }
+  it { expect(described_class::ATTRIBUTES).to_not be_nil }
 
   it { expect(iterator.first_page).to eq(1) }
 

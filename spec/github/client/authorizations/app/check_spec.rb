@@ -22,7 +22,7 @@ RSpec.describe Github::Client::Authorizations::App, '#check' do
 
     it "checks resource successfully" do
       subject.check client_id, access_token
-      a_get(request_path, host).should have_been_made
+      expect(a_get(request_path, host)).to have_been_made
     end
 
     it "fails without client_id" do
@@ -41,12 +41,12 @@ RSpec.describe Github::Client::Authorizations::App, '#check' do
 
     it "returns the resource" do
       authorization = subject.check client_id, access_token
-      authorization.should be_a Github::ResponseWrapper
+      expect(authorization).to be_a Github::ResponseWrapper
     end
 
     it "gets the authorization information" do
       authorization = subject.check client_id, access_token
-      authorization.token.should == 'abc123'
+      expect(authorization.token).to eq 'abc123'
     end
   end
 
@@ -60,7 +60,7 @@ RSpec.describe Github::Client::Authorizations::App, '#check' do
 
     it "returns nil" do
       authorization = subject.check client_id, access_token
-      authorization.should be_nil
+      expect(authorization).to be_nil
     end
   end
 end # check

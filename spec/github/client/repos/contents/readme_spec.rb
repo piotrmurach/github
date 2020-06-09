@@ -20,11 +20,11 @@ describe Github::Client::Repos::Contents, '#readme' do
 
   it "should get the resources" do
     subject.readme user, repo
-    a_get(request_path).should have_been_made
+    expect(a_get(request_path)).to have_been_made
   end
 
   it "should get readme information" do
     readme = subject.readme user, repo
-    readme.name.should == 'README.md'
+    expect(readme.name).to eq 'README.md'
   end
 end

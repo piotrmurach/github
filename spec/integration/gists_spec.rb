@@ -8,6 +8,6 @@ describe Github::Client::Gists do
 
   it_should_behave_like 'api interface'
 
-  its(:comments)   { should be_a Github::Client::Gists::Comments }
+  its(:comments)   { is_expected.to be_a Github::Client::Gists::Comments }
 
 end # Github::Gists

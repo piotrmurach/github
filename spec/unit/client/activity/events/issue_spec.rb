@@ -17,7 +17,7 @@ describe Github::Client::Activity::Events, '#issue' do
   after { reset_authentication_for subject }
 
   context "resource found" do
-    it { should respond_to :issue_events }
+    it { is_expected.to respond_to :issue_events }
 
     it "should fail to get resource without username" do
       expect { subject.issue nil, repo }.to raise_error(ArgumentError)

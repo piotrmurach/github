@@ -29,7 +29,7 @@ describe Github::Client::Repos::Collaborators, '#list' do
 
     it "should get the resources" do
       subject.list user, repo
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it_should_behave_like 'an array of resources' do
@@ -38,13 +38,13 @@ describe Github::Client::Repos::Collaborators, '#list' do
 
     it "should get collaborator information" do
       collaborators = subject.list user, repo
-      collaborators.first.login.should == 'octocat'
+      expect(collaborators.first.login).to eq 'octocat'
     end
 
     it "should yield to a block" do
       yielded = []
       result = subject.list(user, repo) { |obj| yielded << obj }
-      yielded.should == result
+      expect(yielded).to eq result
     end
   end
 

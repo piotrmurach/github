@@ -25,7 +25,7 @@ RSpec.describe Github::Client::PullRequests::Reviews, "#get" do
     let(:body)   { fixture("pull_requests/review.json") }
     let(:status) { 200 }
 
-    it { should respond_to :find }
+    it { is_expected.to respond_to :find }
 
     it { expect { subject.get }.to raise_error(ArgumentError) }
 

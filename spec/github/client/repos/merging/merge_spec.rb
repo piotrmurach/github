@@ -39,17 +39,17 @@ describe Github::Client::Repos::Merging, '#merge' do
 
     it "should merge resource successfully" do
       subject.merge user, repo, inputs
-      a_post(request_path).with(body: inputs).should have_been_made
+      expect(a_post(request_path).with(body: inputs)).to have_been_made
     end
 
     it "should return the resource" do
       merge = subject.merge user, repo, inputs
-      merge.should be_a Github::ResponseWrapper
+      expect(merge).to be_a Github::ResponseWrapper
     end
 
     it "should get the commit comment information" do
       merge = subject.merge user, repo, inputs
-      merge.commit.author.login.should == 'octocat'
+      expect(merge.commit.author.login).to eq 'octocat'
     end
   end
 

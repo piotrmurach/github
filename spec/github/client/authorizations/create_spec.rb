@@ -26,12 +26,12 @@ describe Github::Client::Authorizations, '#create' do
 
     it "creates resource successfully" do
       subject.create inputs
-      a_post(request_path, host).with(body: inputs).should have_been_made
+      expect(a_post(request_path, host).with(body: inputs)).to have_been_made
     end
 
     it "returns the resource" do
       authorization = subject.create inputs
-      authorization.should be_a Github::ResponseWrapper
+      expect(authorization).to be_a Github::ResponseWrapper
     end
 
     it "fails without a note parameter" do
@@ -43,7 +43,7 @@ describe Github::Client::Authorizations, '#create' do
 
     it "gets the authorization information" do
       authorization = subject.create inputs
-      authorization.token.should == 'abc123'
+      expect(authorization.token).to eq 'abc123'
     end
   end
 

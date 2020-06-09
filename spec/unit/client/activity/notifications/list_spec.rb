@@ -21,7 +21,7 @@ RSpec.describe Github::Client::Activity::Notifications, '#list' do
         :headers => {:content_type => "application/json; charset=utf-8"})
     }
 
-    it { should respond_to :all }
+    it { is_expected.to respond_to :all }
 
     it 'should get the resource' do
       subject.list

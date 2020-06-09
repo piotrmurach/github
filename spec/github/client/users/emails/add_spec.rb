@@ -20,14 +20,14 @@ describe Github::Client::Users::Emails, '#add' do
   let(:status) { 200 }
 
   it 'extracts request parameters and email data' do
-    subject.should_receive(:post_request).
+    expect(subject).to receive(:post_request).
       with(request_path, { "per_page" => 21, "page" => 1, "data" => [email] })
     subject.add email, params
   end
 
   it 'submits request successfully' do
     subject.add email
-    a_post(request_path).with(:query => { :access_token => "#{OAUTH_TOKEN}"}).
-      should have_been_made
+    expect(a_post(request_path).with(:query => { :access_token => "#{OAUTH_TOKEN}"})).
+      to have_been_made
   end
 end # add

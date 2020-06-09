@@ -25,8 +25,8 @@ describe Github::Client::Users::Keys, '#delete' do
 
     it "should create resource successfully" do
       subject.delete key_id
-      a_delete(request_path).with(:query => {:access_token => OAUTH_TOKEN}).
-        should have_been_made
+      expect(a_delete(request_path).with(:query => {:access_token => OAUTH_TOKEN})).
+        to have_been_made
     end
   end
 

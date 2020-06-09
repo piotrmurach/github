@@ -28,13 +28,13 @@ describe Github::Client, '#repos' do
 
   it "redirects and grabs the resource as if it was a 200" do
     subject.repos.get(user, repo)
-    a_get(request_path).should have_been_made
+    expect(a_get(request_path)).to have_been_made
   end
 
   it "throws if there are too many redirects" do
     limit_reached = Github::RedirectLimitReached
     expect{ subject.repos.get("too-many", "redirects") }.to raise_error(limit_reached)
 
-    a_get(too_many_path).should have_been_made.times(4)
+    expect(a_get(too_many_path)).to have_been_made.times(4)
   end
 end

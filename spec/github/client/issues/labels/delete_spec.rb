@@ -22,7 +22,7 @@ describe Github::Client::Issues::Labels, '#delete' do
 
     it "should remove resource successfully" do
       subject.delete user, repo, label_id
-      a_delete(request_path).should have_been_made
+      expect(a_delete(request_path)).to have_been_made
     end
   end
 

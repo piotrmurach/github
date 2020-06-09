@@ -8,46 +8,46 @@ describe Github::Configuration do
 
   subject { instance }
 
-  its(:adapter) { should == :net_http }
+  its(:adapter) { is_expected.to eq :net_http }
 
-  its(:endpoint) { should == 'https://api.github.com' }
+  its(:endpoint) { is_expected.to eq 'https://api.github.com' }
 
-  its(:site) { should == 'https://github.com' }
+  its(:site) { is_expected.to eq 'https://github.com' }
 
-  its(:upload_endpoint) { should == 'https://uploads.github.com' }
+  its(:upload_endpoint) { is_expected.to eq 'https://uploads.github.com' }
 
-  its(:user_agent) { should =~ /Github API Ruby Gem/ }
+  its(:user_agent) { is_expected.to match /Github API Ruby Gem/ }
 
-  its(:oauth_token) { should be_nil }
+  its(:oauth_token) { is_expected.to be_nil }
 
-  its(:auto_pagination) { should be_false }
+  its(:auto_pagination) { is_expected.to be false }
 
-  its(:ssl) { should_not be_empty }
+  its(:ssl) { is_expected.to_not be_empty }
 
-  its(:ssl) { should be_a Hash }
+  its(:ssl) { is_expected.to be_a Hash }
 
-  its(:repo) { should be_nil }
+  its(:repo) { is_expected.to be_nil }
 
-  its(:user) { should be_nil }
+  its(:user) { is_expected.to be_nil }
 
-  its(:org)  { should be_nil }
+  its(:org)  { is_expected.to be_nil }
 
-  its(:connection_options) { should be_a Hash }
+  its(:connection_options) { is_expected.to be_a Hash }
 
-  its(:connection_options) { should be_empty }
+  its(:connection_options) { is_expected.to be_empty }
 
-  its(:login) { should be_nil }
+  its(:login) { is_expected.to be_nil }
 
-  its(:password) { should be_nil }
+  its(:password) { is_expected.to be_nil }
 
-  its(:basic_auth) { should be_nil }
+  its(:basic_auth) { is_expected.to be_nil }
 
   describe ".call" do
     before { subject.adapter = :net_http }
 
     after { subject.adapter = :net_http }
 
-    it { should respond_to :call }
+    it { is_expected.to respond_to :call }
 
     it "evaluates block" do
       block = Proc.new { |config| config.adapter= :http }

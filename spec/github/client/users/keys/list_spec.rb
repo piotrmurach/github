@@ -19,12 +19,12 @@ describe Github::Client::Users::Keys, '#list' do
     let(:body) { fixture('users/keys.json') }
     let(:status) { 200 }
 
-    it {should respond_to :all }
+    it { is_expected.to respond_to :all }
 
     it "should get the resources" do
       subject.list
-      a_get(request_path).with(:query => { :access_token => "#{OAUTH_TOKEN}"}).
-        should have_been_made
+      expect(a_get(request_path).with(:query => { :access_token => "#{OAUTH_TOKEN}"})).
+        to have_been_made
     end
 
     it_should_behave_like 'an array of resources' do
@@ -33,13 +33,13 @@ describe Github::Client::Users::Keys, '#list' do
 
     it "should get keys information" do
       keys = subject.list
-      keys.first.id.should == key_id
+      expect(keys.first.id).to eq key_id
     end
 
     it "should yield to a block" do
       yielded = []
       result = subject.list { |obj| yielded << obj }
-      yielded.should == result
+      expect(yielded).to eq result
     end
 
     it_should_behave_like 'request failure' do
@@ -55,8 +55,8 @@ describe Github::Client::Users::Keys, '#list' do
 
     it "should get the resources" do
       subject.list :user => user
-      a_get(request_path).with(:query => { :access_token => "#{OAUTH_TOKEN}"}).
-        should have_been_made
+      expect(a_get(request_path).with(:query => { :access_token => "#{OAUTH_TOKEN}"})).
+        to have_been_made
     end
 
     it_should_behave_like 'an array of resources' do
@@ -65,13 +65,13 @@ describe Github::Client::Users::Keys, '#list' do
 
     it "should get keys information" do
       keys = subject.list :user => user
-      keys.first.id.should == key_id
+      expect(keys.first.id).to eq key_id
     end
 
     it "should yield to a block" do
       yielded = []
       result = subject.list(:user => user) { |obj| yielded << obj }
-      yielded.should == result
+      expect(yielded).to eq result
     end
   end
 end # list

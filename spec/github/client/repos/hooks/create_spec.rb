@@ -46,17 +46,17 @@ describe Github::Client::Repos::Hooks, '#create' do
 
     it "should create resource successfully" do
       subject.create user, repo, inputs
-      a_post(request_path).with(body: inputs).should have_been_made
+      expect(a_post(request_path).with(body: inputs)).to have_been_made
     end
 
     it "should return the resource" do
       hook = subject.create user, repo, inputs
-      hook.should be_a Github::ResponseWrapper
+      expect(hook).to be_a Github::ResponseWrapper
     end
 
     it "should get the hook information" do
       hook = subject.create user, repo, inputs
-      hook.name.should == 'web'
+      expect(hook.name).to eq 'web'
     end
   end
 

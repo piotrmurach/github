@@ -24,7 +24,7 @@ RSpec.describe Github::Client::Authorizations::App, '#create' do
 
     it "creates resource successfully" do
       subject.create client_id
-      a_put(request_path, host).should have_been_made
+      expect(a_put(request_path, host)).to have_been_made
     end
 
     it "fails without client_id" do
@@ -33,12 +33,12 @@ RSpec.describe Github::Client::Authorizations::App, '#create' do
 
     it "returns the resource" do
       authorization = subject.create client_id
-      authorization.should be_a Github::ResponseWrapper
+      expect(authorization).to be_a Github::ResponseWrapper
     end
 
     it "gets the authorization information" do
       authorization = subject.create client_id
-      authorization.token.should == 'abc123'
+      expect(authorization.token).to eq 'abc123'
     end
   end
 end # create

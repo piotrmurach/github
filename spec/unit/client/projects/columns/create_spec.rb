@@ -32,17 +32,17 @@ RSpec.describe Github::Client::Projects::Columns, '#create' do
 
       it "creates resource" do
         subject.create project_id, inputs
-        a_post(request_path).with(body: inputs).should have_been_made
+        expect(a_post(request_path).with(body: inputs)).to have_been_made
       end
 
       it "returns the resource" do
         column = subject.create project_id, inputs
-        column.name.should == 'To Do'
+        expect(column.name).to eq 'To Do'
       end
 
       it "returns mash type" do
         column = subject.create project_id, inputs
-        column.should be_a Github::ResponseWrapper
+        expect(column).to be_a Github::ResponseWrapper
       end
     end
   end

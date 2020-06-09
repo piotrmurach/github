@@ -39,12 +39,12 @@ describe Github::Client::Repos::Contents, '#delete' do
 
     it "should delete the resource" do
       subject.delete user, repo, path, params
-      a_delete(request_path).with(:query => params).should have_been_made
+      expect(a_delete(request_path).with(:query =>params)).to have_been_made
     end
 
     it "gets repository contents information" do
       content = subject.delete user, repo, path, params
-      content.content.should be_nil
+      expect(content.content).to be_nil
     end
   end
 

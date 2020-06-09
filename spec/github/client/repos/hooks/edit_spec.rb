@@ -55,17 +55,17 @@ describe Github::Client::Repos::Hooks, '#edit' do
 
     it "should edit the resource" do
       subject.edit user, repo, hook_id, inputs
-      a_patch(request_path).with(body: inputs).should have_been_made
+      expect(a_patch(request_path).with(body: inputs)).to have_been_made
     end
 
     it "should return resource" do
       hook = subject.edit user, repo, hook_id, inputs
-      hook.should be_a Github::ResponseWrapper
+      expect(hook).to be_a Github::ResponseWrapper
     end
 
-    it "should be able to retrieve information" do
+    it "is_expected.to be able to retrieve information" do
       hook = subject.edit user, repo, hook_id, inputs
-      hook.name.should == 'web'
+      expect(hook.name).to eq 'web'
     end
   end
 

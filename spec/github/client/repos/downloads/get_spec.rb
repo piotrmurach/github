@@ -20,7 +20,7 @@ describe Github::Client::Repos::Downloads, '#get' do
     let(:body)   { fixture('repos/download.json') }
     let(:status) { 200 }
 
-    it { should respond_to :find }
+    it { is_expected.to respond_to :find }
 
     it { expect { subject.get }.to raise_error(ArgumentError) }
 
@@ -30,18 +30,18 @@ describe Github::Client::Repos::Downloads, '#get' do
 
     it "should get the resource" do
       subject.get user, repo, download_id
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it "should get download information" do
       download = subject.get user, repo, download_id
-      download.id.should == download_id
-      download.name.should == 'new_file.jpg'
+      expect(download.id).to eq download_id
+      expect(download.name).to eq 'new_file.jpg'
     end
 
     it "should return mash" do
       download = subject.get user, repo, download_id
-      download.should be_a Github::ResponseWrapper
+      expect(download).to be_a Github::ResponseWrapper
     end
   end
 

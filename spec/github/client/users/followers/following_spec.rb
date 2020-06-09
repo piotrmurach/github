@@ -19,7 +19,7 @@ describe Github::Client::Users::Followers, '#following' do
 
     it "should get the resources" do
       subject.following user
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it_should_behave_like 'an array of resources' do
@@ -28,13 +28,13 @@ describe Github::Client::Users::Followers, '#following' do
 
     it "should get following users information" do
       followings = subject.following user
-      followings.first.login.should == 'octocat'
+      expect(followings.first.login).to eq 'octocat'
     end
 
     it "should yield to a block" do
       yielded = []
       result = subject.following(user) { |obj| yielded << obj }
-      yielded.should == result
+      expect(yielded).to eq result
     end
   end
 
@@ -53,8 +53,8 @@ describe Github::Client::Users::Followers, '#following' do
 
     it "should get the resources" do
       subject.following
-      a_get(request_path).with(:query => { :access_token => "#{OAUTH_TOKEN}"}).
-        should have_been_made
+      expect(a_get(request_path).with(:query => { :access_token => "#{OAUTH_TOKEN}"})).
+        to have_been_made
     end
   end
 

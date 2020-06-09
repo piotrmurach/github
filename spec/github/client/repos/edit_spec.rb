@@ -39,17 +39,17 @@ describe Github::Client::Repos, '#edit' do
 
     it "should edit the resource" do
       subject.edit user, repo, inputs
-      a_patch(request_path).with(body: inputs).should have_been_made
+      expect(a_patch(request_path).with(body: inputs)).to have_been_made
     end
 
     it "should return resource" do
       repository = subject.edit user, repo, inputs
-      repository.should be_a Github::ResponseWrapper
+      expect(repository).to be_a Github::ResponseWrapper
     end
 
-    it "should be able to retrieve information" do
+    it "is_expected.to be able to retrieve information" do
       repository = subject.edit user, repo, inputs
-      repository.name.should == 'Hello-World'
+      expect(repository.name).to eq 'Hello-World'
     end
   end
 
