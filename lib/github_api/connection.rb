@@ -65,7 +65,7 @@ module Github
 
     # Creates http connection
     #
-    # Returns a Fraday::Connection object
+    # Returns a Faraday::Connection object
     def connection(api, options = {})
       connection_options = default_options(options)
       connection_options.merge!(builder: stack(options.merge!(api: api)))

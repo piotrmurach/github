@@ -17,6 +17,8 @@ module Faraday
       end
     end
 
+    module_function
+
     def build_nested_query(value, prefix = nil, encoder = nil)
       case value
       when Array
