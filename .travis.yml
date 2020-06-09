@@ -1,23 +1,26 @@
 ---
 language: ruby
-cache: bundler
+before_install: "gem install bundler -v '< 2.0'"
 script: "bundle exec rake ci"
 rvm:
-  - 2.0.0
-  - 2.1.10
-  - 2.2.9
-  - 2.3.6
-  - 2.4.3
-  - 2.5.8
-  - 2.6.6
-  - 2.7.1
+  - 2.0
+  - 2.1
+  - 2.2
+  - 2.3
+  - 2.4
+  - 2.5
+  - 2.6
+  - 2.7
   - ruby-head
-  - jruby-9000
+  - jruby-9.2.11.1
   - jruby-head
+  - truffleruby
 matrix:
   allow_failures:
     - rvm: ruby-head
     - rvm: jruby-head
+    - rvm: jruby-9.2.11.1
+    - rvm: truffleruby
   fast_finish: true
 notifications:
   email: false
