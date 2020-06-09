@@ -20,45 +20,45 @@ Then /^the response should equal (.*)$/ do |expected_response|
   else
     raise ArgumentError 'Expected boolean type!'
   end
-  @response.should == expected
+  expect(@response).to eq expected
 end
 
 Then /^the response status should be (.*)$/ do |expected_response|
-  @response.status.should eql expected_response.to_i
+  expect(@response.status).to eql expected_response.to_i
 end
 
 Then /^the response should be (.*)$/ do |expected_response|
   expected_response = case expected_response
   when /false/
-    @response.should be_false
+    expect(@response).to be false
   when /true/
-    @response.should be_true
+    expect(@response).to be true
   when /\d+/
-    @response.should eql expected_response.to_i
+    expect(@response).to eql expected_response.to_i
   when /empty/
-    @response.should be_empty
+    expect(@response).to be_empty
   else
-    @response.should eql expected_response
+    expect(@response).to eql expected_response
   end
 end
 
 Then /^the response type should be (.*)$/ do |type|
   case type.downcase
   when 'json'
-    @response.headers.content_type.should =~ /application\/json/
+    expect(@response.headers.content_type).to match /application\/json/
   when 'html'
-    @response.headers.content_type.should =~ /text\/html/
+    expect(@response.headers.content_type).to match /text\/html/
   when 'raw'
-    @response.headers.content_type.should =~ /raw/
+    expect(@response.headers.content_type).to match /raw/
   end
 end
 
 Then /^the response should have (\d+) items$/ do |size|
-  @response.size.should eql size.to_i
+  expect(@response.size).to eql size.to_i
 end
 
 Then /^the response should not be empty$/ do
-  @response.should_not be_empty
+  expect(@response).to_not be_empty
 end
 
 Then /^the response should in (.*) contain (.*)$/ do |attr, item|
@@ -75,7 +75,7 @@ end
 Then /^the response should contain (.*)$/ do |item|
   case @response.body
   when Array
-    @response.body.should include item
+    expect(@response.body).to include item
   end
 end
 
@@ -86,7 +86,7 @@ end
 Then /^the response (.*) link should contain:$/ do |type, table|
   table.hashes.each do |attributes|
     attributes.each do |key, val|
-      @response.links.send(:"#{type}").should match /#{key}=#{val}/
+      expect(@response.links.send(:"#{type}")).to match /#{key}=#{val}/
     end
   end
 end
@@ -97,8 +97,8 @@ end
 
 Then /^the response (.*) item (.*) should be (.*)$/ do |action, field, result|
   if action == 'first'
-    @response.first.send(field).should eql result
+    expect(@response.first.send(field)).to eql result
   else
-    @response.last.send(field).should eql result
+    expect(@response.last.send(field)).to eql result
   end
 end

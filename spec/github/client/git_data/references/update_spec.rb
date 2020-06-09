@@ -40,17 +40,17 @@ describe Github::Client::GitData::References, '#update' do
 
     it "should update resource successfully" do
       subject.update user, repo, ref, inputs
-      a_patch(request_path).with(body: inputs).should have_been_made
+      expect(a_patch(request_path).with(body: inputs)).to have_been_made
     end
 
     it "should return the resource" do
       reference = subject.update user, repo, ref, inputs
-      reference.first.should be_a Github::Mash
+      expect(reference.first).to be_a Github::Mash
     end
 
     it "should get the reference information" do
       reference = subject.update user, repo, ref, inputs
-      reference.first.ref.should eql 'refs/heads/sc/featureA'
+      expect(reference.first.ref).to eql 'refs/heads/sc/featureA'
     end
   end
 

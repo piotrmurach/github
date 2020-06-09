@@ -30,7 +30,7 @@ RSpec.describe Github::Client::Gists, '#starred?' do
     end
 
     it 'returns true if gist is already starred' do
-      expect(subject.starred?(gist_id)).to be_true
+      expect(subject.starred?(gist_id)).to be true
     end
   end
 
@@ -38,7 +38,7 @@ RSpec.describe Github::Client::Gists, '#starred?' do
     let(:status) { 404 }
 
     it 'returns false if gist is not starred' do
-      expect(subject.starred?(gist_id)).to be_false
+      expect(subject.starred?(gist_id)).to be false
     end
   end
 end # starred?

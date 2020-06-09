@@ -13,7 +13,7 @@ describe Github::Client::Repos::Releases::Assets, '#upload' do
   let(:path)     { "/repos/#{owner}/#{repo}/releases/#{id}/assets" }
 
   before {
-    Faraday::UploadIO.stub(:new).and_return(file)
+    allow(Faraday::UploadIO).to receive(:new).and_return(file)
     stub_post(path, endpoint).with(query: {name:'batman.jpg'}).to_return(body: body, status: status,
       headers: {content_type: 'application/json; charset=utf-8'})
   }

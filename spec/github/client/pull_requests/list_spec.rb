@@ -20,7 +20,7 @@ RSpec.describe Github::Client::PullRequests, '#list' do
     let(:body) { fixture('pull_requests/pull_requests.json') }
     let(:status) { 200 }
 
-    it { should respond_to :all }
+    it { is_expected.to respond_to :all }
 
     it { expect { subject.list }.to raise_error(ArgumentError) }
 

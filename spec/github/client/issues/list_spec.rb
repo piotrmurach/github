@@ -16,11 +16,11 @@ describe Github::Client::Issues, '#list' do
 
   context "resource found" do
 
-    it { should respond_to(:all) }
+    it { is_expected.to respond_to(:all) }
 
     it "should get the resources" do
       subject.list
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it_should_behave_like 'an array of resources' do
@@ -29,13 +29,13 @@ describe Github::Client::Issues, '#list' do
 
     it "should get issue information" do
       issues = subject.list
-      issues.first.title.should == 'Found a bug'
+      expect(issues.first.title).to eq 'Found a bug'
     end
 
     it "should yield to a block" do
       yielded = []
       result = subject.list { |obj| yielded << obj }
-      yielded.should == result
+      expect(yielded).to eq result
     end
   end
 
@@ -45,7 +45,7 @@ describe Github::Client::Issues, '#list' do
 
     it 'should get the resources' do
       subject.list :org => org
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
   end
 
@@ -54,7 +54,7 @@ describe Github::Client::Issues, '#list' do
 
     it 'should get the resources' do
       subject.list :user
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
   end
 
@@ -70,7 +70,7 @@ describe Github::Client::Issues, '#list' do
     
     it "should get the resources" do
       subject.list :user => user, :repo => repo
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it_should_behave_like 'an array of resources' do
@@ -79,18 +79,18 @@ describe Github::Client::Issues, '#list' do
 
     it "should get repository issue information" do
       repo_issues = subject.list :user => user, :repo => repo
-      repo_issues.first.title.should == 'Found a bug'
+      expect(repo_issues.first.title).to eq 'Found a bug'
     end
 
     it "should yield to a block" do
       yielded = []
       result = subject.list(:user => user, :repo => repo) { |obj| yielded << obj }
-      yielded.should == result
+      expect(yielded).to eq result
     end
 
     it "should pass parameters" do 
       subject.list :user => user, :repo => repo, :param1 => "foo", :param2 => "bar"
-      a_get(request_path + "?param1=foo&param2=bar").should have_been_made
+      expect(a_get(request_path + "?param1=foo&param2=bar")).to have_been_made
     end
   end
 

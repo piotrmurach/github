@@ -18,7 +18,7 @@ RSpec.describe Github::Client::Gists::Comments, '#get' do
     let(:body) { fixture('gists/comment.json') }
     let(:status) { 200 }
 
-    it { should respond_to :find }
+    it { is_expected.to respond_to :find }
 
     it "fails to get resource without comment id" do
       expect { subject.get nil, nil }.to raise_error(ArgumentError)

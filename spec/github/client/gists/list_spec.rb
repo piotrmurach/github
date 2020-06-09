@@ -18,7 +18,7 @@ RSpec.describe Github::Client::Gists, '#list' do
     let(:request_path) { "/users/#{user}/gists" }
 
     context "resource found" do
-      it { should respond_to :all }
+      it { is_expected.to respond_to :all }
 
       it "gets the resources" do
         subject.list(user: user)

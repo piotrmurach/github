@@ -23,10 +23,11 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'oauth2',      '~> 1.0'
   gem.add_dependency 'descendants_tracker', '~> 0.0.4'
 
-  gem.add_development_dependency 'bundler', '>= 1.5.0', '< 2.0'
+  gem.add_development_dependency 'bundler',  '>= 1.5.0', '< 3'
   gem.add_development_dependency 'rake',     '< 11.0'
   gem.add_development_dependency 'cucumber', '~> 2.1'
-  gem.add_development_dependency 'rspec',    '~> 2.14.1'
+  gem.add_development_dependency 'rspec',    '~> 3'
+  gem.add_development_dependency 'rspec-its','~> 1'
   gem.add_development_dependency 'vcr',      '~> 3.0.3'
   gem.add_development_dependency 'webmock',  '~> 3.0.1'
 end

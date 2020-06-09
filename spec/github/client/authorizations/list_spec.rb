@@ -18,7 +18,7 @@ RSpec.describe Github::Client::Authorizations, '#list' do
     let(:body) { fixture('auths/authorizations.json') }
     let(:status) { 200 }
 
-    it { should respond_to :all }
+    it { is_expected.to respond_to :all }
 
     it "should fail to get resource without basic authentication" do
       reset_authentication_for subject
@@ -27,7 +27,7 @@ RSpec.describe Github::Client::Authorizations, '#list' do
 
     it "should get the resources" do
       subject.list
-      a_get(request_path, host).should have_been_made
+      expect(a_get(request_path, host)).to have_been_made
     end
 
     it_should_behave_like 'an array of resources' do
@@ -36,13 +36,13 @@ RSpec.describe Github::Client::Authorizations, '#list' do
 
     it "should get authorization information" do
       authorizations = subject.list
-      authorizations.first.token.should == 'abc123'
+      expect(authorizations.first.token).to eq 'abc123'
     end
 
     it "should yield to a block" do
       yielded = []
       result = subject.list { |obj| yielded << obj }
-      yielded.should == result
+      expect(yielded).to eq result
     end
   end
 

@@ -25,14 +25,14 @@ RSpec.describe Github::Client::PullRequests, '#merged?' do
 
     it "returns false if resource not found" do
       merged = subject.merged?(user, repo, number)
-      expect(merged).to be_false
+      expect(merged).to be false
     end
 
     it "returns true if resoure found" do
       stub_get(request_path).to_return(body: "[]", status: 200,
         headers: {user_agent: subject.user_agent})
       merged = subject.merged? user, repo, number
-      expect(merged).to be_true
+      expect(merged).to be true
     end
   end
 end # merged?

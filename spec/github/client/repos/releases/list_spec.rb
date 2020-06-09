@@ -18,7 +18,7 @@ RSpec.describe Github::Client::Repos::Releases, '#list' do
     let(:body)   { fixture("repos/releases.json") }
     let(:status) { 200 }
 
-    it { should respond_to :all }
+    it { is_expected.to respond_to :all }
 
     it { expect { subject.list }.to raise_error(ArgumentError) }
 

@@ -29,18 +29,18 @@ describe Github::Client::Users::Keys, '#create' do
 
     it "should create resource successfully" do
       subject.create inputs
-      a_post(request_path).with(:body => inputs.except(:unrelated),
-        :query => {:access_token => OAUTH_TOKEN}).should have_been_made
+      expect(a_post(request_path).with(:body => inputs.except(:unrelated),
+        :query => {:access_token => OAUTH_TOKEN})).to have_been_made
     end
 
     it "should return the resource" do
       key = subject.create inputs
-      key.should be_a Github::ResponseWrapper
+      expect(key).to be_a Github::ResponseWrapper
     end
 
     it "should get the key information" do
       key = subject.create inputs
-      key.title.should == 'octocat@octomac'
+      expect(key.title).to eq 'octocat@octomac'
     end
   end
 

@@ -36,7 +36,7 @@ describe Github::Client::Repos::PubSubHubbub, '#subscribe' do
 
     it "subscribes to hub" do
       subject.subscribe topic, callback
-      a_post("/hub?access_token=#{OAUTH_TOKEN}").with(body: hub_inputs).should have_been_made
+      expect(a_post("/hub?access_token=#{OAUTH_TOKEN}").with(body: hub_inputs)).to have_been_made
     end
   end
 

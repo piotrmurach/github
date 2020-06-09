@@ -19,7 +19,7 @@ describe Github::Client::Repos::Statistics, '#participation' do
 
     it "should get the resources" do
       subject.participation user, repo
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
   end
 end

@@ -18,7 +18,7 @@ describe Github::Client::Repos::Commits, '#list' do
     let(:body)   { fixture('repos/commits.json') }
     let(:status) { 200 }
 
-    it { should respond_to :all }
+    it { is_expected.to respond_to :all }
 
     it { expect { subject.list }.to raise_error(ArgumentError) }
 
@@ -26,7 +26,7 @@ describe Github::Client::Repos::Commits, '#list' do
 
     it "should get the resources" do
       subject.list user, repo
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it_should_behave_like 'an array of resources' do
@@ -35,13 +35,13 @@ describe Github::Client::Repos::Commits, '#list' do
 
     it "should get commit information" do
       commits = subject.list user, repo
-      commits.first.author.name.should == 'Scott Chacon'
+      expect(commits.first.author.name).to eq 'Scott Chacon'
     end
 
     it "should yield to a block" do
       yielded = []
       result = subject.list(user, repo) { |obj| yielded << obj }
-      yielded.should == result
+      expect(yielded).to eq result
     end
   end
 

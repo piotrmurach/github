@@ -39,17 +39,17 @@ describe Github::Client::Issues::Labels, '#create' do
 
     it "should create resource successfully" do
       subject.create user, repo, inputs
-      a_post(request_path).with(body: inputs).should have_been_made
+      expect(a_post(request_path).with(body: inputs)).to have_been_made
     end
 
     it "should return the resource" do
       label = subject.create user, repo, inputs
-      label.should be_a Github::ResponseWrapper
+      expect(label).to be_a Github::ResponseWrapper
     end
 
     it "should get the label information" do
       label = subject.create user, repo, inputs
-      label.name.should == 'bug'
+      expect(label.name).to eq 'bug'
     end
   end
 

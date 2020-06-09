@@ -17,11 +17,11 @@ describe Github::Client::Repos::Branches::Protections, '#delete' do
 
   after { reset_authentication_for subject }
 
-  it { should respond_to :remove }
+  it { is_expected.to respond_to :remove }
 
   it "should delete the resource successfully" do
     subject.delete user, repo, branch
-    a_delete(request_path).should have_been_made
+    expect(a_delete(request_path)).to have_been_made
   end
 
   it "should fail to delete resource without 'user' parameter" do

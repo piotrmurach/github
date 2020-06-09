@@ -19,7 +19,7 @@ describe Github::Client::Repos::Downloads, '#list' do
     let(:body)   { fixture('repos/downloads.json') }
     let(:status) { 200 }
 
-    it { should respond_to :all }
+    it { is_expected.to respond_to :all }
 
     it { expect { subject.list }.to raise_error(ArgumentError) }
 
@@ -29,7 +29,7 @@ describe Github::Client::Repos::Downloads, '#list' do
 
     it "should get the resources" do
       subject.list user, repo
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it_should_behave_like 'an array of resources' do
@@ -38,13 +38,13 @@ describe Github::Client::Repos::Downloads, '#list' do
 
     it "should get download information" do
       downloads = subject.list user, repo
-      downloads.first.name.should == 'new_file.jpg'
+      expect(downloads.first.name).to eq 'new_file.jpg'
     end
 
     it "should yield to a block" do
       yielded = []
       result = subject.list(user, repo) { |obj| yielded << obj }
-      yielded.should == result
+      expect(yielded).to eq result
     end
   end
 

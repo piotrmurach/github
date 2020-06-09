@@ -19,7 +19,7 @@ describe Github::Client::GitData::References, '#list' do
     let(:body) { fixture('git_data/references.json') }
     let(:status) { 200 }
 
-    it { should respond_to :all }
+    it { is_expected.to respond_to :all }
 
     it "should fail to get resource without username" do
       expect { subject.list(nil, repo) }.to raise_error(ArgumentError)
@@ -67,29 +67,29 @@ describe Github::Client::GitData::References, '#list' do
 
     it "should get the resources" do
       subject.list user, repo, :ref => ref
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it "should return array of resources" do
       references = subject.list user, repo, :ref => ref
-      references.should be_an Enumerable
-      references.should have(3).items
+      expect(references).to be_an Enumerable
+      expect(references.size).to be 3
     end
 
-    it "should be a mash type" do
+    it "is_expected.to be a mash type" do
       references = subject.list user, repo, :ref => ref
-      references.first.should be_a Github::Mash
+      expect(references.first).to be_a Github::Mash
     end
 
     it "should get reference information" do
       references = subject.list user, repo, :ref => ref
-      references.first.ref.should eql 'refs/heads/master'
+      expect(references.first.ref).to eql 'refs/heads/master'
     end
 
     it "should yield to a block" do
       yielded = []
       result = subject.list(user, repo, :ref => ref) { |obj| yielded << obj }
-      yielded.should == result
+      expect(yielded).to eq result
     end
   end
 
@@ -100,7 +100,7 @@ describe Github::Client::GitData::References, '#list' do
 
     it "should get the resources" do
       subject.list user, repo
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
   end
 

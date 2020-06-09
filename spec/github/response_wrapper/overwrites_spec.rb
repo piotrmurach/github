@@ -13,7 +13,7 @@ describe Github::ResponseWrapper, 'overwrites' do
 
   it { expect(object.id).to eql(2456210) }
 
-  it { expect(object.fork).to be_false }
+  it { expect(object.fork).to be false }
 
   it { expect(object.type).to eql('repo') }
 end

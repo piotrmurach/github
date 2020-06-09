@@ -18,7 +18,7 @@ describe Github::Client::Repos, '#get' do
     let(:body)   { fixture('repos/repo.json') }
     let(:status) { 200 }
 
-    it { should respond_to(:find) }
+    it { is_expected.to respond_to(:find) }
 
     it "should raise error when no user/repo parameters" do
       expect { subject.get nil, repo }.to raise_error(ArgumentError)
@@ -30,17 +30,17 @@ describe Github::Client::Repos, '#get' do
 
     it "should find resources" do
       subject.get user, repo
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it "should return repository mash" do
       repository = subject.get user, repo
-      repository.should be_a Github::ResponseWrapper
+      expect(repository).to be_a Github::ResponseWrapper
     end
 
     it "should get repository information" do
       repository = subject.get user, repo
-      repository.name.should == 'Hello-World'
+      expect(repository.name).to eq 'Hello-World'
     end
   end
 

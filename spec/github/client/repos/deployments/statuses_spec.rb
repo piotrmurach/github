@@ -24,7 +24,7 @@ describe Github::Client::Repos::Deployments, '#statuses' do
 
     it "should get the resources" do
       subject.statuses user, repo, id
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it_should_behave_like 'an array of resources' do
@@ -33,13 +33,13 @@ describe Github::Client::Repos::Deployments, '#statuses' do
 
     it "should get deployment information" do
       statuses = subject.statuses user, repo, id
-      statuses.first.sha.should == 'a9a5ad01cf26b646e6f95bf9e2d13a2a155b5c9b'
+      expect(statuses.first.sha).to eq 'a9a5ad01cf26b646e6f95bf9e2d13a2a155b5c9b'
     end
 
     it "should yield to a block" do
       yielded = []
       result = subject.statuses(user, repo, id) { |obj| yielded << obj }
-      yielded.should == result
+      expect(yielded).to eq result
     end
   end
 

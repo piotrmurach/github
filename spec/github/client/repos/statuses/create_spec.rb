@@ -35,17 +35,17 @@ describe Github::Client::Repos::Statuses, '#create' do
 
     it "should create resource successfully" do
       subject.create user, repo, sha, inputs
-      a_post(request_path).with(body: inputs).should have_been_made
+      expect(a_post(request_path).with(body: inputs)).to have_been_made
     end
 
     it "should return the resource" do
       status = subject.create user, repo, sha, inputs
-      status.should be_a Github::ResponseWrapper
+      expect(status).to be_a Github::ResponseWrapper
     end
 
     it "should get the status information" do
       status = subject.create user, repo, sha, inputs
-      status.state.should == 'success'
+      expect(status.state).to eq 'success'
     end
   end
 

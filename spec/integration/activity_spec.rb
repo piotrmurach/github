@@ -8,11 +8,11 @@ describe Github::Client::Activity, 'integration' do
 
   it_should_behave_like 'api interface'
 
-  its(:events)        { should be_a Github::Client::Activity::Events }
+  its(:events)        { is_expected.to be_a Github::Client::Activity::Events }
 
-  its(:notifications) { should be_a Github::Client::Activity::Notifications }
+  its(:notifications) { is_expected.to be_a Github::Client::Activity::Notifications }
 
-  its(:starring)      { should be_a Github::Client::Activity::Starring }
+  its(:starring)      { is_expected.to be_a Github::Client::Activity::Starring }
 
-  its(:watching)      { should be_a Github::Client::Activity::Watching }
+  its(:watching)      { is_expected.to be_a Github::Client::Activity::Watching }
 end

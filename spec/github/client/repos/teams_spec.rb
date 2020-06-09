@@ -28,22 +28,22 @@ describe Github::Client::Repos, '#teams' do
 
     it "should find resources" do
       subject.teams user, repo
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it "should return array of resources" do
       teams = subject.teams user, repo
-      teams.should be_an Enumerable
-      teams.should have(1).items
+      expect(teams).to be_an Enumerable
+      expect(teams.size).to be 1
     end
 
     it "should get branch information" do
       teams = subject.teams user, repo
-      teams.first.name.should == 'Owners'
+      expect(teams.first.name).to eq 'Owners'
     end
 
     it "should yield to a block" do
-      subject.should_receive(:teams).with(user, repo).and_yield('web')
+      expect(subject).to receive(:teams).with(user, repo).and_yield('web')
       subject.teams(user, repo) { |param| 'web'}
     end
   end

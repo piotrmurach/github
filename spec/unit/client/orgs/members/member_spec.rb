@@ -28,7 +28,7 @@ RSpec.describe Github::Client::Orgs::Members, '#member?' do
 
       it "returns false if resource not found" do
         membership = subject.member?(org, member)
-        expect(membership).to be_false
+        expect(membership).to be false
       end
     end
 
@@ -37,7 +37,7 @@ RSpec.describe Github::Client::Orgs::Members, '#member?' do
 
       it "returns true if resoure found" do
         membership = subject.member?(org, member)
-        expect(membership).to be_true
+        expect(membership).to be true
       end
     end
   end
@@ -50,7 +50,7 @@ RSpec.describe Github::Client::Orgs::Members, '#member?' do
 
       it "should return false if resource not found" do
         public_member = subject.member?(org, member, public: true)
-        expect(public_member).to be_false
+        expect(public_member).to be false
       end
     end
 
@@ -59,7 +59,7 @@ RSpec.describe Github::Client::Orgs::Members, '#member?' do
 
       it "returns true if resoure found" do
         public_member = subject.member?(org, member, public: true)
-        expect(public_member).to be_true
+        expect(public_member).to be true
       end
     end
   end

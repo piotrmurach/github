@@ -16,22 +16,22 @@ describe Github::Authorization do
   end
 
   context '.client' do
-    it { should respond_to :client }
+    it { is_expected.to respond_to :client }
 
     it "should return OAuth2::Client instance" do
-      github.client.should be_a OAuth2::Client
+      expect(github.client).to be_a OAuth2::Client
     end
 
     it "should assign site from the options hash" do
-      github.client.site.should == site
+      expect(github.client.site).to eq site
     end
 
     it "should assign 'authorize_url" do
-      github.client.authorize_url.should == "#{site}login/oauth/authorize"
+      expect(github.client.authorize_url).to eq "#{site}login/oauth/authorize"
     end
 
     it "should assign 'token_url" do
-      github.client.token_url.should == "#{site}login/oauth/access_token"
+      expect(github.client.token_url).to eq "#{site}login/oauth/access_token"
     end
   end
 
@@ -49,26 +49,26 @@ describe Github::Authorization do
     it "should return authentication token code" do
       github.client_id = client_id
       github.client_secret = client_secret
-      github.client.stub(:auth_code).and_return code
-      github.auth_code.should == code
+      allow(github.client).to receive(:auth_code).and_return code
+      expect(github.auth_code).to eq code
     end
   end
 
   context "authorize_url" do
     let(:options) { {:client_id => client_id, :client_secret => client_secret} }
 
-    it { should respond_to(:authorize_url) }
+    it { is_expected.to respond_to(:authorize_url) }
 
     it "should return address containing client_id" do
-      github.authorize_url.should =~ /client_id=#{client_id}/
+      expect(github.authorize_url).to match /client_id=#{client_id}/
     end
 
     it "should return address containing scopes" do
-      github.authorize_url(:scope => 'user').should =~ /scope=user/
+      expect(github.authorize_url(:scope => 'user')).to match /scope=user/
     end
 
     it "should return address containing redirect_uri" do
-      github.authorize_url(:redirect_uri => 'http://localhost').should =~ /redirect_uri/
+      expect(github.authorize_url(:redirect_uri => 'http://localhost')).to match /redirect_uri/
     end
   end
 
@@ -80,12 +80,12 @@ describe Github::Authorization do
         to_return(:body => '', :status => 200, :headers => {})
     end
 
-    it { should respond_to(:get_token) }
+    it { is_expected.to respond_to(:get_token) }
 
     it "should make the authorization request" do
       expect {
         github.get_token code
-        a_request(:post, "https://github.com/login/oauth/access_token").should have_been_made
+        a_request(:post, expect("https://github.com/login/oauth/access_token")).to have_been_made
       }.to raise_error(OAuth2::Error)
     end
 
@@ -95,49 +95,49 @@ describe Github::Authorization do
   end
 
   context ".authenticated?" do
-    it { should respond_to(:authenticated?) }
+    it { is_expected.to respond_to(:authenticated?) }
 
     it "should return false if falied on basic authentication" do
-      github.stub(:basic_authed?).and_return false
-      expect(github.authenticated?).to be_false
+      allow(github).to receive(:basic_authed?).and_return false
+      expect(github.authenticated?).to be false
     end
 
     it "should return true if basic authentication performed" do
-      github.stub(:basic_authed?).and_return true
-      github.authenticated?.should be_true
+      allow(github).to receive(:basic_authed?).and_return true
+      expect(github.authenticated?).to be true
     end
 
     it "should return true if basic authentication performed" do
-      github.stub(:oauth_token?).and_return true
-      github.authenticated?.should be_true
+      allow(github).to receive(:oauth_token?).and_return true
+      expect(github.authenticated?).to be true
     end
   end
 
   context ".basic_authed?" do
     before do
-      github.stub(:basic_auth?).and_return false
+      allow(github).to receive(:basic_auth?).and_return false
     end
 
-    it { should respond_to(:basic_authed?) }
+    it { is_expected.to respond_to(:basic_authed?) }
 
     it "should return false if login is missing" do
-      github.stub(:login?).and_return false
-      github.basic_authed?.should be_false
+      allow(github).to receive(:login?).and_return false
+      expect(github.basic_authed?).to be false
     end
 
     it "should return true if login && password provided" do
-      github.stub(:login?).and_return true
-      github.stub(:password?).and_return true
-      expect(github.basic_authed?).to be_true
+      allow(github).to receive(:login?).and_return true
+      allow(github).to receive(:password?).and_return true
+      expect(github.basic_authed?).to be true
     end
   end
 
   context "authentication" do
-    it { should respond_to(:authentication) }
+    it { is_expected.to respond_to(:authentication) }
 
     it "should return empty hash if no basic authentication params available" do
-      github.stub(:login?).and_return false
-      github.stub(:basic_auth?).and_return false
+      allow(github).to receive(:login?).and_return false
+      allow(github).to receive(:basic_auth?).and_return false
       expect(github.authentication).to be_empty
     end
 

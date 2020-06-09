@@ -18,7 +18,7 @@ describe Github::Client::Gitignore, '#get' do
     let(:status) { 200 }
     let(:accept) { "application/json; charset=utf-8" }
 
-    it { should respond_to :find }
+    it { is_expected.to respond_to :find }
 
     it "should fail to get resource without key" do
       expect { subject.get }.to raise_error(ArgumentError)
@@ -26,12 +26,12 @@ describe Github::Client::Gitignore, '#get' do
 
     it "should get the resource" do
       subject.get template
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it "should get key information" do
       temp = subject.get template
-      temp.name.should == "C"
+      expect(temp.name).to eq "C"
     end
   end
 
@@ -42,7 +42,7 @@ describe Github::Client::Gitignore, '#get' do
 
     it "should get the resource" do
       subject.get template, 'accept' => 'application/vnd.github.raw'
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
   end
 

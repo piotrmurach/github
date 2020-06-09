@@ -38,7 +38,7 @@ RSpec.describe Github::Client::Activity::Notifications, '#create' do
 
     it 'returns the resource' do
       thread = subject.create thread_id, inputs
-      expect(thread.subscribed).to be_true
+      expect(thread.subscribed).to be true
     end
   end
 end # create

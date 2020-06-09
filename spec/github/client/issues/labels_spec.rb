@@ -4,6 +4,6 @@ require 'spec_helper'
 
 describe Github::Client::Issues::Labels, 'integration' do
 
-  it { described_class::VALID_LABEL_INPUTS.should_not be_nil }
+  it { expect(described_class::VALID_LABEL_INPUTS).to_not be_nil }
 
 end # Github::Client::Issues::Labels

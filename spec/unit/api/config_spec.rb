@@ -15,16 +15,16 @@ RSpec.describe Github::API::Config, 'inheritance' do
 
   it "inherits properties down" do
     top.property :magic
-    expect(top.property_names.include?(:magic)).to be_true
-    expect(middle.property_names.include?(:magic)).to be_true
-    expect(bottom.property_names.include?(:magic)).to be_true
+    expect(top.property_names.include?(:magic)).to be true
+    expect(middle.property_names.include?(:magic)).to be true
+    expect(bottom.property_names.include?(:magic)).to be true
   end
 
   it "doesn't inherit properties up" do
     middle.property :mushroom
-    expect(top.property_names.include?(:mushroom)).to be_false
-    expect(middle.property_names.include?(:mushroom)).to be_true
-    expect(bottom.property_names.include?(:mushroom)).to be_true
+    expect(top.property_names.include?(:mushroom)).to be false
+    expect(middle.property_names.include?(:mushroom)).to be true
+    expect(bottom.property_names.include?(:mushroom)).to be true
   end
 
   it "allows to override a default option" do

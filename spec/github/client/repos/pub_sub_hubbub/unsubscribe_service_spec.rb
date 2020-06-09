@@ -14,7 +14,7 @@ describe Github::Client::Repos::PubSubHubbub, '#unsubscribe_service' do
   it { expect { subject.unsubscribe_service }.to raise_error(ArgumentError) }
 
   it "subscribes to service" do
-    subject.should_receive(:unsubscribe).with(topic, callback)
+    expect(subject).to receive(:unsubscribe).with(topic, callback)
     subject.unsubscribe_service user, repo, service
   end
 end # unsubscribe_service

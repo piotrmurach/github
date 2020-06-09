@@ -8,5 +8,5 @@ describe Github::Client::Search, 'integration' do
 
   it_should_behave_like 'api interface'
 
-  its(:legacy) { should be_a Github::Client::Search::Legacy }
+  its(:legacy) { is_expected.to be_a Github::Client::Search::Legacy }
 end

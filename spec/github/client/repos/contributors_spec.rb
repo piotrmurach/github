@@ -29,12 +29,12 @@ describe Github::Client::Repos, '#contributors' do
 
     it 'filters out unknown parameters' do
       subject.contributors user, repo, :unknown => true
-      a_get(request_path).with(body: {}).should have_been_made
+      expect(a_get(request_path).with(body: {})).to have_been_made
     end
 
     it "should find resources" do
       subject.contributors user, repo
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it_should_behave_like 'an array of resources' do
@@ -43,11 +43,11 @@ describe Github::Client::Repos, '#contributors' do
 
     it "should get branch information" do
       contributors = subject.contributors user, repo
-      contributors.first.login.should == 'octocat'
+      expect(contributors.first.login).to eq 'octocat'
     end
 
     it "should yield to a block" do
-      subject.should_receive(:contributors).with(user, repo).and_yield('web')
+      expect(subject).to receive(:contributors).with(user, repo).and_yield('web')
       subject.contributors(user, repo) { |param| 'web'}
     end
   end

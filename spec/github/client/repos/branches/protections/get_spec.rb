@@ -21,17 +21,17 @@ describe Github::Client::Repos::Branches::Protections, '#get' do
 
     it "should find resources" do
       subject.get user, repo, branch
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it "should return repository mash" do
       repo_branch = subject.get user, repo, branch
-      repo_branch.should be_a Github::ResponseWrapper
+      expect(repo_branch).to be_a Github::ResponseWrapper
     end
 
     it "should get repository branch protection information" do
       protection = subject.get user, repo, branch
-      protection.enforce_admins.enabled.should eq false
+      expect(protection.enforce_admins.enabled).to eq false
     end
   end
 

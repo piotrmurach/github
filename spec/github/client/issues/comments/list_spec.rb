@@ -19,7 +19,7 @@ describe Github::Client::Issues::Comments, '#list' do
     let(:body) { fixture('issues/comments.json') }
     let(:status) { 200 }
 
-    it { should respond_to :all }
+    it { is_expected.to respond_to :all }
 
     it "should fail to get resource without username" do
       expect { subject.list user, nil }.to raise_error(ArgumentError)
@@ -27,7 +27,7 @@ describe Github::Client::Issues::Comments, '#list' do
 
     it "should get the resources" do
       subject.list user, repo, :number => number
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it_should_behave_like 'an array of resources' do
@@ -36,13 +36,13 @@ describe Github::Client::Issues::Comments, '#list' do
 
     it "should get issue comment information" do
       comments = subject.list user, repo, :number => number
-      comments.first.user.login.should == 'octocat'
+      expect(comments.first.user.login).to eq 'octocat'
     end
 
     it "should yield to a block" do
       yielded = []
       result = subject.list(user, repo, :number => number) { |obj| yielded << obj }
-      yielded.should == result
+      expect(yielded).to eq result
     end
 
     it_should_behave_like 'request failure' do
@@ -57,7 +57,7 @@ describe Github::Client::Issues::Comments, '#list' do
 
     it "should get the resources" do
       subject.list user, repo
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it_should_behave_like 'an array of resources' do
@@ -66,13 +66,13 @@ describe Github::Client::Issues::Comments, '#list' do
 
     it "should get issue comment information" do
       comments = subject.list user, repo
-      comments.first.user.login.should == 'octocat'
+      expect(comments.first.user.login).to eq 'octocat'
     end
 
     it "should yield to a block" do
       yielded = []
       result = subject.list(user, repo) { |obj| yielded << obj }
-      yielded.should == result
+      expect(yielded).to eq result
     end
   end
 end # list

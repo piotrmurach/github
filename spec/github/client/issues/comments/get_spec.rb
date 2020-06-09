@@ -19,7 +19,7 @@ describe Github::Client::Issues::Comments, '#get' do
     let(:body) { fixture('issues/comment.json') }
     let(:status) { 200 }
 
-    it { should respond_to :find }
+    it { is_expected.to respond_to :find }
 
     it "should fail to get resource without comment id" do
       expect { subject.get user, repo, nil }.to raise_error(ArgumentError)
@@ -27,18 +27,18 @@ describe Github::Client::Issues::Comments, '#get' do
 
     it "should get the resource" do
       subject.get user, repo, comment_id
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it "should get comment information" do
       comment = subject.get user, repo, comment_id
-      comment.user.id.should == comment_id
-      comment.user.login.should == 'octocat'
+      expect(comment.user.id).to eq comment_id
+      expect(comment.user.login).to eq 'octocat'
     end
 
     it "should return mash" do
       comment = subject.get user, repo, comment_id
-      comment.should be_a Github::ResponseWrapper
+      expect(comment).to be_a Github::ResponseWrapper
     end
   end
 

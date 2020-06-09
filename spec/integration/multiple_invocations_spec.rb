@@ -19,7 +19,7 @@ describe Github, 'invocations' do
     it 'requests commit information twice' do
       subject.repos.commits.get user, repo, sha
       subject.repos.commits.get user, repo, sha
-      a_get(request_path).should have_been_made.times(2)
+      expect(a_get(request_path)).to have_been_made.times(2)
     end
   end
 
@@ -36,7 +36,7 @@ describe Github, 'invocations' do
     it 'requests organization information twice' do
       subject.orgs.get org
       subject.orgs.get org
-      a_get(request_path).should have_been_made.times(2)
+      expect(a_get(request_path)).to have_been_made.times(2)
     end
   end
 end

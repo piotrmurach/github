@@ -20,7 +20,7 @@ describe Github::Client::GitData::Blobs, '#get' do
     let(:body) { fixture('git_data/blob.json') }
     let(:status) { 200 }
 
-    it { should respond_to :find }
+    it { is_expected.to respond_to :find }
 
     it "should fail to get resource without sha" do
       expect { subject.get user, repo }.to raise_error(ArgumentError)
@@ -28,17 +28,17 @@ describe Github::Client::GitData::Blobs, '#get' do
 
     it "should get the resource" do
       subject.get user, repo, sha
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it "should get blob information" do
       blob = subject.get user, repo, sha
-      blob.content.should eql "Content of the blob"
+      expect(blob.content).to eql "Content of the blob"
     end
 
     it "should return mash" do
       blob = subject.get user, repo, sha
-      blob.should be_a Github::ResponseWrapper
+      expect(blob).to be_a Github::ResponseWrapper
     end
   end
 

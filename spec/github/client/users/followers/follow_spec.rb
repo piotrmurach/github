@@ -23,11 +23,11 @@ describe Github::Client::Users::Followers, '#follow' do
 
   it 'successfully unfollows a user' do
     subject.follow(user)
-    a_put(request_path).with(:query => { :access_token => OAUTH_TOKEN}).
-      should have_been_made
+    expect(a_put(request_path).with(:query => { :access_token => OAUTH_TOKEN})).
+      to have_been_made
   end
 
   it "should return 204 with a message 'Not Found'" do
-    subject.follow(user).status.should be 204
+    expect(subject.follow(user).status).to be 204
   end
 end # follow

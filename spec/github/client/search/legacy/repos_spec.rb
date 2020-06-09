@@ -20,17 +20,17 @@ describe Github::Client::Search::Legacy, '#repos' do
 
     it "should get the resources" do
       subject.repos keyword
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it "should get the resource through params hash" do
       subject.repos keyword: keyword
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it "should get repository information" do
       repos = subject.repos keyword: keyword
-      repos.repositories.first.username.should == 'mathiasbynens'
+      expect(repos.repositories.first.username).to eq 'mathiasbynens'
     end
   end
 end

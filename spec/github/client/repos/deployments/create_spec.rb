@@ -33,17 +33,17 @@ describe Github::Client::Repos::Deployments, '#create' do
 
     it "should create resource successfully" do
       subject.create user, repo, params
-      a_post(request_path).with(:body => params).should have_been_made
+      expect(a_post(request_path).with(:body => params)).to have_been_made
     end
 
     it "should return the resource" do
       deployment = subject.create user, repo, params
-      deployment.should be_a Github::ResponseWrapper
+      expect(deployment).to be_a Github::ResponseWrapper
     end
 
     it "should get the deployment information" do
       deployment = subject.create user, repo, params
-      deployment.environment.should == 'production'
+      expect(deployment.environment).to eq 'production'
     end
   end
 

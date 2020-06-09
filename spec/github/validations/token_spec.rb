@@ -8,11 +8,11 @@ describe Github::Validations::Token do
 
   context '#validates_token_for' do
     it 'does not require authentication token' do
-      validator.validates_token_for(:get, '/octocat/emails').should be_false
+      expect(validator.validates_token_for(:get, '/octocat/emails')).to be false
     end
 
     it 'requires authentication token' do
-      validator.validates_token_for(:get, '/user/emails').should be_true
+      expect(validator.validates_token_for(:get, '/user/emails')).to be true
     end
   end
 

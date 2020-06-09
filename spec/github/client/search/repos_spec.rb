@@ -18,21 +18,21 @@ describe Github::Client::Search, '#repos' do
     let(:body)   { fixture('search/repos.json') }
     let(:status) { 200 }
 
-    it { should respond_to :repos }
+    it { is_expected.to respond_to :repos }
 
     it "should get the resources" do
       subject.repos q: query
-      a_get(request_path).with(query: {q: query}).should have_been_made
+      expect(a_get(request_path).with(query: {q: query})).to have_been_made
     end
 
-    it "should be a response wrapper" do
+    it "is_expected.to be a response wrapper" do
       code = subject.repos q: query
-      code.should be_a Github::ResponseWrapper
+      expect(code).to be_a Github::ResponseWrapper
     end
 
     it "should get information" do
       code = subject.repos q: query
-      code.total_count.should == 40
+      expect(code.total_count).to eq 40
     end
   end
 end

@@ -13,6 +13,7 @@ if RUBY_VERSION > '1.9' and (ENV['COVERAGE'] || ENV['TRAVIS'])
   end
 end
 
+require 'rspec/its'
 require 'webmock/rspec'
 require 'github_api'
 
@@ -31,8 +32,7 @@ end
 RSpec.configure do |config|
   config.include WebMock::API
   config.order = :rand
-  config.color_enabled = true
-  config.treat_symbols_as_metadata_keys_with_true_values = true
+  config.color = true
   config.run_all_when_everything_filtered = true
 
   config.before(:each) do

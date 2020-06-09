@@ -16,7 +16,7 @@ describe Github::Client::Activity::Events, '#organization' do
   after { reset_authentication_for subject }
 
   context "resource found" do
-    it { should respond_to :organization }
+    it { is_expected.to respond_to :organization }
 
     it "should fail to get resource without orgname" do
       expect { subject.organization }.to raise_error(ArgumentError)

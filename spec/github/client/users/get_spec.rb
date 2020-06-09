@@ -17,21 +17,21 @@ describe Github::Client::Users, '#get' do
     let(:body)   { fixture('users/user.json') }
     let(:status) { 200 }
 
-    it { should respond_to :find }
+    it { is_expected.to respond_to :find }
 
     it "should get the resources" do
       subject.get :user => user
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
-    it "should be a response wrapper" do
+    it "is_expected.to be a response wrapper" do
       user_resource = subject.get :user => user
-      user_resource.should be_a Github::ResponseWrapper
+      expect(user_resource).to be_a Github::ResponseWrapper
     end
 
     it "should get org information" do
       user_resource = subject.get :user => user
-      user_resource.login.should == 'octocat'
+      expect(user_resource.login).to eq 'octocat'
     end
   end
 
@@ -49,8 +49,8 @@ describe Github::Client::Users, '#get' do
 
     it "should get the resources" do
       subject.get
-      a_get(request_path).with(:query => {:access_token => OAUTH_TOKEN}).
-        should have_been_made
+      expect(a_get(request_path).with(:query => {:access_token => OAUTH_TOKEN})).
+        to have_been_made
     end
   end
 

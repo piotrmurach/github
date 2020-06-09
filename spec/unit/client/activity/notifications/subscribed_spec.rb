@@ -31,7 +31,7 @@ RSpec.describe Github::Client::Activity::Notifications, '#subscribed?' do
 
     it 'gets resource information' do
       subscribed = subject.subscribed? thread_id
-      expect(subscribed.subscribed).to be_true
+      expect(subscribed.subscribed).to be true
     end
   end
 

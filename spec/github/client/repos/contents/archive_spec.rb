@@ -22,7 +22,7 @@ describe Github::Client::Repos::Contents, '#get' do
 
   it "should get the resources" do
     subject.archive user, repo, :archive_format => archive_format, :ref => ref
-    a_get(request_path).should have_been_made
+    expect(a_get(request_path)).to have_been_made
   end
 
   context 'with defaults' do
@@ -32,7 +32,7 @@ describe Github::Client::Repos::Contents, '#get' do
 
     it 'should get the resource' do
       subject.archive user, repo
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
   end
 end

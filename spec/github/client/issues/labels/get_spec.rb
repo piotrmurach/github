@@ -19,7 +19,7 @@ describe Github::Client::Issues::Labels, '#get' do
     let(:body) { fixture('issues/label.json') }
     let(:status) { 200 }
 
-    it { should respond_to :get }
+    it { is_expected.to respond_to :get }
 
     it "should fail to get resource without label id" do
       expect { subject.get user, repo, nil }.to raise_error(ArgumentError)
@@ -27,17 +27,17 @@ describe Github::Client::Issues::Labels, '#get' do
 
     it "should get the resource" do
       subject.get user, repo, label_name
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it "should get label information" do
       label = subject.get user, repo, label_name
-      label.name.should == 'bug'
+      expect(label.name).to eq 'bug'
     end
 
     it "should return mash" do
       label = subject.get user, repo, label_name
-      label.should be_a Github::ResponseWrapper
+      expect(label).to be_a Github::ResponseWrapper
     end
   end
 

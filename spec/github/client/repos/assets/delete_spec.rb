@@ -29,7 +29,7 @@ describe Github::Client::Repos::Releases::Assets, '#delete' do
 
     it "should delete the resource" do
       subject.delete user, repo, id
-      a_delete(path).should have_been_made
+      expect(a_delete(path)).to have_been_made
     end
   end
 

@@ -29,17 +29,17 @@ describe Github::Client::Issues::Comments, '#edit' do
 
     it "should create resource successfully" do
       subject.edit user, repo, number, inputs
-      a_patch(request_path).with(body: inputs).should have_been_made
+      expect(a_patch(request_path).with(body: inputs)).to have_been_made
     end
 
     it "should return the resource" do
       comment = subject.edit user, repo, number, inputs
-      comment.should be_a Github::ResponseWrapper
+      expect(comment).to be_a Github::ResponseWrapper
     end
 
     it "should get the comment information" do
       comment = subject.edit user, repo, number, inputs
-      comment.user.login.should == 'octocat'
+      expect(comment.user.login).to eq 'octocat'
     end
   end
 

@@ -19,7 +19,7 @@ describe Github::Client::Issues::Milestones, '#get' do
     let(:body) { fixture('issues/milestone.json') }
     let(:status) { 200 }
 
-    it { subject.should respond_to :find }
+    it { expect(subject).to respond_to :find }
 
     it { expect { subject.get }.to raise_error(ArgumentError) }
 
@@ -29,18 +29,18 @@ describe Github::Client::Issues::Milestones, '#get' do
 
     it "should get the resource" do
       subject.get user, repo, milestone_id
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it "should get milestone information" do
       milestone = subject.get user, repo, milestone_id
-      milestone.number.should == milestone_id
-      milestone.title.should == 'v1.0'
+      expect(milestone.number).to eq milestone_id
+      expect(milestone.title).to eq 'v1.0'
     end
 
     it "should return mash" do
       milestone = subject.get user, repo, milestone_id
-      milestone.should be_a Github::ResponseWrapper
+      expect(milestone).to be_a Github::ResponseWrapper
     end
   end
 
