@@ -1,5 +1,19 @@
 # Change log
 
+## [v0.19.0] - 2020-06-x
+
+### Added
+* Add Repo Invitations by Seth Siegler(@Siggs2000)
+
+### Changed
+* Change to update RSpec from v2 to v3 by Leo Arnold(@leoarnold)
+* Change to support latest Faraday by Leo Arnold(@leoarnold)
+
+### Fixed
+* Fix refs passing in Github::Client::GitData::References by Nicolas Leger(@nicolasleger)
+* Fix Simplecov deprecations by Leo Arnold(@leoarnold)
+* Fix Request error message interpolation by Olle Jonsson(@olleolleolle)
+
 ## [v0.18.2] - 2017-11-19
 
 ### Fixed
@@ -725,6 +739,7 @@
 
 * fixing json parsing issue preventing repository creation
 
+[v0.19.0]: https://github.com/peter-murach/github/compare/v0.18.2...v0.19.0
 [v0.18.2]: https://github.com/peter-murach/github/compare/v0.18.1...v0.18.2
 [v0.18.1]: https://github.com/peter-murach/github/compare/v0.17.0...v0.18.1
 [v0.17.0]: https://github.com/peter-murach/github/compare/v0.16.0...v0.17.0
