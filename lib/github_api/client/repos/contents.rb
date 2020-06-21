@@ -33,6 +33,23 @@ module Github
       get_request("/repos/#{arguments.user}/#{arguments.repo}/readme", arguments.params)
     end
 
+    # Get the LICENSE
+    #
+    # This method returns the contents of the repository's license file, if one is detected.
+    #
+    # @param [Hash] params
+    #
+    # @example
+    #   github = Github.new
+    #   github.repos.contents.license 'user-name', 'repo-name'
+    #
+    # @api public
+    def license(*args)
+      arguments(args, required: [:user, :repo])
+
+      get_request("/repos/#{arguments.user}/#{arguments.repo}/license", arguments.params)
+    end
+    
     # Get contents
     #
     # This method returns the contents of any file or directory in a repository.
