@@ -28,7 +28,7 @@ describe Github::Client::Repos::Invitations, '#list' do
 
     it "should get the resources" do
       subject.list user, repo
-      a_get(request_path).should have_been_made
+      expect(a_get(request_path)).to have_been_made
     end
 
     it "should get invitations information" do
