@@ -1,13 +1,17 @@
 # Change log
 
-## [v0.19.0] - 2020-06-x
+## [v0.19.0] - 2020-06-22
 
 ### Added
 * Add Repo Invitations by Seth Siegler(@Siggs2000)
+* Adds ability to fetch per-repo license information by Zach Wick(@zachwick)
+* Add 'has_projects' to the list of valid repo options by  Romain Tartière(@smortex)
 
 ### Changed
 * Change to update RSpec from v2 to v3 by Leo Arnold(@leoarnold)
 * Change to support latest Faraday by Leo Arnold(@leoarnold)
+* Change to remove OrderedHash as no longer needed
+* Change gemspec to relax rake & bundler versions
 
 ### Fixed
 * Fix refs passing in Github::Client::GitData::References by Nicolas Leger(@nicolasleger)
@@ -739,28 +743,28 @@
 
 * fixing json parsing issue preventing repository creation
 
-[v0.19.0]: https://github.com/peter-murach/github/compare/v0.18.2...v0.19.0
-[v0.18.2]: https://github.com/peter-murach/github/compare/v0.18.1...v0.18.2
-[v0.18.1]: https://github.com/peter-murach/github/compare/v0.17.0...v0.18.1
-[v0.17.0]: https://github.com/peter-murach/github/compare/v0.16.0...v0.17.0
-[v0.16.0]: https://github.com/peter-murach/github/compare/v0.15.0...v0.16.0
-[v0.15.0]: https://github.com/peter-murach/github/compare/v0.14.5...v0.15.0
-[v0.14.5]: https://github.com/peter-murach/github/compare/v0.14.4...v0.14.5
-[v0.14.4]: https://github.com/peter-murach/github/compare/v0.14.3...v0.14.4
-[v0.14.3]: https://github.com/peter-murach/github/compare/v0.14.2...v0.14.3
-[v0.14.2]: https://github.com/peter-murach/github/compare/v0.14.1...v0.14.2
-[v0.14.1]: https://github.com/peter-murach/github/compare/v0.14.0...v0.14.1
-[v0.14.0]: https://github.com/peter-murach/github/compare/v0.13.1...v0.14.0
-[v0.13.1]: https://github.com/peter-murach/github/compare/v0.13.0...v0.13.1
-[v0.13.0]: https://github.com/peter-murach/github/compare/v0.12.4...v0.13.0
-[v0.12.4]: https://github.com/peter-murach/github/compare/v0.12.3...v0.12.4
-[v0.12.3]: https://github.com/peter-murach/github/compare/v0.12.2...v0.12.3
-[v0.12.2]: https://github.com/peter-murach/github/compare/v0.12.1...v0.12.2
-[v0.12.1]: https://github.com/peter-murach/github/compare/v0.12.0...v0.12.1
-[v0.12.0]: https://github.com/peter-murach/github/compare/v0.11.3...v0.12.0
-[v0.11.3]: https://github.com/peter-murach/github/compare/v0.11.2...v0.11.3
-[v0.11.2]: https://github.com/peter-murach/github/compare/v0.11.1...v0.11.2
-[v0.11.1]: https://github.com/peter-murach/github/compare/v0.11.0...v0.11.1
-[v0.11.0]: https://github.com/peter-murach/github/compare/v0.10.2...v0.11.0
-[v0.10.2]: https://github.com/peter-murach/github/compare/v0.10.1...v0.10.2
-[v0.10.1]: https://github.com/peter-murach/github/compare/v0.10.0...v0.10.1
+[v0.19.0]: https://github.com/piotrmurach/github/compare/v0.18.2...v0.19.0
+[v0.18.2]: https://github.com/piotrmurach/github/compare/v0.18.1...v0.18.2
+[v0.18.1]: https://github.com/piotrmurach/github/compare/v0.17.0...v0.18.1
+[v0.17.0]: https://github.com/piotrmurach/github/compare/v0.16.0...v0.17.0
+[v0.16.0]: https://github.com/piotrmurach/github/compare/v0.15.0...v0.16.0
+[v0.15.0]: https://github.com/piotrmurach/github/compare/v0.14.5...v0.15.0
+[v0.14.5]: https://github.com/piotrmurach/github/compare/v0.14.4...v0.14.5
+[v0.14.4]: https://github.com/piotrmurach/github/compare/v0.14.3...v0.14.4
+[v0.14.3]: https://github.com/piotrmurach/github/compare/v0.14.2...v0.14.3
+[v0.14.2]: https://github.com/piotrmurach/github/compare/v0.14.1...v0.14.2
+[v0.14.1]: https://github.com/piotrmurach/github/compare/v0.14.0...v0.14.1
+[v0.14.0]: https://github.com/piotrmurach/github/compare/v0.13.1...v0.14.0
+[v0.13.1]: https://github.com/piotrmurach/github/compare/v0.13.0...v0.13.1
+[v0.13.0]: https://github.com/piotrmurach/github/compare/v0.12.4...v0.13.0
+[v0.12.4]: https://github.com/piotrmurach/github/compare/v0.12.3...v0.12.4
+[v0.12.3]: https://github.com/piotrmurach/github/compare/v0.12.2...v0.12.3
+[v0.12.2]: https://github.com/piotrmurach/github/compare/v0.12.1...v0.12.2
+[v0.12.1]: https://github.com/piotrmurach/github/compare/v0.12.0...v0.12.1
+[v0.12.0]: https://github.com/piotrmurach/github/compare/v0.11.3...v0.12.0
+[v0.11.3]: https://github.com/piotrmurach/github/compare/v0.11.2...v0.11.3
+[v0.11.2]: https://github.com/piotrmurach/github/compare/v0.11.1...v0.11.2
+[v0.11.1]: https://github.com/piotrmurach/github/compare/v0.11.0...v0.11.1
+[v0.11.0]: https://github.com/piotrmurach/github/compare/v0.10.2...v0.11.0
+[v0.10.2]: https://github.com/piotrmurach/github/compare/v0.10.1...v0.10.2
+[v0.10.1]: https://github.com/piotrmurach/github/compare/v0.10.0...v0.10.1
