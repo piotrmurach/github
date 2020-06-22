@@ -6,18 +6,16 @@
 
 [![Gem Version](https://badge.fury.io/rb/github_api.svg)][gem]
 [![Build Status](https://secure.travis-ci.org/piotrmurach/github.svg?branch=master)][travis]
-[![Code Climate](https://codeclimate.com/github/piotrmurach/github/badges/gpa.svg)][codeclimate]
+[![Maintainability](https://api.codeclimate.com/v1/badges/7dc798db81a62774f99b/maintainability)][codeclimate]
 [![Coverage Status](https://coveralls.io/repos/piotrmurach/github/badge.svg?branch=master)][coverage]
 [![Inline docs](http://inch-ci.org/github/piotrmurach/github.svg)][inchpages]
-[![Dependency Status](https://gemnasium.com/piotrmurach/github.svg?travis)][gemnasium]
 
 [gitter]: https://gitter.im/piotrmurach/github_api
 [gem]: http://badge.fury.io/rb/github_api
 [travis]: http://travis-ci.org/piotrmurach/github
-[codeclimate]: https://codeclimate.com/github/piotrmurach/github
+[codeclimate]: https://codeclimate.com/github/piotrmurach/github/maintainability
 [coverage]: https://coveralls.io/r/piotrmurach/github
 [inchpages]: http://inch-ci.org/github/piotrmurach/github
-[gemnasium]: https://gemnasium.com/piotrmurach/github
 
 [Website](http://piotrmurach.github.io/github/) | [Wiki](https://github.com/piotrmurach/github/wiki) | [RDocs](http://rubydoc.info/github/piotrmurach/github/master/frames)
 
@@ -738,4 +736,4 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/piotrm
 
 ## Copyright
 
-Copyright (c) 2011-2017 Piotr Murach. See LICENSE.txt for further details.
+Copyright (c) 2011 Piotr Murach. See LICENSE.txt for further details.
