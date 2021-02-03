@@ -5,7 +5,7 @@ require_relative '../../api'
 module Github
   class Client::Issues::Labels < API
 
-    VALID_LABEL_INPUTS = %w[ name color description ].freeze
+    VALID_LABEL_INPUTS = %w[ name color description new_name ].freeze
 
     # List all labels for a repository
     #
