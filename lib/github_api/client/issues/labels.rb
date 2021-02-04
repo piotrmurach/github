@@ -5,7 +5,7 @@ require_relative '../../api'
 module Github
   class Client::Issues::Labels < API
 
-    VALID_LABEL_INPUTS = %w[ name color ].freeze
+    VALID_LABEL_INPUTS = %w[ name color description new_name ].freeze
 
     # List all labels for a repository
     #
@@ -80,7 +80,7 @@ module Github
     def create(*args)
       arguments(args, required: [:user, :repo]) do
         permit VALID_LABEL_INPUTS
-        assert_required VALID_LABEL_INPUTS
+        assert_required %w[ name color ]
       end
 
       post_request("/repos/#{arguments.user}/#{arguments.repo}/labels", arguments.params)
@@ -103,7 +103,6 @@ module Github
     def update(*args)
       arguments(args, required: [:user, :repo, :label_name]) do
         permit VALID_LABEL_INPUTS
-        assert_required VALID_LABEL_INPUTS
       end
 
       patch_request("/repos/#{arguments.user}/#{arguments.repo}/labels/#{arguments.label_name}", arguments.params)

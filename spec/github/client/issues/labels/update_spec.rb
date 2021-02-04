@@ -26,18 +26,6 @@ describe Github::Client::Issues::Labels, '#update' do
     let(:body) { fixture('issues/label.json') }
     let(:status) { 200 }
 
-    it "should fail to create resource if 'name' input is missing" do
-      expect {
-        subject.update user, repo, label_id, inputs.except('name')
-      }.to raise_error(Github::Error::RequiredParams)
-    end
-
-    it "should fail to create resource if 'color' input is missing" do
-      expect {
-        subject.update user, repo, label_id, inputs.except('color')
-      }.to raise_error(Github::Error::RequiredParams)
-    end
-
     it "should update resource successfully" do
       subject.update user, repo, label_id, inputs
       expect(a_patch(request_path).with(body: inputs)).to have_been_made
