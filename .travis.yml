@@ -1,5 +1,6 @@
 ---
 language: ruby
+cache: bundler
 before_install: "gem install bundler -v '< 2.0'"
 script: "bundle exec rake ci"
 rvm:
