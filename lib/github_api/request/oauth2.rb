@@ -19,7 +19,7 @@ module Github
         params = { ACCESS_TOKEN => @token }.update query_params(env[:url])
 
         if token = params[ACCESS_TOKEN] and !token.empty?
-          env[:url].query = build_query params
+          env[:url].query = build_query params.except(ACCESS_TOKEN)
           env[:request_headers].merge!(AUTH_HEADER => "token #{token}")
         end
 
