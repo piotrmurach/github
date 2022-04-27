@@ -21,7 +21,7 @@
 
 A Ruby client for the official GitHub API.
 
-Supports all the API methods. It's built in a modular way. You can either instantiate the whole API wrapper Github.new or use parts of it i.e. Github::Client::Repos.new if working solely with repositories is your main concern. Intuitive query methods allow you easily call API endpoints.
+Supports all the API methods. It's built in a modular way. You can either instantiate the whole API wrapper Github.new or use parts of it i.e. Github::Client::Repos.new if working solely with repositories is your main concern. Intuitive query methods allow you to easily call API endpoints.
 
 ## Features
 
