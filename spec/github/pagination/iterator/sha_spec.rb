@@ -49,7 +49,7 @@ describe Github::PageIterator, 'when sha' do
     it 'performs request' do
       expect(iterator).to receive(:page_request).
         with("/repos/peter-murach/github/commits",
-          'sha' => 'master', 'per_page' => 30).and_return(response)
+             { 'sha' => 'master', 'per_page' => 30 }).and_return(response)
       iterator.first
     end
   end
@@ -57,8 +57,8 @@ describe Github::PageIterator, 'when sha' do
   context 'next page request' do
     it 'performs request' do
       expect(iterator).to receive(:page_request).
-        with("/repos/peter-murach/github/commits", 'last_sha' => last_sha,
-          'sha' => last_sha, 'per_page' => 30, 'top' => top_sha).
+        with("/repos/peter-murach/github/commits", { 'last_sha' => last_sha,
+          'sha' => last_sha, 'per_page' => 30, 'top' => top_sha }).
         and_return(response)
       iterator.next
     end

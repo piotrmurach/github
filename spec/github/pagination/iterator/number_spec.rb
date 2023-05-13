@@ -58,7 +58,7 @@ describe Github::PageIterator, 'when number' do
 
     it 'performs request' do
       expect(iterator).to receive(:page_request).
-        with("/users/#{user}/repos", 'per_page' => 20, 'page' => 1).
+        with("/users/#{user}/repos", { 'per_page' => 20, 'page' => 1 }).
         and_return(response)
       iterator.first
     end
@@ -72,7 +72,7 @@ describe Github::PageIterator, 'when number' do
 
     it 'performs request' do
       expect(iterator).to receive(:page_request).
-        with("/users/#{user}/repos", 'page' => 4,'per_page' => 20).
+        with("/users/#{user}/repos", { 'page' => 4,'per_page' => 20 }).
         and_return(response)
       iterator.next
     end
@@ -86,7 +86,7 @@ describe Github::PageIterator, 'when number' do
 
     it 'performs request' do
       expect(iterator).to receive(:page_request).
-        with("/users/#{user}/repos", 'page' => 2,'per_page' => 20).
+        with("/users/#{user}/repos", { 'page' => 2,'per_page' => 20 }).
         and_return(response)
       iterator.prev
     end
@@ -100,7 +100,7 @@ describe Github::PageIterator, 'when number' do
 
     it 'performs request' do
       expect(iterator).to receive(:page_request).
-        with("/users/#{user}/repos", 'page' => 6,'per_page' => 20).
+        with("/users/#{user}/repos", { 'page' => 6,'per_page' => 20 }).
         and_return(response)
       iterator.last
     end
@@ -115,7 +115,7 @@ describe Github::PageIterator, 'when number' do
 
     it 'performs request' do
       expect(iterator).to receive(:page_request).
-        with("/users/#{user}/repos", 'page' => 2,'per_page' => 20).
+        with("/users/#{user}/repos", { 'page' => 2,'per_page' => 20 }).
         and_return(response)
       iterator.get_page(2)
     end

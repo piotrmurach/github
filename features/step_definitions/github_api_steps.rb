@@ -95,7 +95,7 @@ Then /^the request header (.*) should be$/ do |header, value|
 end
 
 Then /^the response collection of resources is different for "([^"]*)" attribute$/ do |attr|
-  @next_response.first.send(:"#{attr}").should_not eql @response.first.send(:"#{attr}")
+  expect(@next_response.first.send(:"#{attr}")).to_not eql @response.first.send(:"#{attr}")
 end
 
 Then /^this collection should include first page$/ do
